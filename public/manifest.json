@@ -1,0 +1,15 @@
+{
+  "1bsm": [
+    {
+      "id": "les-nombres-complexes",
+      "file": "chapitre_nombres_complexes.json",
+      "isActive": true
+    },
+    {
+      "id": "structures-algebriques",
+      "file": "chapitre_structure_algebrique.json",
+      "isActive": false
+    }
+  ],
+  "1s": []
+}
