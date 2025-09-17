@@ -20,7 +20,7 @@ const ChapterCard: React.FC<{ chapter: Chapter; progress?: ChapterProgress; onCl
     return (
         <div 
             onClick={onClick}
-            className={`relative bg-gradient-to-br from-white to-gray-50 border-2 border-gray-200 rounded-xl shadow-md flex flex-col cursor-pointer min-h-[260px] overflow-hidden group transition-all duration-500 ease-in-out hover:shadow-xl hover:shadow-indigo-500/25 hover:scale-[1.03] hover:-rotate-1 hover:border-indigo-300 active:scale-95 touch-manipulation before:absolute before:inset-0 before:bg-gradient-to-t before:from-indigo-500/10 before:to-transparent before:opacity-0 before:transition-opacity before:duration-300 hover:before:opacity-100 ${
+            className={`relative bg-gradient-to-br from-white to-slate-50 border border-slate-200 rounded-lg shadow-sm flex flex-col cursor-pointer min-h-[260px] overflow-hidden group transition-all duration-300 ease-out hover:shadow-lg hover:shadow-slate-500/15 hover:border-slate-300 hover:bg-gradient-to-br hover:from-slate-50 hover:to-slate-100 active:shadow-sm touch-manipulation before:absolute before:inset-0 before:bg-gradient-to-t before:from-slate-600/5 before:to-transparent before:opacity-0 before:transition-opacity before:duration-300 hover:before:opacity-100 ${
                 !chapter.isActive ? 'opacity-60 cursor-not-allowed' : ''
             }`}
             style={{
@@ -29,8 +29,8 @@ const ChapterCard: React.FC<{ chapter: Chapter; progress?: ChapterProgress; onCl
             }}
         >
             {/* Section titre */}
-            <div className="p-4 bg-gradient-to-r from-indigo-50/50 to-blue-50/30 group-hover:from-indigo-100/60 group-hover:to-blue-100/40 transition-all duration-300">
-                <h3 className="text-xl font-bold font-serif text-gray-800 group-hover:text-indigo-700 transition-colors duration-300">{chapter.chapter}</h3>
+            <div className="p-4 bg-gradient-to-r from-slate-50/80 to-slate-100/50 group-hover:from-slate-100/90 group-hover:to-slate-200/60 transition-all duration-300">
+                <h3 className="text-xl font-bold font-serif text-slate-800 group-hover:text-slate-900 transition-colors duration-300">{chapter.chapter}</h3>
             </div>
             
             {/* Section badge */}
