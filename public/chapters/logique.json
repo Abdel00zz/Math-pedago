@@ -1,256 +1,317 @@
 {
   "class": "1bsm",
-    "level": "1ère Bac Sciences Mathématiques",
   "chapter": "Logique et Raisonnements Mathématiques",
+  "sessionDate": "20 Sep 2024",
   "quiz": [
     {
-      "id": "q_logique_def_1",
-      "question": "Parmi les énoncés suivants, lequel est une proposition mathématique ?",
+      "id": "q_logic_def_1",
+      "question": "Quelle est la différence fondamentale entre une 'proposition' et une 'fonction propositionnelle' ?",
       "options": [
-        { "text": "$x + 5 = 10$", "isCorrect": false },
-        { "text": "$\\sqrt{2}$ est un nombre irrationnel", "isCorrect": true },
-        { "text": "Résoudre l'inéquation", "isCorrect": false },
-        { "text": "x est un entier pair", "isCorrect": false }
+        { "text": "Une proposition contient une variable, une fonction propositionnelle n'en contient pas.", "isCorrect": false },
+        { 
+          "text": "Une proposition a une valeur de vérité fixe (Vraie ou Fausse), tandis qu'une fonction propositionnelle dépend d'une variable pour en avoir une.", 
+          "isCorrect": true,
+          "explanation": "Une proposition est un énoncé qui est intrinsèquement soit vrai, soit faux. Une fonction propositionnelle, comme $\\displaystyle{P(x): 'x > 5'}$, devient une proposition seulement quand la variable $\\displaystyle{x}$ est remplacée par une valeur spécifique."
+        },
+        { "text": "Il n'y a aucune différence, les deux termes sont interchangeables.", "isCorrect": false },
+        { "text": "Une proposition est toujours vraie, une fonction propositionnelle est toujours fausse.", "isCorrect": false }
       ]
     },
     {
-      "id": "q_logique_negation_quant_1",
-      "question": "Quelle est la négation de la proposition $P: (\\forall x \\in \\mathbb{R}), x^2 + 1 > 0$ ?",
+      "id": "q_logic_truth_value_1",
+      "question": "Quelle est la valeur de vérité de la proposition $\\displaystyle{P: (\\sqrt{2} \\in \\mathbb{Q}) \\text{ et } (|-5| = 5)}$ ?",
       "options": [
-        { "text": "$(\\forall x \\in \\mathbb{R}), x^2 + 1 \\le 0$", "isCorrect": false },
-        { "text": "$(\\exists x \\in \\mathbb{R}), x^2 + 1 < 0$", "isCorrect": false },
-        { "text": "$(\\exists x \\in \\mathbb{R}), x^2 + 1 \\le 0$", "isCorrect": true },
-        { "text": "$(\\forall x \\in \\mathbb{R}), x^2 + 1 = 0$", "isCorrect": false }
+        { "text": "Vraie", "isCorrect": false },
+        { 
+          "text": "Fausse", 
+          "isCorrect": true,
+          "explanation": "La conjonction 'et' ($\\displaystyle{P \\land Q}$) n'est vraie que si les deux propositions P et Q sont vraies. Ici, '$\\displaystyle{\\sqrt{2} \\in \\mathbb{Q}}$' est fausse, et '$\\displaystyle{|-5|=5}$' est vraie. Puisqu'une des deux est fausse, la proposition entière est fausse."
+        }
       ]
     },
     {
-      "id": "q_logique_negation_quant_2",
-      "question": "Quelle est la négation de la proposition $Q: (\\exists n \\in \\mathbb{N}), n^2 = n$ ?",
+      "id": "q_logic_truth_value_2",
+      "question": "Quelle est la valeur de vérité de la proposition $\\displaystyle{Q: (2 < -7) \\text{ ou } (10 = 5)}$ ?",
       "options": [
-        { "text": "$(\\exists n \\in \\mathbb{N}), n^2 \\neq n$", "isCorrect": false },
-        { "text": "$(\\forall n \\in \\mathbb{N}), n^2 = n$", "isCorrect": false },
-        { "text": "$(\\forall n \\in \\mathbb{N}), n^2 \\neq n$", "isCorrect": true },
-        { "text": "$(\\exists n \\in \\mathbb{N}), n^2 < n$", "isCorrect": false }
+        { "text": "Vraie", "isCorrect": false },
+        { 
+          "text": "Fausse", 
+          "isCorrect": true,
+          "explanation": "La disjonction 'ou' ($\\displaystyle{P \\lor Q}$) est vraie si au moins l'une des deux propositions est vraie. Ici, $\\displaystyle{P: '2 < -7'}$ est fausse et $\\displaystyle{Q: '10=5'}$ est fausse. Comme les deux sont fausses, la proposition est fausse."
+        }
       ]
     },
     {
-      "id": "q_logique_verite_implication_1",
-      "question": "L'implication $P \\Rightarrow Q$ est fausse uniquement quand :",
+      "id": "q_logic_implication_1",
+      "question": "La proposition d'implication $\\displaystyle{P \\Rightarrow Q}$ est fausse dans un seul cas. Lequel ?",
       "options": [
-        { "text": "P est vraie et Q est fausse", "isCorrect": true },
-        { "text": "P est fausse et Q est vraie", "isCorrect": false },
-        { "text": "P et Q sont toutes les deux fausses", "isCorrect": false },
-        { "text": "P et Q sont toutes les deux vraies", "isCorrect": false }
+        { "text": "Quand P est fausse et Q est vraie.", "isCorrect": false },
+        { "text": "Quand P est fausse et Q est fausse.", "isCorrect": false },
+        { 
+          "text": "Quand P est vraie et Q est fausse.", 
+          "isCorrect": true,
+          "explanation": "L'implication $\\displaystyle{P \\Rightarrow Q}$ (Si P, alors Q) est définie comme étant fausse uniquement lorsque l'hypothèse P est vraie et que la conclusion Q est fausse. Dans tous les autres cas, elle est vraie."
+        },
+        { "text": "Quand P est vraie et Q est vraie.", "isCorrect": false }
       ]
     },
     {
-      "id": "q_logique_verite_conjonction_1",
-      "question": "La proposition \"$\\sqrt{9}=3$ et $5$ est un nombre premier\" est :",
+      "id": "q_logic_implication_2",
+      "question": "Quelle est la valeur de vérité de l'implication : $\\displaystyle{(\\pi \\in \\mathbb{N}) \\Rightarrow (1 \\neq 2)}$ ?",
       "options": [
-        { "text": "Vraie", "isCorrect": true },
-        { "text": "Fausse", "isCorrect": false },
-        { "text": "Ni vraie ni fausse", "isCorrect": false },
-        { "text": "Une fonction propositionnelle", "isCorrect": false }
+        { 
+          "text": "Vraie", 
+          "isCorrect": true,
+          "explanation": "L'hypothèse $\\displaystyle{P: '\\pi \\in \\mathbb{N}'}$ est fausse. Une implication avec une hypothèse fausse est toujours vraie, peu importe la valeur de vérité de la conclusion. C'est le principe 'Ex falso sequitur quodlibet' (d'une fausseté, suit n'importe quoi)."
+        },
+        { "text": "Fausse", "isCorrect": false }
       ]
     },
     {
-      "id": "q_logique_verite_disjonction_1",
-      "question": "La proposition \"$\\pi = 3.14$ ou $|-7|=7$\" est :",
+      "id": "q_logic_quantifier_1",
+      "question": "Laquelle de ces propositions est vraie ?",
       "options": [
-        { "text": "Fausse, car $\\pi \\neq 3.14$", "isCorrect": false },
-        { "text": "Vraie, car au moins une des deux propositions est vraie", "isCorrect": true },
-        { "text": "Fausse, car les deux propositions doivent être vraies", "isCorrect": false },
-        { "text": "Vraie, car les deux propositions sont vraies", "isCorrect": false }
+        { "text": "$\\displaystyle{(\\forall x \\in \\mathbb{R}), x^2 > x}$", "isCorrect": false },
+        { "text": "$\\displaystyle{(\\forall n \\in \\mathbb{N}), n^2+n+1}$ est un nombre premier.", "isCorrect": false },
+        { 
+          "text": "$\\displaystyle{(\\exists x \\in \\mathbb{R}), x^2 = 36}$", 
+          "isCorrect": true,
+          "explanation": "Le quantificateur existentiel '$\\displaystyle{\\exists}$' signifie 'il existe au moins un'. Pour $\\displaystyle{x=6}$ (ou $\\displaystyle{x=-6}$), l'équation $\\displaystyle{x^2=36}$ est vérifiée, donc la proposition est vraie. Les autres sont fausses (contre-exemples : $\\displaystyle{x=0.5}$ pour la première, $\\displaystyle{n=4}$ pour la seconde, $\\displaystyle{x=1}$ pour la dernière)."
+        },
+        { "text": "$\\displaystyle{(\\forall x \\in \\mathbb{R}), |x| = x}$", "isCorrect": false }
       ]
     },
     {
-      "id": "q_logique_contraposition_1",
-      "question": "La contraposée de l'implication \"Si $n$ est premier, alors $n$ est impair\" est :",
+      "id": "q_logic_quantifier_order",
+      "question": "Considérez les propositions $\\displaystyle{P: (\\forall x \\in \\mathbb{R})(\\exists y \\in \\mathbb{R}), y > x}$ et $\\displaystyle{Q: (\\exists y \\in \\mathbb{R})(\\forall x \\in \\mathbb{R}), y > x}$. Laquelle est vraie ?",
       "options": [
-        { "text": "Si $n$ n'est pas premier, alors $n$ n'est pas impair", "isCorrect": false },
-        { "text": "Si $n$ est impair, alors $n$ est premier", "isCorrect": false },
-        { "text": "Si $n$ n'est pas impair, alors $n$ n'est pas premier", "isCorrect": true },
-        { "text": "$n$ est premier et $n$ n'est pas impair", "isCorrect": false }
+        { "text": "Les deux sont vraies.", "isCorrect": false },
+        { 
+          "text": "P est vraie et Q est fausse.", 
+          "isCorrect": true,
+          "explanation": "P est vraie : pour n'importe quel réel $\\displaystyle{x}$, on peut toujours trouver un réel $\\displaystyle{y}$ plus grand (par exemple $\\displaystyle{y=x+1}$). Q est fausse : elle affirme qu'il existe un seul réel $\\displaystyle{y}$ qui est plus grand que tous les autres réels, ce qui est impossible. L'ordre des quantificateurs de natures différentes est crucial et ne peut être changé."
+        },
+        { "text": "P est fausse et Q est vraie.", "isCorrect": false },
+        { "text": "Les deux sont fausses.", "isCorrect": false }
       ]
     },
     {
-      "id": "q_logique_negation_implication_1",
-      "question": "La négation de $P \\Rightarrow Q$ est logiquement équivalente à :",
+      "id": "q_logic_negation_1",
+      "question": "Quelle est la négation de la proposition $\\displaystyle{(\\exists m \\in \\mathbb{Z})(\\forall n \\in \\mathbb{N}): mn = m+n}$ ?",
       "options": [
-        { "text": "$\\neg P \\text{ et } Q$", "isCorrect": false },
-        { "text": "$P \\text{ et } \\neg Q$", "isCorrect": true },
-        { "text": "$\\neg P \\text{ ou } Q$", "isCorrect": false },
-        { "text": "$Q \\Rightarrow P$", "isCorrect": false }
+        { "text": "$\\displaystyle{(\\exists m \\in \\mathbb{Z})(\\forall n \\in \\mathbb{N}): mn \\neq m+n}$", "isCorrect": false },
+        { "text": "$\\displaystyle{(\\forall m \\in \\mathbb{Z})(\\exists n \\in \\mathbb{N}): mn = m+n}$", "isCorrect": false },
+        { "text": "$\\displaystyle{(\\forall m \\notin \\mathbb{Z})(\\exists n \\notin \\mathbb{N}): mn \\neq m+n}$", "isCorrect": false },
+        { 
+          "text": "$\\displaystyle{(\\forall m \\in \\mathbb{Z})(\\exists n \\in \\mathbb{N}): mn \\neq m+n}$", 
+          "isCorrect": true,
+          "explanation": "Pour nier une proposition quantifiée, on change chaque quantificateur ($\\displaystyle{\\forall}$ devient $\\displaystyle{\\exists}$ et vice-versa) et on nie la fonction propositionnelle à la fin. Donc, $\\displaystyle{\\overline{(\\exists m)(\\forall n) P(m,n)}}$ devient $\\displaystyle{(\\forall m)(\\exists n) \\overline{P(m,n)}}$."
+        }
       ]
     },
     {
-      "id": "q_logique_equivalence_1",
-      "question": "L'équivalence $P \\Leftrightarrow Q$ est vraie si et seulement si :",
+      "id": "q_logic_negation_implication",
+      "question": "La négation de l'implication $\\displaystyle{P \\Rightarrow Q}$ est logiquement équivalente à :",
       "options": [
-        { "text": "$P$ est vraie et $Q$ est fausse", "isCorrect": false },
-        { "text": "$P \\Rightarrow Q$ est vraie", "isCorrect": false },
-        { "text": "$P$ et $Q$ ont la même valeur de vérité", "isCorrect": true },
-        { "text": "$P$ est fausse et $Q$ est vraie", "isCorrect": false }
+        { "text": "$\\displaystyle{\\overline{P} \\Rightarrow \\overline{Q}}$", "isCorrect": false },
+        { 
+          "text": "$\\displaystyle{P \\text{ et } \\overline{Q}}$", 
+          "isCorrect": true,
+          "explanation": "La négation de 'Si P, alors Q' n'est pas 'Si non P, alors non Q'. C'est l'affirmation que P est vraie ET que Q est fausse, ce qui est le seul cas où l'implication est fausse. C'est une loi logique."
+        },
+        { "text": "$\\displaystyle{\\overline{P} \\text{ ou } Q}$", "isCorrect": false },
+        { "text": "$\\displaystyle{Q \\Rightarrow P}$", "isCorrect": false }
       ]
     },
     {
-      "id": "q_logique_loi_morgan_1",
-      "question": "Selon les lois de De Morgan, la négation de $(P \\text{ ou } Q)$ est :",
+      "id": "q_logic_equivalence_1",
+      "question": "Quelle est la valeur de vérité de l'équivalence : $\\displaystyle{|-4|=4 \\Leftrightarrow 3 \\le 12}$ ?",
       "options": [
-        { "text": "$(\\neg P \\text{ ou } \\neg Q)$", "isCorrect": false },
-        { "text": "$(\\neg P \\text{ et } \\neg Q)$", "isCorrect": true },
-        { "text": "$(\\neg P \\text{ ou } Q)$", "isCorrect": false },
-        { "text": "$(P \\text{ et } Q)$", "isCorrect": false }
+        { 
+          "text": "Vraie", 
+          "isCorrect": true,
+          "explanation": "L'équivalence $\\displaystyle{P \\Leftrightarrow Q}$ est vraie si et seulement si P et Q ont la même valeur de vérité. Ici, $\\displaystyle{P: '|-4|=4'}$ est vraie, et $\\displaystyle{Q: '3 \\le 12'}$ est vraie. Puisque Vrai $\\displaystyle{\\Leftrightarrow}$ Vrai, l'équivalence est vraie."
+        },
+        { "text": "Fausse", "isCorrect": false }
       ]
     },
     {
-      "id": "q_logique_raisonnement_type_1",
-      "question": "Pour prouver que \"$\\sqrt{2}$ est irrationnel\", on suppose qu'il est rationnel pour aboutir à une contradiction. Ce type de raisonnement est :",
+      "id": "q_logic_equivalence_2",
+      "question": "Quelle est la valeur de vérité de l'équivalence : $\\displaystyle{\\pi < 3 \\Leftrightarrow 5 \\le \\sqrt{2}}$ ?",
       "options": [
-        { "text": "Un raisonnement par l'absurde", "isCorrect": true },
-        { "text": "Un raisonnement par contraposée", "isCorrect": false },
-        { "text": "Un raisonnement par récurrence", "isCorrect": false },
-        { "text": "Un raisonnement par disjonction de cas", "isCorrect": false }
+        { 
+          "text": "Vraie", 
+          "isCorrect": true,
+          "explanation": "L'équivalence $\\displaystyle{P \\Leftrightarrow Q}$ est vraie si P et Q ont la même valeur de vérité. Ici, $\\displaystyle{P: '\\pi < 3'}$ est fausse, et $\\displaystyle{Q: '5 \\le \\sqrt{2}'}$ est fausse. Puisque Faux $\\displaystyle{\\Leftrightarrow}$ Faux, l'équivalence est vraie."
+        },
+        { "text": "Fausse", "isCorrect": false }
       ]
     },
     {
-      "id": "q_logique_raisonnement_type_2",
-      "question": "Pour montrer que $(\\forall n \\in \\mathbb{N}), n(n+1)$ est pair, on étudie les cas '$n$ est pair' et '$n$ est impair'. Il s'agit d'un raisonnement :",
+      "id": "q_logic_contrapositive",
+      "question": "Quelle est la contraposée de l'implication '$\\displaystyle{n^2}$ est pair $\\displaystyle{\\Rightarrow n}$ est pair' ?",
       "options": [
-        { "text": "Par l'absurde", "isCorrect": false },
-        { "text": "Par disjonction des cas", "isCorrect": true },
-        { "text": "Par récurrence", "isCorrect": false },
-        { "text": "Direct", "isCorrect": false }
+        { "text": "'$\\displaystyle{n^2}$ est impair $\\displaystyle{\\Rightarrow n}$ est impair'", "isCorrect": false },
+        { "text": "'$\\displaystyle{n}$ est pair $\\displaystyle{\\Rightarrow n^2}$ est pair'", "isCorrect": false },
+        { 
+          "text": "'$\\displaystyle{n}$ est impair $\\displaystyle{\\Rightarrow n^2}$ est impair'", 
+          "isCorrect": true,
+          "explanation": "La contraposée de $\\displaystyle{P \\Rightarrow Q}$ est l'implication $\\displaystyle{\\overline{Q} \\Rightarrow \\overline{P}}$. Ici, P est '$\\displaystyle{n^2}$ est pair' et Q est '$\\displaystyle{n}$ est pair'. La négation de '$\\displaystyle{n}$ est pair' est '$\\displaystyle{n}$ est impair'. Donc la contraposée est '$\\displaystyle{n}$ est impair $\\displaystyle{\\Rightarrow n^2}$ est impair'."
+        },
+        { "text": "'$\\displaystyle{n^2}$ est pair et $\\displaystyle{n}$ est impair'", "isCorrect": false }
       ]
     },
     {
-      "id": "q_logique_recurrence_etape_1",
-      "question": "Dans un raisonnement par récurrence pour prouver $(\\forall n \\ge n_0) P(n)$, l'étape où l'on suppose $P(n)$ vraie pour un certain $n$ et on démontre $P(n+1)$ s'appelle :",
+      "id": "q_logic_reasoning_type_1",
+      "question": "Pour prouver une proposition P, on suppose sa négation $\\displaystyle{\\overline{P}}$ et on montre que cela mène à une contradiction. Comment s'appelle ce type de raisonnement ?",
       "options": [
-        { "text": "L'initialisation", "isCorrect": false },
-        { "text": "La conclusion", "isCorrect": false },
-        { "text": "L'hypothèse de récurrence", "isCorrect": false },
-        { "text": "L'hérédité", "isCorrect": true }
+        { "text": "Raisonnement par contraposée", "isCorrect": false },
+        { "text": "Raisonnement par récurrence", "isCorrect": false },
+        { "text": "Raisonnement par disjonction de cas", "isCorrect": false },
+        { 
+          "text": "Raisonnement par l'absurde", 
+          "isCorrect": true,
+          "explanation": "Le raisonnement par l'absurde consiste à supposer que la proposition à démontrer est fausse (c'est-à-dire que sa négation est vraie) et à en déduire une contradiction logique (une proposition de la forme $\\displaystyle{Q \\text{ et } \\overline{Q}}$), ce qui prouve que l'hypothèse de départ ($\\displaystyle{\\overline{P}}$) était fausse, et donc que P est vraie."
+        }
       ]
     },
     {
-      "id": "q_logique_contre_exemple_1",
-      "question": "Quel est un contre-exemple à la proposition \"Tous les nombres premiers sont impairs\" ?",
+      "id": "q_logic_de_morgan",
+      "question": "Selon les lois de Morgan, la négation de $\\displaystyle{(P \\text{ ou } Q)}$ est :",
       "options": [
-        { "text": "1", "isCorrect": false },
-        { "text": "2", "isCorrect": true },
-        { "text": "9", "isCorrect": false },
-        { "text": "Il n'y a pas de contre-exemple", "isCorrect": false }
+        { "text": "$\\displaystyle{(\\overline{P} \\text{ ou } \\overline{Q})}$", "isCorrect": false },
+        { 
+          "text": "$\\displaystyle{(\\overline{P} \\text{ et } \\overline{Q})}$", 
+          "isCorrect": true,
+          "explanation": "L'une des lois de Morgan stipule que la négation d'une disjonction est la conjonction des négations : $\\displaystyle{\\overline{(P \\lor Q)} \\Leftrightarrow (\\overline{P} \\land \\overline{Q})}$."
+        },
+        { "text": "$\\displaystyle{(\\overline{P} \\text{ ou } Q)}$", "isCorrect": false },
+        { "text": "$\\displaystyle{(P \\text{ et } Q)}$", "isCorrect": false }
       ]
     },
     {
-      "id": "q_logique_quant_ordre_1",
-      "question": "La proposition $(\\exists x \\in \\mathbb{R}) (\\forall y \\in \\mathbb{R}), y+x=y$ est :",
+      "id": "q_logic_unique_existential",
+      "question": "Que signifie la proposition $\\displaystyle{(\\exists! x \\in \\mathbb{R}), x^2 = 4}$ ?",
       "options": [
-        { "text": "Vraie, il suffit de prendre x=0", "isCorrect": true },
-        { "text": "Fausse, car l'ordre des quantificateurs est incorrect", "isCorrect": false },
-        { "text": "Fausse, car pour y=1 il n'y a pas de x", "isCorrect": false },
-        { "text": "Vraie, pour n'importe quel x", "isCorrect": false }
+        { "text": "Il existe une solution réelle à $\\displaystyle{x^2 = 4}$.", "isCorrect": false },
+        { 
+          "text": "Il existe une unique solution réelle à $\\displaystyle{x^2 = 4}$.", 
+          "isCorrect": true,
+          "explanation": "Le quantificateur $\\displaystyle{\\exists!}$ signifie 'il existe un unique'. La proposition affirme donc qu'il y a exactement une seule valeur réelle $\\displaystyle{x}$ pour laquelle $\\displaystyle{x^2=4}$. Cette proposition est fausse, car il y en a deux : $\\displaystyle{x=2}$ et $\\displaystyle{x=-2}$."
+        },
+        { "text": "Toutes les solutions réelles de $\\displaystyle{x^2 = 4}$ sont uniques.", "isCorrect": false },
+        { "text": "L'équation $\\displaystyle{x^2 = 4}$ n'a pas de solution.", "isCorrect": false }
       ]
     },
     {
-      "id": "q_logique_quant_ordre_2",
-      "question": "La proposition $(\\forall x \\in \\mathbb{R}) (\\exists y \\in \\mathbb{R}), y > x$ signifie :",
+      "id": "q_logic_condition_1",
+      "question": "Dans l'implication $\\displaystyle{P \\Rightarrow Q}$, comment appelle-t-on la proposition P par rapport à Q ?",
       "options": [
-        { "text": "Il existe un nombre réel plus grand que tous les autres", "isCorrect": false },
-        { "text": "Tout nombre réel a un successeur immédiat", "isCorrect": false },
-        { "text": "Pour n'importe quel nombre réel, on peut toujours en trouver un plus grand", "isCorrect": true },
-        { "text": "L'ensemble des nombres réels est fini", "isCorrect": false }
+        { "text": "Une condition nécessaire", "isCorrect": false },
+        { 
+          "text": "Une condition suffisante", 
+          "isCorrect": true,
+          "explanation": "Dans $\\displaystyle{P \\Rightarrow Q}$, on dit que P est une condition suffisante pour Q. Cela signifie que la véracité de P est suffisante pour garantir la véracité de Q. Inversement, Q est une condition nécessaire pour P."
+        },
+        { "text": "Une condition équivalente", "isCorrect": false },
+        { "text": "La contraposée", "isCorrect": false }
       ]
     },
     {
-      "id": "q_logique_unicite_1",
-      "question": "Que signifie la notation $(\\exists! x \\in E), P(x)$ ?",
+      "id": "q_logic_recurrence_heredity",
+      "question": "Dans un raisonnement par récurrence pour prouver $\\displaystyle{(\\forall n \\ge n_0) P(n)}$, l'étape de l'hérédité consiste à :",
       "options": [
-        { "text": "Il existe au moins un x dans E qui vérifie P(x)", "isCorrect": false },
-        { "text": "Il existe un unique x dans E qui vérifie P(x)", "isCorrect": true },
-        { "text": "Il existe une infinité de x dans E qui vérifient P(x)", "isCorrect": false },
-        { "text": "Pour tout x dans E, P(x) est fausse", "isCorrect": false }
+        { "text": "Vérifier que $\\displaystyle{P(n_0)}$ est vraie.", "isCorrect": false },
+        { 
+          "text": "Supposer que $\\displaystyle{P(n)}$ est vraie pour un certain $\\displaystyle{n \\ge n_0}$ et montrer que $\\displaystyle{P(n+1)}$ est vraie.", 
+          "isCorrect": true,
+          "explanation": "L'hérédité est le cœur du raisonnement par récurrence. On établit un lien de cause à effet : si la propriété est vraie à un rang $\\displaystyle{n}$, alors elle l'est aussi au rang suivant $\\displaystyle{n+1}$. L'initialisation ($\\displaystyle{P(n_0)}$ vraie) sert de premier domino pour enclencher le processus."
+        },
+        { "text": "Montrer que $\\displaystyle{P(n)}$ est vraie pour tout $\\displaystyle{n \\ge n_0}$.", "isCorrect": false },
+        { "text": "Supposer que $\\displaystyle{P(n+1)}$ est vraie et montrer que $\\displaystyle{P(n)}$ est vraie.", "isCorrect": false }
       ]
     }
   ],
   "exercises": [
     {
-      "id": "exo_logique_verite_negation_1",
-      "title": "Valeurs de Vérité et Négation",
-      "statement": "Pour chaque proposition, déterminer sa valeur de vérité en justifiant, puis écrire sa négation.",
+      "id": "exo_raisonnement_direct",
+      "title": "Raisonnement Déductif",
+      "statement": "En utilisant le raisonnement déductif (ou direct), démontrez la véracité des implications suivantes.",
       "sub_questions": [
-        { "text": "$P_1: (\\forall x \\in \\mathbb{R}), x^2 \\ge 0$ " },
-        { "text": "$P_2: (\\exists x \\in \\mathbb{R}), x^2 - x - 2 = 0$ " },
-        { "text": "$P_3: (\\forall n \\in \\mathbb{N})(\\exists m \\in \\mathbb{N}), n > m$ " },
-        { "text": "$P_4: (\\exists m \\in \\mathbb{N})(\\forall n \\in \\mathbb{N}), n > m$ " }
+        { "text": "Montrer que : $\\displaystyle{(\\forall (a,b) \\in (\\mathbb{R}^{+*})^2), a \\le b \\Rightarrow \\frac{a}{b+1} \\le \\frac{b}{a+1}}$." },
+        { "text": "Soit $\\displaystyle{x \\in \\mathbb{R}}$. Montrer que $\\displaystyle{|x-1| \\le 2 \\Rightarrow |x^2-1| \\le 5}$." }
       ]
     },
     {
-      "id": "exo_logique_table_verite_1",
-      "title": "Lois Logiques et Tables de Vérité",
-      "statement": "Une loi logique (ou tautologie) est une proposition qui est toujours vraie, quelles que soient les valeurs de vérité des propositions qui la composent.",
-      "sub_questions": [
-        { "text": "Dresser la table de vérité de la proposition $(P \\Rightarrow Q) \\Leftrightarrow (\\neg P \\lor Q)$." },
-        { "text": "En déduire que cette proposition est une loi logique." }
-      ]
-    },
-    {
-      "id": "exo_logique_raisonnement_direct_1",
-      "title": "Raisonnement Direct",
-      "statement": "En utilisant un raisonnement déductif (direct), montrer les implications suivantes :",
-      "sub_questions": [
-        { "text": "Soit $x \\in \\mathbb{R}$. Montrer que : $|x-1| \\le 2 \\Rightarrow x^2 - 2x - 3 \\le 0$." },
-        { "text": "Soient a et b deux réels. Montrer que : $a^2+b^2=0 \\Rightarrow a=0 \\text{ et } b=0$." }
-      ]
-    },
-    {
-      "id": "exo_logique_raisonnement_contraposition_1",
+      "id": "exo_raisonnement_contraposition",
       "title": "Raisonnement par Contraposée",
-      "statement": "Le raisonnement par contraposée consiste à montrer que $\\neg Q \\Rightarrow \\neg P$ pour prouver $P \\Rightarrow Q$.",
+      "statement": "Utilisez le raisonnement par contraposée ($\\displaystyle{P \\Rightarrow Q \\Leftrightarrow \\overline{Q} \\Rightarrow \\overline{P}}$) pour démontrer les propositions suivantes.",
       "sub_questions": [
-        { "text": "Soit $n \\in \\mathbb{N}$. Montrer en utilisant la contraposée que : si $n^2$ est pair, alors $n$ est pair." }
+        { "text": "Soit $\\displaystyle{n \\in \\mathbb{N}}$. Montrer que si $\\displaystyle{n^2}$ est impair, alors $\\displaystyle{n}$ est impair." },
+        { "text": "Soit $\\displaystyle{x, y \\in \\mathbb{R}}$. Montrer que : $\\displaystyle{x \\neq y \\Rightarrow (x+1)(y-1) \\neq (x-1)(y+1)}$." }
       ]
     },
     {
-      "id": "exo_logique_raisonnement_absurde_1",
+      "id": "exo_raisonnement_absurde",
       "title": "Raisonnement par l'Absurde",
-      "statement": "Le raisonnement par l'absurde consiste à supposer la négation de la proposition à démontrer et à en déduire une contradiction.",
+      "statement": "Utilisez le raisonnement par l'absurde pour établir les résultats suivants.",
       "sub_questions": [
-        { "text": "Montrer que pour tout $x \\in \\mathbb{R}^*$, on a $x + \\frac{1}{x} \\neq 1$." },
-        { "text": "En utilisant un raisonnement par l'absurde, montrer que $\\sqrt{2}$ n'est pas un nombre rationnel." }
+        { "text": "Montrer que la somme d'un nombre rationnel et d'un nombre irrationnel est un nombre irrationnel." },
+        { "text": "Montrer que $\\displaystyle{\\sqrt{3}}$ est un nombre irrationnel." }
       ]
     },
     {
-      "id": "exo_logique_raisonnement_cas_1",
-      "title": "Raisonnement par Disjonction de Cas",
-      "statement": "Le raisonnement par disjonction de cas permet de prouver une propriété en la vérifiant sur différentes parties disjointes qui recouvrent tous les cas possibles.",
-      "sub_questions": [
-        { "text": "Montrer que pour tout entier $n \\in \\mathbb{N}$, le nombre $n(n+1)$ est pair." }
-      ]
-    },
-    {
-      "id": "exo_logique_raisonnement_contre_exemple_1",
-      "title": "Raisonnement par Contre-Exemple",
-      "statement": "Pour montrer qu'une proposition universelle $(\\forall x \\in E, P(x))$ est fausse, il suffit de trouver un élément $a \\in E$ tel que $P(a)$ soit fausse. Cet élément est un contre-exemple.",
-      "sub_questions": [
-        { "text": "Montrer que la proposition suivante est fausse : \"Pour tout entier $n \\in \\mathbb{N}$, le nombre $n^2+n+41$ est premier\"." }
-      ]
-    },
-    {
-      "id": "exo_logique_raisonnement_equivalence_1",
-      "title": "Raisonnement par Équivalences Successives",
-      "statement": "Le raisonnement par équivalences successives consiste à transformer une proposition en une autre qui lui est équivalente, jusqu'à aboutir à une proposition dont la vérité est évidente.",
-      "sub_questions": [
-        { "text": "Soit $x \\in \\mathbb{R}$. Montrer que : $\\sqrt{x^2+1} - x > 0$." }
-      ]
-    },
-    {
-      "id": "exo_logique_raisonnement_recurrence_1",
+      "id": "exo_raisonnement_recurrence",
       "title": "Raisonnement par Récurrence",
-      "statement": "Le raisonnement par récurrence est utilisé pour démontrer une propriété pour tous les entiers naturels à partir d'un certain rang.",
+      "statement": "Utilisez le principe de récurrence pour démontrer les propositions suivantes.",
       "sub_questions": [
-        { "text": "Montrer par récurrence que pour tout $n \\in \\mathbb{N}$, $3$ divise $4^n - 1$." }
+        { "text": "Montrer que $\\displaystyle{(\\forall n \\in \\mathbb{N}^*), \\sum_{k=1}^{n} k^2 = 1^2+2^2+...+n^2 = \\frac{n(n+1)(2n+1)}{6}}$." },
+        { "text": "Montrer que $\\displaystyle{(\\forall n \\in \\mathbb{N})}$, le nombre $\\displaystyle{3^{2n+1} + 2^{n+2}}$ est divisible par 7." }
+      ]
+    },
+    {
+      "id": "exo_raisonnement_equivalence",
+      "title": "Raisonnement par Équivalences Successives",
+      "statement": "Démontrez les équivalences suivantes.",
+      "sub_questions": [
+        { "text": "Montrer que $\\displaystyle{(\\forall x \\in \\mathbb{R}), \\sqrt{x^2+1} - x > 0}$." },
+        { "text": "Montrer que $\\displaystyle{(\\forall x \\in [1;+\\infty[)(\\forall y \\in [4;+\\infty[), \\sqrt{x-1}+2\\sqrt{y-4}=\\frac{x+y}{2} \\Leftrightarrow (x=2 \\text{ et } y=8)}$." }
+      ]
+    },
+    {
+      "id": "exo_raisonnement_disjonction",
+      "title": "Raisonnement par Disjonction des Cas",
+      "statement": "En séparant les cas de manière appropriée, démontrez les propositions suivantes.",
+      "sub_questions": [
+        { "text": "Montrer que $\\displaystyle{(\\forall n \\in \\mathbb{N})}$, le nombre $\\displaystyle{n(n+1)}$ est pair." },
+        { "text": "Résoudre dans $\\displaystyle{\\mathbb{R}}$ l'équation : $\\displaystyle{|x-2| + |2x+4| = 10}$." }
+      ]
+    },
+    {
+      "id": "exo_raisonnement_contre_exemple",
+      "title": "Raisonnement par Contre-Exemple",
+      "statement": "Montrez que les propositions universelles suivantes sont fausses en trouvant un contre-exemple.",
+      "sub_questions": [
+        { "text": "$\\displaystyle{P: (\\forall x \\in \\mathbb{R}), x^2+x-2=0}$." },
+        { "text": "$\\displaystyle{Q: (\\forall n \\in \\mathbb{N})}$, $\\displaystyle{2^n+1}$ est un nombre premier." }
+      ]
+    },
+    {
+      "id": "exo_negation_et_verite",
+      "title": "Négation et Valeur de Vérité",
+      "statement": "Pour chaque proposition, donnez sa négation, puis déterminez la valeur de vérité de la proposition initiale.",
+      "sub_questions": [
+        { "text": "$\\displaystyle{P: (\\forall x \\in \\mathbb{R}), x^2 \\ge x}$." },
+        { "text": "$\\displaystyle{Q: (\\exists x \\in \\mathbb{N})(\\forall y \\in \\mathbb{N}), y = \\sqrt{x}}$." },
+        { "text": "$\\displaystyle{R: (\\forall x \\in \\mathbb{N})(\\exists y \\in \\mathbb{N}), y = \\frac{x}{2}}$." }
+      ]
+    },
+    {
+      "id": "exo_double_implication",
+      "title": "Raisonnement par Double Implication",
+      "statement": "Pour prouver une équivalence $\\displaystyle{P \\Leftrightarrow Q}$, on peut prouver séparément les deux implications $\\displaystyle{P \\Rightarrow Q}$ et $\\displaystyle{Q \\Rightarrow P}$. Utilisez cette méthode ici.",
+      "sub_questions": [
+        { "text": "Soit $\\displaystyle{n \\in \\mathbb{N}}$. Montrer que $\\displaystyle{n}$ est impair si et seulement si $\\displaystyle{n^2}$ est impair." }
       ]
     }
   ]

@@ -219,6 +219,7 @@ class ChapterWidget(QFrame):
     """Widget personnalisé pour afficher un chapitre"""
     toggled = pyqtSignal(str, bool)
     edit_requested = pyqtSignal(object)  # Signal pour demander l'édition
+    delete_requested = pyqtSignal(object)  # Signal pour demander la suppression
 
     def __init__(self, chapter: ChapterData):
         super().__init__()
@@ -294,6 +295,25 @@ class ChapterWidget(QFrame):
         """)
         actions_layout.addWidget(self.edit_btn)
         
+        # Bouton de suppression
+        self.delete_btn = QPushButton("🗑️")
+        self.delete_btn.setToolTip("Supprimer ce chapitre")
+        self.delete_btn.setMaximumSize(30, 30)
+        self.delete_btn.clicked.connect(self.on_delete_clicked)
+        self.delete_btn.setStyleSheet("""
+            QPushButton {
+                background-color: #dc3545;
+                color: white;
+                border: none;
+                border-radius: 15px;
+                font-size: 12px;
+            }
+            QPushButton:hover {
+                background-color: #c82333;
+            }
+        """)
+        actions_layout.addWidget(self.delete_btn)
+        
         # Checkbox d'activation
         self.checkbox = QCheckBox()
         self.checkbox.setChecked(self.chapter.is_active)
@@ -331,6 +351,10 @@ class ChapterWidget(QFrame):
     def on_edit_clicked(self):
         """Émet le signal pour demander l'édition du chapitre"""
         self.edit_requested.emit(self.chapter)
+    
+    def on_delete_clicked(self):
+        """Émet le signal pour demander la suppression du chapitre"""
+        self.delete_requested.emit(self.chapter)
     
     def update_display(self):
         """Met à jour l'affichage après modification"""
@@ -666,28 +690,17 @@ class AdminApp(QMainWindow):
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 manifest = json.load(f)
-
-            # Validation du format du manifest
-            if not isinstance(manifest, dict):
-                raise ValueError("Manifest invalide: un objet JSON est attendu (mapping des classes vers des listes de chapitres).")
-            # Cas fréquent: fichier chapitre sélectionné au lieu d'un manifest
-            if 'class' in manifest and 'chapter' in manifest:
-                raise ValueError("Le fichier sélectionné ressemble à un chapitre (et non à un manifest). Utilisez 'Importer Chapitres' pour ce fichier, ou sélectionnez un manifest.json valide.")
-
+            
             self.chapters_data.clear()
-
+            
             # Déterminer le dossier des chapitres
             manifest_dir = os.path.dirname(file_path)
             self.chapters_dir = os.path.join(manifest_dir, 'chapters')
-
+            
             for class_id, chapters in manifest.items():
-                if not isinstance(chapters, list):
-                    raise ValueError(f"Manifest invalide: la clé '{class_id}' doit contenir une liste de chapitres.")
                 for item in chapters:
-                    if not isinstance(item, dict) or 'file' not in item or 'id' not in item:
-                        raise ValueError(f"Entrée invalide pour la classe '{class_id}': chaque élément doit contenir les clés 'id' et 'file'.")
                     chapter_title = "(Titre à charger)"
-
+                    
                     # Essayer de charger le titre depuis le fichier de chapitre
                     chapter_file_path = os.path.join(self.chapters_dir, item['file'])
                     if os.path.exists(chapter_file_path):
@@ -698,7 +711,7 @@ class AdminApp(QMainWindow):
                                     chapter_title = chapter_content['chapter']
                         except Exception as e:
                             print(f"Erreur lors du chargement du titre pour {item['file']}: {e}")
-
+                    
                     chapter = ChapterData(
                         id=item['id'],
                         file=item['file'],
@@ -706,7 +719,7 @@ class AdminApp(QMainWindow):
                         class_type=class_id,
                         chapter=chapter_title
                     )
-
+                    
                     # Charger les informations supplémentaires si disponibles
                     if os.path.exists(chapter_file_path):
                         try:
@@ -720,16 +733,15 @@ class AdminApp(QMainWindow):
                                     chapter.exercise_count = len(chapter_content['exercises'])
                         except Exception as e:
                             print(f"Erreur lors du chargement des détails pour {item['file']}: {e}")
-
+                    
                     self.chapters_data[item['id']] = chapter
-
+            
             self.is_dirty = False
             self.refresh_display()
             self.status_bar.showMessage(f"Manifest chargé: {len(self.chapters_data)} chapitres trouvés avec titres")
-
+            
         except Exception as e:
             QMessageBox.critical(self, "Erreur", f"Impossible de charger le manifest:\n{str(e)}")
-
 
     def import_chapters(self):
         """Importe des fichiers de chapitres"""
@@ -809,6 +821,7 @@ class AdminApp(QMainWindow):
                 chapter_widget = ChapterWidget(chapter)
                 chapter_widget.toggled.connect(self.on_chapter_toggled)
                 chapter_widget.edit_requested.connect(self.on_chapter_edit_requested)
+                chapter_widget.delete_requested.connect(self.on_chapter_delete_requested)
                 group_layout.addWidget(chapter_widget)
             
             self.chapters_layout.addWidget(group_box)
@@ -867,6 +880,47 @@ class AdminApp(QMainWindow):
             self.is_dirty = True
             self.refresh_display()
             self.status_bar.showMessage(f"Chapitre '{chapter.chapter}' modifié avec succès")
+
+    def on_chapter_delete_requested(self, chapter: ChapterData):
+        """Supprime un chapitre après confirmation (avec option de supprimer le fichier)"""
+        msg = QMessageBox(self)
+        msg.setWindowTitle("Confirmer la suppression")
+        msg.setIcon(QMessageBox.Icon.Warning)
+        msg.setText(f"Voulez-vous supprimer le chapitre '{chapter.chapter}' ?")
+        msg.setInformativeText("Cette action retirera le chapitre du manifest. Vous pouvez aussi supprimer le fichier source.")
+        msg.setStandardButtons(QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+        msg.setDefaultButton(QMessageBox.StandardButton.No)
+        delete_file_checkbox = QCheckBox("Supprimer aussi le fichier du chapitre (.json)")
+        msg.setCheckBox(delete_file_checkbox)
+        result = msg.exec()
+
+        if result == QMessageBox.StandardButton.Yes:
+            file_deleted = False
+            file_error = None
+            if delete_file_checkbox.isChecked() and self.chapters_dir:
+                chapter_path = os.path.join(self.chapters_dir, chapter.file)
+                try:
+                    if os.path.exists(chapter_path):
+                        os.remove(chapter_path)
+                        file_deleted = True
+                except Exception as e:
+                    file_error = str(e)
+            
+            # Retirer du manifest en mémoire
+            if chapter.id in self.chapters_data:
+                del self.chapters_data[chapter.id]
+            
+            self.is_dirty = True
+            self.refresh_display()
+            status = "Chapitre supprimé du manifest."
+            if delete_file_checkbox.isChecked():
+                if file_deleted:
+                    status += " Fichier supprimé."
+                else:
+                    status += " Le fichier n'a pas pu être supprimé."
+                    if file_error:
+                        status += f" ({file_error})"
+            self.status_bar.showMessage(status)
 
     def select_all_chapters(self):
         """Sélectionne tous les chapitres"""
