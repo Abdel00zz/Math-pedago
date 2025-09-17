@@ -20,28 +20,32 @@ const ChapterCard: React.FC<{ chapter: Chapter; progress?: ChapterProgress; onCl
     return (
         <div 
             onClick={onClick}
-            className={`bg-card-bg/80 backdrop-blur-sm rounded-2xl shadow-sm p-6 border border-border-color transition-all duration-300 flex flex-col justify-between cursor-pointer transform hover:-translate-y-1.5 hover:shadow-xl hover:border-primary active:scale-[0.98] active:shadow-md ${
+            className={`bg-card-bg border-2 border-border-color rounded-lg shadow-sm transition-all duration-300 flex flex-col cursor-pointer hover:border-primary hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] min-h-[280px] ${
                 !chapter.isActive ? 'opacity-60 cursor-not-allowed' : ''
             }`}
         >
-            <div>
-                <div className="flex justify-between items-center">
-                    <h3 className="text-xl font-bold font-serif text-dark-gray">{chapter.chapter}</h3>
-                    {/* Badge de statut placé à droite */}
-                    {isCompleted ? (
-                        <span className="px-3 py-1 bg-green-100 border border-green-300 rounded-full text-green-800 font-semibold text-xs">
-                            Terminé
-                        </span>
-                    ) : chapter.isActive ? (
-                        <span className="px-3 py-1 bg-orange-100 border border-orange-300 rounded-full text-orange-800 font-semibold text-xs">
-                            Pas encore terminé
-                        </span>
-                    ) : (
-                        <span className="text-xs font-bold text-secondary bg-light-gray px-2 py-1 rounded-full text-center whitespace-nowrap">À VENIR</span>
-                    )}
-                </div>
+            {/* Section titre */}
+            <div className="p-4 bg-gradient-to-r from-primary/5 to-blue-50">
+                <h3 className="text-xl font-bold font-serif text-primary">{chapter.chapter}</h3>
             </div>
-            <div className="mt-4 grid grid-cols-2 gap-4">
+            
+            {/* Section badge */}
+            <div className="p-3 flex justify-end">
+                {isCompleted ? (
+                    <span className="px-2 py-0.5 bg-green-100 rounded-full text-green-800 font-medium text-xs whitespace-nowrap">
+                        Terminé
+                    </span>
+                ) : chapter.isActive ? (
+                    <span className="px-2 py-0.5 bg-orange-100 rounded-full text-orange-800 font-medium text-xs whitespace-nowrap">
+                        Pas encore terminé
+                    </span>
+                ) : (
+                    <span className="text-xs font-bold text-secondary bg-light-gray px-2 py-1 rounded-full text-center whitespace-nowrap">À VENIR</span>
+                )}
+            </div>
+            
+            {/* Section statistiques */}
+            <div className="p-4 grid grid-cols-2 gap-4">
                 {/* Quiz Stat Block */}
                 <div className="bg-light-gray/50 rounded-xl p-3 text-center">
                     <span className={`material-symbols-outlined text-3xl ${quizColor}`}>{quizIcon}</span>
@@ -133,15 +137,17 @@ const DashboardView: React.FC = () => {
 
 
             {userChapters.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {userChapters.map(chapter => (
-                        <ChapterCard
-                            key={chapter.id}
-                            chapter={chapter}
-                            progress={progress[chapter.id]}
-                            onClick={() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'chapter-hub', chapterId: chapter.id } })}
-                        />
-                    ))}
+                <div className="space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6">
+                        {userChapters.map(chapter => (
+                            <ChapterCard
+                                key={chapter.id}
+                                chapter={chapter}
+                                progress={progress[chapter.id]}
+                                onClick={() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'chapter-hub', chapterId: chapter.id } })}
+                            />
+                        ))}
+                    </div>
                 </div>
             ) : (
                  <div className="text-center py-16 px-6 bg-card-bg/80 backdrop-blur-sm rounded-2xl shadow-sm">

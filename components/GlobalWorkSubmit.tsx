@@ -144,7 +144,7 @@ const GlobalWorkSubmit: React.FC = () => {
     return (
         <>
             {showConfetti && <Confetti />}
-            <div className="absolute top-4 sm:top-6 lg:top-8 right-4 sm:right-6 lg:right-8 z-20">
+            <div className="absolute top-2 sm:top-3 lg:top-4 right-2 sm:right-3 lg:right-4 z-20">
                 {isWorkSubmitted ? (
                      <div 
                          className="relative px-4 py-2 bg-card-bg/50 backdrop-blur-sm rounded-2xl shadow-sm border border-border-color" 
