@@ -3,17 +3,22 @@
     {
       "id": "les-nombres-complexes",
       "file": "chapitre_nombres_complexes.json",
-      "isActive": true
+      "isActive": false
     },
     {
       "id": "logique-ensembles-et-applications",
       "file": "logique et continuité.json",
+      "isActive": false
+    },
+    {
+      "id": "logique-et-raisonnements-math-matiques",
+      "file": "logique.json",
       "isActive": true
     },
     {
       "id": "structures-algebriques",
       "file": "chapitre_structure_algebrique.json",
-      "isActive": true
+      "isActive": false
     }
   ]
 }

@@ -1,0 +1,257 @@
+{
+  "class": "1bsm",
+    "level": "1ère Bac Sciences Mathématiques",
+  "chapter": "Logique et Raisonnements Mathématiques",
+  "quiz": [
+    {
+      "id": "q_logique_def_1",
+      "question": "Parmi les énoncés suivants, lequel est une proposition mathématique ?",
+      "options": [
+        { "text": "$x + 5 = 10$", "isCorrect": false },
+        { "text": "$\\sqrt{2}$ est un nombre irrationnel", "isCorrect": true },
+        { "text": "Résoudre l'inéquation", "isCorrect": false },
+        { "text": "x est un entier pair", "isCorrect": false }
+      ]
+    },
+    {
+      "id": "q_logique_negation_quant_1",
+      "question": "Quelle est la négation de la proposition $P: (\\forall x \\in \\mathbb{R}), x^2 + 1 > 0$ ?",
+      "options": [
+        { "text": "$(\\forall x \\in \\mathbb{R}), x^2 + 1 \\le 0$", "isCorrect": false },
+        { "text": "$(\\exists x \\in \\mathbb{R}), x^2 + 1 < 0$", "isCorrect": false },
+        { "text": "$(\\exists x \\in \\mathbb{R}), x^2 + 1 \\le 0$", "isCorrect": true },
+        { "text": "$(\\forall x \\in \\mathbb{R}), x^2 + 1 = 0$", "isCorrect": false }
+      ]
+    },
+    {
+      "id": "q_logique_negation_quant_2",
+      "question": "Quelle est la négation de la proposition $Q: (\\exists n \\in \\mathbb{N}), n^2 = n$ ?",
+      "options": [
+        { "text": "$(\\exists n \\in \\mathbb{N}), n^2 \\neq n$", "isCorrect": false },
+        { "text": "$(\\forall n \\in \\mathbb{N}), n^2 = n$", "isCorrect": false },
+        { "text": "$(\\forall n \\in \\mathbb{N}), n^2 \\neq n$", "isCorrect": true },
+        { "text": "$(\\exists n \\in \\mathbb{N}), n^2 < n$", "isCorrect": false }
+      ]
+    },
+    {
+      "id": "q_logique_verite_implication_1",
+      "question": "L'implication $P \\Rightarrow Q$ est fausse uniquement quand :",
+      "options": [
+        { "text": "P est vraie et Q est fausse", "isCorrect": true },
+        { "text": "P est fausse et Q est vraie", "isCorrect": false },
+        { "text": "P et Q sont toutes les deux fausses", "isCorrect": false },
+        { "text": "P et Q sont toutes les deux vraies", "isCorrect": false }
+      ]
+    },
+    {
+      "id": "q_logique_verite_conjonction_1",
+      "question": "La proposition \"$\\sqrt{9}=3$ et $5$ est un nombre premier\" est :",
+      "options": [
+        { "text": "Vraie", "isCorrect": true },
+        { "text": "Fausse", "isCorrect": false },
+        { "text": "Ni vraie ni fausse", "isCorrect": false },
+        { "text": "Une fonction propositionnelle", "isCorrect": false }
+      ]
+    },
+    {
+      "id": "q_logique_verite_disjonction_1",
+      "question": "La proposition \"$\\pi = 3.14$ ou $|-7|=7$\" est :",
+      "options": [
+        { "text": "Fausse, car $\\pi \\neq 3.14$", "isCorrect": false },
+        { "text": "Vraie, car au moins une des deux propositions est vraie", "isCorrect": true },
+        { "text": "Fausse, car les deux propositions doivent être vraies", "isCorrect": false },
+        { "text": "Vraie, car les deux propositions sont vraies", "isCorrect": false }
+      ]
+    },
+    {
+      "id": "q_logique_contraposition_1",
+      "question": "La contraposée de l'implication \"Si $n$ est premier, alors $n$ est impair\" est :",
+      "options": [
+        { "text": "Si $n$ n'est pas premier, alors $n$ n'est pas impair", "isCorrect": false },
+        { "text": "Si $n$ est impair, alors $n$ est premier", "isCorrect": false },
+        { "text": "Si $n$ n'est pas impair, alors $n$ n'est pas premier", "isCorrect": true },
+        { "text": "$n$ est premier et $n$ n'est pas impair", "isCorrect": false }
+      ]
+    },
+    {
+      "id": "q_logique_negation_implication_1",
+      "question": "La négation de $P \\Rightarrow Q$ est logiquement équivalente à :",
+      "options": [
+        { "text": "$\\neg P \\text{ et } Q$", "isCorrect": false },
+        { "text": "$P \\text{ et } \\neg Q$", "isCorrect": true },
+        { "text": "$\\neg P \\text{ ou } Q$", "isCorrect": false },
+        { "text": "$Q \\Rightarrow P$", "isCorrect": false }
+      ]
+    },
+    {
+      "id": "q_logique_equivalence_1",
+      "question": "L'équivalence $P \\Leftrightarrow Q$ est vraie si et seulement si :",
+      "options": [
+        { "text": "$P$ est vraie et $Q$ est fausse", "isCorrect": false },
+        { "text": "$P \\Rightarrow Q$ est vraie", "isCorrect": false },
+        { "text": "$P$ et $Q$ ont la même valeur de vérité", "isCorrect": true },
+        { "text": "$P$ est fausse et $Q$ est vraie", "isCorrect": false }
+      ]
+    },
+    {
+      "id": "q_logique_loi_morgan_1",
+      "question": "Selon les lois de De Morgan, la négation de $(P \\text{ ou } Q)$ est :",
+      "options": [
+        { "text": "$(\\neg P \\text{ ou } \\neg Q)$", "isCorrect": false },
+        { "text": "$(\\neg P \\text{ et } \\neg Q)$", "isCorrect": true },
+        { "text": "$(\\neg P \\text{ ou } Q)$", "isCorrect": false },
+        { "text": "$(P \\text{ et } Q)$", "isCorrect": false }
+      ]
+    },
+    {
+      "id": "q_logique_raisonnement_type_1",
+      "question": "Pour prouver que \"$\\sqrt{2}$ est irrationnel\", on suppose qu'il est rationnel pour aboutir à une contradiction. Ce type de raisonnement est :",
+      "options": [
+        { "text": "Un raisonnement par l'absurde", "isCorrect": true },
+        { "text": "Un raisonnement par contraposée", "isCorrect": false },
+        { "text": "Un raisonnement par récurrence", "isCorrect": false },
+        { "text": "Un raisonnement par disjonction de cas", "isCorrect": false }
+      ]
+    },
+    {
+      "id": "q_logique_raisonnement_type_2",
+      "question": "Pour montrer que $(\\forall n \\in \\mathbb{N}), n(n+1)$ est pair, on étudie les cas '$n$ est pair' et '$n$ est impair'. Il s'agit d'un raisonnement :",
+      "options": [
+        { "text": "Par l'absurde", "isCorrect": false },
+        { "text": "Par disjonction des cas", "isCorrect": true },
+        { "text": "Par récurrence", "isCorrect": false },
+        { "text": "Direct", "isCorrect": false }
+      ]
+    },
+    {
+      "id": "q_logique_recurrence_etape_1",
+      "question": "Dans un raisonnement par récurrence pour prouver $(\\forall n \\ge n_0) P(n)$, l'étape où l'on suppose $P(n)$ vraie pour un certain $n$ et on démontre $P(n+1)$ s'appelle :",
+      "options": [
+        { "text": "L'initialisation", "isCorrect": false },
+        { "text": "La conclusion", "isCorrect": false },
+        { "text": "L'hypothèse de récurrence", "isCorrect": false },
+        { "text": "L'hérédité", "isCorrect": true }
+      ]
+    },
+    {
+      "id": "q_logique_contre_exemple_1",
+      "question": "Quel est un contre-exemple à la proposition \"Tous les nombres premiers sont impairs\" ?",
+      "options": [
+        { "text": "1", "isCorrect": false },
+        { "text": "2", "isCorrect": true },
+        { "text": "9", "isCorrect": false },
+        { "text": "Il n'y a pas de contre-exemple", "isCorrect": false }
+      ]
+    },
+    {
+      "id": "q_logique_quant_ordre_1",
+      "question": "La proposition $(\\exists x \\in \\mathbb{R}) (\\forall y \\in \\mathbb{R}), y+x=y$ est :",
+      "options": [
+        { "text": "Vraie, il suffit de prendre x=0", "isCorrect": true },
+        { "text": "Fausse, car l'ordre des quantificateurs est incorrect", "isCorrect": false },
+        { "text": "Fausse, car pour y=1 il n'y a pas de x", "isCorrect": false },
+        { "text": "Vraie, pour n'importe quel x", "isCorrect": false }
+      ]
+    },
+    {
+      "id": "q_logique_quant_ordre_2",
+      "question": "La proposition $(\\forall x \\in \\mathbb{R}) (\\exists y \\in \\mathbb{R}), y > x$ signifie :",
+      "options": [
+        { "text": "Il existe un nombre réel plus grand que tous les autres", "isCorrect": false },
+        { "text": "Tout nombre réel a un successeur immédiat", "isCorrect": false },
+        { "text": "Pour n'importe quel nombre réel, on peut toujours en trouver un plus grand", "isCorrect": true },
+        { "text": "L'ensemble des nombres réels est fini", "isCorrect": false }
+      ]
+    },
+    {
+      "id": "q_logique_unicite_1",
+      "question": "Que signifie la notation $(\\exists! x \\in E), P(x)$ ?",
+      "options": [
+        { "text": "Il existe au moins un x dans E qui vérifie P(x)", "isCorrect": false },
+        { "text": "Il existe un unique x dans E qui vérifie P(x)", "isCorrect": true },
+        { "text": "Il existe une infinité de x dans E qui vérifient P(x)", "isCorrect": false },
+        { "text": "Pour tout x dans E, P(x) est fausse", "isCorrect": false }
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "id": "exo_logique_verite_negation_1",
+      "title": "Valeurs de Vérité et Négation",
+      "statement": "Pour chaque proposition, déterminer sa valeur de vérité en justifiant, puis écrire sa négation.",
+      "sub_questions": [
+        { "text": "$P_1: (\\forall x \\in \\mathbb{R}), x^2 \\ge 0$ " },
+        { "text": "$P_2: (\\exists x \\in \\mathbb{R}), x^2 - x - 2 = 0$ " },
+        { "text": "$P_3: (\\forall n \\in \\mathbb{N})(\\exists m \\in \\mathbb{N}), n > m$ " },
+        { "text": "$P_4: (\\exists m \\in \\mathbb{N})(\\forall n \\in \\mathbb{N}), n > m$ " }
+      ]
+    },
+    {
+      "id": "exo_logique_table_verite_1",
+      "title": "Lois Logiques et Tables de Vérité",
+      "statement": "Une loi logique (ou tautologie) est une proposition qui est toujours vraie, quelles que soient les valeurs de vérité des propositions qui la composent.",
+      "sub_questions": [
+        { "text": "Dresser la table de vérité de la proposition $(P \\Rightarrow Q) \\Leftrightarrow (\\neg P \\lor Q)$." },
+        { "text": "En déduire que cette proposition est une loi logique." }
+      ]
+    },
+    {
+      "id": "exo_logique_raisonnement_direct_1",
+      "title": "Raisonnement Direct",
+      "statement": "En utilisant un raisonnement déductif (direct), montrer les implications suivantes :",
+      "sub_questions": [
+        { "text": "Soit $x \\in \\mathbb{R}$. Montrer que : $|x-1| \\le 2 \\Rightarrow x^2 - 2x - 3 \\le 0$." },
+        { "text": "Soient a et b deux réels. Montrer que : $a^2+b^2=0 \\Rightarrow a=0 \\text{ et } b=0$." }
+      ]
+    },
+    {
+      "id": "exo_logique_raisonnement_contraposition_1",
+      "title": "Raisonnement par Contraposée",
+      "statement": "Le raisonnement par contraposée consiste à montrer que $\\neg Q \\Rightarrow \\neg P$ pour prouver $P \\Rightarrow Q$.",
+      "sub_questions": [
+        { "text": "Soit $n \\in \\mathbb{N}$. Montrer en utilisant la contraposée que : si $n^2$ est pair, alors $n$ est pair." }
+      ]
+    },
+    {
+      "id": "exo_logique_raisonnement_absurde_1",
+      "title": "Raisonnement par l'Absurde",
+      "statement": "Le raisonnement par l'absurde consiste à supposer la négation de la proposition à démontrer et à en déduire une contradiction.",
+      "sub_questions": [
+        { "text": "Montrer que pour tout $x \\in \\mathbb{R}^*$, on a $x + \\frac{1}{x} \\neq 1$." },
+        { "text": "En utilisant un raisonnement par l'absurde, montrer que $\\sqrt{2}$ n'est pas un nombre rationnel." }
+      ]
+    },
+    {
+      "id": "exo_logique_raisonnement_cas_1",
+      "title": "Raisonnement par Disjonction de Cas",
+      "statement": "Le raisonnement par disjonction de cas permet de prouver une propriété en la vérifiant sur différentes parties disjointes qui recouvrent tous les cas possibles.",
+      "sub_questions": [
+        { "text": "Montrer que pour tout entier $n \\in \\mathbb{N}$, le nombre $n(n+1)$ est pair." }
+      ]
+    },
+    {
+      "id": "exo_logique_raisonnement_contre_exemple_1",
+      "title": "Raisonnement par Contre-Exemple",
+      "statement": "Pour montrer qu'une proposition universelle $(\\forall x \\in E, P(x))$ est fausse, il suffit de trouver un élément $a \\in E$ tel que $P(a)$ soit fausse. Cet élément est un contre-exemple.",
+      "sub_questions": [
+        { "text": "Montrer que la proposition suivante est fausse : \"Pour tout entier $n \\in \\mathbb{N}$, le nombre $n^2+n+41$ est premier\"." }
+      ]
+    },
+    {
+      "id": "exo_logique_raisonnement_equivalence_1",
+      "title": "Raisonnement par Équivalences Successives",
+      "statement": "Le raisonnement par équivalences successives consiste à transformer une proposition en une autre qui lui est équivalente, jusqu'à aboutir à une proposition dont la vérité est évidente.",
+      "sub_questions": [
+        { "text": "Soit $x \\in \\mathbb{R}$. Montrer que : $\\sqrt{x^2+1} - x > 0$." }
+      ]
+    },
+    {
+      "id": "exo_logique_raisonnement_recurrence_1",
+      "title": "Raisonnement par Récurrence",
+      "statement": "Le raisonnement par récurrence est utilisé pour démontrer une propriété pour tous les entiers naturels à partir d'un certain rang.",
+      "sub_questions": [
+        { "text": "Montrer par récurrence que pour tout $n \\in \\mathbb{N}$, $3$ divise $4^n - 1$." }
+      ]
+    }
+  ]
+}
