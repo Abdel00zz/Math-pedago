@@ -20,13 +20,18 @@ const ChapterCard: React.FC<{ chapter: Chapter; progress?: ChapterProgress; onCl
     return (
         <div 
             onClick={onClick}
-            className={`bg-card-bg border-2 border-border-color rounded-lg shadow-sm transition-all duration-300 flex flex-col cursor-pointer hover:border-primary hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] min-h-[280px] ${
+            className={`relative bg-gradient-to-br from-white via-blue-50/30 to-purple-50/20 border-2 border-transparent rounded-none shadow-lg flex flex-col cursor-pointer min-h-[260px] overflow-hidden group transition-all duration-700 ease-out hover:shadow-2xl hover:shadow-blue-500/20 hover:-translate-y-2 hover:rotate-1 active:scale-95 touch-manipulation before:absolute before:inset-0 before:bg-gradient-to-r before:from-blue-400/0 before:via-purple-400/10 before:to-pink-400/0 before:translate-x-[-100%] before:transition-transform before:duration-1000 hover:before:translate-x-[100%] after:absolute after:inset-0 after:border-2 after:border-gradient-to-r after:from-blue-500 after:via-purple-500 after:to-pink-500 after:opacity-0 after:transition-opacity after:duration-500 hover:after:opacity-100 ${
                 !chapter.isActive ? 'opacity-60 cursor-not-allowed' : ''
             }`}
+            style={{
+                background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #f1f5f9 100%)',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.9)'
+            }}
         >
             {/* Section titre */}
-            <div className="p-4 bg-gradient-to-r from-primary/5 to-blue-50">
-                <h3 className="text-xl font-bold font-serif text-primary">{chapter.chapter}</h3>
+            <div className="relative p-4 bg-gradient-to-r from-primary/5 to-blue-50 overflow-hidden group-hover:bg-gradient-to-r group-hover:from-blue-100/50 group-hover:to-purple-100/30 transition-all duration-700">
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1200 ease-out"></div>
+                <h3 className="relative text-xl font-bold font-serif text-primary group-hover:text-blue-600 transition-colors duration-500 group-hover:drop-shadow-sm">{chapter.chapter}</h3>
             </div>
             
             {/* Section badge */}
@@ -137,8 +142,8 @@ const DashboardView: React.FC = () => {
 
 
             {userChapters.length > 0 ? (
-                <div className="space-y-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6">
+                <div className="space-y-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6 px-2 sm:px-0">
                         {userChapters.map(chapter => (
                             <ChapterCard
                                 key={chapter.id}
