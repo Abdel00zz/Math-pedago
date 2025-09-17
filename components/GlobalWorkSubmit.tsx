@@ -3,6 +3,7 @@ import { AppContext } from '../context/AppContext';
 import { useNotification } from '../context/NotificationContext';
 import { Chapter } from '../types';
 import { CLASS_OPTIONS } from '../constants';
+import { generateStudentProgressSubmission } from '../utils/utils';
 import ConfirmationModal from './ConfirmationModal';
 import Confetti from './Confetti';
 
@@ -42,10 +43,14 @@ const GlobalWorkSubmit: React.FC = () => {
     // FIX: Corrected typo from `active-Chapter` to `activeChapter`.
     const totalExercises = activeChapter.exercises?.length || 0;
     const exercisesFeedback = chapterProgress?.exercisesFeedback || {};
+    // Nombre d'exercices pour lesquels un feedback est saisi (incluant 'Pas travaillé')
+    const evaluatedCount = Object.keys(exercisesFeedback).length;
+    const allExercisesEvaluated = totalExercises > 0 ? evaluatedCount === totalExercises : true;
+    // Nombre d'exercices réellement travaillés (excluant 'Pas travaillé') pour le récapitulatif uniquement
     const workedOnExercisesCount = Object.values(exercisesFeedback).filter(f => f !== 'Pas travaillé').length;
-    const allExercisesWorked = totalExercises > 0 ? workedOnExercisesCount === totalExercises : true;
 
-    const canSubmit = isQuizFinished && allExercisesWorked && !isWorkSubmitted;
+    // On autorise la soumission si le quiz est terminé et si tous les exercices sont évalués (même 'Pas travaillé')
+    const canSubmit = isQuizFinished && allExercisesEvaluated && !isWorkSubmitted;
 
     const getTooltipText = (): string => {
         if (isWorkSubmitted) return `Votre travail pour l'activité "${activeChapter.chapter}" a déjà été envoyé.`;
@@ -55,11 +60,9 @@ const GlobalWorkSubmit: React.FC = () => {
         const reasons: string[] = [];
         if (!isQuizFinished) reasons.push(`terminez le quiz`);
         
-        const unevaluatedCount = totalExercises - Object.keys(exercisesFeedback).length;
-        const notWorkedCount = Object.keys(exercisesFeedback).length - workedOnExercisesCount;
+        const unevaluatedCount = totalExercises - evaluatedCount;
         
         if (unevaluatedCount > 0) reasons.push(`évaluez ${unevaluatedCount} exercice(s)`);
-        if (notWorkedCount > 0) reasons.push(`terminez ${notWorkedCount} exercice(s) 'Pas travaillé'`);
         
         if (reasons.length > 0) return `Pour envoyer : ${reasons.join(' et ')}.`;
         return 'Envoyer votre travail finalisé';
@@ -78,7 +81,20 @@ const GlobalWorkSubmit: React.FC = () => {
 
             const classLabel = CLASS_OPTIONS.find(c => c.value === profile.classId)?.label || profile.classId;
             const submissionDate = new Date();
-            const resume = `Quiz: ${chapterProgress.quiz.score}%. Exercices: ${workedOnExercisesCount}/${totalExercises} travaillés.`;
+            const resume = `Quiz: ${chapterProgress.quiz.score}%. Exercices: ${evaluatedCount}/${totalExercises} évalués.`;
+            
+            // Générer la structure JSON selon les spécifications
+            const progressSubmission = generateStudentProgressSubmission(
+                profile.name,
+                classLabel,
+                [{
+                    chapterName: activeChapter.chapter,
+                    quizScore: chapterProgress.quiz.score,
+                    quizAnswers: chapterProgress.quiz.answers,
+                    exercisesFeedback: chapterProgress.exercisesFeedback,
+                    quizQuestions: activeChapter.quiz
+                }]
+            );
             
             formData.append('eleve', profile.name);
             formData.append('classe', classLabel);
@@ -87,7 +103,7 @@ const GlobalWorkSubmit: React.FC = () => {
             formData.append('submittedAt', submissionDate.toLocaleString('fr-FR', { dateStyle: 'full', timeStyle: 'short' }));
             formData.append('resume', resume);
 
-            const progressJson = JSON.stringify(chapterProgress, null, 2);
+            const progressJson = JSON.stringify(progressSubmission, null, 2);
             const blob = new Blob([progressJson], { type: 'application/json' });
             const sanitizedName = profile.name.replace(/[^a-z0-9]/gi, '_').toLowerCase();
             const filename = `progression_${sanitizedName}_${activeChapter.id}.json`;
@@ -143,13 +159,9 @@ const GlobalWorkSubmit: React.FC = () => {
                     <button
                         onClick={() => setIsConfirmationModalOpen(true)}
                         title={getTooltipText()}
-                        className="group relative px-6 py-3 bg-gradient-to-r from-blue-600 via-primary to-blue-700 rounded-2xl shadow-lg transition-all duration-300 transform hover:shadow-2xl hover:scale-105 active:scale-95 overflow-hidden"
+                        className="group relative px-4 py-2 text-primary font-medium text-sm rounded-full transition-all duration-200 hover:bg-primary/8 hover:text-primary active:bg-primary/12 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:ring-offset-1"
                     >
-                        <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 to-primary/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out"></div>
-                        <div className="relative flex items-center gap-2">
-                            <span className="material-symbols-outlined text-white text-lg animate-pulse">send</span>
-                            <span className="font-bold text-white drop-shadow-sm">Envoyer mon travail</span>
-                        </div>
+                        <span className="relative">Envoyer mon travail</span>
                     </button>
                 ) : null}
             </div>

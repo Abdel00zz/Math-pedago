@@ -120,7 +120,7 @@ class ChapterEditDialog(QDialog):
         
         # Classe
         self.class_combo = QComboBox()
-        self.class_combo.addItems(["csi", "1s", "ts"])
+        self.class_combo.addItems(["tcs", "1bse", "1bsm", "2bse", "2bsm", "2beco"])
         self.class_combo.setCurrentText(self.chapter.class_type)
         form_layout.addRow("Classe:", self.class_combo)
         
@@ -355,9 +355,12 @@ class AdminApp(QMainWindow):
     """Application principale d'administration"""
     
     CLASS_LABELS = {
-        'csi': 'Cycle Scientifique Initial',
-        '1s': 'Première Scientifique',
-        'ts': 'Terminale Scientifique',
+        'tcs': 'Tronc Commun Scientifique',
+        '1bse': '1ère Bac Sciences Expérimentales',
+        '1bsm': '1ère Bac Sciences Mathématiques',
+        '2bse': '2ème Bac Sciences Expérimentales',
+        '2bsm': '2ème Bac Sciences Mathématiques',
+        '2beco': '2ème Bac Économie',
     }
 
     def __init__(self):
@@ -663,17 +666,28 @@ class AdminApp(QMainWindow):
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 manifest = json.load(f)
-            
+
+            # Validation du format du manifest
+            if not isinstance(manifest, dict):
+                raise ValueError("Manifest invalide: un objet JSON est attendu (mapping des classes vers des listes de chapitres).")
+            # Cas fréquent: fichier chapitre sélectionné au lieu d'un manifest
+            if 'class' in manifest and 'chapter' in manifest:
+                raise ValueError("Le fichier sélectionné ressemble à un chapitre (et non à un manifest). Utilisez 'Importer Chapitres' pour ce fichier, ou sélectionnez un manifest.json valide.")
+
             self.chapters_data.clear()
-            
+
             # Déterminer le dossier des chapitres
             manifest_dir = os.path.dirname(file_path)
             self.chapters_dir = os.path.join(manifest_dir, 'chapters')
-            
+
             for class_id, chapters in manifest.items():
+                if not isinstance(chapters, list):
+                    raise ValueError(f"Manifest invalide: la clé '{class_id}' doit contenir une liste de chapitres.")
                 for item in chapters:
+                    if not isinstance(item, dict) or 'file' not in item or 'id' not in item:
+                        raise ValueError(f"Entrée invalide pour la classe '{class_id}': chaque élément doit contenir les clés 'id' et 'file'.")
                     chapter_title = "(Titre à charger)"
-                    
+
                     # Essayer de charger le titre depuis le fichier de chapitre
                     chapter_file_path = os.path.join(self.chapters_dir, item['file'])
                     if os.path.exists(chapter_file_path):
@@ -684,7 +698,7 @@ class AdminApp(QMainWindow):
                                     chapter_title = chapter_content['chapter']
                         except Exception as e:
                             print(f"Erreur lors du chargement du titre pour {item['file']}: {e}")
-                    
+
                     chapter = ChapterData(
                         id=item['id'],
                         file=item['file'],
@@ -692,7 +706,7 @@ class AdminApp(QMainWindow):
                         class_type=class_id,
                         chapter=chapter_title
                     )
-                    
+
                     # Charger les informations supplémentaires si disponibles
                     if os.path.exists(chapter_file_path):
                         try:
@@ -706,15 +720,16 @@ class AdminApp(QMainWindow):
                                     chapter.exercise_count = len(chapter_content['exercises'])
                         except Exception as e:
                             print(f"Erreur lors du chargement des détails pour {item['file']}: {e}")
-                    
+
                     self.chapters_data[item['id']] = chapter
-            
+
             self.is_dirty = False
             self.refresh_display()
             self.status_bar.showMessage(f"Manifest chargé: {len(self.chapters_data)} chapitres trouvés avec titres")
-            
+
         except Exception as e:
             QMessageBox.critical(self, "Erreur", f"Impossible de charger le manifest:\n{str(e)}")
+
 
     def import_chapters(self):
         """Importe des fichiers de chapitres"""

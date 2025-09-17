@@ -6,10 +6,14 @@
       "isActive": true
     },
     {
+      "id": "logique-ensembles-et-applications",
+      "file": "logique et continuité.json",
+      "isActive": true
+    },
+    {
       "id": "structures-algebriques",
       "file": "chapitre_structure_algebrique.json",
-      "isActive": false
+      "isActive": true
     }
-  ],
-  "1s": []
+  ]
 }

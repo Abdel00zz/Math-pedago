@@ -72,6 +72,23 @@ export interface AppState {
     isReviewMode: boolean;
 }
 
+// Structure JSON pour la progression de l'élève selon les spécifications
+export interface StudentProgressSubmission {
+    studentName: string;
+    studentLevel: string;
+    timestamp: number;
+    results: ChapterResult[];
+}
+
+export interface ChapterResult {
+    chapter: string;
+    quiz: {
+        score: number;
+        answers: { [questionId: string]: number };
+    };
+    exercisesFeedback: { [exerciseId: string]: Feedback };
+}
+
 export type Action =
     | { type: 'INIT'; payload: Partial<AppState> }
     | { type: 'CHANGE_VIEW'; payload: { view: View; chapterId?: string | null; subView?: ActivitySubView; review?: boolean } }

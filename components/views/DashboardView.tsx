@@ -6,15 +6,16 @@ const ChapterCard: React.FC<{ chapter: Chapter; progress?: ChapterProgress; onCl
     const isQuizSubmitted = progress?.quiz.isSubmitted || false;
     const totalExercises = chapter.exercises?.length || 0;
     const exercisesFeedback = progress?.exercisesFeedback || {};
-    const workedOnExercisesCount = Object.values(exercisesFeedback).filter(f => f !== 'Pas travaillé').length;
-    const allExercisesWorked = totalExercises > 0 ? workedOnExercisesCount === totalExercises : true;
-    const isCompleted = isQuizSubmitted && allExercisesWorked;
+    // Terminé si chaque exercice est évalué (même 'Pas travaillé') et le quiz est soumis
+    const evaluatedCount = Object.keys(exercisesFeedback).length;
+    const allExercisesEvaluated = totalExercises > 0 ? evaluatedCount === totalExercises : true;
+    const isCompleted = isQuizSubmitted && allExercisesEvaluated;
     
     const quizScore = progress?.quiz.score || 0;
     const quizIcon = isQuizSubmitted ? 'check_circle' : 'quiz';
     const quizColor = isQuizSubmitted ? 'text-success' : 'text-primary/80';
-    const exerciseIcon = allExercisesWorked ? 'check_circle' : 'edit_note';
-    const exerciseColor = allExercisesWorked ? 'text-success' : 'text-primary/80';
+    const exerciseIcon = allExercisesEvaluated ? 'check_circle' : 'edit_note';
+    const exerciseColor = allExercisesEvaluated ? 'text-success' : 'text-primary/80';
 
     return (
         <div 
@@ -58,10 +59,10 @@ const ChapterCard: React.FC<{ chapter: Chapter; progress?: ChapterProgress; onCl
                 <div className="bg-light-gray/50 rounded-xl p-3 text-center">
                     <span className={`material-symbols-outlined text-3xl ${exerciseColor}`}>{exerciseIcon}</span>
                     <p className="font-bold text-dark-gray text-sm mt-1">{totalExercises} Exercice{totalExercises !== 1 ? 's' : ''}</p>
-                    {allExercisesWorked ? (
+                    {allExercisesEvaluated ? (
                         <div className="flex items-center justify-center gap-1 text-sm text-success font-bold mt-1">
                             <span className="material-symbols-outlined text-base">check_circle</span>
-                            <span>Travaillés</span>
+                            <span>Évalués</span>
                         </div>
                     ) : (
                         <p className="text-sm text-secondary mt-1">À faire</p>
