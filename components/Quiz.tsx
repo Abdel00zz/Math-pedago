@@ -67,7 +67,7 @@ const Quiz: React.FC = () => {
                         Réviser mes réponses
                     </button>
                     <button onClick={() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'chapter-hub' } })} className="px-6 py-2 font-semibold text-secondary bg-light-gray rounded-lg hover:bg-border-color">
-                        Retour au Chapitre
+                        Retour à l'activité
                     </button>
                 </div>
             </div>
@@ -136,9 +136,14 @@ const Quiz: React.FC = () => {
             </div>
             
             {isReviewMode && (
-                <div className="mt-6 p-4 bg-info/10 border-l-4 border-info rounded-r-lg prose max-w-none text-secondary">
-                    <h4 className="font-bold text-info not-prose">Explication</h4>
-                    <MathJax dynamic>{currentQuestion.explanation}</MathJax>
+                <div className="mt-6 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl shadow-sm border border-blue-200/50 prose max-w-none">
+                    <h4 className="font-bold text-blue-700 not-prose mb-3 flex items-center gap-2">
+                        <span className="material-symbols-outlined text-blue-600">info</span>
+                        Explication
+                    </h4>
+                    <div className="text-gray-700">
+                        <MathJax dynamic>{currentQuestion.explanation}</MathJax>
+                    </div>
                 </div>
             )}
 
@@ -154,7 +159,7 @@ const Quiz: React.FC = () => {
                 {currentQuizQuestionIndex === quizQuestions.length - 1 ? (
                      isReviewMode ? (
                         <button onClick={() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'chapter-hub' } })} className="px-8 py-3 font-bold text-white bg-primary rounded-lg transition-transform transform hover:-translate-y-1 active:scale-95">
-                           Retour au Chapitre
+                           Retour à l'activité
                         </button>
                     ) : (
                         <button

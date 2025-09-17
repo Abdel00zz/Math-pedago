@@ -3,23 +3,6 @@ import { AppContext } from '../../context/AppContext';
 import { useNotification } from '../../context/NotificationContext';
 import { CLASS_OPTIONS } from '../../constants';
 
-const LoginBackground = () => (
-    <div className="absolute inset-0 z-0 overflow-hidden opacity-5" aria-hidden="true">
-        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-                <pattern id="math-pattern" x="0" y="0" width="200" height="200" patternUnits="userSpaceOnUse">
-                    <text x="10" y="30" fontFamily="Fira Sans, sans-serif" fontSize="12" fill="#1f2937">∫(x)dx</text>
-                    <text x="100" y="70" fontFamily="Fira Sans, sans-serif" fontSize="14" fill="#1f2937">E=mc²</text>
-                    <text x="20" y="150" fontFamily="Fira Sans, sans-serif" fontSize="16" fill="#1f2937">α+β=γ</text>
-                    <text x="150" y="180" fontFamily="Fira Sans, sans-serif" fontSize="10" fill="#1f2937">ƒ(x)=ax²+bx+c</text>
-                    <text x="80" y="120" fontFamily="Fira Sans, sans-serif" fontSize="18" fill="#1f2937">π</text>
-                </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#math-pattern)" />
-        </svg>
-    </div>
-);
-
 const LoginView: React.FC = () => {
     const { state, dispatch } = useContext(AppContext);
     const { addNotification } = useNotification();
@@ -114,7 +97,6 @@ const LoginView: React.FC = () => {
     return (
         <div className="flex items-center justify-center min-h-screen sm:-mt-20">
             <div className="relative w-full max-w-md p-8 space-y-8 bg-card-bg rounded-2xl shadow-lg animate-slideInUp overflow-hidden">
-                <LoginBackground />
                 <div className="relative z-10">
                     {state.profile ? loggedInView : loggedOutView}
                 </div>

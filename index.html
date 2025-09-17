@@ -34,6 +34,14 @@
                 pulse: { '0%, 100%': { opacity: 1, transform: 'scale(1)' }, '50%': { opacity: .9, transform: 'scale(1.02)' } },
                 ping: { '75%, 100%': { transform: 'scale(2)', opacity: 0 } },
                 cursorBlink: { '0%, 100%': { opacity: 1 }, '50%': { opacity: 0 } },
+                confettiFall: {
+                    '0%': { transform: 'translateY(-10vh) rotateZ(0deg)', opacity: 1 },
+                    '100%': { transform: 'translateY(110vh) rotateZ(360deg)', opacity: 0 }
+                },
+                confettiSpin: {
+                    '0%': { transform: 'rotateY(0deg)' },
+                    '100%': { transform: 'rotateY(360deg)' }
+                }
             },
             animation: {
                 fadeIn: 'fadeIn 0.5s ease-out forwards',

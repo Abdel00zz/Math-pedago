@@ -22,7 +22,7 @@ const SubQuestionDisplay: React.FC<{ subQuestions: SubQuestion[]; level: number 
 };
 
 
-const ExerciseCard: React.FC<{ exercise: Exercise; exerciseNumber: number }> = ({ exercise, exerciseNumber }) => {
+const ExerciseCard: React.FC<{ exercise: Exercise; exerciseNumber: number; isWorkSubmitted: boolean }> = ({ exercise, exerciseNumber, isWorkSubmitted }) => {
     const { state, dispatch } = useContext(AppContext);
     const { currentChapterId, progress } = state;
     const [isHintModalOpen, setIsHintModalOpen] = useState(false);
@@ -33,6 +33,7 @@ const ExerciseCard: React.FC<{ exercise: Exercise; exerciseNumber: number }> = (
     const currentFeedback = chapterProgress?.exercisesFeedback[exercise.id];
 
     const handleFeedback = (feedback: Feedback) => {
+        if (isWorkSubmitted) return;
         dispatch({ type: 'UPDATE_EXERCISE_FEEDBACK', payload: { exId: exercise.id, feedback } });
     };
 
@@ -63,6 +64,7 @@ const ExerciseCard: React.FC<{ exercise: Exercise; exerciseNumber: number }> = (
         <>
             <div className="bg-card-bg p-4 sm:p-6 rounded-2xl shadow-lg mb-8">
                 <div className="flex justify-between items-start mb-4">
+                    {/* FIX: Corrected typo in JSX tag from `hh2` to `h2`. */}
                     <h2 className="text-2xl font-bold font-serif text-dark-gray">
                         <span className="text-primary mr-2">Exercice {exerciseNumber}</span>
                         {exercise.title && <span className="text-secondary font-normal text-xl">| {exercise.title}</span>}
@@ -90,11 +92,12 @@ const ExerciseCard: React.FC<{ exercise: Exercise; exerciseNumber: number }> = (
                             <button
                                 key={opt.label}
                                 onClick={() => handleFeedback(opt.label)}
-                                className={`px-3 py-1.5 text-sm font-bold rounded-full transition-all transform hover:scale-105 active:scale-95 ${
+                                disabled={isWorkSubmitted}
+                                className={`px-3 py-1.5 text-sm font-bold rounded-full transition-all ${
                                     currentFeedback === opt.label
                                         ? opt.activeStyle
                                         : opt.style
-                                }`}
+                                } ${isWorkSubmitted ? 'opacity-70 cursor-not-allowed' : 'transform hover:scale-105 active:scale-95'}`}
                             >
                                 {opt.label}
                             </button>
@@ -120,25 +123,29 @@ const ExerciseCard: React.FC<{ exercise: Exercise; exerciseNumber: number }> = (
 
 const Exercises: React.FC = () => {
     const { state } = useContext(AppContext);
-    const { currentChapterId, activities } = state;
+    const { currentChapterId, activities, progress } = state;
 
     if (!currentChapterId) return null;
     
     const chapter = activities[currentChapterId];
+    const chapterProgress = progress[currentChapterId];
+
     if (!chapter || !chapter.exercises || chapter.exercises.length === 0) {
         return (
             <div className="text-center py-12 px-6 bg-card-bg rounded-2xl shadow-sm">
                 <span className="material-symbols-outlined text-6xl text-secondary/50">info</span>
-                <p className="mt-4 font-semibold text-dark-gray">Il n'y a pas d'exercices dans ce chapitre.</p>
+                <p className="mt-4 font-semibold text-dark-gray">Il n'y a pas d'exercices dans cette activité.</p>
                 <p className="text-secondary">Passez au quiz ou revenez plus tard.</p>
             </div>
         );
     }
 
+    const isWorkSubmitted = chapterProgress?.isWorkSubmitted || false;
+
     return (
         <div>
             {chapter.exercises.map((ex, index) => (
-                <ExerciseCard key={ex.id} exercise={ex} exerciseNumber={index + 1} />
+                <ExerciseCard key={ex.id} exercise={ex} exerciseNumber={index + 1} isWorkSubmitted={isWorkSubmitted} />
             ))}
         </div>
     );

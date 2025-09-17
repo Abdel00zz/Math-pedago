@@ -118,13 +118,14 @@ const appReducer = (state: AppState, action: Action): AppState => {
             };
         }
         case 'SUBMIT_WORK': {
-            if (!state.currentChapterId) return state;
-            const progress = state.progress[state.currentChapterId];
+            const { chapterId } = action.payload;
+            if (!chapterId || !state.progress[chapterId]) return state;
+            const progress = state.progress[chapterId];
              return {
                 ...state,
                 progress: {
                     ...state.progress,
-                    [state.currentChapterId]: { ...progress, isWorkSubmitted: true }
+                    [chapterId]: { ...progress, isWorkSubmitted: true }
                 },
             };
         }
@@ -189,7 +190,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 
             } catch (error) {
                 console.error("Failed to load or sync chapter data:", error);
-                addNotification("Impossible de charger les derniers chapitres.", "info");
+                addNotification("Impossible de charger les dernières activités.", "info");
             } finally {
                 let savedData: Partial<AppState> = {};
                 try {

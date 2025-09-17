@@ -17,16 +17,18 @@ const ActivityView: React.FC = () => {
 
     return (
         <div className="animate-fadeIn">
-            <div className="relative text-center mb-8">
-                 <button
-                    onClick={() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'chapter-hub', chapterId: currentChapterId } })}
-                    className="absolute left-0 top-1/2 -translate-y-1/2 inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-secondary bg-card-bg/80 backdrop-blur-sm rounded-full shadow-sm hover:bg-light-gray transition border border-border-color active:scale-95"
-                    aria-label="Retour au hub du chapitre"
-                >
-                    <span className="material-symbols-outlined">arrow_back</span>
-                    Retour au chapitre
-                </button>
-                <h2 className="text-3xl font-bold font-serif">{title} - {chapter.chapter}</h2>
+            <div className="relative flex justify-center items-center mb-8 h-[42px]">
+                <div className="absolute left-0">
+                    <button
+                        onClick={() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'chapter-hub', chapterId: currentChapterId } })}
+                        className="inline-flex items-center justify-center w-10 h-10 text-secondary bg-card-bg/80 backdrop-blur-sm rounded-full shadow-sm hover:bg-light-gray transition border border-border-color active:scale-95"
+                        aria-label="Retour au hub de l'activité"
+                    >
+                        <span className="material-symbols-outlined">arrow_back</span>
+                    </button>
+                </div>
+               
+                <h2 className="text-3xl font-bold font-serif whitespace-nowrap">{title} - {chapter.chapter}</h2>
             </div>
             
             <div>

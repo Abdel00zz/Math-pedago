@@ -2,48 +2,53 @@ import React, { useContext, useMemo, useState, useEffect } from 'react';
 import { AppContext } from '../../context/AppContext';
 import { Chapter, ChapterProgress } from '../../types';
 
-const ChapterCard: React.FC<{ chapter: Chapter; progress: ChapterProgress; onClick: () => void }> = ({ chapter, progress, onClick }) => {
-    const quizProgress = progress?.quiz;
-    const isQuizDone = quizProgress?.isSubmitted || false;
-    const score = quizProgress?.score || 0;
-
-    const allExercisesFeedback = Object.values(progress?.exercisesFeedback || {});
-    const isWorkDone = allExercisesFeedback.length > 0 && !allExercisesFeedback.includes('Pas travaillé');
+const ChapterCard: React.FC<{ chapter: Chapter; progress?: ChapterProgress; onClick: () => void }> = ({ chapter, progress, onClick }) => {
+    const isQuizSubmitted = progress?.quiz.isSubmitted || false;
+    const totalExercises = chapter.exercises?.length || 0;
+    const exercisesFeedback = progress?.exercisesFeedback || {};
+    const workedOnExercisesCount = Object.values(exercisesFeedback).filter(f => f !== 'Pas travaillé').length;
+    const allExercisesWorked = totalExercises > 0 ? workedOnExercisesCount === totalExercises : true;
+    const isCompleted = isQuizSubmitted && allExercisesWorked;
     
-    const quizCount = chapter.quiz?.length || 0;
-    const exerciseCount = chapter.exercises?.length || 0;
-
-    const cardClasses = `bg-card-bg/80 backdrop-blur-sm rounded-2xl shadow-sm p-6 border border-border-color transition-all duration-300 flex flex-col justify-between ${
-        chapter.isActive 
-            ? 'cursor-pointer transform hover:-translate-y-1.5 hover:shadow-xl hover:border-primary active:scale-[0.98] active:shadow-md' 
-            : 'opacity-60 cursor-not-allowed'
-    }`;
-
+    const quizScore = progress?.quiz.score || 0;
+    const quizIcon = isQuizSubmitted ? 'check_circle' : 'quiz';
+    const quizColor = isQuizSubmitted ? 'text-success' : 'text-primary/80';
+    const exerciseIcon = allExercisesWorked ? 'check_circle' : 'edit_note';
+    const exerciseColor = allExercisesWorked ? 'text-success' : 'text-primary/80';
 
     return (
         <div 
-            onClick={chapter.isActive ? onClick : undefined}
-            className={cardClasses}
+            onClick={onClick}
+            className={`bg-card-bg/80 backdrop-blur-sm rounded-2xl shadow-sm p-6 border border-border-color transition-all duration-300 flex flex-col justify-between cursor-pointer transform hover:-translate-y-1.5 hover:shadow-xl hover:border-primary active:scale-[0.98] active:shadow-md ${
+                !chapter.isActive ? 'opacity-60 cursor-not-allowed' : ''
+            }`}
         >
             <div>
-                <div className="flex justify-between items-start">
-                    <div className="flex-1">
-                        <h3 className="text-xl font-bold font-serif text-dark-gray">{chapter.chapter}</h3>
-                    </div>
-                    {!chapter.isActive && (
-                        <span className="text-xs font-bold text-secondary bg-light-gray px-2 py-1 rounded-full">À VENIR</span>
+                <div className="flex justify-between items-center">
+                    <h3 className="text-xl font-bold font-serif text-dark-gray">{chapter.chapter}</h3>
+                    {/* Badge de statut placé à droite */}
+                    {isCompleted ? (
+                        <span className="px-3 py-1 bg-green-100 border border-green-300 rounded-full text-green-800 font-semibold text-xs">
+                            Terminé
+                        </span>
+                    ) : chapter.isActive ? (
+                        <span className="px-3 py-1 bg-orange-100 border border-orange-300 rounded-full text-orange-800 font-semibold text-xs">
+                            Pas encore terminé
+                        </span>
+                    ) : (
+                        <span className="text-xs font-bold text-secondary bg-light-gray px-2 py-1 rounded-full text-center whitespace-nowrap">À VENIR</span>
                     )}
                 </div>
             </div>
             <div className="mt-4 grid grid-cols-2 gap-4">
                 {/* Quiz Stat Block */}
                 <div className="bg-light-gray/50 rounded-xl p-3 text-center">
-                    <span className="material-symbols-outlined text-3xl text-primary/80">quiz</span>
-                    <p className="font-bold text-dark-gray text-sm mt-1">{quizCount} Question{quizCount !== 1 ? 's' : ''}</p>
-                    {isQuizDone ? (
+                    <span className={`material-symbols-outlined text-3xl ${quizColor}`}>{quizIcon}</span>
+                    <p className="font-bold text-dark-gray text-sm mt-1">{chapter.quiz?.length || 0} Question{(chapter.quiz?.length || 0) !== 1 ? 's' : ''}</p>
+                    {isQuizSubmitted ? (
                         <div className="flex items-center justify-center gap-1 text-sm text-success font-bold mt-1">
                             <span className="material-symbols-outlined text-base">check_circle</span>
-                            <span>{score}%</span>
+                            <span>{quizScore}%</span>
                         </div>
                     ) : (
                         <p className="text-sm text-secondary mt-1">À faire</p>
@@ -51,9 +56,9 @@ const ChapterCard: React.FC<{ chapter: Chapter; progress: ChapterProgress; onCli
                 </div>
                 {/* Exercise Stat Block */}
                 <div className="bg-light-gray/50 rounded-xl p-3 text-center">
-                    <span className="material-symbols-outlined text-3xl text-primary/80">edit_note</span>
-                    <p className="font-bold text-dark-gray text-sm mt-1">{exerciseCount} Exercice{exerciseCount !== 1 ? 's' : ''}</p>
-                    {isWorkDone ? (
+                    <span className={`material-symbols-outlined text-3xl ${exerciseColor}`}>{exerciseIcon}</span>
+                    <p className="font-bold text-dark-gray text-sm mt-1">{totalExercises} Exercice{totalExercises !== 1 ? 's' : ''}</p>
+                    {allExercisesWorked ? (
                         <div className="flex items-center justify-center gap-1 text-sm text-success font-bold mt-1">
                             <span className="material-symbols-outlined text-base">check_circle</span>
                             <span>Travaillés</span>
@@ -102,7 +107,7 @@ const DashboardView: React.FC = () => {
     
     const userChapters = useMemo(() => {
         if (!profile) return [];
-        return Object.values(activities)
+        return (Object.values(activities) as Chapter[])
             .filter(ch => ch.class === profile.classId)
             .sort((a, b) => {
                 if (a.isActive && !b.isActive) return -1;
@@ -140,7 +145,7 @@ const DashboardView: React.FC = () => {
             ) : (
                  <div className="text-center py-16 px-6 bg-card-bg/80 backdrop-blur-sm rounded-2xl shadow-sm">
                      <span className="material-symbols-outlined text-6xl text-secondary/50">library_books</span>
-                    <p className="mt-4 font-semibold text-dark-gray text-lg">Aucun chapitre n'est disponible pour votre classe pour le moment.</p>
+                    <p className="mt-4 font-semibold text-dark-gray text-lg">Aucune activité n'est disponible pour votre classe pour le moment.</p>
                     <p className="text-secondary">Revenez bientôt !</p>
                 </div>
             )}

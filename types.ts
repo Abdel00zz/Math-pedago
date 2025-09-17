@@ -81,5 +81,5 @@ export type Action =
     | { type: 'SUBMIT_QUIZ'; payload: { score: number } }
     | { type: 'TOGGLE_REVIEW_MODE'; payload: boolean }
     | { type: 'UPDATE_EXERCISE_FEEDBACK'; payload: { exId: string; feedback: Feedback } }
-    | { type: 'SUBMIT_WORK' }
+    | { type: 'SUBMIT_WORK'; payload: { chapterId: string } }
     | { type: 'SYNC_ACTIVITIES'; payload: { activities: { [chapterId: string]: Chapter }; progress: { [chapterId: string]: ChapterProgress } } };
