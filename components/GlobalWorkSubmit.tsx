@@ -103,11 +103,27 @@ const GlobalWorkSubmit: React.FC = () => {
             formData.append('submittedAt', submissionDate.toLocaleString('fr-FR', { dateStyle: 'full', timeStyle: 'short' }));
             formData.append('resume', resume);
 
+            // Inclure les données JSON directement dans le message ET dans des champs séparés
             const progressJson = JSON.stringify(progressSubmission, null, 2);
-            const blob = new Blob([progressJson], { type: 'application/json' });
-            const sanitizedName = profile.name.replace(/[^a-z0-9]/gi, '_').toLowerCase();
-            const filename = `progression_${sanitizedName}_${activeChapter.id}.json`;
-            formData.append('attachment', blob, filename);
+            
+            // Méthode 1: JSON complet dans le message
+            formData.append('message', `Données de progression de l'élève:\n\n${progressJson}`);
+            
+            // Méthode 2: Données importantes dans des champs séparés pour garantir la réception
+            formData.append('donnees_json', progressJson);
+            formData.append('score_quiz', chapterProgress.quiz.score.toString());
+            formData.append('reponses_quiz', JSON.stringify(chapterProgress.quiz.answers));
+            formData.append('feedback_exercices', JSON.stringify(chapterProgress.exercisesFeedback));
+            
+            // Méthode 3: Essayer aussi avec une pièce jointe (peut ne pas fonctionner avec AJAX)
+            try {
+                const blob = new Blob([progressJson], { type: 'application/json' });
+                const sanitizedName = profile.name.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+                const filename = `progression_${sanitizedName}_${activeChapter.id}.json`;
+                formData.append('attachment', blob, filename);
+            } catch (e) {
+                console.warn('Impossible d\'ajouter la pièce jointe:', e);
+            }
             
             const response = await fetch('https://formsubmit.co/bdh.malek@gmail.com', {
               method: 'POST',
