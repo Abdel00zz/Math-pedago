@@ -20,7 +20,7 @@ const ChapterCard: React.FC<{ chapter: Chapter; progress?: ChapterProgress; onCl
     return (
         <div 
             onClick={onClick}
-            className={`relative bg-gradient-to-br from-white via-blue-50/30 to-purple-50/20 border-2 border-transparent rounded-none shadow-lg flex flex-col cursor-pointer min-h-[260px] overflow-hidden group transition-all duration-700 ease-out hover:shadow-2xl hover:shadow-blue-500/20 hover:-translate-y-2 hover:rotate-1 active:scale-95 touch-manipulation before:absolute before:inset-0 before:bg-gradient-to-r before:from-blue-400/0 before:via-purple-400/10 before:to-pink-400/0 before:translate-x-[-100%] before:transition-transform before:duration-1000 hover:before:translate-x-[100%] after:absolute after:inset-0 after:border-2 after:border-gradient-to-r after:from-blue-500 after:via-purple-500 after:to-pink-500 after:opacity-0 after:transition-opacity after:duration-500 hover:after:opacity-100 ${
+            className={`relative bg-gradient-to-br from-white to-gray-50 border-2 border-gray-200 rounded-xl shadow-md flex flex-col cursor-pointer min-h-[260px] overflow-hidden group transition-all duration-500 ease-in-out hover:shadow-xl hover:shadow-indigo-500/25 hover:scale-[1.03] hover:-rotate-1 hover:border-indigo-300 active:scale-95 touch-manipulation before:absolute before:inset-0 before:bg-gradient-to-t before:from-indigo-500/10 before:to-transparent before:opacity-0 before:transition-opacity before:duration-300 hover:before:opacity-100 ${
                 !chapter.isActive ? 'opacity-60 cursor-not-allowed' : ''
             }`}
             style={{
@@ -29,9 +29,8 @@ const ChapterCard: React.FC<{ chapter: Chapter; progress?: ChapterProgress; onCl
             }}
         >
             {/* Section titre */}
-            <div className="relative p-4 bg-gradient-to-r from-primary/5 to-blue-50 overflow-hidden group-hover:bg-gradient-to-r group-hover:from-blue-100/50 group-hover:to-purple-100/30 transition-all duration-700">
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1200 ease-out"></div>
-                <h3 className="relative text-xl font-bold font-serif text-primary group-hover:text-blue-600 transition-colors duration-500 group-hover:drop-shadow-sm">{chapter.chapter}</h3>
+            <div className="p-4 bg-gradient-to-r from-indigo-50/50 to-blue-50/30 group-hover:from-indigo-100/60 group-hover:to-blue-100/40 transition-all duration-300">
+                <h3 className="text-xl font-bold font-serif text-gray-800 group-hover:text-indigo-700 transition-colors duration-300">{chapter.chapter}</h3>
             </div>
             
             {/* Section badge */}
