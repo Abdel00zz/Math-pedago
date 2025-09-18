@@ -79,25 +79,27 @@ const Quiz: React.FC = () => {
     const userAnswer = userAnswers[currentQuestion.id];
 
     return (
-        <div className="bg-card-bg p-4 sm:p-6 lg:p-8 rounded-2xl shadow-lg animate-fadeIn">
-            <div className="flex justify-between items-center mb-4">
+        <div className="bg-card-bg p-6 sm:p-8 lg:p-10 rounded-2xl shadow-lg animate-fadeIn max-w-5xl mx-auto">
+            <div className="flex justify-between items-center mb-6">
                 <h3 className="text-xl font-bold font-serif text-dark-gray">Question {currentQuizQuestionIndex + 1}/{quizQuestions.length}</h3>
                  {isReviewMode && (
-                    <span className={`px-3 py-1 text-xs font-bold uppercase rounded-full ${currentQuestion.options.find(o => o.text === userAnswer)?.isCorrect ? 'bg-success/10 text-success' : 'bg-error/10 text-error'}`}>
+                    <span className={`px-4 py-2 text-sm font-bold uppercase rounded-full ${currentQuestion.options.find(o => o.text === userAnswer)?.isCorrect ? 'bg-success/10 text-success' : 'bg-error/10 text-error'}`}>
                         {currentQuestion.options.find(o => o.text === userAnswer)?.isCorrect ? 'Correct' : 'Incorrect'}
                     </span>
                 )}
             </div>
 
-            <div className="w-full bg-light-gray rounded-full h-2.5 mb-6">
-                <div className="bg-primary h-2.5 rounded-full" style={{width: `${((currentQuizQuestionIndex + 1) / quizQuestions.length) * 100}%`}}></div>
+            <div className="w-full bg-light-gray rounded-full h-3 mb-8">
+                <div className="bg-primary h-3 rounded-full transition-all duration-300" style={{width: `${((currentQuizQuestionIndex + 1) / quizQuestions.length) * 100}%`}}></div>
             </div>
 
-            <div className="mb-6 min-h-[6rem] prose prose-lg max-w-none text-dark-gray">
-                <MathJax dynamic>{currentQuestion.question}</MathJax>
+            <div className="mb-10 min-h-[10rem] prose prose-xl max-w-none text-dark-gray bg-gradient-to-br from-blue-50/30 to-indigo-50/30 p-6 rounded-xl border border-blue-100/50">
+                <div className="text-xl md:text-2xl leading-relaxed font-medium">
+                    <MathJax dynamic>{currentQuestion.question}</MathJax>
+                </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {currentQuestion.options.map((option, index) => {
                     const isSelected = userAnswer === option.text;
                     let optionStyle = 'border-border-color bg-light-gray/30 hover:bg-light-gray/70';
@@ -126,46 +128,46 @@ const Quiz: React.FC = () => {
                             key={index}
                             onClick={() => handleAnswerSelect(option.text)}
                             disabled={isReviewMode}
-                            className={`p-4 rounded-lg text-left transition-all duration-200 border-2 flex justify-between items-center ${optionStyle} active:scale-[0.99]`}
+                            className={`p-5 rounded-xl text-left transition-all duration-200 border-2 flex justify-between items-center ${optionStyle} active:scale-[0.98] hover:shadow-md min-h-[4rem]`}
                         >
-                            <span className="font-semibold text-dark-gray"><MathJax inline dynamic>{option.text}</MathJax></span>
-                            {icon}
+                            <span className="text-dark-gray text-lg leading-relaxed flex-1 pr-3"><MathJax inline dynamic>{option.text}</MathJax></span>
+                            {icon && <div className="flex-shrink-0">{icon}</div>}
                         </button>
                     )
                 })}
             </div>
             
             {isReviewMode && (
-                <div className="mt-6 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl shadow-sm border border-blue-200/50 prose max-w-none">
-                    <h4 className="font-bold text-blue-700 not-prose mb-3 flex items-center gap-2">
-                        <span className="material-symbols-outlined text-blue-600">info</span>
-                        Explication
+                <div className="mt-8 p-8 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl shadow-md border border-blue-200/50 prose max-w-none">
+                    <h4 className="font-bold text-blue-700 not-prose mb-4 flex items-center gap-3 text-lg">
+                        <span className="material-symbols-outlined text-blue-600 text-2xl">info</span>
+                        Explication détaillée
                     </h4>
-                    <div className="text-gray-700">
+                    <div className="text-gray-700 text-lg leading-relaxed">
                         <MathJax dynamic>{currentQuestion.explanation}</MathJax>
-            </div>
+                    </div>
                 </div>
             )}
 
-            <div className="flex justify-between items-center mt-8">
+            <div className="flex justify-between items-center mt-10 pt-6 border-t border-gray-200/50">
                 <button
                     onClick={() => handleNavigate('prev')}
                     disabled={currentQuizQuestionIndex === 0}
-                    className="px-6 py-2 font-semibold text-secondary bg-light-gray rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-border-color active:scale-95"
+                    className="px-8 py-3 font-semibold text-secondary bg-light-gray rounded-xl disabled:opacity-50 disabled:cursor-not-allowed hover:bg-border-color active:scale-95 transition-all duration-200 min-w-[120px]"
                 >
                     Précédent
                 </button>
 
                 {currentQuizQuestionIndex === quizQuestions.length - 1 ? (
                      isReviewMode ? (
-                        <button onClick={() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'chapter-hub' } })} className="px-8 py-3 font-bold text-white bg-primary rounded-lg transition-transform transform hover:-translate-y-1 active:scale-95">
+                        <button onClick={() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'chapter-hub' } })} className="px-10 py-4 font-bold text-white bg-primary rounded-xl transition-transform transform hover:-translate-y-1 active:scale-95 shadow-lg">
                            Retour à l'activité
                         </button>
                     ) : (
                         <button
                             onClick={handleSubmit}
                             disabled={!chapterProgress.quiz.allAnswered}
-                            className="px-8 py-3 font-bold text-white bg-success rounded-lg transition-transform transform hover:-translate-y-1 disabled:bg-gray-400 disabled:cursor-not-allowed animate-pulse active:scale-95"
+                            className="px-10 py-4 font-bold text-white bg-success rounded-xl transition-transform transform hover:-translate-y-1 disabled:bg-gray-400 disabled:cursor-not-allowed animate-pulse active:scale-95 shadow-lg"
                         >
                             Terminer le Quiz
                         </button>
@@ -173,7 +175,7 @@ const Quiz: React.FC = () => {
                 ) : (
                     <button
                         onClick={() => handleNavigate('next')}
-                        className="px-6 py-2 font-semibold text-white bg-primary rounded-lg hover:bg-opacity-90 active:scale-95"
+                        className="px-8 py-3 font-semibold text-white bg-primary rounded-xl hover:bg-opacity-90 active:scale-95 transition-all duration-200 min-w-[120px]"
                     >
                         Suivant
                     </button>
