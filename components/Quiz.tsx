@@ -79,7 +79,7 @@ const Quiz: React.FC = () => {
     const userAnswer = userAnswers[currentQuestion.id];
 
     return (
-        <div className="bg-white p-4 sm:p-6 md:p-8 rounded-xl shadow-lg animate-fadeIn w-full max-w-3xl mx-auto min-h-[calc(100vh-12rem)] flex flex-col justify-between border border-gray-100">
+        <div className="bg-white p-4 sm:p-6 md:p-8 rounded-xl shadow-lg animate-fadeIn w-full max-w-3xl mx-auto min-h-[calc(100vh-12rem)] landscape:min-h-[calc(100vh-8rem)] flex flex-col justify-between border border-gray-100">
             <div className="flex-shrink-0">
                 <div className="flex justify-between items-center mb-2 sm:mb-3 md:mb-4">
                     <h3 className="text-lg sm:text-xl md:text-2xl font-semibold font-sans text-gray-700 tracking-tight">Question {currentQuizQuestionIndex + 1} sur {quizQuestions.length}</h3>
@@ -96,13 +96,13 @@ const Quiz: React.FC = () => {
             </div>
 
             <div className="flex-grow flex flex-col justify-center">
-                <div className="mb-6 sm:mb-8 md:mb-10 min-h-[5rem] sm:min-h-[6rem] md:min-h-[7rem] prose prose-lg sm:prose-xl max-w-none text-gray-800 bg-gray-50 p-4 sm:p-5 md:p-6 rounded-lg border border-gray-200">
+                <div className="mb-6 sm:mb-8 md:mb-10 landscape:mb-3 min-h-[5rem] sm:min-h-[6rem] md:min-h-[7rem] landscape:min-h-[3rem] prose prose-lg sm:prose-xl max-w-none text-gray-800 bg-gray-50 p-4 sm:p-5 md:p-6 landscape:p-3 rounded-lg border border-gray-200">
                     <div className="text-base sm:text-lg md:text-xl leading-relaxed font-normal text-center">
                         <MathJax dynamic>{currentQuestion.question}</MathJax>
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 gap-3 sm:gap-4 md:gap-5 mb-6 sm:mb-8 md:mb-10">
+                <div className="grid grid-cols-1 gap-3 sm:gap-4 md:gap-5 landscape:gap-2 mb-6 sm:mb-8 md:mb-10 landscape:mb-3">
                 {currentQuestion.options.map((option, index) => {
                     const isSelected = userAnswer === option.text;
                     let optionStyle = 'border-border-color bg-light-gray/30 hover:bg-light-gray/70';
@@ -131,7 +131,7 @@ const Quiz: React.FC = () => {
                             key={index}
                             onClick={() => handleAnswerSelect(option.text)}
                             disabled={isReviewMode}
-                            className={`p-4 sm:p-5 md:p-6 rounded-lg text-left transition-all duration-200 border-2 flex justify-between items-center ${optionStyle} hover:shadow-md min-h-[3.5rem] sm:min-h-[4rem] md:min-h-[4.5rem] touch-manipulation cursor-pointer`}
+                            className={`p-4 sm:p-5 md:p-6 landscape:p-3 rounded-lg text-left transition-all duration-200 border-2 flex justify-between items-center ${optionStyle} hover:shadow-md min-h-[3.5rem] sm:min-h-[4rem] md:min-h-[4.5rem] landscape:min-h-[2.5rem] touch-manipulation cursor-pointer`}
                         >
                             <span className="text-gray-800 text-sm sm:text-base md:text-lg leading-relaxed flex-1 pr-3 font-medium"><MathJax inline dynamic>{option.text}</MathJax></span>
                             {icon && <div className="flex-shrink-0">{icon}</div>}
@@ -141,7 +141,7 @@ const Quiz: React.FC = () => {
             </div>
             
             {isReviewMode && (
-                <div className="flex-shrink-0 mt-3 sm:mt-4 md:mt-5 p-3 sm:p-4 md:p-5 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg sm:rounded-xl shadow-sm border border-blue-200/50 prose max-w-none">
+                <div className="flex-shrink-0 mt-3 sm:mt-4 md:mt-5 landscape:mt-2 p-3 sm:p-4 md:p-5 landscape:p-2 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg sm:rounded-xl shadow-sm border border-blue-200/50 prose max-w-none">
                     <h4 className="font-bold text-blue-700 not-prose mb-2 sm:mb-3 flex items-center gap-1 sm:gap-2 text-sm sm:text-base">
                         <span className="material-symbols-outlined text-blue-600 text-lg sm:text-xl">info</span>
                         Explication détaillée
@@ -152,7 +152,7 @@ const Quiz: React.FC = () => {
                 </div>
             )}
 
-            <div className="flex-shrink-0 flex justify-between items-center mt-2 sm:mt-3 md:mt-4 pt-1 sm:pt-2 md:pt-3">
+            <div className="flex-shrink-0 flex justify-between items-center mt-2 sm:mt-3 md:mt-4 landscape:mt-1 pt-1 sm:pt-2 md:pt-3 landscape:pt-1">
                 <button
                     onClick={() => handleNavigate('prev')}
                     disabled={currentQuizQuestionIndex === 0}
