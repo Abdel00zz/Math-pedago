@@ -96,7 +96,7 @@ const Quiz: React.FC = () => {
             </div>
 
             <div className="flex-grow flex flex-col justify-center">
-                <div className="mb-6 sm:mb-8 md:mb-10 landscape:mb-3 min-h-[5rem] sm:min-h-[6rem] md:min-h-[7rem] landscape:min-h-[3rem] prose prose-lg sm:prose-xl max-w-none text-gray-800 bg-gray-50 p-4 sm:p-5 md:p-6 landscape:p-3 rounded-lg border border-gray-200">
+                <div className="mb-6 sm:mb-8 md:mb-10 landscape:mb-3 min-h-[5rem] sm:min-h-[6rem] md:min-h-[7rem] landscape:min-h-[3rem] prose prose-lg sm:prose-xl max-w-none text-gray-800 bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/50 p-4 sm:p-5 md:p-6 landscape:p-3 rounded-2xl shadow-lg backdrop-blur-sm">
                     <div className="text-base sm:text-lg md:text-xl leading-relaxed font-normal text-center">
                         <MathJax dynamic>{currentQuestion.question}</MathJax>
                     </div>
@@ -152,11 +152,11 @@ const Quiz: React.FC = () => {
                 </div>
             )}
 
-            <div className="flex-shrink-0 flex justify-between items-center mt-2 sm:mt-3 md:mt-4 landscape:mt-1 pt-1 sm:pt-2 md:pt-3 landscape:pt-1">
+            <div className="flex-shrink-0 flex justify-between items-center mt-6 sm:mt-8 md:mt-10 landscape:mt-4 pt-4 sm:pt-6 md:pt-8 landscape:pt-3">
                 <button
                     onClick={() => handleNavigate('prev')}
                     disabled={currentQuizQuestionIndex === 0}
-                    className="px-2 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2 font-semibold text-secondary bg-light-gray rounded-md hover:bg-border-color hover:shadow-sm active:scale-95 transition-all duration-200 min-w-[60px] sm:min-w-[70px] md:min-w-[80px] text-xs sm:text-sm disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation"
+                    className="px-4 py-2 sm:px-5 sm:py-2.5 md:px-6 md:py-3 font-medium text-slate-500 bg-white/80 rounded-2xl hover:bg-white hover:text-slate-700 hover:shadow-md active:scale-98 transition-all duration-200 min-w-[80px] sm:min-w-[90px] md:min-w-[100px] text-sm disabled:opacity-40 disabled:cursor-not-allowed backdrop-blur-md border border-slate-200/50"
                 >
                     Précédent
                 </button>
@@ -178,7 +178,7 @@ const Quiz: React.FC = () => {
                 ) : (
                     <button
                         onClick={() => handleNavigate('next')}
-                        className="px-2 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2 font-semibold text-white bg-primary rounded-md hover:bg-primary/90 hover:shadow-sm active:scale-95 transition-all duration-200 min-w-[60px] sm:min-w-[70px] md:min-w-[80px] text-xs sm:text-sm touch-manipulation"
+                        className="px-4 py-2 sm:px-5 sm:py-2.5 md:px-6 md:py-3 font-medium text-white bg-slate-800 rounded-2xl hover:bg-slate-900 hover:shadow-md active:scale-98 transition-all duration-200 min-w-[80px] sm:min-w-[90px] md:min-w-[100px] text-sm backdrop-blur-md"
                     >
                         Suivant
                     </button>
