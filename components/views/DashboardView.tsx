@@ -153,7 +153,7 @@ const DashboardView: React.FC = () => {
             <nav className="fixed top-6 right-4 z-50 flex gap-3" role="navigation" aria-label="Actions principales">
                 <button
                     onClick={() => setIsOrientationModalOpen(true)}
-                    className="w-12 h-12 bg-gradient-to-br from-rose-50/90 to-pink-50/90 hover:from-rose-100/95 hover:to-pink-100/95 text-rose-500 hover:text-rose-600 rounded-full shadow-sm hover:shadow-md transition-all duration-300 flex items-center justify-center backdrop-blur-sm border border-rose-100/60 hover:border-rose-200/80"
+                    className="w-12 h-12 bg-gradient-to-br from-gray-50/90 to-slate-50/90 hover:from-gray-100/95 hover:to-slate-100/95 text-gray-500 hover:text-gray-600 rounded-full shadow-sm hover:shadow-md transition-all duration-300 flex items-center justify-center backdrop-blur-sm border border-gray-100/60 hover:border-gray-200/80"
                     title="Orientation pédagogique"
                     aria-label="Ouvrir l'orientation pédagogique"
                 >
@@ -162,14 +162,14 @@ const DashboardView: React.FC = () => {
                 
                 <button
                      onClick={() => setIsHelpModalOpen(true)}
-                     className="w-12 h-12 bg-gradient-to-br from-sky-50/90 to-blue-50/90 hover:from-sky-100/95 hover:to-blue-100/95 backdrop-blur-sm shadow-sm hover:shadow-md transition-all duration-300 rounded-full flex items-center justify-center text-sky-500 hover:text-sky-600 border border-sky-100/60 hover:border-sky-200/80"
+                     className="w-12 h-12 bg-gradient-to-br from-gray-50/90 to-slate-50/90 hover:from-gray-100/95 hover:to-slate-100/95 backdrop-blur-sm shadow-sm hover:shadow-md transition-all duration-300 rounded-full flex items-center justify-center text-gray-500 hover:text-gray-600 border border-gray-100/60 hover:border-gray-200/80"
                      title="Aide"
                      aria-label="Ouvrir l'aide"
                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                </button>
+                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                     </svg>
+                 </button>
             </nav>
             
 

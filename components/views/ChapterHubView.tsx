@@ -7,7 +7,7 @@ const HubCard: React.FC<{ icon: React.ReactNode; title: string; description: str
         className="text-center cursor-pointer bg-card-bg/80 backdrop-blur-sm rounded-2xl shadow-lg p-8 transition-all duration-500 transform hover:-translate-y-3 hover:shadow-2xl hover:scale-105 border border-border-color active:scale-95 active:shadow-md min-h-[280px] flex flex-col justify-between group"
     >
         <div className="flex-1 flex flex-col items-center justify-center">
-            <h3 className="text-xl font-bold font-serif mb-3 text-dark-gray group-hover:text-primary transition-colors duration-300">{title}</h3>
+            <h3 className="text-3xl font-bold font-serif mb-3 text-dark-gray group-hover:text-primary transition-colors duration-300">{title}</h3>
         </div>
         <p className="text-secondary text-sm leading-relaxed group-hover:text-dark-gray transition-colors duration-300">{description}</p>
     </div>
