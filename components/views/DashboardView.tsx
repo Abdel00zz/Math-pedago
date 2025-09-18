@@ -1,6 +1,9 @@
 import React, { useContext, useMemo, useState, useEffect } from 'react';
 import { AppContext } from '../../context/AppContext';
 import { Chapter, ChapterProgress } from '../../types';
+import { CLASS_OPTIONS } from '../../constants';
+import OrientationModal from '../OrientationModal';
+import HelpModal from '../HelpModal';
 
 const ChapterCard: React.FC<{ chapter: Chapter; progress?: ChapterProgress; onClick: () => void }> = ({ chapter, progress, onClick }) => {
     const isQuizSubmitted = progress?.quiz.isSubmitted || false;
@@ -20,17 +23,21 @@ const ChapterCard: React.FC<{ chapter: Chapter; progress?: ChapterProgress; onCl
     return (
         <div 
             onClick={onClick}
-            className={`relative bg-gradient-to-br from-white to-slate-50 border border-slate-200 rounded-lg shadow-sm flex flex-col cursor-pointer min-h-[260px] overflow-hidden group transition-all duration-300 ease-out hover:shadow-lg hover:shadow-slate-500/15 hover:border-slate-300 hover:bg-gradient-to-br hover:from-slate-50 hover:to-slate-100 active:shadow-sm touch-manipulation before:absolute before:inset-0 before:bg-gradient-to-t before:from-slate-600/5 before:to-transparent before:opacity-0 before:transition-opacity before:duration-300 hover:before:opacity-100 ${
-                !chapter.isActive ? 'opacity-60 cursor-not-allowed' : ''
+            className={`relative bg-gradient-to-br from-white to-slate-50 rounded-lg shadow-sm flex flex-col cursor-pointer min-h-[260px] overflow-hidden group transition-all duration-300 ease-out touch-manipulation before:absolute before:inset-0 before:bg-gradient-to-t before:from-slate-600/5 before:to-transparent before:opacity-0 before:transition-opacity before:duration-300 hover:before:opacity-100 ${
+                !chapter.isActive 
+                    ? 'opacity-60 cursor-not-allowed border-2 border-slate-200' 
+                    : 'border-3 border-blue-400 hover:border-blue-500 hover:shadow-xl hover:shadow-blue-500/20 hover:bg-gradient-to-br hover:from-slate-50 hover:to-slate-100 active:shadow-sm animate-pulse-subtle'
             }`}
             style={{
                 background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #f1f5f9 100%)',
-                boxShadow: '0 4px 20px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.9)'
+                boxShadow: chapter.isActive 
+                    ? '0 6px 25px rgba(59, 130, 246, 0.15), inset 0 1px 0 rgba(255,255,255,0.9), 0 0 0 1px rgba(59, 130, 246, 0.2)' 
+                    : '0 4px 20px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.9)'
             }}
         >
             {/* Section titre */}
-            <div className="p-4 bg-gradient-to-r from-slate-50/80 to-slate-100/50 group-hover:from-slate-100/90 group-hover:to-slate-200/60 transition-all duration-300">
-                <h3 className="text-xl font-bold font-serif text-slate-800 group-hover:text-slate-900 transition-colors duration-300">{chapter.chapter}</h3>
+            <div className="p-5 bg-gradient-to-r from-blue-50/90 to-indigo-50/90 group-hover:from-blue-100/95 group-hover:to-indigo-100/95 transition-all duration-300 border-b-2 border-blue-200/60 group-hover:border-blue-300/80">
+                <h3 className="text-xl font-bold font-sans text-slate-900 group-hover:text-blue-900 transition-colors duration-300 leading-tight">{chapter.chapter}</h3>
             </div>
             
             {/* Section badge */}
@@ -87,6 +94,8 @@ const DashboardView: React.FC = () => {
     
     const [displayText, setDisplayText] = useState('');
     const [isTyping, setIsTyping] = useState(true);
+    const [isOrientationModalOpen, setIsOrientationModalOpen] = useState(false);
+    const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
     
     const welcomeText = useMemo(() => {
         if (!profile) return '';
@@ -129,13 +138,40 @@ const DashboardView: React.FC = () => {
     
     return (
         <div className="animate-fadeIn">
-            <div className="flex items-center gap-4 mb-8 p-4 bg-card-bg/50 backdrop-blur-sm rounded-2xl">
+            {/* Bouton d'orientation pédagogique fixe en haut à droite */}
+            <button
+                onClick={() => setIsOrientationModalOpen(true)}
+                className="fixed top-4 right-20 z-50 w-12 h-12 bg-white/90 hover:bg-white text-slate-600 hover:text-slate-800 rounded-full shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center backdrop-blur-sm border border-slate-200/50 hover:border-slate-300/70"
+                title="Orientation pédagogique"
+                aria-label="Ouvrir l'orientation pédagogique"
+            >
+                <span className="material-symbols-outlined text-xl">school</span>
+            </button>
+            
+            {/* Bouton d'aide fixe en haut à droite */}
+            <button
+                onClick={() => setIsHelpModalOpen(true)}
+                className="fixed top-4 right-4 z-50 w-12 h-12 bg-white/90 backdrop-blur-sm shadow-md hover:shadow-lg transition-all duration-200 rounded-full flex items-center justify-center text-slate-600 hover:text-slate-800 border border-slate-200/50 hover:border-slate-300/70"
+                title="Aide"
+                aria-label="Ouvrir l'aide"
+            >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </button>
+            
+            <div className="flex items-center gap-4 mb-8">
                 <span className="text-5xl">🦉</span>
                 <div>
-                    <h1 className="text-3xl font-bold font-serif min-h-[40px] text-dark-gray">
+                    <h1 className="text-3xl font-bold font-serif text-dark-gray">
                         {displayText}
                         {isTyping && <span className="animate-cursorBlink text-primary/80 ml-1">|</span>}
                     </h1>
+                    {profile && (
+                        <p className="text-sm text-gray-500 mt-1">
+                            {CLASS_OPTIONS.find(c => c.value === profile.classId)?.label}
+                        </p>
+                    )}
                 </div>
             </div>
 
@@ -160,6 +196,19 @@ const DashboardView: React.FC = () => {
                     <p className="text-secondary">Revenez bientôt !</p>
                 </div>
             )}
+            
+            {/* Modal d'orientation pédagogique */}
+            <OrientationModal 
+                isOpen={isOrientationModalOpen} 
+                onClose={() => setIsOrientationModalOpen(false)}
+                classId={profile?.classId || ''}
+            />
+            
+            {/* Modal d'aide */}
+            <HelpModal 
+                isOpen={isHelpModalOpen} 
+                onClose={() => setIsHelpModalOpen(false)}
+            />
         </div>
     );
 };

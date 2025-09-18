@@ -143,7 +143,7 @@ const Quiz: React.FC = () => {
                     </h4>
                     <div className="text-gray-700">
                         <MathJax dynamic>{currentQuestion.explanation}</MathJax>
-                    </div>
+            </div>
                 </div>
             )}
 

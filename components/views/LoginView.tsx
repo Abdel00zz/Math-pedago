@@ -96,11 +96,13 @@ const LoginView: React.FC = () => {
 
     return (
         <div className="flex items-center justify-center min-h-screen sm:-mt-20">
+            
             <div className="relative w-full max-w-md p-8 space-y-8 bg-card-bg rounded-2xl shadow-lg animate-slideInUp overflow-hidden">
                 <div className="relative z-10">
                     {state.profile ? loggedInView : loggedOutView}
                 </div>
             </div>
+
         </div>
     );
 };
