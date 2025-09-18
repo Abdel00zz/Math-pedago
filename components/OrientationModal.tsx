@@ -398,7 +398,7 @@ const OrientationModal: React.FC<OrientationModalProps> = ({ isOpen, onClose, cl
                 <h2 className="text-3xl font-bold text-slate-700 mb-2 text-center font-['Fira_Sans',sans-serif]">
                     Programme de Mathématiques
                 </h2>
-                <p className="text-slate-500 text-sm text-center">
+                <p className="text-slate-600 text-base text-center font-sans font-medium tracking-wide bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent hover:from-indigo-700 hover:to-purple-700 transition-all duration-300">
                     {chapters.length} chapitres disponibles
                 </p>
             </div>
