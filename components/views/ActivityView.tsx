@@ -28,7 +28,7 @@ const ActivityView: React.FC = () => {
                     </button>
                 </div>
                
-                <h2 className="text-xl font-medium font-serif text-slate-700 whitespace-nowrap mb-4">{title} - {chapter.chapter}</h2>
+                <h2 className="text-xl font-medium font-serif text-slate-700 whitespace-nowrap mb-4">{chapter.chapter}</h2>
             </div>
             
             <div>

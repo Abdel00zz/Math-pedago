@@ -5,7 +5,8 @@ import { CLASS_OPTIONS } from '../../constants';
 import OrientationModal from '../OrientationModal';
 import HelpModal from '../HelpModal';
 
-const ChapterCard: React.FC<{ chapter: Chapter; progress?: ChapterProgress; onClick: () => void }> = ({ chapter, progress, onClick }) => {
+
+const ChapterCard: React.FC<{ chapter: Chapter; progress?: ChapterProgress; onClick: () => void; onLiveClick?: (sessionDate: string) => void }> = ({ chapter, progress, onClick, onLiveClick }) => {
     const isQuizSubmitted = progress?.quiz.isSubmitted || false;
     const totalExercises = chapter.exercises?.length || 0;
     const exercisesFeedback = progress?.exercisesFeedback || {};
@@ -16,74 +17,83 @@ const ChapterCard: React.FC<{ chapter: Chapter; progress?: ChapterProgress; onCl
     
     const quizScore = progress?.quiz.score || 0;
     const quizIcon = isQuizSubmitted ? 'check_circle' : 'quiz';
-    const quizColor = isQuizSubmitted ? 'text-success' : 'text-primary/80';
+    const quizColor = isQuizSubmitted ? 'text-emerald-600' : 'text-blue-600';
     const exerciseIcon = allExercisesEvaluated ? 'check_circle' : 'edit_note';
-    const exerciseColor = allExercisesEvaluated ? 'text-success' : 'text-primary/80';
+    const exerciseColor = allExercisesEvaluated ? 'text-emerald-600' : 'text-purple-600';
 
     return (
         <div 
-            onClick={onClick}
-            className={`relative bg-gradient-to-br from-white to-slate-50 rounded-lg shadow-sm flex flex-col cursor-pointer min-h-[260px] overflow-hidden group transition-all duration-300 ease-out touch-manipulation before:absolute before:inset-0 before:bg-gradient-to-t before:from-slate-600/5 before:to-transparent before:opacity-0 before:transition-opacity before:duration-300 hover:before:opacity-100 ${
+            onClick={chapter.isActive ? onClick : undefined}
+            className={`relative bg-white rounded-xl shadow-lg flex flex-col min-h-[140px] overflow-hidden group transition-all duration-500 ease-out ${
                 !chapter.isActive 
-                    ? 'opacity-60 cursor-not-allowed border-2 border-slate-200' 
-                    : 'border-3 border-blue-400 hover:border-blue-500 hover:shadow-xl hover:shadow-blue-500/20 hover:bg-gradient-to-br hover:from-slate-50 hover:to-slate-100 active:shadow-sm animate-pulse-subtle'
+                    ? 'opacity-60 cursor-not-allowed border border-gray-200' 
+                    : 'cursor-pointer hover:scale-[1.02] border border-gray-100 hover:border-blue-200 hover:shadow-2xl hover:shadow-blue-500/10 active:scale-[0.98]'
             }`}
-            style={{
-                background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #f1f5f9 100%)',
-                boxShadow: chapter.isActive 
-                    ? '0 6px 25px rgba(59, 130, 246, 0.15), inset 0 1px 0 rgba(255,255,255,0.9), 0 0 0 1px rgba(59, 130, 246, 0.2)' 
-                    : '0 4px 20px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.9)'
-            }}
         >
-            {/* Section titre */}
-            <div className="p-5 bg-gradient-to-r from-blue-50/90 to-indigo-50/90 group-hover:from-blue-100/95 group-hover:to-indigo-100/95 transition-all duration-300 border-b-2 border-blue-200/60 group-hover:border-blue-300/80">
-                <h3 className="text-xl font-bold font-sans text-slate-900 group-hover:text-blue-900 transition-colors duration-300 leading-tight">{chapter.chapter}</h3>
-            </div>
+            {/* Header hyper compact */}
+            <header className="relative p-3 bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/50 border-b border-gray-100">
+                <div className="flex items-center justify-between gap-2">
+                     <hgroup className="flex-1 min-w-0">
+                         <h3 className="text-sm font-extrabold text-gray-900 leading-tight group-hover:text-blue-900 transition-all duration-300 truncate bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent hover:from-purple-600 hover:to-pink-600 drop-shadow-sm">{chapter.chapter}</h3>
+                     </hgroup>
+                     <nav className="flex items-center gap-2" aria-label="Statut du chapitre">
+                            {isCompleted ? (
+                                <span className="flex items-center gap-1 px-3 py-1.5 text-xs font-semibold rounded-full shadow-sm border bg-gradient-to-r from-emerald-50 to-green-50 text-emerald-700 border-emerald-200 hover:shadow-md transition-all duration-200">
+                                    ✓ Terminé
+                                </span>
+                            ) : chapter.isActive ? (
+                                <span className="flex items-center gap-1 px-3 py-1.5 text-xs font-semibold rounded-full shadow-sm border bg-gradient-to-r from-amber-50 to-yellow-50 text-amber-700 border-amber-200 hover:shadow-md transition-all duration-200">
+                                    ⏱ En cours
+                                </span>
+                            ) : (
+                                <span className="flex items-center gap-1 px-3 py-1.5 text-xs font-semibold rounded-full shadow-sm border bg-gradient-to-r from-gray-50 to-slate-50 text-gray-600 border-gray-200 transition-all duration-200">
+                                     🔒 À venir
+                                 </span>
+                             )}
+                         </nav>
+                 </div>
+            </header>
             
-            {/* Section badge */}
-            <div className="p-3 flex justify-end">
-                {isCompleted ? (
-                    <span className="px-2 py-0.5 bg-green-100 rounded-full text-green-800 font-medium text-xs whitespace-nowrap">
-                        Terminé
-                    </span>
-                ) : chapter.isActive ? (
-                    <span className="px-2 py-0.5 bg-orange-100 rounded-full text-orange-800 font-medium text-xs whitespace-nowrap">
-                        Pas encore terminé
-                    </span>
-                ) : (
-                    <span className="text-xs font-bold text-secondary bg-light-gray px-2 py-1 rounded-full text-center whitespace-nowrap">À VENIR</span>
-                )}
-            </div>
-            
-            {/* Section statistiques */}
-            <div className="p-4 grid grid-cols-2 gap-4">
-                {/* Quiz Stat Block */}
-                <div className="bg-light-gray/50 rounded-xl p-3 text-center">
-                    <span className={`material-symbols-outlined text-3xl ${quizColor}`}>{quizIcon}</span>
-                    <p className="font-bold text-dark-gray text-sm mt-1">{chapter.quiz?.length || 0} Question{(chapter.quiz?.length || 0) !== 1 ? 's' : ''}</p>
-                    {isQuizSubmitted ? (
-                        <div className="flex items-center justify-center gap-1 text-sm text-success font-bold mt-1">
-                            <span className="material-symbols-outlined text-base">check_circle</span>
-                            <span>{quizScore}%</span>
-                        </div>
-                    ) : (
-                        <p className="text-sm text-secondary mt-1">À faire</p>
-                    )}
-                </div>
-                {/* Exercise Stat Block */}
-                <div className="bg-light-gray/50 rounded-xl p-3 text-center">
-                    <span className={`material-symbols-outlined text-3xl ${exerciseColor}`}>{exerciseIcon}</span>
-                    <p className="font-bold text-dark-gray text-sm mt-1">{totalExercises} Exercice{totalExercises !== 1 ? 's' : ''}</p>
-                    {allExercisesEvaluated ? (
-                        <div className="flex items-center justify-center gap-1 text-sm text-success font-bold mt-1">
-                            <span className="material-symbols-outlined text-base">check_circle</span>
-                            <span>Évalués</span>
-                        </div>
-                    ) : (
-                        <p className="text-sm text-secondary mt-1">À faire</p>
-                    )}
-                </div>
-            </div>
+            {/* Section statistiques optimisée */}
+             <main className="flex-1 p-2 grid grid-cols-2 gap-2">
+                 {/* Carte Quiz */}
+                 <article className="bg-gradient-to-br from-blue-50 to-blue-100/50 rounded-lg p-4 border border-blue-200/50 hover:border-blue-300 transition-all duration-300 group/quiz flex flex-col items-center text-center justify-between">
+                     <header className="flex flex-col items-center">
+                         <h4 className="font-bold text-gray-800 text-sm mb-2" role="heading" aria-level="4">
+                             <span className="sr-only">Quiz: </span>{chapter.quiz?.length || 0} questions
+                         </h4>
+                     </header>
+                     
+                     <footer className="mt-2">
+                         {isQuizSubmitted ? (
+                             <span className="flex items-center gap-1 text-emerald-700 font-bold text-sm bg-emerald-50 px-2 py-1 rounded">
+                                 ✓ {quizScore}%
+                             </span>
+                         ) : (
+                             <span className="text-sm text-blue-600 bg-blue-50 px-2 py-1 rounded font-medium">À faire</span>
+                         )}
+                     </footer>
+                 </article>
+                 
+                 {/* Carte Exercices */}
+                 <article className="bg-gradient-to-br from-purple-50 to-purple-100/50 rounded-lg p-4 border border-purple-200/50 hover:border-purple-300 transition-all duration-300 group/exercise flex flex-col items-center text-center justify-between">
+                     <header className="flex flex-col items-center">
+                         <h4 className="font-bold text-gray-800 text-sm mb-2" role="heading" aria-level="4">
+                             <span className="sr-only">Exercices: </span>{totalExercises} exercices
+                         </h4>
+                     </header>
+                     
+                     <footer className="mt-2">
+                         {allExercisesEvaluated ? (
+                             <span className="flex items-center gap-1 text-emerald-700 font-bold text-sm bg-emerald-50 px-2 py-1 rounded">
+                                 ✓ OK
+                             </span>
+                         ) : (
+                             <span className="text-sm text-purple-600 bg-purple-50 px-2 py-1 rounded font-medium">À faire</span>
+                         )}
+                     </footer>
+                 </article>
+             </main>
         </div>
     );
 };
@@ -96,6 +106,7 @@ const DashboardView: React.FC = () => {
     const [isTyping, setIsTyping] = useState(true);
     const [isOrientationModalOpen, setIsOrientationModalOpen] = useState(false);
     const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
+    const [selectedSessionDate, setSelectedSessionDate] = useState('');
     
     const welcomeText = useMemo(() => {
         if (!profile) return '';
@@ -137,79 +148,89 @@ const DashboardView: React.FC = () => {
     if (!profile) return null;
     
     return (
-        <div className="animate-fadeIn">
-            {/* Bouton d'orientation pédagogique fixe en haut à droite */}
-            <button
-                onClick={() => setIsOrientationModalOpen(true)}
-                className="fixed top-4 right-20 z-50 w-12 h-12 bg-white/90 hover:bg-white text-slate-600 hover:text-slate-800 rounded-full shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center backdrop-blur-sm border border-slate-200/50 hover:border-slate-300/70"
-                title="Orientation pédagogique"
-                aria-label="Ouvrir l'orientation pédagogique"
-            >
-                <span className="material-symbols-outlined text-xl">school</span>
-            </button>
+        <main className="animate-fadeIn">
+            {/* Boutons d'action en haut à droite */}
+            <nav className="fixed top-6 right-4 z-50 flex gap-3" role="navigation" aria-label="Actions principales">
+                <button
+                    onClick={() => setIsOrientationModalOpen(true)}
+                    className="w-12 h-12 bg-gradient-to-br from-rose-50/90 to-pink-50/90 hover:from-rose-100/95 hover:to-pink-100/95 text-rose-500 hover:text-rose-600 rounded-full shadow-sm hover:shadow-md transition-all duration-300 flex items-center justify-center backdrop-blur-sm border border-rose-100/60 hover:border-rose-200/80"
+                    title="Orientation pédagogique"
+                    aria-label="Ouvrir l'orientation pédagogique"
+                >
+                    <span className="material-symbols-outlined text-xl">school</span>
+                </button>
+                
+                <button
+                     onClick={() => setIsHelpModalOpen(true)}
+                     className="w-12 h-12 bg-gradient-to-br from-sky-50/90 to-blue-50/90 hover:from-sky-100/95 hover:to-blue-100/95 backdrop-blur-sm shadow-sm hover:shadow-md transition-all duration-300 rounded-full flex items-center justify-center text-sky-500 hover:text-sky-600 border border-sky-100/60 hover:border-sky-200/80"
+                     title="Aide"
+                     aria-label="Ouvrir l'aide"
+                 >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </button>
+            </nav>
             
-            {/* Bouton d'aide fixe en haut à droite */}
-            <button
-                onClick={() => setIsHelpModalOpen(true)}
-                className="fixed top-4 right-4 z-50 w-12 h-12 bg-white/90 backdrop-blur-sm shadow-md hover:shadow-lg transition-all duration-200 rounded-full flex items-center justify-center text-slate-600 hover:text-slate-800 border border-slate-200/50 hover:border-slate-300/70"
-                title="Aide"
-                aria-label="Ouvrir l'aide"
-            >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-            </button>
+
             
-            <div className="flex items-center gap-4 mb-8">
-                <span className="text-5xl">🦉</span>
-                <div>
-                    <h1 className="text-3xl font-bold font-serif text-dark-gray">
-                        {displayText}
-                        {isTyping && <span className="animate-cursorBlink text-primary/80 ml-1">|</span>}
-                    </h1>
-                    {profile && (
-                        <p className="text-sm text-gray-500 mt-1">
-                            {CLASS_OPTIONS.find(c => c.value === profile.classId)?.label}
-                        </p>
-                    )}
-                </div>
-            </div>
+            {/* Contenu principal avec espacement amélioré */}
+            <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <header className="flex justify-center mb-8">
+                    <hgroup className="text-center">
+                        <h2 className="text-4xl md:text-5xl font-bold font-serif text-dark-gray mb-2">
+                            {displayText}
+                            {isTyping && <span className="animate-cursorBlink text-primary/80 ml-1">|</span>}
+                        </h2>
+                        {profile && (
+                            <p className="text-lg text-gray-500">
+                                {CLASS_OPTIONS.find(c => c.value === profile.classId)?.label}
+                            </p>
+                        )}
+                    </hgroup>
+                </header>
 
 
-            {userChapters.length > 0 ? (
-                <div className="space-y-4">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6 px-2 sm:px-0">
-                        {userChapters.map(chapter => (
-                            <ChapterCard
-                                key={chapter.id}
-                                chapter={chapter}
-                                progress={progress[chapter.id]}
-                                onClick={() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'chapter-hub', chapterId: chapter.id } })}
-                            />
-                        ))}
-                    </div>
-                </div>
-            ) : (
-                 <div className="text-center py-16 px-6 bg-card-bg/80 backdrop-blur-sm rounded-2xl shadow-sm">
-                     <span className="material-symbols-outlined text-6xl text-secondary/50">library_books</span>
-                    <p className="mt-4 font-semibold text-dark-gray text-lg">Aucune activité n'est disponible pour votre classe pour le moment.</p>
-                    <p className="text-secondary">Revenez bientôt !</p>
-                </div>
-            )}
+                {userChapters.length > 0 ? (
+                    <section className="space-y-4" aria-label="Chapitres disponibles">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-3 sm:gap-4 lg:gap-8 px-2 sm:px-0" role="list">
+                            {userChapters.map(chapter => (
+                                <ChapterCard
+                                    key={chapter.id}
+                                    chapter={chapter}
+                                    progress={progress[chapter.id]}
+                                    onClick={() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'chapter-hub', chapterId: chapter.id } })}
+                                    onLiveClick={(sessionDate) => {
+                                        setSelectedSessionDate(sessionDate);
+                                        
+                                    }}
+                                />
+                            ))}
+                        </div>
+                    </section>
+                ) : (
+                    <section className="text-center py-16 px-6 bg-card-bg/80 backdrop-blur-sm rounded-2xl shadow-sm" aria-label="Aucun contenu disponible">
+                        <span className="material-symbols-outlined text-6xl text-secondary/50" aria-hidden="true">library_books</span>
+                        <h3 className="mt-4 font-semibold text-dark-gray text-lg">Aucune activité n'est disponible pour votre classe pour le moment.</h3>
+                        <p className="text-secondary">Revenez bientôt !</p>
+                    </section>
+                )}
+            </section>
             
-            {/* Modal d'orientation pédagogique */}
+            {/* Modales */}
             <OrientationModal 
                 isOpen={isOrientationModalOpen} 
                 onClose={() => setIsOrientationModalOpen(false)}
                 classId={profile?.classId || ''}
             />
             
-            {/* Modal d'aide */}
             <HelpModal 
                 isOpen={isHelpModalOpen} 
                 onClose={() => setIsHelpModalOpen(false)}
             />
-        </div>
+            
+
+        </main>
     );
 };
 

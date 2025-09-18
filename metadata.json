@@ -1,5 +1,5 @@
 {
-  "name": "Plateforme Pédagogique Interactive",
-  "description": "Une application React moderne et fluide pour les élèves, permettant de suivre des chapitres, de répondre à des quiz, de faire des exercices et de suivre sa progression. L'application offre une expérience utilisateur professionnelle avec une interface minimaliste et des animations soignées.",
+  "name": "بيداغوا ماط - Pédago Maths",
+  "description": "منصة تعليمية تفاعلية حديثة للطلاب، تتيح متابعة الفصول والإجابة على الاختبارات وحل التمارين ومتابعة التقدم. Une application React moderne et fluide pour les élèves, permettant de suivre des chapitres, de répondre à des quiz, de faire des exercices et de suivre sa progression.",
   "requestFramePermissions": []
 }
