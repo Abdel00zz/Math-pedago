@@ -39,7 +39,7 @@ const ChapterCard: React.FC<{ chapter: Chapter; progress?: ChapterProgress; onCl
                      <nav className="flex items-center gap-2" aria-label="Statut du chapitre">
                             {isCompleted ? (
                                 <span className="flex items-center gap-1 px-3 py-1.5 text-xs font-semibold rounded-full shadow-sm border bg-gradient-to-r from-emerald-50 to-green-50 text-emerald-700 border-emerald-200 hover:shadow-md transition-all duration-200">
-                                    ✓ Terminé
+                                    Terminé
                                 </span>
                             ) : chapter.isActive ? (
                                 <span className="flex items-center gap-1 px-3 py-1.5 text-xs font-semibold rounded-full shadow-sm border bg-gradient-to-r from-amber-50 to-yellow-50 text-amber-700 border-amber-200 hover:shadow-md transition-all duration-200">
@@ -67,7 +67,7 @@ const ChapterCard: React.FC<{ chapter: Chapter; progress?: ChapterProgress; onCl
                      <footer className="mt-2">
                          {isQuizSubmitted ? (
                              <span className="flex items-center gap-1 text-emerald-700 font-bold text-sm bg-emerald-50 px-2 py-1 rounded">
-                                 ✓ {quizScore}%
+                                 {quizScore}%
                              </span>
                          ) : (
                              <span className="text-sm text-blue-600 bg-blue-50 px-2 py-1 rounded font-medium">À faire</span>
@@ -85,8 +85,8 @@ const ChapterCard: React.FC<{ chapter: Chapter; progress?: ChapterProgress; onCl
                      
                      <footer className="mt-2">
                          {allExercisesEvaluated ? (
-                             <span className="flex items-center gap-1 text-emerald-700 font-bold text-sm bg-emerald-50 px-2 py-1 rounded">
-                                 ✓ OK
+                             <span className="flex items-center gap-1 text-emerald-700 font-bold text-xs bg-emerald-50 px-2 py-1 rounded">
+                                 OK
                              </span>
                          ) : (
                              <span className="text-sm text-purple-600 bg-purple-50 px-2 py-1 rounded font-medium">À faire</span>
@@ -175,8 +175,8 @@ const DashboardView: React.FC = () => {
 
             
             {/* Contenu principal avec espacement amélioré */}
-            <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <header className="flex justify-center mb-8">
+            <section className="w-full mx-auto px-1 sm:px-2 lg:px-3 relative z-10">
+                <header className="flex justify-center mb-4">
                     <hgroup className="text-center">
                         <h2 className="text-4xl md:text-5xl font-bold font-serif text-dark-gray mb-2">
                             {displayText}
@@ -193,7 +193,7 @@ const DashboardView: React.FC = () => {
 
                 {userChapters.length > 0 ? (
                     <section className="space-y-4" aria-label="Chapitres disponibles">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-3 sm:gap-4 lg:gap-8 px-2 sm:px-0" role="list">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-2 sm:gap-3 lg:gap-4 px-0" role="list">
                             {userChapters.map(chapter => (
                                 <ChapterCard
                                     key={chapter.id}
