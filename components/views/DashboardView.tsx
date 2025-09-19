@@ -5,95 +5,80 @@ import { CLASS_OPTIONS } from '../../constants';
 import OrientationModal from '../OrientationModal';
 import HelpModal from '../HelpModal';
 
-
-const ChapterCard: React.FC<{ chapter: Chapter; progress?: ChapterProgress; onClick: () => void; onLiveClick?: (sessionDate: string) => void }> = ({ chapter, progress, onClick, onLiveClick }) => {
-    const isQuizSubmitted = progress?.quiz.isSubmitted || false;
+const ChapterCard: React.FC<{ chapter: Chapter; progress?: ChapterProgress; onClick: () => void; }> = ({ chapter, progress, onClick }) => {
+    const totalQuizQuestions = chapter.quiz?.length || 0;
     const totalExercises = chapter.exercises?.length || 0;
-    const exercisesFeedback = progress?.exercisesFeedback || {};
-    // Terminé si chaque exercice est évalué (même 'Pas travaillé') et le quiz est soumis
-    const evaluatedCount = Object.keys(exercisesFeedback).length;
-    const allExercisesEvaluated = totalExercises > 0 ? evaluatedCount === totalExercises : true;
-    const isCompleted = isQuizSubmitted && allExercisesEvaluated;
-    
-    const quizScore = progress?.quiz.score || 0;
-    const quizIcon = isQuizSubmitted ? 'check_circle' : 'quiz';
-    const quizColor = isQuizSubmitted ? 'text-emerald-600' : 'text-blue-600';
-    const exerciseIcon = allExercisesEvaluated ? 'check_circle' : 'edit_note';
-    const exerciseColor = allExercisesEvaluated ? 'text-emerald-600' : 'text-purple-600';
+
+    const completedExercises = Object.keys(progress?.exercisesFeedback || {}).length;
+    const isQuizDone = progress?.quiz.isSubmitted || false;
+
+    const completionPercentage = useMemo(() => {
+        const quizUnit = totalQuizQuestions > 0 ? 1 : 0;
+        const totalUnits = quizUnit + totalExercises;
+        if (totalUnits === 0) return 100;
+
+        const completedUnits = (isQuizDone ? quizUnit : 0) + completedExercises;
+        
+        return Math.round((completedUnits / totalUnits) * 100);
+    }, [totalQuizQuestions, totalExercises, completedExercises, isQuizDone]);
+
+    const isCompleted = useMemo(() => {
+        const quizOk = totalQuizQuestions > 0 ? isQuizDone : true;
+        const exercisesOk = completedExercises === totalExercises;
+        return chapter.isActive && quizOk && exercisesOk;
+    }, [chapter.isActive, totalQuizQuestions, isQuizDone, completedExercises, totalExercises]);
 
     return (
-        <div 
+        <div
             onClick={chapter.isActive ? onClick : undefined}
-            className={`relative bg-white rounded-xl shadow-lg flex flex-col min-h-[140px] overflow-hidden group transition-all duration-500 ease-out ${
-                !chapter.isActive 
-                    ? 'opacity-60 cursor-not-allowed border border-gray-200' 
-                    : 'cursor-pointer hover:scale-[1.02] border border-gray-100 hover:border-blue-200 hover:shadow-2xl hover:shadow-blue-500/10 active:scale-[0.98]'
+            className={`font-sans rounded-xl border flex flex-col bg-white transition-all duration-300 group ${
+                !chapter.isActive
+                    ? 'border-slate-200 bg-slate-50/50 cursor-not-allowed'
+                    : 'cursor-pointer border-slate-200 hover:border-blue-400 hover:shadow-lg'
             }`}
         >
-            {/* Header hyper compact */}
-            <header className="relative p-3 bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/50 border-b border-gray-100">
-                <div className="flex items-center justify-between gap-2">
-                     <hgroup className="flex-1 min-w-0">
-                         <h3 className="text-sm font-extrabold text-gray-900 leading-tight group-hover:text-blue-900 transition-all duration-300 truncate bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent hover:from-purple-600 hover:to-pink-600 drop-shadow-sm">{chapter.chapter}</h3>
-                     </hgroup>
-                     <nav className="flex items-center gap-2" aria-label="Statut du chapitre">
-                            {isCompleted ? (
-                                <span className="flex items-center gap-1 px-3 py-1.5 text-xs font-semibold rounded-full shadow-sm border bg-gradient-to-r from-emerald-50 to-green-50 text-emerald-700 border-emerald-200 hover:shadow-md transition-all duration-200">
-                                    Terminé
-                                </span>
-                            ) : chapter.isActive ? (
-                                <span className="flex items-center gap-1 px-3 py-1.5 text-xs font-semibold rounded-full shadow-sm border bg-gradient-to-r from-amber-50 to-yellow-50 text-amber-700 border-amber-200 hover:shadow-md transition-all duration-200">
-                                    ⏱ En cours
-                                </span>
-                            ) : (
-                                <span className="flex items-center gap-1 px-3 py-1.5 text-xs font-semibold rounded-full shadow-sm border bg-gradient-to-r from-gray-50 to-slate-50 text-gray-600 border-gray-200 transition-all duration-200">
-                                     🔒 À venir
-                                 </span>
-                             )}
-                         </nav>
-                 </div>
-            </header>
-            
-            {/* Section statistiques optimisée */}
-             <main className="flex-1 p-2 grid grid-cols-2 gap-2">
-                 {/* Carte Quiz */}
-                 <article className="bg-gradient-to-br from-blue-50 to-blue-100/50 rounded-lg p-4 border border-blue-200/50 hover:border-blue-300 transition-all duration-300 group/quiz flex flex-col items-center text-center justify-between">
-                     <header className="flex flex-col items-center">
-                         <h4 className="font-bold text-gray-800 text-sm mb-2" role="heading" aria-level="4">
-                             <span className="sr-only">Quiz: </span>{chapter.quiz?.length || 0} questions
-                         </h4>
-                     </header>
-                     
-                     <footer className="mt-2">
-                         {isQuizSubmitted ? (
-                             <span className="flex items-center gap-1 text-emerald-700 font-bold text-sm bg-emerald-50 px-2 py-1 rounded">
-                                 {quizScore}%
-                             </span>
-                         ) : (
-                             <span className="text-sm text-blue-600 bg-blue-50 px-2 py-1 rounded font-medium">À faire</span>
-                         )}
-                     </footer>
-                 </article>
-                 
-                 {/* Carte Exercices */}
-                 <article className="bg-gradient-to-br from-purple-50 to-purple-100/50 rounded-lg p-4 border border-purple-200/50 hover:border-purple-300 transition-all duration-300 group/exercise flex flex-col items-center text-center justify-between">
-                     <header className="flex flex-col items-center">
-                         <h4 className="font-bold text-gray-800 text-sm mb-2" role="heading" aria-level="4">
-                             <span className="sr-only">Exercices: </span>{totalExercises} exercices
-                         </h4>
-                     </header>
-                     
-                     <footer className="mt-2">
-                         {allExercisesEvaluated ? (
-                             <span className="flex items-center gap-1 text-emerald-700 font-bold text-xs bg-emerald-50 px-2 py-1 rounded">
-                                 OK
-                             </span>
-                         ) : (
-                             <span className="text-sm text-purple-600 bg-purple-50 px-2 py-1 rounded font-medium">À faire</span>
-                         )}
-                     </footer>
-                 </article>
-             </main>
+            <div className="p-5 flex-grow">
+                <div className="flex justify-between items-start mb-3">
+                    <h3 className="text-base font-semibold text-slate-800 group-hover:text-blue-600 transition-colors duration-300">
+                        {chapter.chapter}
+                    </h3>
+                    {progress?.isWorkSubmitted ? (
+                        <span className="px-2.5 py-0.5 text-xs font-medium text-purple-800 bg-purple-100 rounded-full whitespace-nowrap">Travail soumis</span>
+                    ) : isCompleted ? (
+                        <span className="px-2.5 py-0.5 text-xs font-medium text-green-800 bg-green-100 rounded-full whitespace-nowrap">Terminé</span>
+                    ) : chapter.isActive ? (
+                        <span className="px-2.5 py-0.5 text-xs font-medium text-blue-800 bg-blue-100 rounded-full whitespace-nowrap">En cours</span>
+                    ) : (
+                        <span className="px-2.5 py-0.5 text-xs font-medium text-slate-700 bg-slate-200 rounded-full whitespace-nowrap">À venir</span>
+                    )}
+                </div>
+
+                
+                <div className="flex items-center gap-4 text-xs text-slate-600 mt-4">
+                    <div className="flex items-center gap-2">
+                        <span className="material-symbols-outlined text-base text-blue-500">quiz</span>
+                        <span>{totalQuizQuestions} Questions</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <span className="material-symbols-outlined text-base text-purple-500">edit_note</span>
+                        <span>{totalExercises} Exercices</span>
+                    </div>
+                </div>
+            </div>
+
+            {chapter.isActive && (
+                <div className="px-5 py-3 bg-slate-50 border-t border-slate-200 rounded-b-xl">
+                    <div className="flex items-center gap-3">
+                        <div className="w-full bg-slate-200 rounded-full h-1.5">
+                            <div
+                                className="bg-blue-500 h-1.5 rounded-full transition-all duration-500 ease-out"
+                                style={{ width: `${completionPercentage}%` }}
+                            ></div>
+                        </div>
+                        <p className="text-xs text-slate-600 font-medium whitespace-nowrap">{completionPercentage}%</p>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
@@ -102,38 +87,32 @@ const DashboardView: React.FC = () => {
     const { state, dispatch } = useContext(AppContext);
     const { profile, activities, progress } = state;
     
-    const [displayText, setDisplayText] = useState('');
-    const [isTyping, setIsTyping] = useState(true);
     const [isOrientationModalOpen, setIsOrientationModalOpen] = useState(false);
     const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
-    const [selectedSessionDate, setSelectedSessionDate] = useState('');
-    
-    const welcomeText = useMemo(() => {
-        if (!profile) return '';
-        const greeting = 'Bonjour, ';
-        return `${greeting}${profile.name} !`;
-    }, [profile]);
+    const [welcomeMessage, setWelcomeMessage] = useState('');
+    const [typingCompleted, setTypingCompleted] = useState(false);
 
     useEffect(() => {
-        if (welcomeText) {
-            setIsTyping(true);
-            setDisplayText('');
-            
+        if (profile?.name) {
+            const fullMessage = `Prêt à relever de nouveaux défis, ${profile.name} ?`;
             let i = 0;
+            setWelcomeMessage('');
+            setTypingCompleted(false);
+    
             const typingInterval = setInterval(() => {
-                setDisplayText(welcomeText.substring(0, i + 1));
-                i++;
-                
-                if (i >= welcomeText.length) {
+                if (i < fullMessage.length) {
+                    setWelcomeMessage(prev => prev + fullMessage.charAt(i));
+                    i++;
+                } else {
                     clearInterval(typingInterval);
-                    setIsTyping(false);
+                    setTypingCompleted(true);
                 }
-            }, 70);
-
+            }, 50);
+    
             return () => clearInterval(typingInterval);
         }
-    }, [welcomeText]);
-    
+    }, [profile]);
+
     const userChapters = useMemo(() => {
         if (!profile) return [];
         return (Object.values(activities) as Chapter[])
@@ -145,91 +124,120 @@ const DashboardView: React.FC = () => {
             });
     }, [activities, profile]);
 
+    const { nextChapter, otherChapters } = useMemo(() => {
+        const next = userChapters.find(ch => {
+            if (!ch.isActive) return false;
+
+            const chProgress = progress[ch.id];
+            const totalExercises = ch.exercises?.length || 0;
+            const totalQuizQuestions = ch.quiz?.length || 0;
+            const completedExercises = Object.keys(chProgress?.exercisesFeedback || {}).length;
+            const isQuizDone = chProgress?.quiz.isSubmitted || false;
+
+            const quizOk = totalQuizQuestions > 0 ? isQuizDone : true;
+            const exercisesOk = completedExercises === totalExercises;
+
+            return !(quizOk && exercisesOk);
+        });
+
+        const others = userChapters.filter(ch => ch.id !== next?.id);
+
+        return { nextChapter: next, otherChapters: others };
+    }, [userChapters, progress]);
+
+    const handleChapterClick = (chapterId: string) => {
+        dispatch({ type: 'CHANGE_VIEW', payload: { view: 'chapter-hub', chapterId } });
+    };
+
     if (!profile) return null;
     
     return (
-        <main className="animate-fadeIn">
-            {/* Boutons d'action en haut à droite */}
-            <nav className="fixed top-6 right-4 z-50 flex gap-3" role="navigation" aria-label="Actions principales">
-                <button
-                    onClick={() => setIsOrientationModalOpen(true)}
-                    className="w-12 h-12 bg-gradient-to-br from-gray-50/90 to-slate-50/90 hover:from-gray-100/95 hover:to-slate-100/95 text-gray-500 hover:text-gray-600 rounded-full shadow-sm hover:shadow-md transition-all duration-300 flex items-center justify-center backdrop-blur-sm border border-gray-100/60 hover:border-gray-200/80"
-                    title="Orientation pédagogique"
-                    aria-label="Ouvrir l'orientation pédagogique"
-                >
-                    <span className="material-symbols-outlined text-xl">school</span>
-                </button>
-                
-                <button
-                     onClick={() => setIsHelpModalOpen(true)}
-                     className="w-12 h-12 bg-gradient-to-br from-gray-50/90 to-slate-50/90 hover:from-gray-100/95 hover:to-slate-100/95 backdrop-blur-sm shadow-sm hover:shadow-md transition-all duration-300 rounded-full flex items-center justify-center text-gray-500 hover:text-gray-600 border border-gray-100/60 hover:border-gray-200/80"
-                     title="Aide"
-                     aria-label="Ouvrir l'aide"
-                 >
-                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                     </svg>
-                 </button>
-            </nav>
-            
-
-            
-            {/* Contenu principal avec espacement amélioré */}
-            <section className="w-full mx-auto px-1 sm:px-2 lg:px-3 relative z-10">
-                <header className="flex justify-center mb-4">
-                    <hgroup className="text-center">
-                        <h2 className="text-4xl md:text-5xl font-bold font-serif text-dark-gray mb-2">
-                            {displayText}
-                            {isTyping && <span className="animate-cursorBlink text-primary/80 ml-1">|</span>}
-                        </h2>
-                        {profile && (
-                            <p className="text-lg text-gray-500">
+        <main className="animate-fadeIn bg-slate-100 min-h-screen font-sans">
+            <header className="bg-white border-b border-slate-200">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="flex justify-between items-center h-24">
+                        <div>
+                            <h1 className="text-2xl font-bold text-slate-800 h-9">
+                                {welcomeMessage}
+                                {!typingCompleted && <span className="animate-pulse ml-1 opacity-70">|</span>}
+                            </h1>
+                            <p className="text-slate-500 mt-1 text-base">
                                 {CLASS_OPTIONS.find(c => c.value === profile.classId)?.label}
                             </p>
-                        )}
-                    </hgroup>
-                </header>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <button
+                                onClick={() => setIsOrientationModalOpen(true)}
+                                className="h-10 px-3 sm:px-4 flex items-center justify-center rounded-lg text-slate-600 bg-white border border-slate-300 hover:bg-slate-50 hover:text-blue-600 transition-colors active:scale-95"
+                                title="Orientation pédagogique"
+                            >
+                                <span className="material-symbols-outlined text-xl">explore</span>
+                                <span className="text-sm font-medium hidden sm:inline ml-2">Orientation</span>
+                            </button>
+                            <button
+                                onClick={() => setIsHelpModalOpen(true)}
+                                className="h-10 px-3 sm:px-4 flex items-center justify-center rounded-lg text-slate-600 bg-white border border-slate-300 hover:bg-slate-50 hover:text-blue-600 transition-colors active:scale-95"
+                                title="Aide"
+                            >
+                                <span className="material-symbols-outlined text-xl">help</span>
+                                <span className="text-sm font-medium hidden sm:inline ml-2">Aide</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </header>
 
+            <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+                {nextChapter && (
+                    <div className="mb-12">
+                        <h2 className="text-2xl font-bold mb-5 text-slate-700">Continuez votre parcours</h2>
+                        <div className="max-w-3xl">
+                            <ChapterCard
+                                chapter={nextChapter}
+                                progress={progress[nextChapter.id]}
+                                onClick={() => handleChapterClick(nextChapter.id)}
+                            />
+                        </div>
+                    </div>
+                )}
 
-                {userChapters.length > 0 ? (
-                    <section className="space-y-4" aria-label="Chapitres disponibles">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-2 sm:gap-3 lg:gap-4 px-0" role="list">
-                            {userChapters.map(chapter => (
+                {otherChapters.length > 0 && (
+                    <div>
+                        <h2 className="text-2xl font-bold mb-5 text-slate-700">
+                            {nextChapter ? 'Autres chapitres' : 'Commencez votre parcours'}
+                        </h2>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {otherChapters.map(chapter => (
                                 <ChapterCard
                                     key={chapter.id}
                                     chapter={chapter}
                                     progress={progress[chapter.id]}
-                                    onClick={() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'chapter-hub', chapterId: chapter.id } })}
-                                    onLiveClick={(sessionDate) => {
-                                        setSelectedSessionDate(sessionDate);
-                                        
-                                    }}
+                                    onClick={() => handleChapterClick(chapter.id)}
                                 />
                             ))}
                         </div>
-                    </section>
-                ) : (
-                    <section className="text-center py-16 px-6 bg-card-bg/80 backdrop-blur-sm rounded-2xl shadow-sm" aria-label="Aucun contenu disponible">
-                        <span className="material-symbols-outlined text-6xl text-secondary/50" aria-hidden="true">library_books</span>
-                        <h3 className="mt-4 font-semibold text-dark-gray text-lg">Aucune activité n'est disponible pour votre classe pour le moment.</h3>
-                        <p className="text-secondary">Revenez bientôt !</p>
-                    </section>
+                    </div>
+                )}
+
+                {userChapters.length === 0 && (
+                     <div className="text-center py-16 px-6 bg-white rounded-xl border border-slate-200">
+                        <span className="material-symbols-outlined text-5xl text-slate-400" aria-hidden="true">upcoming</span>
+                        <h3 className="mt-4 font-bold text-slate-700 text-xl">Aucune activité n'est disponible.</h3>
+                        <p className="text-slate-500 mt-1.5">Revenez bientôt pour de nouveaux chapitres !</p>
+                    </div>
                 )}
             </section>
             
-            {/* Modales */}
             <OrientationModal 
                 isOpen={isOrientationModalOpen} 
                 onClose={() => setIsOrientationModalOpen(false)}
-                classId={profile?.classId || ''}
+                classId={profile.classId}
             />
             
             <HelpModal 
                 isOpen={isHelpModalOpen} 
                 onClose={() => setIsHelpModalOpen(false)}
             />
-            
-
         </main>
     );
 };

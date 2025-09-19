@@ -27,7 +27,7 @@ const App: React.FC = () => {
 
     return (
         <div className="bg-background text-text-primary min-h-screen font-sans">
-            <main className="container mx-auto p-4 sm:p-6 lg:p-8 relative z-10">
+            <main className="container mx-auto px-4 sm:px-6 lg:px-8 pb-4 sm:pb-6 lg:pb-8 relative z-10">
                 {state.profile && <GlobalWorkSubmit />}
                 {renderView()}
             </main>

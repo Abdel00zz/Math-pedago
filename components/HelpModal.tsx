@@ -72,7 +72,7 @@ const HelpModal: React.FC<HelpModalProps> = ({ isOpen, onClose }) => {
 
                          {/* Message du professeur reformulé */}
                          <div className="text-gray-700 text-base md:text-lg font-medium leading-relaxed" style={{ fontFamily: '"Fira Sans", sans-serif' }}>
-                             Découvre une approche moderne et interactive pour maîtriser les mathématiques. <strong className="text-indigo-700">Pédago Math</strong> t'accompagne dans ton apprentissage avec des outils adaptés à ton rythme.
+                             Découvre une approche moderne et interactive pour maîtriser les mathématiques. <strong className="text-indigo-700">Maths Mind</strong> t'accompagne dans ton apprentissage avec des outils adaptés à ton rythme.
                          </div>
                      </div>
 

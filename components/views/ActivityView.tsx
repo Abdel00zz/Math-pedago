@@ -16,26 +16,12 @@ const ActivityView: React.FC = () => {
     const title = activitySubView === 'quiz' ? 'Quiz' : 'Exercices';
 
     return (
-        <div className="animate-fadeIn">
-            <div className="relative flex justify-center items-center mb-8 h-[42px]">
-                <div className="absolute left-0">
-                    <button
-                        onClick={() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'chapter-hub', chapterId: currentChapterId } })}
-                        className="inline-flex items-center justify-center w-10 h-10 text-secondary bg-card-bg/80 backdrop-blur-sm rounded-full shadow-sm hover:bg-light-gray transition border border-border-color active:scale-95"
-                        aria-label="Retour au hub de l'activité"
-                    >
-                        <span className="material-symbols-outlined">arrow_back</span>
-                    </button>
-                </div>
-               
-                <h2 className="text-xl font-medium font-serif text-slate-700 whitespace-nowrap mb-4">{chapter.chapter}</h2>
+        <main className="animate-fadeIn bg-slate-50 min-h-screen font-sans">
+            <div >
+                {activitySubView === 'quiz' && <Quiz chapter={chapter} title={title} />}
+                {activitySubView === 'exercises' && <Exercises chapter={chapter} title={title} />}
             </div>
-            
-            <div>
-                {activitySubView === 'quiz' && <Quiz />}
-                {activitySubView === 'exercises' && <Exercises />}
-            </div>
-        </div>
+        </main>
     );
 };
 

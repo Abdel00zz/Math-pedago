@@ -6,6 +6,7 @@ import { CLASS_OPTIONS } from '../constants';
 import { generateStudentProgressSubmission } from '../utils/utils';
 import ConfirmationModal from './ConfirmationModal';
 import Confetti from './Confetti';
+import Tooltip from './Tooltip';
 
 const GlobalWorkSubmit: React.FC = () => {
     const { state, dispatch } = useContext(AppContext);
@@ -21,8 +22,8 @@ const GlobalWorkSubmit: React.FC = () => {
         return chapters.find(ch => ch.class === profile.classId && ch.isActive);
     }, [activities, profile]);
 
-    // Ne pas afficher sur la page principale (dashboard)
-    if (!profile || state.view === 'dashboard') return null;
+    // We only want to show the submit button on the activity pages ('quiz' or 'exercises')
+    if (state.view !== 'activity') return null;
 
     if (!activeChapter) {
         return (
@@ -160,25 +161,16 @@ const GlobalWorkSubmit: React.FC = () => {
     return (
         <>
             {showConfetti && <Confetti />}
-            <div className="absolute top-2 sm:top-3 lg:top-4 right-2 sm:right-3 lg:right-4 z-20">
-                {isWorkSubmitted ? (
-                     <div 
-                         className="relative px-4 py-2 bg-card-bg/50 backdrop-blur-sm rounded-2xl shadow-sm border border-border-color" 
-                         title={getTooltipText()}
-                     >
-                         <div className="flex items-center gap-2">
-                             <span className="material-symbols-outlined text-success text-base">check_circle</span>
-                             <span className="text-xs font-bold text-dark-gray">Travail Envoyé</span>
-                         </div>
-                     </div>
-                ) : canSubmit ? (
-                    <button
-                        onClick={() => setIsConfirmationModalOpen(true)}
-                        title={getTooltipText()}
-                        className="group relative px-4 py-2 text-primary font-medium text-sm rounded-full transition-all duration-200 hover:bg-primary/8 hover:text-primary active:bg-primary/12 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:ring-offset-1"
-                    >
-                        <span className="relative">Envoyer mon travail</span>
-                    </button>
+            <div className="fixed bottom-0 left-0 right-0 flex justify-center pb-6 z-20">
+                {canSubmit ? (
+                    <Tooltip text={getTooltipText()}>
+                        <button
+                            onClick={() => setIsConfirmationModalOpen(true)}
+                            className="bg-blue-500 text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 transform hover:scale-105 transition-all duration-200 animate-pulse"
+                        >
+                            Soumettre mon travail
+                        </button>
+                    </Tooltip>
                 ) : null}
             </div>
 

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { AppContext } from '../context/AppContext';
-import { Exercise, Feedback, SubQuestion } from '../types';
+import { Chapter, Exercise, Feedback, SubQuestion } from '../types';
 import { MathJax } from 'better-react-mathjax';
 import Modal from './Modal';
 
@@ -40,39 +40,38 @@ const ExerciseCard: React.FC<{ exercise: Exercise; exerciseNumber: number; isWor
     const feedbackOptions: { label: Feedback, style: string, activeStyle: string }[] = [
         { 
             label: 'Facile', 
-            style: 'bg-green-100 text-green-800 hover:bg-green-200', 
-            activeStyle: 'bg-green-600 text-white ring-2 ring-offset-2 ring-green-600',
+            style: 'bg-white border-slate-200 hover:border-green-400 text-slate-700', 
+            activeStyle: 'bg-green-50 border-green-500 ring-2 ring-green-400 text-green-800 font-bold',
         },
         { 
             label: 'Moyen', 
-            style: 'bg-amber-100 text-amber-800 hover:bg-amber-200', 
-            activeStyle: 'bg-amber-500 text-white ring-2 ring-offset-2 ring-amber-500',
+            style: 'bg-white border-slate-200 hover:border-amber-400 text-slate-700', 
+            activeStyle: 'bg-amber-50 border-amber-500 ring-2 ring-amber-400 text-amber-800 font-bold',
         },
         { 
             label: 'Difficile', 
-            style: 'bg-red-100 text-red-800 hover:bg-red-200', 
-            activeStyle: 'bg-red-600 text-white ring-2 ring-offset-2 ring-red-600',
+            style: 'bg-white border-slate-200 hover:border-red-400 text-slate-700', 
+            activeStyle: 'bg-red-50 border-red-500 ring-2 ring-red-400 text-red-800 font-bold',
         },
         { 
             label: 'Pas travaillé', 
-            style: 'bg-gray-100 text-gray-800 hover:bg-gray-200', 
-            activeStyle: 'bg-gray-600 text-white ring-2 ring-offset-2 ring-gray-600',
+            style: 'bg-white border-slate-200 hover:border-gray-400 text-slate-700', 
+            activeStyle: 'bg-gray-100 border-gray-500 ring-2 ring-gray-400 text-gray-800 font-bold',
         },
     ];
 
     return (
         <>
-            <div className="bg-card-bg p-4 sm:p-6 rounded-2xl shadow-lg mb-8">
+            <div className="bg-white p-8 rounded-3xl shadow-xl mb-8">
                 <div className="flex justify-between items-start mb-4">
-                    {/* FIX: Corrected typo in JSX tag from `hh2` to `h2`. */}
-                    <h2 className="text-2xl font-bold font-serif text-dark-gray">
-                        <span className="text-primary mr-2">Exercice {exerciseNumber}</span>
-                        {exercise.title && <span className="text-secondary font-normal text-xl">| {exercise.title}</span>}
+                    <h2 className="text-2xl font-bold text-slate-800">
+                        <span className="text-blue-500 mr-3">Exercice {exerciseNumber}</span>
+                        {exercise.title && <span className="text-slate-500 font-normal text-xl">| {exercise.title}</span>}
                     </h2>
                     {exercise.hint && (
                         <button
                             onClick={() => setIsHintModalOpen(true)}
-                            className="flex-shrink-0 flex items-center justify-center h-10 w-10 text-amber-600 bg-amber-100 rounded-full hover:bg-amber-200 transition-all active:scale-95 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                            className="flex-shrink-0 flex items-center justify-center h-11 w-11 text-amber-600 bg-amber-50 rounded-full hover:bg-amber-100 transition-all active:scale-95 focus:outline-none focus:ring-2 focus:ring-amber-400"
                             title="Afficher l'indice"
                             aria-label="Afficher l'indice"
                         >
@@ -81,23 +80,23 @@ const ExerciseCard: React.FC<{ exercise: Exercise; exerciseNumber: number; isWor
                     )}
                 </div>
 
-                <div className="prose max-w-none text-dark-gray">
+                <div className="prose max-w-none text-slate-700 leading-relaxed">
                     <MathJax dynamic>{exercise.statement}</MathJax>
                     {exercise.sub_questions && <SubQuestionDisplay subQuestions={exercise.sub_questions} level={1} />}
                 </div>
 
-                <div className="mt-6 flex flex-col sm:flex-row items-center justify-end">
-                    <div className="flex gap-2 flex-wrap justify-end">
+                <div className="mt-8 flex flex-col sm:flex-row items-center justify-end">
+                    <div className="flex gap-3 flex-wrap justify-end">
                         {feedbackOptions.map(opt => (
                             <button
                                 key={opt.label}
                                 onClick={() => handleFeedback(opt.label)}
                                 disabled={isWorkSubmitted}
-                                className={`px-3 py-1.5 text-sm font-bold rounded-full transition-all ${
+                                className={`px-4 py-2 text-sm font-semibold rounded-lg transition-all border-2 ${
                                     currentFeedback === opt.label
                                         ? opt.activeStyle
                                         : opt.style
-                                } ${isWorkSubmitted ? 'opacity-70 cursor-not-allowed' : 'transform hover:scale-105 active:scale-95'}`}
+                                } ${isWorkSubmitted ? 'opacity-70 cursor-not-allowed' : 'transform hover:-translate-y-0.5 active:scale-95'}`}
                             >
                                 {opt.label}
                             </button>
@@ -121,13 +120,17 @@ const ExerciseCard: React.FC<{ exercise: Exercise; exerciseNumber: number; isWor
     );
 };
 
-const Exercises: React.FC = () => {
-    const { state } = useContext(AppContext);
-    const { currentChapterId, activities, progress } = state;
+interface ExercisesProps {
+    chapter: Chapter;
+    title: string;
+}
+
+const Exercises: React.FC<ExercisesProps> = ({ chapter, title }) => {
+    const { state, dispatch } = useContext(AppContext);
+    const { currentChapterId, progress } = state;
 
     if (!currentChapterId) return null;
     
-    const chapter = activities[currentChapterId];
     const chapterProgress = progress[currentChapterId];
 
     if (!chapter || !chapter.exercises || chapter.exercises.length === 0) {
@@ -143,7 +146,23 @@ const Exercises: React.FC = () => {
     const isWorkSubmitted = chapterProgress?.isWorkSubmitted || false;
 
     return (
-        <div>
+        <div className="w-full max-w-3xl my-auto mx-auto">
+            <header className="relative mb-6 grid grid-cols-3 items-center">
+                <div className="flex justify-start">
+                    <button
+                        onClick={() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'chapter-hub' } })}
+                        className="flex items-center justify-center h-11 w-11 text-slate-500 bg-white rounded-full shadow-md hover:bg-slate-100 transition-all active:scale-95"
+                        aria-label="Retour au hub du chapitre"
+                    >
+                        <span className="material-symbols-outlined">arrow_back</span>
+                    </button>
+                </div>
+                <div className="text-center">
+                    <h2 className="text-lg font-bold text-slate-800 truncate">{chapter.chapter}</h2>
+                    <p className="text-sm text-slate-500">{title}</p>
+                </div>
+                <div />
+            </header>
             {chapter.exercises.map((ex, index) => (
                 <ExerciseCard key={ex.id} exercise={ex} exerciseNumber={index + 1} isWorkSubmitted={isWorkSubmitted} />
             ))}
