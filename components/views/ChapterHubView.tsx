@@ -19,7 +19,7 @@ const HubCard: React.FC<{
             <h3 className="text-xl font-bold text-slate-800 transition-colors duration-300 group-hover:text-blue-600">
                 {title}
             </h3>
-            <p className="mt-1 text-sm text-slate-500">{description}</p>
+            <p className="mt-1 text-sm text-slate-500 font-fira">{description}</p>
         </div>
         <span className="material-symbols-outlined absolute top-4 right-4 text-slate-300 transition-transform duration-300 group-hover:translate-x-1">
             arrow_forward

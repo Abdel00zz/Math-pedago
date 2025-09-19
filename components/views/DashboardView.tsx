@@ -34,7 +34,7 @@ const ChapterCard: React.FC<{ chapter: Chapter; progress?: ChapterProgress; onCl
             className={`font-sans rounded-xl border flex flex-col bg-white transition-all duration-300 group ${
                 !chapter.isActive
                     ? 'border-slate-200 bg-slate-50/50 cursor-not-allowed'
-                    : 'cursor-pointer border-slate-200 hover:border-blue-400 hover:shadow-lg'
+                    : 'cursor-pointer border-blue-400 shadow-md hover:border-blue-500 hover:shadow-lg'
             }`}
         >
             <div className="p-5 flex-grow">
@@ -43,13 +43,13 @@ const ChapterCard: React.FC<{ chapter: Chapter; progress?: ChapterProgress; onCl
                         {chapter.chapter}
                     </h3>
                     {progress?.isWorkSubmitted ? (
-                        <span className="px-2.5 py-0.5 text-xs font-medium text-purple-800 bg-purple-100 rounded-full whitespace-nowrap">Travail soumis</span>
+                        <span className="px-2.5 py-0.5 text-xs font-medium text-purple-800 bg-purple-100 rounded-full whitespace-nowrap font-fira">Travail soumis</span>
                     ) : isCompleted ? (
-                        <span className="px-2.5 py-0.5 text-xs font-medium text-green-800 bg-green-100 rounded-full whitespace-nowrap">Terminé</span>
+                        <span className="px-2.5 py-0.5 text-xs font-medium text-green-800 bg-green-100 rounded-full whitespace-nowrap font-fira">Terminé</span>
                     ) : chapter.isActive ? (
-                        <span className="px-2.5 py-0.5 text-xs font-medium text-blue-800 bg-blue-100 rounded-full whitespace-nowrap">En cours</span>
+                        <span className="px-2.5 py-0.5 text-xs font-medium text-blue-800 bg-blue-100 rounded-full whitespace-nowrap font-fira">En cours</span>
                     ) : (
-                        <span className="px-2.5 py-0.5 text-xs font-medium text-slate-700 bg-slate-200 rounded-full whitespace-nowrap">À venir</span>
+                        <span className="px-2.5 py-0.5 text-xs font-medium text-slate-700 bg-slate-200 rounded-full whitespace-nowrap font-fira">À venir</span>
                     )}
                 </div>
 
@@ -94,7 +94,7 @@ const DashboardView: React.FC = () => {
 
     useEffect(() => {
         if (profile?.name) {
-            const fullMessage = `Prêt à relever de nouveaux défis, ${profile.name} ?`;
+            const fullMessage = `Prrêt à relever de nouveaux défis, ${profile.name} ?`;
             let i = 0;
             setWelcomeMessage('');
             setTypingCompleted(false);

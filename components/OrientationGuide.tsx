@@ -24,12 +24,12 @@ const OrientationGuide: React.FC = () => {
     }
 
     return (
-        <div className="fixed inset-0 bg-slate-900 bg-opacity-80 flex items-center justify-center z-[9999] p-8 animate-fadeIn">
-            <div className="bg-white rounded-2xl p-8 text-center max-w-xs mx-auto shadow-2xl">
-                <span className="material-symbols-outlined text-6xl text-blue-500 mb-4">screen_rotation</span>
-                <h3 className="text-xl font-bold text-slate-800 mb-2">Une meilleure expérience</h3>
-                <p className="text-slate-600">
-                    Pour profiter pleinement du contenu, veuillez faire pivoter votre appareil en mode paysage.
+        <div className="fixed inset-0 bg-slate-900 bg-opacity-80 flex items-center justify-center z-[9999] p-2 animate-fadeIn">
+            <div className="bg-white rounded-lg p-3 text-center max-w-[200px] mx-auto shadow-md">
+                <span className="material-symbols-outlined text-3xl text-blue-500 mb-1">screen_rotation</span>
+                <h3 className="text-base font-bold text-slate-800 mb-0.5">Mode paysage</h3>
+                <p className="text-xs text-slate-600 font-fira">
+                    Pivotez pour une meilleure vue
                 </p>
             </div>
         </div>
