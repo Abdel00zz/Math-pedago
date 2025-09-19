@@ -5,6 +5,7 @@ import DashboardView from './components/views/DashboardView';
 import ChapterHubView from './components/views/ChapterHubView';
 import ActivityView from './components/views/ActivityView';
 import { Notifications } from './components/Notifications';
+import OrientationGuide from './components/OrientationGuide';
 import GlobalWorkSubmit from './components/GlobalWorkSubmit';
 
 const App: React.FC = () => {
@@ -32,6 +33,7 @@ const App: React.FC = () => {
                 {renderView()}
             </main>
             <Notifications />
+            <OrientationGuide />
         </div>
     );
 };
