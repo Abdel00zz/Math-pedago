@@ -1,244 +1,241 @@
-import React, { useContext, useMemo, useState, useEffect } from 'react';
-import { AppContext } from '../../context/AppContext';
+// Fix: Import `useState` from React to handle component state.
+import React, { useMemo, useRef, useEffect, useState } from 'react';
+import { useAppState, useAppDispatch } from '../../context/AppContext';
 import { Chapter, ChapterProgress } from '../../types';
-import { CLASS_OPTIONS } from '../../constants';
-import OrientationModal from '../OrientationModal';
 import HelpModal from '../HelpModal';
+import OrientationModal from '../OrientationModal';
+import { CLASS_OPTIONS, DB_KEY } from '../../constants';
+import { useNotification } from '../../context/NotificationContext';
 
-const ChapterCard: React.FC<{ chapter: Chapter; progress?: ChapterProgress; onClick: () => void; }> = ({ chapter, progress, onClick }) => {
-    const totalQuizQuestions = chapter.quiz?.length || 0;
-    const totalExercises = chapter.exercises?.length || 0;
+interface ChapterCardProps {
+    chapter: Chapter;
+    progress: ChapterProgress;
+    onSelect: (chapterId: string) => void;
+}
 
-    const completedExercises = Object.keys(progress?.exercisesFeedback || {}).length;
-    const isQuizDone = progress?.quiz.isSubmitted || false;
+const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress, onSelect }) => {
+    const getStatusInfo = () => {
+        if (!chapter.isActive) {
+            return {
+                badgeText: 'Prochainement',
+                badgeClasses: 'bg-gray-200 text-gray-600',
+                disabled: true,
+            };
+        }
+        if (progress?.isWorkSubmitted) {
+            return {
+                badgeText: 'Travail soumis',
+                badgeClasses: 'bg-success/10 text-success',
+                disabled: false,
+            };
+        }
+        if (progress?.quiz.isSubmitted || Object.keys(progress?.exercisesFeedback || {}).length > 0) {
+            return {
+                badgeText: 'En cours',
+                badgeClasses: 'bg-warning/10 text-warning',
+                disabled: false,
+            };
+        }
+        return {
+            badgeText: 'À commencer',
+            badgeClasses: 'bg-primary/10 text-primary',
+            disabled: false,
+        };
+    };
 
-    const completionPercentage = useMemo(() => {
-        const quizUnit = totalQuizQuestions > 0 ? 1 : 0;
-        const totalUnits = quizUnit + totalExercises;
-        if (totalUnits === 0) return 100;
+    const { badgeText, badgeClasses, disabled } = getStatusInfo();
 
-        const completedUnits = (isQuizDone ? quizUnit : 0) + completedExercises;
-        
-        return Math.round((completedUnits / totalUnits) * 100);
-    }, [totalQuizQuestions, totalExercises, completedExercises, isQuizDone]);
-
-    const isCompleted = useMemo(() => {
-        const quizOk = totalQuizQuestions > 0 ? isQuizDone : true;
-        const exercisesOk = completedExercises === totalExercises;
-        return chapter.isActive && quizOk && exercisesOk;
-    }, [chapter.isActive, totalQuizQuestions, isQuizDone, completedExercises, totalExercises]);
+    const cardBaseClasses = "w-full flex justify-between items-center p-6 bg-surface border border-border rounded-lg transition-all duration-200 font-button";
+    const cardInteractiveClasses = "hover:bg-background hover:border-border-hover hover:shadow-claude transform hover:-translate-y-1 cursor-pointer";
+    const cardDisabledClasses = "opacity-60 cursor-not-allowed";
 
     return (
-        <div
-            onClick={chapter.isActive ? onClick : undefined}
-            className={`font-sans rounded-xl border flex flex-col bg-white transition-all duration-300 group ${
-                !chapter.isActive
-                    ? 'border-slate-200 bg-slate-50/50 cursor-not-allowed'
-                    : 'cursor-pointer border-blue-400 shadow-md hover:border-blue-500 hover:shadow-lg'
-            }`}
+        <button
+            onClick={() => onSelect(chapter.id)}
+            disabled={disabled}
+            className={`${cardBaseClasses} ${disabled ? cardDisabledClasses : cardInteractiveClasses}`}
+            aria-label={`Accéder au chapitre ${chapter.chapter}`}
         >
-            <div className="p-5 flex-grow">
-                <div className="flex justify-between items-start mb-3">
-                    <h3 className="text-base font-semibold text-slate-800 group-hover:text-blue-600 transition-colors duration-300">
-                        {chapter.chapter}
-                    </h3>
-                    {progress?.isWorkSubmitted ? (
-                        <span className="px-2.5 py-0.5 text-xs font-medium text-purple-800 bg-purple-100 rounded-full whitespace-nowrap font-fira">Travail soumis</span>
-                    ) : isCompleted ? (
-                        <span className="px-2.5 py-0.5 text-xs font-medium text-green-800 bg-green-100 rounded-full whitespace-nowrap font-fira">Terminé</span>
-                    ) : chapter.isActive ? (
-                        <span className="px-2.5 py-0.5 text-xs font-medium text-blue-800 bg-blue-100 rounded-full whitespace-nowrap font-fira">En cours</span>
-                    ) : (
-                        <span className="px-2.5 py-0.5 text-xs font-medium text-slate-700 bg-slate-200 rounded-full whitespace-nowrap font-fira">À venir</span>
-                    )}
-                </div>
-
-                
-                <div className="flex items-center gap-4 text-xs text-slate-600 mt-4">
-                    <div className="flex items-center gap-2">
-                        <span className="material-symbols-outlined text-base text-blue-500">quiz</span>
-                        <span>{totalQuizQuestions} Questions</span>
+            <div className="flex-1 text-left">
+                <h2 className="text-xl font-semibold text-text">{chapter.chapter}</h2>
+                <div className="flex items-center gap-2 mt-1">
+                    <div className="relative flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
                     </div>
-                    <div className="flex items-center gap-2">
-                        <span className="material-symbols-outlined text-base text-purple-500">edit_note</span>
-                        <span>{totalExercises} Exercices</span>
+                    <p className="text-sm text-secondary">Séance Live : {chapter.sessionDate}</p>
+                </div>
+            </div>
+            <div className="flex items-center gap-4 ml-4">
+                 <span className={`px-2.5 py-0.5 text-xs font-semibold rounded-full ${badgeClasses}`}>{badgeText}</span>
+            </div>
+        </button>
+    );
+});
+
+
+const DashboardView: React.FC = () => {
+    const state = useAppState();
+    const dispatch = useAppDispatch();
+    const { profile, activities, progress, chapterOrder } = state;
+    const [isHelpModalOpen, setHelpModalOpen] = useState(false);
+    const [isOrientationModalOpen, setOrientationModalOpen] = useState(false);
+
+    const { addNotification } = useNotification();
+    const helpClickCountRef = useRef(0);
+    const helpClickTimerRef = useRef<number | null>(null);
+
+    const handleHelpClick = () => {
+        setHelpModalOpen(true);
+
+        if (helpClickTimerRef.current) {
+            clearTimeout(helpClickTimerRef.current);
+        }
+
+        helpClickCountRef.current += 1;
+        const currentCount = helpClickCountRef.current;
+
+        if (currentCount === 5) {
+            if (state.profile) {
+                const profileToKeep = {
+                    profile: { name: state.profile.name, classId: '' },
+                };
+                localStorage.setItem(DB_KEY, JSON.stringify(profileToKeep));
+                window.location.reload();
+            }
+            helpClickCountRef.current = 0;
+        } else {
+            if (currentCount >= 3) {
+                addNotification(`Cliquez encore ${5 - currentCount} fois pour réinitialiser.`, 'info');
+            }
+            helpClickTimerRef.current = window.setTimeout(() => {
+                helpClickCountRef.current = 0;
+            }, 1500); // Reset after 1.5 seconds
+        }
+    };
+    
+    useEffect(() => {
+        const timerId = helpClickTimerRef.current;
+        return () => {
+            if (timerId) {
+                clearTimeout(timerId);
+            }
+        };
+    }, []);
+
+    const userActivities = useMemo(() => {
+        if (!profile) return [];
+        return (Object.values(activities) as Chapter[])
+            .filter(activity => activity.class === profile.classId)
+            .sort((a, b) => {
+                if (a.isActive && !b.isActive) return -1;
+                if (!a.isActive && b.isActive) return 1;
+
+                const indexA = chapterOrder.indexOf(a.id);
+                const indexB = chapterOrder.indexOf(b.id);
+
+                if (indexA === -1) return 1;
+                if (indexB === -1) return -1;
+
+                return indexA - indexB;
+            });
+    }, [activities, profile, chapterOrder]);
+
+    const className = useMemo(() => {
+        if (!profile) return '';
+        return CLASS_OPTIONS.find(c => c.value === profile.classId)?.label || profile.classId;
+    }, [profile]);
+
+    if (!profile) {
+        return <div>Chargement du profil...</div>;
+    }
+
+    const handleChapterSelect = (chapterId: string) => {
+        const chapter = activities[chapterId];
+        if (chapter && chapter.isActive) {
+          dispatch({ type: 'CHANGE_VIEW', payload: { view: 'work-plan', chapterId } });
+        }
+    };
+    
+    return (
+        <div className="max-w-4xl mx-auto animate-fadeIn">
+            <div className="flex justify-end items-center mb-4">
+                <div className="flex items-center gap-2">
+                    <div className="relative group flex items-center">
+                        <button 
+                            onClick={handleHelpClick} 
+                            className="p-2 rounded-full text-secondary hover:bg-background transition active:scale-95 font-button"
+                            aria-label="Aide"
+                        >
+                            <span className="material-symbols-outlined text-3xl">help_outline</span>
+                        </button>
+                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-max px-3 py-1.5 bg-text text-white text-xs font-medium rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                            Aide
+                            <svg className="absolute text-text left-0 top-full h-2 w-full" x="0px" y="0px" viewBox="0 0 255 255" xmlSpace="preserve"><polygon className="fill-current" points="0,0 127.5,127.5 255,0"/></svg>
+                        </div>
+                    </div>
+                    <div className="relative group flex items-center">
+                        <button 
+                            onClick={() => setOrientationModalOpen(true)} 
+                            className="p-2 rounded-full text-secondary hover:bg-background transition active:scale-95 font-button"
+                            aria-label="Orientation"
+                        >
+                            <span className="material-symbols-outlined text-3xl">explore</span>
+                        </button>
+                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-max px-3 py-1.5 bg-text text-white text-xs font-medium rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                            Orientation
+                            <svg className="absolute text-text left-0 top-full h-2 w-full" x="0px" y="0px" viewBox="0 0 255 255" xmlSpace="preserve"><polygon className="fill-current" points="0,0 127.5,127.5 255,0"/></svg>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            {chapter.isActive && (
-                <div className="px-5 py-3 bg-slate-50 border-t border-slate-200 rounded-b-xl">
-                    <div className="flex items-center gap-3">
-                        <div className="w-full bg-slate-200 rounded-full h-1.5">
-                            <div
-                                className="bg-blue-500 h-1.5 rounded-full transition-all duration-500 ease-out"
-                                style={{ width: `${completionPercentage}%` }}
-                            ></div>
-                        </div>
-                        <p className="text-xs text-slate-600 font-medium whitespace-nowrap">{completionPercentage}%</p>
-                    </div>
+            <header className="mb-8">
+                <h1 className="text-2xl sm:text-3xl font-bold text-text min-h-[2.5rem] font-title flex items-baseline flex-wrap gap-x-2">
+                    <span 
+                        className="inline-block opacity-0 animate-slideInUp" 
+                        style={{ animationDelay: '0ms' }}>
+                        Ravi de vous revoir,
+                    </span>
+                    <span 
+                        className="inline-block text-primary opacity-0 animate-slideInUp" 
+                        style={{ animationDelay: '150ms' }}>
+                        {profile.name}
+                    </span>
+                    <span 
+                        className="inline-block opacity-0 animate-slideInUp" 
+                        style={{ animationDelay: '300ms' }}>
+                        !
+                    </span>
+                </h1>
+                <p 
+                    className="text-secondary mt-2 opacity-0 animate-slideInUp" 
+                    style={{ animationDelay: '450ms' }}>
+                    Voici les prochaines étapes de votre parcours en <strong className="text-text-secondary font-semibold">{className}</strong>.
+                </p>
+            </header>
+            
+            {userActivities.length > 0 ? (
+                <div className="space-y-4">
+                    {userActivities.map(chapter => (
+                        <ChapterCard
+                            key={chapter.id}
+                            chapter={chapter}
+                            progress={progress[chapter.id]}
+                            onSelect={handleChapterSelect}
+                        />
+                    ))}
+                </div>
+            ) : (
+                <div className="text-center p-12 bg-surface border border-border rounded-lg">
+                    <span className="material-symbols-outlined text-5xl text-secondary">upcoming</span>
+                    <h2 className="mt-4 text-xl font-semibold text-text">Aucune activité disponible</h2>
+                    <p className="text-secondary mt-2">De nouveaux chapitres seront bientôt disponibles. Revenez plus tard !</p>
                 </div>
             )}
+            <HelpModal isOpen={isHelpModalOpen} onClose={() => setHelpModalOpen(false)} />
+            <OrientationModal isOpen={isOrientationModalOpen} onClose={() => setOrientationModalOpen(false)} classId={profile.classId} />
         </div>
-    );
-};
-
-const DashboardView: React.FC = () => {
-    const { state, dispatch } = useContext(AppContext);
-    const { profile, activities, progress } = state;
-    
-    const [isOrientationModalOpen, setIsOrientationModalOpen] = useState(false);
-    const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
-    const [welcomeMessage, setWelcomeMessage] = useState('');
-    const [typingCompleted, setTypingCompleted] = useState(false);
-
-    useEffect(() => {
-        if (profile?.name) {
-            const fullMessage = `Prrêt à relever de nouveaux défis, ${profile.name} ?`;
-            let i = 0;
-            setWelcomeMessage('');
-            setTypingCompleted(false);
-    
-            const typingInterval = setInterval(() => {
-                if (i < fullMessage.length) {
-                    setWelcomeMessage(prev => prev + fullMessage.charAt(i));
-                    i++;
-                } else {
-                    clearInterval(typingInterval);
-                    setTypingCompleted(true);
-                }
-            }, 50);
-    
-            return () => clearInterval(typingInterval);
-        }
-    }, [profile]);
-
-    const userChapters = useMemo(() => {
-        if (!profile) return [];
-        return (Object.values(activities) as Chapter[])
-            .filter(ch => ch.class === profile.classId)
-            .sort((a, b) => {
-                if (a.isActive && !b.isActive) return -1;
-                if (!a.isActive && b.isActive) return 1;
-                return a.chapter.localeCompare(b.chapter);
-            });
-    }, [activities, profile]);
-
-    const { nextChapter, otherChapters } = useMemo(() => {
-        const next = userChapters.find(ch => {
-            if (!ch.isActive) return false;
-
-            const chProgress = progress[ch.id];
-            const totalExercises = ch.exercises?.length || 0;
-            const totalQuizQuestions = ch.quiz?.length || 0;
-            const completedExercises = Object.keys(chProgress?.exercisesFeedback || {}).length;
-            const isQuizDone = chProgress?.quiz.isSubmitted || false;
-
-            const quizOk = totalQuizQuestions > 0 ? isQuizDone : true;
-            const exercisesOk = completedExercises === totalExercises;
-
-            return !(quizOk && exercisesOk);
-        });
-
-        const others = userChapters.filter(ch => ch.id !== next?.id);
-
-        return { nextChapter: next, otherChapters: others };
-    }, [userChapters, progress]);
-
-    const handleChapterClick = (chapterId: string) => {
-        dispatch({ type: 'CHANGE_VIEW', payload: { view: 'chapter-hub', chapterId } });
-    };
-
-    if (!profile) return null;
-    
-    return (
-        <main className="animate-fadeIn bg-slate-100 min-h-screen font-sans">
-            <header className="bg-white border-b border-slate-200">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between items-center h-24">
-                        <div>
-                            <h1 className="text-2xl font-bold text-slate-800 h-9">
-                                {welcomeMessage}
-                                {!typingCompleted && <span className="animate-pulse ml-1 opacity-70">|</span>}
-                            </h1>
-                            <p className="text-slate-500 mt-1 text-base">
-                                {CLASS_OPTIONS.find(c => c.value === profile.classId)?.label}
-                            </p>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <button
-                                onClick={() => setIsOrientationModalOpen(true)}
-                                className="h-10 px-3 sm:px-4 flex items-center justify-center rounded-lg text-slate-600 bg-white border border-slate-300 hover:bg-slate-50 hover:text-blue-600 transition-colors active:scale-95"
-                                title="Orientation pédagogique"
-                            >
-                                <span className="material-symbols-outlined text-xl">explore</span>
-                                <span className="text-sm font-medium hidden sm:inline ml-2">Orientation</span>
-                            </button>
-                            <button
-                                onClick={() => setIsHelpModalOpen(true)}
-                                className="h-10 px-3 sm:px-4 flex items-center justify-center rounded-lg text-slate-600 bg-white border border-slate-300 hover:bg-slate-50 hover:text-blue-600 transition-colors active:scale-95"
-                                title="Aide"
-                            >
-                                <span className="material-symbols-outlined text-xl">help</span>
-                                <span className="text-sm font-medium hidden sm:inline ml-2">Aide</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </header>
-
-            <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-                {nextChapter && (
-                    <div className="mb-12">
-                        <h2 className="text-2xl font-bold mb-5 text-slate-700">Continuez votre parcours</h2>
-                        <div className="max-w-3xl">
-                            <ChapterCard
-                                chapter={nextChapter}
-                                progress={progress[nextChapter.id]}
-                                onClick={() => handleChapterClick(nextChapter.id)}
-                            />
-                        </div>
-                    </div>
-                )}
-
-                {otherChapters.length > 0 && (
-                    <div>
-                        <h2 className="text-2xl font-bold mb-5 text-slate-700">
-                            {nextChapter ? 'Autres chapitres' : 'Commencez votre parcours'}
-                        </h2>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {otherChapters.map(chapter => (
-                                <ChapterCard
-                                    key={chapter.id}
-                                    chapter={chapter}
-                                    progress={progress[chapter.id]}
-                                    onClick={() => handleChapterClick(chapter.id)}
-                                />
-                            ))}
-                        </div>
-                    </div>
-                )}
-
-                {userChapters.length === 0 && (
-                     <div className="text-center py-16 px-6 bg-white rounded-xl border border-slate-200">
-                        <span className="material-symbols-outlined text-5xl text-slate-400" aria-hidden="true">upcoming</span>
-                        <h3 className="mt-4 font-bold text-slate-700 text-xl">Aucune activité n'est disponible.</h3>
-                        <p className="text-slate-500 mt-1.5">Revenez bientôt pour de nouveaux chapitres !</p>
-                    </div>
-                )}
-            </section>
-            
-            <OrientationModal 
-                isOpen={isOrientationModalOpen} 
-                onClose={() => setIsOrientationModalOpen(false)}
-                classId={profile.classId}
-            />
-            
-            <HelpModal 
-                isOpen={isHelpModalOpen} 
-                onClose={() => setIsHelpModalOpen(false)}
-            />
-        </main>
     );
 };
 

@@ -1,15 +1,13 @@
-import React, { useContext } from 'react';
-import { AppContext } from './context/AppContext';
+import React from 'react';
+import { useAppState } from './context/AppContext';
 import LoginView from './components/views/LoginView';
 import DashboardView from './components/views/DashboardView';
 import ChapterHubView from './components/views/ChapterHubView';
 import ActivityView from './components/views/ActivityView';
 import { Notifications } from './components/Notifications';
-import OrientationGuide from './components/OrientationGuide';
-import GlobalWorkSubmit from './components/GlobalWorkSubmit';
 
 const App: React.FC = () => {
-    const { state } = useContext(AppContext);
+    const state = useAppState();
 
     const renderView = () => {
         switch (state.view) {
@@ -17,7 +15,7 @@ const App: React.FC = () => {
                 return <LoginView />;
             case 'dashboard':
                 return <DashboardView />;
-            case 'chapter-hub':
+            case 'work-plan':
                 return <ChapterHubView />;
             case 'activity':
                 return <ActivityView />;
@@ -25,15 +23,13 @@ const App: React.FC = () => {
                 return <LoginView />;
         }
     };
-
+    
     return (
-        <div className="bg-background text-text-primary min-h-screen font-sans">
-            <main className="container mx-auto px-4 sm:px-6 lg:px-8 pb-4 sm:pb-6 lg:pb-8 relative z-10">
-                {state.profile && <GlobalWorkSubmit />}
+        <div className="bg-background text-text min-h-screen font-sans">
+            <main className="p-4 sm:p-6 lg:p-8">
                 {renderView()}
             </main>
             <Notifications />
-            <OrientationGuide />
         </div>
     );
 };

@@ -1,215 +1,144 @@
-import React, { useContext } from 'react';
-import { AppContext } from '../context/AppContext';
-import { Chapter, QuizQuestion } from '../types';
-import { useNotification } from '../context/NotificationContext';
+import React, { useMemo } from 'react';
+import { useAppState, useAppDispatch } from '../context/AppContext';
+import Confetti from './Confetti';
 import { MathJax } from 'better-react-mathjax';
+import { useNotification } from '../context/NotificationContext';
 
-interface QuizProps {
-    chapter: Chapter;
-    title: string;
-}
-
-const Quiz: React.FC<QuizProps> = ({ chapter, title }) => {
-    const { state, dispatch } = useContext(AppContext);
+const Quiz: React.FC = () => {
+    const state = useAppState();
+    const dispatch = useAppDispatch();
     const { addNotification } = useNotification();
-    const { currentChapterId, progress, isReviewMode } = state;
+    const { currentChapterId, activities, progress, isReviewMode } = state;
 
     if (!currentChapterId) return null;
-    
-    const chapterProgress = progress[currentChapterId];
-    
-    if (!chapter || !chapterProgress) return null;
+    const chapter = activities[currentChapterId];
+    const quizProgress = progress[currentChapterId].quiz;
+    const { currentQuestionIndex, answers, isSubmitted, allAnswered, score } = quizProgress;
+    const question = chapter.quiz[currentQuestionIndex];
 
-    const quizQuestions = chapter.quiz;
-    const currentQuizQuestionIndex = chapterProgress.quiz.currentQuestionIndex || 0;
-    const currentQuestion: QuizQuestion = quizQuestions[currentQuizQuestionIndex];
-    const userAnswers = chapterProgress.quiz.answers;
-    const isSubmitted = chapterProgress.quiz.isSubmitted;
-
-    const handleAnswerSelect = (answer: string) => {
+    const handleOptionChange = (answer: string) => {
         if (isSubmitted) return;
-        dispatch({ type: 'UPDATE_QUIZ_ANSWER', payload: { qId: currentQuestion.id, answer } });
+        dispatch({ type: 'UPDATE_QUIZ_ANSWER', payload: { qId: question.id, answer } });
     };
 
     const handleNavigate = (direction: 'next' | 'prev') => {
-        const newIndex = direction === 'next' ? currentQuizQuestionIndex + 1 : currentQuizQuestionIndex - 1;
-        if (newIndex >= 0 && newIndex < quizQuestions.length) {
+        const newIndex = direction === 'next' ? currentQuestionIndex + 1 : currentQuestionIndex - 1;
+        if (newIndex >= 0 && newIndex < chapter.quiz.length) {
             dispatch({ type: 'NAVIGATE_QUIZ', payload: newIndex });
         }
     };
 
     const calculateScore = () => {
-        let correctAnswers = 0;
-        quizQuestions.forEach(q => {
-            const correctOption = q.options.find(o => o.isCorrect);
-            if(correctOption && userAnswers[q.id] === correctOption.text) {
-                correctAnswers++;
+        return chapter.quiz.reduce((acc, q) => {
+            const correctOption = q.options.find(opt => opt.isCorrect)?.text;
+            if (answers[q.id] === correctOption) {
+                return acc + 1;
             }
-        });
-        return quizQuestions.length > 0 ? Math.round((correctAnswers / quizQuestions.length) * 100) : 0;
+            return acc;
+        }, 0);
     };
 
     const handleSubmit = () => {
-        if (!chapterProgress.quiz.allAnswered) {
-            addNotification('Veuillez répondre à toutes les questions avant de soumettre.', 'error');
-            return;
-        }
-        const score = calculateScore();
-        dispatch({ type: 'SUBMIT_QUIZ', payload: { score } });
-        addNotification(`Quiz terminé ! Votre score : ${score}%`, 'success');
+        const finalScore = calculateScore();
+        dispatch({ type: 'SUBMIT_QUIZ', payload: { score: finalScore } });
     };
-    
-    if (isSubmitted && !isReviewMode) {
-        const score = chapterProgress.quiz.score;
+
+    const isPerfectScore = useMemo(() => score === chapter.quiz.length, [score, chapter.quiz.length]);
+
+    if (isSubmitted || isReviewMode) {
+        const userAnsw = answers[question.id];
+        const correctAnsw = question.options.find(o => o.isCorrect)?.text;
+        
         return (
-            <div className="min-h-screen bg-gradient-to-br from-slate-100 to-slate-200 flex p-4 font-sans">
-                <div className="w-full max-w-md text-center bg-white rounded-3xl shadow-2xl p-6 transform transition-all duration-500 hover:scale-105 m-auto">
-                    <h3 className="text-2xl font-bold text-slate-800 mb-2">Quiz Terminé !</h3>
-                    <p className="text-slate-500 text-base">Votre score</p>
-                    <div className={`my-6 flex items-baseline justify-center ${score >= 70 ? 'text-green-500' : score >= 40 ? 'text-yellow-500' : 'text-red-500'}`}>
-                        <span className="text-8xl font-bold italic">{score}</span>
-                        <span className="text-4xl font-bold">%</span>
-                    </div>
-                    <div className="flex flex-col gap-4 mt-8">
-                        <button onClick={() => dispatch({ type: 'TOGGLE_REVIEW_MODE', payload: true })} className="w-full px-5 py-3 font-bold text-white bg-blue-500 rounded-xl transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg active:scale-95">
-                            Réviser mes réponses
-                        </button>
-                        <button
-                            onClick={() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'chapter-hub' } })}
-                            className="w-full px-6 py-3 font-semibold text-slate-600 bg-white border-2 border-slate-200 rounded-xl hover:bg-slate-50 hover:border-slate-300 transition-colors duration-300 active:scale-95"
-                        >
-                            Retour à l'activité
-                        </button>
-                    </div>
-                </div>
-            </div>
-        );
-    }
-    
-    if (!currentQuestion) return null;
-
-    const userAnswer = userAnswers[currentQuestion.id];
-
-    return (
-        <div className="min-h-screen bg-slate-100 flex flex-col p-4 sm:p-6 lg:p-8 font-sans">
-            <div className="w-full max-w-3xl my-auto mx-auto">
-                {/* Header */}
-                <header className="relative mb-6 grid grid-cols-3 items-center">
-                    <div className="flex justify-start">
-                        <button
-                            onClick={() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'chapter-hub' } })}
-                            className="flex items-center justify-center h-11 w-11 text-slate-500 bg-white rounded-full shadow-md hover:bg-slate-100 transition-all active:scale-95"
-                            aria-label="Retour au hub du chapitre"
-                        >
-                            <span className="material-symbols-outlined">arrow_back</span>
-                        </button>
-                    </div>
-                    <div className="text-center">
-                        <h2 className="text-lg font-bold text-slate-800 truncate">{chapter.chapter}</h2>
-                        <p className="text-sm text-slate-500">{title}</p>
-                    </div>
-                    <div className="text-lg font-bold text-slate-500 text-right">
-                        {currentQuizQuestionIndex + 1} / {quizQuestions.length}
-                    </div>
-                </header>
-
-                {/* Progress Bar */}
-                <div className="w-full bg-slate-200 rounded-full h-2 mb-8">
-                    <div
-                        className="bg-gradient-to-r from-blue-400 to-blue-600 h-2 rounded-full transition-all duration-500 ease-out"
-                        style={{ width: `${((currentQuizQuestionIndex + 1) / quizQuestions.length) * 100}%` }}
-                    ></div>
-                </div>
-
-                {/* Question Card */}
-                <div className="bg-white rounded-lg shadow-xl p-4 mb-8 h-36 flex items-center justify-center">
-                    <div className="text-slate-800 text-xl font-semibold text-center leading-relaxed">
-                        <MathJax dynamic>{currentQuestion.question}</MathJax>
-                    </div>
-                </div>
-
-                {/* Answer Options */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {currentQuestion.options.map((option, index) => {
-                        const isSelected = userAnswer === option.text;
-                        let optionStyle = 'bg-white border-slate-200 hover:border-blue-400 hover:shadow-lg';
-                        let icon = null;
-
-                        if (isReviewMode) {
-                            if (option.isCorrect) {
-                                optionStyle = 'bg-green-50 border-green-400 ring-2 ring-green-300 shadow-lg';
-                                icon = <span className="text-green-500 material-symbols-outlined">check_circle</span>;
-                            } else if (isSelected && !option.isCorrect) {
-                                optionStyle = 'bg-red-50 border-red-400 ring-2 ring-red-300 shadow-lg';
-                                icon = <span className="text-red-500 material-symbols-outlined">cancel</span>;
-                            } else {
-                                optionStyle = 'bg-slate-50 border-slate-200 opacity-70 cursor-not-allowed';
-                            }
-                        } else if (isSelected) {
-                            optionStyle = 'bg-blue-50 border-blue-500 ring-2 ring-blue-400 shadow-xl';
-                        }
-                        
-                        return (
-                            <button
-                                key={index}
-                                onClick={() => handleAnswerSelect(option.text)}
-                                disabled={isReviewMode}
-                                className={`p-4 rounded-xl text-left transition-all duration-200 border-2 flex justify-between items-center w-full transform hover:-translate-y-1 ${optionStyle}`}
+            <div className="bg-surface p-6 rounded-lg border border-border">
+                {isSubmitted && !isReviewMode && (
+                     <div className="text-center mb-8 p-6 bg-background rounded-lg">
+                        {isPerfectScore && <Confetti />}
+                        <h2 className="text-2xl font-bold text-text">Quiz terminé !</h2>
+                        <p className="text-secondary mt-2">Votre score est de :</p>
+                        <p className={`text-4xl sm:text-5xl font-bold my-2 ${isPerfectScore ? 'text-success' : 'text-primary'}`}>
+                            {score} / {chapter.quiz.length}
+                        </p>
+                        <div className="mt-6 flex flex-col sm:flex-row-reverse justify-center items-center gap-3">
+                            <button 
+                                onClick={() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'activity', chapterId: currentChapterId, subView: 'exercises' } })}
+                                className="font-button w-full sm:w-auto px-6 py-3 font-semibold text-white bg-primary rounded-lg hover:bg-primary-hover transition-transform transform hover:-translate-y-px active:scale-95"
                             >
-                                <span className="text-slate-700 font-medium text-base flex-1 pr-4"><MathJax inline dynamic>{option.text}</MathJax></span>
-                                {icon && <div className="flex-shrink-0">{icon}</div>}
+                                Continuer vers les exercices
                             </button>
-                        )
-                    })}
-                </div>
-                
-                {isReviewMode && currentQuestion.explanation && (
-                    <div className="mt-8 p-5 bg-blue-50 border-l-4 border-blue-400 rounded-r-lg">
-                        <h4 className="font-bold text-blue-800 mb-2 flex items-center gap-2">
-                            <span className="material-symbols-outlined text-blue-700">info</span>
-                            Explication
-                        </h4>
-                        <div className="text-slate-700 leading-relaxed">
-                            <MathJax dynamic>{currentQuestion.explanation}</MathJax>
+                            <button 
+                                onClick={() => dispatch({ type: 'TOGGLE_REVIEW_MODE', payload: true })}
+                                className="font-button w-full sm:w-auto px-6 py-2 font-semibold text-primary border border-primary rounded-lg hover:bg-primary-light"
+                            >
+                                Revoir mes réponses
+                            </button>
                         </div>
                     </div>
                 )}
 
-                {/* Navigation */}
-                <div className="flex justify-between items-center mt-10">
-                    <button
-                        onClick={() => handleNavigate('prev')}
-                        disabled={currentQuizQuestionIndex === 0}
-                        className="font-bold text-slate-500 hover:text-blue-600 transition-colors duration-300 disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 group"
-                    >
-                        <span className="material-symbols-outlined transition-transform duration-300 group-hover:-translate-x-1">arrow_back</span>
-                        Précédent
-                    </button>
-
-                    {currentQuizQuestionIndex === quizQuestions.length - 1 ? (
-                        isReviewMode ? (
-                            <button onClick={() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'chapter-hub' } })} className="px-6 py-3 font-bold text-white bg-blue-500 rounded-xl hover:bg-blue-600 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-xl">
-                               Retour à l'activité
-                            </button>
-                        ) : (
-                            <button
-                                onClick={handleSubmit}
-                                disabled={!chapterProgress.quiz.allAnswered}
-                                className="px-6 py-3 font-bold text-white bg-green-500 rounded-xl hover:bg-green-600 disabled:bg-slate-300 disabled:cursor-not-allowed active:scale-95 transition-all duration-300 shadow-lg hover:shadow-xl animate-pulse"
-                            >
-                                Terminer le Quiz
-                            </button>
-                        )
-                    ) : (
-                        <button
-                            onClick={() => handleNavigate('next')}
-                            className="px-6 py-3 font-bold text-white bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl hover:shadow-xl active:scale-95 transition-all duration-300 shadow-lg flex items-center gap-2 group"
-                        >
-                            Suivant
-                            <span className="material-symbols-outlined transition-transform duration-300 group-hover:translate-x-1">arrow_forward</span>
-                        </button>
-                    )}
-                </div>
+                {(isReviewMode) && (
+                    <>
+                        <div className="mb-4 text-sm text-secondary">Question {currentQuestionIndex + 1} sur {chapter.quiz.length}</div>
+                        <h3 className="text-xl font-semibold mb-6 text-text">
+                            <MathJax dynamic>{question.question}</MathJax>
+                        </h3>
+                        <div className="space-y-3">
+                            {question.options.map((option, index) => {
+                                const isCorrect = option.isCorrect;
+                                const isSelected = userAnsw === option.text;
+                                let optionClass = "border-border";
+                                if (isCorrect) optionClass = "border-success bg-success/10";
+                                else if (isSelected && !isCorrect) optionClass = "border-error bg-error/10";
+                                
+                                return (
+                                    <div key={index} className={`p-4 rounded-lg border-2 ${optionClass}`}>
+                                        <MathJax dynamic>{option.text}</MathJax>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                        <div className="mt-6 p-4 bg-background rounded-lg">
+                            <p className="font-bold text-text">Explication :</p>
+                            <p className="text-secondary mt-1"><MathJax dynamic>{question.explanation}</MathJax></p>
+                        </div>
+                        <div className="mt-6 flex justify-between items-center">
+                            <button onClick={() => handleNavigate('prev')} disabled={currentQuestionIndex === 0} className="font-button px-4 py-2 font-semibold text-primary rounded-lg hover:bg-primary-light disabled:opacity-50">Précédent</button>
+                            <button onClick={() => handleNavigate('next')} disabled={currentQuestionIndex === chapter.quiz.length - 1} className="font-button px-4 py-2 font-semibold text-primary rounded-lg hover:bg-primary-light disabled:opacity-50">Suivant</button>
+                        </div>
+                     </>
+                )}
+            </div>
+        );
+    }
+    
+    return (
+        <div className="bg-surface p-6 rounded-lg border border-border">
+            <div className="mb-4 text-sm text-secondary">Question {currentQuestionIndex + 1} sur {chapter.quiz.length}</div>
+            <h3 className="text-xl font-semibold mb-6 text-text">
+                <MathJax dynamic>{question.question}</MathJax>
+            </h3>
+            <div className="space-y-3">
+                {question.options.map((option, index) => (
+                    <label key={index} className={`flex items-center gap-3 p-4 rounded-lg border-2 cursor-pointer transition ${answers[question.id] === option.text ? 'border-primary bg-primary-light' : 'border-border hover:border-primary/50'}`}>
+                        <input
+                            type="radio"
+                            name={`question-${question.id}`}
+                            value={option.text}
+                            checked={answers[question.id] === option.text}
+                            onChange={() => handleOptionChange(option.text)}
+                            className="form-radio h-5 w-5 text-primary focus:ring-primary"
+                        />
+                         <MathJax dynamic>{option.text}</MathJax>
+                    </label>
+                ))}
+            </div>
+            <div className="mt-8 flex justify-between items-center">
+                <button onClick={() => handleNavigate('prev')} disabled={currentQuestionIndex === 0} className="font-button px-4 py-2 font-semibold text-primary rounded-lg hover:bg-primary-light disabled:opacity-50">Précédent</button>
+                {currentQuestionIndex === chapter.quiz.length - 1 ? (
+                    <button onClick={handleSubmit} disabled={!allAnswered} className="font-button px-6 py-3 font-semibold text-white bg-primary rounded-lg hover:bg-primary-hover disabled:bg-primary/50">Soumettre</button>
+                ) : (
+                    <button onClick={() => handleNavigate('next')} disabled={!answers[question.id]} className="font-button px-4 py-2 font-semibold text-primary rounded-lg hover:bg-primary-light disabled:opacity-50">Suivant</button>
+                )}
             </div>
         </div>
     );

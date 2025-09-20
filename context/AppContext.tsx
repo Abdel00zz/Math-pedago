@@ -1,5 +1,6 @@
-import React, { createContext, useReducer, useEffect, ReactNode, Dispatch, useContext } from 'react';
-import { AppState, Action, ChapterData, Chapter } from '../types';
+import React, { createContext, useReducer, useEffect, ReactNode, Dispatch, useContext, useRef } from 'react';
+// Fix: Removed unused 'ChapterData' type from import to resolve error. The other types are now correctly imported from the fixed types.ts file.
+import { AppState, Action, Chapter, Profile, QuizProgress, ChapterProgress, Feedback } from '../types';
 import { DB_KEY } from '../constants';
 import { useNotification } from './NotificationContext';
 
@@ -11,13 +12,25 @@ const initialState: AppState = {
     currentChapterId: null,
     activitySubView: null,
     isReviewMode: false,
+    chapterOrder: [],
 };
 
 // ... (appReducer remains the same)
 const appReducer = (state: AppState, action: Action): AppState => {
     switch (action.type) {
-        case 'INIT':
-            return { ...state, ...action.payload, view: action.payload.profile ? 'dashboard' : 'login' };
+        case 'INIT': {
+            const profile = action.payload.profile;
+            const progress = action.payload.progress || {};
+            const activities = action.payload.activities || {};
+            
+            return {
+                ...state,
+                ...action.payload,
+                activities,
+                progress,
+                view: (profile && profile.classId) ? 'dashboard' : 'login'
+            };
+        }
         case 'CHANGE_VIEW': {
             const { view, chapterId, subView, review } = action.payload;
             const newState: AppState = {
@@ -134,117 +147,133 @@ const appReducer = (state: AppState, action: Action): AppState => {
                 ...state,
                 activities: action.payload.activities,
                 progress: action.payload.progress,
+                chapterOrder: action.payload.chapterOrder,
             };
         default:
             return state;
     }
 };
 
-export const AppContext = createContext<{ state: AppState; dispatch: Dispatch<Action> }>({
-    state: initialState,
-    dispatch: () => null,
-});
+const AppStateContext = createContext<AppState | undefined>(undefined);
+const AppDispatchContext = createContext<Dispatch<Action> | undefined>(undefined);
+
+export const useAppState = () => {
+    const context = useContext(AppStateContext);
+    if (context === undefined) {
+        throw new Error('useAppState must be used within an AppProvider');
+    }
+    return context;
+};
+
+export const useAppDispatch = () => {
+    const context = useContext(AppDispatchContext);
+    if (context === undefined) {
+        throw new Error('useAppDispatch must be used within an AppProvider');
+    }
+    return context;
+};
 
 export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [state, dispatch] = useReducer(appReducer, initialState);
     const { addNotification } = useNotification();
+    const fetchedClassRef = useRef<string | null>(null);
 
+    // Effect 1: Load initial state from localStorage. Runs only once.
     useEffect(() => {
-        const loadAndSyncData = async () => {
-            const allActivities: { [id: string]: Chapter } = {};
+        let savedData: Partial<AppState> = {};
+        try {
+            const rawData = localStorage.getItem(DB_KEY);
+            if (rawData) {
+                const parsedData = JSON.parse(rawData);
+                if (typeof parsedData === 'object' && parsedData !== null) {
+                    savedData = parsedData;
+                }
+            }
+        } catch (error) {
+            console.error("Failed to load or parse data from localStorage, resetting.", error);
+            localStorage.removeItem(DB_KEY);
+        }
+        // Dispatch minimal init. Activities will be loaded by the next effect.
+        dispatch({ type: 'INIT', payload: { ...savedData, activities: {}, progress: savedData.progress || {} } as any });
+    }, []);
+
+    // Effect 2: Fetch and sync chapter data when profile class changes.
+    useEffect(() => {
+        const syncChaptersForClass = async (classId: string) => {
+            if (classId === fetchedClassRef.current) return;
+            fetchedClassRef.current = classId;
+
             try {
                 const manifestRes = await fetch('/manifest.json');
                 if (!manifestRes.ok) throw new Error("Manifest file not found");
-                const manifest: { [classId: string]: { id: string; file: string; isActive: boolean }[] } = await manifestRes.json();
+                const manifest: { [id: string]: any[] } = await manifestRes.json();
 
-                const chapterPromises: Promise<Chapter | null>[] = [];
+                const chapterInfos = manifest[classId] || [];
+                const allActivities: { [id: string]: Chapter } = {};
+                const chapterOrderForClass = chapterInfos.map(info => info.id);
 
-                for (const classId in manifest) {
-                    for (const chapterInfo of manifest[classId]) {
-                        const promise = fetch(`/chapters/${chapterInfo.file}`)
-                            .then(res => {
-                                if (!res.ok) throw new Error(`Could not load chapter: ${chapterInfo.file}`);
-                                return res.json();
-                            })
-                            .then((chapterData: ChapterData) => ({
-                                ...chapterData,
-                                id: chapterInfo.id,
-                                file: chapterInfo.file,
-                                isActive: chapterInfo.isActive,
-                            }))
-                            .catch(err => {
-                                console.error(err);
-                                return null;
-                            });
-                        chapterPromises.push(promise);
-                    }
+                if (chapterInfos.length > 0) {
+                    const chapterPromises = chapterInfos.map(info => 
+                        fetch(`/chapters/${info.file}`)
+                            .then(res => res.ok ? res.json() : Promise.reject(`Could not load ${info.file}`))
+                            .then(data => ({ ...data, id: info.id, file: info.file, isActive: info.isActive }))
+                            .catch(err => { console.error(err); return null; })
+                    );
+                    const loadedChapters = (await Promise.all(chapterPromises)).filter(Boolean) as Chapter[];
+                    loadedChapters.forEach(ch => allActivities[ch.id] = ch);
                 }
-                
-                const loadedChapters = await Promise.all(chapterPromises);
-                
-                loadedChapters.forEach(chapter => {
-                    if (chapter) {
-                        allActivities[chapter.id] = chapter;
-                    }
-                });
 
-            } catch (error) {
-                console.error("Failed to load or sync chapter data:", error);
-                addNotification("Impossible de charger les dernières activités.", "info");
-            } finally {
-                let savedData: Partial<AppState> = {};
-                try {
-                    const rawData = localStorage.getItem(DB_KEY);
-                    if (rawData) {
-                        const parsedData = JSON.parse(rawData);
-                         if (typeof parsedData === 'object' && parsedData !== null) {
-                            savedData = parsedData;
-                        } else {
-                            // This case handles non-object JSON values like "null", "true", etc.
-                            throw new Error("Saved data is not a valid object.");
-                        }
-                    }
-                } catch (error) {
-                    console.error("Failed to load or parse data from localStorage, resetting.", error);
-                    localStorage.removeItem(DB_KEY); // Clear corrupted data
-                }
-                
-                const newProgress = { ...(savedData.progress || {}) };
-                
-                Object.keys(allActivities).forEach(id => {
-                    if (!newProgress[id]) {
-                        newProgress[id] = {
+                const newProgress = { ...state.progress };
+                Object.values(allActivities).forEach(chapter => {
+                    if (!newProgress[chapter.id]) {
+                        newProgress[chapter.id] = {
                             quiz: { answers: {}, isSubmitted: false, score: 0, allAnswered: false, currentQuestionIndex: 0 },
                             exercisesFeedback: {},
                             isWorkSubmitted: false,
                         };
                     }
                 });
+                
+                dispatch({ type: 'SYNC_ACTIVITIES', payload: { activities: allActivities, progress: newProgress, chapterOrder: chapterOrderForClass } });
 
-                dispatch({ type: 'INIT', payload: { ...savedData, activities: allActivities, progress: newProgress } });
+            } catch (error) {
+                console.error("Failed to load or sync chapter data:", error);
+                addNotification("Impossible de charger les chapitres pour votre classe.", "error");
             }
         };
 
-        loadAndSyncData();
-    }, [addNotification]);
+        if (state.profile?.classId) {
+            syncChaptersForClass(state.profile.classId);
+        } else {
+            // No profile, so no chapters to load/show. Ensure state is clean.
+             if(Object.keys(state.activities).length > 0) {
+                 dispatch({ type: 'SYNC_ACTIVITIES', payload: { activities: {}, progress: state.progress, chapterOrder: [] } });
+            }
+            fetchedClassRef.current = null;
+        }
+    }, [state.profile, addNotification]);
 
+    // Effect 3: Persist state to localStorage (debounced).
     useEffect(() => {
         const handler = setTimeout(() => {
             if (state.profile) {
                 const stateToSave: Partial<AppState> = {
                     profile: state.profile,
                     progress: state.progress,
+                    chapterOrder: state.chapterOrder,
                 };
                 localStorage.setItem(DB_KEY, JSON.stringify(stateToSave));
             }
-        }, 500);
+        }, 1000);
 
         return () => clearTimeout(handler);
-    }, [state.progress, state.profile]);
+    }, [state.progress, state.profile, state.chapterOrder]);
 
     return (
-        <AppContext.Provider value={{ state, dispatch }}>
-            {children}
-        </AppContext.Provider>
+        <AppStateContext.Provider value={state}>
+            <AppDispatchContext.Provider value={dispatch}>
+                {children}
+            </AppDispatchContext.Provider>
+        </AppStateContext.Provider>
     );
 };

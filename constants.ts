@@ -1,6 +1,6 @@
 
 
-export const DB_KEY = 'بيداغوا_ماط_PedagoMaths_EleveData_V4.7_React';
+export const DB_KEY = 'pedagoEleveData_V4.7_React';
 
 export const CLASS_OPTIONS = [
     { value: 'tcs', label: 'Tronc Commun Scientifique' },

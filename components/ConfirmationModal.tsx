@@ -6,37 +6,35 @@ interface ConfirmationModalProps {
     onClose: () => void;
     onSubmit: () => void;
     isSubmitting: boolean;
-    activityTitle: string;
+    chapterTitle: string;
 }
 
-const ConfirmationModal: React.FC<ConfirmationModalProps> = ({ isOpen, onClose, onSubmit, isSubmitting, activityTitle }) => {
+const ConfirmationModal: React.FC<ConfirmationModalProps> = ({ isOpen, onClose, onSubmit, isSubmitting, chapterTitle }) => {
     return (
-        <Modal isOpen={isOpen} onClose={onClose} title="Confirmation Requise">
+        <Modal isOpen={isOpen} onClose={onClose} title="Prêt à finaliser votre travail ?">
             <div className="mt-4 text-center">
-                <div className="mx-auto w-16 h-16 flex items-center justify-center bg-error/10 rounded-full text-error mb-4">
-                    <span className="material-symbols-outlined text-4xl">priority_high</span>
+                <div className="mx-auto w-16 h-16 flex items-center justify-center bg-primary-light rounded-full text-primary mb-4">
+                    <span className="material-symbols-outlined text-4xl">upload_file</span>
                 </div>
-                <h3 className="text-lg font-semibold text-dark-gray">
-                    Envoyer le travail pour cette activité ?
-                </h3>
-                <p className="font-bold font-serif text-xl my-2 text-primary">{activityTitle}</p>
-                <p className="text-sm text-secondary mt-2">
-                    Une fois envoyé, vous ne pourrez plus modifier vos réponses. <br/>Cette action est définitive.
+                <p className="text-lg text-secondary">
+                    Vous allez soumettre votre travail pour le chapitre :
                 </p>
+                <p className="font-bold text-xl my-2 text-text">{chapterTitle}</p>
+                <p className="text-sm text-secondary">Cette action est définitive et ne pourra pas être modifiée.</p>
             </div>
 
             <div className="mt-8 flex flex-col-reverse sm:flex-row sm:justify-end sm:gap-4">
                 <button
                     onClick={onClose}
                     disabled={isSubmitting}
-                    className="w-full sm:w-auto mt-2 sm:mt-0 px-6 py-2 font-semibold text-secondary bg-light-gray rounded-lg hover:bg-border-color active:scale-95 disabled:opacity-50"
+                    className="font-button w-full sm:w-auto mt-2 sm:mt-0 px-6 py-2 font-semibold text-secondary bg-background border border-border rounded-lg hover:bg-border-hover active:scale-95 disabled:opacity-50"
                 >
-                    Annuler
+                    Revenir en arrière
                 </button>
                 <button
                     onClick={onSubmit}
                     disabled={isSubmitting}
-                    className="w-full sm:w-auto flex items-center justify-center px-6 py-3 font-bold text-white bg-error rounded-lg transition-transform transform hover:-translate-y-1 active:scale-95 disabled:bg-error/70 disabled:cursor-wait"
+                    className="font-button w-full sm:w-auto flex items-center justify-center px-6 py-3 font-semibold text-white bg-primary rounded-lg transition-transform transform hover:-translate-y-px active:scale-95 disabled:bg-primary/70 disabled:cursor-wait"
                 >
                     {isSubmitting ? (
                         <>
@@ -44,7 +42,7 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({ isOpen, onClose, 
                             <span>Envoi en cours...</span>
                         </>
                     ) : (
-                        "Confirmer l'envoi"
+                        'Oui, envoyer mon travail'
                     )}
                 </button>
             </div>

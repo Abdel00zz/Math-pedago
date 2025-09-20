@@ -1,0 +1,8 @@
+.exercise-card {
+    font-family: 'Latin Modern Roman', serif;
+    background-color: #fffff0; /* Soft yellow */
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+}

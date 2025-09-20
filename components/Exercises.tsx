@@ -1,171 +1,152 @@
-import React, { useContext, useState } from 'react';
-import { AppContext } from '../context/AppContext';
-import { Chapter, Exercise, Feedback, SubQuestion } from '../types';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
+import { useAppState, useAppDispatch } from '../context/AppContext';
+import { Feedback, Exercise } from '../types';
 import { MathJax } from 'better-react-mathjax';
 import Modal from './Modal';
+import { useNotification } from '../context/NotificationContext';
 
-const SubQuestionDisplay: React.FC<{ subQuestions: SubQuestion[]; level: number }> = ({ subQuestions, level }) => {
-    if (!subQuestions || subQuestions.length === 0) return null;
+const FeedbackButtons: React.FC<{ exId: string }> = React.memo(({ exId }) => {
+    const state = useAppState();
+    const dispatch = useAppDispatch();
+    const progress = state.progress[state.currentChapterId!];
+    const currentFeedback = progress.exercisesFeedback[exId];
 
-    const listStyleType = level === 1 ? 'decimal' : level === 2 ? 'lower-alpha' : 'lower-roman';
-
-    return (
-        <ol style={{ listStyleType }} className={`pl-6 mt-2 styled-list`}>
-            {subQuestions.map((sq, index) => (
-                <li key={index} className="mb-2">
-                    <MathJax inline dynamic>{sq.text}</MathJax>
-                    {sq.sub_questions && <SubQuestionDisplay subQuestions={sq.sub_questions} level={level + 1} />}
-                </li>
-            ))}
-        </ol>
-    );
-};
-
-
-const ExerciseCard: React.FC<{ exercise: Exercise; exerciseNumber: number; isWorkSubmitted: boolean }> = ({ exercise, exerciseNumber, isWorkSubmitted }) => {
-    const { state, dispatch } = useContext(AppContext);
-    const { currentChapterId, progress } = state;
-    const [isHintModalOpen, setIsHintModalOpen] = useState(false);
-    
-    if (!currentChapterId) return null;
-
-    const chapterProgress = progress[currentChapterId];
-    const currentFeedback = chapterProgress?.exercisesFeedback[exercise.id];
-
-    const handleFeedback = (feedback: Feedback) => {
-        if (isWorkSubmitted) return;
-        dispatch({ type: 'UPDATE_EXERCISE_FEEDBACK', payload: { exId: exercise.id, feedback } });
-    };
-
-    const feedbackOptions: { label: Feedback, style: string, activeStyle: string }[] = [
-        { 
-            label: 'Facile', 
-            style: 'bg-white border-slate-200 hover:border-green-400 text-slate-700', 
-            activeStyle: 'bg-green-50 border-green-500 ring-2 ring-green-400 text-green-800 font-bold',
-        },
-        { 
-            label: 'Moyen', 
-            style: 'bg-white border-slate-200 hover:border-amber-400 text-slate-700', 
-            activeStyle: 'bg-amber-50 border-amber-500 ring-2 ring-amber-400 text-amber-800 font-bold',
-        },
-        { 
-            label: 'Difficile', 
-            style: 'bg-white border-slate-200 hover:border-red-400 text-slate-700', 
-            activeStyle: 'bg-red-50 border-red-500 ring-2 ring-red-400 text-red-800 font-bold',
-        },
-        { 
-            label: 'Pas travaillé', 
-            style: 'bg-white border-slate-200 hover:border-gray-400 text-slate-700', 
-            activeStyle: 'bg-gray-100 border-gray-500 ring-2 ring-gray-400 text-gray-800 font-bold',
-        },
+    const feedbacks: { label: Feedback, color: string }[] = [
+        { label: 'Réussi facilement', color: 'bg-success/10 text-success border-success/20 hover:bg-success/20' },
+        { label: 'J\'ai réfléchi', color: 'bg-warning/10 text-warning border-warning/20 hover:bg-warning/20' },
+        { label: 'C\'était un défi', color: 'bg-error/10 text-error border-error/20 hover:bg-error/20' },
+        { label: 'Pas encore fait', color: 'bg-border text-secondary border-border hover:bg-border-hover' },
     ];
 
+    const handleFeedback = useCallback((feedback: Feedback) => {
+        dispatch({ type: 'UPDATE_EXERCISE_FEEDBACK', payload: { exId, feedback } });
+    }, [dispatch, exId]);
+
     return (
-        <>
-            <div className="bg-white p-8 rounded-3xl shadow-xl mb-8">
-                <div className="flex justify-between items-start mb-4">
-                    <h2 className="text-2xl font-bold text-slate-800">
-                        <span className="text-blue-500 mr-3">Exercice {exerciseNumber}</span>
-                        {exercise.title && <span className="text-slate-500 font-normal text-xl">| {exercise.title}</span>}
-                    </h2>
-                    {exercise.hint && (
-                        <button
-                            onClick={() => setIsHintModalOpen(true)}
-                            className="flex-shrink-0 flex items-center justify-center h-11 w-11 text-amber-600 bg-amber-50 rounded-full hover:bg-amber-100 transition-all active:scale-95 focus:outline-none focus:ring-2 focus:ring-amber-400"
-                            title="Afficher l'indice"
-                            aria-label="Afficher l'indice"
-                        >
-                            <span className="material-symbols-outlined text-2xl">lightbulb</span>
-                        </button>
-                    )}
-                </div>
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+            <p className="text-sm font-medium text-text-secondary shrink-0">Comment avez-vous trouvé cet exercice ?</p>
+            <div className="flex flex-wrap gap-1.5 justify-start">
+                {feedbacks.map(({ label, color }) => (
+                    <button
+                        key={label}
+                        onClick={() => handleFeedback(label)}
+                        className={`font-button px-2.5 py-1 text-[11px] leading-tight font-semibold border rounded-md transition-transform active:scale-95 ${currentFeedback === label ? color + ' ring-2 ring-offset-2 ring-offset-surface ring-current' : color}`}
+                    >
+                        {label}
+                    </button>
+                ))}
+            </div>
+        </div>
+    );
+});
 
-                <div className="prose max-w-none text-slate-700 leading-relaxed">
-                    <MathJax dynamic>{exercise.statement}</MathJax>
-                    {exercise.sub_questions && <SubQuestionDisplay subQuestions={exercise.sub_questions} level={1} />}
-                </div>
+const HintModal: React.FC<{ exercise: Exercise, isOpen: boolean, onClose: () => void }> = ({ exercise, isOpen, onClose }) => {
+    if (!exercise.hint || exercise.hint.length === 0) return null;
 
-                <div className="mt-8 flex flex-col sm:flex-row items-center justify-end">
-                    <div className="flex gap-3 flex-wrap justify-end">
-                        {feedbackOptions.map(opt => (
-                            <button
-                                key={opt.label}
-                                onClick={() => handleFeedback(opt.label)}
-                                disabled={isWorkSubmitted}
-                                className={`px-4 py-2 text-sm font-semibold rounded-lg transition-all border-2 ${
-                                    currentFeedback === opt.label
-                                        ? opt.activeStyle
-                                        : opt.style
-                                } ${isWorkSubmitted ? 'opacity-70 cursor-not-allowed' : 'transform hover:-translate-y-0.5 active:scale-95'}`}
-                            >
-                                {opt.label}
-                            </button>
-                        ))}
-                    </div>
+    return (
+        <Modal isOpen={isOpen} onClose={onClose} title={`Indice pour: ${exercise.title || 'Exercice'}`}>
+            <div className="mt-4 flex items-start gap-4 p-4 bg-background rounded-lg border border-border">
+                <span className="material-symbols-outlined text-primary text-2xl mt-1">lightbulb</span>
+                <div className="text-secondary space-y-2">
+                    {exercise.hint.map((h, i) => (
+                        <div key={i}><MathJax dynamic>{h.text}</MathJax></div>
+                    ))}
                 </div>
             </div>
-
-            {exercise.hint && (
-                <Modal
-                    isOpen={isHintModalOpen}
-                    onClose={() => setIsHintModalOpen(false)}
-                    title="Indice"
-                >
-                    <div className="mt-4 prose max-w-none text-dark-gray">
-                        <SubQuestionDisplay subQuestions={exercise.hint} level={1} />
-                    </div>
-                </Modal>
-            )}
-        </>
+        </Modal>
     );
 };
 
-interface ExercisesProps {
-    chapter: Chapter;
-    title: string;
-}
+const ExerciseItem = React.memo(({ exercise, index, onOpenHint }: { exercise: Exercise; index: number; onOpenHint: (ex: Exercise) => void }) => {
+    return (
+        <div className="bg-surface p-6 rounded-lg border border-border">
+            <div className="flex justify-between items-start mb-4">
+                <h3 className="text-xl font-semibold text-text flex items-center flex-wrap">
+                   <span className="font-bold font-libertinus">Exercice {index + 1}</span>
+                   {exercise.title && (
+                    <>
+                        <span className="mx-2 text-border font-light">|</span>
+                        <span>{exercise.title}</span>
+                    </>
+                   )}
+                </h3>
+                {exercise.hint && (
+                    <button 
+                        onClick={() => onOpenHint(exercise)} 
+                        className="font-button flex items-center gap-1 px-3 py-1.5 text-sm font-semibold text-primary bg-primary-light rounded-lg hover:bg-primary/20 transition"
+                        >
+                        <span className="material-symbols-outlined text-base">lightbulb</span>
+                        Indice
+                    </button>
+                )}
+            </div>
+            
+            <div className="text-text-secondary space-y-2 prose max-w-none">
+                <MathJax dynamic>{exercise.statement}</MathJax>
+                {exercise.sub_questions && (
+                    <ol className="list-decimal pl-5 space-y-3 antique-list mt-4">
+                        {exercise.sub_questions.map((sq, i) => (
+                            <li key={i} className="pl-2"><MathJax dynamic>{sq.text}</MathJax></li>
+                        ))}
+                    </ol>
+                )}
+            </div>
+            <div className="mt-6 pt-4 border-t border-border">
+                <FeedbackButtons exId={exercise.id} />
+            </div>
+        </div>
+    )
+});
 
-const Exercises: React.FC<ExercisesProps> = ({ chapter, title }) => {
-    const { state, dispatch } = useContext(AppContext);
-    const { currentChapterId, progress } = state;
+const Exercises: React.FC = () => {
+    const state = useAppState();
+    const { addNotification } = useNotification();
+    const { currentChapterId, activities, progress } = state;
+    const [hintModalState, setHintModalState] = useState<{ isOpen: boolean; exercise: Exercise | null }>({ isOpen: false, exercise: null });
 
-    if (!currentChapterId) return null;
-    
+    if (!currentChapterId || !activities[currentChapterId] || !progress[currentChapterId]) return null;
+    const chapter = activities[currentChapterId];
     const chapterProgress = progress[currentChapterId];
 
-    if (!chapter || !chapter.exercises || chapter.exercises.length === 0) {
-        return (
-            <div className="text-center py-12 px-6 bg-card-bg rounded-2xl shadow-sm">
-                <span className="material-symbols-outlined text-6xl text-secondary/50">info</span>
-                <p className="mt-4 font-semibold text-dark-gray">Il n'y a pas d'exercices dans cette activité.</p>
-                <p className="text-secondary">Passez au quiz ou revenez plus tard.</p>
-            </div>
-        );
-    }
+    const totalExercises = chapter.exercises.length;
+    const completedExercises = Object.values(chapterProgress.exercisesFeedback).filter(
+        feedback => feedback !== 'Pas encore fait'
+    ).length;
 
-    const isWorkSubmitted = chapterProgress?.isWorkSubmitted || false;
+    const prevCompletedExercises = useRef(completedExercises);
+
+    useEffect(() => {
+        if (completedExercises > 0 && completedExercises === totalExercises && prevCompletedExercises.current < totalExercises) {
+            addNotification("Étape 2 terminée ! Vous pouvez maintenant soumettre votre travail.", 'info');
+        }
+        prevCompletedExercises.current = completedExercises;
+    }, [completedExercises, totalExercises, addNotification]);
+
+    const openHintModal = useCallback((exercise: Exercise) => {
+        setHintModalState({ isOpen: true, exercise });
+    }, []);
+    
+    const closeHintModal = useCallback(() => {
+        setHintModalState({ isOpen: false, exercise: null });
+    }, []);
 
     return (
-        <div className="w-full max-w-3xl my-auto mx-auto">
-            <header className="relative mb-6 grid grid-cols-3 items-center">
-                <div className="flex justify-start">
-                    <button
-                        onClick={() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'chapter-hub' } })}
-                        className="flex items-center justify-center h-11 w-11 text-slate-500 bg-white rounded-full shadow-md hover:bg-slate-100 transition-all active:scale-95"
-                        aria-label="Retour au hub du chapitre"
-                    >
-                        <span className="material-symbols-outlined">arrow_back</span>
-                    </button>
-                </div>
-                <div className="text-center">
-                    <h2 className="text-lg font-bold text-slate-800 truncate">{chapter.chapter}</h2>
-                    <p className="text-sm text-slate-500">{title}</p>
-                </div>
-                <div />
-            </header>
+        <div className="space-y-6">
             {chapter.exercises.map((ex, index) => (
-                <ExerciseCard key={ex.id} exercise={ex} exerciseNumber={index + 1} isWorkSubmitted={isWorkSubmitted} />
+                <ExerciseItem 
+                    key={ex.id}
+                    exercise={ex}
+                    index={index}
+                    onOpenHint={openHintModal}
+                />
             ))}
+            {hintModalState.exercise && (
+                 <HintModal 
+                    exercise={hintModalState.exercise}
+                    isOpen={hintModalState.isOpen}
+                    onClose={closeHintModal}
+                />
+            )}
         </div>
     );
 };

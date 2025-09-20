@@ -4,6 +4,7 @@ import App from './App';
 import { AppProvider } from './context/AppContext';
 import { NotificationProvider } from './context/NotificationContext';
 import { MathJaxContext } from 'better-react-mathjax';
+import ErrorBoundary from './components/ErrorBoundary';
 
 const config = {
   tex: {
@@ -24,13 +25,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const root = ReactDOM.createRoot(rootElement);
     root.render(
       <React.StrictMode>
-        <MathJaxContext version={3} config={config}>
-            <NotificationProvider>
-                <AppProvider>
-                    <App />
-                </AppProvider>
-            </NotificationProvider>
-        </MathJaxContext>
+        <ErrorBoundary>
+            <MathJaxContext version={3} config={config}>
+                <NotificationProvider>
+                    <AppProvider>
+                        <App />
+                    </AppProvider>
+                </NotificationProvider>
+            </MathJaxContext>
+        </ErrorBoundary>
       </React.StrictMode>
     );
 });
+
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+                console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            })
+            .catch(error => {
+                console.log('ServiceWorker registration failed: ', error);
+            });
+    });
+}

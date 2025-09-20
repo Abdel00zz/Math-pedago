@@ -1,55 +1,51 @@
-// types.ts
-export type View = 'login' | 'dashboard' | 'chapter-hub' | 'activity';
-export type ActivitySubView = 'quiz' | 'exercises' | null;
-export type Feedback = 'Facile' | 'Moyen' | 'Difficile' | 'Pas travaillé';
-
 export interface Profile {
     name: string;
     classId: string;
 }
 
-export interface QuizOption {
+export interface Option {
     text: string;
-    isCorrect?: boolean;
+    isCorrect: boolean;
 }
 
-export interface QuizQuestion {
+export interface Question {
     id: string;
     question: string;
-    options: QuizOption[];
+    options: Option[];
     explanation: string;
+}
+
+export interface Hint {
+    text: string;
 }
 
 export interface SubQuestion {
     text: string;
-    sub_questions?: SubQuestion[];
 }
 
 export interface Exercise {
     id: string;
-    title?: string;
+    title: string;
     statement: string;
-    hint?: SubQuestion[];
-    sub_questions: SubQuestion[];
+    sub_questions?: SubQuestion[];
+    hint?: Hint[];
 }
 
-export interface ChapterData {
+export interface Chapter {
+    id: string;
+    file: string;
+    isActive: boolean;
     class: string;
     chapter: string;
     sessionDate: string;
-    quiz: QuizQuestion[];
+    quiz: Question[];
     exercises: Exercise[];
 }
 
-// The main Chapter object now includes all necessary properties
-export interface Chapter extends ChapterData {
-    id: string;
-    file: string; // The original filename, useful for the admin panel
-    isActive: boolean;
-}
+export type Feedback = 'Réussi facilement' | 'J\'ai réfléchi' | 'C\'était un défi' | 'Pas encore fait';
 
 export interface QuizProgress {
-    answers: { [questionId: string]: string };
+    answers: { [qId: string]: string };
     isSubmitted: boolean;
     score: number;
     allAnswered: boolean;
@@ -58,45 +54,29 @@ export interface QuizProgress {
 
 export interface ChapterProgress {
     quiz: QuizProgress;
-    exercisesFeedback: { [exerciseId: string]: Feedback };
+    exercisesFeedback: { [exId: string]: Feedback };
     isWorkSubmitted: boolean;
 }
 
 export interface AppState {
-    view: View;
+    view: 'login' | 'dashboard' | 'work-plan' | 'activity';
     profile: Profile | null;
     activities: { [chapterId: string]: Chapter };
     progress: { [chapterId: string]: ChapterProgress };
     currentChapterId: string | null;
-    activitySubView: ActivitySubView;
+    activitySubView: 'quiz' | 'exercises' | null;
     isReviewMode: boolean;
-}
-
-// Structure JSON pour la progression de l'élève selon les spécifications
-export interface StudentProgressSubmission {
-    studentName: string;
-    studentLevel: string;
-    timestamp: number;
-    results: ChapterResult[];
-}
-
-export interface ChapterResult {
-    chapter: string;
-    quiz: {
-        score: number;
-        answers: { [questionId: string]: number };
-    };
-    exercisesFeedback: { [exerciseId: string]: Feedback };
+    chapterOrder: string[];
 }
 
 export type Action =
     | { type: 'INIT'; payload: Partial<AppState> }
-    | { type: 'CHANGE_VIEW'; payload: { view: View; chapterId?: string | null; subView?: ActivitySubView; review?: boolean } }
     | { type: 'LOGIN'; payload: Profile }
+    | { type: 'CHANGE_VIEW'; payload: { view: AppState['view']; chapterId?: string; subView?: AppState['activitySubView']; review?: boolean } }
     | { type: 'NAVIGATE_QUIZ'; payload: number }
     | { type: 'UPDATE_QUIZ_ANSWER'; payload: { qId: string; answer: string } }
     | { type: 'SUBMIT_QUIZ'; payload: { score: number } }
     | { type: 'TOGGLE_REVIEW_MODE'; payload: boolean }
     | { type: 'UPDATE_EXERCISE_FEEDBACK'; payload: { exId: string; feedback: Feedback } }
     | { type: 'SUBMIT_WORK'; payload: { chapterId: string } }
-    | { type: 'SYNC_ACTIVITIES'; payload: { activities: { [chapterId: string]: Chapter }; progress: { [chapterId: string]: ChapterProgress } } };
+    | { type: 'SYNC_ACTIVITIES'; payload: { activities: { [id: string]: Chapter }; progress: { [id: string]: ChapterProgress }; chapterOrder: string[] } };

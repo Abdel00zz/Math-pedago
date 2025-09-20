@@ -1,5 +1,5 @@
 {
-  "name": "maths-mind",
+  "name": "le-centre-scientifique",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -9,12 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "better-react-mathjax": "^2.3.0",
-    "katex": "^0.16.22",
     "react": "^19.1.1",
+    "uuid": "^13.0.0",
     "react-dom": "^19.1.1",
-    "react-katex": "^3.1.0",
-    "uuid": "^13.0.0"
+    "better-react-mathjax": "^2.3.0"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",

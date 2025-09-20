@@ -1,224 +1,178 @@
-import React, { useEffect } from 'react';
-import ReactDOM from 'react-dom';
+import React, { useState } from 'react';
+import Modal from './Modal';
 
 interface HelpModalProps {
     isOpen: boolean;
     onClose: () => void;
 }
 
-const HelpModal: React.FC<HelpModalProps> = ({ isOpen, onClose }) => {
-    useEffect(() => {
-        const handleEsc = (event: KeyboardEvent) => {
-            if (event.key === 'Escape') {
-                onClose();
-            }
-        };
-        window.addEventListener('keydown', handleEsc);
-        return () => window.removeEventListener('keydown', handleEsc);
-    }, [onClose]);
+const FrenchContent: React.FC = () => (
+    <div className="space-y-5 text-text-secondary leading-relaxed">
+        <div className="text-center mb-6">
+            <h3 className="text-xl font-bold text-text">Bienvenue au Centre Scientifique !</h3>
+            <p>Votre centre scolaire interactif, ouvert 24h/24 et 7j/7 pour un apprentissage sans limites.</p>
+        </div>
+        
+        <div>
+            <h4 className="font-bold text-text mb-2">Quiz Interactifs</h4>
+            <p>Testez vos connaissances avec des quiz courts pour ancrer les bases. Lisez bien, répondez, puis analysez la correction pour progresser.</p>
+        </div>
+        
+        <div>
+            <h4 className="font-bold text-text mb-2">Exercices & Auto-évaluation</h4>
+            <p>Après chaque exercice, évaluez votre ressenti. Cela m'aide à identifier vos points forts et les notions à renforcer.</p>
+            <ul className="list-disc pl-5 mt-2 space-y-1">
+                <li><strong className="text-success">J'ai réussi facilement :</strong> Vous maîtrisez, bravo !</li>
+                <li><strong className="text-warning">J'ai eu besoin de réfléchir :</strong> C'est bien, la pratique ancre les connaissances.</li>
+                <li><strong className="text-error">C'était un vrai défi :</strong> Parfait pour en discuter en cours. Pensez à utiliser le bouton "Indice".</li>
+                <li><strong>Je reviendrai plus tard :</strong> C'est noté, n'oubliez pas d'y revenir.</li>
+            </ul>
+        </div>
 
-    if (!isOpen) return null;
+        <div>
+            <h4 className="font-bold text-text mb-2">Finaliser et Envoyer</h4>
+            <p>Une fois le quiz et tous les exercices évalués, vous pouvez m'envoyer votre travail. Je reçois alors un résumé de votre progression et peux vous proposer un accompagnement personnalisé.</p>
+        </div>
+        
+        <div>
+            <h4 className="font-bold text-text mb-2">Pour les Parents</h4>
+            <p>La plateforme offre une solution durable aux parents. À la fin de chaque mois, ils recevront un rapport global sur la progression de leur enfant, leur permettant de suivre son évolution de manière claire et concrète.</p>
+        </div>
 
-    return ReactDOM.createPortal(
-        <div 
-            className="fixed inset-0 z-50 flex items-center justify-center p-4"
-            onClick={onClose}
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="help-modal-title"
-        >
-            <div className="fixed inset-0 bg-black/60 backdrop-blur-md animate-fadeIn transition-all duration-500" aria-hidden="true"></div>
-            <div 
-                className="relative w-full max-w-[92vw] sm:max-w-[90vw] md:max-w-[80vw] lg:max-w-[70vw] xl:max-w-[60vw] p-0 bg-gradient-to-br from-white via-blue-50/30 to-indigo-50/40 shadow-2xl animate-slideInUp max-h-[95vh] overflow-hidden border border-blue-100/50 backdrop-blur-sm"
-            onClick={e => e.stopPropagation()}
-            style={{ fontFamily: 'Inter, Poppins, system-ui, sans-serif', borderRadius: '20px', boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(59, 130, 246, 0.1)' }}
-            >
+        <div>
+            <h4 className="font-bold text-text mb-2">Notre Approche Révolutionnaire</h4>
+            <p>Notre plateforme est ultra-pédagogique et a été conçue pour être l'opposé d'un apprentissage passif comme le visionnage de vidéos. Elle oblige l'élève à s'engager activement :</p>
+             <ul className="list-disc pl-5 mt-2 space-y-1">
+                <li>Réfléchir et réagir à chaque étape.</li>
+                <li>Organiser son temps pour accomplir son travail.</li>
+                <li>Vivre une expérience interactive complète, soutenue par des méthodes de récompense et de motivation intelligentes.</li>
+            </ul>
+        </div>
 
-                
-                {/* Contenu avec scroll */}
-                <div className="p-8 overflow-y-auto max-h-[calc(95vh-80px)] scrollbar-thin scrollbar-thumb-blue-300/60 scrollbar-track-transparent max-w-full" style={{
-                    background: 'linear-gradient(135deg, rgba(248, 250, 252, 0.8) 0%, rgba(241, 245, 249, 0.9) 50%, rgba(236, 254, 255, 0.8) 100%)',
-                    borderRadius: '16px',
-                    fontFamily: '"Inter", "Segoe UI", system-ui, sans-serif',
-                    backdropFilter: 'blur(10px)'
-                }}>
-                    {/* Bouton de fermeture repositionné */}
-                    <div className="flex justify-end mb-4">
-                        <button 
-                            onClick={onClose} 
-                            className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-all duration-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300"
-                            aria-label="Fermer"
-                        >
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                        </button>
-                    </div>
-
-                    {/* Message d'accueil avec présentation du professeur */}
-                     <div className="text-center mb-6 md:mb-8">
-                         {/* Titre et présentation du professeur - design épuré */}
-                           <div className="mb-8" dir="rtl" style={{
-                               fontFamily: '"Playfair Display", "Amiri", serif',
-                               lineHeight: '1.6'
-                           }}>
-                               <div className="text-2xl md:text-3xl font-light text-gray-800 text-center" style={{
-                                   fontWeight: '300',
-                                   letterSpacing: '0.5px'
-                               }}>
-                                     مرحباً بكم، أنا الأستاذ عبد المالك، وسأرافقكم في تعلم الرياضيات بخطوات واضحة ومفيدة
-                                 </div>
-                           </div>
-
-                         {/* Message du professeur reformulé */}
-                         <div className="text-gray-700 text-base md:text-lg font-medium leading-relaxed" style={{ fontFamily: '"Fira Sans", sans-serif' }}>
-                             Découvre une approche moderne et interactive pour maîtriser les mathématiques. <strong className="text-indigo-700">Maths Mind</strong> t'accompagne dans ton apprentissage avec des outils adaptés à ton rythme.
-                         </div>
-                     </div>
-
-                    {/* Contenu bilingue en deux colonnes */}
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
-                        {/* Colonne française */}
-                        <div className="space-y-3 md:space-y-5 text-gray-700 leading-relaxed" style={{ fontFamily: '"Fira Sans", -apple-system, BlinkMacSystemFont, sans-serif' }}>
-                            <div>
-                                <h4 className="text-lg md:text-xl font-bold text-indigo-900 mb-2 md:mb-3">Quiz interactifs guidés par le prof</h4>
-                                <div className="text-sm md:text-base text-gray-800 mb-2">
-                                    Je te propose des quiz courts (Vrai/Faux, QCM) pour vérifier les prérequis et ancrer les bases. L'objectif est simple : comprendre vite, mémoriser mieux, progresser sûrement.
-                                </div>
-                                <ul className="list-disc pl-3 md:pl-4 space-y-1 text-gray-800">
-                                    <li>Lis l'énoncé calmement et repère les mots-clés.</li>
-                                    <li>Réponds, puis observe la correction pour comparer ta démarche.</li>
-                                    <li>Note la méthode qui fonctionne afin de la réutiliser.</li>
-                                </ul>
-                            </div>
-
-                            {/* Nouvel encart: Exercices & feedback */}
-                            <div>
-                                <h4 className="text-base md:text-lg font-bold text-indigo-900 mb-2 md:mb-3">Exercices : auto-évalue-toi simplement</h4>
-                                <div className="text-sm md:text-base text-gray-800 mb-1">
-                                    Après chaque exercice, choisis un niveau adapté. Cela m'aide à identifier tes points forts et les aspects nécessitant un soutien supplémentaire.
-                                </div>
-                                <ul className="list-disc pl-3 md:pl-4 space-y-1 text-indigo-800">
-                                    <li><strong>Facile</strong> : tu maîtrises, passe au suivant.</li>
-                                    <li><strong>Moyen</strong> : révise la méthode et refais un exercice similaire.</li>
-                                    <li><strong>Difficile</strong> : on le travaille ensemble en cours, regarde le bouton « Indice » s'il existe.</li>
-                                    <li><strong>Pas travaillé</strong> : acceptable et compté comme « évalué », mais pense à y revenir.</li>
-                                </ul>
-                            </div>
-
-                            <div>
-                                <h4 className="text-base md:text-lg font-bold text-emerald-900 mb-2 md:mb-3">Feedback et bouton « Envoyer »</h4>
-                                <div className="text-sm md:text-base text-gray-800 mb-1">
-                                    En cliquant sur « Envoyer », je reçois un résumé clair de ton travail (taux de réussite, erreurs récurrentes, temps passé). Avec ces données, je te propose un plan d'entraînement ciblé.
-                                </div>
-                                <ul className="list-disc pl-3 md:pl-4 space-y-1 text-emerald-800">
-                                    <li>Envoi possible dès que le quiz est terminé et tous les exercices évalués (même avec « Pas travaillé »).</li>
-                                    <li>Recommandations personnalisées sur les concepts à revoir.</li>
-                                    <li>Exercices adaptés à ton niveau actuel et conseils méthodologiques pour gagner en efficacité.</li>
-                                </ul>
-                            </div>
-
-                            <div>
-                                <h4 className="text-base md:text-lg font-bold text-rose-900 mb-2 md:mb-3">Cours en direct : on progresse ensemble</h4>
-                                <div className="text-sm md:text-base text-gray-800 mb-1">
-                                    Pendant le cours, on corrige ensemble, tu poses tes questions sur ce qui te pose problème, et je t'aide à structurer tes étapes de résolution. Chaque difficulté devient une opportunité d'apprentissage plus profond.
-                                </div>
-                                <ul className="list-disc pl-3 md:pl-4 space-y-1 text-rose-800">
-                                    <li>Résolution progressive des exercices difficiles.</li>
-                                    <li>Astuces pour éviter les pièges et gagner du temps.</li>
-                                    <li>Objectifs clairs à atteindre entre deux séances.</li>
-                                </ul>
-                                <div className="text-sm md:text-base text-rose-800 font-medium mt-1">
-                                    Ton effort + mon accompagnement = des résultats durables.
-                                </div>
-                            </div>
-
-                            {/* Autres fonctionnalités utiles */}
-                            <div>
-                                <h4 className="text-base md:text-lg font-bold text-sky-900 mb-2 md:mb-3">Autres fonctionnalités utiles</h4>
-                                <ul className="list-disc pl-3 md:pl-4 space-y-1 text-sky-800 text-sm md:text-base">
-                                    <li><strong>Notifications</strong> : un message s'affiche en haut à droite (succès, erreur, info) pour confirmer tes actions.</li>
-                                    <li><strong>Tableau de bord</strong> : vois ton score de quiz et combien d'exercices sont évalués sur le total; tu peux revoir le quiz s'il est soumis.</li>
-                                    <li><strong>Indices</strong> : certains exercices ont un bouton « Indice » qui ouvre une aide étape par étape.</li>
-                                    <li><strong>Navigation</strong> : depuis le hub du chapitre, lance le Quiz ou les Exercices, et utilise « Précédent/Suivant » pour parcourir les questions.</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        {/* Colonne arabe */}
-                        <div className="space-y-3 md:space-y-5 text-gray-700 leading-relaxed" dir="rtl" style={{
-                            fontFamily: '"Noto Sans Arabic", "Arabic UI Text", "Segoe UI Arabic", "Tahoma", sans-serif',
-                            textAlign: 'right'
-                        }}>
-                            <div>
-                                <h4 className="text-lg md:text-xl font-bold text-indigo-900 mb-2 md:mb-3">ابدأ من هنا: اختبارات قصيرة تفاعلية</h4>
-                                <div className="text-sm md:text-base text-gray-800 mb-2">
-                                     التطبيق يمكنك من إجراء اختبارات قصيرة (صحيح/خطأ واختيار من متعدد) للتحقق من المعارف القبلية وتثبيت الأساسيات. الهدف واضح: تفهم بسرعة، تحفظ بإتقان، وتتقدم بثبات.
-                                 </div>
-                                <ul className="list-disc pr-3 md:pr-4 space-y-1 text-gray-800">
-                                    <li>اقرأ المعطيات بهدوء وحدد الكلمات المفتاحية.</li>
-                                    <li>أجب ثم اطّلع على التصحيح وقارن طريقتك.</li>
-                                    <li>دوّن الطريقة التي نجحت معك لتعيد استخدامها.</li>
-                                </ul>
-                            </div>
-
-                            {/* جديد: التمارين ومستويات التغذية الراجعة */}
-                            <div>
-                                <h4 className="text-base md:text-lg font-bold text-indigo-900 mb-2 md:mb-3">التمارين: قيّم نفسك ببساطة</h4>
-                                <div className="text-sm md:text-base text-gray-800 mb-1">
-                                    بعد كل تمرين اختر مستوى مناسباً. هذا يساعدني على معرفة نقاط القوة والجوانب التي تحتاج دعماً إضافياً.
-                                </div>
-                                <ul className="list-disc pr-3 md:pr-4 space-y-1 text-indigo-800">
-                                    <li><strong>سهل</strong>: أنت متقن، انتقل إلى التمرين التالي.</li>
-                                    <li><strong>متوسط</strong>: راجع المنهجية وأعد تمريناً مشابهاً.</li>
-                                    <li><strong>صعب</strong>: نعالجه معاً في الحصة المباشرة، واطّلع على زر «تلميح» إن وُجد.</li>
-                                    <li><strong>غير منجز</strong>: مقبول ويُحتسب «مُقيّماً»، لكن تذكّر العودة إليه.</li>
-                                </ul>
-                            </div>
-
-                            <div>
-                                <h4 className="text-base md:text-lg font-bold text-emerald-900 mb-2 md:mb-3">التغذية الراجعة وزر «إرسال»</h4>
-                                <div className="text-sm md:text-base text-gray-800 mb-1">
-                                    عند الضغط على «إرسال» يصلني ملخص واضح لعملك (نِسب النجاح، الأخطاء المتكررة، الوقت المستغرق). بهذه المعطيات أقترح لك خطة تدريب موجهة.
-                                </div>
-                                <ul className="list-disc pr-3 md:pr-4 space-y-1 text-emerald-800">
-                                    <li>يمكن الإرسال عند إنهاء الاختبار وتقييم جميع التمارين (حتى بخيار «Pas travaillé»).</li>
-                                    <li>توصيات شخصية بالمفاهيم التي تحتاج مراجعة.</li>
-                                    <li>تمارين مناسبة لمستواك الحالي ونصائح منهجية لرفع الفعالية.</li>
-                                </ul>
-                            </div>
-
-                            <div>
-                                <h4 className="text-base md:text-lg font-bold text-rose-900 mb-2 md:mb-3">حصص مباشرة: نتقدم معاً</h4>
-                                <div className="text-sm md:text-base text-gray-800 mb-1">
-                                    خلال الحصة نصحّح معاً، تسأل عمّا أشكل عليك، وأساعدك على تنظيم خطوات الحل. كل صعوبة فرصة لتعلّم أعمق.
-                                </div>
-                                <ul className="list-disc pr-3 md:pr-4 space-y-1 text-rose-800">
-                                    <li>حل تدريجي للتمارين الصعبة.</li>
-                                    <li>حيل لتجنب الأخطاء الشائعة وربح الوقت.</li>
-                                    <li>أهداف واضحة بين حصتين لقياس التقدم.</li>
-                                </ul>
-                                <div className="text-sm md:text-base text-rose-800 font-medium mt-1">
-                                    جهدُك + مرافقتي = نتائج ثابتة ومستدامة.
-                                </div>
-                            </div>
-
-                            {/* ميزات أخرى مفيدة */}
-                            <div>
-                                <h4 className="text-base md:text-lg font-bold text-sky-900 mb-2 md:mb-3">ميزات أخرى مفيدة</h4>
-                                <ul className="list-disc pr-3 md:pr-4 space-y-1 text-sky-800 text-sm md:text-base">
-                                    <li><strong>الإشعارات</strong>: رسالة تظهر أعلى اليمين (نجاح، خطأ، معلومات) لتأكيد عملياتك.</li>
-                                    <li><strong>لوحة المتابعة</strong>: تشاهد نتيجة الاختبار وعدد التمارين المُقيمة من المجموع؛ يمكنك مراجعة الاختبار إذا تم إرساله.</li>
-                                    <li><strong>زر «تلميح»</strong>: بعض التمارين تحتوي زر «تلميح» يفتح مساعدة خطوة بخطوة.</li>
-                                    <li><strong>التنقل</strong>: من مركز الفصل ابدأ الاختبار أو التمارين، واستعمل «السابق/التالي» للتنقل بين الأسئلة.</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+        <div>
+            <h4 className="font-bold text-text mb-2">Cours en Direct</h4>
+            <p>Pendant nos séances, nous corrigeons les exercices, répondons à vos questions et structurons les méthodes de résolution. Chaque difficulté est une opportunité d'apprendre.</p>
+            <div className="mt-3">
+                <p className="font-bold text-text mb-2">Pour me contacter :</p>
+                <div className="flex flex-col sm:flex-row gap-3">
+                    <a href="https://web.facebook.com/Maths.new.horizons" target="_blank" rel="noopener noreferrer" className="font-button flex-1 flex items-center justify-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-[#1877F2] rounded-lg hover:bg-opacity-90 transition transform hover:-translate-y-px">
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fillRule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clipRule="evenodd"></path></svg>
+                        <span>Facebook</span>
+                    </a>
+                    <a href="https://wa.me/212674680119" target="_blank" rel="noopener noreferrer" className="font-button flex-1 flex items-center justify-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-[#25D366] rounded-lg hover:bg-opacity-90 transition transform hover:-translate-y-px">
+                        <span className="material-symbols-outlined text-xl">chat</span>
+                        <span>WhatsApp</span>
+                    </a>
                 </div>
             </div>
-        </div>,
-        document.body
+        </div>
+    </div>
+);
+
+const ArabicContent: React.FC = () => (
+    <div className="space-y-5 text-text-secondary leading-relaxed text-right" dir="rtl">
+        <div className="text-center mb-6">
+            <h3 className="text-xl font-bold text-text">! مرحباً بكم في المركز العلمي</h3>
+            <p>مركزكم الدراسي التفاعلي، مفتوح 24 ساعة طوال أيام الأسبوع لتعلم بلا حدود.</p>
+        </div>
+
+        <div>
+            <h4 className="font-bold text-text mb-2">اختبارات قصيرة تفاعلية</h4>
+            <p>اختبروا معارفكم باختبارات قصيرة لتثبيت الأساسيات. اقرأوا بتمعن، أجيبوا، ثم حللوا التصحيح للتقدم.</p>
+        </div>
+
+        <div>
+            <h4 className="font-bold text-text mb-2">التمارين والتقييم الذاتي</h4>
+            <p>بعد كل تمرين، قيّموا شعوركم. هذا يساعدني على تحديد نقاط قوتكم والمفاهيم التي تحتاج إلى تعزيز.</p>
+            <ul className="list-disc pr-5 mt-2 space-y-1">
+                <li><strong className="text-success">لقد نجحت بسهولة:</strong> أنتم تتقنون، أحسنتم!</li>
+                <li><strong className="text-warning">لقد احتجت إلى التفكير:</strong> جيد، الممارسة تثبت المعرفة.</li>
+                <li><strong className="text-error">لقد كان تحديًا حقيقيًا:</strong> ممتاز لمناقشته في الحصة. فكروا في استخدام زر "تلميح".</li>
+                <li><strong>سأعود لاحقًا:</strong> تم تسجيل ذلك، لا تنسوا العودة إليه.</li>
+            </ul>
+        </div>
+
+        <div>
+            <h4 className="font-bold text-text mb-2">إنهاء وإرسال</h4>
+            <p>بمجرد إنهاء الاختبار وتقييم جميع التمارين، يمكنكم إرسال عملكم لي. أتلقى حينها ملخصًا لتقدمكم ويمكنني أن أقدم لكم مرافقة شخصية.</p>
+        </div>
+        
+        <div>
+            <h4 className="font-bold text-text mb-2">للآباء</h4>
+            <p>تقدم المنصة حلاً دائماً للآباء. في نهاية كل شهر، سيتلقون تقريراً شاملاً عن تقدم طفلهم، مما يتيح لهم متابعة تطوره بوضوح وفعالية.</p>
+        </div>
+
+        <div>
+            <h4 className="font-bold text-text mb-2">نهجنا الثوري</h4>
+            <p>منصتنا تعليمية للغاية ومصممة لتكون نقيض التعلم السلبي مثل مشاهدة مقاطع الفيديو. إنها تجبر الطالب على المشاركة بفعالية:</p>
+            <ul className="list-disc pr-5 mt-2 space-y-1">
+                <li>التفكير والتفاعل في كل مرحلة.</li>
+                <li>تنظيم وقته لإنجاز عمله.</li>
+                <li>عيش تجربة تفاعلية كاملة، مدعومة بأساليب مكافأة وتحفيز ذكية.</li>
+            </ul>
+        </div>
+
+        <div>
+            <h4 className="font-bold text-text mb-2">الحصص المباشرة</h4>
+            <p>خلال حصصنا، نصحح التمارين، نجيب على أسئلتكم، وننظم طرق الحل. كل صعوبة هي فرصة للتعلم.</p>
+            <div className="mt-3">
+                <p className="font-bold text-text mb-2">للتواصل معي :</p>
+                <div className="flex flex-col sm:flex-row gap-3">
+                    <a href="https://web.facebook.com/Maths.new.horizons" target="_blank" rel="noopener noreferrer" className="font-button flex-1 flex items-center justify-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-[#1877F2] rounded-lg hover:bg-opacity-90 transition transform hover:-translate-y-px">
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fillRule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clipRule="evenodd"></path></svg>
+                        <span>فيسبوك</span>
+                    </a>
+                    <a href="https://wa.me/212674680119" target="_blank" rel="noopener noreferrer" className="font-button flex-1 flex items-center justify-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-[#25D366] rounded-lg hover:bg-opacity-90 transition transform hover:-translate-y-px">
+                        <span className="material-symbols-outlined text-xl">chat</span>
+                        <span>واتساب</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+);
+
+const HelpModal: React.FC<HelpModalProps> = ({ isOpen, onClose }) => {
+    const [activeTab, setActiveTab] = useState<'fr' | 'ar'>('fr');
+
+    return (
+        <Modal 
+            isOpen={isOpen} 
+            onClose={onClose} 
+            title="Guide d'utilisation"
+            className="sm:max-w-2xl"
+        >
+            <div className="mt-4">
+                <div className="border-b border-border mb-4">
+                    <nav className="-mb-px flex gap-6" aria-label="Tabs">
+                        <button
+                            onClick={() => setActiveTab('fr')}
+                            className={`font-button shrink-0 border-b-2 px-1 pb-2 text-sm font-medium transition-colors ${
+                                activeTab === 'fr' 
+                                ? 'border-primary text-primary' 
+                                : 'border-transparent text-text-secondary hover:border-border-hover hover:text-text'
+                            }`}
+                        >
+                            Français
+                        </button>
+                        <button
+                             onClick={() => setActiveTab('ar')}
+                             className={`font-button shrink-0 border-b-2 px-1 pb-2 text-sm font-medium transition-colors ${
+                                activeTab === 'ar' 
+                                ? 'border-primary text-primary' 
+                                : 'border-transparent text-text-secondary hover:border-border-hover hover:text-text'
+                            }`}
+                        >
+                            العربية
+                        </button>
+                    </nav>
+                </div>
+
+                <div className="max-h-[60vh] overflow-y-auto pr-2">
+                    {activeTab === 'fr' ? <FrenchContent /> : <ArabicContent />}
+                </div>
+            </div>
+        </Modal>
     );
 };
 

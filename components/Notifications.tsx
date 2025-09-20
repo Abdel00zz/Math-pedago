@@ -12,17 +12,19 @@ const Toast: React.FC<{ notification: Notification; onDismiss: (id: string) => v
 
     return (
         <div
-            className={`w-full max-w-sm p-4 text-white rounded-lg shadow-2xl animate-slideInRight ${typeStyles[notification.type]} flex items-center justify-between`}
+            className={`w-full max-w-sm p-4 text-white rounded-lg shadow-claude animate-slideInRight ${typeStyles[notification.type]}`}
             role="alert"
         >
-            <span>{notification.message}</span>
-            <button 
-                onClick={() => onDismiss(notification.id)} 
-                className="ml-4 -mr-1 p-1 rounded-full hover:bg-white/20 transition-colors focus:outline-none focus:ring-2 focus:ring-white"
-                aria-label="Fermer"
-            >
-                <span className="material-symbols-outlined text-lg">close</span>
-            </button>
+            <div className="flex items-center justify-between">
+                <span>{notification.message}</span>
+                <button 
+                    onClick={() => onDismiss(notification.id)} 
+                    className="font-button ml-4 -mr-1 p-1 rounded-full hover:bg-white/20 transition-colors focus:outline-none focus:ring-2 focus:ring-white"
+                    aria-label="Fermer"
+                >
+                    <span className="material-symbols-outlined text-lg">close</span>
+                </button>
+            </div>
         </div>
     );
 };

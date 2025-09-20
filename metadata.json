@@ -1,5 +1,5 @@
 {
-  "name": "Maths Mind",
-  "description": "منصة تعليمية تفاعلية حديثة للطلاب، تتيح متابعة الفصول والإجابة على الاختبارات وحل التمارين ومتابعة التقدم. Une application React moderne et fluide pour les élèves, permettant de suivre des chapitres, de répondre à des quiz, de faire des exercices et de suivre sa progression.",
+  "name": "Le centre scientifique",
+  "description": "Bienvenue au Centre Scientifique, votre centre scolaire interactif aux portes ouvertes 24h/24 et 7j/7 pour un apprentissage sans limites. Suivez des chapitres, répondez à des quiz, faites des exercices et suivez votre progression via une interface moderne et fluide.",
   "requestFramePermissions": []
 }
