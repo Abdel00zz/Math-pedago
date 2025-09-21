@@ -1,4 +1,4 @@
-import { Profile, Chapter, ChapterProgress, Feedback, Question, AppState, Option } from './types';
+import { Profile, Chapter, ChapterProgress, Feedback, Question, AppState, Option, ExportedProgressFile, ExportedChapterResult } from './types';
 import { CLASS_OPTIONS } from '../constants';
 
 export const getChapterId = (name: string): string => {
@@ -17,7 +17,7 @@ export const downloadJSON = (data: object, filename: string): void => {
     URL.revokeObjectURL(url);
 };
 
-export const generateStudentReport = (state: AppState) => {
+export const generateStudentReport = (state: AppState): ExportedProgressFile | null => {
     const { profile, activities, progress, chapterOrder } = state;
     if (!profile) return null;
 
@@ -51,7 +51,6 @@ export const generateStudentReport = (state: AppState) => {
             return {
                 chapter: chapter.chapter,
                 quiz: {
-                    isSubmitted: prog.quiz.isSubmitted,
                     score: parseFloat(quizScorePercentage.toFixed(2)),
                     answers: quizAnswersWithIndices,
                 },
@@ -59,11 +58,11 @@ export const generateStudentReport = (state: AppState) => {
                 durationSeconds: (prog.quiz.duration || 0) + (prog.exercisesDuration || 0),
             };
         })
-        .filter((result): result is NonNullable<typeof result> => result !== null);
+        .filter((result): result is ExportedChapterResult => result !== null);
 
     return {
         studentName: profile.name,
-        studentLevel: classInfo ? classInfo.value : profile.classId, // Use class value '1bsm' as per example
+        studentLevel: classInfo ? classInfo.label : profile.classId,
         timestamp: Date.now(),
         results,
     };

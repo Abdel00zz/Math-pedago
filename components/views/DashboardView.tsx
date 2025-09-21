@@ -210,10 +210,10 @@ const SessionStatus: React.FC<SessionStatusProps> = React.memo(({ dates }) => {
     }, [dates, now]);
 
     const statusStyles = {
-        live: 'text-primary font-semibold',
-        upcoming: 'text-info font-medium',
-        past: 'text-text-disabled italic',
-        none: 'text-text-disabled italic',
+        live: 'text-text font-semibold',
+        upcoming: 'text-text-secondary font-medium',
+        past: 'text-text-secondary italic',
+        none: 'text-text-secondary italic',
     };
     
     const currentStyle = statusStyles[sessionInfo.status] || statusStyles.none;
@@ -222,11 +222,11 @@ const SessionStatus: React.FC<SessionStatusProps> = React.memo(({ dates }) => {
         <div className={`flex items-center gap-2 ${currentStyle}`}>
             {sessionInfo.status === 'live' ? (
                 <span className="relative flex h-3 w-3">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-current opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-3 w-3 bg-current"></span>
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
                 </span>
             ) : sessionInfo.status === 'upcoming' ? (
-                <span className="w-2 h-2 rounded-full bg-info animate-cursorBlink"></span>
+                <span className="w-2 h-2 rounded-full bg-secondary animate-cursorBlink"></span>
             ) : (
                 <span className="material-symbols-outlined !text-base">{sessionInfo.icon}</span>
             )}
@@ -243,8 +243,8 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
             return {
                 text: 'Terminé',
                 icon: 'check_circle',
-                iconClasses: 'text-success',
-                textClasses: 'text-success',
+                iconClasses: 'text-text-secondary',
+                textClasses: 'text-text-secondary',
                 disabled: false,
             };
         }
@@ -261,16 +261,16 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
             return {
                 text: 'En cours',
                 icon: 'autorenew',
-                iconClasses: 'text-primary',
-                textClasses: 'text-primary',
+                iconClasses: 'text-text',
+                textClasses: 'text-text',
                 disabled: false,
             };
         }
         return {
             text: 'À faire',
             icon: 'edit_note',
-            iconClasses: 'text-info',
-            textClasses: 'text-info',
+            iconClasses: 'text-text-secondary',
+            textClasses: 'text-text-secondary',
             disabled: false,
         };
     }, [chapter.isActive, progress]);
@@ -645,13 +645,13 @@ const DashboardView: React.FC = () => {
                                     <span className="opacity-0 animate-futuristicWelcome inline-block" style={{ animationDelay: '100ms' }}>
                                         {greeting},
                                     </span>
-                                    <span className="text-primary opacity-0 animate-nameReveal inline-block ml-4" style={{ animationDelay: '300ms' }}>
+                                    <span className="text-text opacity-0 animate-nameReveal inline-block ml-4" style={{ animationDelay: '300ms' }}>
                                         {profile.name}
                                     </span>
                                 </h1>
                                 <div className="mt-2">
                                     <div
-                                        className="inline-block text-xl font-garamond text-primary italic"
+                                        className="inline-block text-xl font-garamond text-text-secondary italic"
                                         dangerouslySetInnerHTML={{ __html: formatClassNameHTML(className) }}
                                     />
                                 </div>
@@ -691,10 +691,10 @@ const DashboardView: React.FC = () => {
                             {completed.length > 0 && (
                                 <section>
                                     <div className="flex items-center gap-3 mb-6">
-                                        <span className="text-success/70 text-2xl">✓</span>
+                                        <span className="text-text-secondary text-2xl">✓</span>
                                         <h2 className="text-4xl antique-title text-text">
                                             Chapitres achevés
-                                            <span className="text-lg font-normal text-success ml-3">
+                                            <span className="text-lg font-normal text-text-secondary ml-3">
                                                 ({completed.length})
                                             </span>
                                         </h2>

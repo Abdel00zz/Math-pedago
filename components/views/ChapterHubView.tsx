@@ -4,6 +4,7 @@ import { CLASS_OPTIONS } from '../../constants';
 import ConfirmationModal from '../ConfirmationModal';
 import { useNotification } from '../../context/NotificationContext';
 import TypingEffect from '../TypingEffect';
+import { ExportedProgressFile } from '../../types';
 
 type BadgeStatus = 'completed' | 'in-progress' | 'todo' | 'ready' | 'locked';
 
@@ -114,7 +115,8 @@ const ChapterHubView: React.FC = () => {
             addHiddenField('_autoresponse', "Votre travail a été reçu avec succès. Nous l'examinerons dans les plus brefs délais.");
             
             const submissionDate = new Date();
-            const resume = `Quiz: ${quiz.score}/${chapter.quiz.length} (${((quiz.score / chapter.quiz.length) * 100).toFixed(1)}%). Exercices: ${evaluatedExercisesCount}/${totalExercises} évalués.`;
+            const quizScorePercentage = chapter.quiz.length > 0 ? (quiz.score / chapter.quiz.length) * 100 : 100;
+            const resume = `Quiz: ${quiz.score}/${chapter.quiz.length} (${quizScorePercentage.toFixed(1)}%). Exercices: ${evaluatedExercisesCount}/${totalExercises} évalués.`;
             
             // Informations principales
             addHiddenField('eleve', profile.name);
@@ -124,18 +126,34 @@ const ChapterHubView: React.FC = () => {
             addHiddenField('submittedAt', submissionDate.toLocaleString('fr-FR', { dateStyle: 'full', timeStyle: 'short' }));
             addHiddenField('resume', resume);
             
+            // Find the index of the selected answer for each question
+            const quizAnswersWithIndices: { [qId: string]: number } = {};
+            Object.keys(quiz.answers).forEach(qId => {
+                const question = chapter.quiz.find(q => q.id === qId);
+                if (question) {
+                    const answerIndex = question.options.findIndex(opt => opt.text === quiz.answers[qId]);
+                    if (answerIndex !== -1) {
+                        quizAnswersWithIndices[qId] = answerIndex;
+                    }
+                }
+            });
+
             // Construire la structure de données pour la soumission
-            const submissionData = {
-                profile: {
-                    name: profile.name,
-                    classId: profile.classId
-                },
-                chapter: {
-                    id: chapter.id,
-                    title: chapter.chapter
-                },
-                progress: chapterProgress,
-                submittedAt: new Date().toISOString()
+            const submissionData: ExportedProgressFile = {
+                studentName: profile.name,
+                studentLevel: className,
+                timestamp: Date.now(),
+                results: [
+                    {
+                        chapter: chapter.chapter,
+                        quiz: {
+                            score: parseFloat(quizScorePercentage.toFixed(2)),
+                            answers: quizAnswersWithIndices,
+                        },
+                        exercisesFeedback: chapterProgress.exercisesFeedback,
+                        durationSeconds: (chapterProgress.quiz.duration || 0) + (chapterProgress.exercisesDuration || 0),
+                    }
+                ]
             };
             
             // Créer et attacher le fichier JSON
@@ -297,13 +315,13 @@ ${exercisesSelfAssessment.feedback.map((ex: any) =>
     
     const getStatusBadge = (status: BadgeStatus, text: string) => {
         const styles: Record<BadgeStatus, string> = {
-            completed: 'bg-success/10 text-success',
-            'in-progress': 'bg-warning/10 text-warning',
-            todo: 'bg-secondary/10 text-secondary',
-            ready: 'bg-info/10 text-info',
-            locked: 'bg-secondary/10 text-secondary',
+            completed: 'px-2.5 py-1 text-xs font-semibold rounded-full bg-success/10 text-success',
+            'in-progress': 'px-2.5 py-1 text-xs font-semibold rounded-full bg-warning/10 text-warning',
+            todo: 'px-2 py-0.5 text-[11px] font-normal font-garamond rounded border border-border text-text-secondary bg-surface',
+            ready: 'px-2.5 py-1 text-xs font-semibold rounded-full bg-info/10 text-info',
+            locked: 'px-2.5 py-1 text-xs font-semibold rounded-full bg-secondary/10 text-secondary',
         };
-        return <span className={`px-2.5 py-1 text-xs font-semibold rounded-full ${styles[status]}`}>{text}</span>;
+        return <span className={`${styles[status]}`}>{text}</span>;
     };
 
     return (
