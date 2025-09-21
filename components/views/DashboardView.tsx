@@ -154,10 +154,11 @@ const SessionStatus: React.FC<SessionStatusProps> = React.memo(({ dates }) => {
 
         if (liveSession) {
             const timeFormat: Intl.DateTimeFormatOptions = { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris' };
-            const timeString = liveSession.toLocaleTimeString('fr-FR', timeFormat).replace(':', 'h');
+            const startTimeString = liveSession.toLocaleTimeString('fr-FR', timeFormat).replace(':', 'h');
+            const endTimeString = new Date(liveSession.getTime() + SESSION_DURATION_MS).toLocaleTimeString('fr-FR', timeFormat).replace(':', 'h');
             return { 
                 status: 'live', 
-                text: `Séance en direct à ${timeString}`,
+                text: `En direct (${startTimeString} - ${endTimeString})`,
                 icon: 'podcasts'
             };
         }
@@ -189,7 +190,7 @@ const SessionStatus: React.FC<SessionStatusProps> = React.memo(({ dates }) => {
             
             return { 
                 status: 'upcoming', 
-                text: formattedDate,
+                text: `Prochaine séance : ${formattedDate}`,
                 icon: 'update'
             };
         }
@@ -210,7 +211,7 @@ const SessionStatus: React.FC<SessionStatusProps> = React.memo(({ dates }) => {
 
     const statusStyles = {
         live: 'text-primary font-semibold',
-        upcoming: 'text-text-secondary font-medium',
+        upcoming: 'text-info font-medium',
         past: 'text-text-disabled italic',
         none: 'text-text-disabled italic',
     };
@@ -224,6 +225,8 @@ const SessionStatus: React.FC<SessionStatusProps> = React.memo(({ dates }) => {
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-current opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-3 w-3 bg-current"></span>
                 </span>
+            ) : sessionInfo.status === 'upcoming' ? (
+                <span className="w-2 h-2 rounded-full bg-info animate-cursorBlink"></span>
             ) : (
                 <span className="material-symbols-outlined !text-base">{sessionInfo.icon}</span>
             )}
@@ -608,27 +611,27 @@ const DashboardView: React.FC = () => {
         <>
             <style>{customStyles}</style>
 
-            <div className="fixed top-6 right-6 z-40 flex items-center gap-3">
+            <div className="fixed top-4 right-4 z-40 flex items-center gap-2">
                 <div className="group relative">
                     <button 
                         onClick={handleHelpClick}
-                        className="w-12 h-12 rounded-full flex items-center justify-center"
+                        className="w-11 h-11 rounded-full flex items-center justify-center bg-surface/50 hover:bg-surface border border-border/70 transition-all duration-200"
                         aria-label="Aide et support"
                     >
-                        <span className="material-symbols-outlined text-text-secondary !text-3xl group-hover:text-primary transition-colors">help_outline</span>
+                        <span className="material-symbols-outlined text-text-secondary !text-2xl group-hover:text-primary transition-colors">help_outline</span>
                     </button>
-                    <span className="tooltip">Aide</span>
+                    <span className="tooltip">Aide (Ctrl+H)</span>
                 </div>
                 
                 <div className="group relative">
                     <button 
                         onClick={() => setOrientationModalOpen(true)}
-                        className="w-12 h-12 rounded-full flex items-center justify-center"
+                        className="w-11 h-11 rounded-full flex items-center justify-center bg-surface/50 hover:bg-surface border border-border/70 transition-all duration-200"
                         aria-label="Programme d'orientation"
                     >
-                        <span className="material-symbols-outlined text-text-secondary !text-3xl group-hover:text-primary transition-colors">explore</span>
+                        <span className="material-symbols-outlined text-text-secondary !text-2xl group-hover:text-primary transition-colors">explore</span>
                     </button>
-                    <span className="tooltip">Programme</span>
+                    <span className="tooltip">Programme (Ctrl+O)</span>
                 </div>
             </div>
 
@@ -642,7 +645,7 @@ const DashboardView: React.FC = () => {
                                     <span className="opacity-0 animate-futuristicWelcome inline-block" style={{ animationDelay: '100ms' }}>
                                         {greeting},
                                     </span>
-                                    <span className="text-primary opacity-0 animate-nameGlow inline-block ml-4" style={{ animationDelay: '300ms' }}>
+                                    <span className="text-primary opacity-0 animate-nameReveal inline-block ml-4" style={{ animationDelay: '300ms' }}>
                                         {profile.name}
                                     </span>
                                 </h1>
@@ -759,7 +762,7 @@ const DashboardView: React.FC = () => {
                             <span className="font-brand text-2xl text-primary -mt-1">Scientifique</span>
                         </div>
                         <p className="text-xs text-text-secondary serif-text italic mt-4">
-                            © {new Date().getFullYear()} - Votre parcours d'apprentissage personnalisé
+                            © {new Date().getFullYear()} - Votre parcours d'apprentissage interactif
                         </p>
                     </footer>
                 </div>
@@ -773,54 +776,11 @@ const DashboardView: React.FC = () => {
                 classId={profile.classId} 
             />
             
-            {/* Indicateur de progression globale */}
-            <GlobalProgress 
-                completed={categorizedActivities.completed.length}
-                inProgress={categorizedActivities.inProgress.length}
-                total={Object.keys(activities).filter(id => activities[id].class === profile.classId).length}
-            />
-            
             {/* Notifications flottantes */}
             <NotificationToast />
         </>
     );
 };
-
-// Composant de progression globale
-const GlobalProgress: React.FC<{
-    completed: number;
-    inProgress: number;
-    total: number;
-}> = React.memo(({ completed, inProgress, total }) => {
-    const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
-    
-    if (total === 0) return null;
-    
-    return (
-        <div className="fixed bottom-8 right-8 z-40">
-            <div className="claude-card p-4 rounded-2xl shadow-xl backdrop-blur-sm bg-surface/90">
-                <h4 className="text-sm antique-title text-text mb-2">Progression globale</h4>
-                <div className="w-48">
-                    <div className="flex justify-between text-xs text-text-secondary mb-1">
-                        <span className="serif-text">{percentage}% complété</span>
-                        <span className="serif-text">{completed}/{total}</span>
-                    </div>
-                    <div className="h-2 bg-border rounded-full overflow-hidden">
-                        <div 
-                            className="h-full bg-gradient-to-r from-success to-green-400 rounded-full transition-all duration-1000 ease-out"
-                            style={{ width: `${percentage}%` }}
-                        />
-                    </div>
-                    {inProgress > 0 && (
-                        <p className="text-xs text-info mt-2 serif-text italic">
-                            {inProgress} chapitre{inProgress > 1 ? 's' : ''} en cours
-                        </p>
-                    )}
-                </div>
-            </div>
-        </div>
-    );
-});
 
 // Composant de notifications toast
 const NotificationToast: React.FC = () => {

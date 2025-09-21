@@ -71,7 +71,7 @@
     {
       "id": "ensembles-et-applications",
       "file": "1bsm_ensembles_et_applications.json",
-      "isActive": true
+      "isActive": false
     },
     {
       "id": "generalites-sur-les-fonctions",
