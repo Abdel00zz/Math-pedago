@@ -15,7 +15,7 @@ const FeedbackButtons: React.FC<{ exId: string }> = React.memo(({ exId }) => {
         { label: 'Réussi facilement', color: 'bg-success/10 text-success border-success/20 hover:bg-success/20' },
         { label: 'J\'ai réfléchi', color: 'bg-warning/10 text-warning border-warning/20 hover:bg-warning/20' },
         { label: 'C\'était un défi', color: 'bg-error/10 text-error border-error/20 hover:bg-error/20' },
-        { label: 'Pas encore fait', color: 'bg-border text-secondary border-border hover:bg-border-hover' },
+        { label: 'Non traité', color: 'bg-secondary/10 text-secondary border-secondary/20 hover:bg-secondary/20' },
     ];
 
     const handleFeedback = useCallback((feedback: Feedback) => {
@@ -109,9 +109,7 @@ const Exercises: React.FC = () => {
     const chapterProgress = progress[currentChapterId];
 
     const totalExercises = chapter.exercises.length;
-    const completedExercises = Object.values(chapterProgress.exercisesFeedback).filter(
-        feedback => feedback !== 'Pas encore fait'
-    ).length;
+    const completedExercises = Object.values(chapterProgress.exercisesFeedback).length;
 
     const prevCompletedExercises = useRef(completedExercises);
 

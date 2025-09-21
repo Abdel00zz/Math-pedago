@@ -23,9 +23,7 @@ const ChapterHubView: React.FC = () => {
     const isQuizCompleted = quizProgress.isSubmitted;
 
     const totalExercises = chapter.exercises.length;
-    const completedExercises = Object.values(chapterProgress.exercisesFeedback).filter(
-        feedback => feedback !== 'Pas encore fait'
-    ).length;
+    const completedExercises = Object.values(chapterProgress.exercisesFeedback).length;
 
     const exerciseCompletionPercent = totalExercises > 0 ? (completedExercises / totalExercises) * 100 : 0;
     const isWorkReady = isQuizCompleted && completedExercises === totalExercises;
