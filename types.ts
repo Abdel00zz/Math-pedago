@@ -84,3 +84,36 @@ export type Action =
     | { type: 'UPDATE_EXERCISES_DURATION'; payload: { duration: number } }
     | { type: 'SUBMIT_WORK'; payload: { chapterId: string } }
     | { type: 'SYNC_ACTIVITIES'; payload: { activities: { [id: string]: Chapter }; progress: { [id: string]: ChapterProgress }; chapterOrder: string[] } };
+
+// ---- Structures for Progress File Import ----
+
+/**
+ * Describes the structure of a quiz result within an imported progress file.
+ * This corresponds to the `quiz` object in the JSON schema.
+ */
+export interface ImportedQuizResult {
+    isSubmitted: boolean;
+    score: number; // Percentage, e.g., 33.33
+    answers: { [qId: string]: number }; // Maps question ID to the index of the selected option
+}
+
+/**
+ * Describes the structure of a single chapter's results in an imported progress file.
+ * This corresponds to an object in the `results` array in the JSON schema.
+ */
+export interface ImportedChapterResult {
+    chapter: string; // Chapter name, must match exactly
+    quiz: ImportedQuizResult;
+    exercisesFeedback: { [exId: string]: Feedback };
+    durationSeconds?: number; // Total time spent on the chapter in seconds
+}
+
+/**
+ * Describes the top-level structure of an imported progress JSON file.
+ */
+export interface ImportedProgressFile {
+    studentName: string;
+    studentLevel: string; // The full class name, e.g., "1ère Bac Sciences Mathématiques"
+    timestamp: number;
+    results: ImportedChapterResult[];
+}
