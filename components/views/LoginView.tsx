@@ -37,9 +37,9 @@ const LoginView: React.FC = () => {
 
     return (
         <div className="flex flex-col items-center justify-center min-h-[80vh] animate-fadeIn p-4">
-            <div className="w-full max-w-md p-10 space-y-8 bg-surface border-y-2 border-primary/20 rounded-sm shadow-claude">
+            <div className="w-full max-w-md p-10 space-y-8 bg-surface border-2 border-primary rounded-sm shadow-claude">
                 <div className="text-center">
-                    <div className="mx-auto w-44 h-44 flex flex-col items-center justify-center bg-surface border border-border rounded-full mb-4">
+                    <div className="mx-auto w-44 h-44 flex flex-col items-center justify-center bg-surface border border-border rounded-xl mb-4">
                         <span className="font-brand text-sm tracking-widest text-text-secondary">Le Centre</span>
                         <div className="w-10 h-px bg-border-hover my-2"></div>
                         <span className="font-brand text-3xl text-primary -mt-1">Scientifique</span>

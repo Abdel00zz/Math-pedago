@@ -43,7 +43,7 @@ export interface Chapter {
     exercises: Exercise[];
 }
 
-export type Feedback = 'Réussi facilement' | 'J\'ai réfléchi' | 'C\'était un défi' | 'Non traité';
+export type Feedback = 'Facile' | 'Moyen' | 'Difficile' | 'Non traité';
 
 export interface QuizProgress {
     answers: { [qId: string]: string };

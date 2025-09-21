@@ -153,11 +153,11 @@ const SessionStatus: React.FC<SessionStatusProps> = React.memo(({ dates }) => {
         });
 
         if (liveSession) {
-            const sessionEnd = new Date(liveSession.getTime() + SESSION_DURATION_MS);
-            const remainingMinutes = Math.max(0, Math.floor((sessionEnd.getTime() - now.getTime()) / 60000));
+            const timeFormat: Intl.DateTimeFormatOptions = { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris' };
+            const timeString = liveSession.toLocaleTimeString('fr-FR', timeFormat).replace(':', 'h');
             return { 
                 status: 'live', 
-                text: `EN DIRECT · Termine dans ${remainingMinutes} min`,
+                text: `Séance en direct à ${timeString}`,
                 icon: 'podcasts'
             };
         }
@@ -209,7 +209,7 @@ const SessionStatus: React.FC<SessionStatusProps> = React.memo(({ dates }) => {
     }, [dates, now]);
 
     const statusStyles = {
-        live: 'text-info font-semibold',
+        live: 'text-primary font-semibold',
         upcoming: 'text-text-secondary font-medium',
         past: 'text-text-disabled italic',
         none: 'text-text-disabled italic',
@@ -648,7 +648,7 @@ const DashboardView: React.FC = () => {
                                 </h1>
                                 <div className="mt-2">
                                     <div
-                                        className="inline-block text-base font-garamond text-primary italic"
+                                        className="inline-block text-xl font-garamond text-primary italic"
                                         dangerouslySetInnerHTML={{ __html: formatClassNameHTML(className) }}
                                     />
                                 </div>

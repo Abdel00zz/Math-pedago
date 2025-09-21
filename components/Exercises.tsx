@@ -10,9 +10,9 @@ const FeedbackButton: React.FC<{
 }> = ({ feedback, currentFeedback, onClick }) => {
     const isSelected = feedback === currentFeedback;
     const styles: { [key in Feedback]: { base: string; selected: string } } = {
-        'Réussi facilement': { base: 'border-success/50 hover:bg-success/10', selected: 'bg-success/10 border-success text-success' },
-        'J\'ai réfléchi': { base: 'border-warning/50 hover:bg-warning/10', selected: 'bg-warning/10 border-warning text-warning' },
-        'C\'était un défi': { base: 'border-error/50 hover:bg-error/10', selected: 'bg-error/10 border-error text-error' },
+        'Facile': { base: 'border-success/50 hover:bg-success/10', selected: 'bg-success/10 border-success text-success' },
+        'Moyen': { base: 'border-warning/50 hover:bg-warning/10', selected: 'bg-warning/10 border-warning text-warning' },
+        'Difficile': { base: 'border-error/50 hover:bg-error/10', selected: 'bg-error/10 border-error text-error' },
         'Non traité': { base: 'border-secondary/50 hover:bg-secondary/10', selected: 'bg-secondary/10 border-secondary text-secondary' },
     };
 
@@ -122,7 +122,7 @@ const Exercises: React.FC = () => {
                     <div className="mt-6 border-t border-border pt-4">
                         <p className="text-sm font-semibold text-text mb-3">Comment vous êtes-vous senti face à cet exercice ?</p>
                         <div className="flex flex-col sm:flex-row gap-2">
-                           {(['Réussi facilement', 'J\'ai réfléchi', 'C\'était un défi', 'Non traité'] as Feedback[]).map(f => (
+                           {(['Facile', 'Moyen', 'Difficile', 'Non traité'] as Feedback[]).map(f => (
                                 <FeedbackButton 
                                     key={f} 
                                     feedback={f}

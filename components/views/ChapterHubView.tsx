@@ -124,8 +124,22 @@ const ChapterHubView: React.FC = () => {
             addHiddenField('submittedAt', submissionDate.toLocaleString('fr-FR', { dateStyle: 'full', timeStyle: 'short' }));
             addHiddenField('resume', resume);
             
+            // Construire la structure de données pour la soumission
+            const submissionData = {
+                profile: {
+                    name: profile.name,
+                    classId: profile.classId
+                },
+                chapter: {
+                    id: chapter.id,
+                    title: chapter.chapter
+                },
+                progress: chapterProgress,
+                submittedAt: new Date().toISOString()
+            };
+            
             // Créer et attacher le fichier JSON
-            const progressJson = JSON.stringify(chapterProgress, null, 2);
+            const progressJson = JSON.stringify(submissionData, null, 2);
             const blob = new Blob([progressJson], { type: 'application/json' });
             const sanitizedName = profile.name.replace(/[^a-z0-9]/gi, '_').toLowerCase();
             const filename = `progression_${sanitizedName}_${chapter.id}.json`;
