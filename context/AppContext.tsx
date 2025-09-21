@@ -19,16 +19,17 @@ const initialState: AppState = {
 const appReducer = (state: AppState, action: Action): AppState => {
     switch (action.type) {
         case 'INIT': {
-            const profile = action.payload.profile;
-            const progress = action.payload.progress || {};
-            const activities = action.payload.activities || {};
-            
+            const { profile, progress = {}, view, currentChapterId, activitySubView, chapterOrder } = action.payload;
+            const restoredView = profile && profile.classId ? (view || 'dashboard') : 'login';
+
             return {
                 ...state,
-                ...action.payload,
-                activities,
+                profile: profile || null,
                 progress,
-                view: (profile && profile.classId) ? 'dashboard' : 'login'
+                chapterOrder: chapterOrder || [],
+                view: restoredView,
+                currentChapterId: currentChapterId || null,
+                activitySubView: activitySubView || null,
             };
         }
         case 'CHANGE_VIEW': {
@@ -97,7 +98,13 @@ const appReducer = (state: AppState, action: Action): AppState => {
                     ...state.progress,
                     [state.currentChapterId]: {
                         ...progress,
-                        quiz: { ...progress.quiz, isSubmitted: true, score: action.payload.score, currentQuestionIndex: 0 }
+                        quiz: { 
+                            ...progress.quiz, 
+                            isSubmitted: true, 
+                            score: action.payload.score, 
+                            duration: action.payload.duration,
+                            currentQuestionIndex: 0 
+                        }
                     },
                 },
             };
@@ -127,6 +134,21 @@ const appReducer = (state: AppState, action: Action): AppState => {
                 progress: {
                     ...state.progress,
                     [state.currentChapterId]: { ...progress, exercisesFeedback: newFeedback }
+                },
+            };
+        }
+        case 'UPDATE_EXERCISES_DURATION': {
+            if (!state.currentChapterId) return state;
+            const progress = state.progress[state.currentChapterId];
+            const newDuration = (progress.exercisesDuration || 0) + action.payload.duration;
+            return {
+                ...state,
+                progress: {
+                    ...state.progress,
+                    [state.currentChapterId]: {
+                        ...progress,
+                        exercisesDuration: newDuration
+                    }
                 },
             };
         }
@@ -193,8 +215,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
             console.error("Failed to load or parse data from localStorage, resetting.", error);
             localStorage.removeItem(DB_KEY);
         }
-        // Dispatch minimal init. Activities will be loaded by the next effect.
-        dispatch({ type: 'INIT', payload: { ...savedData, activities: {}, progress: savedData.progress || {} } as any });
+        dispatch({ type: 'INIT', payload: savedData });
     }, []);
 
     // Effect 2: Fetch and sync chapter data when profile class changes.
@@ -216,7 +237,18 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
                     const chapterPromises = chapterInfos.map(info => 
                         fetch(`/chapters/${info.file}`)
                             .then(res => res.ok ? res.json() : Promise.reject(`Could not load ${info.file}`))
-                            .then(data => ({ ...data, id: info.id, file: info.file, isActive: info.isActive }))
+                            .then(data => {
+                                const normalizedData = { ...data };
+                                // Ensure sessionDates is an array, handling old 'sessionDate' format.
+                                if (!Array.isArray(normalizedData.sessionDates)) {
+                                    normalizedData.sessionDates = [];
+                                }
+                                // Clean up old property if it exists
+                                if ('sessionDate' in normalizedData) {
+                                    delete normalizedData.sessionDate;
+                                }
+                                return { ...normalizedData, id: info.id, file: info.file, isActive: info.isActive };
+                            })
                             .catch(err => { console.error(err); return null; })
                     );
                     const loadedChapters = (await Promise.all(chapterPromises)).filter(Boolean) as Chapter[];
@@ -227,9 +259,10 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
                 Object.values(allActivities).forEach(chapter => {
                     if (!newProgress[chapter.id]) {
                         newProgress[chapter.id] = {
-                            quiz: { answers: {}, isSubmitted: false, score: 0, allAnswered: false, currentQuestionIndex: 0 },
+                            quiz: { answers: {}, isSubmitted: false, score: 0, allAnswered: false, currentQuestionIndex: 0, duration: 0 },
                             exercisesFeedback: {},
                             isWorkSubmitted: false,
+                            exercisesDuration: 0,
                         };
                     }
                 });
@@ -253,21 +286,19 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         }
     }, [state.profile, addNotification]);
 
-    // Effect 3: Persist state to localStorage (debounced).
+    // Effect 3: Persist state to localStorage immediately on any state change.
     useEffect(() => {
-        const handler = setTimeout(() => {
-            if (state.profile) {
-                const stateToSave: Partial<AppState> = {
-                    profile: state.profile,
-                    progress: state.progress,
-                    chapterOrder: state.chapterOrder,
-                };
+        if (state.profile) { // Only save if logged in
+            // Exclude large 'activities' object from persistence
+            const { activities, isReviewMode, ...stateToSave } = state; 
+            try {
                 localStorage.setItem(DB_KEY, JSON.stringify(stateToSave));
+            } catch (error) {
+                console.error("Failed to save state to localStorage:", error);
+                addNotification("Impossible de sauvegarder votre progression.", "error");
             }
-        }, 1000);
-
-        return () => clearTimeout(handler);
-    }, [state.progress, state.profile, state.chapterOrder]);
+        }
+    }, [state, addNotification]);
 
     return (
         <AppStateContext.Provider value={state}>

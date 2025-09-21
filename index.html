@@ -12,25 +12,25 @@
           extend: {
             colors: {
               primary: '#DC6B3E',
-              'primary-light': '#FFF4F0',
-              secondary: '#6B6967',
-              background: '#FAF9F7',
+              'primary-light': '#FEE2E2', // A lighter, more versatile light tone for the orange
+              secondary: '#64748B', // slate-500
+              background: '#F8FAFC', // slate-50
               surface: '#FFFFFF',
-              border: '#E5E3DF',
-              'border-hover': '#D4D2CE',
-              text: '#2D2D2D',
-              'text-secondary': '#6B6967',
-              'text-disabled': '#9B9997',
-              success: '#10A37F',
-              warning: '#F39C12',
-              error: '#EF4444',
-              info: '#3B82F6',
-              'modal-backdrop': 'rgba(250, 249, 247, 0.8)',
-              // Legacy colors for compatibility, mapping to new system
+              border: '#E2E8F0', // slate-200
+              'border-hover': '#CBD5E1', // slate-300
+              text: '#1E293B', // slate-800 (modern black)
+              'text-secondary': '#64748B', // slate-500
+              'text-disabled': '#94A3B8', // slate-400
+              success: '#10B981', // emerald-500
+              warning: '#F59E0B', // amber-500
+              error: '#EF4444', // red-500
+              info: '#3B82F6', // blue-500
+              'modal-backdrop': 'rgba(248, 250, 252, 0.8)', // slate-50 with opacity
+              // Legacy colors mapped to new system for compatibility
               'card-bg': '#FFFFFF',
-              'text-primary': '#2D2D2D',
-              'border-color': '#E5E3DF',
-              'light-gray': '#E5E3DF', 
+              'text-primary': '#1E293B',
+              'border-color': '#E2E8F0',
+              'light-gray': '#E2E8F0',
             },
             fontFamily: {
               sans: ['Inter', 'sans-serif'],
@@ -40,6 +40,8 @@
               libertinus: ['"Source Serif 4"', 'serif'],
               brand: ['"Marcellus SC"', 'serif'],
               lato: ['Lato', 'sans-serif'],
+              'playfair': ['"Playfair Display"', 'serif'],
+              'garamond': ['"EB Garamond"', 'serif'],
             },
             boxShadow: {
               'claude': '0 4px 12px rgba(0, 0, 0, 0.08)',
@@ -51,13 +53,31 @@
                 pulse: { '0%, 100%': { opacity: 1, transform: 'scale(1)' }, '50%': { opacity: .9, transform: 'scale(1.02)' } },
                 ping: { '75%, 100%': { transform: 'scale(2)', opacity: 0 } },
                 cursorBlink: { '0%, 100%': { opacity: 1 }, '50%': { opacity: 0 } },
-                confettiFall: {
-                    '0%': { transform: 'translateY(-10vh) rotateZ(0deg)', opacity: 1 },
-                    '100%': { transform: 'translateY(110vh) rotateZ(360deg)', opacity: 0 }
+                futuristicWelcome: {
+                    '0%': {
+                        opacity: 0,
+                        transform: 'translateY(20px) scale(0.95)',
+                        filter: 'blur(5px)',
+                    },
+                    '100%': {
+                        opacity: 1,
+                        transform: 'translateY(0) scale(1)',
+                        filter: 'blur(0)',
+                    }
                 },
-                confettiSpin: {
-                    '0%': { transform: 'rotateY(0deg)' },
-                    '100%': { transform: 'rotateY(360deg)' }
+                nameGlow: {
+                    '0%': {
+                        opacity: 0,
+                        textShadow: '0 0 10px rgba(220, 107, 62, 0)',
+                        filter: 'blur(8px)',
+                        transform: 'translateY(20px) scale(0.95)',
+                    },
+                    '100%': {
+                        opacity: 1,
+                        textShadow: '0 0 15px rgba(220, 107, 62, 0.8)',
+                        filter: 'blur(0)',
+                        transform: 'translateY(0) scale(1)',
+                    }
                 }
             },
             animation: {
@@ -67,6 +87,8 @@
                 pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                 ping: 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
                 cursorBlink: 'cursorBlink 1.2s step-end infinite',
+                futuristicWelcome: 'futuristicWelcome 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards',
+                nameGlow: 'nameGlow 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards'
             },
           }
         }
@@ -74,13 +96,13 @@
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Alata&family=Inter:wght@400;500;600;700&family=Lato:wght@400;700&family=Marcellus+SC&family=Nunito+Sans:wght@400;600;700&family=Roboto+Slab:wght@400;700&family=Source+Serif+4:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Alata&family=Inter:wght@400;500;600;700&family=Lato:wght@400;700&family=Marcellus+SC&family=Nunito+Sans:wght@400;600;700&family=Roboto+Slab:wght@400;700&family=Source+Serif+4:wght@700&family=Playfair+Display:wght@700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <style>
         body { 
           font-family: 'Inter', sans-serif;
-          background-color: #FAF9F7;
-          color: #2D2D2D;
+          background-color: #F8FAFC; /* slate-50 */
+          color: #1E293B; /* slate-800 */
           font-size: 15px;
           line-height: 1.6;
           letter-spacing: -0.01em;
@@ -90,7 +112,7 @@
         .antique-list::marker {
             font-family: 'Roboto Slab', serif;
             font-weight: 700;
-            color: #6B6967; /* text-secondary */
+            color: #64748B; /* slate-500 */
         }
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;

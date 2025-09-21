@@ -1,146 +1,486 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import { useAppState, useAppDispatch } from '../../context/AppContext';
-import GlobalWorkSubmit from '../GlobalWorkSubmit';
+import { CLASS_OPTIONS } from '../../constants';
+import ConfirmationModal from '../ConfirmationModal';
+import { useNotification } from '../../context/NotificationContext';
+import TypingEffect from '../TypingEffect';
+
+type BadgeStatus = 'completed' | 'in-progress' | 'todo' | 'ready' | 'locked';
+
+// Configuration FormSubmit centralisée
+const FORMSUBMIT_CONFIG = {
+    endpoint: 'https://formsubmit.co/bdh.malek@gmail.com', // Endpoint standard pour supporter les pièces jointes
+    options: {
+        _captcha: 'false',
+        _template: 'table',
+        // Fix: Use double quotes for the string to correctly handle the apostrophe.
+        _autoresponse: "Votre travail a été reçu avec succès. Nous l'examinerons dans les plus brefs délais.",
+        _next: window.location.href, // Rediriger vers la même page après soumission
+    }
+};
 
 const ChapterHubView: React.FC = () => {
     const state = useAppState();
     const dispatch = useAppDispatch();
-    const { currentChapterId, activities, progress } = state;
+    const { addNotification } = useNotification();
+    const { currentChapterId, activities, progress, profile } = state;
 
-    if (!currentChapterId || !activities[currentChapterId] || !progress[currentChapterId]) {
-        return <div>Chargement du chapitre...</div>;
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isConfirmationModalOpen, setConfirmationModalOpen] = useState(false);
+    const [showConfetti, setShowConfetti] = useState(false);
+
+    const chapter = useMemo(() => {
+        if (!currentChapterId) return null;
+        return activities[currentChapterId];
+    }, [currentChapterId, activities]);
+
+    const chapterProgress = useMemo(() => {
+        if (!currentChapterId) return null;
+        return progress[currentChapterId];
+    }, [currentChapterId, progress]);
+    
+    const className = useMemo(() => {
+        if (!profile) return '';
+        return CLASS_OPTIONS.find(c => c.value === profile.classId)?.label || profile.classId;
+    }, [profile]);
+
+    // Calculer les valeurs dérivées avec des valeurs par défaut pour éviter les erreurs
+    const quiz = chapterProgress?.quiz || { isSubmitted: false, answers: {} };
+    const totalExercises = chapter?.exercises?.length || 0;
+    const evaluatedExercisesCount = chapterProgress ? Object.keys(chapterProgress.exercisesFeedback || {}).length : 0;
+
+    const quizProgressPercent = useMemo(() => {
+        if (quiz.isSubmitted) return 100;
+        if (!chapter || chapter.quiz.length === 0) return 0;
+        return (Object.keys(quiz.answers).length / chapter.quiz.length) * 100;
+    }, [quiz.answers, quiz.isSubmitted, chapter?.quiz?.length]);
+    
+    const exercisesProgressPercent = useMemo(() => {
+        if (totalExercises === 0) return 100;
+        return (evaluatedExercisesCount / totalExercises) * 100;
+    }, [evaluatedExercisesCount, totalExercises]);
+
+    if (!chapter || !chapterProgress || !profile) {
+        return (
+            <div className="text-center p-12">
+                <h2 className="text-xl font-semibold">Chargement du plan de travail...</h2>
+                <p className="text-secondary mt-2">Veuillez patienter un instant.</p>
+            </div>
+        );
     }
 
-    const chapter = activities[currentChapterId];
-    const chapterProgress = progress[currentChapterId];
-    const quizProgress = chapterProgress.quiz;
+    const isQuizCompleted = quiz.isSubmitted;
+    const areExercisesEvaluated = evaluatedExercisesCount === totalExercises;
+    const canSubmitWork = isQuizCompleted && areExercisesEvaluated && !chapterProgress.isWorkSubmitted;
 
-    const totalQuizQuestions = chapter.quiz.length;
-    const answeredQuestions = Object.keys(quizProgress.answers).length;
-    const quizCompletionPercent = totalQuizQuestions > 0 ? (answeredQuestions / totalQuizQuestions) * 100 : 0;
-    
-    const quizScore = quizProgress.score;
-    const isQuizCompleted = quizProgress.isSubmitted;
-
-    const totalExercises = chapter.exercises.length;
-    const completedExercises = Object.values(chapterProgress.exercisesFeedback).length;
-
-    const exerciseCompletionPercent = totalExercises > 0 ? (completedExercises / totalExercises) * 100 : 0;
-    const isWorkReady = isQuizCompleted && completedExercises === totalExercises;
-
-    const navigateTo = (subView: 'quiz' | 'exercises', review: boolean = false) => {
-        dispatch({ type: 'CHANGE_VIEW', payload: { view: 'activity', chapterId: currentChapterId, subView, review } });
+    const handleStartQuiz = () => {
+        dispatch({ type: 'CHANGE_VIEW', payload: { view: 'activity', chapterId: chapter.id, subView: 'quiz' } });
     };
 
+    const handleReviewQuiz = () => {
+        dispatch({ type: 'CHANGE_VIEW', payload: { view: 'activity', chapterId: chapter.id, subView: 'quiz', review: true } });
+    };
+
+    const handleStartExercises = () => {
+        dispatch({ type: 'CHANGE_VIEW', payload: { view: 'activity', chapterId: chapter.id, subView: 'exercises' } });
+    };
+    
+    const handleSubmitWork = async () => {
+        if (!canSubmitWork || isSubmitting || !profile || !chapter || !chapterProgress) return;
+
+        setIsSubmitting(true);
+        
+        try {
+            // Créer un formulaire HTML temporaire pour contourner les problèmes CORS
+            const form = document.createElement('form');
+            form.action = 'https://formsubmit.co/bdh.malek@gmail.com';
+            form.method = 'POST';
+            form.enctype = 'multipart/form-data';
+            form.style.display = 'none';
+            
+            // Configuration FormSubmit
+            const addHiddenField = (name: string, value: string) => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = name;
+                input.value = value;
+                form.appendChild(input);
+            };
+            
+            addHiddenField('_template', 'table');
+            addHiddenField('_captcha', 'false');
+            addHiddenField('_next', window.location.href);
+            addHiddenField('_subject', `✅ Nouveau travail soumis: ${profile.name} - ${chapter.chapter}`);
+            addHiddenField('_autoresponse', "Votre travail a été reçu avec succès. Nous l'examinerons dans les plus brefs délais.");
+            
+            const submissionDate = new Date();
+            const resume = `Quiz: ${quiz.score}/${chapter.quiz.length} (${((quiz.score / chapter.quiz.length) * 100).toFixed(1)}%). Exercices: ${evaluatedExercisesCount}/${totalExercises} évalués.`;
+            
+            // Informations principales
+            addHiddenField('eleve', profile.name);
+            addHiddenField('classe', className);
+            addHiddenField('chapitre', chapter.chapter);
+            addHiddenField('chapitreId', chapter.id);
+            addHiddenField('submittedAt', submissionDate.toLocaleString('fr-FR', { dateStyle: 'full', timeStyle: 'short' }));
+            addHiddenField('resume', resume);
+            
+            // Créer et attacher le fichier JSON
+            const progressJson = JSON.stringify(chapterProgress, null, 2);
+            const blob = new Blob([progressJson], { type: 'application/json' });
+            const sanitizedName = profile.name.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+            const filename = `progression_${sanitizedName}_${chapter.id}.json`;
+            
+            // Créer un input file pour la pièce jointe
+            const fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.name = 'attachment';
+            fileInput.style.display = 'none';
+            
+            // Créer un fichier à partir du blob
+            const file = new File([blob], filename, { type: 'application/json' });
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(file);
+            fileInput.files = dataTransfer.files;
+            
+            form.appendChild(fileInput);
+            document.body.appendChild(form);
+            
+            // Soumettre le formulaire
+            form.submit();
+            
+            // Nettoyer le formulaire après un délai
+            setTimeout(() => {
+                document.body.removeChild(form);
+            }, 1000);
+            
+            // Marquer le travail comme soumis
+            dispatch({ type: 'SUBMIT_WORK', payload: { chapterId: chapter.id } });
+            
+            // Notification de succès
+            addNotification(`Travail pour "${chapter.chapter}" envoyé avec succès !`, 'success');
+            
+            // Fermer la modal de confirmation
+            setConfirmationModalOpen(false);
+            
+            // Effet confetti pour célébrer
+            setShowConfetti(true);
+            setTimeout(() => setShowConfetti(false), 5000);
+            
+        } catch (error) {
+            console.error("Erreur d'envoi:", error);
+            addNotification("Une erreur est survenue. Veuillez réessayer.", 'error');
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+    
+    // Fonction pour formater le corps de l'email
+    const formatEmailBody = (data: any): string => {
+        const { studentProfile, chapterDetails, quizResults, exercisesSelfAssessment } = data;
+        
+        // Calculer les statistiques nécessaires
+        const correctAnswers = quizResults.answers.filter((a: any) => a.isCorrect).length;
+        const incorrectAnswers = quizResults.answers.length - correctAnswers;
+        const averageExerciseScore = exercisesSelfAssessment.feedback.length > 0 
+            ? (exercisesSelfAssessment.feedback.reduce((sum: number, ex: any) => sum + (ex.studentFeedback?.score || 0), 0) / exercisesSelfAssessment.feedback.length).toFixed(1)
+            : '0';
+        
+        const formatDuration = (seconds: number) => {
+            if (seconds < 60) return `${seconds}s`;
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+            return remainingSeconds > 0 ? `${minutes}m ${remainingSeconds}s` : `${minutes}m`;
+        };
+        
+        return `
+📚 NOUVEAU TRAVAIL SOUMIS
+========================
+
+👤 ÉTUDIANT
+-----------
+Nom: ${studentProfile.name}
+Classe: ${studentProfile.className}
+Date de soumission: ${new Date().toLocaleString('fr-FR')}
+
+📖 CHAPITRE
+-----------
+${chapterDetails.title}
+ID: ${chapterDetails.id}
+
+📊 RÉSULTATS
+------------
+Quiz: ${quizResults.score}/${quizResults.totalQuestions} (${quizResults.percentage.toFixed(1)}%)
+Exercices évalués: ${exercisesSelfAssessment.feedback.length}/${exercisesSelfAssessment.totalExercises}
+Note moyenne des exercices: ${averageExerciseScore}/5
+
+🎯 DÉTAILS DU QUIZ
+------------------
+Questions réussies: ${correctAnswers}
+Questions échouées: ${incorrectAnswers}
+Temps passé: ${formatDuration(quizResults.durationInSeconds)}
+
+💪 AUTO-ÉVALUATION DES EXERCICES
+---------------------------------
+${exercisesSelfAssessment.feedback.map((ex: any) => 
+    `• ${ex.exerciseTitle}: ${ex.studentFeedback?.score || 'N/A'}/5 - ${ex.studentFeedback?.feedback || 'Pas de commentaire'}`
+).join('\n')}
+
+📎 Voir le fichier JSON joint pour plus de détails.
+        `.trim();
+    };
+    
+    // Fonction pour sauvegarder une copie locale (optionnel)
+    const saveLocalBackup = (data: any, filename: string) => {
+        try {
+            const backupKey = `submission_backup_${chapter.id}_${Date.now()}`;
+            localStorage.setItem(backupKey, JSON.stringify({
+                filename,
+                data,
+                timestamp: new Date().toISOString()
+            }));
+            
+            // Nettoyer les anciennes sauvegardes (garder seulement les 5 dernières)
+            cleanOldBackups();
+        } catch (error) {
+            console.warn('Impossible de sauvegarder localement:', error);
+        }
+    };
+    
+    const cleanOldBackups = () => {
+        const backupKeys = Object.keys(localStorage)
+            .filter(key => key.startsWith('submission_backup_'))
+            .sort()
+            .reverse();
+        
+        // Garder seulement les 5 sauvegardes les plus récentes
+        backupKeys.slice(5).forEach(key => {
+            localStorage.removeItem(key);
+        });
+    };
+    
+    const getQuizStatus = (): { text: string; status: BadgeStatus } => {
+        if (quiz.isSubmitted) return { text: 'Terminé', status: 'completed' };
+        if (Object.keys(quiz.answers).length > 0) return { text: 'En cours', status: 'in-progress' };
+        return { text: 'À commencer', status: 'todo' };
+    };
+
+    const getExercisesStatus = (): { text: string; status: BadgeStatus } => {
+        if (areExercisesEvaluated) return { text: 'Terminé', status: 'completed' };
+        if (evaluatedExercisesCount > 0) return { text: 'En cours', status: 'in-progress' };
+        return { text: 'À commencer', status: 'todo' };
+    };
+
+    const getSubmissionStatus = (): { text: string; status: BadgeStatus } => {
+        if (chapterProgress.isWorkSubmitted) return { text: 'Travail soumis', status: 'completed' };
+        if (canSubmitWork) return { text: 'Prêt à être soumis', status: 'ready' };
+        return { text: 'Verrouillé', status: 'locked' };
+    };
+
+    const quizStatus = getQuizStatus();
+    const exercisesStatus = getExercisesStatus();
+    const submissionStatus = getSubmissionStatus();
+    const isSubmissionUnlocked = canSubmitWork || chapterProgress.isWorkSubmitted;
+    
+    const getStatusBadge = (status: BadgeStatus, text: string) => {
+        const styles: Record<BadgeStatus, string> = {
+            completed: 'bg-success/10 text-success',
+            'in-progress': 'bg-warning/10 text-warning',
+            todo: 'bg-secondary/10 text-secondary',
+            ready: 'bg-info/10 text-info',
+            locked: 'bg-secondary/10 text-secondary',
+        };
+        return <span className={`px-2.5 py-1 text-xs font-semibold rounded-full ${styles[status]}`}>{text}</span>;
+    };
 
     return (
-        <div className="max-w-4xl mx-auto animate-slideInUp">
+        <div className="max-w-4xl mx-auto animate-fadeIn">
             <header className="relative flex items-center justify-center mb-8">
                 <button 
                     onClick={() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'dashboard' } })}
-                    className="font-button absolute left-0 flex items-center justify-center w-10 h-10 rounded-full text-secondary bg-transparent border border-transparent hover:bg-surface hover:border-border transition-all duration-200 active:scale-95"
+                    className="font-button absolute left-0 flex items-center justify-center w-12 h-12 rounded-full text-secondary bg-transparent hover:bg-surface/50 transition-all duration-200 active:scale-95"
                     aria-label="Retour au tableau de bord"
                 >
-                    <span className="material-symbols-outlined">arrow_back</span>
+                    <span className="material-symbols-outlined text-3xl">arrow_back</span>
                 </button>
                 <div className="text-center">
-                    <h1 className="text-3xl font-bold text-text font-title">{chapter.chapter}</h1>
-                    <p className="text-secondary mt-1">Prêt à relever le défi ?</p>
+                    <h1 className="text-3xl font-bold text-gray-600 font-title">
+                        Plan de travail
+                    </h1>
+                    <p className="text-secondary">{chapter.chapter}</p>
                 </div>
             </header>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {/* Quiz Section */}
-                <div className="relative overflow-hidden p-6 bg-surface border border-border rounded-lg flex flex-col h-full transition-all duration-300 hover:shadow-claude hover:-translate-y-1">
-                    <span className="material-symbols-outlined absolute -right-4 -bottom-4 text-[120px] text-primary/5 opacity-50 rotate-[-15deg]">quiz</span>
-                    <div className="flex-grow">
-                        <h2 className="text-2xl font-bold text-text">Étape 1: Le Quiz</h2>
-                        <p className="text-secondary mt-1 mb-4">Vérifiez votre compréhension des points clés du cours.</p>
-                        {isQuizCompleted ? (
-                             <div className="space-y-2">
-                                <div className="flex justify-between items-center text-sm font-semibold">
-                                    <span className="text-text">Score</span>
-                                    <span className="text-success">{quizScore}/{totalQuizQuestions}</span>
-                                </div>
-                                <div className="w-full bg-background rounded-full h-2">
-                                    <div className="bg-success h-2 rounded-full" style={{width: `${(quizScore/totalQuizQuestions)*100}%`}}></div>
-                                </div>
-                            </div>
-                        ) : (
-                             <div className="space-y-2">
-                                <div className="flex justify-between items-center text-sm font-semibold">
-                                    <span className="text-text">Progression</span>
-                                    <span className="text-text-secondary">
-                                        {answeredQuestions}/{totalQuizQuestions} questions répondues
-                                    </span>
-                                </div>
-                                 <div className="w-full bg-border rounded-full h-2">
-                                    <div 
-                                        className={`h-2 rounded-full transition-all duration-500 bg-primary`} 
-                                        style={{width: `${quizCompletionPercent}%`}}>
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-                    </div>
-                    <button
-                        onClick={() => navigateTo('quiz', isQuizCompleted)}
-                        className="w-full sm:w-auto mt-6 px-6 py-3 font-semibold text-white bg-primary rounded-lg hover:bg-opacity-90 transition-transform transform hover:scale-[1.03] active:scale-[0.98] font-button self-end"
-                    >
-                        {isQuizCompleted ? 'Revoir le Quiz' : 'Commencer le Quiz'}
-                    </button>
-                </div>
-
-                {/* Exercises Section */}
-                 <div className={`relative overflow-hidden p-6 bg-surface border border-border rounded-lg flex flex-col h-full transition-all duration-300 ${!isQuizCompleted ? 'opacity-70 bg-background' : 'hover:shadow-claude hover:-translate-y-1'}`}>
-                     <span className="material-symbols-outlined absolute -right-4 -bottom-4 text-[120px] text-primary/5 opacity-50 rotate-[-15deg]">edit_note</span>
-                    <div className="flex-grow">
-                        <h2 className="text-2xl font-bold text-text">Étape 2: Les Exercices</h2>
-                        <p className="text-secondary mt-1 mb-4">Mettez en pratique vos connaissances et évaluez votre aisance.</p>
-                        <div className="space-y-2">
-                            <div className="flex justify-between items-center text-sm font-semibold">
-                                <span className="text-text">Progression</span>
-                                <span className={completedExercises === totalExercises ? 'text-success' : 'text-text-secondary'}>
-                                    {completedExercises}/{totalExercises} exercices évalués
+            
+            <div className="space-y-6">
+                {/* Étape 1: Quiz */}
+                <div className="bg-surface p-5 rounded-xl border border-border shadow-sm">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+                        <div className="flex-grow">
+                            <div className="flex items-center gap-4">
+                                <span className="flex items-center justify-center w-12 h-12 bg-primary-light text-primary rounded-full font-bold text-xl shrink-0">
+                                    <span className="material-symbols-outlined text-2xl">lock_open</span>
                                 </span>
-                            </div>
-                             <div className="w-full bg-border rounded-full h-2">
-                                <div 
-                                    className={`h-2 rounded-full transition-all duration-500 ${completedExercises === totalExercises ? 'bg-success' : 'bg-warning'}`} 
-                                    style={{width: `${exerciseCompletionPercent}%`}}>
+                                <div>
+                                    <h2 className="text-xl font-bold text-text">Étape 1 : Le Quiz</h2>
                                 </div>
+                            </div>
+                            <p className="text-secondary mt-3 pl-14 text-sm max-w-md">
+                                {isQuizCompleted ? 'Quiz terminé. Vous pouvez maintenant passer aux exercices.' : 'Vérifiez votre compréhension des concepts clés du chapitre.'}
+                            </p>
+                        </div>
+                        <div className="w-full sm:w-auto sm:max-w-[240px] flex-shrink-0 flex flex-col gap-3 self-stretch">
+                            <div className="flex-grow flex flex-col justify-center w-full">
+                                <div className="flex items-baseline justify-between w-full mb-1">
+                                    <span className="text-sm font-semibold text-text-secondary">{isQuizCompleted ? 'Score' : 'Progression'}</span>
+                                    {isQuizCompleted 
+                                        ? <span className="font-bold text-lg text-primary">{quiz.score}/{chapter.quiz.length}</span> 
+                                        : getStatusBadge(quizStatus.status, quizStatus.text)}
+                                </div>
+                                <div className="w-full bg-border/50 rounded-full h-3">
+                                    <div className={`h-3 rounded-full transition-all duration-500 ${isQuizCompleted ? 'bg-success' : 'bg-primary'}`} style={{ width: `${quizProgressPercent}%` }} />
+                                </div>
+                            </div>
+                             <div className="w-full sm:w-auto">
+                                {isQuizCompleted ? (
+                                    <button onClick={handleReviewQuiz} className="font-button w-full px-6 py-2 font-semibold text-primary bg-primary-light border border-primary/20 rounded-lg hover:bg-primary/20 transition-colors">
+                                        Revoir le Quiz
+                                    </button>
+                                ) : (
+                                    <button onClick={handleStartQuiz} className="font-button w-full px-6 py-2 font-semibold text-white bg-primary rounded-lg hover:bg-primary-hover transition-transform transform hover:-translate-y-px active:scale-95">
+                                        {Object.keys(quiz.answers).length > 0 ? 'Continuer le Quiz' : 'Commencer le Quiz'}
+                                    </button>
+                                )}
                             </div>
                         </div>
                     </div>
-                    <div className="mt-6 self-end w-full sm:w-auto text-right">
-                        <div className="relative group inline-block">
-                            <button
-                                onClick={() => navigateTo('exercises')}
-                                disabled={!isQuizCompleted}
-                                className="w-full sm:w-auto px-6 py-3 font-semibold text-white bg-primary rounded-lg hover:bg-opacity-90 transition-transform transform hover:scale-[1.03] active:scale-[0.98] disabled:bg-secondary/50 disabled:cursor-not-allowed font-button"
-                            >
-                                {!isQuizCompleted && <span className="material-symbols-outlined text-base mr-1 align-bottom">lock</span>}
-                                Accéder aux exercices
-                            </button>
-                            {!isQuizCompleted && (
-                                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-max px-3 py-1.5 bg-text text-white text-xs font-semibold rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10">
-                                    Terminez le quiz pour débloquer
-                                    <svg className="absolute text-text left-0 top-full h-2 w-full" x="0px" y="0px" viewBox="0 0 255 255" xmlSpace="preserve"><polygon className="fill-current" points="0,0 127.5,127.5 255,0"/></svg>
+                </div>
+
+                {/* Étape 2: Exercices */}
+                <div className={`bg-surface p-5 rounded-xl border border-border shadow-sm transition-opacity ${!isQuizCompleted && 'opacity-60'}`}>
+                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+                        <div className="flex-grow">
+                            <div className="flex items-center gap-4">
+                                <span className="flex items-center justify-center w-12 h-12 bg-primary-light text-primary rounded-full font-bold text-xl shrink-0">
+                                    <span className="material-symbols-outlined text-2xl">{isQuizCompleted ? 'lock_open' : 'lock'}</span>
+                                </span>
+                                <div>
+                                    <h2 className="text-xl font-bold text-text">Étape 2 : Les Exercices</h2>
                                 </div>
-                            )}
+                            </div>
+                             <p className="text-secondary mt-3 pl-14 text-sm max-w-md">
+                                {areExercisesEvaluated ? 'Tous les exercices ont été auto-évalués.' : 'Mettez en pratique vos connaissances et évaluez votre maîtrise.'}
+                            </p>
+                        </div>
+                        <div className="w-full sm:w-auto sm:max-w-[240px] flex-shrink-0 flex flex-col gap-3 self-stretch">
+                            <div className="flex-grow flex flex-col justify-center w-full">
+                                <div className="flex items-baseline justify-between w-full mb-1">
+                                    <span className="text-sm font-semibold text-text-secondary">Progression</span>
+                                    {getStatusBadge(exercisesStatus.status, `${evaluatedExercisesCount}/${totalExercises}`)}
+                                </div>
+                                <div className="w-full bg-border/50 rounded-full h-3">
+                                    <div className={`h-3 rounded-full transition-all duration-500 ${areExercisesEvaluated ? 'bg-success' : 'bg-primary'}`} style={{ width: `${exercisesProgressPercent}%` }} />
+                                </div>
+                            </div>
+                             <div className="w-full sm:w-auto">
+                                <button 
+                                    onClick={handleStartExercises} 
+                                    disabled={!isQuizCompleted || chapterProgress.isWorkSubmitted} 
+                                    className="font-button w-full px-6 py-2 font-semibold text-primary bg-primary-light border border-primary/20 rounded-lg hover:bg-primary/20 transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-primary-light"
+                                >
+                                    {evaluatedExercisesCount > 0 ? 'Continuer les exercices' : 'Commencer les exercices'}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                {/* Étape 3: Soumission */}
+                <div className={`bg-surface p-5 rounded-xl border border-border shadow-sm transition-opacity ${!isSubmissionUnlocked && 'opacity-60'}`}>
+                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+                        <div className="flex-grow">
+                            <div className="flex items-center gap-4">
+                               <span className="flex items-center justify-center w-12 h-12 bg-primary-light text-primary rounded-full font-bold text-xl shrink-0">
+                                    <span className="material-symbols-outlined text-2xl">{isSubmissionUnlocked ? 'lock_open' : 'lock'}</span>
+                                </span>
+                                <div>
+                                    <h2 className="text-xl font-bold text-text">Étape 3 : Soumission</h2>
+                                </div>
+                            </div>
+                             <p className="text-secondary mt-3 pl-14 text-sm max-w-md">
+                                {chapterProgress.isWorkSubmitted ? 'Excellent travail ! Votre progression a été enregistrée et envoyée.' : 'Une fois les étapes 1 et 2 terminées, vous pourrez envoyer votre travail.'}
+                             </p>
+                        </div>
+                        <div className="w-full sm:w-auto sm:max-w-[240px] flex-shrink-0 flex flex-col items-end gap-3 self-stretch">
+                            <div className="flex-grow flex flex-col items-end justify-center w-full">
+                               <div className="flex items-center justify-between w-full">
+                                    <span className="text-sm font-semibold text-text-secondary">Statut</span>
+                                    {getStatusBadge(submissionStatus.status, submissionStatus.text)}
+                                </div>
+                            </div>
+                             <div className="w-full sm:w-auto">
+                                {chapterProgress.isWorkSubmitted ? (
+                                    <div className="flex items-center justify-center gap-2 w-full px-6 py-2 rounded-lg font-semibold bg-success/10 text-success">
+                                        <span className="material-symbols-outlined text-xl">check_circle</span>
+                                        <span>Travail Envoyé</span>
+                                    </div>
+                                ) : (
+                                    <div className="relative group w-full">
+                                        <button
+                                            onClick={() => setConfirmationModalOpen(true)}
+                                            disabled={!canSubmitWork || isSubmitting}
+                                            className="font-button w-full px-8 py-3 font-bold text-white bg-primary rounded-lg hover:bg-primary-hover transition-all duration-200 transform hover:scale-105 active:scale-95 disabled:bg-secondary/50 disabled:cursor-not-allowed disabled:transform-none"
+                                        >
+                                            {isSubmitting ? (
+                                                <span className="flex items-center justify-center gap-2">
+                                                    <span className="animate-spin">⏳</span>
+                                                    Envoi en cours...
+                                                </span>
+                                            ) : (
+                                                'Envoyer le travail'
+                                            )}
+                                        </button>
+                                        {(!canSubmitWork && !chapterProgress.isWorkSubmitted) && (
+                                             <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-max max-w-xs px-3 py-2 bg-text text-white text-sm rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                                                <ul className="list-none text-left space-y-1">
+                                                    {!isQuizCompleted && <li>✓ Terminez le quiz</li>}
+                                                    {!areExercisesEvaluated && <li>✓ Évaluez tous les exercices</li>}
+                                                </ul>
+                                                <div className="absolute left-1/2 -translate-x-1/2 top-full w-0 h-0 border-x-4 border-x-transparent border-t-4 border-t-text"></div>
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div className="mt-12">
-                <GlobalWorkSubmit 
-                    isReady={isWorkReady}
-                    isSubmitted={chapterProgress.isWorkSubmitted}
-                    chapterId={currentChapterId}
-                    chapterTitle={chapter.chapter}
-                />
-            </div>
+            <ConfirmationModal
+                isOpen={isConfirmationModalOpen}
+                onClose={() => !isSubmitting && setConfirmationModalOpen(false)}
+                onSubmit={handleSubmitWork}
+                isSubmitting={isSubmitting}
+                chapterTitle={chapter.chapter}
+            />
+            
+            {/* Effet confetti pour célébrer la soumission */}
+            {showConfetti && (
+                <div className="fixed inset-0 pointer-events-none z-50 overflow-hidden">
+                    <div className="confetti-container">
+                        {[...Array(50)].map((_, i) => (
+                            <div
+                                key={i}
+                                className="confetti"
+                                style={{
+                                    left: `${Math.random() * 100}%`,
+                                    animationDelay: `${Math.random() * 3}s`,
+                                    backgroundColor: ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#feca57', '#ff9ff3'][Math.floor(Math.random() * 6)]
+                                }}
+                            />
+                        ))}
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

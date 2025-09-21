@@ -1,6 +1,5 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { useAppState, useAppDispatch } from '../context/AppContext';
-import Confetti from './Confetti';
 import { MathJax } from 'better-react-mathjax';
 import { useNotification } from '../context/NotificationContext';
 
@@ -9,12 +8,24 @@ const Quiz: React.FC = () => {
     const dispatch = useAppDispatch();
     const { addNotification } = useNotification();
     const { currentChapterId, activities, progress, isReviewMode } = state;
+    const [timeSpent, setTimeSpent] = useState(0);
 
     if (!currentChapterId) return null;
     const chapter = activities[currentChapterId];
     const quizProgress = progress[currentChapterId].quiz;
     const { currentQuestionIndex, answers, isSubmitted, allAnswered, score } = quizProgress;
     const question = chapter.quiz[currentQuestionIndex];
+
+    useEffect(() => {
+        // Don't run timer in review mode or if quiz is already submitted
+        if (isReviewMode || isSubmitted) return;
+
+        const timer = setInterval(() => {
+            setTimeSpent(prev => prev + 1);
+        }, 1000);
+
+        return () => clearInterval(timer);
+    }, [isReviewMode, isSubmitted]);
 
     const handleOptionChange = (answer: string) => {
         if (isSubmitted) return;
@@ -40,20 +51,21 @@ const Quiz: React.FC = () => {
 
     const handleSubmit = () => {
         const finalScore = calculateScore();
-        dispatch({ type: 'SUBMIT_QUIZ', payload: { score: finalScore } });
+        dispatch({ type: 'SUBMIT_QUIZ', payload: { score: finalScore, duration: timeSpent } });
     };
 
     const isPerfectScore = useMemo(() => score === chapter.quiz.length, [score, chapter.quiz.length]);
 
     if (isSubmitted || isReviewMode) {
         const userAnsw = answers[question.id];
-        const correctAnsw = question.options.find(o => o.isCorrect)?.text;
         
+        // Smartly find the explanation text
+        const explanationText = question.explanation || question.options.find(opt => opt.isCorrect)?.explanation;
+
         return (
             <div className="bg-surface p-6 rounded-lg border border-border">
                 {isSubmitted && !isReviewMode && (
                      <div className="text-center mb-8 p-6 bg-background rounded-lg">
-                        {isPerfectScore && <Confetti />}
                         <h2 className="text-2xl font-bold text-text">Quiz terminé !</h2>
                         <p className="text-secondary mt-2">Votre score est de :</p>
                         <p className={`text-4xl sm:text-5xl font-bold my-2 ${isPerfectScore ? 'text-success' : 'text-primary'}`}>
@@ -97,10 +109,12 @@ const Quiz: React.FC = () => {
                                 );
                             })}
                         </div>
-                        <div className="mt-6 p-4 bg-background rounded-lg">
-                            <p className="font-bold text-text">Explication :</p>
-                            <p className="text-secondary mt-1"><MathJax dynamic>{question.explanation}</MathJax></p>
-                        </div>
+                        {explanationText && (
+                            <div className="mt-6 p-4 bg-background rounded-lg border border-border">
+                                <p className="font-bold text-text">Explication :</p>
+                                <p className="text-secondary mt-1"><MathJax dynamic>{explanationText}</MathJax></p>
+                            </div>
+                        )}
                         <div className="mt-6 flex justify-between items-center">
                             <button onClick={() => handleNavigate('prev')} disabled={currentQuestionIndex === 0} className="font-button px-4 py-2 font-semibold text-primary rounded-lg hover:bg-primary-light disabled:opacity-50">Précédent</button>
                             <button onClick={() => handleNavigate('next')} disabled={currentQuestionIndex === chapter.quiz.length - 1} className="font-button px-4 py-2 font-semibold text-primary rounded-lg hover:bg-primary-light disabled:opacity-50">Suivant</button>

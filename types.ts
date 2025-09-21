@@ -6,13 +6,14 @@ export interface Profile {
 export interface Option {
     text: string;
     isCorrect: boolean;
+    explanation?: string;
 }
 
 export interface Question {
     id: string;
     question: string;
     options: Option[];
-    explanation: string;
+    explanation?: string;
 }
 
 export interface Hint {
@@ -37,7 +38,7 @@ export interface Chapter {
     isActive: boolean;
     class: string;
     chapter: string;
-    sessionDate: string;
+    sessionDates: string[]; // Changed from sessionDate: string
     quiz: Question[];
     exercises: Exercise[];
 }
@@ -50,12 +51,14 @@ export interface QuizProgress {
     score: number;
     allAnswered: boolean;
     currentQuestionIndex: number;
+    duration: number; // in seconds
 }
 
 export interface ChapterProgress {
     quiz: QuizProgress;
     exercisesFeedback: { [exId: string]: Feedback };
     isWorkSubmitted: boolean;
+    exercisesDuration: number; // in seconds
 }
 
 export interface AppState {
@@ -75,8 +78,9 @@ export type Action =
     | { type: 'CHANGE_VIEW'; payload: { view: AppState['view']; chapterId?: string; subView?: AppState['activitySubView']; review?: boolean } }
     | { type: 'NAVIGATE_QUIZ'; payload: number }
     | { type: 'UPDATE_QUIZ_ANSWER'; payload: { qId: string; answer: string } }
-    | { type: 'SUBMIT_QUIZ'; payload: { score: number } }
+    | { type: 'SUBMIT_QUIZ'; payload: { score: number; duration: number } }
     | { type: 'TOGGLE_REVIEW_MODE'; payload: boolean }
     | { type: 'UPDATE_EXERCISE_FEEDBACK'; payload: { exId: string; feedback: Feedback } }
+    | { type: 'UPDATE_EXERCISES_DURATION'; payload: { duration: number } }
     | { type: 'SUBMIT_WORK'; payload: { chapterId: string } }
     | { type: 'SYNC_ACTIVITIES'; payload: { activities: { [id: string]: Chapter }; progress: { [id: string]: ChapterProgress }; chapterOrder: string[] } };

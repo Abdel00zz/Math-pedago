@@ -1,4 +1,5 @@
 
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { useNotification, Notification } from '../context/NotificationContext';
@@ -8,6 +9,8 @@ const Toast: React.FC<{ notification: Notification; onDismiss: (id: string) => v
         success: 'bg-success',
         error: 'bg-error',
         info: 'bg-info',
+        // Fix: Add style for 'warning' notification type.
+        warning: 'bg-warning',
     };
 
     return (

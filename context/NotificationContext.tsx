@@ -1,8 +1,10 @@
 
+
 import React, { createContext, useState, useCallback, ReactNode, useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-export type NotificationType = 'success' | 'error' | 'info';
+// Fix: Add 'warning' to NotificationType to support warning notifications.
+export type NotificationType = 'success' | 'error' | 'info' | 'warning';
 
 export interface Notification {
     id: string;

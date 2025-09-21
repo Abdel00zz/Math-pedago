@@ -37,9 +37,9 @@ const LoginView: React.FC = () => {
 
     return (
         <div className="flex flex-col items-center justify-center min-h-[80vh] animate-fadeIn p-4">
-            <div className="w-full max-w-md p-10 space-y-8 bg-surface border border-border rounded-lg shadow-claude">
+            <div className="w-full max-w-md p-10 space-y-8 bg-surface border-y-2 border-primary/20 rounded-sm shadow-claude">
                 <div className="text-center">
-                    <div className="mx-auto w-44 h-44 flex flex-col items-center justify-center bg-surface border-2 border-border mb-4">
+                    <div className="mx-auto w-44 h-44 flex flex-col items-center justify-center bg-surface border border-border rounded-full mb-4">
                         <span className="font-brand text-sm tracking-widest text-text-secondary">Le Centre</span>
                         <div className="w-10 h-px bg-border-hover my-2"></div>
                         <span className="font-brand text-3xl text-primary -mt-1">Scientifique</span>
@@ -60,7 +60,7 @@ const LoginView: React.FC = () => {
                 </div>
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
-                        <label htmlFor="name" className="block text-sm font-medium text-text font-lato mb-2">
+                        <label htmlFor="name" className="block text-sm font-medium text-text font-serif mb-2">
                             Nom complet
                         </label>
                         <input
@@ -68,21 +68,21 @@ const LoginView: React.FC = () => {
                             type="text"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            className={`w-full px-4 py-3 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all ${hasPreloadedName ? 'bg-border/30 text-text-secondary cursor-not-allowed' : ''}`}
+                            className={`w-full px-1 py-2 bg-transparent border-0 border-b border-border-hover focus:outline-none focus:ring-0 focus:border-primary transition-colors ${hasPreloadedName ? 'bg-border/20 text-text-secondary cursor-not-allowed border-b-transparent' : ''}`}
                             placeholder="Entrez votre nom"
                             required
                             readOnly={hasPreloadedName}
                         />
                     </div>
                     <div>
-                        <label htmlFor="classId" className="block text-sm font-medium text-text font-lato mb-2">
+                        <label htmlFor="classId" className="block text-sm font-medium text-text font-serif mb-2">
                             Sélectionnez votre classe
                         </label>
                         <select
                             id="classId"
                             value={classId}
                             onChange={(e) => setClassId(e.target.value)}
-                            className="w-full px-4 py-3 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all cursor-pointer"
+                            className="w-full px-1 py-2 bg-transparent border-0 border-b border-border-hover focus:outline-none focus:ring-0 focus:border-primary transition-colors cursor-pointer"
                             required
                         >
                             {CLASS_OPTIONS.map(option => (
@@ -97,7 +97,7 @@ const LoginView: React.FC = () => {
                     )}
                     <button
                         type="submit"
-                        className="w-full px-4 py-3 font-semibold text-white bg-primary rounded-lg hover:bg-primary-hover transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] font-button shadow-sm"
+                        className="w-full px-4 py-3 font-serif font-bold tracking-wider uppercase text-sm text-white bg-primary rounded-sm hover:bg-primary/90 transition-colors"
                     >
                         {hasPreloadedName ? 'Mettre à jour' : 'Commencer maintenant'}
                     </button>
@@ -105,7 +105,7 @@ const LoginView: React.FC = () => {
 
                 {!hasPreloadedName && (
                     <div className="p-4 bg-background rounded-lg border border-border">
-                        <p className="text-center text-sm text-secondary font-lato">
+                        <p className="text-center text-sm text-secondary font-serif">
                             Accédez à des ressources pédagogiques d'excellence, disponibles à tout moment pour accompagner votre réussite.
                         </p>
                     </div>

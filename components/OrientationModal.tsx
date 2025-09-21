@@ -332,7 +332,7 @@ const OrientationModal: React.FC<OrientationModalProps> = ({ isOpen, onClose, cl
             isOpen={isOpen} 
             onClose={onClose} 
             title="Programme d'Orientation" 
-            className="sm:max-w-5xl font-serif"
+            className="sm:max-w-7xl font-serif"
         >
             <div className="mt-4 max-h-[75vh] overflow-y-auto -mr-2 pr-2 space-y-4">
                 {chapters.length > 0 ? sectionOrder.map(sectionName => sections[sectionName] && (

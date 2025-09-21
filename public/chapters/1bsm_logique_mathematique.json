@@ -1,7 +1,11 @@
 {
   "class": "1bsm",
   "chapter": "Logique mathématique",
-  "sessionDate": "25 septembre à 20h00",
+  "sessionDates": [
+    "2025-09-25T19:00:00Z",
+    "2025-09-22T17:00:00Z",
+    "2025-09-25T17:00:00Z"
+  ],
   "quiz": [
     {
       "id": "q_proposition_1",
