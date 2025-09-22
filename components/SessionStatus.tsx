@@ -74,7 +74,7 @@ const SessionStatus: React.FC<SessionStatusProps> = React.memo(({ dates }) => {
             
             return { 
                 status: 'upcoming', 
-                text: `Prochaine séance Live: ${formattedDate}`,
+                text: `Prochaine séance : ${formattedDate}`,
                 icon: 'update'
             };
         }

@@ -253,6 +253,21 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
                     );
                     const loadedChapters = (await Promise.all(chapterPromises)).filter(Boolean) as Chapter[];
                     loadedChapters.forEach(ch => allActivities[ch.id] = ch);
+
+                    // Proactively cache chapters for offline use
+                    if ('caches' in window) {
+                        caches.open('le-centre-scientifique-dynamic-v2').then(cache => {
+                            const chapterUrls = chapterInfos.map(info => `/chapters/${info.file}`);
+                            // Add manifest to the dynamic cache as well
+                            chapterUrls.push('/manifest.json');
+                            cache.addAll(chapterUrls).then(() => {
+                                console.log('Tous les chapitres de la classe ont été mis en cache.');
+                                addNotification('Contenu prêt pour une utilisation hors ligne.', 'info');
+                            }).catch(err => {
+                                console.warn('Échec de la mise en cache proactive des chapitres:', err);
+                            });
+                        });
+                    }
                 }
 
                 const newProgress = { ...state.progress };
@@ -271,7 +286,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 
             } catch (error) {
                 console.error("Failed to load or sync chapter data:", error);
-                addNotification("Impossible de charger les chapitres pour votre classe.", "error");
+                addNotification("Impossible de charger les chapitres. Vérifiez votre connexion.", "error");
             }
         };
 
