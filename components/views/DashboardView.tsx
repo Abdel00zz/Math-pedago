@@ -486,7 +486,7 @@ const DashboardView: React.FC = () => {
                     <header className="sticky top-0 z-30 bg-background/90 backdrop-blur-md py-6 mb-6 -mx-4 -mt-4 sm:-mx-6 sm:-mt-6 px-4 sm:px-6">
                         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 max-w-5xl mx-auto">
                             <div>
-                                <h1 className="text-4xl sm:text-6xl font-playfair mb-2">
+                                <h1 className="text-2xl sm:text-4xl font-playfair mb-2">
                                     {greeting},
                                     <span className="text-[#FF7A00] ml-4">
                                         {profile.name}
@@ -494,7 +494,7 @@ const DashboardView: React.FC = () => {
                                 </h1>
                                 <div className="mt-2">
                                     <div
-                                        className="inline-block text-xl font-garamond text-text-secondary italic"
+                                        className="inline-block text-lg font-garamond text-text-secondary italic"
                                         dangerouslySetInnerHTML={{ __html: formatClassNameHTML(className) }}
                                     />
                                 </div>
