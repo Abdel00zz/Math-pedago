@@ -10,9 +10,10 @@ const initialState: AppState = {
     activities: {},
     progress: {},
     currentChapterId: null,
-    activitySubView: null,
+    activitySubView: 'quiz',
     isReviewMode: false,
     chapterOrder: [],
+    shouldBlinkBackButton: false,
 };
 
 // ... (appReducer remains the same)
@@ -170,6 +171,16 @@ const appReducer = (state: AppState, action: Action): AppState => {
                 activities: action.payload.activities,
                 progress: action.payload.progress,
                 chapterOrder: action.payload.chapterOrder,
+            };
+        case 'TRIGGER_BACK_BUTTON_BLINK':
+            return {
+                ...state,
+                shouldBlinkBackButton: true,
+            };
+        case 'STOP_BACK_BUTTON_BLINK':
+            return {
+                ...state,
+                shouldBlinkBackButton: false,
             };
         default:
             return state;

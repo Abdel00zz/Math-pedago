@@ -45,6 +45,25 @@ const Exercises: React.FC = () => {
             }
         };
     }, [dispatch, currentChapterId]);
+
+    // Effet pour détecter la complétion de tous les exercices
+    useEffect(() => {
+        if (!currentChapterId) return;
+        
+        const chapter = activities[currentChapterId];
+        const exercisesFeedback = progress[currentChapterId].exercisesFeedback;
+        const totalExercises = chapter.exercises.length;
+        const evaluatedExercisesCount = Object.keys(exercisesFeedback).length;
+        
+        // Vérifier si tous les exercices ont été évalués
+        if (totalExercises > 0 && evaluatedExercisesCount === totalExercises) {
+            // Scroll vers le haut de la page
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // Déclencher l'effet de clignotement du bouton retour
+            dispatch({ type: 'TRIGGER_BACK_BUTTON_BLINK' });
+        }
+    }, [currentChapterId, activities, progress, dispatch]);
     
     if (!currentChapterId) return null;
     const chapter = activities[currentChapterId];
@@ -111,7 +130,12 @@ const Exercises: React.FC = () => {
         <div className="space-y-4 pb-4">
             {chapter.exercises.map((exercise, index) => (
                 <div key={exercise.id} className="bg-surface p-6 rounded-lg border border-border">
-                    <h3 className="text-3xl font-playfair text-text">{`Exercice ${index + 1} | ${exercise.title}`}</h3>
+                    <h3 className="text-3xl font-playfair text-text">
+                        {`Exercice ${index + 1} | `}
+                        <span className="text-gray-500" style={{ fontSize: '0.7em' }}>
+                            {exercise.title}
+                        </span>
+                    </h3>
                     <div className="mt-4 text-text-secondary serif-text">
                         <MathJax dynamic>{exercise.statement}</MathJax>
                     </div>
