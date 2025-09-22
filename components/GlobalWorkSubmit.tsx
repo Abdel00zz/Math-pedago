@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useAppDispatch } from '../context/AppContext';
 import { useNotification } from '../context/NotificationContext';
-import { usePWANotifications } from '../hooks/usePWANotifications';
 import ConfirmationModal from './ConfirmationModal';
 import Confetti from './Confetti';
 
@@ -15,7 +14,6 @@ interface GlobalWorkSubmitProps {
 const GlobalWorkSubmit: React.FC<GlobalWorkSubmitProps> = ({ isReady, isSubmitted, chapterId, chapterTitle }) => {
     const dispatch = useAppDispatch();
     const { addNotification } = useNotification();
-    const { sendCongratulations } = usePWANotifications();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [showConfetti, setShowConfetti] = useState(false);
@@ -27,10 +25,6 @@ const GlobalWorkSubmit: React.FC<GlobalWorkSubmitProps> = ({ isReady, isSubmitte
         
         dispatch({ type: 'SUBMIT_WORK', payload: { chapterId } });
         addNotification('Votre travail a été envoyé avec succès !', 'success');
-        
-        // Envoyer une notification PWA de félicitations
-        await sendCongratulations(`Excellent travail sur "${chapterTitle}" ! Votre progression a été enregistrée.`);
-        
         setIsSubmitting(false);
         setIsModalOpen(false);
         setShowConfetti(true);
