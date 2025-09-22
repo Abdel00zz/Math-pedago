@@ -1,4 +1,5 @@
 import React from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import { useAppState } from './context/AppContext';
 import LoginView from './components/views/LoginView';
 import DashboardView from './components/views/DashboardView';
@@ -30,6 +31,7 @@ const App: React.FC = () => {
                 {renderView()}
             </main>
             <Notifications />
+            <Analytics />
         </div>
     );
 };
