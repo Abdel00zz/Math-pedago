@@ -313,15 +313,30 @@ ${exercisesSelfAssessment.feedback.map((ex: any) =>
     const submissionStatus = getSubmissionStatus();
     const isSubmissionUnlocked = canSubmitWork || chapterProgress.isWorkSubmitted;
     
-    const getStatusBadge = (status: BadgeStatus, text: string) => {
-        const styles: Record<BadgeStatus, string> = {
-            completed: 'px-2.5 py-1 text-xs font-semibold rounded-full bg-success/10 text-success',
-            'in-progress': 'px-2.5 py-1 text-xs font-semibold rounded-full bg-warning/10 text-warning',
-            todo: 'px-2 py-0.5 text-[11px] font-normal font-garamond rounded border border-border text-text-secondary bg-surface',
-            ready: 'px-2.5 py-1 text-xs font-semibold rounded-full bg-info/10 text-info',
-            locked: 'px-2.5 py-1 text-xs font-semibold rounded-full bg-secondary/10 text-secondary',
+    const getStatusBadge = (status: BadgeStatus, text: string, isModern: boolean = false) => {
+        const baseStyles: Record<BadgeStatus, string> = {
+            completed: 'bg-success/10 text-success',
+            'in-progress': 'bg-warning/10 text-warning',
+            todo: 'bg-surface border-border text-text-secondary', // Base for todo
+            ready: 'bg-info/10 text-info',
+            locked: 'bg-secondary/10 text-secondary',
         };
-        return <span className={`${styles[status]}`}>{text}</span>;
+    
+        if (isModern && status === 'todo') {
+            return (
+                <span className="font-button text-xs font-medium text-primary animate-pulse">
+                    {text}
+                </span>
+            );
+        }
+        
+        const regularStyles = 'px-2.5 py-1 text-xs font-semibold rounded-full';
+        
+        if (status === 'todo') {
+            return <span className="px-2 py-0.5 text-[11px] font-normal font-garamond rounded border border-border text-text-secondary bg-surface">{text}</span>
+        }
+    
+        return <span className={`${regularStyles} ${baseStyles[status]}`}>{text}</span>;
     };
 
     return (
@@ -365,7 +380,7 @@ ${exercisesSelfAssessment.feedback.map((ex: any) =>
                                     <span className="text-sm font-semibold text-text-secondary">{isQuizCompleted ? 'Score' : 'Progression'}</span>
                                     {isQuizCompleted 
                                         ? <span className="font-bold text-lg text-primary">{quiz.score}/{chapter.quiz.length}</span> 
-                                        : getStatusBadge(quizStatus.status, quizStatus.text)}
+                                        : getStatusBadge(quizStatus.status, quizStatus.text, true)}
                                 </div>
                                 <div className="w-full bg-border/50 rounded-full h-3">
                                     <div className={`h-3 rounded-full transition-all duration-500 ${isQuizCompleted ? 'bg-success' : 'bg-primary'}`} style={{ width: `${quizProgressPercent}%` }} />
