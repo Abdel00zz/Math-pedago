@@ -445,7 +445,7 @@ const DashboardView: React.FC = () => {
                         className="w-14 h-14 rounded-full flex items-center justify-center bg-surface/50 hover:bg-surface border border-border/70 transition-all duration-200"
                         aria-label="Notifications"
                     >
-                        <span className="material-symbols-outlined text-text-secondary !text-3xl group-hover:text-primary transition-colors">notifications</span>
+                        <span className="material-symbols-outlined text-text-secondary !text-2xl group-hover:text-primary transition-colors">notifications</span>
                         {unreadNotificationsCount > 0 && (
                             <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-error text-white text-xs font-bold">
                                 {unreadNotificationsCount}
@@ -464,7 +464,7 @@ const DashboardView: React.FC = () => {
                         className="w-14 h-14 rounded-full flex items-center justify-center bg-surface/50 hover:bg-surface border border-border/70 transition-all duration-200"
                         aria-label="Programme d'orientation"
                     >
-                        <span className="material-symbols-outlined text-text-secondary !text-3xl group-hover:text-primary transition-colors">explore</span>
+                        <span className="material-symbols-outlined text-text-secondary !text-2xl group-hover:text-primary transition-colors">explore</span>
                     </button>
                     <span className="tooltip">Programme (Ctrl+O)</span>
                 </div>
@@ -474,7 +474,7 @@ const DashboardView: React.FC = () => {
                         className="w-14 h-14 rounded-full flex items-center justify-center bg-surface/50 hover:bg-surface border border-border/70 transition-all duration-200"
                         aria-label="Aide et support"
                     >
-                        <span className="material-symbols-outlined text-text-secondary !text-3xl group-hover:text-primary transition-colors">help_outline</span>
+                        <span className="material-symbols-outlined text-text-secondary !text-2xl group-hover:text-primary transition-colors">help_outline</span>
                     </button>
                     <span className="tooltip">Aide (Ctrl+H)</span>
                 </div>
@@ -488,7 +488,7 @@ const DashboardView: React.FC = () => {
                             <div>
                                 <h1 className="text-4xl sm:text-6xl font-playfair mb-2">
                                     {greeting},
-                                    <span className="text-text ml-4">
+                                    <span className="text-[#FF7A00] ml-4">
                                         {profile.name}
                                     </span>
                                 </h1>
@@ -568,7 +568,7 @@ const DashboardView: React.FC = () => {
                                 {unreadNotificationsCount}
                             </span>
                         )}
-                        <span className="material-symbols-outlined !text-[28px]">notifications</span>
+                        <span className="material-symbols-outlined !text-[26px]">notifications</span>
                         <span className="text-xs font-medium mt-1">Notifications</span>
                     </button>
                      <button
@@ -576,7 +576,7 @@ const DashboardView: React.FC = () => {
                         className="flex-1 flex flex-col items-center justify-center p-2 text-text-secondary hover:text-primary transition-colors"
                         aria-label="Programme d'orientation"
                     >
-                        <span className="material-symbols-outlined !text-[28px]">explore</span>
+                        <span className="material-symbols-outlined !text-[26px]">explore</span>
                         <span className="text-xs font-medium mt-1">Programme</span>
                     </button>
                     <button
@@ -584,7 +584,7 @@ const DashboardView: React.FC = () => {
                         className="flex-1 flex flex-col items-center justify-center p-2 text-text-secondary hover:text-primary transition-colors"
                         aria-label="Aide et support"
                     >
-                        <span className="material-symbols-outlined !text-[28px]">help_outline</span>
+                        <span className="material-symbols-outlined !text-[26px]">help_outline</span>
                         <span className="text-xs font-medium mt-1">Aide</span>
                     </button>
                 </nav>

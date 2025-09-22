@@ -7,12 +7,15 @@ const LoginView: React.FC = () => {
     const state = useAppState();
     const dispatch = useAppDispatch();
     const [name, setName] = useState(state.profile?.name || '');
-    const [classId, setClassId] = useState(CLASS_OPTIONS[0]?.value || '');
+    const [classId, setClassId] = useState(state.profile?.classId || CLASS_OPTIONS[0]?.value || '');
     const [error, setError] = useState('');
 
     useEffect(() => {
         if (state.profile?.name) {
             setName(state.profile.name);
+        }
+        if (state.profile?.classId) {
+            setClassId(state.profile.classId);
         }
     }, [state.profile]);
 
@@ -34,167 +37,127 @@ const LoginView: React.FC = () => {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-[80vh] animate-fadeIn p-4 bg-gradient-to-br from-slate-50 to-blue-50/40">
-            <div className="w-full max-w-md p-10 space-y-8 bg-white/95 backdrop-blur-sm border border-slate-200/60 rounded-2xl shadow-xl shadow-slate-200/40 transition-all duration-500 hover:shadow-2xl hover:shadow-slate-300/20">
+        <div className="flex items-center justify-center min-h-[80vh] animate-fadeIn p-4">
+            <div className="w-full max-w-md landscape:max-w-4xl bg-surface border border-border rounded-2xl shadow-claude">
                 
-                <div className="text-center">
-                    {/* Logo carré amélioré avec effets subtils */}
-                    <div className="relative w-64 h-64 mx-auto flex flex-col items-center justify-center border-2 border-slate-200/80 hover:border-primary/40 p-6 px-8 rounded-xl mb-8 bg-gradient-to-br from-white to-slate-50/30 shadow-inner transition-all duration-300 group">
-                        {/* Effet de brillance subtil */}
-                        <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/40 to-transparent opacity-0 group-hover:opacity-100 rounded-xl transition-opacity duration-500"></div>
-                        
-                        {/* Contenu du logo */}
-                        <span className="relative font-brand text-2xl tracking-widest text-slate-600 transition-colors duration-300 group-hover:text-slate-700">
-                            Le Centre
-                        </span>
-                        
-                        {/* Séparateur amélioré */}
-                        <div className="relative flex items-center justify-center my-3">
-                            <div className="w-12 h-px bg-gradient-to-r from-transparent via-slate-300 to-transparent"></div>
-                            <div className="absolute w-2 h-2 bg-primary/60 rounded-full"></div>
+                <div className="flex flex-col landscape:flex-row landscape:gap-10 landscape:items-center p-6 sm:p-8">
+                    
+                    {/* Colonne Gauche: Logo */}
+                    <div className="flex-shrink-0 landscape:w-2/5 flex justify-center items-center">
+                        <div className="w-48 h-48 mx-auto flex flex-col items-center justify-center border border-border p-4 px-2 rounded-xl bg-background/50 shadow-inner group transition-all duration-300 hover:border-border-hover">
+                            <span className="font-brand text-xl tracking-widest text-text-secondary transition-colors duration-300 group-hover:text-text">
+                                Le Centre
+                            </span>
+                            <div className="w-12 h-px bg-border my-2"></div>
+                            <span className="font-brand text-4xl text-primary font-semibold leading-none tracking-tight transition-all duration-300 group-hover:text-primary/90 group-hover:scale-105">
+                                Scientifique
+                            </span>
                         </div>
-                        
-                        <span className="relative font-brand text-5xl text-primary font-semibold -mt-1 leading-none tracking-tight transition-all duration-300 group-hover:text-primary/90 group-hover:scale-105">
-                            Scientifique
-                        </span>
-                        
-                        {/* Points décoratifs subtils */}
-                        <div className="absolute top-4 right-4 w-1 h-1 bg-primary/30 rounded-full opacity-60"></div>
-                        <div className="absolute bottom-6 left-6 w-1.5 h-1.5 bg-primary/20 rounded-full opacity-40"></div>
                     </div>
 
-                    {/* Messages de bienvenue améliorés */}
-                    {hasPreloadedName ? (
-                        <div className="mt-6 space-y-2">
-                            <h2 className="text-4xl font-playfair text-slate-800 leading-tight">
-                                Bon retour, <span className="text-primary font-medium">{name}</span> !
-                            </h2>
-                            <p className="mt-3 text-slate-600 font-garamond italic text-base leading-relaxed">
-                                Veuillez sélectionner votre nouvelle classe pour continuer.
-                            </p>
-                        </div>
-                    ) : (
-                        <div className="mt-6 space-y-2">
-                            <h2 className="text-4xl font-playfair text-slate-800 font-medium">Bienvenue</h2>
-                            <p className="mt-3 text-slate-600 font-garamond italic text-base leading-relaxed">
-                                Entrez vos informations pour commencer votre parcours.
-                            </p>
-                        </div>
-                    )}
-                </div>
-
-                <form onSubmit={handleSubmit} className="space-y-6">
-                    {/* Champ nom avec améliorations subtiles */}
-                    <div className="group">
-                        <label htmlFor="name" className="block text-lg font-medium text-slate-700 font-garamond mb-2 transition-colors group-focus-within:text-primary">
-                            Nom complet
-                        </label>
-                        <div className="relative">
-                            <input
-                                id="name"
-                                type="text"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                                className={`w-full px-2 py-3 bg-white/80 border-0 border-b-2 border-slate-200 focus:outline-none focus:ring-0 focus:border-primary transition-all duration-300 font-garamond text-lg placeholder-slate-400 ${
-                                    hasPreloadedName 
-                                        ? 'bg-slate-50/80 text-slate-500 cursor-not-allowed border-b-slate-300' 
-                                        : 'hover:border-slate-300 hover:bg-white'
-                                }`}
-                                placeholder="Entrez votre nom"
-                                required
-                                readOnly={hasPreloadedName}
-                            />
-                            {/* Indicateur de focus subtil */}
-                            {!hasPreloadedName && (
-                                <div className="absolute bottom-0 left-0 w-full h-0.5 bg-primary scale-x-0 group-focus-within:scale-x-100 transition-transform duration-300 origin-left"></div>
+                    {/* Colonne Droite: Formulaire et Messages */}
+                    <div className="flex-grow landscape:w-3/5 mt-6 landscape:mt-0">
+                         <div className="text-center mb-8">
+                            {hasPreloadedName ? (
+                                <>
+                                    <h2 className="text-4xl font-playfair text-text leading-tight">
+                                        Bon retour, <span className="text-primary font-medium">{name}</span> !
+                                    </h2>
+                                    <p className="mt-2 text-text-secondary font-garamond italic text-base">
+                                        Veuillez confirmer ou sélectionner votre classe.
+                                    </p>
+                                </>
+                            ) : (
+                                <>
+                                    <h2 className="text-4xl font-playfair text-text font-medium">Bienvenue</h2>
+                                    <p className="mt-2 text-text-secondary font-garamond italic text-base">
+                                        Commencez votre parcours d'apprentissage.
+                                    </p>
+                                </>
                             )}
                         </div>
-                    </div>
 
-                    {/* Champ classe avec améliorations */}
-                    <div className="group">
-                        <label htmlFor="classId" className="block text-lg font-medium text-slate-700 font-garamond mb-2 transition-colors group-focus-within:text-primary">
-                            Sélectionnez votre classe
-                        </label>
-                        <div className="relative">
-                            <select
-                                id="classId"
-                                value={classId}
-                                onChange={(e) => setClassId(e.target.value)}
-                                className="w-full px-2 py-3 bg-white/80 border-0 border-b-2 border-slate-200 focus:outline-none focus:ring-0 focus:border-primary transition-all duration-300 cursor-pointer font-garamond text-lg hover:border-slate-300 hover:bg-white appearance-none"
-                                required
+                        <form onSubmit={handleSubmit} className="space-y-6">
+                            <div>
+                                <label htmlFor="name" className="block text-base font-medium text-text-secondary font-garamond mb-2">
+                                    Nom complet
+                                </label>
+                                <div className="relative group">
+                                    <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-disabled pointer-events-none group-focus-within:text-primary transition-colors">
+                                        person
+                                    </span>
+                                    <input
+                                        id="name"
+                                        type="text"
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
+                                        className={`w-full pl-12 pr-4 py-3 bg-slate-50/80 border border-slate-300/70 rounded-lg focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300 font-garamond text-lg placeholder:text-text-disabled ${
+                                            hasPreloadedName 
+                                                ? 'bg-slate-100 text-slate-500 cursor-not-allowed' 
+                                                : 'hover:border-slate-400/70 hover:bg-slate-50'
+                                        }`}
+                                        placeholder="Votre nom et prénom"
+                                        required
+                                        readOnly={hasPreloadedName}
+                                    />
+                                </div>
+                            </div>
+
+                            <div>
+                                <label htmlFor="classId" className="block text-base font-medium text-text-secondary font-garamond mb-2">
+                                    Votre classe
+                                </label>
+                                <div className="relative group">
+                                     <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-disabled pointer-events-none group-focus-within:text-primary transition-colors">
+                                        school
+                                    </span>
+                                    <select
+                                        id="classId"
+                                        value={classId}
+                                        onChange={(e) => setClassId(e.target.value)}
+                                        className="w-full pl-12 pr-10 py-3 bg-slate-50/80 border border-slate-300/70 rounded-lg focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300 cursor-pointer font-garamond text-lg hover:border-slate-400/70 hover:bg-slate-50 appearance-none"
+                                        required
+                                    >
+                                        {CLASS_OPTIONS.map(option => (
+                                            <option key={option.value} value={option.value}>
+                                                {option.label}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none transition-colors group-focus-within:text-primary">
+                                        <span className="material-symbols-outlined text-text-disabled">unfold_more</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {error && (
+                                <p className="text-sm text-error text-center font-garamond font-medium">{error}</p>
+                            )}
+
+                            <button
+                                type="submit"
+                                className="relative w-full px-4 py-4 font-serif font-bold tracking-wider uppercase text-sm text-white bg-primary rounded-lg shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5 transition-all duration-300 overflow-hidden group"
                             >
-                                {CLASS_OPTIONS.map(option => (
-                                    <option key={option.value} value={option.value} className="py-2">
-                                        {option.label}
-                                    </option>
-                                ))}
-                            </select>
-                            {/* Flèche personnalisée */}
-                            <div className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none transition-colors group-focus-within:text-primary">
-                                <svg className="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
-                                </svg>
-                            </div>
-                            {/* Indicateur de focus */}
-                            <div className="absolute bottom-0 left-0 w-full h-0.5 bg-primary scale-x-0 group-focus-within:scale-x-100 transition-transform duration-300 origin-left"></div>
-                        </div>
+                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+                                <span className="relative">
+                                    {hasPreloadedName ? 'Accéder à mon espace' : 'Commencer'}
+                                </span>
+                            </button>
+                        </form>
                     </div>
+                </div>
 
-                    {/* Message d'erreur amélioré */}
-                    {error && (
-                        <div className="p-4 bg-red-50/80 border border-red-200/60 rounded-lg backdrop-blur-sm animate-slideIn">
-                            <div className="flex items-center space-x-2">
-                                <div className="w-2 h-2 bg-red-400 rounded-full flex-shrink-0"></div>
-                                <p className="text-sm text-red-700 text-center font-garamond font-medium">{error}</p>
-                            </div>
-                        </div>
-                    )}
-
-                    {/* Bouton submit amélioré */}
-                    <button
-                        type="submit"
-                        className="relative w-full px-4 py-4 font-serif font-bold tracking-wider uppercase text-sm text-white bg-gradient-to-r from-primary to-primary/90 rounded-lg shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5 transition-all duration-300 overflow-hidden group"
-                    >
-                        {/* Effet de brillance au survol */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
-                        <span className="relative">
-                            {hasPreloadedName ? 'Mettre à jour' : 'Commencer maintenant'}
-                        </span>
-                    </button>
-                </form>
-
-                {/* Message informatif pour nouveaux utilisateurs */}
                 {!hasPreloadedName && (
-                    <div className="mt-8 relative p-4 bg-gradient-to-r from-slate-50/80 to-blue-50/60 rounded-lg border border-slate-200/50 backdrop-blur-sm">
-                        <div className="flex items-center gap-4">
-                            <div className="flex-shrink-0">
-                               
-                            </div>
-                            <p className="text-base text-slate-700 font-serif leading-relaxed text-center">
-                                Explorez un univers d'excellence en <strong className="font-semibold text-primary">mathématiques</strong>. Nos ressources interactives sont conçues pour votre réussite.
+                    <div className="border-t border-border bg-background/50 p-6 rounded-b-2xl">
+                         <div className="flex items-center justify-center gap-3 text-center">
+                             
+                            <p className="text-base text-text-secondary font-serif leading-relaxed">
+                                Explorez l'excellence en <strong className="font-semibold text-text">mathématiques</strong>.
                             </p>
                         </div>
                     </div>
                 )}
             </div>
-
-            {/* Styles pour les animations personnalisées */}
-            <style>{`
-                @keyframes slideIn {
-                    from {
-                        opacity: 0;
-                        transform: translateY(-10px);
-                    }
-                    to {
-                        opacity: 1;
-                        transform: translateY(0);
-                    }
-                }
-                .animate-slideIn {
-                    animation: slideIn 0.3s ease-out;
-                }
-            `}</style>
         </div>
     );
 };
