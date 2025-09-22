@@ -108,10 +108,10 @@ const Exercises: React.FC = () => {
     );
 
     return (
-        <div className="space-y-4 pb-24">
-            {chapter.exercises.map(exercise => (
+        <div className="space-y-4 pb-4">
+            {chapter.exercises.map((exercise, index) => (
                 <div key={exercise.id} className="bg-surface p-6 rounded-lg border border-border">
-                    <h3 className="text-2xl antique-title text-text">{exercise.title}</h3>
+                    <h3 className="text-3xl font-playfair text-text">{`Exercice ${index + 1} | ${exercise.title}`}</h3>
                     <div className="mt-4 text-text-secondary serif-text">
                         <MathJax dynamic>{exercise.statement}</MathJax>
                     </div>
@@ -134,23 +134,6 @@ const Exercises: React.FC = () => {
                     </div>
                 </div>
             ))}
-            
-            <div className="fixed bottom-0 left-0 right-0 bg-surface/80 backdrop-blur-sm border-t border-border p-4 animate-slideInUp">
-                <div className="max-w-4xl mx-auto">
-                    <div className="flex justify-between items-center text-sm text-secondary mb-1">
-                        <span className="font-semibold">Progression de l'auto-évaluation</span>
-                        <span>{evaluatedExercisesCount} / {totalExercises} auto-évalués</span>
-                    </div>
-                    <div className="w-full bg-border rounded-full h-2.5">
-                        <div
-                            className={`h-2.5 rounded-full transition-all duration-500 ${
-                                progressPercentage === 100 ? 'bg-success' : 'bg-primary'
-                            }`}
-                            style={{ width: `${progressPercentage}%` }}
-                        />
-                    </div>
-                </div>
-            </div>
         </div>
     );
 };

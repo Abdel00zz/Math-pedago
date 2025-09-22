@@ -1,5 +1,6 @@
 import React from 'react';
 import { UINotification } from '../hooks/useNotificationGenerator';
+import Modal from './Modal';
 
 interface NotificationCenterProps {
     isOpen: boolean;
@@ -8,50 +9,41 @@ interface NotificationCenterProps {
 }
 
 const NotificationCenter: React.FC<NotificationCenterProps> = ({ isOpen, onClose, notifications }) => {
-    if (!isOpen) return null;
-
     return (
-        // Transparent backdrop to catch outside clicks
-        <div 
-            className="fixed inset-0 z-40" 
-            onClick={onClose}
-            aria-hidden="true"
+        <Modal 
+            isOpen={isOpen} 
+            onClose={onClose} 
+            title="" // Le titre est géré à l'intérieur pour un style personnalisé
+            className="sm:max-w-xl"
         >
-            {/* Popover panel */}
-            <div 
-                className="absolute w-full max-w-sm bg-surface border border-border shadow-claude transition-opacity duration-300 origin-bottom-right sm:origin-top-right animate-fadeIn notification-popover-arrow right-4 bottom-20 sm:bottom-auto sm:top-14 rounded-xl"
-                onClick={e => e.stopPropagation()}
-                role="dialog"
-                aria-label="Notifications"
-            >
-                <div className="p-4 border-b border-border">
-                    <h3 className="font-bold text-text font-serif">Notifications</h3>
+            <div className="p-2">
+                <div className="text-center mb-6">
+                    <h2 className="text-4xl font-playfair text-text">Notifications</h2>
+                    <div className="w-24 h-px bg-border-hover mx-auto mt-3"></div>
                 </div>
-                <div className="max-h-96 overflow-y-auto">
+                
+                <div className="max-h-[60vh] overflow-y-auto -mr-4 pr-4">
                     {notifications.length > 0 ? (
-                        <ul className="divide-y divide-border">
+                        <ul className="space-y-4">
                             {notifications.map((notif, index) => (
-                                <li key={index} className="p-4 flex items-start gap-3 hover:bg-background/50 transition-colors">
-                                    <span className="mt-1.5 flex-shrink-0 w-2 h-2 bg-primary rounded-full"></span>
-                                    <div className="flex-grow">
-                                        <h4 className="font-semibold text-text text-sm">{notif.title}</h4>
-                                        <p className="text-text-secondary text-sm" dangerouslySetInnerHTML={{ __html: notif.message }}></p>
+                                <li key={index} className="p-4 bg-background/50 border-l-4 border-primary/50 rounded-r-lg">
+                                    <div className="font-garamond">
+                                        <h4 className="font-semibold text-text text-lg">{notif.title}</h4>
+                                        <p className="text-text-secondary text-base mt-1" dangerouslySetInnerHTML={{ __html: notif.message }}></p>
                                     </div>
                                 </li>
                             ))}
                         </ul>
                     ) : (
-                        <div className="text-center p-8 text-secondary">
-                            <p className="text-sm font-serif">Vous n'avez aucune nouvelle notification.</p>
-                            <p className="text-xs mt-1">Tout est à jour !</p>
+                        <div className="text-center py-12 text-secondary">
+                            <span className="material-symbols-outlined text-5xl">notifications_off</span>
+                            <p className="text-lg font-garamond mt-4">Vous n'avez aucune nouvelle notification.</p>
+                            <p className="text-base font-garamond italic mt-1">Tout est à jour !</p>
                         </div>
                     )}
                 </div>
-                 <div className="p-2 border-t border-border text-center">
-                    <a href="#" onClick={(e) => e.preventDefault()} className="text-sm font-semibold text-primary hover:underline font-serif">Afficher tout</a>
-                </div>
             </div>
-        </div>
+        </Modal>
     );
 };
 

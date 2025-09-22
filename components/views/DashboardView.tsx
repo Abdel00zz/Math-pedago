@@ -20,6 +20,8 @@ interface CategorizedActivities {
 // Constantes pour éviter les recalculs
 const HELP_RESET_DELAY_MS = 1500;
 const HELP_CLICKS_TO_RESET = 5;
+const NOTIFICATION_READ_KEY = 'pedagoEleveNotificationsRead_V1';
+
 
 // Styles personnalisés optimisés
 const customStyles = `
@@ -104,29 +106,6 @@ const customStyles = `
   
   .group:hover .tooltip {
     opacity: 1;
-  }
-
-  @media (min-width: 640px) {
-    .notification-popover-arrow::before,
-    .notification-popover-arrow::after {
-      content: '';
-      position: absolute;
-      bottom: 100%;
-      right: 1.25rem; /* 20px -> ~center of the trigger button */
-      transform: translateX(50%);
-      border-width: 7px;
-      border-style: solid;
-      border-color: transparent;
-    }
-
-    .notification-popover-arrow::before {
-      border-bottom-color: #E5E5E5; /* border color */
-    }
-
-    .notification-popover-arrow::after {
-      margin-bottom: -2px;
-      border-bottom-color: #FFFFFF; /* surface color */
-    }
   }
 `;
 
@@ -266,7 +245,20 @@ const DashboardView: React.FC = () => {
     const [isNotificationCenterOpen, setNotificationCenterOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(!profile);
     
-    const notifications = useNotificationGenerator(state);
+    const [readNotificationIds, setReadNotificationIds] = useState<Set<string>>(() => {
+        try {
+            const stored = localStorage.getItem(NOTIFICATION_READ_KEY);
+            return stored ? new Set(JSON.parse(stored)) : new Set();
+        } catch {
+            return new Set();
+        }
+    });
+
+    const allNotifications = useNotificationGenerator(state);
+
+    const unreadNotificationsCount = useMemo(() => {
+        return allNotifications.filter(n => !readNotificationIds.has(n.id)).length;
+    }, [allNotifications, readNotificationIds]);
 
     const { addNotification } = useNotification();
     const helpClickCountRef = useRef(0);
@@ -283,6 +275,21 @@ const DashboardView: React.FC = () => {
         onOrientation: () => setOrientationModalOpen(true),
         onRefresh: () => window.location.reload()
     });
+
+    const handleOpenNotifications = () => {
+        setNotificationCenterOpen(true);
+        if (unreadNotificationsCount > 0) {
+            const currentAllIds = allNotifications.map(n => n.id);
+            const newReadIds = new Set([...readNotificationIds, ...currentAllIds]);
+            
+            setReadNotificationIds(newReadIds);
+            try {
+                localStorage.setItem(NOTIFICATION_READ_KEY, JSON.stringify(Array.from(newReadIds)));
+            } catch (error) {
+                console.error("Failed to save read notifications:", error);
+            }
+        }
+    };
     
     // Gestion de l'état idle
     useEffect(() => {
@@ -434,35 +441,23 @@ const DashboardView: React.FC = () => {
              <div className="fixed top-4 right-4 z-40 hidden sm:flex items-center gap-3">
                 <div className="group relative">
                     <button 
-                        onClick={() => setNotificationCenterOpen(prev => !prev)}
+                        onClick={handleOpenNotifications}
                         className="w-14 h-14 rounded-full flex items-center justify-center bg-surface/50 hover:bg-surface border border-border/70 transition-all duration-200"
                         aria-label="Notifications"
                     >
                         <span className="material-symbols-outlined text-text-secondary !text-3xl group-hover:text-primary transition-colors">notifications</span>
-                        {notifications.length > 0 && (
+                        {unreadNotificationsCount > 0 && (
                             <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-error text-white text-xs font-bold">
-                                {notifications.length}
+                                {unreadNotificationsCount}
                             </span>
                         )}
                     </button>
                     <NotificationCenter 
                         isOpen={isNotificationCenterOpen} 
                         onClose={() => setNotificationCenterOpen(false)}
-                        notifications={notifications}
+                        notifications={allNotifications}
                     />
                 </div>
-                
-                <div className="group relative">
-                    <button 
-                        onClick={handleHelpClick}
-                        className="w-14 h-14 rounded-full flex items-center justify-center bg-surface/50 hover:bg-surface border border-border/70 transition-all duration-200"
-                        aria-label="Aide et support"
-                    >
-                        <span className="material-symbols-outlined text-text-secondary !text-3xl group-hover:text-primary transition-colors">help_outline</span>
-                    </button>
-                    <span className="tooltip">Aide (Ctrl+H)</span>
-                </div>
-                
                 <div className="group relative">
                     <button 
                         onClick={() => setOrientationModalOpen(true)}
@@ -472,6 +467,16 @@ const DashboardView: React.FC = () => {
                         <span className="material-symbols-outlined text-text-secondary !text-3xl group-hover:text-primary transition-colors">explore</span>
                     </button>
                     <span className="tooltip">Programme (Ctrl+O)</span>
+                </div>
+                <div className="group relative">
+                    <button 
+                        onClick={handleHelpClick}
+                        className="w-14 h-14 rounded-full flex items-center justify-center bg-surface/50 hover:bg-surface border border-border/70 transition-all duration-200"
+                        aria-label="Aide et support"
+                    >
+                        <span className="material-symbols-outlined text-text-secondary !text-3xl group-hover:text-primary transition-colors">help_outline</span>
+                    </button>
+                    <span className="tooltip">Aide (Ctrl+H)</span>
                 </div>
             </div>
 
@@ -554,17 +559,25 @@ const DashboardView: React.FC = () => {
             <div className="sm:hidden fixed bottom-0 left-0 right-0 bg-surface/90 backdrop-blur-sm border-t border-border z-40 shadow-claude">
                 <nav className="flex justify-around items-center h-16">
                     <button
-                        onClick={() => setNotificationCenterOpen(prev => !prev)}
+                        onClick={handleOpenNotifications}
                         className="relative flex-1 flex flex-col items-center justify-center p-2 text-text-secondary hover:text-primary transition-colors"
                         aria-label="Notifications"
                     >
-                         {notifications.length > 0 && (
+                         {unreadNotificationsCount > 0 && (
                             <span className="absolute top-2 right-1/2 translate-x-4 flex h-5 w-5 items-center justify-center rounded-full bg-error text-white text-[10px] font-bold">
-                                {notifications.length}
+                                {unreadNotificationsCount}
                             </span>
                         )}
                         <span className="material-symbols-outlined !text-[28px]">notifications</span>
                         <span className="text-xs font-medium mt-1">Notifications</span>
+                    </button>
+                     <button
+                        onClick={() => setOrientationModalOpen(true)}
+                        className="flex-1 flex flex-col items-center justify-center p-2 text-text-secondary hover:text-primary transition-colors"
+                        aria-label="Programme d'orientation"
+                    >
+                        <span className="material-symbols-outlined !text-[28px]">explore</span>
+                        <span className="text-xs font-medium mt-1">Programme</span>
                     </button>
                     <button
                         onClick={handleHelpClick}
@@ -573,14 +586,6 @@ const DashboardView: React.FC = () => {
                     >
                         <span className="material-symbols-outlined !text-[28px]">help_outline</span>
                         <span className="text-xs font-medium mt-1">Aide</span>
-                    </button>
-                    <button
-                        onClick={() => setOrientationModalOpen(true)}
-                        className="flex-1 flex flex-col items-center justify-center p-2 text-text-secondary hover:text-primary transition-colors"
-                        aria-label="Programme d'orientation"
-                    >
-                        <span className="material-symbols-outlined !text-[28px]">explore</span>
-                        <span className="text-xs font-medium mt-1">Programme</span>
                     </button>
                 </nav>
             </div>
@@ -593,33 +598,7 @@ const DashboardView: React.FC = () => {
                 onClose={() => setOrientationModalOpen(false)} 
                 classId={profile.classId} 
             />
-            
-            {/* Notifications flottantes */}
-            <NotificationToast />
         </>
-    );
-};
-
-// Composant de notifications toast
-const NotificationToast: React.FC = () => {
-    const { notifications } = useNotification();
-    
-    return (
-        <div className="fixed top-8 right-8 z-50 space-y-2">
-            {notifications.map((notif) => (
-                <div
-                    key={notif.id}
-                    className={`claude-card p-4 rounded-xl shadow-lg backdrop-blur-sm
-                        ${notif.type === 'success' ? 'bg-emerald-50/90 border-emerald-200' : ''}
-                        ${notif.type === 'warning' ? 'bg-amber-50/90 border-amber-200' : ''}
-                        ${notif.type === 'error' ? 'bg-red-50/90 border-red-200' : ''}
-                        ${notif.type === 'info' ? 'bg-blue-50/90 border-blue-200' : ''}
-                    `}
-                >
-                    <p className="text-sm serif-text text-text">{notif.message}</p>
-                </div>
-            ))}
-        </div>
     );
 };
 

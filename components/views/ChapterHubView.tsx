@@ -3,7 +3,6 @@ import { useAppState, useAppDispatch } from '../../context/AppContext';
 import { CLASS_OPTIONS } from '../../constants';
 import ConfirmationModal from '../ConfirmationModal';
 import { useNotification } from '../../context/NotificationContext';
-import TypingEffect from '../TypingEffect';
 import { ExportedProgressFile } from '../../types';
 
 type BadgeStatus = 'completed' | 'in-progress' | 'todo' | 'ready' | 'locked';
@@ -49,6 +48,32 @@ const ChapterHubView: React.FC = () => {
     const quiz = chapterProgress?.quiz || { isSubmitted: false, answers: {} };
     const totalExercises = chapter?.exercises?.length || 0;
     const evaluatedExercisesCount = chapterProgress ? Object.keys(chapterProgress.exercisesFeedback || {}).length : 0;
+    const isQuizCompleted = quiz.isSubmitted;
+    const areExercisesEvaluated = evaluatedExercisesCount === totalExercises;
+    const canSubmitWork = isQuizCompleted && areExercisesEvaluated && !chapterProgress?.isWorkSubmitted;
+
+
+    const getQuizStatus = (): { text: string; status: BadgeStatus } => {
+        if (quiz.isSubmitted) return { text: 'Terminé', status: 'completed' };
+        if (Object.keys(quiz.answers).length > 0) return { text: 'En cours', status: 'in-progress' };
+        return { text: 'À commencer', status: 'todo' };
+    };
+
+    const getExercisesStatus = (): { text: string; status: BadgeStatus } => {
+        if (areExercisesEvaluated) return { text: 'Terminé', status: 'completed' };
+        if (evaluatedExercisesCount > 0) return { text: 'En cours', status: 'in-progress' };
+        return { text: 'À commencer', status: 'todo' };
+    };
+
+    const getSubmissionStatus = (): { text: string; status: BadgeStatus } => {
+        if (chapterProgress?.isWorkSubmitted) return { text: 'Travail soumis', status: 'completed' };
+        if (canSubmitWork) return { text: 'Prêt à être soumis', status: 'ready' };
+        return { text: 'Verrouillé', status: 'locked' };
+    };
+
+    const quizStatus = getQuizStatus();
+    const exercisesStatus = getExercisesStatus();
+    const submissionStatus = getSubmissionStatus();
 
     const quizProgressPercent = useMemo(() => {
         if (quiz.isSubmitted) return 100;
@@ -61,6 +86,11 @@ const ChapterHubView: React.FC = () => {
         return (evaluatedExercisesCount / totalExercises) * 100;
     }, [evaluatedExercisesCount, totalExercises]);
 
+    const quizIcon = useMemo(() => {
+        if (quizStatus.status === 'todo') return 'lock_open';
+        return 'quiz';
+    }, [quizStatus.status]);
+
     if (!chapter || !chapterProgress || !profile) {
         return (
             <div className="text-center p-12">
@@ -69,10 +99,6 @@ const ChapterHubView: React.FC = () => {
             </div>
         );
     }
-
-    const isQuizCompleted = quiz.isSubmitted;
-    const areExercisesEvaluated = evaluatedExercisesCount === totalExercises;
-    const canSubmitWork = isQuizCompleted && areExercisesEvaluated && !chapterProgress.isWorkSubmitted;
 
     const handleStartQuiz = () => {
         dispatch({ type: 'CHANGE_VIEW', payload: { view: 'activity', chapterId: chapter.id, subView: 'quiz' } });
@@ -290,34 +316,6 @@ ${exercisesSelfAssessment.feedback.map((ex: any) =>
         });
     };
     
-    const getQuizStatus = (): { text: string; status: BadgeStatus } => {
-        if (quiz.isSubmitted) return { text: 'Terminé', status: 'completed' };
-        if (Object.keys(quiz.answers).length > 0) return { text: 'En cours', status: 'in-progress' };
-        return { text: 'À commencer', status: 'todo' };
-    };
-
-    const getExercisesStatus = (): { text: string; status: BadgeStatus } => {
-        if (areExercisesEvaluated) return { text: 'Terminé', status: 'completed' };
-        if (evaluatedExercisesCount > 0) return { text: 'En cours', status: 'in-progress' };
-        return { text: 'À commencer', status: 'todo' };
-    };
-
-    const getSubmissionStatus = (): { text: string; status: BadgeStatus } => {
-        if (chapterProgress.isWorkSubmitted) return { text: 'Travail soumis', status: 'completed' };
-        if (canSubmitWork) return { text: 'Prêt à être soumis', status: 'ready' };
-        return { text: 'Verrouillé', status: 'locked' };
-    };
-
-    const quizStatus = getQuizStatus();
-    const exercisesStatus = getExercisesStatus();
-    const submissionStatus = getSubmissionStatus();
-    const isSubmissionUnlocked = canSubmitWork || chapterProgress.isWorkSubmitted;
-
-    const quizIcon = useMemo(() => {
-        if (quizStatus.status === 'todo') return 'lock_open';
-        return 'quiz';
-    }, [quizStatus.status]);
-    
     const getStatusBadge = (status: BadgeStatus, text: string) => {
         const styles: Record<BadgeStatus, string> = {
             completed: 'px-2.5 py-1 text-xs font-semibold rounded-full bg-success/10 text-success',
@@ -328,6 +326,8 @@ ${exercisesSelfAssessment.feedback.map((ex: any) =>
         };
         return <span className={`${styles[status]}`}>{text}</span>;
     };
+
+    const isSubmissionUnlocked = canSubmitWork || chapterProgress.isWorkSubmitted;
 
     return (
         <div className="max-w-4xl mx-auto animate-fadeIn">

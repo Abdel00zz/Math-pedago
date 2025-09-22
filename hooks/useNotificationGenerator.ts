@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { AppState } from '../types';
 
 export interface UINotification {
+    id: string;
     title: string;
     message: string;
 }
@@ -20,6 +21,7 @@ export const useNotificationGenerator = (state: AppState): UINotification[] => {
 
         // 1. Welcome message
         notifications.push({
+            id: 'welcome',
             title: `Bienvenue, ${profile.name} !`,
             message: 'Prêt à relever de nouveaux défis aujourd\'hui ?'
         });
@@ -32,6 +34,7 @@ export const useNotificationGenerator = (state: AppState): UINotification[] => {
 
         if (firstToDoChapter) {
             notifications.push({
+                id: `new-chapter-${firstToDoChapter.id}`,
                 title: 'Nouveau chapitre disponible !',
                 message: `Un nouveau défi vous attend. Le chapitre "<b>${firstToDoChapter.chapter}</b>" est prêt à être exploré.`
             });
@@ -49,6 +52,7 @@ export const useNotificationGenerator = (state: AppState): UINotification[] => {
                 
                 if (upcomingSession) {
                     notifications.push({
+                        id: `session-reminder-${chapter.id}-${upcomingSession.toISOString()}`,
                         title: 'Séance en direct imminente',
                         message: `Préparez-vous ! Votre séance pour "<b>${chapter.chapter}</b>" commence dans moins de ${SESSION_REMINDER_HOURS} heures.`
                     });
@@ -63,6 +67,7 @@ export const useNotificationGenerator = (state: AppState): UINotification[] => {
 
             if (allActiveQuizzesDone) {
                 notifications.push({
+                    id: 'all-active-quizzes-done',
                     title: 'Quiz terminés !',
                     message: 'Bravo ! Vous avez terminé les quiz pour tous les chapitres actifs. Continuez avec les exercices pour maîtriser les sujets !'
                 });
