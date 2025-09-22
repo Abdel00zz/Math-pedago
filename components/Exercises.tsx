@@ -78,7 +78,7 @@ const Exercises: React.FC = () => {
     };
 
     const renderSubQuestions = (subQuestions: SubQuestion[] | undefined) => (
-        <ol className="list-decimal pl-5 mt-4 space-y-2 antique-list text-text-secondary">
+        <ol className="list-decimal pl-5 mt-4 space-y-2 antique-list text-text-secondary serif-text">
             {subQuestions?.map((sq, index) => (
                 <li key={index}><MathJax dynamic>{sq.text}</MathJax></li>
             ))}
@@ -96,7 +96,7 @@ const Exercises: React.FC = () => {
                                 <span className="material-symbols-outlined text-base">lightbulb</span> Afficher l'indice {index + 1}
                             </button>
                         ) : (
-                            <div className="p-3 bg-background rounded-md border border-border">
+                            <div className="p-3 bg-background rounded-md border border-border serif-text">
                                 <MathJax dynamic>{hint.text}</MathJax>
                                 {hint.sub_questions && renderSubQuestions(hint.sub_questions)}
                             </div>
@@ -111,8 +111,8 @@ const Exercises: React.FC = () => {
         <div className="space-y-4 pb-24">
             {chapter.exercises.map(exercise => (
                 <div key={exercise.id} className="bg-surface p-6 rounded-lg border border-border">
-                    <h3 className="text-xl font-semibold text-text">{exercise.title}</h3>
-                    <div className="mt-4 text-text-secondary">
+                    <h3 className="text-2xl antique-title text-text">{exercise.title}</h3>
+                    <div className="mt-4 text-text-secondary serif-text">
                         <MathJax dynamic>{exercise.statement}</MathJax>
                     </div>
                     
@@ -120,7 +120,7 @@ const Exercises: React.FC = () => {
                     {exercise.hint && renderHints(exercise.id, exercise.hint)}
 
                     <div className="mt-6 border-t border-border pt-4">
-                        <p className="text-sm font-semibold text-text mb-3">Comment vous êtes-vous senti face à cet exercice ?</p>
+                        <p className="text-sm font-semibold text-text mb-3 serif-text">Comment vous êtes-vous senti face à cet exercice ?</p>
                         <div className="flex flex-col sm:flex-row gap-2">
                            {(['Facile', 'Moyen', 'Difficile', 'Non traité'] as Feedback[]).map(f => (
                                 <FeedbackButton 

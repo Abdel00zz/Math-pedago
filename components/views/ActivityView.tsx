@@ -1,4 +1,5 @@
 
+
 import React from 'react';
 import { useAppState, useAppDispatch } from '../../context/AppContext';
 import Quiz from '../Quiz';
@@ -27,8 +28,8 @@ const ActivityView: React.FC = () => {
                     <span className="material-symbols-outlined">arrow_back</span>
                 </button>
                 <div className="text-center">
-                    <h1 className="text-3xl font-bold text-text font-title">{subViewTitle}</h1>
-                    <p className="text-secondary">{chapter.chapter}</p>
+                    <h1 className="text-5xl font-playfair text-text">{subViewTitle}</h1>
+                    <p className="text-primary text-xl font-garamond italic mt-1">{chapter.chapter}</p>
                 </div>
             </header>
 

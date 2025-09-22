@@ -66,15 +66,15 @@ const Quiz: React.FC = () => {
             <div className="bg-surface p-6 rounded-lg border border-border">
                 {isSubmitted && !isReviewMode && (
                      <div className="text-center mb-8 p-6 bg-background rounded-lg">
-                        <h2 className="text-2xl font-bold text-text">Quiz terminé !</h2>
-                        <p className="text-secondary mt-2">Votre score est de :</p>
+                        <h2 className="text-2xl antique-title text-text">Quiz terminé !</h2>
+                        <p className="text-secondary mt-2 serif-text">Votre score est de :</p>
                         <p className={`text-4xl sm:text-5xl font-bold my-2 ${isPerfectScore ? 'text-success' : 'text-primary'}`}>
                             {score} / {chapter.quiz.length}
                         </p>
                         <div className="mt-6 flex flex-col sm:flex-row-reverse justify-center items-center gap-3">
                             <button 
                                 onClick={() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'activity', chapterId: currentChapterId, subView: 'exercises' } })}
-                                className="font-button w-full sm:w-auto px-6 py-3 font-semibold text-white bg-primary rounded-lg hover:bg-primary-hover transition-transform transform hover:-translate-y-px active:scale-95"
+                                className="font-button w-full sm:w-auto px-6 py-3 font-semibold text-white bg-primary rounded-lg hover:bg-primary/90 transition-transform transform hover:-translate-y-px active:scale-95"
                             >
                                 Continuer vers les exercices
                             </button>
@@ -91,7 +91,7 @@ const Quiz: React.FC = () => {
                 {(isReviewMode) && (
                     <>
                         <div className="mb-4 text-sm text-secondary">Question {currentQuestionIndex + 1} sur {chapter.quiz.length}</div>
-                        <h3 className="text-xl font-semibold mb-6 text-text">
+                        <h3 className="text-xl font-serif mb-6 text-text">
                             <MathJax dynamic>{question.question}</MathJax>
                         </h3>
                         <div className="space-y-3">
@@ -112,7 +112,7 @@ const Quiz: React.FC = () => {
                         {explanationText && (
                             <div className="mt-6 p-4 bg-background rounded-lg border border-border">
                                 <p className="font-bold text-text">Explication :</p>
-                                <p className="text-secondary mt-1"><MathJax dynamic>{explanationText}</MathJax></p>
+                                <p className="text-secondary mt-1 serif-text"><MathJax dynamic>{explanationText}</MathJax></p>
                             </div>
                         )}
                         <div className="mt-6 flex justify-between items-center">
@@ -128,7 +128,7 @@ const Quiz: React.FC = () => {
     return (
         <div className="bg-surface p-6 rounded-lg border border-border">
             <div className="mb-4 text-sm text-secondary">Question {currentQuestionIndex + 1} sur {chapter.quiz.length}</div>
-            <h3 className="text-xl font-semibold mb-6 text-text">
+            <h3 className="text-xl font-serif mb-6 text-text">
                 <MathJax dynamic>{question.question}</MathJax>
             </h3>
             <div className="space-y-3">
@@ -149,7 +149,7 @@ const Quiz: React.FC = () => {
             <div className="mt-8 flex justify-between items-center">
                 <button onClick={() => handleNavigate('prev')} disabled={currentQuestionIndex === 0} className="font-button px-4 py-2 font-semibold text-primary rounded-lg hover:bg-primary-light disabled:opacity-50">Précédent</button>
                 {currentQuestionIndex === chapter.quiz.length - 1 ? (
-                    <button onClick={handleSubmit} disabled={!allAnswered} className="font-button px-6 py-3 font-semibold text-white bg-primary rounded-lg hover:bg-primary-hover disabled:bg-primary/50">Soumettre</button>
+                    <button onClick={handleSubmit} disabled={!allAnswered} className="font-button px-6 py-3 font-semibold text-white bg-primary rounded-lg hover:bg-primary/90 disabled:bg-primary/50">Soumettre</button>
                 ) : (
                     <button onClick={() => handleNavigate('next')} disabled={!answers[question.id]} className="font-button px-4 py-2 font-semibold text-primary rounded-lg hover:bg-primary-light disabled:opacity-50">Suivant</button>
                 )}

@@ -1,30 +1,16 @@
 import React, { useMemo, useRef, useEffect, useState, useCallback } from 'react';
 import { useAppState, useAppDispatch } from '../../context/AppContext';
-import { Chapter, ChapterProgress } from '../../types';
+import { Chapter } from '../../types';
 import HelpModal from '../HelpModal';
 import OrientationModal from '../OrientationModal';
 import { CLASS_OPTIONS, DB_KEY } from '../../constants';
 import { useNotification } from '../../context/NotificationContext';
+import ChapterSection from '../ChapterSection';
+import NotificationCenter from '../NotificationCenter';
+import { useNotificationGenerator } from '../../hooks/useNotificationGenerator';
+
 
 // Types pour une meilleure type-safety
-interface ChapterCardProps {
-    chapter: Chapter;
-    progress: ChapterProgress;
-    onSelect: (chapterId: string) => void;
-}
-
-interface SessionStatusProps {
-    dates: string[];
-}
-
-interface StatusInfo {
-    text: string;
-    icon: string;
-    iconClasses: string;
-    textClasses: string;
-    disabled: boolean;
-}
-
 interface CategorizedActivities {
     inProgress: Chapter[];
     completed: Chapter[];
@@ -32,8 +18,6 @@ interface CategorizedActivities {
 }
 
 // Constantes pour éviter les recalculs
-const SESSION_DURATION_MS = 2 * 60 * 60 * 1000; // 2 heures
-const UPDATE_INTERVAL_MS = 60000; // 1 minute
 const HELP_RESET_DELAY_MS = 1500;
 const HELP_CLICKS_TO_RESET = 5;
 
@@ -47,7 +31,7 @@ const customStyles = `
   
   .claude-card {
     background-color: #FFFFFF;
-    border: 1px solid #E2E8F0; /* border */
+    border: 1px solid #E5E5E5; /* border */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
     transition: all 0.3s var(--transition-smooth);
     position: relative;
@@ -55,7 +39,7 @@ const customStyles = `
   }
   
   .claude-card:hover:not(:disabled) {
-    border-color: #CBD5E1; /* border-hover */
+    border-color: #D4D4D4; /* border-hover */
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(0, 0, 0, 0.05);
   }
 
@@ -96,7 +80,7 @@ const customStyles = `
     transform: translateX(-50%);
     margin-top: 8px;
     padding: 6px 12px;
-    background: rgba(30, 41, 59, 0.95); /* text color with opacity */
+    background: rgba(23, 23, 23, 0.95); /* text color with opacity */
     color: white;
     font-size: 12px;
     font-weight: 500;
@@ -115,204 +99,36 @@ const customStyles = `
     left: 50%;
     transform: translateX(-50%);
     border: 4px solid transparent;
-    border-bottom-color: rgba(30, 41, 59, 0.95);
+    border-bottom-color: rgba(23, 23, 23, 0.95);
   }
   
   .group:hover .tooltip {
     opacity: 1;
   }
+
+  @media (min-width: 640px) {
+    .notification-popover-arrow::before,
+    .notification-popover-arrow::after {
+      content: '';
+      position: absolute;
+      bottom: 100%;
+      right: 1.25rem; /* 20px -> ~center of the trigger button */
+      transform: translateX(50%);
+      border-width: 7px;
+      border-style: solid;
+      border-color: transparent;
+    }
+
+    .notification-popover-arrow::before {
+      border-bottom-color: #E5E5E5; /* border color */
+    }
+
+    .notification-popover-arrow::after {
+      margin-bottom: -2px;
+      border-bottom-color: #FFFFFF; /* surface color */
+    }
+  }
 `;
-
-// Composant SessionStatus optimisé avec mémoisation
-const SessionStatus: React.FC<SessionStatusProps> = React.memo(({ dates }) => {
-    const [now, setNow] = useState(() => new Date());
-
-    useEffect(() => {
-        const timer = setInterval(() => setNow(new Date()), UPDATE_INTERVAL_MS);
-        return () => clearInterval(timer);
-    }, []);
-
-    const sessionInfo = useMemo(() => {
-        if (!Array.isArray(dates) || dates.length === 0) {
-            return { status: 'none', text: 'Aucune séance programmée', icon: 'event_busy' };
-        }
-        
-        const parsedDates = dates
-            .map(d => new Date(d))
-            .filter(d => !isNaN(d.getTime()))
-            .sort((a, b) => a.getTime() - b.getTime());
-
-        if (parsedDates.length === 0) {
-            return { status: 'none', text: 'Date invalide', icon: 'error_outline' };
-        }
-
-        // Vérifier si une session est en cours
-        const liveSession = parsedDates.find(date => {
-            const sessionEnd = new Date(date.getTime() + SESSION_DURATION_MS);
-            return now >= date && now <= sessionEnd;
-        });
-
-        if (liveSession) {
-            const timeFormat: Intl.DateTimeFormatOptions = { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris' };
-            const startTimeString = liveSession.toLocaleTimeString('fr-FR', timeFormat).replace(':', 'h');
-            const endTimeString = new Date(liveSession.getTime() + SESSION_DURATION_MS).toLocaleTimeString('fr-FR', timeFormat).replace(':', 'h');
-            return { 
-                status: 'live', 
-                text: `En direct (${startTimeString} - ${endTimeString})`,
-                icon: 'podcasts'
-            };
-        }
-
-        // Trouver la prochaine session
-        const nextSession = parsedDates.find(date => date > now);
-        if (nextSession) {
-            const timeDiff = nextSession.getTime() - now.getTime();
-            const daysUntil = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-            
-            let formattedDate;
-            const timeFormat: Intl.DateTimeFormatOptions = { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris' };
-            const timeString = nextSession.toLocaleTimeString('fr-FR', timeFormat).replace(':', 'h');
-            
-            const tomorrow = new Date(now.getTime() + 24 * 60 * 60 * 1000);
-
-            if (daysUntil === 0 && nextSession.getDate() === now.getDate()) {
-                formattedDate = `Aujourd'hui à ${timeString}`;
-            } else if (daysUntil <= 1 && nextSession.getDate() === tomorrow.getDate()) {
-                 formattedDate = `Demain à ${timeString}`;
-            } else {
-                formattedDate = new Intl.DateTimeFormat('fr-FR', {
-                    weekday: 'long',
-                    day: 'numeric',
-                    month: 'long',
-                    ...timeFormat
-                }).format(nextSession).replace(':', 'h');
-            }
-            
-            return { 
-                status: 'upcoming', 
-                text: `Prochaine séance : ${formattedDate}`,
-                icon: 'update'
-            };
-        }
-
-        // S'il y a des dates, mais qu'elles sont toutes passées
-        if(parsedDates.length > 0) {
-            return { 
-                status: 'past', 
-                text: 'Session terminée', 
-                icon: 'history'
-            };
-        }
-        
-        // Fallback
-        return { status: 'none', text: 'Aucune séance programmée', icon: 'event_busy' };
-
-    }, [dates, now]);
-
-    const statusStyles = {
-        live: 'text-text font-semibold',
-        upcoming: 'text-text-secondary font-medium',
-        past: 'text-text-secondary italic',
-        none: 'text-text-secondary italic',
-    };
-    
-    const currentStyle = statusStyles[sessionInfo.status] || statusStyles.none;
-
-    return (
-        <div className={`flex items-center gap-2 ${currentStyle}`}>
-            {sessionInfo.status === 'live' ? (
-                <span className="relative flex h-3 w-3">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
-                </span>
-            ) : sessionInfo.status === 'upcoming' ? (
-                <span className="w-2 h-2 rounded-full bg-secondary animate-cursorBlink"></span>
-            ) : (
-                <span className="material-symbols-outlined !text-base">{sessionInfo.icon}</span>
-            )}
-            <p className="text-base serif-text">{sessionInfo.text}</p>
-        </div>
-    );
-});
-
-
-// Composant ChapterCard optimisé
-const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress, onSelect }) => {
-    const getStatusInfo = useCallback((): StatusInfo => {
-        if (progress?.isWorkSubmitted) {
-            return {
-                text: 'Terminé',
-                icon: 'check_circle',
-                iconClasses: 'text-text-secondary',
-                textClasses: 'text-text-secondary',
-                disabled: false,
-            };
-        }
-        if (!chapter.isActive) {
-            return {
-                text: 'Bientôt disponible',
-                icon: 'lock',
-                iconClasses: 'text-text-secondary',
-                textClasses: 'text-text-secondary',
-                disabled: true,
-            };
-        }
-        if (progress?.quiz?.isSubmitted || Object.keys(progress?.exercisesFeedback || {}).length > 0) {
-            return {
-                text: 'En cours',
-                icon: 'autorenew',
-                iconClasses: 'text-text',
-                textClasses: 'text-text',
-                disabled: false,
-            };
-        }
-        return {
-            text: 'À faire',
-            icon: 'edit_note',
-            iconClasses: 'text-text-secondary',
-            textClasses: 'text-text-secondary',
-            disabled: false,
-        };
-    }, [chapter.isActive, progress]);
-
-    const { text, icon, iconClasses, textClasses, disabled } = getStatusInfo();
-
-    const handleClick = useCallback(() => {
-        if (!disabled) {
-            onSelect(chapter.id);
-        }
-    }, [disabled, onSelect, chapter.id]);
-
-    return (
-        <button
-            onClick={handleClick}
-            disabled={disabled}
-            className={`claude-card group w-full flex flex-col sm:flex-row justify-between items-start gap-4 p-6 rounded-xl ${
-                disabled ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'
-            }`}
-            aria-label={`Accéder au ${chapter.chapter}`}
-            aria-disabled={disabled}
-        >
-            <div className="flex-1 text-left">
-                <h3 className="text-2xl antique-title text-text mb-1">
-                    {chapter.chapter}
-                </h3>
-                <div className="mt-3">
-                    <SessionStatus dates={chapter.sessionDates} />
-                </div>
-            </div>
-            <div className="flex items-center gap-4 self-start sm:self-center mt-3 sm:mt-0">
-                <div className="flex items-center gap-1.5 font-medium serif-text text-base">
-                    <span className={`material-symbols-outlined !text-xl ${iconClasses}`}>{icon}</span>
-                    <span className={textClasses}>{text}</span>
-                </div>
-                {!disabled && (
-                    <span className="material-symbols-outlined text-border-hover text-2xl">arrow_forward</span>
-                )}
-            </div>
-        </button>
-    );
-});
 
 // Hook personnalisé pour la gestion du thème
 const useThemePreference = () => {
@@ -447,7 +263,10 @@ const DashboardView: React.FC = () => {
     const { profile, activities, progress, chapterOrder } = state;
     const [isHelpModalOpen, setHelpModalOpen] = useState(false);
     const [isOrientationModalOpen, setOrientationModalOpen] = useState(false);
+    const [isNotificationCenterOpen, setNotificationCenterOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(!profile);
+    
+    const notifications = useNotificationGenerator(state);
 
     const { addNotification } = useNotification();
     const helpClickCountRef = useRef(0);
@@ -611,14 +430,35 @@ const DashboardView: React.FC = () => {
         <>
             <style>{customStyles}</style>
 
-            <div className="fixed top-4 right-4 z-40 flex items-center gap-2">
+             {/* Desktop Action Buttons */}
+             <div className="fixed top-4 right-4 z-40 hidden sm:flex items-center gap-3">
+                <div className="group relative">
+                    <button 
+                        onClick={() => setNotificationCenterOpen(prev => !prev)}
+                        className="w-14 h-14 rounded-full flex items-center justify-center bg-surface/50 hover:bg-surface border border-border/70 transition-all duration-200"
+                        aria-label="Notifications"
+                    >
+                        <span className="material-symbols-outlined text-text-secondary !text-3xl group-hover:text-primary transition-colors">notifications</span>
+                        {notifications.length > 0 && (
+                            <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-error text-white text-xs font-bold">
+                                {notifications.length}
+                            </span>
+                        )}
+                    </button>
+                    <NotificationCenter 
+                        isOpen={isNotificationCenterOpen} 
+                        onClose={() => setNotificationCenterOpen(false)}
+                        notifications={notifications}
+                    />
+                </div>
+                
                 <div className="group relative">
                     <button 
                         onClick={handleHelpClick}
-                        className="w-11 h-11 rounded-full flex items-center justify-center bg-surface/50 hover:bg-surface border border-border/70 transition-all duration-200"
+                        className="w-14 h-14 rounded-full flex items-center justify-center bg-surface/50 hover:bg-surface border border-border/70 transition-all duration-200"
                         aria-label="Aide et support"
                     >
-                        <span className="material-symbols-outlined text-text-secondary !text-2xl group-hover:text-primary transition-colors">help_outline</span>
+                        <span className="material-symbols-outlined text-text-secondary !text-3xl group-hover:text-primary transition-colors">help_outline</span>
                     </button>
                     <span className="tooltip">Aide (Ctrl+H)</span>
                 </div>
@@ -626,26 +466,24 @@ const DashboardView: React.FC = () => {
                 <div className="group relative">
                     <button 
                         onClick={() => setOrientationModalOpen(true)}
-                        className="w-11 h-11 rounded-full flex items-center justify-center bg-surface/50 hover:bg-surface border border-border/70 transition-all duration-200"
+                        className="w-14 h-14 rounded-full flex items-center justify-center bg-surface/50 hover:bg-surface border border-border/70 transition-all duration-200"
                         aria-label="Programme d'orientation"
                     >
-                        <span className="material-symbols-outlined text-text-secondary !text-2xl group-hover:text-primary transition-colors">explore</span>
+                        <span className="material-symbols-outlined text-text-secondary !text-3xl group-hover:text-primary transition-colors">explore</span>
                     </button>
                     <span className="tooltip">Programme (Ctrl+O)</span>
                 </div>
             </div>
 
             <div className="min-h-screen bg-background">
-                <div className="max-w-5xl mx-auto p-6">
+                <div className="max-w-5xl mx-auto p-4 sm:p-6 pb-28">
                     {/* Header */}
-                    <header className="mb-12">
-                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+                    <header className="sticky top-0 z-30 bg-background/90 backdrop-blur-md py-6 mb-6 -mx-4 -mt-4 sm:-mx-6 sm:-mt-6 px-4 sm:px-6">
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 max-w-5xl mx-auto">
                             <div>
-                                <h1 className="text-6xl font-playfair mb-2 h-20">
-                                    <span className="opacity-0 animate-futuristicWelcome inline-block" style={{ animationDelay: '100ms' }}>
-                                        {greeting},
-                                    </span>
-                                    <span className="text-text opacity-0 animate-nameReveal inline-block ml-4" style={{ animationDelay: '300ms' }}>
+                                <h1 className="text-4xl sm:text-6xl font-playfair mb-2">
+                                    {greeting},
+                                    <span className="text-text ml-4">
                                         {profile.name}
                                     </span>
                                 </h1>
@@ -662,81 +500,25 @@ const DashboardView: React.FC = () => {
                     {/* Contenu principal */}
                     {hasAnyActivity ? (
                         <div className="space-y-12">
-                            {/* Section En cours */}
-                            {inProgress.length > 0 && (
-                                <section>
-                                    <div className="mb-6">
-                                        <h2 className="text-4xl antique-title text-text">
-                                            Chapitres en cours
-                                            <span className="text-lg font-normal text-text-secondary ml-3">
-                                                ({inProgress.length})
-                                            </span>
-                                        </h2>
-                                    </div>
-                                    <div className="space-y-4">
-                                        {inProgress.map((chapter) => (
-                                            <div key={chapter.id}>
-                                                <ChapterCard 
-                                                    chapter={chapter} 
-                                                    progress={progress[chapter.id]} 
-                                                    onSelect={handleChapterSelect} 
-                                                />
-                                            </div>
-                                        ))}
-                                    </div>
-                                </section>
-                            )}
-
-                            {/* Section Achevés */}
-                            {completed.length > 0 && (
-                                <section>
-                                    <div className="flex items-center gap-3 mb-6">
-                                        <span className="text-text-secondary text-2xl">✓</span>
-                                        <h2 className="text-4xl antique-title text-text">
-                                            Chapitres achevés
-                                            <span className="text-lg font-normal text-text-secondary ml-3">
-                                                ({completed.length})
-                                            </span>
-                                        </h2>
-                                    </div>
-                                    <div className="space-y-4">
-                                        {completed.map((chapter) => (
-                                            <div key={chapter.id}>
-                                                <ChapterCard 
-                                                    chapter={chapter} 
-                                                    progress={progress[chapter.id]} 
-                                                    onSelect={handleChapterSelect} 
-                                                />
-                                            </div>
-                                        ))}
-                                    </div>
-                                </section>
-                            )}
-
-                            {/* Section À venir */}
-                            {upcoming.length > 0 && (
-                                <section>
-                                    <div className="mb-6">
-                                        <h2 className="text-4xl antique-title text-text">
-                                            Chapitres à venir
-                                            <span className="text-lg font-normal text-text-secondary ml-3">
-                                                ({upcoming.length})
-                                            </span>
-                                        </h2>
-                                    </div>
-                                    <div className="space-y-4">
-                                        {upcoming.map((chapter) => (
-                                            <div key={chapter.id}>
-                                                <ChapterCard 
-                                                    chapter={chapter} 
-                                                    progress={progress[chapter.id]} 
-                                                    onSelect={handleChapterSelect} 
-                                                />
-                                            </div>
-                                        ))}
-                                    </div>
-                                </section>
-                            )}
+                            <ChapterSection
+                                title="Chapitres en cours"
+                                chapters={inProgress}
+                                progress={progress}
+                                onSelect={handleChapterSelect}
+                            />
+                             <ChapterSection
+                                title="Chapitres achevés"
+                                chapters={completed}
+                                progress={progress}
+                                onSelect={handleChapterSelect}
+                                icon="✓"
+                            />
+                            <ChapterSection
+                                title="Chapitres à venir"
+                                chapters={upcoming}
+                                progress={progress}
+                                onSelect={handleChapterSelect}
+                            />
                         </div>
                     ) : (
                         <div className="claude-card text-center p-12 rounded-2xl mt-8">
@@ -767,6 +549,42 @@ const DashboardView: React.FC = () => {
                     </footer>
                 </div>
             </div>
+
+            {/* Mobile Bottom Navigation */}
+            <div className="sm:hidden fixed bottom-0 left-0 right-0 bg-surface/90 backdrop-blur-sm border-t border-border z-40 shadow-claude">
+                <nav className="flex justify-around items-center h-16">
+                    <button
+                        onClick={() => setNotificationCenterOpen(prev => !prev)}
+                        className="relative flex-1 flex flex-col items-center justify-center p-2 text-text-secondary hover:text-primary transition-colors"
+                        aria-label="Notifications"
+                    >
+                         {notifications.length > 0 && (
+                            <span className="absolute top-2 right-1/2 translate-x-4 flex h-5 w-5 items-center justify-center rounded-full bg-error text-white text-[10px] font-bold">
+                                {notifications.length}
+                            </span>
+                        )}
+                        <span className="material-symbols-outlined !text-[28px]">notifications</span>
+                        <span className="text-xs font-medium mt-1">Notifications</span>
+                    </button>
+                    <button
+                        onClick={handleHelpClick}
+                        className="flex-1 flex flex-col items-center justify-center p-2 text-text-secondary hover:text-primary transition-colors"
+                        aria-label="Aide et support"
+                    >
+                        <span className="material-symbols-outlined !text-[28px]">help_outline</span>
+                        <span className="text-xs font-medium mt-1">Aide</span>
+                    </button>
+                    <button
+                        onClick={() => setOrientationModalOpen(true)}
+                        className="flex-1 flex flex-col items-center justify-center p-2 text-text-secondary hover:text-primary transition-colors"
+                        aria-label="Programme d'orientation"
+                    >
+                        <span className="material-symbols-outlined !text-[28px]">explore</span>
+                        <span className="text-xs font-medium mt-1">Programme</span>
+                    </button>
+                </nav>
+            </div>
+
 
             {/* Modals */}
             <HelpModal isOpen={isHelpModalOpen} onClose={() => setHelpModalOpen(false)} />

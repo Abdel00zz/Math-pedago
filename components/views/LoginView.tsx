@@ -37,7 +37,7 @@ const LoginView: React.FC = () => {
 
     return (
         <div className="flex flex-col items-center justify-center min-h-[80vh] animate-fadeIn p-4">
-            <div className="w-full max-w-md p-10 space-y-8 bg-surface border-2 border-primary rounded-sm shadow-claude">
+            <div className="w-full max-w-md p-10 space-y-8 bg-surface border-2 border-primary rounded-xl shadow-claude">
                 <div className="text-center">
                     <div className="mx-auto w-44 h-44 flex flex-col items-center justify-center bg-surface border border-border rounded-xl mb-4">
                         <span className="font-brand text-sm tracking-widest text-text-secondary">Le Centre</span>
@@ -97,7 +97,7 @@ const LoginView: React.FC = () => {
                     )}
                     <button
                         type="submit"
-                        className="w-full px-4 py-3 font-serif font-bold tracking-wider uppercase text-sm text-white bg-primary rounded-sm hover:bg-primary/90 transition-colors"
+                        className="w-full px-4 py-3 font-serif font-bold tracking-wider uppercase text-sm text-white bg-primary rounded-lg hover:bg-primary/90 transition-colors"
                     >
                         {hasPreloadedName ? 'Mettre à jour' : 'Commencer maintenant'}
                     </button>

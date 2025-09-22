@@ -312,36 +312,26 @@ ${exercisesSelfAssessment.feedback.map((ex: any) =>
     const exercisesStatus = getExercisesStatus();
     const submissionStatus = getSubmissionStatus();
     const isSubmissionUnlocked = canSubmitWork || chapterProgress.isWorkSubmitted;
+
+    const quizIcon = useMemo(() => {
+        if (quizStatus.status === 'todo') return 'lock_open';
+        return 'quiz';
+    }, [quizStatus.status]);
     
-    const getStatusBadge = (status: BadgeStatus, text: string, isModern: boolean = false) => {
-        const baseStyles: Record<BadgeStatus, string> = {
-            completed: 'bg-success/10 text-success',
-            'in-progress': 'bg-warning/10 text-warning',
-            todo: 'bg-surface border-border text-text-secondary', // Base for todo
-            ready: 'bg-info/10 text-info',
-            locked: 'bg-secondary/10 text-secondary',
+    const getStatusBadge = (status: BadgeStatus, text: string) => {
+        const styles: Record<BadgeStatus, string> = {
+            completed: 'px-2.5 py-1 text-xs font-semibold rounded-full bg-success/10 text-success',
+            'in-progress': 'px-2.5 py-1 text-xs font-semibold rounded-full bg-warning/10 text-warning',
+            todo: 'px-2 py-0.5 text-[11px] font-normal font-garamond rounded border border-border text-text-secondary bg-surface',
+            ready: 'px-2.5 py-1 text-xs font-semibold rounded-full bg-info/10 text-info',
+            locked: 'px-2.5 py-1 text-xs font-semibold rounded-full bg-secondary/10 text-secondary',
         };
-    
-        if (isModern && status === 'todo') {
-            return (
-                <span className="font-button text-xs font-medium text-primary animate-pulse">
-                    {text}
-                </span>
-            );
-        }
-        
-        const regularStyles = 'px-2.5 py-1 text-xs font-semibold rounded-full';
-        
-        if (status === 'todo') {
-            return <span className="px-2 py-0.5 text-[11px] font-normal font-garamond rounded border border-border text-text-secondary bg-surface">{text}</span>
-        }
-    
-        return <span className={`${regularStyles} ${baseStyles[status]}`}>{text}</span>;
+        return <span className={`${styles[status]}`}>{text}</span>;
     };
 
     return (
         <div className="max-w-4xl mx-auto animate-fadeIn">
-            <header className="relative flex items-center justify-center mb-8">
+            <header className="relative flex items-center justify-center mb-12">
                 <button 
                     onClick={() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'dashboard' } })}
                     className="font-button absolute left-0 flex items-center justify-center w-12 h-12 rounded-full text-secondary bg-transparent hover:bg-surface/50 transition-all duration-200 active:scale-95"
@@ -350,49 +340,51 @@ ${exercisesSelfAssessment.feedback.map((ex: any) =>
                     <span className="material-symbols-outlined text-3xl">arrow_back</span>
                 </button>
                 <div className="text-center">
-                    <h1 className="text-3xl font-bold text-gray-600 font-title">
+                    <h1 className="text-5xl font-playfair text-text">
                         Plan de travail
                     </h1>
-                    <p className="text-secondary">{chapter.chapter}</p>
+                    <p className="text-primary text-xl font-garamond italic mt-1">{chapter.chapter}</p>
                 </div>
             </header>
             
             <div className="space-y-6">
                 {/* Étape 1: Quiz */}
-                <div className="bg-surface p-5 rounded-xl border border-border shadow-sm">
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+                <div className="bg-surface p-6 rounded-xl border border-border shadow-sm">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
                         <div className="flex-grow">
                             <div className="flex items-center gap-4">
                                 <span className="flex items-center justify-center w-12 h-12 bg-primary-light text-primary rounded-full font-bold text-xl shrink-0">
-                                    <span className="material-symbols-outlined text-2xl">lock_open</span>
+                                    <span className="material-symbols-outlined text-2xl">{quizIcon}</span>
                                 </span>
                                 <div>
-                                    <h2 className="text-xl font-bold text-text">Étape 1 : Le Quiz</h2>
+                                    <h2 className="text-3xl font-playfair text-text">Étape 1 : Le Quiz</h2>
+                                    <p className="text-secondary mt-1 text-sm max-w-md serif-text">
+                                        {isQuizCompleted ? 'Quiz terminé. Vous pouvez maintenant passer aux exercices.' : 'Vérifiez votre compréhension des concepts clés du chapitre.'}
+                                    </p>
                                 </div>
                             </div>
-                            <p className="text-secondary mt-3 pl-14 text-sm max-w-md">
-                                {isQuizCompleted ? 'Quiz terminé. Vous pouvez maintenant passer aux exercices.' : 'Vérifiez votre compréhension des concepts clés du chapitre.'}
-                            </p>
                         </div>
-                        <div className="w-full sm:w-auto sm:max-w-[240px] flex-shrink-0 flex flex-col gap-3 self-stretch">
-                            <div className="flex-grow flex flex-col justify-center w-full">
-                                <div className="flex items-baseline justify-between w-full mb-1">
-                                    <span className="text-sm font-semibold text-text-secondary">{isQuizCompleted ? 'Score' : 'Progression'}</span>
-                                    {isQuizCompleted 
-                                        ? <span className="font-bold text-lg text-primary">{quiz.score}/{chapter.quiz.length}</span> 
-                                        : getStatusBadge(quizStatus.status, quizStatus.text, true)}
+                        <div className="w-full sm:w-auto sm:max-w-[240px] flex-shrink-0 flex flex-col items-end gap-4">
+                            {quizStatus.status !== 'todo' && (
+                                <div className="w-full">
+                                    <div className="flex items-baseline justify-between w-full mb-1">
+                                        <span className="text-sm font-semibold text-text-secondary">{isQuizCompleted ? 'Score' : 'Progression'}</span>
+                                        {isQuizCompleted 
+                                            ? <span className="font-bold text-lg text-primary">{quiz.score}/{chapter.quiz.length}</span> 
+                                            : getStatusBadge(quizStatus.status, quizStatus.text)}
+                                    </div>
+                                    <div className="w-full bg-border/50 rounded-full h-3">
+                                        <div className={`h-3 rounded-full transition-all duration-500 ${isQuizCompleted ? 'bg-success' : 'bg-primary'}`} style={{ width: `${quizProgressPercent}%` }} />
+                                    </div>
                                 </div>
-                                <div className="w-full bg-border/50 rounded-full h-3">
-                                    <div className={`h-3 rounded-full transition-all duration-500 ${isQuizCompleted ? 'bg-success' : 'bg-primary'}`} style={{ width: `${quizProgressPercent}%` }} />
-                                </div>
-                            </div>
-                             <div className="w-full sm:w-auto">
+                            )}
+                             <div className="w-full">
                                 {isQuizCompleted ? (
                                     <button onClick={handleReviewQuiz} className="font-button w-full px-6 py-2 font-semibold text-primary bg-primary-light border border-primary/20 rounded-lg hover:bg-primary/20 transition-colors">
                                         Revoir le Quiz
                                     </button>
                                 ) : (
-                                    <button onClick={handleStartQuiz} className="font-button w-full px-6 py-2 font-semibold text-white bg-primary rounded-lg hover:bg-primary-hover transition-transform transform hover:-translate-y-px active:scale-95">
+                                    <button onClick={handleStartQuiz} className="font-button w-full px-6 py-2 font-semibold text-white bg-primary rounded-lg hover:bg-primary/90 transition-transform transform hover:-translate-y-px active:scale-95">
                                         {Object.keys(quiz.answers).length > 0 ? 'Continuer le Quiz' : 'Commencer le Quiz'}
                                     </button>
                                 )}
@@ -402,32 +394,34 @@ ${exercisesSelfAssessment.feedback.map((ex: any) =>
                 </div>
 
                 {/* Étape 2: Exercices */}
-                <div className={`bg-surface p-5 rounded-xl border border-border shadow-sm transition-opacity ${!isQuizCompleted && 'opacity-60'}`}>
-                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+                <div className={`bg-surface p-6 rounded-xl border border-border shadow-sm transition-opacity ${!isQuizCompleted && 'opacity-60'}`}>
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
                         <div className="flex-grow">
-                            <div className="flex items-center gap-4">
+                             <div className="flex items-center gap-4">
                                 <span className="flex items-center justify-center w-12 h-12 bg-primary-light text-primary rounded-full font-bold text-xl shrink-0">
-                                    <span className="material-symbols-outlined text-2xl">{isQuizCompleted ? 'lock_open' : 'lock'}</span>
+                                    <span className="material-symbols-outlined text-2xl">{isQuizCompleted ? 'draw' : 'lock'}</span>
                                 </span>
                                 <div>
-                                    <h2 className="text-xl font-bold text-text">Étape 2 : Les Exercices</h2>
+                                    <h2 className="text-3xl font-playfair text-text">Étape 2 : Les Exercices</h2>
+                                    <p className="text-secondary mt-1 text-sm max-w-md serif-text">
+                                        {areExercisesEvaluated ? 'Tous les exercices ont été auto-évalués.' : 'Mettez en pratique vos connaissances et évaluez votre maîtrise.'}
+                                    </p>
                                 </div>
                             </div>
-                             <p className="text-secondary mt-3 pl-14 text-sm max-w-md">
-                                {areExercisesEvaluated ? 'Tous les exercices ont été auto-évalués.' : 'Mettez en pratique vos connaissances et évaluez votre maîtrise.'}
-                            </p>
                         </div>
-                        <div className="w-full sm:w-auto sm:max-w-[240px] flex-shrink-0 flex flex-col gap-3 self-stretch">
-                            <div className="flex-grow flex flex-col justify-center w-full">
-                                <div className="flex items-baseline justify-between w-full mb-1">
-                                    <span className="text-sm font-semibold text-text-secondary">Progression</span>
-                                    {getStatusBadge(exercisesStatus.status, `${evaluatedExercisesCount}/${totalExercises}`)}
+                         <div className="w-full sm:w-auto sm:max-w-[240px] flex-shrink-0 flex flex-col items-end gap-4">
+                            {exercisesStatus.status !== 'todo' && (
+                                <div className="w-full">
+                                    <div className="flex items-baseline justify-between w-full mb-1">
+                                        <span className="text-sm font-semibold text-text-secondary">Progression</span>
+                                        {getStatusBadge(exercisesStatus.status, `${evaluatedExercisesCount}/${totalExercises}`)}
+                                    </div>
+                                    <div className="w-full bg-border/50 rounded-full h-3">
+                                        <div className={`h-3 rounded-full transition-all duration-500 ${areExercisesEvaluated ? 'bg-success' : 'bg-primary'}`} style={{ width: `${exercisesProgressPercent}%` }} />
+                                    </div>
                                 </div>
-                                <div className="w-full bg-border/50 rounded-full h-3">
-                                    <div className={`h-3 rounded-full transition-all duration-500 ${areExercisesEvaluated ? 'bg-success' : 'bg-primary'}`} style={{ width: `${exercisesProgressPercent}%` }} />
-                                </div>
-                            </div>
-                             <div className="w-full sm:w-auto">
+                            )}
+                             <div className="w-full">
                                 <button 
                                     onClick={handleStartExercises} 
                                     disabled={!isQuizCompleted || chapterProgress.isWorkSubmitted} 
@@ -441,29 +435,29 @@ ${exercisesSelfAssessment.feedback.map((ex: any) =>
                 </div>
                 
                 {/* Étape 3: Soumission */}
-                <div className={`bg-surface p-5 rounded-xl border border-border shadow-sm transition-opacity ${!isSubmissionUnlocked && 'opacity-60'}`}>
-                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+                <div className={`bg-surface p-6 rounded-xl border border-border shadow-sm transition-opacity ${!isSubmissionUnlocked && 'opacity-60'}`}>
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
                         <div className="flex-grow">
-                            <div className="flex items-center gap-4">
+                             <div className="flex items-center gap-4">
                                <span className="flex items-center justify-center w-12 h-12 bg-primary-light text-primary rounded-full font-bold text-xl shrink-0">
-                                    <span className="material-symbols-outlined text-2xl">{isSubmissionUnlocked ? 'lock_open' : 'lock'}</span>
+                                    <span className="material-symbols-outlined text-2xl">{isSubmissionUnlocked ? 'task_alt' : 'lock'}</span>
                                 </span>
                                 <div>
-                                    <h2 className="text-xl font-bold text-text">Étape 3 : Soumission</h2>
+                                    <h2 className="text-3xl font-playfair text-text">Étape 3 : Soumission</h2>
+                                     <p className="text-secondary mt-1 text-sm max-w-md serif-text">
+                                        {chapterProgress.isWorkSubmitted ? 'Excellent travail ! Votre progression a été enregistrée et envoyée.' : 'Une fois les étapes 1 et 2 terminées, vous pourrez envoyer votre travail.'}
+                                     </p>
                                 </div>
                             </div>
-                             <p className="text-secondary mt-3 pl-14 text-sm max-w-md">
-                                {chapterProgress.isWorkSubmitted ? 'Excellent travail ! Votre progression a été enregistrée et envoyée.' : 'Une fois les étapes 1 et 2 terminées, vous pourrez envoyer votre travail.'}
-                             </p>
                         </div>
-                        <div className="w-full sm:w-auto sm:max-w-[240px] flex-shrink-0 flex flex-col items-end gap-3 self-stretch">
-                            <div className="flex-grow flex flex-col items-end justify-center w-full">
+                        <div className="w-full sm:w-auto sm:max-w-[240px] flex-shrink-0 flex flex-col items-end gap-3">
+                           <div className="w-full">
                                <div className="flex items-center justify-between w-full">
                                     <span className="text-sm font-semibold text-text-secondary">Statut</span>
                                     {getStatusBadge(submissionStatus.status, submissionStatus.text)}
                                 </div>
                             </div>
-                             <div className="w-full sm:w-auto">
+                             <div className="w-full">
                                 {chapterProgress.isWorkSubmitted ? (
                                     <div className="flex items-center justify-center gap-2 w-full px-6 py-2 rounded-lg font-semibold bg-success/10 text-success">
                                         <span className="material-symbols-outlined text-xl">check_circle</span>
@@ -474,7 +468,7 @@ ${exercisesSelfAssessment.feedback.map((ex: any) =>
                                         <button
                                             onClick={() => setConfirmationModalOpen(true)}
                                             disabled={!canSubmitWork || isSubmitting}
-                                            className="font-button w-full px-8 py-3 font-bold text-white bg-primary rounded-lg hover:bg-primary-hover transition-all duration-200 transform hover:scale-105 active:scale-95 disabled:bg-secondary/50 disabled:cursor-not-allowed disabled:transform-none"
+                                            className="font-button w-full px-8 py-3 font-bold text-white bg-primary rounded-lg hover:bg-primary/90 transition-all duration-200 transform hover:scale-105 active:scale-95 disabled:bg-secondary/50 disabled:cursor-not-allowed disabled:transform-none"
                                         >
                                             {isSubmitting ? (
                                                 <span className="flex items-center justify-center gap-2">
