@@ -7,9 +7,16 @@
       "id": "q_rotation_1",
       "question": "L'image d'un cercle par une rotation est :",
       "options": [
-        { "text": "Un cercle de même centre et de même rayon", "isCorrect": true },
-        { "text": "Un cercle de même rayon mais de centre différent" },
-        { "text": "Une ellipse" }
+        {
+          "text": "Un cercle de même centre et de même rayon",
+          "isCorrect": true
+        },
+        {
+          "text": "Un cercle de même rayon mais de centre différent"
+        },
+        {
+          "text": "Une ellipse"
+        }
       ],
       "explanation": "La rotation est une isométrie, elle conserve les distances. L'image d'un cercle est donc un cercle de même rayon. Le centre du nouveau cercle est l'image du centre de l'ancien cercle par la rotation."
     }
@@ -20,5 +27,6 @@
       "title": "Image d'un point",
       "statement": "Dans le plan muni d'un repère orthonormé, on considère le point $A(2,0)$. Déterminer les coordonnées du point $A'$ image de A par la rotation de centre O et d'angle $\\frac{\\pi}{2}$."
     }
-  ]
+  ],
+  "version": "52b8be3cf2d6e3a24c9c269346e979b2"
 }

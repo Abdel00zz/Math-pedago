@@ -7,9 +7,16 @@
       "id": "q_tcs_polynomes_1",
       "question": "Quel est le degré du polynôme $P(x) = 3x^4 - 2x^5 + 7$ ?",
       "options": [
-        { "text": "4" },
-        { "text": "5", "isCorrect": true },
-        { "text": "7" }
+        {
+          "text": "4"
+        },
+        {
+          "text": "5",
+          "isCorrect": true
+        },
+        {
+          "text": "7"
+        }
       ],
       "explanation": "Le degré d'un polynôme est la plus grande puissance de la variable x. Ici, c'est 5."
     }
@@ -20,5 +27,6 @@
       "title": "Racine d'un polynôme",
       "statement": "Vérifier si $x=2$ est une racine du polynôme $Q(x) = x^3 - x^2 - 4$."
     }
-  ]
+  ],
+  "version": "28f6f62dd88df1bef1bd2969dfcd9fc0"
 }

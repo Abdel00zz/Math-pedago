@@ -7,9 +7,16 @@
       "id": "q_2bse_integral_1",
       "question": "Une primitive de $f(x) = x^3$ est :",
       "options": [
-        { "text": "$3x^2$" },
-        { "text": "$\\frac{x^4}{4}$", "isCorrect": true },
-        { "text": "$x^4$" }
+        {
+          "text": "$3x^2$"
+        },
+        {
+          "text": "$\\frac{x^4}{4}$",
+          "isCorrect": true
+        },
+        {
+          "text": "$x^4$"
+        }
       ],
       "explanation": "Une primitive de $x^n$ est $\\frac{x^{n+1}}{n+1}$. Pour $n=3$, on obtient $\\frac{x^4}{4}$."
     }
@@ -20,5 +27,6 @@
       "title": "Calcul d'intégrale",
       "statement": "Calculer l'intégrale suivante : $\\int_0^1 (2x+1) dx$."
     }
-  ]
+  ],
+  "version": "a4826726b52ebad37bb6c5625a4c40a2"
 }

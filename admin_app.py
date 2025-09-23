@@ -1,1029 +1,1113 @@
-
 import sys
 import json
 import os
+import re
+import shutil
 from pathlib import Path
-from typing import Dict, List, Optional
-from PyQt6.QtWidgets import (
-    QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
-    QLabel, QPushButton, QFileDialog, QScrollArea, QFrame,
-    QCheckBox, QGroupBox, QMessageBox, QTextEdit, QSplitter,
-    QTabWidget, QTableWidget, QTableWidgetItem, QHeaderView,
-    QProgressBar, QStatusBar, QToolBar, QMenuBar, QMenu,
-    QDialog, QLineEdit, QComboBox, QFormLayout, QDialogButtonBox
-)
-from PyQt6.QtCore import Qt, QThread, pyqtSignal, QTimer, QSize
-from PyQt6.QtGui import (
-    QIcon, QFont, QPixmap, QPalette, QColor, QAction
-)
+from typing import Dict, List, Optional, Any
+from datetime import datetime
+from dataclasses import dataclass, field, asdict
+from PyQt6.QtWidgets import *
+from PyQt6.QtCore import *
+from PyQt6.QtGui import *
 
 
-class ChapterData:
-    """Classe pour représenter les données d'un chapitre"""
-    def __init__(self, id: str, file: str, is_active: bool, class_type: str, chapter: str = ""):
-        self.id = id
-        self.file = file
-        self.is_active = is_active
-        self.class_type = class_type
-        self.chapter = chapter
-        self.session_date = ""
-        self.quiz_count = 0
-        self.exercise_count = 0
+@dataclass
+class QuizQuestion:
+    """Question de quiz"""
+    question: str = ""
+    options: List[str] = field(default_factory=list)
+    correct_answer: int = 0
+    explanation: str = ""
+    
+    @classmethod
+    def from_dict(cls, data: dict):
+        """
+        Méthode intelligente qui charge les données depuis le nouveau format JSON.
+        """
+        question_text = data.get('question', '')
+        explanation_text = ""
+        
+        options_data = data.get('options', [])
+        parsed_options = []
+        correct_answer_index = 0
+        
+        # On parcourt la liste de dictionnaires pour extraire les données
+        for i, option_dict in enumerate(options_data):
+            # On ajoute le texte de l'option à notre liste
+            parsed_options.append(option_dict.get('text', ''))
+            
+            # Si cette option est la bonne réponse
+            if option_dict.get('isCorrect', False):
+                correct_answer_index = i
+                # On récupère l'explication associée à la bonne réponse
+                explanation_text = option_dict.get('explanation', '')
 
-    def to_dict(self) -> Dict:
+        return cls(
+            question=question_text,
+            options=parsed_options,
+            correct_answer=correct_answer_index,
+            explanation=explanation_text
+        )
+    
+    def to_dict(self):
+        # Cette méthode sauvegarde dans le format simple utilisé par l'éditeur
         return {
-            "id": self.id,
-            "file": self.file,
-            "isActive": self.is_active
+            'question': self.question,
+            'options': self.options,
+            'correctAnswer': self.correct_answer,
+            'explanation': self.explanation
         }
 
 
-class FileProcessor(QThread):
-    """Thread pour traiter les fichiers en arrière-plan"""
-    progress = pyqtSignal(int)
-    finished = pyqtSignal(dict)
-    error = pyqtSignal(str)
-
-    def __init__(self, files: List[str]):
-        super().__init__()
-        self.files = files
-
-    def run(self):
-        try:
-            chapters_data = {}
-            total_files = len(self.files)
-            
-            for i, file_path in enumerate(self.files):
-                with open(file_path, 'r', encoding='utf-8') as f:
-                    content = json.load(f)
-                
-                if 'class' in content and 'chapter' in content:
-                    chapter_id = self.get_chapter_id(content['chapter'])
-                    file_name = os.path.basename(file_path)
-                    
-                    chapter = ChapterData(
-                        id=chapter_id,
-                        file=file_name,
-                        is_active=False,
-                        class_type=content['class'],
-                        chapter=content['chapter']
-                    )
-                    
-                    if 'sessionDate' in content:
-                        chapter.session_date = content['sessionDate']
-                    if 'quiz' in content:
-                        chapter.quiz_count = len(content['quiz'])
-                    if 'exercises' in content:
-                        chapter.exercise_count = len(content['exercises'])
-                    
-                    chapters_data[chapter_id] = chapter
-                
-                progress_value = int((i + 1) / total_files * 100)
-                self.progress.emit(progress_value)
-            
-            self.finished.emit(chapters_data)
-        except Exception as e:
-            self.error.emit(str(e))
-
-    @staticmethod
-    def get_chapter_id(name: str) -> str:
-        """Génère un ID de chapitre à partir du nom"""
-        import re
-        return re.sub(r'[^a-z0-9]+', '-', name.lower()).strip('-')
-
-
-class ChapterEditDialog(QDialog):
-    """Dialogue d'édition d'un chapitre"""
+@dataclass
+class Exercise:
+    """Exercice sans notion de difficulté ni de solution"""
+    title: str = ""
+    description: str = ""
     
-    def __init__(self, chapter: ChapterData, chapters_dir: str, parent=None):
-        super().__init__(parent)
-        self.chapter = chapter
-        self.chapters_dir = chapters_dir
-        self.original_data = None
-        self.setup_ui()
-        self.load_chapter_data()
-    
-    def setup_ui(self):
-        self.setWindowTitle(f"Éditer le chapitre: {self.chapter.chapter}")
-        self.setModal(True)
-        self.resize(500, 400)
+    @classmethod
+    def from_dict(cls, data: dict):
+        """
+        Méthode intelligente qui charge les données depuis le nouveau format JSON pour les exercices.
+        """
+        title = data.get('title', '')
         
-        layout = QVBoxLayout(self)
+        # On combine l'énoncé principal et les sous-questions en une seule description
+        statement = data.get('statement', '')
+        sub_questions = data.get('sub_questions', [])
         
-        # Formulaire d'édition
-        form_layout = QFormLayout()
-        
-        # Nom du chapitre
-        self.chapter_name_edit = QLineEdit()
-        self.chapter_name_edit.setPlaceholderText("Nom du chapitre")
-        form_layout.addRow("Nom du chapitre:", self.chapter_name_edit)
-        
-        # Classe
-        self.class_combo = QComboBox()
-        self.class_combo.addItems(["tcs", "1bse", "1bsm", "2bse", "2bsm", "2beco"])
-        self.class_combo.setCurrentText(self.chapter.class_type)
-        form_layout.addRow("Classe:", self.class_combo)
-        
-        # Date de session
-        self.session_date_edit = QLineEdit()
-        self.session_date_edit.setPlaceholderText("Date de session (ex: 15 Dec 2024)")
-        form_layout.addRow("Date de session:", self.session_date_edit)
-        
-        # ID (lecture seule)
-        self.id_label = QLabel(self.chapter.id)
-        self.id_label.setStyleSheet("color: #6c757d; font-family: monospace;")
-        form_layout.addRow("ID (auto):", self.id_label)
-        
-        # Nom du fichier (lecture seule)
-        self.file_label = QLabel(self.chapter.file)
-        self.file_label.setStyleSheet("color: #6c757d; font-family: monospace;")
-        form_layout.addRow("Fichier:", self.file_label)
-        
-        layout.addLayout(form_layout)
-        
-        # Zone d'informations
-        info_label = QLabel("ℹ️ Les modifications seront sauvegardées directement dans le fichier JSON du chapitre.")
-        info_label.setWordWrap(True)
-        info_label.setStyleSheet("background-color: #e3f2fd; padding: 10px; border-radius: 5px; color: #1565c0;")
-        layout.addWidget(info_label)
-        
-        # Boutons
-        button_box = QDialogButtonBox(
-            QDialogButtonBox.StandardButton.Save | 
-            QDialogButtonBox.StandardButton.Cancel
+        full_description = statement
+        if sub_questions:
+            # On ajoute un peu de mise en forme pour la lisibilité
+            full_description += "\n\n"
+            for i, sq in enumerate(sub_questions):
+                full_description += f"{i+1}. {sq.get('text', '')}\n"
+
+        return cls(
+            title=title,
+            description=full_description.strip(),
         )
-        button_box.accepted.connect(self.save_changes)
-        button_box.rejected.connect(self.reject)
-        layout.addWidget(button_box)
     
-    def load_chapter_data(self):
-        """Charge les données actuelles du chapitre"""
-        chapter_file_path = os.path.join(self.chapters_dir, self.chapter.file)
-        if os.path.exists(chapter_file_path):
-            try:
-                with open(chapter_file_path, 'r', encoding='utf-8') as f:
-                    self.original_data = json.load(f)
-                
-                # Remplir les champs
-                self.chapter_name_edit.setText(self.original_data.get('chapter', ''))
-                self.class_combo.setCurrentText(self.original_data.get('class', self.chapter.class_type))
-                self.session_date_edit.setText(self.original_data.get('sessionDate', ''))
-                
-            except Exception as e:
-                QMessageBox.warning(self, "Erreur", f"Impossible de charger les données du chapitre:\n{str(e)}")
-        else:
-            QMessageBox.warning(self, "Fichier non trouvé", f"Le fichier {self.chapter.file} n'existe pas.")
-    
-    def save_changes(self):
-        """Sauvegarde les modifications"""
-        if not self.original_data:
-            QMessageBox.warning(self, "Erreur", "Aucune donnée originale disponible.")
-            return
+    def to_dict(self):
+        return {
+            'title': self.title,
+            'description': self.description,
+        }
+
+
+class ChapterData:
+    """Modèle complet d'un chapitre"""
+    def __init__(self, file_path: str = None):
+        self.file_path = file_path
+        self.id = ""
+        self.file_name = ""
+        self.is_active = False
+        self.class_type = ""
+        self.chapter_name = ""
+        self.session_dates = []
+        self.quiz_questions = []
+        self.exercises = []
+        self.raw_data = {}
         
+    def load_from_manifest(self, data: dict, class_type: str):
+        """Charge depuis le manifest"""
+        self.id = data.get('id', '')
+        self.file_name = data.get('file', '')
+        self.is_active = data.get('isActive', False)
+        self.class_type = class_type
+        
+    def load_from_file(self, file_path: str):
+        """Charge le contenu complet depuis le fichier"""
+        self.file_path = file_path
+        try:
+            with open(file_path, 'r', encoding='utf-8') as f:
+                self.raw_data = json.load(f)
+                
+            self.chapter_name = self.raw_data.get('chapter', '')
+            self.class_type = self.raw_data.get('class', self.class_type)
+            
+            # Dates
+            if 'sessionDates' in self.raw_data:
+                self.session_dates = self.raw_data['sessionDates']
+            elif 'sessionDate' in self.raw_data:
+                self.session_dates = [self.raw_data['sessionDate']]
+            else:
+                self.session_dates = []
+                
+            # Quiz
+            self.quiz_questions = []
+            for q_data in self.raw_data.get('quiz', []):
+                self.quiz_questions.append(QuizQuestion.from_dict(q_data))
+                
+            # Exercices
+            self.exercises = []
+            for e_data in self.raw_data.get('exercises', []):
+                self.exercises.append(Exercise.from_dict(e_data))
+                
+            return True
+        except Exception as e:
+            print(f"Erreur chargement {file_path}: {e}")
+            return False
+    
+    def save_to_file(self):
+        """Sauvegarde dans le fichier"""
+        if not self.file_path:
+            return False
+            
         try:
             # Mettre à jour les données
-            new_chapter_name = self.chapter_name_edit.text().strip()
-            new_class = self.class_combo.currentText()
-            new_session_date = self.session_date_edit.text().strip()
+            self.raw_data['chapter'] = self.chapter_name
+            self.raw_data['class'] = self.class_type
             
-            if not new_chapter_name:
-                QMessageBox.warning(self, "Erreur", "Le nom du chapitre ne peut pas être vide.")
-                return
+            # Dates
+            if len(self.session_dates) > 1:
+                self.raw_data['sessionDates'] = self.session_dates
+                self.raw_data.pop('sessionDate', None)
+            elif self.session_dates:
+                self.raw_data['sessionDate'] = self.session_dates[0]
+                self.raw_data.pop('sessionDates', None)
+            else:
+                self.raw_data.pop('sessionDate', None)
+                self.raw_data.pop('sessionDates', None)
+
+            # Quiz
+            self.raw_data['quiz'] = [q.to_dict() for q in self.quiz_questions]
             
-            # Mettre à jour les données JSON
-            self.original_data['chapter'] = new_chapter_name
-            self.original_data['class'] = new_class
-            if new_session_date:
-                self.original_data['sessionDate'] = new_session_date
-            elif 'sessionDate' in self.original_data:
-                del self.original_data['sessionDate']
+            # Exercices
+            self.raw_data['exercises'] = [e.to_dict() for e in self.exercises]
             
-            # Sauvegarder le fichier
-            chapter_file_path = os.path.join(self.chapters_dir, self.chapter.file)
-            with open(chapter_file_path, 'w', encoding='utf-8') as f:
-                json.dump(self.original_data, f, indent=2, ensure_ascii=False)
-            
-            # Mettre à jour l'objet chapitre
-            self.chapter.chapter = new_chapter_name
-            self.chapter.class_type = new_class
-            self.chapter.session_date = new_session_date
-            
-            QMessageBox.information(self, "Succès", "Les modifications ont été sauvegardées avec succès.")
-            self.accept()
-            
+            # Sauvegarder
+            with open(self.file_path, 'w', encoding='utf-8') as f:
+                json.dump(self.raw_data, f, indent=2, ensure_ascii=False)
+            return True
         except Exception as e:
-            QMessageBox.critical(self, "Erreur", f"Impossible de sauvegarder les modifications:\n{str(e)}")
+            print(f"Erreur sauvegarde: {e}")
+            return False
+    
+    def to_manifest_dict(self):
+        """Pour le manifest.json"""
+        return {
+            'id': self.id,
+            'file': self.file_name,
+            'isActive': self.is_active
+        }
 
 
-class ChapterWidget(QFrame):
-    """Widget personnalisé pour afficher un chapitre"""
-    toggled = pyqtSignal(str, bool)
-    edit_requested = pyqtSignal(object)  # Signal pour demander l'édition
-    delete_requested = pyqtSignal(object)  # Signal pour demander la suppression
+class QuizEditor(QWidget):
+    """Éditeur de questions de quiz"""
+    
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.questions = []
+        self.current_index = -1
+        self.init_ui()
+        
+    def init_ui(self):
+        layout = QVBoxLayout(self)
+        
+        # Toolbar
+        toolbar = QHBoxLayout()
+        
+        toolbar.addWidget(QLabel("Questions de Quiz"))
+        toolbar.addStretch()
+        
+        self.count_label = QLabel("0 question(s)")
+        toolbar.addWidget(self.count_label)
+        
+        add_btn = QPushButton("➕ Nouvelle")
+        add_btn.clicked.connect(self.add_question)
+        toolbar.addWidget(add_btn)
+        
+        delete_btn = QPushButton("🗑️ Supprimer")
+        delete_btn.clicked.connect(self.delete_current)
+        toolbar.addWidget(delete_btn)
+        
+        layout.addLayout(toolbar)
+        
+        # Splitter principal
+        splitter = QSplitter(Qt.Orientation.Horizontal)
+        
+        # Liste des questions
+        self.question_list = QListWidget()
+        self.question_list.setMaximumWidth(250)
+        self.question_list.currentRowChanged.connect(self.on_selection_changed)
+        splitter.addWidget(self.question_list)
+        
+        # Éditeur de question
+        editor_widget = QWidget()
+        editor_layout = QVBoxLayout(editor_widget)
+        
+        # Question
+        editor_layout.addWidget(QLabel("Question:"))
+        self.question_edit = QTextEdit()
+        self.question_edit.setMaximumHeight(80)
+        self.question_edit.textChanged.connect(self.save_current)
+        editor_layout.addWidget(self.question_edit)
+        
+        # Options
+        editor_layout.addWidget(QLabel("Options de réponse:"))
+        
+        self.options_container = QWidget()
+        self.options_layout = QVBoxLayout(self.options_container)
+        
+        self.option_widgets = []
+        for i in range(4):
+            opt_layout = QHBoxLayout()
+            
+            radio = QRadioButton()
+            radio.toggled.connect(self.save_current)
+            opt_layout.addWidget(radio)
+            
+            option_edit = QLineEdit()
+            option_edit.setPlaceholderText(f"Option {i+1}")
+            option_edit.textChanged.connect(self.save_current)
+            opt_layout.addWidget(option_edit)
+            
+            self.options_layout.addLayout(opt_layout)
+            self.option_widgets.append((radio, option_edit))
+            
+        editor_layout.addWidget(self.options_container)
+        
+        # Explication
+        editor_layout.addWidget(QLabel("Explication (optionnelle):"))
+        self.explanation_edit = QTextEdit()
+        self.explanation_edit.setMaximumHeight(60)
+        self.explanation_edit.textChanged.connect(self.save_current)
+        editor_layout.addWidget(self.explanation_edit)
+        
+        editor_layout.addStretch()
+        splitter.addWidget(editor_widget)
+        
+        splitter.setSizes([250, 500])
+        layout.addWidget(splitter)
+        
+        self.editor_widget = editor_widget
+        self.editor_widget.setEnabled(False)
+        
+    def set_questions(self, questions: List[QuizQuestion]):
+        """Charge les questions"""
+        self.questions = questions.copy()
+        self.refresh_list()
+        if self.questions:
+            self.question_list.setCurrentRow(0)
+            
+    def get_questions(self) -> List[QuizQuestion]:
+        """Retourne les questions"""
+        return self.questions.copy()
+        
+    def refresh_list(self):
+        """Actualise la liste"""
+        self.question_list.clear()
+        for i, q in enumerate(self.questions):
+            text = q.question.strip().split('\n')[0]
+            text = text[:50] + "..." if len(text) > 50 else text
+            if not text:
+                text = f"Question {i+1} (vide)"
+            self.question_list.addItem(text)
+        self.count_label.setText(f"{len(self.questions)} question(s)")
+        
+    def on_selection_changed(self, index: int):
+        """Changement de sélection"""
+        self.current_index = index
+        if 0 <= index < len(self.questions):
+            self.load_question(self.questions[index])
+            self.editor_widget.setEnabled(True)
+        else:
+            self.clear_editor()
+            self.editor_widget.setEnabled(False)
+            
+    def load_question(self, question: QuizQuestion):
+        """Charge une question dans l'éditeur"""
+        self.question_edit.blockSignals(True)
+        self.explanation_edit.blockSignals(True)
+        
+        self.question_edit.setText(question.question)
+        
+        for i, (radio, edit) in enumerate(self.option_widgets):
+            radio.blockSignals(True)
+            edit.blockSignals(True)
+            
+            if i < len(question.options):
+                edit.setText(question.options[i])
+                radio.setChecked(i == question.correct_answer)
+            else:
+                edit.clear()
+                radio.setChecked(False)
+                
+            radio.blockSignals(False)
+            edit.blockSignals(False)
+            
+        self.explanation_edit.setText(question.explanation)
+        
+        self.question_edit.blockSignals(False)
+        self.explanation_edit.blockSignals(False)
+        
+    def clear_editor(self):
+        """Vide l'éditeur"""
+        self.question_edit.clear()
+        self.explanation_edit.clear()
+        for radio, edit in self.option_widgets:
+            radio.setChecked(False)
+            edit.clear()
+            
+    def save_current(self):
+        """Sauvegarde la question courante"""
+        if 0 <= self.current_index < len(self.questions):
+            q = self.questions[self.current_index]
+            q.question = self.question_edit.toPlainText()
+            q.explanation = self.explanation_edit.toPlainText()
+            
+            q.options = []
+            correct_found = False
+            for i, (radio, edit) in enumerate(self.option_widgets):
+                if edit.text().strip():
+                    q.options.append(edit.text())
+                    if radio.isChecked():
+                        q.correct_answer = len(q.options) - 1
+                        correct_found = True
+            
+            if not correct_found and q.options:
+                q.correct_answer = 0
+                self.option_widgets[0][0].setChecked(True)
+                        
+            item = self.question_list.item(self.current_index)
+            if item:
+                text = q.question.strip().split('\n')[0]
+                text = text[:50] + "..." if len(text) > 50 else text
+                if not text:
+                    text = f"Question {self.current_index+1} (vide)"
+                item.setText(text)
+                
+    def add_question(self):
+        """Ajoute une nouvelle question"""
+        new_question = QuizQuestion(
+            question="Nouvelle question",
+            options=["Option 1", "Option 2", "Option 3", "Option 4"],
+            correct_answer=0
+        )
+        self.questions.append(new_question)
+        self.refresh_list()
+        self.question_list.setCurrentRow(len(self.questions) - 1)
+        
+    def delete_current(self):
+        """Supprime la question courante"""
+        if 0 <= self.current_index < len(self.questions):
+            reply = QMessageBox.question(
+                self, "Confirmer",
+                "Supprimer cette question ?",
+                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No
+            )
+            if reply == QMessageBox.StandardButton.Yes:
+                del self.questions[self.current_index]
+                self.refresh_list()
 
-    def __init__(self, chapter: ChapterData):
-        super().__init__()
+
+class ExerciseEditor(QWidget):
+    """Éditeur d'exercices (sans difficulté ni solution)"""
+    
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.exercises = []
+        self.current_index = -1
+        self.init_ui()
+        
+    def init_ui(self):
+        layout = QVBoxLayout(self)
+        
+        toolbar = QHBoxLayout()
+        toolbar.addWidget(QLabel("Exercices"))
+        toolbar.addStretch()
+        self.count_label = QLabel("0 exercice(s)")
+        toolbar.addWidget(self.count_label)
+        add_btn = QPushButton("➕ Nouveau")
+        add_btn.clicked.connect(self.add_exercise)
+        toolbar.addWidget(add_btn)
+        delete_btn = QPushButton("🗑️ Supprimer")
+        delete_btn.clicked.connect(self.delete_current)
+        toolbar.addWidget(delete_btn)
+        layout.addLayout(toolbar)
+        
+        splitter = QSplitter(Qt.Orientation.Horizontal)
+        self.exercise_list = QListWidget()
+        self.exercise_list.setMaximumWidth(250)
+        self.exercise_list.currentRowChanged.connect(self.on_selection_changed)
+        splitter.addWidget(self.exercise_list)
+        
+        editor_widget = QWidget()
+        editor_layout = QVBoxLayout(editor_widget)
+        
+        form = QFormLayout()
+        self.title_edit = QLineEdit()
+        self.title_edit.textChanged.connect(self.save_current)
+        form.addRow("Titre:", self.title_edit)
+        editor_layout.addLayout(form)
+        
+        editor_layout.addWidget(QLabel("Énoncé:"))
+        self.description_edit = QTextEdit()
+        self.description_edit.textChanged.connect(self.save_current)
+        editor_layout.addWidget(self.description_edit)
+        
+        editor_layout.addStretch()
+        
+        splitter.addWidget(editor_widget)
+        splitter.setSizes([250, 500])
+        layout.addWidget(splitter)
+        
+        self.editor_widget = editor_widget
+        self.editor_widget.setEnabled(False)
+        
+    def set_exercises(self, exercises: List[Exercise]):
+        self.exercises = exercises.copy()
+        self.refresh_list()
+        if self.exercises:
+            self.exercise_list.setCurrentRow(0)
+            
+    def get_exercises(self) -> List[Exercise]:
+        return self.exercises.copy()
+        
+    def refresh_list(self):
+        self.exercise_list.clear()
+        for i, ex in enumerate(self.exercises):
+            text = ex.title if ex.title else f"Exercice {i+1}"
+            self.exercise_list.addItem(text)
+        self.count_label.setText(f"{len(self.exercises)} exercice(s)")
+        
+    def on_selection_changed(self, index: int):
+        self.current_index = index
+        if 0 <= index < len(self.exercises):
+            self.load_exercise(self.exercises[index])
+            self.editor_widget.setEnabled(True)
+        else:
+            self.clear_editor()
+            self.editor_widget.setEnabled(False)
+            
+    def load_exercise(self, exercise: Exercise):
+        self.title_edit.blockSignals(True)
+        self.description_edit.blockSignals(True)
+        
+        self.title_edit.setText(exercise.title)
+        self.description_edit.setText(exercise.description)
+        
+        self.title_edit.blockSignals(False)
+        self.description_edit.blockSignals(False)
+        
+    def clear_editor(self):
+        self.title_edit.clear()
+        self.description_edit.clear()
+        
+    def save_current(self):
+        if 0 <= self.current_index < len(self.exercises):
+            ex = self.exercises[self.current_index]
+            ex.title = self.title_edit.text()
+            ex.description = self.description_edit.toPlainText()
+            
+            item = self.exercise_list.item(self.current_index)
+            if item:
+                text = ex.title if ex.title else f"Exercice {self.current_index+1}"
+                item.setText(text)
+                
+    def add_exercise(self):
+        new_exercise = Exercise(
+            title=f"Exercice {len(self.exercises)+1}",
+            description=""
+        )
+        self.exercises.append(new_exercise)
+        self.refresh_list()
+        self.exercise_list.setCurrentRow(len(self.exercises) - 1)
+        
+    def delete_current(self):
+        if 0 <= self.current_index < len(self.exercises):
+            reply = QMessageBox.question(
+                self, "Confirmer",
+                "Supprimer cet exercice ?",
+                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No
+            )
+            if reply == QMessageBox.StandardButton.Yes:
+                del self.exercises[self.current_index]
+                self.refresh_list()
+
+class ChapterContentEditor(QDialog):
+    """Éditeur complet du contenu d'un chapitre"""
+    
+    def __init__(self, chapter: ChapterData, parent=None):
+        super().__init__(parent)
         self.chapter = chapter
-        self.setup_ui()
+        self.setWindowTitle(f"Édition complète: {chapter.chapter_name}")
+        self.setModal(True)
+        self.resize(1000, 700)
+        self.init_ui()
+        self.load_chapter_data()
+        
+    def init_ui(self):
+        layout = QVBoxLayout(self)
+        
+        self.quiz_editor = QuizEditor()
+        self.exercise_editor = ExerciseEditor()
 
-    def setup_ui(self):
-        self.setFrameStyle(QFrame.Shape.Box)
-        self.setStyleSheet("""
-            ChapterWidget {
-                background-color: #f8f9fa;
-                border: 1px solid #dee2e6;
-                border-radius: 8px;
-                margin: 2px;
-                padding: 8px;
-            }
-            ChapterWidget:hover {
-                background-color: #e9ecef;
-                border-color: #0056d2;
-            }
-        """)
-
-        layout = QHBoxLayout(self)
-        layout.setContentsMargins(12, 8, 12, 8)
-
-        # Indicateur d'état
-        status_indicator = QLabel("●")
-        status_indicator.setStyleSheet(
-            f"color: {'#28a745' if self.chapter.is_active else '#6c757d'}; font-size: 16px;"
+        header = QHBoxLayout()
+        title = QLabel(f"📚 {self.chapter.chapter_name}")
+        title.setStyleSheet("font-size: 16px; font-weight: bold;")
+        header.addWidget(title)
+        header.addStretch()
+        self.stats_label = QLabel()
+        header.addWidget(self.stats_label)
+        layout.addLayout(header)
+        
+        self.tabs = QTabWidget()
+        info_widget = self.create_info_tab()
+        self.tabs.addTab(info_widget, "📋 Informations")
+        self.tabs.addTab(self.quiz_editor, "❓ Quiz")
+        self.tabs.addTab(self.exercise_editor, "📝 Exercices")
+        layout.addWidget(self.tabs)
+        
+        buttons = QDialogButtonBox(
+            QDialogButtonBox.StandardButton.Save |
+            QDialogButtonBox.StandardButton.Cancel
         )
-        layout.addWidget(status_indicator)
+        buttons.accepted.connect(self.save_and_close)
+        buttons.rejected.connect(self.reject)
+        layout.addWidget(buttons)
+        
+        self.quiz_editor.question_list.model().rowsInserted.connect(self.update_stats)
+        self.quiz_editor.question_list.model().rowsRemoved.connect(self.update_stats)
+        self.exercise_editor.exercise_list.model().rowsInserted.connect(self.update_stats)
+        self.exercise_editor.exercise_list.model().rowsRemoved.connect(self.update_stats)
+        
+    def create_info_tab(self) -> QWidget:
+        widget = QWidget()
+        layout = QVBoxLayout(widget)
+        form = QFormLayout()
+        
+        self.name_edit = QLineEdit(self.chapter.chapter_name)
+        form.addRow("Nom du chapitre:", self.name_edit)
+        
+        self.class_edit = QLineEdit(self.chapter.class_type)
+        self.class_edit.setEnabled(False)
+        form.addRow("Classe:", self.class_edit)
+        
+        self.file_edit = QLineEdit(self.chapter.file_name)
+        self.file_edit.setEnabled(False)
+        self.file_edit.setStyleSheet("color: gray;")
+        form.addRow("Fichier:", self.file_edit)
+        
+        self.active_check = QCheckBox("Chapitre actif")
+        self.active_check.setChecked(self.chapter.is_active)
+        form.addRow("", self.active_check)
+        layout.addLayout(form)
+        
+        layout.addWidget(QLabel("\nDates de séance:"))
+        self.dates_list = QListWidget()
+        self.dates_list.setMaximumHeight(100)
+        self.dates_list.addItems(sorted(self.chapter.session_dates))
+        layout.addWidget(self.dates_list)
+        
+        date_controls = QHBoxLayout()
+        self.date_edit = QDateTimeEdit()
+        self.date_edit.setCalendarPopup(True)
+        self.date_edit.setDateTime(QDateTime.currentDateTime())
+        self.date_edit.setDisplayFormat("yyyy-MM-dd HH:mm")
+        date_controls.addWidget(self.date_edit)
+        
+        add_date_btn = QPushButton("Ajouter date")
+        add_date_btn.clicked.connect(self.add_date)
+        date_controls.addWidget(add_date_btn)
+        
+        remove_date_btn = QPushButton("Supprimer date")
+        remove_date_btn.clicked.connect(self.remove_date)
+        date_controls.addWidget(remove_date_btn)
+        
+        date_controls.addStretch()
+        layout.addLayout(date_controls)
+        layout.addStretch()
+        return widget
+        
+    def update_stats(self, *args):
+        quiz_count = len(self.quiz_editor.questions)
+        ex_count = len(self.exercise_editor.exercises)
+        self.stats_label.setText(f"📊 {quiz_count} questions | {ex_count} exercices")
+        
+    def load_chapter_data(self):
+        self.quiz_editor.set_questions(self.chapter.quiz_questions)
+        self.exercise_editor.set_exercises(self.chapter.exercises)
+        self.update_stats()
+        
+    def add_date(self):
+        date_str = self.date_edit.dateTime().toString("yyyy-MM-dd HH:mm")
+        if not self.dates_list.findItems(date_str, Qt.MatchFlag.MatchExactly):
+            self.dates_list.addItem(date_str)
+            self.dates_list.sortItems()
+                
+    def remove_date(self):
+        current_item = self.dates_list.currentItem()
+        if current_item:
+            self.dates_list.takeItem(self.dates_list.row(current_item))
+                
+    def save_and_close(self):
+        self.chapter.chapter_name = self.name_edit.text().strip()
+        self.chapter.is_active = self.active_check.isChecked()
+        self.chapter.session_dates = [self.dates_list.item(i).text() for i in range(self.dates_list.count())]
+        self.chapter.quiz_questions = self.quiz_editor.get_questions()
+        self.chapter.exercises = self.exercise_editor.get_exercises()
+        
+        if self.chapter.save_to_file():
+            QMessageBox.information(self, "Succès", "Chapitre sauvegardé avec succès!")
+            self.accept()
+        else:
+            QMessageBox.critical(self, "Erreur", "Erreur lors de la sauvegarde du fichier!")
 
-        # Informations du chapitre
-        info_layout = QVBoxLayout()
-        
-        title_label = QLabel(self.chapter.chapter)
-        title_label.setFont(QFont("Arial", 11, QFont.Weight.Bold))
-        title_label.setStyleSheet("color: #212529;")
-        info_layout.addWidget(title_label)
 
-        details_text = f"Fichier: {self.chapter.file}"
-        if self.chapter.session_date:
-            details_text += f" | Date: {self.chapter.session_date}"
-        if self.chapter.quiz_count > 0:
-            details_text += f" | Quiz: {self.chapter.quiz_count}"
-        if self.chapter.exercise_count > 0:
-            details_text += f" | Exercices: {self.chapter.exercise_count}"
-        
-        details_label = QLabel(details_text)
-        details_label.setStyleSheet("color: #6c757d; font-size: 10px;")
-        info_layout.addWidget(details_label)
-
-        layout.addLayout(info_layout, 1)
-
-        # Boutons d'action
-        actions_layout = QHBoxLayout()
-        
-        # Bouton d'édition
-        self.edit_btn = QPushButton("✏️")
-        self.edit_btn.setToolTip("Éditer ce chapitre")
-        self.edit_btn.setMaximumSize(30, 30)
-        self.edit_btn.clicked.connect(self.on_edit_clicked)
-        self.edit_btn.setStyleSheet("""
-            QPushButton {
-                background-color: #ffc107;
-                border: none;
-                border-radius: 15px;
-                font-size: 12px;
-            }
-            QPushButton:hover {
-                background-color: #e0a800;
-            }
-        """)
-        actions_layout.addWidget(self.edit_btn)
-        
-        # Bouton de suppression
-        self.delete_btn = QPushButton("🗑️")
-        self.delete_btn.setToolTip("Supprimer ce chapitre")
-        self.delete_btn.setMaximumSize(30, 30)
-        self.delete_btn.clicked.connect(self.on_delete_clicked)
-        self.delete_btn.setStyleSheet("""
-            QPushButton {
-                background-color: #dc3545;
-                color: white;
-                border: none;
-                border-radius: 15px;
-                font-size: 12px;
-            }
-            QPushButton:hover {
-                background-color: #c82333;
-            }
-        """)
-        actions_layout.addWidget(self.delete_btn)
-        
-        # Checkbox d'activation
-        self.checkbox = QCheckBox()
-        self.checkbox.setChecked(self.chapter.is_active)
-        self.checkbox.toggled.connect(self.on_toggled)
-        self.checkbox.setStyleSheet("""
-            QCheckBox::indicator {
-                width: 20px;
-                height: 20px;
-            }
-            QCheckBox::indicator:unchecked {
-                border: 2px solid #6c757d;
-                border-radius: 3px;
-                background-color: white;
-            }
-            QCheckBox::indicator:checked {
-                border: 2px solid #0056d2;
-                border-radius: 3px;
-                background-color: #0056d2;
-                image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iOSIgdmlld0JveD0iMCAwIDEyIDkiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xIDQuNUw0LjUgOEwxMSAxIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K);
-            }
-        """)
-        actions_layout.addWidget(self.checkbox)
-        
-        layout.addLayout(actions_layout)
-
-    def on_toggled(self, checked: bool):
-        self.chapter.is_active = checked
-        self.toggled.emit(self.chapter.id, checked)
-        # Mettre à jour l'indicateur d'état
-        status_indicator = self.layout().itemAt(0).widget()
-        status_indicator.setStyleSheet(
-            f"color: {'#28a745' if checked else '#6c757d'}; font-size: 16px;"
-        )
+class SmartChapterManager(QMainWindow):
+    """Application principale intelligente et robuste"""
     
-    def on_edit_clicked(self):
-        """Émet le signal pour demander l'édition du chapitre"""
-        self.edit_requested.emit(self.chapter)
+    # NOUVELLE LISTE DE CLASSES
+    CLASSES_DATA = [
+        { 'value': 'tcs', 'label': 'Tronc Commun Scientifique' },
+        { 'value': '1bse', 'label': '1ère Bac Sciences Expérimentales' },
+        { 'value': '1bsm', 'label': '1ère Bac Sciences Mathématiques' },
+        { 'value': '2bse', 'label': '2ème Bac Sciences Expérimentales' },
+        { 'value': '2bsm', 'label': '2ème Bac Sciences Mathématiques' },
+        { 'value': '2beco', 'label': '2ème Bac Économie' },
+    ]
     
-    def on_delete_clicked(self):
-        """Émet le signal pour demander la suppression du chapitre"""
-        self.delete_requested.emit(self.chapter)
-    
-    def update_display(self):
-        """Met à jour l'affichage après modification"""
-        # Mettre à jour le titre
-        title_label = self.layout().itemAt(1).layout().itemAt(0).widget()
-        title_label.setText(self.chapter.chapter)
-        
-        # Mettre à jour les détails
-        details_text = f"Fichier: {self.chapter.file}"
-        if self.chapter.session_date:
-            details_text += f" | Date: {self.chapter.session_date}"
-        if self.chapter.quiz_count > 0:
-            details_text += f" | Quiz: {self.chapter.quiz_count}"
-        if self.chapter.exercise_count > 0:
-            details_text += f" | Exercices: {self.chapter.exercise_count}"
-        
-        details_label = self.layout().itemAt(1).layout().itemAt(1).widget()
-        details_label.setText(details_text)
-
-
-class AdminApp(QMainWindow):
-    """Application principale d'administration"""
-    
-    CLASS_LABELS = {
-        'tcs': 'Tronc Commun Scientifique',
-        '1bse': '1ère Bac Sciences Expérimentales',
-        '1bsm': '1ère Bac Sciences Mathématiques',
-        '2bse': '2ème Bac Sciences Expérimentales',
-        '2bsm': '2ème Bac Sciences Mathématiques',
-        '2beco': '2ème Bac Économie',
-    }
+    CLASSES = [item['value'] for item in CLASSES_DATA]
+    CLASS_LABELS = {item['value']: item['label'] for item in CLASSES_DATA}
 
     def __init__(self):
         super().__init__()
-        self.chapters_data: Dict[str, ChapterData] = {}
-        self.manifest_path = ""
-        self.chapters_dir = ""
-        self.is_dirty = False
-        self.setup_ui()
-        self.setup_style()
-        self.load_initial_manifest()
-
-    def setup_ui(self):
-        self.setWindowTitle("🦉 Gestion des Chapitres - Administration")
-        self.setMinimumSize(1000, 700)
-        self.resize(1200, 800)
-
-        # Menu bar
-        self.create_menu_bar()
+        self.manifest_path = None
+        self.chapters_dir = None
+        self.chapters_by_class = {cls: [] for cls in self.CLASSES}
+        self.all_chapters = {}
+        self.init_ui()
+        self.auto_load()
         
-        # Toolbar
+    def init_ui(self):
+        self.setWindowTitle("📚 Gestionnaire de Contenus Éducatifs")
+        self.setMinimumSize(1200, 800)
+        self.create_menu()
         self.create_toolbar()
-
-        # Widget central
-        central_widget = QWidget()
-        self.setCentralWidget(central_widget)
         
-        # Layout principal
-        main_layout = QVBoxLayout(central_widget)
-        main_layout.setSpacing(10)
-        main_layout.setContentsMargins(15, 15, 15, 15)
-
-        # En-tête
-        header_layout = QHBoxLayout()
+        central = QWidget()
+        self.setCentralWidget(central)
+        layout = QVBoxLayout(central)
+        layout.addWidget(self.create_header())
         
-        title_label = QLabel("🦉 Gestion des Chapitres")
-        title_label.setFont(QFont("Arial", 18, QFont.Weight.Bold))
-        title_label.setStyleSheet("color: #0056d2; margin-bottom: 5px;")
-        header_layout.addWidget(title_label)
+        self.tabs = QTabWidget()
+        for class_id in self.CLASSES:
+            self.tabs.addTab(self.create_class_tab(class_id), self.CLASS_LABELS[class_id])
+        layout.addWidget(self.tabs)
         
-        header_layout.addStretch()
+        self.status_bar = self.statusBar()
+        self.update_status("Prêt")
+        self.apply_style()
         
-        # Boutons d'action principaux
-        self.load_manifest_btn = QPushButton("📁 Charger Manifest")
-        self.load_manifest_btn.clicked.connect(self.load_manifest)
-        self.load_manifest_btn.setMinimumHeight(35)
-        header_layout.addWidget(self.load_manifest_btn)
-        
-        self.import_chapters_btn = QPushButton("📚 Importer Chapitres")
-        self.import_chapters_btn.clicked.connect(self.import_chapters)
-        self.import_chapters_btn.setMinimumHeight(35)
-        header_layout.addWidget(self.import_chapters_btn)
-        
-        main_layout.addLayout(header_layout)
-
-        # Splitter pour diviser l'interface
-        splitter = QSplitter(Qt.Orientation.Horizontal)
-        
-        # Zone de gestion des chapitres (gauche)
-        chapters_widget = self.create_chapters_widget()
-        splitter.addWidget(chapters_widget)
-        
-        # Zone d'informations (droite)
-        info_widget = self.create_info_widget()
-        splitter.addWidget(info_widget)
-        
-        splitter.setSizes([700, 300])
-        main_layout.addWidget(splitter)
-
-        # Barre de progression
-        self.progress_bar = QProgressBar()
-        self.progress_bar.setVisible(False)
-        main_layout.addWidget(self.progress_bar)
-
-        # Status bar
-        self.status_bar = QStatusBar()
-        self.setStatusBar(self.status_bar)
-        self.status_bar.showMessage("Prêt - Chargez un manifest ou importez des chapitres")
-
-    def create_menu_bar(self):
+    def create_menu(self):
         menubar = self.menuBar()
-        
-        # Menu Fichier
-        file_menu = menubar.addMenu('Fichier')
-        
-        load_action = QAction('Charger Manifest', self)
-        load_action.setShortcut('Ctrl+O')
-        load_action.triggered.connect(self.load_manifest)
-        file_menu.addAction(load_action)
-        
-        import_action = QAction('Importer Chapitres', self)
-        import_action.setShortcut('Ctrl+I')
-        import_action.triggered.connect(self.import_chapters)
-        file_menu.addAction(import_action)
-        
+        file_menu = menubar.addMenu("Fichier")
+        file_menu.addAction("📁 Ouvrir manifest", self.open_manifest)
+        file_menu.addAction("💾 Sauvegarder", self.save_all)
         file_menu.addSeparator()
-        
-        save_action = QAction('Sauvegarder Manifest', self)
-        save_action.setShortcut('Ctrl+S')
-        save_action.triggered.connect(self.save_manifest)
-        file_menu.addAction(save_action)
-        
+        file_menu.addAction("🔍 Vérifier intégrité", self.check_integrity)
+        file_menu.addAction("📥 Importer chapitres", self.import_chapters)
+        file_menu.addAction("📤 Exporter sélection", self.export_selection)
         file_menu.addSeparator()
+        file_menu.addAction("Quitter", self.close)
         
-        exit_action = QAction('Quitter', self)
-        exit_action.setShortcut('Ctrl+Q')
-        exit_action.triggered.connect(self.close)
-        file_menu.addAction(exit_action)
+        edit_menu = menubar.addMenu("Édition")
+        edit_menu.addAction("🔍 Rechercher", lambda: self.search_edit.setFocus())
+        edit_menu.addAction("✓ Activer tous", self.activate_all)
+        edit_menu.addAction("✗ Désactiver tous", self.deactivate_all)
         
-        # Menu Aide
-        help_menu = menubar.addMenu('Aide')
-        about_action = QAction('À propos', self)
-        about_action.triggered.connect(self.show_about)
-        help_menu.addAction(about_action)
-
+        tools_menu = menubar.addMenu("Outils")
+        tools_menu.addAction("📊 Statistiques", self.show_statistics)
+        tools_menu.addAction("🔧 Réparer fichiers", self.repair_files)
+        
     def create_toolbar(self):
-        toolbar = QToolBar()
-        self.addToolBar(toolbar)
-        
-        # Actions de la toolbar
-        load_action = QAction('📁 Charger', self)
-        load_action.triggered.connect(self.load_manifest)
-        toolbar.addAction(load_action)
-        
-        import_action = QAction('📚 Importer', self)
-        import_action.triggered.connect(self.import_chapters)
-        toolbar.addAction(import_action)
-        
+        toolbar = self.addToolBar("Principal")
+        toolbar.setMovable(False)
+        toolbar.addAction("📁 Ouvrir", self.open_manifest)
+        toolbar.addAction("💾 Sauvegarder", self.save_all)
         toolbar.addSeparator()
-        
-        save_action = QAction('💾 Sauvegarder', self)
-        save_action.triggered.connect(self.save_manifest)
-        toolbar.addAction(save_action)
-        
+        toolbar.addAction("➕ Nouveau", self.add_chapter)
+        toolbar.addAction("🔄 Actualiser", self.refresh_all)
         toolbar.addSeparator()
+        toolbar.addAction("📊 Stats", self.show_statistics)
         
-        refresh_action = QAction('🔄 Actualiser', self)
-        refresh_action.triggered.connect(self.refresh_display)
-        toolbar.addAction(refresh_action)
-
-    def create_chapters_widget(self) -> QWidget:
-        """Crée le widget de gestion des chapitres"""
+    def create_header(self) -> QWidget:
         widget = QWidget()
-        layout = QVBoxLayout(widget)
-        
-        # Titre
-        title = QLabel("Chapitres Disponibles")
-        title.setFont(QFont("Arial", 14, QFont.Weight.Bold))
-        title.setStyleSheet("color: #0056d2; margin-bottom: 10px;")
+        layout = QHBoxLayout(widget)
+        title = QLabel("Gestion Complète des Contenus")
+        title.setStyleSheet("font-size: 18px; font-weight: 300; color: #333;")
         layout.addWidget(title)
-        
-        # Zone de défilement pour les chapitres
-        self.scroll_area = QScrollArea()
-        self.scroll_area.setWidgetResizable(True)
-        self.scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
-        self.scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
-        
-        self.chapters_container = QWidget()
-        self.chapters_layout = QVBoxLayout(self.chapters_container)
-        self.chapters_layout.setAlignment(Qt.AlignmentFlag.AlignTop)
-        
-        self.scroll_area.setWidget(self.chapters_container)
-        layout.addWidget(self.scroll_area)
-        
+        layout.addStretch()
+        layout.addWidget(QLabel("🔍"))
+        self.search_edit = QLineEdit()
+        self.search_edit.setPlaceholderText("Rechercher un chapitre...")
+        self.search_edit.setMinimumWidth(250)
+        self.search_edit.textChanged.connect(self.on_search)
+        layout.addWidget(self.search_edit)
+        self.integrity_indicator = QLabel("✅")
+        self.integrity_indicator.setToolTip("État des fichiers")
+        layout.addWidget(self.integrity_indicator)
         return widget
-
-    def create_info_widget(self) -> QWidget:
-        """Crée le widget d'informations"""
+        
+    def create_class_tab(self, class_id: str) -> QWidget:
         widget = QWidget()
         layout = QVBoxLayout(widget)
+        toolbar = QHBoxLayout()
+        label = QLabel(f"Classe {self.CLASS_LABELS[class_id]}")
+        label.setStyleSheet("font-weight: bold; font-size: 14px;")
+        toolbar.addWidget(label)
+        toolbar.addStretch()
+        stats_label = QLabel("0 chapitres")
+        stats_label.setObjectName(f"stats_{class_id}")
+        toolbar.addWidget(stats_label)
+        add_btn = QPushButton("➕ Nouveau chapitre")
+        add_btn.clicked.connect(lambda: self.add_chapter_to_class(class_id))
+        toolbar.addWidget(add_btn)
+        layout.addLayout(toolbar)
         
-        # Onglets d'information
-        self.info_tabs = QTabWidget()
-        
-        # Onglet Statistiques
-        stats_widget = QWidget()
-        stats_layout = QVBoxLayout(stats_widget)
-        
-        self.stats_label = QLabel("Aucune donnée")
-        self.stats_label.setWordWrap(True)
-        self.stats_label.setStyleSheet("padding: 10px; background-color: #f8f9fa; border-radius: 5px;")
-        stats_layout.addWidget(self.stats_label)
-        
-        stats_layout.addStretch()
-        self.info_tabs.addTab(stats_widget, "📊 Statistiques")
-        
-        # Onglet Actions
-        actions_widget = QWidget()
-        actions_layout = QVBoxLayout(actions_widget)
-        
-        # Boutons d'action
-        self.select_all_btn = QPushButton("✅ Tout Sélectionner")
-        self.select_all_btn.clicked.connect(self.select_all_chapters)
-        actions_layout.addWidget(self.select_all_btn)
-        
-        self.deselect_all_btn = QPushButton("❌ Tout Désélectionner")
-        self.deselect_all_btn.clicked.connect(self.deselect_all_chapters)
-        actions_layout.addWidget(self.deselect_all_btn)
-        
-        actions_layout.addWidget(QLabel(""))  # Espaceur
-        
-        self.save_btn = QPushButton("💾 Sauvegarder Manifest")
-        self.save_btn.clicked.connect(self.save_manifest)
-        self.save_btn.setStyleSheet("""
-            QPushButton {
-                background-color: #28a745;
-                color: white;
-                border: none;
-                padding: 10px;
-                border-radius: 5px;
-                font-weight: bold;
-            }
-            QPushButton:hover {
-                background-color: #218838;
-            }
-            QPushButton:pressed {
-                background-color: #1e7e34;
-            }
-        """)
-        actions_layout.addWidget(self.save_btn)
-        
-        actions_layout.addStretch()
-        self.info_tabs.addTab(actions_widget, "⚡ Actions")
-        
-        layout.addWidget(self.info_tabs)
-        
+        table = QTableWidget()
+        table.setObjectName(f"table_{class_id}")
+        table.setColumnCount(6)
+        table.setHorizontalHeaderLabels(["Actif", "Chapitre", "Quiz", "Exercices", "Dates", "Actions"])
+        header = table.horizontalHeader()
+        header.setSectionResizeMode(1, QHeaderView.ResizeMode.Stretch)
+        table.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
+        table.setAlternatingRowColors(True)
+        table.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
+        table.setColumnWidth(0, 50); table.setColumnWidth(2, 60); table.setColumnWidth(3, 80)
+        table.setColumnWidth(4, 100); table.setColumnWidth(5, 150)
+        table.setShowGrid(False)
+        table.verticalHeader().setVisible(False)
+        layout.addWidget(table)
         return widget
-
-    def setup_style(self):
-        """Configure le style de l'application"""
+        
+    def apply_style(self):
         self.setStyleSheet("""
-            QMainWindow {
-                background-color: #ffffff;
+            QMainWindow, QDialog { 
+                background-color: #f5f5f5; 
+                color: #333;
+                font-family: Segoe UI, sans-serif;
             }
-            QPushButton {
-                background-color: #0056d2;
-                color: white;
+            QTabWidget::pane { 
+                border-top: 1px solid #e0e0e0; 
+                background: white; 
+            }
+            QTabBar::tab { 
+                padding: 10px 20px; 
+                background: transparent; 
                 border: none;
-                padding: 8px 16px;
-                border-radius: 5px;
+                color: #555;
+                font-size: 13px;
+            }
+            QTabBar::tab:selected { 
+                background: white;
+                color: #005a9e;
+                border-bottom: 2px solid #005a9e;
+            }
+            QPushButton { 
+                padding: 8px 14px; 
+                background-color: #0078d4; 
+                color: white; 
+                border: none; 
+                border-radius: 4px; 
                 font-weight: bold;
-                min-width: 100px;
+                font-size: 12px;
             }
-            QPushButton:hover {
-                background-color: #004494;
+            QPushButton:hover { background-color: #005a9e; }
+            QPushButton:disabled { background-color: #cdd1d4; }
+            QTableWidget { 
+                border: 1px solid #e0e0e0; 
+                gridline-color: #f0f0f0; 
+                background-color: white;
             }
-            QPushButton:pressed {
-                background-color: #003d82;
+            QHeaderView::section { 
+                background-color: #f5f5f5; 
+                padding: 6px; 
+                border: none;
+                border-bottom: 1px solid #e0e0e0;
+                font-weight: bold; 
+                font-size: 12px;
             }
-            QGroupBox {
-                font-weight: bold;
-                border: 2px solid #dee2e6;
-                border-radius: 8px;
-                margin-top: 10px;
-                padding-top: 10px;
+            QLineEdit, QTextEdit { 
+                padding: 6px; 
+                border: 1px solid #ccc; 
+                border-radius: 4px; 
+                background-color: white;
             }
-            QGroupBox::title {
-                subcontrol-origin: margin;
-                left: 10px;
-                padding: 0 5px 0 5px;
-                color: #0056d2;
+            QLineEdit:focus, QTextEdit:focus {
+                border: 1px solid #0078d4;
             }
-            QScrollArea {
-                border: 1px solid #dee2e6;
-                border-radius: 5px;
-                background-color: #ffffff;
+            QListWidget {
+                border-radius: 4px;
+                border: 1px solid #ccc;
             }
-            QTabWidget::pane {
-                border: 1px solid #dee2e6;
-                border-radius: 5px;
+            QSplitter::handle {
+                background-color: #e0e0e0;
             }
-            QTabBar::tab {
-                background-color: #f8f9fa;
-                padding: 8px 12px;
-                margin-right: 2px;
-                border-top-left-radius: 5px;
-                border-top-right-radius: 5px;
+            QSplitter::handle:horizontal {
+                width: 1px;
             }
-            QTabBar::tab:selected {
-                background-color: #0056d2;
-                color: white;
+            QSplitter::handle:vertical {
+                height: 1px;
             }
         """)
-
-    def load_initial_manifest(self):
-        """Charge automatiquement le manifest.json s'il existe"""
-        manifest_path = Path("public/manifest.json")
-        if manifest_path.exists():
-            self.manifest_path = str(manifest_path.absolute())
-            self.load_manifest_file(self.manifest_path)
-
-    def load_manifest(self):
-        """Charge un fichier manifest.json"""
-        file_path, _ = QFileDialog.getOpenFileName(
-            self, "Charger manifest.json", "", "JSON Files (*.json)"
-        )
-        if file_path:
-            self.manifest_path = file_path
-            self.load_manifest_file(file_path)
-
-    def load_manifest_file(self, file_path: str):
-        """Charge le contenu d'un fichier manifest"""
+        
+    def auto_load(self):
+        default_path = Path("public/manifest.json")
+        if default_path.exists():
+            self.load_manifest(str(default_path))
+            
+    def open_manifest(self):
+        path, _ = QFileDialog.getOpenFileName(self, "Ouvrir manifest.json", "", "JSON Files (*.json)")
+        if path:
+            self.load_manifest(path)
+            
+    def load_manifest(self, path: str):
         try:
-            with open(file_path, 'r', encoding='utf-8') as f:
-                manifest = json.load(f)
+            self.manifest_path = path
+            self.chapters_dir = Path(path).parent / "chapters"
+            self.chapters_dir.mkdir(exist_ok=True)
             
-            self.chapters_data.clear()
+            with open(path, 'r', encoding='utf-8') as f: manifest = json.load(f)
+                
+            self.all_chapters.clear()
+            for cls in self.CLASSES: self.chapters_by_class[cls] = []
+                
+            total_loaded, total_errors = 0, 0
+            for class_id, chapters_list in manifest.items():
+                if class_id not in self.CLASSES: continue
+                for chapter_info in chapters_list:
+                    chapter = ChapterData()
+                    chapter.load_from_manifest(chapter_info, class_id)
+                    file_path = self.chapters_dir / chapter.file_name
+                    
+                    if not file_path.exists():
+                        self.create_default_file(chapter, file_path)
+                    
+                    if chapter.load_from_file(str(file_path)):
+                        total_loaded += 1
+                    else:
+                        total_errors += 1
+                        
+                    self.chapters_by_class[class_id].append(chapter)
+                    self.all_chapters[chapter.id] = chapter
+                    
+            self.refresh_all()
             
-            # Déterminer le dossier des chapitres
-            manifest_dir = os.path.dirname(file_path)
-            self.chapters_dir = os.path.join(manifest_dir, 'chapters')
-            
-            for class_id, chapters in manifest.items():
-                for item in chapters:
-                    chapter_title = "(Titre à charger)"
-                    
-                    # Essayer de charger le titre depuis le fichier de chapitre
-                    chapter_file_path = os.path.join(self.chapters_dir, item['file'])
-                    if os.path.exists(chapter_file_path):
-                        try:
-                            with open(chapter_file_path, 'r', encoding='utf-8') as chapter_file:
-                                chapter_content = json.load(chapter_file)
-                                if 'chapter' in chapter_content:
-                                    chapter_title = chapter_content['chapter']
-                        except Exception as e:
-                            print(f"Erreur lors du chargement du titre pour {item['file']}: {e}")
-                    
-                    chapter = ChapterData(
-                        id=item['id'],
-                        file=item['file'],
-                        is_active=item.get('isActive', False),
-                        class_type=class_id,
-                        chapter=chapter_title
-                    )
-                    
-                    # Charger les informations supplémentaires si disponibles
-                    if os.path.exists(chapter_file_path):
-                        try:
-                            with open(chapter_file_path, 'r', encoding='utf-8') as chapter_file:
-                                chapter_content = json.load(chapter_file)
-                                if 'sessionDate' in chapter_content:
-                                    chapter.session_date = chapter_content['sessionDate']
-                                if 'quiz' in chapter_content:
-                                    chapter.quiz_count = len(chapter_content['quiz'])
-                                if 'exercises' in chapter_content:
-                                    chapter.exercise_count = len(chapter_content['exercises'])
-                        except Exception as e:
-                            print(f"Erreur lors du chargement des détails pour {item['file']}: {e}")
-                    
-                    self.chapters_data[item['id']] = chapter
-            
-            self.is_dirty = False
-            self.refresh_display()
-            self.status_bar.showMessage(f"Manifest chargé: {len(self.chapters_data)} chapitres trouvés avec titres")
+            if total_errors > 0:
+                self.integrity_indicator.setText("⚠️"); self.integrity_indicator.setToolTip(f"{total_errors} erreurs de chargement")
+            else:
+                self.integrity_indicator.setText("✅"); self.integrity_indicator.setToolTip("Fichiers valides")
+                
+            self.update_status(f"Chargé: {total_loaded} chapitres depuis {Path(path).name}")
             
         except Exception as e:
-            QMessageBox.critical(self, "Erreur", f"Impossible de charger le manifest:\n{str(e)}")
-
-    def import_chapters(self):
-        """Importe des fichiers de chapitres"""
-        files, _ = QFileDialog.getOpenFileNames(
-            self, "Importer des chapitres", "", "JSON Files (*.json)"
-        )
-        if files:
-            self.progress_bar.setVisible(True)
-            self.progress_bar.setValue(0)
+            QMessageBox.critical(self, "Erreur", f"Erreur de chargement du manifest:\n{str(e)}")
             
-            self.file_processor = FileProcessor(files)
-            self.file_processor.progress.connect(self.progress_bar.setValue)
-            self.file_processor.finished.connect(self.on_chapters_imported)
-            self.file_processor.error.connect(self.on_import_error)
-            self.file_processor.start()
+    def create_default_file(self, chapter: ChapterData, file_path: Path):
+        default_data = {
+            'chapter': re.sub(r'[-_]', ' ', chapter.id).title(),
+            'class': chapter.class_type, 'sessionDate': datetime.now().strftime("%Y-%m-%d %H:%M"),
+            'quiz': [], 'exercises': []
+        }
+        try:
+            with open(file_path, 'w', encoding='utf-8') as f:
+                json.dump(default_data, f, indent=2, ensure_ascii=False)
+        except Exception as e:
+            print(f"Erreur création fichier {file_path}: {e}")
+            
+    def refresh_all(self):
+        for class_id in self.CLASSES: self.refresh_class_tab(class_id)
+        self.on_search(self.search_edit.text())
+            
+    def refresh_class_tab(self, class_id: str):
+        tab_widget = self.tabs.widget(self.CLASSES.index(class_id))
+        table = tab_widget.findChild(QTableWidget, f"table_{class_id}")
+        stats_label = tab_widget.findChild(QLabel, f"stats_{class_id}")
+        if not table: return
+            
+        chapters = self.chapters_by_class[class_id]
+        table.setRowCount(0); table.setRowCount(len(chapters))
+        
+        stats_label.setText(f"{len(chapters)} chapitres | {sum(len(c.quiz_questions) for c in chapters)} quiz | {sum(len(c.exercises) for c in chapters)} exercices")
+        
+        for row, chapter in enumerate(chapters):
+            check = QCheckBox(); check.setChecked(chapter.is_active)
+            check.stateChanged.connect(lambda state, ch=chapter: setattr(ch, 'is_active', state == Qt.CheckState.Checked.value))
+            cell_widget = QWidget(); layout = QHBoxLayout(cell_widget)
+            layout.addWidget(check); layout.setAlignment(Qt.AlignmentFlag.AlignCenter); layout.setContentsMargins(0,0,0,0)
+            table.setCellWidget(row, 0, cell_widget)
+            table.setItem(row, 1, QTableWidgetItem(chapter.chapter_name))
+            quiz_item = QTableWidgetItem(str(len(chapter.quiz_questions))); quiz_item.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
+            table.setItem(row, 2, quiz_item)
+            ex_item = QTableWidgetItem(str(len(chapter.exercises))); ex_item.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
+            table.setItem(row, 3, ex_item)
+            table.setItem(row, 4, QTableWidgetItem(f"{len(chapter.session_dates)} date(s)"))
+            
+            actions_widget = QWidget(); actions_layout = QHBoxLayout(actions_widget)
+            actions_layout.setContentsMargins(5, 2, 5, 2)
+            edit_btn = QPushButton("✏️ Éditer"); edit_btn.clicked.connect(lambda _, ch=chapter: self.edit_chapter(ch))
+            actions_layout.addWidget(edit_btn)
+            delete_btn = QPushButton("🗑️"); delete_btn.clicked.connect(lambda _, ch=chapter: self.delete_chapter(ch))
+            actions_layout.addWidget(delete_btn)
+            table.setCellWidget(row, 5, actions_widget)
+            
+    def add_chapter(self):
+        if 0 <= self.tabs.currentIndex() < len(self.CLASSES):
+            self.add_chapter_to_class(self.CLASSES[self.tabs.currentIndex()])
+            
+    def add_chapter_to_class(self, class_id: str):
+        name, ok = QInputDialog.getText(self, "Nouveau chapitre", "Nom du chapitre:", QLineEdit.EchoMode.Normal, "")
+        if ok and name:
+            chapter_id = re.sub(r'[^a-z0-9]+', '-', name.lower()).strip('-')
+            if chapter_id in self.all_chapters:
+                QMessageBox.warning(self, "Erreur", "Un chapitre avec un ID similaire existe déjà."); return
 
-    def on_chapters_imported(self, new_chapters: Dict[str, ChapterData]):
-        """Callback quand l'import des chapitres est terminé"""
-        imported_count = 0
-        for chapter_id, chapter_data in new_chapters.items():
-            if chapter_id in self.chapters_data:
-                # Mettre à jour les données existantes
-                existing = self.chapters_data[chapter_id]
-                existing.chapter = chapter_data.chapter
-                existing.session_date = chapter_data.session_date
-                existing.quiz_count = chapter_data.quiz_count
-                existing.exercise_count = chapter_data.exercise_count
+            chapter = ChapterData(); chapter.id = chapter_id
+            chapter.file_name = f"{class_id}_{chapter.id.replace('-', '_')}.json"; chapter.class_type = class_id
+            chapter.chapter_name = name; chapter.is_active = True
+            chapter.session_dates = [datetime.now().strftime("%Y-%m-%d %H:%M")]
+            chapter.file_path = str(self.chapters_dir / chapter.file_name)
+            
+            if not chapter.save_to_file():
+                 QMessageBox.critical(self, "Erreur", f"Impossible de créer le fichier {chapter.file_name}"); return
+
+            self.chapters_by_class[class_id].append(chapter)
+            self.all_chapters[chapter.id] = chapter
+            self.refresh_class_tab(class_id); self.update_status(f"Nouveau chapitre créé: {name}")
+            
+    def edit_chapter(self, chapter: ChapterData):
+        editor = ChapterContentEditor(chapter, self)
+        if editor.exec() == QDialog.DialogCode.Accepted:
+            self.refresh_all(); self.update_status(f"Chapitre modifié: {chapter.chapter_name}")
+            
+    def delete_chapter(self, chapter: ChapterData):
+        reply = QMessageBox.question(self, "Confirmer la suppression",
+            f"Supprimer le chapitre '{chapter.chapter_name}' et son fichier associé ?",
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, QMessageBox.StandardButton.No)
+        if reply == QMessageBox.StandardButton.Yes:
+            if chapter.file_path and Path(chapter.file_path).exists():
+                try: Path(chapter.file_path).unlink()
+                except Exception as e: QMessageBox.warning(self, "Erreur", f"Impossible de supprimer le fichier:\n{e}")
+            self.chapters_by_class[chapter.class_type].remove(chapter)
+            del self.all_chapters[chapter.id]
+            self.refresh_all(); self.update_status(f"Chapitre supprimé: {chapter.chapter_name}")
+            
+    def save_all(self):
+        if not self.manifest_path:
+            path, _ = QFileDialog.getSaveFileName(self, "Sauvegarder manifest", "public/manifest.json", "JSON Files (*.json)")
+            if not path: return
+            self.manifest_path = path
+            self.chapters_dir = Path(path).parent / "chapters"; self.chapters_dir.mkdir(exist_ok=True)
+            
+        manifest = {cid: [c.to_manifest_dict() for c in clist] for cid, clist in self.chapters_by_class.items() if clist}
+        try:
+            with open(self.manifest_path, 'w', encoding='utf-8') as f:
+                json.dump(manifest, f, indent=2, ensure_ascii=False)
+            self.update_status("✅ Manifest et chapitres sauvegardés avec succès")
+        except Exception as e:
+            QMessageBox.critical(self, "Erreur de sauvegarde", f"Erreur du manifest:\n{str(e)}")
+            
+    def check_integrity(self):
+        errors, fixed = [], 0
+        for chapter in self.all_chapters.values():
+            file_path = self.chapters_dir / chapter.file_name
+            if not file_path.exists():
+                self.create_default_file(chapter, file_path); fixed += 1
             else:
-                # Ajouter nouveau chapitre
-                self.chapters_data[chapter_id] = chapter_data
-            imported_count += 1
-        
-        self.is_dirty = True
-        self.progress_bar.setVisible(False)
-        self.refresh_display()
-        self.status_bar.showMessage(f"{imported_count} chapitre(s) importé(s) avec succès")
-
-    def on_import_error(self, error_message: str):
-        """Callback en cas d'erreur d'import"""
-        self.progress_bar.setVisible(False)
-        QMessageBox.critical(self, "Erreur d'import", f"Erreur lors de l'import:\n{error_message}")
-
-    def refresh_display(self):
-        """Actualise l'affichage des chapitres"""
-        # Vider le conteneur
-        for i in reversed(range(self.chapters_layout.count())):
-            child = self.chapters_layout.itemAt(i).widget()
-            if child:
-                child.setParent(None)
-        
-        if not self.chapters_data:
-            no_data_label = QLabel("Aucun chapitre disponible.\nChargez un manifest ou importez des chapitres.")
-            no_data_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-            no_data_label.setStyleSheet("color: #6c757d; padding: 20px; font-style: italic;")
-            self.chapters_layout.addWidget(no_data_label)
-            self.update_stats()
-            return
-        
-        # Grouper par classe
-        chapters_by_class = {}
-        for chapter in self.chapters_data.values():
-            if chapter.class_type not in chapters_by_class:
-                chapters_by_class[chapter.class_type] = []
-            chapters_by_class[chapter.class_type].append(chapter)
-        
-        # Afficher par classe
-        for class_id in sorted(chapters_by_class.keys()):
-            class_label = self.CLASS_LABELS.get(class_id, f"Classe: {class_id.upper()}")
-            
-            group_box = QGroupBox(class_label)
-            group_layout = QVBoxLayout(group_box)
-            
-            # Trier les chapitres par nom
-            chapters = sorted(chapters_by_class[class_id], key=lambda x: x.chapter)
-            
-            for chapter in chapters:
-                chapter_widget = ChapterWidget(chapter)
-                chapter_widget.toggled.connect(self.on_chapter_toggled)
-                chapter_widget.edit_requested.connect(self.on_chapter_edit_requested)
-                chapter_widget.delete_requested.connect(self.on_chapter_delete_requested)
-                group_layout.addWidget(chapter_widget)
-            
-            self.chapters_layout.addWidget(group_box)
-        
-        self.update_stats()
-
-    def update_stats(self):
-        """Met à jour les statistiques affichées"""
-        total_chapters = len(self.chapters_data)
-        active_chapters = sum(1 for ch in self.chapters_data.values() if ch.is_active)
-        
-        stats_by_class = {}
-        for chapter in self.chapters_data.values():
-            if chapter.class_type not in stats_by_class:
-                stats_by_class[chapter.class_type] = {'total': 0, 'active': 0}
-            stats_by_class[chapter.class_type]['total'] += 1
-            if chapter.is_active:
-                stats_by_class[chapter.class_type]['active'] += 1
-        
-        stats_text = f"""<h3>📊 Statistiques Générales</h3>
-        <p><strong>Total des chapitres:</strong> {total_chapters}</p>
-        <p><strong>Chapitres actifs:</strong> {active_chapters}</p>
-        <p><strong>Chapitres inactifs:</strong> {total_chapters - active_chapters}</p>
-        
-        <h4>Par classe:</h4>
-        <ul>
-        """
-        
-        for class_id, stats in stats_by_class.items():
-            class_label = self.CLASS_LABELS.get(class_id, class_id.upper())
-            stats_text += f"<li><strong>{class_label}:</strong> {stats['active']}/{stats['total']} actifs</li>"
-        
-        stats_text += "</ul>"
-        
-        if self.is_dirty:
-            stats_text += "<p style='color: #dc3545;'><strong>⚠️ Modifications non sauvegardées</strong></p>"
-        
-        self.stats_label.setText(stats_text)
-
-    def on_chapter_toggled(self, chapter_id: str, is_active: bool):
-        """Callback quand un chapitre est activé/désactivé"""
-        if chapter_id in self.chapters_data:
-            self.chapters_data[chapter_id].is_active = is_active
-            self.is_dirty = True
-            self.update_stats()
-    
-    def on_chapter_edit_requested(self, chapter: ChapterData):
-        """Ouvre le dialogue d'édition pour un chapitre"""
-        if not self.chapters_dir or not os.path.exists(self.chapters_dir):
-            QMessageBox.warning(self, "Erreur", "Le dossier des chapitres n'est pas accessible.")
-            return
-        
-        dialog = ChapterEditDialog(chapter, self.chapters_dir, self)
-        if dialog.exec() == QDialog.DialogCode.Accepted:
-            # Mettre à jour l'affichage
-            self.is_dirty = True
-            self.refresh_display()
-            self.status_bar.showMessage(f"Chapitre '{chapter.chapter}' modifié avec succès")
-
-    def on_chapter_delete_requested(self, chapter: ChapterData):
-        """Supprime un chapitre après confirmation (avec option de supprimer le fichier)"""
-        msg = QMessageBox(self)
-        msg.setWindowTitle("Confirmer la suppression")
-        msg.setIcon(QMessageBox.Icon.Warning)
-        msg.setText(f"Voulez-vous supprimer le chapitre '{chapter.chapter}' ?")
-        msg.setInformativeText("Cette action retirera le chapitre du manifest. Vous pouvez aussi supprimer le fichier source.")
-        msg.setStandardButtons(QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
-        msg.setDefaultButton(QMessageBox.StandardButton.No)
-        delete_file_checkbox = QCheckBox("Supprimer aussi le fichier du chapitre (.json)")
-        msg.setCheckBox(delete_file_checkbox)
-        result = msg.exec()
-
-        if result == QMessageBox.StandardButton.Yes:
-            file_deleted = False
-            file_error = None
-            if delete_file_checkbox.isChecked() and self.chapters_dir:
-                chapter_path = os.path.join(self.chapters_dir, chapter.file)
                 try:
-                    if os.path.exists(chapter_path):
-                        os.remove(chapter_path)
-                        file_deleted = True
-                except Exception as e:
-                    file_error = str(e)
+                    with open(file_path, 'r', encoding='utf-8') as f: json.load(f)
+                except json.JSONDecodeError: errors.append(chapter.file_name)
+        msg = f"Vérification terminée:\n\n✅ {len(self.all_chapters) - len(errors)} fichiers valides.\n"
+        if fixed: msg += f"🔧 {fixed} fichiers manquants recréés.\n"
+        if errors: msg += f"❌ {len(errors)} fichiers corrompus: {', '.join(errors)}.\nUtilisez 'Réparer fichiers'."
+        QMessageBox.information(self, "Rapport d'intégrité", msg)
+        if fixed: self.refresh_all()
             
-            # Retirer du manifest en mémoire
-            if chapter.id in self.chapters_data:
-                del self.chapters_data[chapter.id]
+    def repair_files(self):
+        repaired = 0
+        for chapter in self.all_chapters.values():
+            file_path = self.chapters_dir / chapter.file_name
+            if file_path.exists():
+                try:
+                    with open(file_path, 'r', encoding='utf-8') as f: json.load(f)
+                except json.JSONDecodeError: self.create_default_file(chapter, file_path); repaired += 1
+        if repaired:
+            QMessageBox.information(self, "Réparation", f"✅ {repaired} fichier(s) corrompu(s) ont été réinitialisés.")
+            self.load_manifest(self.manifest_path)
+        else: QMessageBox.information(self, "Réparation", "Aucun fichier corrompu détecté.")
             
-            self.is_dirty = True
-            self.refresh_display()
-            status = "Chapitre supprimé du manifest."
-            if delete_file_checkbox.isChecked():
-                if file_deleted:
-                    status += " Fichier supprimé."
-                else:
-                    status += " Le fichier n'a pas pu être supprimé."
-                    if file_error:
-                        status += f" ({file_error})"
-            self.status_bar.showMessage(status)
-
-    def select_all_chapters(self):
-        """Sélectionne tous les chapitres"""
-        for chapter in self.chapters_data.values():
-            chapter.is_active = True
-        self.is_dirty = True
-        self.refresh_display()
-
-    def deselect_all_chapters(self):
-        """Désélectionne tous les chapitres"""
-        for chapter in self.chapters_data.values():
-            chapter.is_active = False
-        self.is_dirty = True
-        self.refresh_display()
-
-    def save_manifest(self):
-        """Sauvegarde le manifest.json"""
-        if not self.chapters_data:
-            QMessageBox.warning(self, "Attention", "Aucun chapitre à sauvegarder.")
-            return
+    def show_statistics(self):
+        total_chapters = len(self.all_chapters)
+        if not total_chapters: QMessageBox.information(self, "Statistiques", "Aucun chapitre chargé."); return
+        total_active = sum(1 for c in self.all_chapters.values() if c.is_active)
+        msg = f"📊 **STATISTIQUES GLOBALES**\n\n**Total**: {total_chapters} chapitres\n**Actifs**: {total_active} ({100*total_active/total_chapters:.1f}%)\n"
+        msg += f"**Quiz**: {sum(len(c.quiz_questions) for c in self.all_chapters.values())}\n**Exercices**: {sum(len(c.exercises) for c in self.all_chapters.values())}\n"
+        QMessageBox.information(self, "Statistiques", msg)
         
-        # Utiliser le chemin existant ou demander un nouveau
-        if self.manifest_path and os.path.exists(os.path.dirname(self.manifest_path)):
-            file_path = self.manifest_path
-        else:
-            file_path, _ = QFileDialog.getSaveFileName(
-                self, "Sauvegarder manifest.json", "manifest.json", "JSON Files (*.json)"
-            )
-        
-        if file_path:
+    def import_chapters(self):
+        files, _ = QFileDialog.getOpenFileNames(self, "Importer des chapitres", "", "JSON Files (*.json)")
+        if not files: return
+        imported = 0
+        for file in files:
             try:
-                # Construire le manifest
-                manifest = {}
-                for chapter in self.chapters_data.values():
-                    if chapter.class_type not in manifest:
-                        manifest[chapter.class_type] = []
-                    manifest[chapter.class_type].append(chapter.to_dict())
+                dest = self.chapters_dir / Path(file).name
+                if dest.exists() and QMessageBox.question(self, "Fichier existant", f"{dest.name} existe. Écraser ?", QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No) == QMessageBox.StandardButton.No: continue
+                shutil.copy2(file, dest); imported += 1
+            except Exception as e: print(f"Erreur import {file}: {e}")
+        if imported:
+            self.load_manifest(self.manifest_path)
+            QMessageBox.information(self, "Importation", f"✅ {imported} chapitre(s) importé(s).")
                 
-                # Trier pour la cohérence
-                for class_id in manifest:
-                    manifest[class_id].sort(key=lambda x: x['id'])
-                
-                # Sauvegarder
-                with open(file_path, 'w', encoding='utf-8') as f:
-                    json.dump(manifest, f, indent=2, ensure_ascii=False)
-                
-                self.is_dirty = False
-                self.manifest_path = file_path
-                self.update_stats()
-                self.status_bar.showMessage(f"Manifest sauvegardé: {file_path}")
-                
-                QMessageBox.information(self, "Succès", f"Manifest sauvegardé avec succès:\n{file_path}")
-                
-            except Exception as e:
-                QMessageBox.critical(self, "Erreur", f"Impossible de sauvegarder:\n{str(e)}")
-
-    def show_about(self):
-        """Affiche la boîte de dialogue À propos"""
-        QMessageBox.about(self, "À propos", 
-            "Application d'Administration - Gestion des Chapitres\n\n"
-            "Version 1.0\n"
-            "Remplace admin.html avec une interface PyQt6 professionnelle\n\n"
-            "Fonctionnalités:\n"
-            "• Chargement et modification du manifest.json\n"
-            "• Import de chapitres en lot\n"
-            "• Interface moderne et intuitive\n"
-            "• Sauvegarde automatique des modifications")
-
-    def closeEvent(self, event):
-        """Gère la fermeture de l'application"""
-        if self.is_dirty:
-            reply = QMessageBox.question(
-                self, "Modifications non sauvegardées",
-                "Vous avez des modifications non sauvegardées.\nVoulez-vous sauvegarder avant de quitter?",
-                QMessageBox.StandardButton.Save | QMessageBox.StandardButton.Discard | QMessageBox.StandardButton.Cancel
-            )
+    def export_selection(self):
+        active = [c for c in self.all_chapters.values() if c.is_active]
+        if not active: QMessageBox.warning(self, "Exportation", "Aucun chapitre actif à exporter."); return
+        dir_path = QFileDialog.getExistingDirectory(self, "Choisir un dossier d'exportation")
+        if not dir_path: return
+        exported = 0
+        for chapter in active:
+            if chapter.file_path and Path(chapter.file_path).exists():
+                try: shutil.copy2(chapter.file_path, Path(dir_path) / chapter.file_name); exported += 1
+                except Exception as e: print(f"Erreur export {chapter.file_name}: {e}")
+        QMessageBox.information(self, "Exportation", f"✅ {exported} chapitre(s) exporté(s).")
             
-            if reply == QMessageBox.StandardButton.Save:
-                self.save_manifest()
-                event.accept()
-            elif reply == QMessageBox.StandardButton.Discard:
-                event.accept()
-            else:
-                event.ignore()
-        else:
-            event.accept()
-
+    def activate_all(self):
+        class_id = self.CLASSES[self.tabs.currentIndex()]
+        for chapter in self.chapters_by_class[class_id]: chapter.is_active = True
+        self.refresh_class_tab(class_id)
+        
+    def deactivate_all(self):
+        class_id = self.CLASSES[self.tabs.currentIndex()]
+        for chapter in self.chapters_by_class[class_id]: chapter.is_active = False
+        self.refresh_class_tab(class_id)
+        
+    def on_search(self, text: str):
+        text = text.lower().strip()
+        for class_id in self.CLASSES:
+            table = self.tabs.widget(self.CLASSES.index(class_id)).findChild(QTableWidget, f"table_{class_id}")
+            if table:
+                for row in range(table.rowCount()):
+                    table.setRowHidden(row, text not in table.item(row, 1).text().lower())
+        
+    def update_status(self, message: str):
+        self.status_bar.showMessage(message, 5000)
+        
+    def closeEvent(self, event):
+        reply = QMessageBox.question(self, "Quitter", "Sauvegarder le manifest avant de quitter ?",
+            QMessageBox.StandardButton.Save | QMessageBox.StandardButton.Discard | QMessageBox.StandardButton.Cancel)
+        if reply == QMessageBox.StandardButton.Save: self.save_all(); event.accept()
+        elif reply == QMessageBox.StandardButton.Discard: event.accept()
+        else: event.ignore()
 
 def main():
-    """Point d'entrée principal"""
     app = QApplication(sys.argv)
-    app.setApplicationName("Gestion des Chapitres")
-    app.setApplicationVersion("1.0")
-    app.setOrganizationName("Plateforme Pédagogique")
-    
-    # Style moderne
-    app.setStyle('Fusion')
-    
-    window = AdminApp()
+    app.setApplicationName("Gestionnaire de Contenus Éducatifs")
+    window = SmartChapterManager()
     window.show()
-    
     sys.exit(app.exec())
-
 
 if __name__ == "__main__":
     main()

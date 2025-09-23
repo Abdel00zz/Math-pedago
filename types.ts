@@ -70,6 +70,7 @@ export interface AppState {
     activitySubView: 'quiz' | 'exercises' | null;
     isReviewMode: boolean;
     chapterOrder: string[];
+    shouldBlinkBackButton: boolean;
 }
 
 // Types for the specific JSON export structure
@@ -104,4 +105,6 @@ export type Action =
     | { type: 'UPDATE_EXERCISE_FEEDBACK'; payload: { exId: string; feedback: Feedback } }
     | { type: 'UPDATE_EXERCISES_DURATION'; payload: { duration: number } }
     | { type: 'SUBMIT_WORK'; payload: { chapterId: string } }
-    | { type: 'SYNC_ACTIVITIES'; payload: { activities: { [id: string]: Chapter }; progress: { [id: string]: ChapterProgress }; chapterOrder: string[] } };
+    | { type: 'SYNC_ACTIVITIES'; payload: { activities: { [id: string]: Chapter }; progress: { [id: string]: ChapterProgress }; chapterOrder: string[] } }
+    | { type: 'TRIGGER_BACK_BUTTON_BLINK' }
+    | { type: 'STOP_BACK_BUTTON_BLINK' };

@@ -7,9 +7,16 @@
       "id": "q_tcs_arithmetique_1",
       "question": "Un nombre premier est un nombre qui a exactement :",
       "options": [
-        { "text": "1 diviseur" },
-        { "text": "2 diviseurs", "isCorrect": true },
-        { "text": "Plus de 2 diviseurs" }
+        {
+          "text": "1 diviseur"
+        },
+        {
+          "text": "2 diviseurs",
+          "isCorrect": true
+        },
+        {
+          "text": "Plus de 2 diviseurs"
+        }
       ],
       "explanation": "Un nombre premier est un entier naturel qui admet exactement deux diviseurs distincts : 1 et lui-même."
     }
@@ -20,5 +27,6 @@
       "title": "Décomposition en facteurs premiers",
       "statement": "Décomposer le nombre 180 en produit de facteurs premiers."
     }
-  ]
+  ],
+  "version": "7530c42fd6dec89c6dc0de6dc0c945ce"
 }
