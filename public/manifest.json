@@ -157,7 +157,7 @@
     {
       "id": "ensembles-et-applications",
       "file": "1bsm_ensembles_et_applications.json",
-      "isActive": true,
+      "isActive": false,
       "version": "v1.1.0-17544a"
     },
     {
