@@ -1,32 +1,34 @@
 {
   "class": "2bse",
   "chapter": "Fonctions logarithmes",
-  "sessionDate": "À définir",
+  "sessionDates": [],
   "quiz": [
     {
       "id": "q_2bse_log_1",
       "question": "Pour tout $x > 0$, que vaut $\\ln(e^x)$ ?",
       "options": [
         {
-          "text": "e"
+          "text": "e",
+          "isCorrect": false
         },
         {
-          "text": "1"
+          "text": "1",
+          "isCorrect": false
         },
         {
           "text": "x",
           "isCorrect": true
         }
-      ],
-      "explanation": "Les fonctions logarithme népérien et exponentielle sont des bijections réciproques l'une de l'autre, donc $\\ln(e^x) = x$."
+      ]
     }
   ],
   "exercises": [
     {
       "id": "exo_2bse_log_1",
       "title": "Équation logarithmique",
-      "statement": "Résoudre dans $\\mathbb{R}$ l'équation $\\ln(x+2) + \\ln(x) = \\ln(3)$."
+      "statement": "Résoudre dans $\\mathbb{R}$ l'équation $\\ln(x+2) + \\ln(x) = \\ln(3)$.",
+      "sub_questions": []
     }
   ],
-  "version": "a6499f0a61eefc9d6db80bc07d1ee674"
+  "version": "v1.1.0-fb3cd1"
 }

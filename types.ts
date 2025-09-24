@@ -41,6 +41,7 @@ export interface Chapter {
     sessionDates: string[]; // Changed from sessionDate: string
     quiz: Question[];
     exercises: Exercise[];
+    version?: string;
 }
 
 export type Feedback = 'Facile' | 'Moyen' | 'Difficile' | 'Non traité';
@@ -59,6 +60,7 @@ export interface ChapterProgress {
     exercisesFeedback: { [exId: string]: Feedback };
     isWorkSubmitted: boolean;
     exercisesDuration: number; // in seconds
+    submittedVersion?: string;
 }
 
 export interface AppState {

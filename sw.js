@@ -5,7 +5,7 @@ const DYNAMIC_CACHE_NAME = 'le-centre-scientifique-dynamic-v2';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
-  '/icon.png',
+  '/icone.png',
   '/manifest.webmanifest'
 ];
 
@@ -37,19 +37,27 @@ self.addEventListener('activate', event => {
   return self.clients.claim();
 });
 
-// Stratégie de cache: "Stale While Revalidate" pour le contenu dynamique
+// Stratégie de cache: "Stale While Revalidate" pour le contenu dynamique (JSON)
 const staleWhileRevalidate = async (request) => {
   const cache = await caches.open(DYNAMIC_CACHE_NAME);
   const cachedResponse = await cache.match(request);
   
   const fetchPromise = fetch(request).then(networkResponse => {
-    cache.put(request, networkResponse.clone());
+    // IMPORTANT: Vérifier le type de réponse avant de mettre en cache les fichiers JSON.
+    // Cela empêche la mise en cache du fallback index.html pour un fichier manquant.
+    const contentType = networkResponse.headers.get('content-type');
+    if (networkResponse.ok && contentType && contentType.includes('application/json')) {
+        cache.put(request, networkResponse.clone());
+    } else {
+        console.warn(`[Service Worker] Réponse non mise en cache pour ${request.url}. Status: ${networkResponse.status}, Content-Type: ${contentType}`);
+    }
     return networkResponse;
   }).catch(err => {
-    // Si le réseau échoue, on ne fait rien, la réponse mise en cache (si elle existe) a déjà été renvoyée.
-    console.warn('[Service Worker] Fetch failed; serving from cache if available.', err);
+    // Si le fetch échoue, on se fie à la réponse en cache.
+    console.warn('[Service Worker] Fetch a échoué; service depuis le cache si disponible.', err);
   });
 
+  // Servir depuis le cache si disponible, sinon attendre la réponse réseau.
   return cachedResponse || fetchPromise;
 };
 

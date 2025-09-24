@@ -7,7 +7,8 @@ const FeedbackButton: React.FC<{
     feedback: Feedback;
     currentFeedback: Feedback | undefined;
     onClick: (feedback: Feedback) => void;
-}> = ({ feedback, currentFeedback, onClick }) => {
+    disabled?: boolean;
+}> = ({ feedback, currentFeedback, onClick, disabled = false }) => {
     const isSelected = feedback === currentFeedback;
     const styles: { [key in Feedback]: { base: string; selected: string } } = {
         'Facile': { base: 'border-success/50 hover:bg-success/10', selected: 'bg-success/10 border-success text-success' },
@@ -19,9 +20,10 @@ const FeedbackButton: React.FC<{
     return (
         <button
             onClick={() => onClick(feedback)}
+            disabled={disabled}
             className={`font-button flex-1 px-4 py-2 text-sm font-semibold rounded-lg border-2 transition-all transform active:scale-95 ${
                 isSelected ? styles[feedback].selected : styles[feedback].base
-            }`}
+            } ${disabled ? 'opacity-60 cursor-not-allowed' : ''}`}
         >
             {feedback}
         </button>
@@ -51,7 +53,14 @@ const Exercises: React.FC = () => {
         if (!currentChapterId) return;
         
         const chapter = activities[currentChapterId];
-        const exercisesFeedback = progress[currentChapterId].exercisesFeedback;
+        const chapterProgress = progress[currentChapterId];
+        if (!chapter || !chapterProgress) return;
+
+        const isOutdated = chapter.version && chapterProgress.submittedVersion && chapter.version !== chapterProgress.submittedVersion;
+        // Don't trigger blink effect on re-evaluation.
+        if (chapterProgress.isWorkSubmitted && !isOutdated) return;
+
+        const exercisesFeedback = chapterProgress.exercisesFeedback;
         const totalExercises = chapter.exercises.length;
         const evaluatedExercisesCount = Object.keys(exercisesFeedback).length;
         
@@ -67,7 +76,18 @@ const Exercises: React.FC = () => {
     
     if (!currentChapterId) return null;
     const chapter = activities[currentChapterId];
-    const exercisesFeedback = progress[currentChapterId].exercisesFeedback;
+    const chapterProgress = progress[currentChapterId];
+    const exercisesFeedback = chapterProgress.exercisesFeedback;
+
+    const isReevaluating = useMemo(() => {
+        if (!chapter || !chapterProgress) return false;
+        return (
+            !!chapterProgress.isWorkSubmitted &&
+            !!chapterProgress.submittedVersion &&
+            !!chapter.version &&
+            chapterProgress.submittedVersion !== chapter.version
+        );
+    }, [chapter, chapterProgress]);
 
     const [expandedExId, setExpandedExId] = useState<string | null>(null);
     const [visibleHints, setVisibleHints] = useState<{ [exId: string]: Set<number> }>({});
@@ -128,36 +148,42 @@ const Exercises: React.FC = () => {
 
     return (
         <div className="space-y-4 pb-4">
-            {chapter.exercises.map((exercise, index) => (
-                <div key={exercise.id} className="bg-surface p-6 rounded-lg border border-border">
-                    <h3 className="text-3xl font-playfair text-text">
-                        {`Exercice ${index + 1} | `}
-                        <span className="text-gray-500" style={{ fontSize: '0.7em' }}>
-                            {exercise.title}
-                        </span>
-                    </h3>
-                    <div className="mt-4 text-text-secondary serif-text">
-                        <MathJax dynamic>{exercise.statement}</MathJax>
-                    </div>
-                    
-                    {exercise.sub_questions && renderSubQuestions(exercise.sub_questions)}
-                    {exercise.hint && renderHints(exercise.id, exercise.hint)}
+            {chapter.exercises.map((exercise, index) => {
+                const hasExistingFeedback = !!exercisesFeedback[exercise.id];
+                const areButtonsDisabled = isReevaluating && hasExistingFeedback;
 
-                    <div className="mt-6 border-t border-border pt-4">
-                        <p className="text-sm font-semibold text-text mb-3 serif-text">Comment vous êtes-vous senti face à cet exercice ?</p>
-                        <div className="flex flex-col sm:flex-row gap-2">
-                           {(['Facile', 'Moyen', 'Difficile', 'Non traité'] as Feedback[]).map(f => (
-                                <FeedbackButton 
-                                    key={f} 
-                                    feedback={f}
-                                    currentFeedback={exercisesFeedback[exercise.id]}
-                                    onClick={(fb) => handleFeedback(exercise.id, fb)}
-                                />
-                            ))}
+                return (
+                    <div key={exercise.id} className="bg-surface p-6 rounded-lg border border-border">
+                        <h3 className="text-3xl font-playfair text-text">
+                            {`Exercice ${index + 1} | `}
+                            <span className="text-gray-500" style={{ fontSize: '0.7em' }}>
+                                {exercise.title}
+                            </span>
+                        </h3>
+                        <div className="mt-4 text-text-secondary serif-text">
+                            <MathJax dynamic>{exercise.statement}</MathJax>
+                        </div>
+                        
+                        {exercise.sub_questions && renderSubQuestions(exercise.sub_questions)}
+                        {exercise.hint && renderHints(exercise.id, exercise.hint)}
+
+                        <div className="mt-6 border-t border-border pt-4">
+                            <p className="text-sm font-semibold text-text mb-3 serif-text">Comment vous êtes-vous senti face à cet exercice ?</p>
+                            <div className="flex flex-col sm:flex-row gap-2">
+                               {(['Facile', 'Moyen', 'Difficile', 'Non traité'] as Feedback[]).map(f => (
+                                    <FeedbackButton 
+                                        key={f} 
+                                        feedback={f}
+                                        currentFeedback={exercisesFeedback[exercise.id]}
+                                        onClick={(fb) => handleFeedback(exercise.id, fb)}
+                                        disabled={areButtonsDisabled}
+                                    />
+                                ))}
+                            </div>
                         </div>
                     </div>
-                </div>
-            ))}
+                );
+            })}
         </div>
     );
 };

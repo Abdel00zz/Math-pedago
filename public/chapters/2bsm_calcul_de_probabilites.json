@@ -1,29 +1,30 @@
 {
   "class": "2bsm",
   "chapter": "Calcul de probabilités",
-  "sessionDate": "À définir",
+  "sessionDates": [],
   "quiz": [
     {
       "id": "q1",
       "question": "Que représente P(A|B) ?",
       "options": [
         {
-          "text": "La probabilité de A et B"
+          "text": "La probabilité de A et B",
+          "isCorrect": false
         },
         {
           "text": "La probabilité de A sachant B",
           "isCorrect": true
         }
-      ],
-      "explanation": "C'est la notation pour la probabilité conditionnelle."
+      ]
     }
   ],
   "exercises": [
     {
       "id": "ex1",
       "title": "Loi binomiale",
-      "statement": "On lance 10 fois une pièce équilibrée. Quelle est la probabilité d'obtenir exactement 6 fois 'Face' ?"
+      "statement": "On lance 10 fois une pièce équilibrée. Quelle est la probabilité d'obtenir exactement 6 fois 'Face' ?",
+      "sub_questions": []
     }
   ],
-  "version": "c6128cb80ef3df2f98b5858bd1d41204"
+  "version": "v1.1.0-84fe23"
 }

@@ -1,16 +1,16 @@
 {
   "class": "2bse",
   "chapter": "Limites et continuité",
-  "sessionDate": "À définir",
+  "sessionDates": [],
+  "version": "v1.1.0-auto",
   "quiz": [
     {
-      "id": "q_mcq_1",
+      "id": "q_continuite_graphique",
       "question": "À quelle condition graphique peut-on affirmer qu'une fonction est continue sur un intervalle $[a, b]$ ?",
       "options": [
         {
           "text": "Sa courbe représentative est une droite.",
-          "isCorrect": false,
-          "explanation": "Une fonction affine est bien continue, mais de nombreuses autres fonctions (paraboles, sinusoïdes, etc.) sont aussi continues sans être des droites."
+          "isCorrect": false
         },
         {
           "text": "On peut tracer sa courbe représentative sans lever le crayon.",
@@ -19,13 +19,12 @@
         },
         {
           "text": "Sa courbe est toujours au-dessus de l'axe des abscisses.",
-          "isCorrect": false,
-          "explanation": "La continuité n'est pas liée au signe de la fonction. Une fonction peut être continue tout en changeant de signe."
+          "isCorrect": false
         }
       ]
     },
     {
-      "id": "q_mcq_2",
+      "id": "q_definition_continuite",
       "question": "La définition formelle de la continuité de $f$ en $x_0$ est :",
       "options": [
         {
@@ -35,18 +34,16 @@
         },
         {
           "text": "La limite à gauche et la limite à droite en $x_0$ sont égales.",
-          "isCorrect": false,
-          "explanation": "Cette condition signifie que la limite existe, mais il faut en plus que cette limite soit égale à $f(x_0)$ pour qu'il y ait continuité."
+          "isCorrect": false
         },
         {
           "text": "La fonction est définie en $x_0$.",
-          "isCorrect": false,
-          "explanation": "Ce n'est qu'une des trois conditions. La limite doit aussi exister en $x_0$ et être égale à la valeur de la fonction en ce point."
+          "isCorrect": false
         }
       ]
     },
     {
-      "id": "q_mcq_3",
+      "id": "q_tvi_existence",
       "question": "Soit $f$ une fonction continue sur $[a, b]$. Pour tout réel $k$ compris entre $f(a)$ et $f(b)$, le théorème des valeurs intermédiaires nous assure que :",
       "options": [
         {
@@ -56,24 +53,21 @@
         },
         {
           "text": "l'équation $f(x) = k$ admet une unique solution dans $[a, b]$.",
-          "isCorrect": false,
-          "explanation": "L'unicité de la solution n'est garantie que si la fonction est, en plus, strictement monotone sur l'intervalle."
+          "isCorrect": false
         },
         {
           "text": "la fonction est strictement monotone sur $[a, b]$.",
-          "isCorrect": false,
-          "explanation": "La continuité est la seule condition nécessaire pour appliquer le TVI ; la monotonie n'est pas requise."
+          "isCorrect": false
         }
       ]
     },
     {
-      "id": "q_mcq_4",
+      "id": "q_corollaire_tvi",
       "question": "Pour garantir qu'une équation $f(x)=k$ admette une solution *unique* sur $[a,b]$ (en utilisant le corollaire du TVI), quelles conditions sont nécessaires pour $f$ ?",
       "options": [
         {
           "text": "La fonction doit être positive et continue.",
-          "isCorrect": false,
-          "explanation": "Le signe de la fonction n'a aucun impact sur l'unicité de la solution."
+          "isCorrect": false
         },
         {
           "text": "La fonction doit être continue et strictement monotone.",
@@ -82,24 +76,21 @@
         },
         {
           "text": "La fonction doit être continue et $f(a)f(b) < 0$.",
-          "isCorrect": false,
-          "explanation": "Cette condition est utile pour prouver l'existence d'une solution à $f(x)=0$, mais ne garantit pas que cette solution soit unique."
+          "isCorrect": false
         }
       ]
     },
     {
-      "id": "q_mcq_5",
+      "id": "q_continuite_operations",
       "question": "Si $f$ et $g$ sont deux fonctions continues sur $\\mathbb{R}$, laquelle de ces fonctions n'est PAS garantie d'être continue sur $\\mathbb{R}$ tout entier ?",
       "options": [
         {
           "text": "$f+g$",
-          "isCorrect": false,
-          "explanation": "La somme de deux fonctions continues sur un intervalle I est continue sur I. Ici, I est $\\mathbb{R}$."
+          "isCorrect": false
         },
         {
           "text": "$f \\times g$",
-          "isCorrect": false,
-          "explanation": "Le produit de deux fonctions continues sur un intervalle I est continu sur I. Ici, I est $\\mathbb{R}$."
+          "isCorrect": false
         },
         {
           "text": "$\\displaystyle \\frac{f}{g}$",
@@ -109,13 +100,12 @@
       ]
     },
     {
-      "id": "q_mcq_6",
+      "id": "q_df42b99f",
       "question": "L'image d'un intervalle fermé $[a, b]$ par une fonction continue est toujours :",
       "options": [
         {
           "text": "un intervalle ouvert $]m, M[$.",
-          "isCorrect": false,
-          "explanation": "Les bornes $m$ (minimum) et $M$ (maximum) sont atteintes par la fonction, donc l'intervalle image est nécessairement fermé."
+          "isCorrect": false
         },
         {
           "text": "un intervalle fermé $[m, M]$.",
@@ -124,13 +114,12 @@
         },
         {
           "text": "un intervalle de même longueur que $[a,b]$.",
-          "isCorrect": false,
-          "explanation": "La continuité ne conserve pas les longueurs. Par exemple, l'image de $[0,2]$ par $f(x)=x^2$ est $[0,4]$."
+          "isCorrect": false
         }
       ]
     },
     {
-      "id": "q_mcq_7",
+      "id": "q_d8b0e61e",
       "question": "La fonction valeur absolue $x \\mapsto |x|$ est un exemple célèbre de fonction qui est :",
       "options": [
         {
@@ -140,24 +129,21 @@
         },
         {
           "text": "dérivable en 0 mais non continue en 0.",
-          "isCorrect": false,
-          "explanation": "C'est impossible. Si une fonction est dérivable en un point, elle y est forcément continue."
+          "isCorrect": false
         },
         {
           "text": "ni continue, ni dérivable en 0.",
-          "isCorrect": false,
-          "explanation": "La fonction est bien continue en 0 car $\\lim_{x \\to 0} |x| = 0 = |0|$."
+          "isCorrect": false
         }
       ]
     },
     {
-      "id": "q_mcq_8",
+      "id": "q_f9b5ebc6",
       "question": "Une fonction qui n'est pas définie en un point $a$ peut être 'prolongée par continuité' en ce point si :",
       "options": [
         {
           "text": "elle est positive autour de $a$.",
-          "isCorrect": false,
-          "explanation": "Le signe de la fonction n'intervient pas dans la possibilité d'un prolongement par continuité."
+          "isCorrect": false
         },
         {
           "text": "elle admet une limite finie en $a$.",
@@ -166,13 +152,12 @@
         },
         {
           "text": "elle admet une limite infinie en $a$.",
-          "isCorrect": false,
-          "explanation": "Une limite infinie correspond à une asymptote verticale. C'est une discontinuité qui ne peut pas être 'réparée'."
+          "isCorrect": false
         }
       ]
     },
     {
-      "id": "q_mcq_9",
+      "id": "q_0455f6d9",
       "question": "La fonction partie entière $x \\mapsto E(x)$ est discontinue :",
       "options": [
         {
@@ -182,24 +167,21 @@
         },
         {
           "text": "uniquement en $x=0$.",
-          "isCorrect": false,
-          "explanation": "La discontinuité se produit à chaque entier (..., -2, -1, 0, 1, 2, ...), pas seulement en 0."
+          "isCorrect": false
         },
         {
           "text": "en aucun point de son ensemble de définition.",
-          "isCorrect": false,
-          "explanation": "La fonction partie entière est l'exemple type d'une fonction discontinue, avec une courbe 'en escalier'."
+          "isCorrect": false
         }
       ]
     },
     {
-      "id": "q_mcq_10",
+      "id": "q_ee8b48f9",
       "question": "Si une fonction est continue sur un intervalle fermé et borné $[a,b]$, alors elle est forcément :",
       "options": [
         {
           "text": "monotone et positive.",
-          "isCorrect": false,
-          "explanation": "Une fonction continue sur $[a,b]$ n'est pas obligatoirement monotone (ex: $\\cos(x)$ sur $[0, 2\\pi]$) ni positive."
+          "isCorrect": false
         },
         {
           "text": "bornée et atteint ses bornes (son minimum et son maximum).",
@@ -208,13 +190,12 @@
         },
         {
           "text": "dérivable sur tout l'intervalle $[a,b]$.",
-          "isCorrect": false,
-          "explanation": "La continuité n'implique pas la dérivabilité. La fonction $|x|$ est continue sur $[-1,1]$ mais pas dérivable en 0."
+          "isCorrect": false
         }
       ]
     },
     {
-      "id": "q_mcq_11",
+      "id": "q_a2f81b9c",
       "question": "La fonction $h(x) = \\sqrt{x^2+1}$ est continue sur $\\mathbb{R}$ car c'est :",
       "options": [
         {
@@ -224,24 +205,21 @@
         },
         {
           "text": "un produit de fonctions continues.",
-          "isCorrect": false,
-          "explanation": "La structure de la fonction n'est pas un produit mais une fonction appliquée à une autre."
+          "isCorrect": false
         },
         {
           "text": "une somme de fonctions continues.",
-          "isCorrect": false,
-          "explanation": "La structure de la fonction n'est pas une somme mais une fonction appliquée à une autre."
+          "isCorrect": false
         }
       ]
     },
     {
-      "id": "q_mcq_12",
+      "id": "q_079196d5",
       "question": "Soit $f$ une fonction continue sur $\\mathbb{R}$. Que peut-on dire de l'image de l'intervalle $]-\\infty, +\\infty[$ par $f$ ?",
       "options": [
         {
           "text": "C'est toujours l'intervalle $]-\\infty, +\\infty[$.",
-          "isCorrect": false,
-          "explanation": "Non, par exemple l'image de $\\mathbb{R}$ par la fonction continue $f(x)=x^2$ est $[0, +\\infty[$."
+          "isCorrect": false
         },
         {
           "text": "C'est obligatoirement un intervalle.",
@@ -250,13 +228,12 @@
         },
         {
           "text": "C'est toujours un intervalle de la forme $[m, M]$.",
-          "isCorrect": false,
-          "explanation": "Un intervalle fermé $[m, M]$ est obtenu seulement si l'intervalle de départ est fermé et borné. Ici, l'intervalle de départ est infini."
+          "isCorrect": false
         }
       ]
     },
     {
-      "id": "q_mcq_13",
+      "id": "q_8bb947b8",
       "question": "Une fonction rationnelle (quotient de deux polynômes) est continue...",
       "options": [
         {
@@ -266,18 +243,16 @@
         },
         {
           "text": "sur $\\mathbb{R}$ tout entier.",
-          "isCorrect": false,
-          "explanation": "Faux, une fonction rationnelle est discontinue aux points qui annulent son dénominateur (appelés ses pôles)."
+          "isCorrect": false
         },
         {
           "text": "seulement si le degré du numérateur est supérieur à celui du dénominateur.",
-          "isCorrect": false,
-          "explanation": "La continuité d'une fonction rationnelle sur son domaine de définition ne dépend absolument pas des degrés des polynômes."
+          "isCorrect": false
         }
       ]
     },
     {
-      "id": "q_mcq_14",
+      "id": "q_507ce6dd",
       "question": "La méthode de dichotomie (ou de bissection) est un algorithme qui s'appuie sur...",
       "options": [
         {
@@ -287,18 +262,16 @@
         },
         {
           "text": "le calcul de la dérivée.",
-          "isCorrect": false,
-          "explanation": "Contrairement à la méthode de Newton, la dichotomie n'utilise pas la dérivée, seulement les valeurs de la fonction aux bornes de l'intervalle."
+          "isCorrect": false
         },
         {
           "text": "la notion de limite infinie.",
-          "isCorrect": false,
-          "explanation": "La dichotomie est utilisée pour trouver des solutions finies sur un intervalle borné et ne fait pas appel aux limites infinies."
+          "isCorrect": false
         }
       ]
     },
     {
-      "id": "q_mcq_15",
+      "id": "q_7a66a8c6",
       "question": "Si $f$ est une fonction continue et strictement croissante sur un intervalle $I$, sa fonction réciproque $f^{-1}$...",
       "options": [
         {
@@ -308,24 +281,21 @@
         },
         {
           "text": "est continue et strictement décroissante sur $f(I)$.",
-          "isCorrect": false,
-          "explanation": "La fonction réciproque conserve le sens de variation de la fonction originale. Si $f$ est croissante, $f^{-1}$ l'est aussi."
+          "isCorrect": false
         },
         {
           "text": "n'est pas nécessairement continue.",
-          "isCorrect": false,
-          "explanation": "La continuité de la fonction réciproque est une conclusion majeure du théorème de la bijection."
+          "isCorrect": false
         }
       ]
     },
     {
-      "id": "q_mcq_16",
+      "id": "q_e8a24901",
       "question": "Quelle est la relation entre dérivabilité et continuité en un point ?",
       "options": [
         {
           "text": "Continuité implique dérivabilité.",
-          "isCorrect": false,
-          "explanation": "Faux. La fonction $f(x)=|x|$ est continue en 0 mais n'est pas dérivable en 0."
+          "isCorrect": false
         },
         {
           "text": "Dérivabilité implique continuité.",
@@ -334,19 +304,17 @@
         },
         {
           "text": "Les deux notions sont indépendantes.",
-          "isCorrect": false,
-          "explanation": "Faux. Il y a un lien direct : la dérivabilité est une condition plus forte que la continuité."
+          "isCorrect": false
         }
       ]
     },
     {
-      "id": "q_mcq_17",
+      "id": "q_7d34549f",
       "question": "L'image d'un intervalle ouvert $]a,b[$ par une fonction continue est-elle toujours un intervalle ouvert ?",
       "options": [
         {
           "text": "Oui, toujours.",
-          "isCorrect": false,
-          "explanation": "Faux. L'image est toujours un intervalle, mais il peut être fermé. Contre-exemple : l'image de $]0, 2\\pi[$ par $f(x)=\\sin(x)$ est l'intervalle fermé $[-1, 1]$."
+          "isCorrect": false
         },
         {
           "text": "Non, elle peut être un intervalle fermé ou semi-ouvert.",
@@ -355,19 +323,17 @@
         },
         {
           "text": "Non, ce n'est pas toujours un intervalle.",
-          "isCorrect": false,
-          "explanation": "Faux. Le TVI garantit que l'image d'un intervalle (quel qu'il soit) par une fonction continue est toujours un intervalle."
+          "isCorrect": false
         }
       ]
     },
     {
-      "id": "q_mcq_18",
+      "id": "q_8846694e",
       "question": "La limite d'une fonction polynôme en $\\pm\\infty$ est déterminée par :",
       "options": [
         {
           "text": "son terme constant.",
-          "isCorrect": false,
-          "explanation": "Le terme constant devient négligeable devant les termes de plus haut degré quand $x$ devient très grand."
+          "isCorrect": false
         },
         {
           "text": "son monôme de plus haut degré.",
@@ -376,19 +342,17 @@
         },
         {
           "text": "la somme de tous ses coefficients.",
-          "isCorrect": false,
-          "explanation": "La somme des coefficients est égale à la valeur du polynôme en $x=1$, ce qui n'a aucun lien avec la limite en l'infini."
+          "isCorrect": false
         }
       ]
     },
     {
-      "id": "q_mcq_19",
+      "id": "q_f53973dc",
       "question": "La fonction $x \\mapsto \\tan(x)$ est continue :",
       "options": [
         {
           "text": "sur $\\mathbb{R}$ tout entier.",
-          "isCorrect": false,
-          "explanation": "Faux. La fonction tangente n'est pas définie (et admet des asymptotes verticales) pour $x = \\frac{\\pi}{2} + k\\pi$ où $k$ est un entier."
+          "isCorrect": false
         },
         {
           "text": "sur chaque intervalle où elle est définie.",
@@ -397,24 +361,21 @@
         },
         {
           "text": "uniquement sur $] -\\frac{\\pi}{2}, \\frac{\\pi}{2} [$.",
-          "isCorrect": false,
-          "explanation": "Cet intervalle est un des intervalles où elle est continue, mais ce n'est pas le seul. Elle est aussi continue sur $] \\frac{\\pi}{2}, \\frac{3\\pi}{2} [$, etc."
+          "isCorrect": false
         }
       ]
     },
     {
-      "id": "q_mcq_20",
+      "id": "q_b2755294",
       "question": "Soit $f$ une fonction continue sur $[a,b]$. L'équation $f(x)=k$ a toujours au moins une solution si :",
       "options": [
         {
           "text": "$k$ est un réel quelconque.",
-          "isCorrect": false,
-          "explanation": "Faux. Le TVI ne s'applique que si la valeur cible $k$ est comprise entre les valeurs aux bornes, $f(a)$ et $f(b)$."
+          "isCorrect": false
         },
         {
           "text": "$k$ est compris entre $a$ et $b$.",
-          "isCorrect": false,
-          "explanation": "$k$ doit être comparé aux images $f(a)$ et $f(b)$, pas aux antécédents $a$ et $b$."
+          "isCorrect": false
         },
         {
           "text": "$k$ est une valeur intermédiaire entre $f(a)$ et $f(b)$.",
@@ -424,92 +385,60 @@
       ]
     }
   ],
-  
   "exercises": [
     {
-      "id": "exo_cont_piecewise",
+      "id": "exo_87320aeb",
       "title": "Continuité d'une fonction par morceaux",
-      "statement": "Soit la fonction $f$ définie par : $f(x) = \\begin{cases} \\displaystyle \\frac{\\sqrt{x+3} - 2}{x-1} & \\text{si } x > 1 \\\\ ax^2 + x + \\frac{1}{4} & \\text{si } x \\le 1 \\end{cases}$.",
-      "sub_questions": [
-        { "id": "q1", "text": "Calculer $\\displaystyle \\lim_{x \\to 1^+} f(x)$." },
-        { "id": "q2", "text": "Exprimer $f(1)$ et $\\displaystyle \\lim_{x \\to 1^-} f(x)$ en fonction de $a$." },
-        { "id": "q3", "text": "Déterminer la valeur de $a$ pour que la fonction $f$ soit continue en $x=1$." }
-      ]
+      "statement": "Soit la fonction $f$ définie par : $f(x) = \\begin{cases} \\displaystyle \\frac{\\sqrt{x+3} - 2}{x-1} & \\text{si } x > 1 \\\\ ax^2 + x + \\frac{1}{4} & \\text{si } x \\le 1 \\end{cases}$.\n\n1. Calculer $\\displaystyle \\lim_{x \\to 1^+} f(x)$.\n2. Exprimer $f(1)$ et $\\displaystyle \\lim_{x \\to 1^-} f(x)$ en fonction de $a$.\n3. Déterminer la valeur de $a$ pour que la fonction $f$ soit continue en $x=1$.",
+      "sub_questions": []
     },
     {
-      "id": "exo_tvi_equation",
+      "id": "exo_3bd0ceb2",
       "title": "Théorème des Valeurs Intermédiaires",
-      "statement": "On considère l'équation $(E) : x^3 + 2x - 2 = 0$.",
-      "sub_questions": [
-        { "id": "q1", "text": "Soit $f(x) = x^3 + 2x - 2$. Justifier la continuité de $f$ sur $\\mathbb{R}$ et étudier sa monotonie." },
-        { "id": "q2", "text": "Montrer que l'équation $(E)$ admet une unique solution $\\alpha$ dans l'intervalle $]0, 1[$." },
-        { "id": "q3", "text": "Donner un encadrement de $\\alpha$ d'amplitude $0.25$." }
-      ]
+      "statement": "On considère l'équation $(E) : x^3 + 2x - 2 = 0$.\n\n1. Soit $f(x) = x^3 + 2x - 2$. Justifier la continuité de $f$ sur $\\mathbb{R}$ et étudier sa monotonie.\n2. Montrer que l'équation $(E)$ admet une unique solution $\\alpha$ dans l'intervalle $]0, 1[$.\n3. Donner un encadrement de $\\alpha$ d'amplitude $0.25$.",
+      "sub_questions": []
     },
     {
-      "id": "exo_image_intervalle",
+      "id": "exo_f16b56f2",
       "title": "Image d'intervalles",
-      "statement": "Soit la fonction $f$ définie sur $\\mathbb{R}$ par $f(x) = -x^2 + 2x + 3$.",
-      "sub_questions": [
-        { "id": "q1", "text": "Dresser le tableau de variation de $f$." },
-        { "id": "q2", "text": "Déterminer $f([0, 3])$." },
-        { "id": "q3", "text": "Déterminer $f(]-\\infty, 1])$."}
-      ]
+      "statement": "Soit la fonction $f$ définie sur $\\mathbb{R}$ par $f(x) = -x^2 + 2x + 3$.\n\n1. Dresser le tableau de variation de $f$.\n2. Déterminer $f([0, 3])$.\n3. Déterminer $f(]-\\infty, 1])$.",
+      "sub_questions": []
     },
     {
-      "id": "exo_cont_composee",
+      "id": "exo_9a6e17e6",
       "title": "Continuité et composition",
-      "statement": "Soit $h(x) = \\sqrt{\\displaystyle \\frac{x}{x-1}}$.",
-      "sub_questions": [
-        { "id": "q1", "text": "Déterminer l'ensemble de définition $D_h$ de la fonction $h$." },
-        { "id": "q2", "text": "En utilisant les opérations sur les fonctions continues (composition, quotient), justifier que $h$ est continue sur chaque intervalle de $D_h$." }
-      ]
+      "statement": "Soit $h(x) = \\sqrt{\\displaystyle \\frac{x}{x-1}}$.\n\n1. Déterminer l'ensemble de définition $D_h$ de la fonction $h$.\n2. En utilisant les opérations sur les fonctions continues (composition, quotient), justifier que $h$ est continue sur chaque intervalle de $D_h$.",
+      "sub_questions": []
     },
     {
-      "id": "exo_prolongement",
+      "id": "exo_880a3a4f",
       "title": "Prolongement par continuité",
       "statement": "Soit la fonction $f$ définie sur $] -\\frac{\\pi}{2}, \\frac{\\pi}{2} [ \\setminus \\{0\\}$ par $f(x) = \\displaystyle \\frac{\\tan(x)}{x}$. La fonction $f$ est-elle prolongeable par continuité en $x=0$ ? Si oui, définir ce prolongement.",
       "sub_questions": []
     },
     {
-      "id": "exo_min_max",
+      "id": "exo_07553365",
       "title": "Valeurs minimales et maximales",
-      "statement": "Soit la fonction $f$ définie sur $\\mathbb{R}$ par $f(x) = x^3 - 3x^2 + 1$. On s'intéresse à l'intervalle $I = [-1, 3]$.",
-      "sub_questions": [
-        { "id": "q1", "text": "Justifier que $f$ est continue sur $I$." },
-        { "id": "q2", "text": "Étudier les variations de $f$ sur $\\mathbb{R}$." },
-        { "id": "q3", "text": "En déduire la valeur minimale et la valeur maximale de $f$ sur l'intervalle $I$." }
-      ]
+      "statement": "Soit la fonction $f$ définie sur $\\mathbb{R}$ par $f(x) = x^3 - 3x^2 + 1$. On s'intéresse à l'intervalle $I = [-1, 3]$.\n\n1. Justifier que $f$ est continue sur $I$.\n2. Étudier les variations de $f$ sur $\\mathbb{R}$.\n3. En déduire la valeur minimale et la valeur maximale de $f$ sur l'intervalle $I$.",
+      "sub_questions": []
     },
     {
-      "id": "exo_partie_entiere",
+      "id": "exo_3937195f",
       "title": "Fonction Partie Entière",
-      "statement": "Soit la fonction $g(x) = x - E(x)$.",
-      "sub_questions": [
-        { "id": "q1", "text": "Calculer $g(2)$, $g(2.5)$ et $g(-1.5)$." },
-        { "id": "q2", "text": "Montrer que pour tout $x \\in \\mathbb{R}$, $0 \\le g(x) < 1$." },
-        { "id": "q3", "text": "Étudier la continuité de $g$ en $x=2$. La fonction $g$ est-elle continue sur $\\mathbb{R}$ ?" }
-      ]
+      "statement": "Soit la fonction $g(x) = x - E(x)$.\n\n1. Calculer $g(2)$, $g(2.5)$ et $g(-1.5)$.\n2. Montrer que pour tout $x \\in \\mathbb{R}$, $0 \\le g(x) < 1$.\n3. Étudier la continuité de $g$ en $x=2$. La fonction $g$ est-elle continue sur $\\mathbb{R}$ ?",
+      "sub_questions": []
     },
     {
-      "id": "exo_fonction_reciproque",
+      "id": "exo_ac23c99c",
       "title": "Fonction réciproque",
-      "statement": "Soit $f$ la fonction définie sur $I = [0, +\\infty[$ par $f(x) = x^2 + 1$.",
-      "sub_questions": [
-        { "id": "q1", "text": "Montrer que $f$ réalise une bijection de $I$ vers un intervalle $J$ que l'on déterminera." },
-        { "id": "q2", "text": "En déduire que $f$ admet une fonction réciproque $f^{-1}$ définie sur $J$." },
-        { "id": "q3", "text": "Déterminer l'expression de $f^{-1}(x)$ pour $x \\in J$." }
-      ]
+      "statement": "Soit $f$ la fonction définie sur $I = [0, +\\infty[$ par $f(x) = x^2 + 1$.\n\n1. Montrer que $f$ réalise une bijection de $I$ vers un intervalle $J$ que l'on déterminera.\n2. En déduire que $f$ admet une fonction réciproque $f^{-1}$ définie sur $J$.\n3. Déterminer l'expression de $f^{-1}(x)$ pour $x \\in J$.",
+      "sub_questions": []
     },
     {
-      "id": "exo_synthese",
+      "id": "exo_fe83d2b5",
       "title": "Exercice de synthèse",
-      "statement": "Soit $f(x) = \\displaystyle \\frac{1}{x} + \\sin(\\pi x)$ sur $]0, +\\infty[$.",
-      "sub_questions": [
-        { "id": "q1", "text": "Justifier que $f$ est continue sur son domaine de définition." },
-        { "id": "q2", "text": "Calculer $f(1/2)$ et $f(1)$." },
-        { "id": "q3", "text": "Montrer que l'équation $f(x)=2$ admet au moins une solution dans l'intervalle $[1/2, 1]$." }
-      ]
+      "statement": "Soit $f(x) = \\displaystyle \\frac{1}{x} + \\sin(\\pi x)$ sur $]0, +\\infty[$.\n\n1. Justifier que $f$ est continue sur son domaine de définition.\n2. Calculer $f(1/2)$ et $f(1)$.\n3. Montrer que l'équation $f(x)=2$ admet au moins une solution dans l'intervalle $[1/2, 1]$.",
+      "sub_questions": []
     }
   ]
 }

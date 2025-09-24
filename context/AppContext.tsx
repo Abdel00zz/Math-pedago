@@ -4,13 +4,16 @@ import { AppState, Action, Chapter, Profile, QuizProgress, ChapterProgress, Feed
 import { DB_KEY } from '../constants';
 import { useNotification } from './NotificationContext';
 
+const CHAPTER_VERSIONS_KEY = 'pedagoEleveChapterVersions_V1.2';
+const UI_NOTIFICATIONS_KEY = 'pedagoUiNotifications_V1';
+
 const initialState: AppState = {
     view: 'login',
     profile: null,
     activities: {},
     progress: {},
     currentChapterId: null,
-    activitySubView: 'quiz',
+    activitySubView: null,
     isReviewMode: false,
     chapterOrder: [],
     shouldBlinkBackButton: false,
@@ -31,6 +34,7 @@ const appReducer = (state: AppState, action: Action): AppState => {
                 view: restoredView,
                 currentChapterId: currentChapterId || null,
                 activitySubView: activitySubView || null,
+                shouldBlinkBackButton: false,
             };
         }
         case 'CHANGE_VIEW': {
@@ -78,7 +82,7 @@ const appReducer = (state: AppState, action: Action): AppState => {
             if (!state.currentChapterId) return state;
             const progress = state.progress[state.currentChapterId];
             const newAnswers = { ...progress.quiz.answers, [action.payload.qId]: action.payload.answer };
-            const allAnswered = Object.keys(newAnswers).length === state.activities[state.currentChapterId].quiz.length;
+            const allAnswered = Object.keys(newAnswers).length >= state.activities[state.currentChapterId].quiz.length;
             return {
                 ...state,
                 progress: {
@@ -155,33 +159,49 @@ const appReducer = (state: AppState, action: Action): AppState => {
         }
         case 'SUBMIT_WORK': {
             const { chapterId } = action.payload;
-            if (!chapterId || !state.progress[chapterId]) return state;
+            if (!chapterId || !state.progress[chapterId] || !state.activities[chapterId]) return state;
             const progress = state.progress[chapterId];
-             return {
+            const chapter = state.activities[chapterId];
+            return {
                 ...state,
                 progress: {
                     ...state.progress,
-                    [chapterId]: { ...progress, isWorkSubmitted: true }
+                    [chapterId]: { 
+                        ...progress, 
+                        isWorkSubmitted: true,
+                        submittedVersion: chapter.version 
+                    }
                 },
             };
         }
-        case 'SYNC_ACTIVITIES':
+        case 'SYNC_ACTIVITIES': {
+            const { activities, progress, chapterOrder } = action.payload;
+            const updatedProgress = { ...progress };
+
+            // Re-evaluate progress based on new activities data
+            Object.keys(updatedProgress).forEach(chapterId => {
+                const chapter = activities[chapterId];
+                const p = updatedProgress[chapterId];
+        
+                if (chapter && p) {
+                    // Re-evaluate if all quiz questions are answered based on the latest chapter data
+                    const totalQuestions = chapter.quiz.length;
+                    const answeredQuestions = Object.keys(p.quiz.answers).length;
+                    p.quiz.allAnswered = totalQuestions > 0 && answeredQuestions >= totalQuestions;
+                }
+            });
+
             return {
                 ...state,
-                activities: action.payload.activities,
-                progress: action.payload.progress,
-                chapterOrder: action.payload.chapterOrder,
+                activities: activities,
+                progress: updatedProgress,
+                chapterOrder: chapterOrder,
             };
+        }
         case 'TRIGGER_BACK_BUTTON_BLINK':
-            return {
-                ...state,
-                shouldBlinkBackButton: true,
-            };
+            return { ...state, shouldBlinkBackButton: true };
         case 'STOP_BACK_BUTTON_BLINK':
-            return {
-                ...state,
-                shouldBlinkBackButton: false,
-            };
+            return { ...state, shouldBlinkBackButton: false };
         default:
             return state;
     }
@@ -236,8 +256,16 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
             fetchedClassRef.current = classId;
 
             try {
+                const oldVersions = JSON.parse(localStorage.getItem(CHAPTER_VERSIONS_KEY) || '{}');
+                const newVersions: { [id: string]: string } = {};
+
                 const manifestRes = await fetch('/manifest.json');
-                if (!manifestRes.ok) throw new Error("Manifest file not found");
+                if (!manifestRes.ok) throw new Error(`Manifest file not found (${manifestRes.status})`);
+                
+                const manifestContentType = manifestRes.headers.get("content-type");
+                if (!manifestContentType || !manifestContentType.includes("application/json")) {
+                    throw new Error(`Expected manifest to be JSON, but got ${manifestContentType}`);
+                }
                 const manifest: { [id: string]: any[] } = await manifestRes.json();
 
                 const chapterInfos = manifest[classId] || [];
@@ -247,39 +275,84 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
                 if (chapterInfos.length > 0) {
                     const chapterPromises = chapterInfos.map(info => 
                         fetch(`/chapters/${info.file}`)
-                            .then(res => res.ok ? res.json() : Promise.reject(`Could not load ${info.file}`))
+                            .then(res => {
+                                if (!res.ok) return Promise.reject(new Error(`Could not load ${info.file} (${res.status})`));
+                                
+                                const contentType = res.headers.get("content-type");
+                                if (!contentType || !contentType.includes("application/json")) {
+                                    return Promise.reject(new Error(`Expected chapter to be JSON, but got ${contentType} for ${info.file}`));
+                                }
+                                return res.json();
+                            })
                             .then(data => {
+                                const newVersion = info.version;
+                                const oldVersion = oldVersions[info.id];
+                                const oldChapter = state.activities[info.id];
+
+                                if (newVersion && oldVersion && oldVersion !== newVersion) {
+                                    if (info.isActive) {
+                                        try {
+                                            const uiNotifications = JSON.parse(localStorage.getItem(UI_NOTIFICATIONS_KEY) || '[]');
+                                            let updateMessage = `Le chapitre "<b>${data.chapter}</b>" a été récemment mis à jour.`;
+                                            
+                                            if (oldChapter) {
+                                                const quizDiff = data.quiz.length - oldChapter.quiz.length;
+                                                const exDiff = data.exercises.length - oldChapter.exercises.length;
+                                                const changes = [];
+                                                if (quizDiff > 0) changes.push(`+${quizDiff} question(s) de quiz`);
+                                                else if (quizDiff < 0) changes.push(`${-quizDiff} question(s) de quiz en moins`);
+                                                
+                                                if (exDiff > 0) changes.push(`+${exDiff} exercice(s)`);
+                                                else if (exDiff < 0) changes.push(`${-exDiff} exercice(s) en moins`);
+
+                                                if (changes.length > 0) {
+                                                    updateMessage += `<br>Changements&nbsp;: ${changes.join(', ')}.`;
+                                                }
+                                            } else {
+                                                updateMessage += " Découvrez les nouveautés !";
+                                            }
+
+                                            const newNotif = {
+                                                id: `update-${info.id}-${newVersion}`,
+                                                title: 'Contenu Mis à Jour',
+                                                message: updateMessage,
+                                                timestamp: Date.now()
+                                            };
+                                            if (!uiNotifications.find((n: any) => n.id === newNotif.id)) {
+                                                uiNotifications.push(newNotif);
+                                                localStorage.setItem(UI_NOTIFICATIONS_KEY, JSON.stringify(uiNotifications));
+                                            }
+                                        } catch (e) {
+                                            console.error("Failed to create UI notification for chapter update", e);
+                                        }
+                                    }
+                                }
+                                
+                                if (newVersion) {
+                                    newVersions[info.id] = newVersion;
+                                }
+
                                 const normalizedData = { ...data };
                                 // Ensure sessionDates is an array, handling old 'sessionDate' format.
-                                if (!Array.isArray(normalizedData.sessionDates)) {
+                                if (normalizedData.sessionDate && !normalizedData.sessionDates) {
+                                    normalizedData.sessionDates = [normalizedData.sessionDate];
+                                } else if (!Array.isArray(normalizedData.sessionDates)) {
                                     normalizedData.sessionDates = [];
                                 }
                                 // Clean up old property if it exists
                                 if ('sessionDate' in normalizedData) {
                                     delete normalizedData.sessionDate;
                                 }
-                                return { ...normalizedData, id: info.id, file: info.file, isActive: info.isActive };
+
+                                return { ...normalizedData, id: info.id, file: info.file, isActive: info.isActive, version: info.version };
                             })
                             .catch(err => { console.error(err); return null; })
                     );
                     const loadedChapters = (await Promise.all(chapterPromises)).filter(Boolean) as Chapter[];
                     loadedChapters.forEach(ch => allActivities[ch.id] = ch);
-
-                    // Proactively cache chapters for offline use
-                    if ('caches' in window) {
-                        caches.open('le-centre-scientifique-dynamic-v2').then(cache => {
-                            const chapterUrls = chapterInfos.map(info => `/chapters/${info.file}`);
-                            // Add manifest to the dynamic cache as well
-                            chapterUrls.push('/manifest.json');
-                            cache.addAll(chapterUrls).then(() => {
-                                console.log('Tous les chapitres de la classe ont été mis en cache.');
-                                addNotification('Contenu prêt pour une utilisation hors ligne.', 'info');
-                            }).catch(err => {
-                                console.warn('Échec de la mise en cache proactive des chapitres:', err);
-                            });
-                        });
-                    }
                 }
+                
+                localStorage.setItem(CHAPTER_VERSIONS_KEY, JSON.stringify(newVersions));
 
                 const newProgress = { ...state.progress };
                 Object.values(allActivities).forEach(chapter => {
@@ -315,8 +388,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     // Effect 3: Persist state to localStorage immediately on any state change.
     useEffect(() => {
         if (state.profile) { // Only save if logged in
-            // Exclude large 'activities' object from persistence
-            const { activities, isReviewMode, ...stateToSave } = state; 
+            // Exclude large 'activities' object and transient state from persistence
+            const { activities, isReviewMode, shouldBlinkBackButton, ...stateToSave } = state; 
             try {
                 localStorage.setItem(DB_KEY, JSON.stringify(stateToSave));
             } catch (error) {

@@ -1,7 +1,7 @@
 {
   "class": "2bsm",
   "chapter": "Arithmétique dans ℤ",
-  "sessionDate": "À définir",
+  "sessionDates": [],
   "quiz": [
     {
       "id": "q1",
@@ -12,18 +12,19 @@
           "isCorrect": true
         },
         {
-          "text": "Tout entier se décompose de manière unique en produit de facteurs premiers."
+          "text": "Tout entier se décompose de manière unique en produit de facteurs premiers.",
+          "isCorrect": false
         }
-      ],
-      "explanation": "Le théorème de Bézout donne une condition nécessaire et suffisante pour que deux entiers soient premiers entre eux."
+      ]
     }
   ],
   "exercises": [
     {
       "id": "ex1",
       "title": "PGCD",
-      "statement": "Calculer le PGCD de 120 et 84 en utilisant l'algorithme d'Euclide."
+      "statement": "Calculer le PGCD de 120 et 84 en utilisant l'algorithme d'Euclide.",
+      "sub_questions": []
     }
   ],
-  "version": "8b106996ec8e964cccd2155e22b61deb"
+  "version": "v1.1.0-a9eca8"
 }

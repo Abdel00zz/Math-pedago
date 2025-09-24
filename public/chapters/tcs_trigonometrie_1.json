@@ -1,32 +1,34 @@
 {
   "class": "tcs",
   "chapter": "Trigonométrie 1 (Règles du calcul trigonométrique)",
-  "sessionDate": "À définir",
+  "sessionDates": [],
   "quiz": [
     {
       "id": "q_tcs_trigo1_1",
       "question": "Quelle est l'identité trigonométrique fondamentale ?",
       "options": [
         {
-          "text": "$\\sin^2(x) - \\cos^2(x) = 1$"
+          "text": "$\\sin^2(x) - \\cos^2(x) = 1$",
+          "isCorrect": false
         },
         {
           "text": "$\\cos^2(x) + \\sin^2(x) = 1$",
           "isCorrect": true
         },
         {
-          "text": "$\\tan(x) = \\frac{\\cos(x)}{\\sin(x)}$"
+          "text": "$\\tan(x) = \\frac{\\cos(x)}{\\sin(x)}$",
+          "isCorrect": false
         }
-      ],
-      "explanation": "Pour tout angle x, on a toujours $\\cos^2(x) + \\sin^2(x) = 1$."
+      ]
     }
   ],
   "exercises": [
     {
       "id": "exo_tcs_trigo1_1",
       "title": "Simplification d'expression",
-      "statement": "Simplifier l'expression suivante : $\\cos(\\pi - x) + \\sin(\\frac{\\pi}{2} - x)$."
+      "statement": "Simplifier l'expression suivante : $\\cos(\\pi - x) + \\sin(\\frac{\\pi}{2} - x)$.",
+      "sub_questions": []
     }
   ],
-  "version": "503df2f6550812ca59c8a168c3d60d74"
+  "version": "v1.1.0-0bc91a"
 }

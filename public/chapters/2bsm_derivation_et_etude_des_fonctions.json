@@ -1,7 +1,7 @@
 {
   "class": "2bsm",
   "chapter": "Dérivation et étude des fonctions",
-  "sessionDate": "À définir",
+  "sessionDates": [],
   "quiz": [
     {
       "id": "q1",
@@ -12,18 +12,19 @@
           "isCorrect": true
         },
         {
-          "text": "Toute fonction continue sur [a,b] atteint ses bornes."
+          "text": "Toute fonction continue sur [a,b] atteint ses bornes.",
+          "isCorrect": false
         }
-      ],
-      "explanation": "Le théorème de Rolle garantit l'existence d'un point où la tangente est horizontale sous certaines conditions."
+      ]
     }
   ],
   "exercises": [
     {
       "id": "ex1",
       "title": "Tableau de variation",
-      "statement": "Étudier les variations de la fonction $f(x) = x e^{-x}$."
+      "statement": "Étudier les variations de la fonction $f(x) = x e^{-x}$.",
+      "sub_questions": []
     }
   ],
-  "version": "e88298a9789b4aae6d78df7255647a72"
+  "version": "v1.1.0-ee9464"
 }

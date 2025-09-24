@@ -2,14 +2,14 @@
   "class": "1bsm",
   "chapter": "Logique mathématique",
   "sessionDates": [
-    "2025-09-24T18:00:00Z",
+    "2025-09-25T18:00:00Z",
     "2025-09-30T17:00:00Z",
     "2025-10-02T17:00:00Z"
   ],
   "quiz": [
     {
       "id": "q_proposition_1",
-      "question": "Une proposition est :",
+      "question": "Une proposition est AAA :",
       "options": [
         {
           "text": "Un énoncé mathématique qui peut être vrai ou faux",
@@ -55,7 +55,7 @@
     },
     {
       "id": "q_connecteur_ou_3",
-      "question": "La proposition $P \\lor Q$ est fausse quand :",
+      "question": "AAA La proposition $P \\lor Q$ est fausse quand :",
       "options": [
         {
           "text": "$P$ et $Q$ sont toutes les deux fausses",
@@ -468,47 +468,16 @@
       ]
     },
     {
-      "id": "q_fonction_propositionnelle_21",
-      "question": "Une fonction propositionnelle est :",
+      "id": "q_c4cccf59",
+      "question": "Nouvelle question",
       "options": [
         {
-          "text": "Un énoncé contenant une ou plusieurs variables qui devient une proposition quand on fixe les variables",
+          "text": "Option 1",
           "isCorrect": true,
-          "explanation": "Une fonction propositionnelle $P(x)$ est un énoncé contenant une variable $x$ qui devient une proposition (vraie ou fausse) quand on donne une valeur particulière à $x$."
+          "explanation": "Ceci est la bonne réponse."
         },
         {
-          "text": "Une proposition toujours vraie",
-          "isCorrect": false
-        },
-        {
-          "text": "Une fonction mathématique",
-          "isCorrect": false
-        },
-        {
-          "text": "Un connecteur logique",
-          "isCorrect": false
-        }
-      ]
-    },
-    {
-      "id": "q_tautologie_22",
-      "question": "Une tautologie est :",
-      "options": [
-        {
-          "text": "Une proposition toujours vraie, quelle que soit la valeur de vérité de ses composantes",
-          "isCorrect": true,
-          "explanation": "Une tautologie est une proposition composée qui est vraie dans tous les cas possibles, c'est-à-dire pour toutes les valeurs de vérité de ses propositions élémentaires."
-        },
-        {
-          "text": "Une proposition toujours fausse",
-          "isCorrect": false
-        },
-        {
-          "text": "Une proposition dont la valeur dépend du contexte",
-          "isCorrect": false
-        },
-        {
-          "text": "Une répétition d'un même mot",
+          "text": "Option 2",
           "isCorrect": false
         }
       ]
@@ -518,7 +487,7 @@
     {
       "id": "exo_propositions_quantificateurs",
       "title": "Propositions et Quantificateurs",
-      "statement": "Exprimer les propositions suivantes à l'aide des quantificateurs et connecteurs logiques, puis indiquer la valeur de vérité de chacune d'elles :",
+      "statement": "AAA Exprimer les propositions suivantes à l'aide des quantificateurs et connecteurs logiques, puis indiquer la valeur de vérité de chacune d'elles :",
       "sub_questions": [
         {
           "text": "Il existe au moins une solution de l'équation $x^2 - 2 = 0$."
@@ -640,7 +609,13 @@
           "text": "En déduire que $f(n)$ est divisible par 111 pour tout $n \\in \\mathbb{N}$."
         }
       ]
+    },
+    {
+      "id": "exo_f29e772b",
+      "title": "Nouvel Exercice 7",
+      "statement": "Énoncé de l'exercice...",
+      "sub_questions": []
     }
   ],
-  "version": "038556852202c971ba27005a3aa9fad0"
+  "version": "v1.1.0-89891b"
 }

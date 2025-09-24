@@ -1,7 +1,7 @@
 {
   "class": "2bsm",
   "chapter": "Suites numériques",
-  "sessionDate": "À définir",
+  "sessionDates": [],
   "quiz": [
     {
       "id": "q1",
@@ -12,18 +12,19 @@
           "isCorrect": true
         },
         {
-          "text": "Non"
+          "text": "Non",
+          "isCorrect": false
         }
-      ],
-      "explanation": "Toute suite réelle convergente est bornée."
+      ]
     }
   ],
   "exercises": [
     {
       "id": "ex1",
       "title": "Convergence",
-      "statement": "Étudier la convergence de la suite $u_n = \\frac{2n+1}{n+3}$."
+      "statement": "Étudier la convergence de la suite $u_n = \\frac{2n+1}{n+3}$.",
+      "sub_questions": []
     }
   ],
-  "version": "130ac9d9040d5c06a830637c3a0c9f88"
+  "version": "v1.1.0-f45bbc"
 }

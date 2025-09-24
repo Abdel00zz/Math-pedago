@@ -1,32 +1,34 @@
 {
   "class": "2bse",
   "chapter": "Dérivation et applications",
-  "sessionDate": "À définir",
+  "sessionDates": [],
   "quiz": [
     {
       "id": "q_2bse_derivation_1",
       "question": "Quelle est la dérivée de $\\ln(u(x))$ ?",
       "options": [
         {
-          "text": "$\\frac{1}{u(x)}$"
+          "text": "$\\frac{1}{u(x)}$",
+          "isCorrect": false
         },
         {
           "text": "$\\frac{u'(x)}{u(x)}$",
           "isCorrect": true
         },
         {
-          "text": "$u'(x) \\ln(u(x))$"
+          "text": "$u'(x) \\ln(u(x))$",
+          "isCorrect": false
         }
-      ],
-      "explanation": "La dérivée de la composée de fonctions $\\ln(u(x))$ est $\\frac{u'(x)}{u(x)}$."
+      ]
     }
   ],
   "exercises": [
     {
       "id": "exo_2bse_derivation_1",
       "title": "Tangente",
-      "statement": "Déterminer l'équation de la tangente à la courbe de la fonction $f(x) = e^x$ au point d'abscisse 0."
+      "statement": "Déterminer l'équation de la tangente à la courbe de la fonction $f(x) = e^x$ au point d'abscisse 0.",
+      "sub_questions": []
     }
   ],
-  "version": "54c9e335bb6721c64e73a1a8009344e2"
+  "version": "v1.1.0-3fbe6d"
 }

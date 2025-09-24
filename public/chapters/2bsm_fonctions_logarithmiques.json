@@ -1,29 +1,30 @@
 {
   "class": "2bsm",
   "chapter": "Fonctions logarithmiques",
-  "sessionDate": "À définir",
+  "sessionDates": [],
   "quiz": [
     {
       "id": "q1",
       "question": "Quelle est la dérivée de $\\ln(x)$ ?",
       "options": [
         {
-          "text": "$x$"
+          "text": "$x$",
+          "isCorrect": false
         },
         {
           "text": "$\\frac{1}{x}$",
           "isCorrect": true
         }
-      ],
-      "explanation": "La dérivée de la fonction logarithme népérien est la fonction inverse."
+      ]
     }
   ],
   "exercises": [
     {
       "id": "ex1",
       "title": "Équation",
-      "statement": "Résoudre l'équation $\\ln(x-1) = 2$."
+      "statement": "Résoudre l'équation $\\ln(x-1) = 2$.",
+      "sub_questions": []
     }
   ],
-  "version": "2b3be453bbc70c106de9fcd7046d04d3"
+  "version": "v1.1.0-2d0f6a"
 }

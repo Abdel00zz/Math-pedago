@@ -1,32 +1,34 @@
 {
   "class": "1bsm",
   "chapter": "Étude des fonctions",
-  "sessionDate": "À définir",
+  "sessionDates": [],
   "quiz": [
     {
       "id": "q_etudefonction_1",
       "question": "Si la dérivée $f'(x)$ d'une fonction est positive sur un intervalle I, alors la fonction $f$ est :",
       "options": [
         {
-          "text": "Décroissante sur I"
+          "text": "Décroissante sur I",
+          "isCorrect": false
         },
         {
-          "text": "Constante sur I"
+          "text": "Constante sur I",
+          "isCorrect": false
         },
         {
           "text": "Croissante sur I",
           "isCorrect": true
         }
-      ],
-      "explanation": "Le signe de la dérivée donne le sens de variation de la fonction. Si $f'(x) > 0$ sur I, alors $f$ est strictement croissante sur I."
+      ]
     }
   ],
   "exercises": [
     {
       "id": "exo_etudefonction_1",
       "title": "Tableau de variation",
-      "statement": "Dresser le tableau de variation complet de la fonction $f(x) = x^3 - 3x + 2$ sur $\\mathbb{R}$."
+      "statement": "Dresser le tableau de variation complet de la fonction $f(x) = x^3 - 3x + 2$ sur $\\mathbb{R}$.",
+      "sub_questions": []
     }
   ],
-  "version": "fb52c6940b15db22d33a9295b116af4c"
+  "version": "v1.1.0-da9ff8"
 }

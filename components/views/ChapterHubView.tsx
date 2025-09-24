@@ -43,18 +43,63 @@ const ChapterHubView: React.FC = () => {
         if (!profile) return '';
         return CLASS_OPTIONS.find(c => c.value === profile.classId)?.label || profile.classId;
     }, [profile]);
+    
+    const isOutdatedSubmission = useMemo(() => {
+        if (!chapter || !chapterProgress) return false;
+        return (
+            chapterProgress.isWorkSubmitted &&
+            !!chapter.version &&
+            !!chapterProgress.submittedVersion &&
+            chapter.version !== chapterProgress.submittedVersion
+        );
+    }, [chapter, chapterProgress]);
 
     // Calculer les valeurs dérivées avec des valeurs par défaut pour éviter les erreurs
-    const quiz = chapterProgress?.quiz || { isSubmitted: false, answers: {} };
+    const quiz = useMemo(() => {
+        const defaultQuizProgress = {
+            answers: {},
+            isSubmitted: false,
+            score: 0,
+            allAnswered: false,
+            currentQuestionIndex: 0,
+            duration: 0
+        };
+        // Merge defaults with actual progress to handle old data shapes from localStorage
+        return { ...defaultQuizProgress, ...(chapterProgress?.quiz || {}) };
+    }, [chapterProgress]);
+    
     const totalExercises = chapter?.exercises?.length || 0;
-    const evaluatedExercisesCount = chapterProgress ? Object.keys(chapterProgress.exercisesFeedback || {}).length : 0;
-    const isQuizCompleted = quiz.isSubmitted;
-    const areExercisesEvaluated = evaluatedExercisesCount === totalExercises;
-    const canSubmitWork = isQuizCompleted && areExercisesEvaluated && !chapterProgress?.isWorkSubmitted;
+    
+    const evaluatedExercisesCount = useMemo(() => {
+        if (!chapter || !chapterProgress?.exercisesFeedback) {
+            return 0;
+        }
+        const currentExerciseIds = new Set(chapter.exercises.map(ex => ex.id));
+        return Object.keys(chapterProgress.exercisesFeedback)
+                     .filter(exId => currentExerciseIds.has(exId))
+                     .length;
+    }, [chapter, chapterProgress]);
+    
+    const areAllCurrentQuizQuestionsAnswered = useMemo(() => {
+        if (!chapter || chapter.quiz.length === 0) return true;
+        // Utilisez `quiz.allAnswered` qui est maintenant recalculé de manière fiable dans le réducteur
+        return quiz.allAnswered;
+    }, [chapter, quiz.allAnswered]);
+
+    const areExercisesEvaluated = totalExercises > 0 ? evaluatedExercisesCount === totalExercises : true;
+
+    const canSubmitWork = useMemo(() => {
+        if (!chapterProgress) return false;
+        const allActivitiesDone = areAllCurrentQuizQuestionsAnswered && areExercisesEvaluated;
+        if (isOutdatedSubmission) {
+            return allActivitiesDone;
+        }
+        return allActivitiesDone && !chapterProgress.isWorkSubmitted;
+    }, [areAllCurrentQuizQuestionsAnswered, areExercisesEvaluated, chapterProgress, isOutdatedSubmission]);
 
 
     const getQuizStatus = (): { text: string; status: BadgeStatus } => {
-        if (quiz.isSubmitted) return { text: 'Terminé', status: 'completed' };
+        if (quiz.isSubmitted && areAllCurrentQuizQuestionsAnswered) return { text: 'Terminé', status: 'completed' };
         if (Object.keys(quiz.answers).length > 0) return { text: 'En cours', status: 'in-progress' };
         return { text: 'À commencer', status: 'todo' };
     };
@@ -66,7 +111,12 @@ const ChapterHubView: React.FC = () => {
     };
 
     const getSubmissionStatus = (): { text: string; status: BadgeStatus } => {
-        if (chapterProgress?.isWorkSubmitted) return { text: 'Travail soumis', status: 'completed' };
+        if (chapterProgress?.isWorkSubmitted) {
+            if (isOutdatedSubmission) {
+                return { text: 'Mise à jour disponible', status: 'ready' };
+            }
+            return { text: 'Travail soumis', status: 'completed' };
+        }
         if (canSubmitWork) return { text: 'Prêt à être soumis', status: 'ready' };
         return { text: 'Verrouillé', status: 'locked' };
     };
@@ -76,10 +126,9 @@ const ChapterHubView: React.FC = () => {
     const submissionStatus = getSubmissionStatus();
 
     const quizProgressPercent = useMemo(() => {
-        if (quiz.isSubmitted) return 100;
         if (!chapter || chapter.quiz.length === 0) return 0;
         return (Object.keys(quiz.answers).length / chapter.quiz.length) * 100;
-    }, [quiz.answers, quiz.isSubmitted, chapter?.quiz?.length]);
+    }, [quiz.answers, chapter?.quiz?.length]);
     
     const exercisesProgressPercent = useMemo(() => {
         if (totalExercises === 0) return 100;
@@ -90,6 +139,8 @@ const ChapterHubView: React.FC = () => {
         if (quizStatus.status === 'todo') return 'lock_open';
         return 'quiz';
     }, [quizStatus.status]);
+    
+    const shouldAllowQuizRetake = isOutdatedSubmission && !areAllCurrentQuizQuestionsAnswered;
 
     if (!chapter || !chapterProgress || !profile) {
         return (
@@ -359,7 +410,7 @@ ${exercisesSelfAssessment.feedback.map((ex: any) =>
                                 <div>
                                     <h2 className="text-3xl font-playfair text-text">Étape 1 : Le Quiz</h2>
                                     <p className="text-secondary mt-1 text-sm max-w-md serif-text">
-                                        {isQuizCompleted ? 'Quiz terminé. Vous pouvez maintenant passer aux exercices.' : 'Vérifiez votre compréhension des concepts clés du chapitre.'}
+                                        {quiz.isSubmitted ? 'Quiz terminé. Vous pouvez maintenant passer aux exercices.' : 'Vérifiez votre compréhension des concepts clés du chapitre.'}
                                     </p>
                                 </div>
                             </div>
@@ -368,24 +419,24 @@ ${exercisesSelfAssessment.feedback.map((ex: any) =>
                             {quizStatus.status !== 'todo' && (
                                 <div className="w-full">
                                     <div className="flex items-baseline justify-between w-full mb-1">
-                                        <span className="text-sm font-semibold text-text-secondary">{isQuizCompleted ? 'Score' : 'Progression'}</span>
-                                        {isQuizCompleted 
+                                        <span className="text-sm font-semibold text-text-secondary">{quiz.isSubmitted ? 'Score' : 'Progression'}</span>
+                                        {quiz.isSubmitted 
                                             ? <span className="font-bold text-lg text-primary">{quiz.score}/{chapter.quiz.length}</span> 
                                             : getStatusBadge(quizStatus.status, quizStatus.text)}
                                     </div>
                                     <div className="w-full bg-border/50 rounded-full h-3">
-                                        <div className={`h-3 rounded-full transition-all duration-500 ${isQuizCompleted ? 'bg-success' : 'bg-primary'}`} style={{ width: `${quizProgressPercent}%` }} />
+                                        <div className={`h-3 rounded-full transition-all duration-500 ${quiz.isSubmitted ? 'bg-success' : 'bg-primary'}`} style={{ width: `${quizProgressPercent}%` }} />
                                     </div>
                                 </div>
                             )}
                              <div className="w-full">
-                                {isQuizCompleted ? (
+                                {quiz.isSubmitted && !shouldAllowQuizRetake ? (
                                     <button onClick={handleReviewQuiz} className="font-button w-full px-6 py-2 font-semibold text-primary bg-primary-light border border-primary/20 rounded-lg hover:bg-primary/20 transition-colors">
                                         Revoir le Quiz
                                     </button>
                                 ) : (
                                     <button onClick={handleStartQuiz} className="font-button w-full px-6 py-2 font-semibold text-white bg-primary rounded-lg hover:bg-primary/90 transition-transform transform hover:-translate-y-px active:scale-95">
-                                        {Object.keys(quiz.answers).length > 0 ? 'Continuer le Quiz' : 'Commencer le Quiz'}
+                                        {shouldAllowQuizRetake ? 'Compléter le Quiz' : (Object.keys(quiz.answers).length > 0 ? 'Continuer le Quiz' : 'Commencer le Quiz')}
                                     </button>
                                 )}
                             </div>
@@ -394,12 +445,12 @@ ${exercisesSelfAssessment.feedback.map((ex: any) =>
                 </div>
 
                 {/* Étape 2: Exercices */}
-                <div className={`bg-surface p-6 rounded-xl border border-border shadow-sm transition-opacity ${!isQuizCompleted && 'opacity-60'}`}>
+                <div className={`bg-surface p-6 rounded-xl border border-border shadow-sm transition-opacity ${!quiz.isSubmitted && 'opacity-60'}`}>
                     <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
                         <div className="flex-grow">
                              <div className="flex items-center gap-4">
                                 <span className="flex items-center justify-center w-12 h-12 bg-primary-light text-primary rounded-full font-bold text-xl shrink-0">
-                                    <span className="material-symbols-outlined text-2xl">{isQuizCompleted ? 'draw' : 'lock'}</span>
+                                    <span className="material-symbols-outlined text-2xl">{quiz.isSubmitted ? 'draw' : 'lock'}</span>
                                 </span>
                                 <div>
                                     <h2 className="text-3xl font-playfair text-text">Étape 2 : Les Exercices</h2>
@@ -424,7 +475,7 @@ ${exercisesSelfAssessment.feedback.map((ex: any) =>
                              <div className="w-full">
                                 <button 
                                     onClick={handleStartExercises} 
-                                    disabled={!isQuizCompleted || chapterProgress.isWorkSubmitted} 
+                                    disabled={!quiz.isSubmitted || (chapterProgress.isWorkSubmitted && !isOutdatedSubmission)} 
                                     className="font-button w-full px-6 py-2 font-semibold text-primary bg-primary-light border border-primary/20 rounded-lg hover:bg-primary/20 transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-primary-light"
                                 >
                                     {evaluatedExercisesCount > 0 ? 'Continuer les exercices' : 'Commencer les exercices'}
@@ -445,7 +496,7 @@ ${exercisesSelfAssessment.feedback.map((ex: any) =>
                                 <div>
                                     <h2 className="text-3xl font-playfair text-text">Étape 3 : Soumission</h2>
                                      <p className="text-secondary mt-1 text-sm max-w-md serif-text">
-                                        {chapterProgress.isWorkSubmitted ? 'Excellent travail ! Votre progression a été enregistrée et envoyée.' : 'Une fois les étapes 1 et 2 terminées, vous pourrez envoyer votre travail.'}
+                                        {chapterProgress.isWorkSubmitted && !isOutdatedSubmission ? 'Excellent travail ! Votre progression a été enregistrée et envoyée.' : 'Une fois les étapes 1 et 2 terminées, vous pourrez envoyer votre travail.'}
                                      </p>
                                 </div>
                             </div>
@@ -458,7 +509,7 @@ ${exercisesSelfAssessment.feedback.map((ex: any) =>
                                 </div>
                             </div>
                              <div className="w-full">
-                                {chapterProgress.isWorkSubmitted ? (
+                                {(chapterProgress.isWorkSubmitted && !isOutdatedSubmission) ? (
                                     <div className="flex items-center justify-center gap-2 w-full px-6 py-2 rounded-lg font-semibold bg-success/10 text-success">
                                         <span className="material-symbols-outlined text-xl">check_circle</span>
                                         <span>Travail Envoyé</span>
@@ -476,13 +527,13 @@ ${exercisesSelfAssessment.feedback.map((ex: any) =>
                                                     Envoi en cours...
                                                 </span>
                                             ) : (
-                                                'Envoyer le travail'
+                                                isOutdatedSubmission ? 'Renvoyer le travail' : 'Envoyer le travail'
                                             )}
                                         </button>
-                                        {(!canSubmitWork && !chapterProgress.isWorkSubmitted) && (
+                                        {!canSubmitWork && (
                                              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-max max-w-xs px-3 py-2 bg-text text-white text-sm rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
                                                 <ul className="list-none text-left space-y-1">
-                                                    {!isQuizCompleted && <li>✓ Terminez le quiz</li>}
+                                                    {!areAllCurrentQuizQuestionsAnswered && <li>✓ Terminez le quiz</li>}
                                                     {!areExercisesEvaluated && <li>✓ Évaluez tous les exercices</li>}
                                                 </ul>
                                                 <div className="absolute left-1/2 -translate-x-1/2 top-full w-0 h-0 border-x-4 border-x-transparent border-t-4 border-t-text"></div>

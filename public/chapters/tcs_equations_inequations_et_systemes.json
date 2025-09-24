@@ -1,32 +1,34 @@
 {
   "class": "tcs",
   "chapter": "Équations, inéquations et systèmes",
-  "sessionDate": "À définir",
+  "sessionDates": [],
   "quiz": [
     {
       "id": "q_tcs_equations_1",
       "question": "Pour une équation du second degré $ax^2+bx+c=0$, si le discriminant $\\Delta$ est strictement positif, l'équation admet :",
       "options": [
         {
-          "text": "Aucune solution réelle"
+          "text": "Aucune solution réelle",
+          "isCorrect": false
         },
         {
-          "text": "Une unique solution réelle"
+          "text": "Une unique solution réelle",
+          "isCorrect": false
         },
         {
           "text": "Deux solutions réelles distinctes",
           "isCorrect": true
         }
-      ],
-      "explanation": "Si $\\Delta > 0$, l'équation du second degré a deux solutions réelles distinctes."
+      ]
     }
   ],
   "exercises": [
     {
       "id": "exo_tcs_equations_1",
       "title": "Résolution de système",
-      "statement": "Résoudre le système d'équations suivant : $\\begin{cases} x + y = 5 \\\\ x - y = 1 \\end{cases}$"
+      "statement": "Résoudre le système d'équations suivant : $\\begin{cases} x + y = 5 \\\\ x - y = 1 \\end{cases}$",
+      "sub_questions": []
     }
   ],
-  "version": "6daeed6e7f96c5879da7f55af75abbba"
+  "version": "v1.1.0-b69e9b"
 }

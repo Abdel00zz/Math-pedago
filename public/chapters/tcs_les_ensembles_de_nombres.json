@@ -1,32 +1,34 @@
 {
   "class": "tcs",
   "chapter": "Les ensembles de nombres ℕ, ℤ, ℚ, 𝔻 et ℝ",
-  "sessionDate": "À définir",
+  "sessionDates": [],
   "quiz": [
     {
       "id": "q_tcs_ensembles_1",
       "question": "Lequel de ces nombres n'appartient pas à l'ensemble des nombres décimaux $\\mathbb{D}$ ?",
       "options": [
         {
-          "text": "0.5"
+          "text": "0.5",
+          "isCorrect": false
         },
         {
           "text": "$\\frac{1}{3}$",
           "isCorrect": true
         },
         {
-          "text": "2"
+          "text": "2",
+          "isCorrect": false
         }
-      ],
-      "explanation": "Un nombre décimal peut s'écrire sous la forme $\\frac{a}{10^n}$ avec a entier et n entier naturel. $\\frac{1}{3}$ ne peut pas s'écrire ainsi, son développement décimal est infini."
+      ]
     }
   ],
   "exercises": [
     {
       "id": "exo_tcs_ensembles_1",
       "title": "Classification des nombres",
-      "statement": "Classer les nombres suivants dans le plus petit ensemble (ℕ, ℤ, ℚ, 𝔻, ℝ) auquel ils appartiennent : $-5$; $3.14$; $\\sqrt{2}$; $\\frac{7}{4}$."
+      "statement": "Classer les nombres suivants dans le plus petit ensemble (ℕ, ℤ, ℚ, 𝔻, ℝ) auquel ils appartiennent : $-5$; $3.14$; $\\sqrt{2}$; $\\frac{7}{4}$.",
+      "sub_questions": []
     }
   ],
-  "version": "7afb72f3894a8f20b43aa33f70feda53"
+  "version": "v1.1.0-c557de"
 }

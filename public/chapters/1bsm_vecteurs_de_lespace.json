@@ -1,32 +1,34 @@
 {
   "class": "1bsm",
   "chapter": "Vecteurs de l'espace",
-  "sessionDate": "À définir",
+  "sessionDates": [],
   "quiz": [
     {
       "id": "q_vecteurs_espace_1",
       "question": "Trois vecteurs $\\vec{u}$, $\\vec{v}$ et $\\vec{w}$ sont dits coplanaires si :",
       "options": [
         {
-          "text": "Ils ont la même direction"
+          "text": "Ils ont la même direction",
+          "isCorrect": false
         },
         {
           "text": "Ils peuvent être représentés dans un même plan",
           "isCorrect": true
         },
         {
-          "text": "Leur produit scalaire est nul"
+          "text": "Leur produit scalaire est nul",
+          "isCorrect": false
         }
-      ],
-      "explanation": "Des vecteurs sont coplanaires si, en choisissant un même point origine, leurs représentants ont leurs extrémités dans un même plan passant par cette origine."
+      ]
     }
   ],
   "exercises": [
     {
       "id": "exo_vecteurs_espace_1",
       "title": "Coordonnées de vecteurs",
-      "statement": "Dans un repère de l'espace, on donne les points $A(1, 2, 3)$ et $B(4, 0, 5)$. Déterminer les coordonnées du vecteur $\\vec{AB}$."
+      "statement": "Dans un repère de l'espace, on donne les points $A(1, 2, 3)$ et $B(4, 0, 5)$. Déterminer les coordonnées du vecteur $\\vec{AB}$.",
+      "sub_questions": []
     }
   ],
-  "version": "9811489d9ce81fe66298acc757a00c1e"
+  "version": "v1.1.0-9b1a9b"
 }

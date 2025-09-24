@@ -74,39 +74,6 @@ const customStyles = `
   .ornament:hover {
     opacity: 1;
   }
-  
-  .tooltip {
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    margin-top: 8px;
-    padding: 6px 12px;
-    background: rgba(23, 23, 23, 0.95); /* text color with opacity */
-    color: white;
-    font-size: 12px;
-    font-weight: 500;
-    border-radius: 6px;
-    white-space: nowrap;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-    backdrop-filter: blur(4px);
-  }
-  
-  .tooltip::after {
-    content: '';
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    border: 4px solid transparent;
-    border-bottom-color: rgba(23, 23, 23, 0.95);
-  }
-  
-  .group:hover .tooltip {
-    opacity: 1;
-  }
 `;
 
 // Hook personnalisé pour la gestion du thème
@@ -294,7 +261,7 @@ const DashboardView: React.FC = () => {
     // Gestion de l'état idle
     useEffect(() => {
         if (isIdle) {
-            addNotification('Votre session est inactive. Les données seront rafraîchies.', 'info');
+             // Do not show popup notification per user request.
         }
     }, [isIdle, addNotification]);
 
@@ -329,17 +296,11 @@ const DashboardView: React.FC = () => {
                     profile: { name: state.profile.name, classId: '' },
                 };
                 localStorage.setItem(DB_KEY, JSON.stringify(profileToKeep));
-                addNotification('Réinitialisation en cours...', 'success');
+                
                 setTimeout(() => window.location.reload(), 500);
             }
             helpClickCountRef.current = 0;
         } else {
-            if (currentCount >= 3) {
-                addNotification(
-                    `${HELP_CLICKS_TO_RESET - currentCount} clic${HELP_CLICKS_TO_RESET - currentCount > 1 ? 's' : ''} pour réinitialiser`,
-                    'info'
-                );
-            }
             helpClickTimerRef.current = setTimeout(() => {
                 helpClickCountRef.current = 0;
             }, HELP_RESET_DELAY_MS);
@@ -400,7 +361,7 @@ const DashboardView: React.FC = () => {
         if (chapter && (chapter.isActive || progress[chapterId]?.isWorkSubmitted)) {
             dispatch({ type: 'CHANGE_VIEW', payload: { view: 'work-plan', chapterId } });
         } else {
-            addNotification('Ce chapitre n\'est pas encore accessible', 'info');
+            // Do not show pop-up notification per user request
         }
     }, [activities, progress, dispatch, addNotification]);
 
@@ -439,10 +400,10 @@ const DashboardView: React.FC = () => {
 
              {/* Desktop Action Buttons */}
              <div className="fixed top-4 right-4 z-40 hidden sm:flex items-center gap-3">
-                <div className="group relative">
+                <div className="relative">
                     <button 
                         onClick={handleOpenNotifications}
-                        className="w-14 h-14 rounded-full flex items-center justify-center bg-surface/50 hover:bg-surface border border-border/70 transition-all duration-200"
+                        className="group w-14 h-14 rounded-full flex items-center justify-center bg-surface/50 hover:bg-surface border border-border/70 transition-all duration-200"
                         aria-label="Notifications"
                     >
                         <span className="material-symbols-outlined text-text-secondary !text-2xl group-hover:text-primary transition-colors">notifications</span>
@@ -458,26 +419,20 @@ const DashboardView: React.FC = () => {
                         notifications={allNotifications}
                     />
                 </div>
-                <div className="group relative">
-                    <button 
-                        onClick={() => setOrientationModalOpen(true)}
-                        className="w-14 h-14 rounded-full flex items-center justify-center bg-surface/50 hover:bg-surface border border-border/70 transition-all duration-200"
-                        aria-label="Programme d'orientation"
-                    >
-                        <span className="material-symbols-outlined text-text-secondary !text-2xl group-hover:text-primary transition-colors">explore</span>
-                    </button>
-                    <span className="tooltip">Programme (Ctrl+O)</span>
-                </div>
-                <div className="group relative">
-                    <button 
-                        onClick={handleHelpClick}
-                        className="w-14 h-14 rounded-full flex items-center justify-center bg-surface/50 hover:bg-surface border border-border/70 transition-all duration-200"
-                        aria-label="Aide et support"
-                    >
-                        <span className="material-symbols-outlined text-text-secondary !text-2xl group-hover:text-primary transition-colors">help_outline</span>
-                    </button>
-                    <span className="tooltip">Aide (Ctrl+H)</span>
-                </div>
+                <button 
+                    onClick={() => setOrientationModalOpen(true)}
+                    className="group w-14 h-14 rounded-full flex items-center justify-center bg-surface/50 hover:bg-surface border border-border/70 transition-all duration-200"
+                    aria-label="Programme d'orientation (Ctrl+O)"
+                >
+                    <span className="material-symbols-outlined text-text-secondary !text-2xl group-hover:text-primary transition-colors">explore</span>
+                </button>
+                <button 
+                    onClick={handleHelpClick}
+                    className="group w-14 h-14 rounded-full flex items-center justify-center bg-surface/50 hover:bg-surface border border-border/70 transition-all duration-200"
+                    aria-label="Aide et support (Ctrl+H)"
+                >
+                    <span className="material-symbols-outlined text-text-secondary !text-2xl group-hover:text-primary transition-colors">help_outline</span>
+                </button>
             </div>
 
             <div className="min-h-screen bg-background">

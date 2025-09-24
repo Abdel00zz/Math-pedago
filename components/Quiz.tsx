@@ -12,23 +12,33 @@ const Quiz: React.FC = () => {
 
     if (!currentChapterId) return null;
     const chapter = activities[currentChapterId];
-    const quizProgress = progress[currentChapterId].quiz;
+    const chapterProgress = progress[currentChapterId];
+    const quizProgress = chapterProgress.quiz;
     const { currentQuestionIndex, answers, isSubmitted, allAnswered, score } = quizProgress;
     const question = chapter.quiz[currentQuestionIndex];
 
+    const isOutdated = useMemo(() => {
+        return (
+            chapterProgress?.isWorkSubmitted &&
+            !!chapter.version &&
+            !!chapterProgress?.submittedVersion &&
+            chapter.version !== chapterProgress.submittedVersion
+        );
+    }, [chapter, chapterProgress]);
+
     useEffect(() => {
-        // Don't run timer in review mode or if quiz is already submitted
-        if (isReviewMode || isSubmitted) return;
+        // Don't run timer in review mode or if quiz is already submitted (unless it's an outdated submission)
+        if (isReviewMode || (isSubmitted && !isOutdated)) return;
 
         const timer = setInterval(() => {
             setTimeSpent(prev => prev + 1);
         }, 1000);
 
         return () => clearInterval(timer);
-    }, [isReviewMode, isSubmitted]);
+    }, [isReviewMode, isSubmitted, isOutdated]);
 
     const handleOptionChange = (answer: string) => {
-        if (isSubmitted) return;
+        if (isSubmitted && !isOutdated) return;
         dispatch({ type: 'UPDATE_QUIZ_ANSWER', payload: { qId: question.id, answer } });
     };
 
@@ -56,7 +66,7 @@ const Quiz: React.FC = () => {
 
     const isPerfectScore = useMemo(() => score === chapter.quiz.length, [score, chapter.quiz.length]);
 
-    if (isSubmitted || isReviewMode) {
+    if ((isSubmitted && !isOutdated) || isReviewMode) {
         const userAnsw = answers[question.id];
         
         // Smartly find the explanation text
