@@ -1,23 +1,99 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { useAppState, useAppDispatch } from '../../context/AppContext';
 import { CLASS_OPTIONS } from '../../constants';
 import ConfirmationModal from '../ConfirmationModal';
 import { useNotification } from '../../context/NotificationContext';
+import GlobalActionButtons from '../GlobalActionButtons';
 import { ExportedProgressFile } from '../../types';
 
-type BadgeStatus = 'completed' | 'in-progress' | 'todo' | 'ready' | 'locked';
 
-// Configuration FormSubmit centralisée
-const FORMSUBMIT_CONFIG = {
-    endpoint: 'https://formsubmit.co/bdh.malek@gmail.com', // Endpoint standard pour supporter les pièces jointes
-    options: {
-        _captcha: 'false',
-        _template: 'table',
-        // Fix: Use double quotes for the string to correctly handle the apostrophe.
-        _autoresponse: "Votre travail a été reçu avec succès. Nous l'examinerons dans les plus brefs délais.",
-        _next: window.location.href, // Rediriger vers la même page après soumission
-    }
+// --- TYPES ---
+type StepStatus = 'locked' | 'todo' | 'in-progress' | 'completed';
+type ButtonVariant = 'primary' | 'secondary' | 'disabled';
+
+interface LearningStepProps {
+    status: StepStatus;
+    icon: string;
+    title: string;
+    description: string;
+    progressInfo?: string;
+    progressPercent?: number;
+    onClick: () => void;
+    disabled?: boolean;
+    buttonText: string;
+    buttonVariant: ButtonVariant;
+}
+
+
+// --- CONFIGURATION STATIQUE ---
+const statusConfig: { [key in StepStatus]: { ringColor: string; textColor: string; barColor: string; icon: string; } } = {
+    locked: { ringColor: 'ring-border', textColor: 'text-text-disabled', barColor: '#E5E5E5', icon: 'lock' },
+    todo: { ringColor: 'ring-secondary/50', textColor: 'text-text', barColor: '#737373', icon: 'lock_open' },
+    'in-progress': { ringColor: 'ring-primary', textColor: 'text-primary', barColor: '#FF6B35', icon: 'autorenew' },
+    completed: { ringColor: 'ring-success', textColor: 'text-success', barColor: '#10B981', icon: 'check_circle' },
 };
+
+
+// --- COMPOSANT DE CARTE D'ÉTAPE UNIFIÉ ---
+const LearningStep: React.FC<LearningStepProps> = ({
+    status, icon, title, description, progressInfo, progressPercent,
+    onClick, disabled, buttonText, buttonVariant
+}) => {
+    const currentStatus = statusConfig[status];
+    const isStepDisabled = status === 'locked' || disabled;
+
+    const buttonStyles: { [key in ButtonVariant]: string } = {
+        primary: 'bg-primary text-white hover:bg-primary/90 shadow-md shadow-primary/20',
+        secondary: 'bg-surface text-text hover:bg-border border border-border',
+        disabled: 'bg-border text-text-disabled cursor-not-allowed'
+    };
+
+    return (
+        <div className={`p-6 rounded-xl border border-border transition-all duration-200 bg-surface ${isStepDisabled ? 'opacity-70' : 'shadow-sm'}`}>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+                {/* Left Side: Icon, Title, Description */}
+                <div className="flex-grow flex items-start gap-4">
+                    <div className={`w-12 h-12 rounded-full flex items-center justify-center ring-2 ${currentStatus.ringColor} bg-background shrink-0`}>
+                        <span className={`material-symbols-outlined !text-2xl transition-colors ${currentStatus.textColor} ${status === 'in-progress' ? 'animate-spin' : ''}`}>
+                            {icon}
+                        </span>
+                    </div>
+                    <div>
+                        <h2 className="text-2xl font-playfair text-text">{title}</h2>
+                        <p className="text-secondary text-sm mt-1 font-garamond italic max-w-md">{description}</p>
+                    </div>
+                </div>
+
+                {/* Right Side: Progress & Button */}
+                <div className="w-full sm:w-auto sm:max-w-sm flex-shrink-0 flex flex-col items-end gap-4">
+                    {typeof progressPercent !== 'undefined' && status !== 'locked' && (
+                        <div className="w-full">
+                            <div className="flex justify-between items-baseline mb-1">
+                                <span className="text-sm font-button font-semibold text-secondary">{progressInfo}</span>
+                                {status !== 'completed' && 
+                                    <span className="text-sm font-button font-bold" style={{color: currentStatus.barColor}}>
+                                        {Math.round(progressPercent)}%
+                                    </span>
+                                }
+                            </div>
+                            <div className="h-2.5 w-full bg-border/50 rounded-full overflow-hidden">
+                                <div className="h-full transition-all duration-500 rounded-full" style={{ width: `${progressPercent}%`, backgroundColor: currentStatus.barColor }}></div>
+                            </div>
+                        </div>
+                    )}
+                     <button
+                        onClick={onClick}
+                        disabled={isStepDisabled}
+                        className={`font-button font-semibold px-6 py-2 rounded-lg text-sm transition-all duration-200 whitespace-nowrap w-full text-center active:scale-95 ${buttonStyles[buttonVariant]}`}
+                    >
+                        {buttonText}
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
+};
+
 
 const ChapterHubView: React.FC = () => {
     const state = useAppState();
@@ -28,155 +104,82 @@ const ChapterHubView: React.FC = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isConfirmationModalOpen, setConfirmationModalOpen] = useState(false);
     const [showConfetti, setShowConfetti] = useState(false);
-
-    const chapter = useMemo(() => {
-        if (!currentChapterId) return null;
-        return activities[currentChapterId];
-    }, [currentChapterId, activities]);
-
-    const chapterProgress = useMemo(() => {
-        if (!currentChapterId) return null;
-        return progress[currentChapterId];
-    }, [currentChapterId, progress]);
     
-    const className = useMemo(() => {
-        if (!profile) return '';
-        return CLASS_OPTIONS.find(c => c.value === profile.classId)?.label || profile.classId;
-    }, [profile]);
+    const chapter = useMemo(() => currentChapterId ? activities[currentChapterId] : null, [currentChapterId, activities]);
+    const chapterProgress = useMemo(() => currentChapterId ? progress[currentChapterId] : null, [currentChapterId, progress]);
     
-    const isOutdatedSubmission = useMemo(() => {
-        if (!chapter || !chapterProgress) return false;
-        return (
-            chapterProgress.isWorkSubmitted &&
-            !!chapter.version &&
-            !!chapterProgress.submittedVersion &&
-            chapter.version !== chapterProgress.submittedVersion
-        );
-    }, [chapter, chapterProgress]);
+    const {
+        quiz,
+        totalQuestions,
+        answeredQuestionsCount,
+        totalExercises,
+        evaluatedExercisesCount,
+        isQuizCompleted,
+        areAllExercisesDone,
+        canSubmitWork,
+        quizProgressPercent,
+        exercisesProgressPercent,
+        isOutdatedSubmission,
+        isChapterLocked
+    } = useMemo(() => {
+        const prog = currentChapterId ? progress[currentChapterId] : null;
+        const chap = currentChapterId ? activities[currentChapterId] : null;
 
-    // Calculer les valeurs dérivées avec des valeurs par défaut pour éviter les erreurs
-    const quiz = useMemo(() => {
-        const defaultQuizProgress = {
-            answers: {},
-            isSubmitted: false,
-            score: 0,
-            allAnswered: false,
-            currentQuestionIndex: 0,
-            duration: 0
+        const q = prog?.quiz || { isSubmitted: false, answers: {}, score: 0, duration: 0, hintsUsed: 0, allAnswered: false, currentQuestionIndex: 0 };
+        const tq = chap?.quiz?.length || 0;
+        const aqc = Object.keys(q.answers).length;
+        const te = chap?.exercises?.length || 0;
+        const eec = Object.keys(prog?.exercisesFeedback || {}).length;
+
+        const iqc = q.isSubmitted;
+        const aed = te > 0 ? eec === te : true;
+
+        const outdated = prog?.isWorkSubmitted && !!chap?.version && !!prog?.submittedVersion && chap.version !== prog.submittedVersion;
+        const locked = prog?.isWorkSubmitted && !outdated;
+
+        let csw = false;
+        if (outdated) {
+            csw = iqc && aed;
+        } else {
+            csw = iqc && aed && !prog?.isWorkSubmitted;
+        }
+
+        return {
+            quiz: q,
+            totalQuestions: tq,
+            answeredQuestionsCount: aqc,
+            totalExercises: te,
+            evaluatedExercisesCount: eec,
+            isQuizCompleted: iqc,
+            areAllExercisesDone: aed,
+            canSubmitWork: csw,
+            quizProgressPercent: iqc ? 100 : (tq > 0 ? (aqc / tq) * 100 : 0),
+            exercisesProgressPercent: te > 0 ? (eec / te) * 100 : 100,
+            isOutdatedSubmission: outdated,
+            isChapterLocked: locked
         };
-        // Merge defaults with actual progress to handle old data shapes from localStorage
-        return { ...defaultQuizProgress, ...(chapterProgress?.quiz || {}) };
-    }, [chapterProgress]);
-    
-    const totalExercises = chapter?.exercises?.length || 0;
-    
-    const evaluatedExercisesCount = useMemo(() => {
-        if (!chapter || !chapterProgress?.exercisesFeedback) {
-            return 0;
-        }
-        const currentExerciseIds = new Set(chapter.exercises.map(ex => ex.id));
-        return Object.keys(chapterProgress.exercisesFeedback)
-                     .filter(exId => currentExerciseIds.has(exId))
-                     .length;
-    }, [chapter, chapterProgress]);
-    
-    const areAllCurrentQuizQuestionsAnswered = useMemo(() => {
-        if (!chapter || chapter.quiz.length === 0) return true;
-        // Utilisez `quiz.allAnswered` qui est maintenant recalculé de manière fiable dans le réducteur
-        return quiz.allAnswered;
-    }, [chapter, quiz.allAnswered]);
+    }, [currentChapterId, activities, progress]);
 
-    const areExercisesEvaluated = totalExercises > 0 ? evaluatedExercisesCount === totalExercises : true;
+    const handleStartQuiz = useCallback(() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'activity', chapterId: chapter?.id, subView: 'quiz' } }), [dispatch, chapter?.id]);
+    const handleReviewQuiz = useCallback(() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'activity', chapterId: chapter?.id, subView: 'quiz', review: true } }), [dispatch, chapter?.id]);
+    const handleStartExercises = useCallback(() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'activity', chapterId: chapter?.id, subView: 'exercises' } }), [dispatch, chapter?.id]);
 
-    const canSubmitWork = useMemo(() => {
-        if (!chapterProgress) return false;
-        const allActivitiesDone = areAllCurrentQuizQuestionsAnswered && areExercisesEvaluated;
-        if (isOutdatedSubmission) {
-            return allActivitiesDone;
-        }
-        return allActivitiesDone && !chapterProgress.isWorkSubmitted;
-    }, [areAllCurrentQuizQuestionsAnswered, areExercisesEvaluated, chapterProgress, isOutdatedSubmission]);
-
-
-    const getQuizStatus = (): { text: string; status: BadgeStatus } => {
-        if (quiz.isSubmitted && areAllCurrentQuizQuestionsAnswered) return { text: 'Terminé', status: 'completed' };
-        if (Object.keys(quiz.answers).length > 0) return { text: 'En cours', status: 'in-progress' };
-        return { text: 'À commencer', status: 'todo' };
-    };
-
-    const getExercisesStatus = (): { text: string; status: BadgeStatus } => {
-        if (areExercisesEvaluated) return { text: 'Terminé', status: 'completed' };
-        if (evaluatedExercisesCount > 0) return { text: 'En cours', status: 'in-progress' };
-        return { text: 'À commencer', status: 'todo' };
-    };
-
-    const getSubmissionStatus = (): { text: string; status: BadgeStatus } => {
-        if (chapterProgress?.isWorkSubmitted) {
-            if (isOutdatedSubmission) {
-                return { text: 'Mise à jour disponible', status: 'ready' };
-            }
-            return { text: 'Travail soumis', status: 'completed' };
-        }
-        if (canSubmitWork) return { text: 'Prêt à être soumis', status: 'ready' };
-        return { text: 'Verrouillé', status: 'locked' };
-    };
-
-    const quizStatus = getQuizStatus();
-    const exercisesStatus = getExercisesStatus();
-    const submissionStatus = getSubmissionStatus();
-
-    const quizProgressPercent = useMemo(() => {
-        if (!chapter || chapter.quiz.length === 0) return 0;
-        return (Object.keys(quiz.answers).length / chapter.quiz.length) * 100;
-    }, [quiz.answers, chapter?.quiz?.length]);
-    
-    const exercisesProgressPercent = useMemo(() => {
-        if (totalExercises === 0) return 100;
-        return (evaluatedExercisesCount / totalExercises) * 100;
-    }, [evaluatedExercisesCount, totalExercises]);
-
-    const quizIcon = useMemo(() => {
-        if (quizStatus.status === 'todo') return 'lock_open';
-        return 'quiz';
-    }, [quizStatus.status]);
-    
-    const shouldAllowQuizRetake = isOutdatedSubmission && !areAllCurrentQuizQuestionsAnswered;
-
-    if (!chapter || !chapterProgress || !profile) {
-        return (
-            <div className="text-center p-12">
-                <h2 className="text-xl font-semibold">Chargement du plan de travail...</h2>
-                <p className="text-secondary mt-2">Veuillez patienter un instant.</p>
-            </div>
-        );
-    }
-
-    const handleStartQuiz = () => {
-        dispatch({ type: 'CHANGE_VIEW', payload: { view: 'activity', chapterId: chapter.id, subView: 'quiz' } });
-    };
-
-    const handleReviewQuiz = () => {
-        dispatch({ type: 'CHANGE_VIEW', payload: { view: 'activity', chapterId: chapter.id, subView: 'quiz', review: true } });
-    };
-
-    const handleStartExercises = () => {
-        dispatch({ type: 'CHANGE_VIEW', payload: { view: 'activity', chapterId: chapter.id, subView: 'exercises' } });
-    };
-    
-    const handleSubmitWork = async () => {
+    const handleSubmitWork = () => {
         if (!canSubmitWork || isSubmitting || !profile || !chapter || !chapterProgress) return;
-
         setIsSubmitting(true);
-        
+    
         try {
-            // Créer un formulaire HTML temporaire pour contourner les problèmes CORS
+            // Dispatch state update immediately before submitting the form.
+            // This ensures progress is saved locally before the page reloads.
+            dispatch({ type: 'SUBMIT_WORK', payload: { chapterId: chapter.id } });
+            setConfirmationModalOpen(false);
+            
             const form = document.createElement('form');
             form.action = 'https://formsubmit.co/bdh.malek@gmail.com';
             form.method = 'POST';
             form.enctype = 'multipart/form-data';
             form.style.display = 'none';
-            
-            // Configuration FormSubmit
+    
             const addHiddenField = (name: string, value: string) => {
                 const input = document.createElement('input');
                 input.type = 'hidden';
@@ -184,26 +187,16 @@ const ChapterHubView: React.FC = () => {
                 input.value = value;
                 form.appendChild(input);
             };
-            
+    
             addHiddenField('_template', 'table');
             addHiddenField('_captcha', 'false');
             addHiddenField('_next', window.location.href);
             addHiddenField('_subject', `✅ Nouveau travail soumis: ${profile.name} - ${chapter.chapter}`);
             addHiddenField('_autoresponse', "Votre travail a été reçu avec succès. Nous l'examinerons dans les plus brefs délais.");
+    
+            const className = CLASS_OPTIONS.find(c => c.value === profile.classId)?.label || profile.classId;
+            const quizScorePercentage = totalQuestions > 0 ? (quiz.score / totalQuestions) * 100 : 0;
             
-            const submissionDate = new Date();
-            const quizScorePercentage = chapter.quiz.length > 0 ? (quiz.score / chapter.quiz.length) * 100 : 100;
-            const resume = `Quiz: ${quiz.score}/${chapter.quiz.length} (${quizScorePercentage.toFixed(1)}%). Exercices: ${evaluatedExercisesCount}/${totalExercises} évalués.`;
-            
-            // Informations principales
-            addHiddenField('eleve', profile.name);
-            addHiddenField('classe', className);
-            addHiddenField('chapitre', chapter.chapter);
-            addHiddenField('chapitreId', chapter.id);
-            addHiddenField('submittedAt', submissionDate.toLocaleString('fr-FR', { dateStyle: 'full', timeStyle: 'short' }));
-            addHiddenField('resume', resume);
-            
-            // Find the index of the selected answer for each question
             const quizAnswersWithIndices: { [qId: string]: number } = {};
             Object.keys(quiz.answers).forEach(qId => {
                 const question = chapter.quiz.find(q => q.id === qId);
@@ -214,8 +207,7 @@ const ChapterHubView: React.FC = () => {
                     }
                 }
             });
-
-            // Construire la structure de données pour la soumission
+    
             const submissionData: ExportedProgressFile = {
                 studentName: profile.name,
                 studentLevel: className,
@@ -233,19 +225,16 @@ const ChapterHubView: React.FC = () => {
                 ]
             };
             
-            // Créer et attacher le fichier JSON
             const progressJson = JSON.stringify(submissionData, null, 2);
             const blob = new Blob([progressJson], { type: 'application/json' });
             const sanitizedName = profile.name.replace(/[^a-z0-9]/gi, '_').toLowerCase();
             const filename = `progression_${sanitizedName}_${chapter.id}.json`;
             
-            // Créer un input file pour la pièce jointe
             const fileInput = document.createElement('input');
             fileInput.type = 'file';
             fileInput.name = 'attachment';
             fileInput.style.display = 'none';
             
-            // Créer un fichier à partir du blob
             const file = new File([blob], filename, { type: 'application/json' });
             const dataTransfer = new DataTransfer();
             dataTransfer.items.add(file);
@@ -253,327 +242,99 @@ const ChapterHubView: React.FC = () => {
             
             form.appendChild(fileInput);
             document.body.appendChild(form);
-            
-            // Soumettre le formulaire
             form.submit();
             
-            // Nettoyer le formulaire après un délai
             setTimeout(() => {
-                document.body.removeChild(form);
-            }, 1000);
-            
-            // Marquer le travail comme soumis
-            dispatch({ type: 'SUBMIT_WORK', payload: { chapterId: chapter.id } });
-            
-            // Notification de succès
-            addNotification(`Travail pour "${chapter.chapter}" envoyé avec succès !`, 'success');
-            
-            // Fermer la modal de confirmation
-            setConfirmationModalOpen(false);
-            
-            // Effet confetti pour célébrer
-            setShowConfetti(true);
-            setTimeout(() => setShowConfetti(false), 5000);
+                if (document.body.contains(form)) {
+                    document.body.removeChild(form);
+                }
+            }, 2000);
             
         } catch (error) {
-            console.error("Erreur d'envoi:", error);
-            addNotification("Une erreur est survenue. Veuillez réessayer.", 'error');
-        } finally {
+            console.error("Erreur lors de la préparation de l'envoi:", error);
+            addNotification("Une erreur est survenue avant l'envoi. Veuillez réessayer.", 'error');
             setIsSubmitting(false);
         }
     };
     
-    // Fonction pour formater le corps de l'email
-    const formatEmailBody = (data: any): string => {
-        const { studentProfile, chapterDetails, quizResults, exercisesSelfAssessment } = data;
-        
-        // Calculer les statistiques nécessaires
-        const correctAnswers = quizResults.answers.filter((a: any) => a.isCorrect).length;
-        const incorrectAnswers = quizResults.answers.length - correctAnswers;
-        const averageExerciseScore = exercisesSelfAssessment.feedback.length > 0 
-            ? (exercisesSelfAssessment.feedback.reduce((sum: number, ex: any) => sum + (ex.studentFeedback?.score || 0), 0) / exercisesSelfAssessment.feedback.length).toFixed(1)
-            : '0';
-        
-        const formatDuration = (seconds: number) => {
-            if (seconds < 60) return `${seconds}s`;
-            const minutes = Math.floor(seconds / 60);
-            const remainingSeconds = seconds % 60;
-            return remainingSeconds > 0 ? `${minutes}m ${remainingSeconds}s` : `${minutes}m`;
-        };
-        
-        return `
-📚 NOUVEAU TRAVAIL SOUMIS
-========================
-
-👤 ÉTUDIANT
------------
-Nom: ${studentProfile.name}
-Classe: ${studentProfile.className}
-Date de soumission: ${new Date().toLocaleString('fr-FR')}
-
-📖 CHAPITRE
------------
-${chapterDetails.title}
-ID: ${chapterDetails.id}
-
-📊 RÉSULTATS
-------------
-Quiz: ${quizResults.score}/${quizResults.totalQuestions} (${quizResults.percentage.toFixed(1)}%)
-Exercices évalués: ${exercisesSelfAssessment.feedback.length}/${exercisesSelfAssessment.totalExercises}
-Note moyenne des exercices: ${averageExerciseScore}/5
-
-🎯 DÉTAILS DU QUIZ
-------------------
-Questions réussies: ${correctAnswers}
-Questions échouées: ${incorrectAnswers}
-Temps passé: ${formatDuration(quizResults.durationInSeconds)}
-
-💪 AUTO-ÉVALUATION DES EXERCICES
----------------------------------
-${exercisesSelfAssessment.feedback.map((ex: any) => 
-    `• ${ex.exerciseTitle}: ${ex.studentFeedback?.score || 'N/A'}/5 - ${ex.studentFeedback?.feedback || 'Pas de commentaire'}`
-).join('\n')}
-
-📎 Voir le fichier JSON joint pour plus de détails.
-        `.trim();
-    };
+    if (!chapter || !chapterProgress || !profile) {
+        return <div className="text-center p-12">Chargement...</div>;
+    }
     
-    // Fonction pour sauvegarder une copie locale (optionnel)
-    const saveLocalBackup = (data: any, filename: string) => {
-        try {
-            const backupKey = `submission_backup_${chapter.id}_${Date.now()}`;
-            localStorage.setItem(backupKey, JSON.stringify({
-                filename,
-                data,
-                timestamp: new Date().toISOString()
-            }));
-            
-            // Nettoyer les anciennes sauvegardes (garder seulement les 5 dernières)
-            cleanOldBackups();
-        } catch (error) {
-            console.warn('Impossible de sauvegarder localement:', error);
-        }
-    };
+    const steps: LearningStepProps[] = [
+        {
+            icon: 'fact_check', title: 'Étape 1 : Le Quiz',
+            description: 'Évaluez votre compréhension des concepts fondamentaux du chapitre.',
+            status: isQuizCompleted ? 'completed' : answeredQuestionsCount > 0 ? 'in-progress' : 'todo',
+            progressPercent: quizProgressPercent,
+            progressInfo: isQuizCompleted ? `Score : ${quiz.score}/${totalQuestions}` : `${answeredQuestionsCount} / ${totalQuestions}`,
+            onClick: isQuizCompleted ? handleReviewQuiz : handleStartQuiz,
+            buttonText: isChapterLocked ? 'Consulter' : isQuizCompleted ? 'Revoir' : answeredQuestionsCount > 0 ? 'Continuer' : 'Commencer',
+            buttonVariant: isChapterLocked || isQuizCompleted ? 'secondary' : 'primary',
+        },
+        {
+            icon: 'assignment', title: 'Étape 2 : Les Exercices',
+            description: 'Mettez en pratique vos connaissances et auto-évaluez votre maîtrise.',
+            status: !isQuizCompleted ? 'locked' : areAllExercisesDone ? 'completed' : evaluatedExercisesCount > 0 ? 'in-progress' : 'todo',
+            progressPercent: exercisesProgressPercent,
+            progressInfo: totalExercises > 0 ? `${evaluatedExercisesCount} / ${totalExercises}` : 'Aucun exercice',
+            onClick: handleStartExercises,
+            disabled: !isQuizCompleted,
+            buttonText: isChapterLocked ? 'Consulter' : areAllExercisesDone ? 'Revoir' : evaluatedExercisesCount > 0 ? 'Continuer' : 'Commencer',
+            buttonVariant: !isQuizCompleted ? 'disabled' : (areAllExercisesDone || isChapterLocked) ? 'secondary' : 'primary',
+        },
+        ...(!isChapterLocked ? [{
+            icon: 'flag_circle', title: 'Étape 3 : Finalisation',
+            description: isOutdatedSubmission 
+                ? 'Le contenu a été mis à jour. Veuillez revoir les étapes avant de renvoyer.' 
+                : 'Une fois les étapes terminées, envoyez votre travail pour validation.',
+            status: (canSubmitWork ? 'todo' : 'locked') as StepStatus,
+            onClick: () => setConfirmationModalOpen(true), disabled: !canSubmitWork || isSubmitting,
+            buttonText: isSubmitting ? 'Envoi...' : isOutdatedSubmission ? 'Renvoyer' : 'Finaliser',
+            buttonVariant: (canSubmitWork ? 'primary' : 'disabled') as ButtonVariant,
+        }] : [])
+    ];
     
-    const cleanOldBackups = () => {
-        const backupKeys = Object.keys(localStorage)
-            .filter(key => key.startsWith('submission_backup_'))
-            .sort()
-            .reverse();
-        
-        // Garder seulement les 5 sauvegardes les plus récentes
-        backupKeys.slice(5).forEach(key => {
-            localStorage.removeItem(key);
-        });
-    };
-    
-    const getStatusBadge = (status: BadgeStatus, text: string) => {
-        const styles: Record<BadgeStatus, string> = {
-            completed: 'px-2.5 py-1 text-xs font-semibold rounded-full bg-success/10 text-success',
-            'in-progress': 'px-2.5 py-1 text-xs font-semibold rounded-full bg-warning/10 text-warning',
-            todo: 'px-2 py-0.5 text-[11px] font-normal font-garamond rounded border border-border text-text-secondary bg-surface',
-            ready: 'px-2.5 py-1 text-xs font-semibold rounded-full bg-info/10 text-info',
-            locked: 'px-2.5 py-1 text-xs font-semibold rounded-full bg-secondary/10 text-secondary',
-        };
-        return <span className={`${styles[status]}`}>{text}</span>;
-    };
-
-    const isSubmissionUnlocked = canSubmitWork || chapterProgress.isWorkSubmitted;
-
     return (
-        <div className="max-w-4xl mx-auto animate-fadeIn">
-            <header className="relative flex items-center justify-center mb-12">
-                <button 
-                    onClick={() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'dashboard' } })}
-                    className="font-button absolute left-0 flex items-center justify-center w-12 h-12 rounded-full text-secondary bg-transparent hover:bg-surface/50 transition-all duration-200 active:scale-95"
-                    aria-label="Retour au tableau de bord"
-                >
-                    <span className="material-symbols-outlined text-3xl">arrow_back</span>
-                </button>
-                <div className="text-center">
-                    <h1 className="text-5xl font-playfair text-text">
-                        Plan de travail
-                    </h1>
-                    <p className="text-primary text-xl font-garamond italic mt-1">{chapter.chapter}</p>
-                </div>
-            </header>
-            
-            <div className="space-y-6">
-                {/* Étape 1: Quiz */}
-                <div className="bg-surface p-6 rounded-xl border border-border shadow-sm">
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-                        <div className="flex-grow">
-                            <div className="flex items-center gap-4">
-                                <span className="flex items-center justify-center w-12 h-12 bg-primary-light text-primary rounded-full font-bold text-xl shrink-0">
-                                    <span className="material-symbols-outlined text-2xl">{quizIcon}</span>
-                                </span>
-                                <div>
-                                    <h2 className="text-3xl font-playfair text-text">Étape 1 : Le Quiz</h2>
-                                    <p className="text-secondary mt-1 text-sm max-w-md serif-text">
-                                        {quiz.isSubmitted ? 'Quiz terminé. Vous pouvez maintenant passer aux exercices.' : 'Vérifiez votre compréhension des concepts clés du chapitre.'}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="w-full sm:w-auto sm:max-w-[240px] flex-shrink-0 flex flex-col items-end gap-4">
-                            {quizStatus.status !== 'todo' && (
-                                <div className="w-full">
-                                    <div className="flex items-baseline justify-between w-full mb-1">
-                                        <span className="text-sm font-semibold text-text-secondary">{quiz.isSubmitted ? 'Score' : 'Progression'}</span>
-                                        {quiz.isSubmitted 
-                                            ? <span className="font-bold text-lg text-primary">{quiz.score}/{chapter.quiz.length}</span> 
-                                            : getStatusBadge(quizStatus.status, quizStatus.text)}
-                                    </div>
-                                    <div className="w-full bg-border/50 rounded-full h-3">
-                                        <div className={`h-3 rounded-full transition-all duration-500 ${quiz.isSubmitted ? 'bg-success' : 'bg-primary'}`} style={{ width: `${quizProgressPercent}%` }} />
-                                    </div>
-                                </div>
-                            )}
-                             <div className="w-full">
-                                {quiz.isSubmitted && !shouldAllowQuizRetake ? (
-                                    <button onClick={handleReviewQuiz} className="font-button w-full px-6 py-2 font-semibold text-primary bg-primary-light border border-primary/20 rounded-lg hover:bg-primary/20 transition-colors">
-                                        Revoir le Quiz
-                                    </button>
-                                ) : (
-                                    <button onClick={handleStartQuiz} className="font-button w-full px-6 py-2 font-semibold text-white bg-primary rounded-lg hover:bg-primary/90 transition-transform transform hover:-translate-y-px active:scale-95">
-                                        {shouldAllowQuizRetake ? 'Compléter le Quiz' : (Object.keys(quiz.answers).length > 0 ? 'Continuer le Quiz' : 'Commencer le Quiz')}
-                                    </button>
-                                )}
-                            </div>
+        <>
+            <GlobalActionButtons />
+            <div className="max-w-3xl mx-auto animate-slideInUp pb-24 sm:pb-8">
+                {showConfetti && (
+                    <div className="absolute inset-0 pointer-events-none z-50">{[...Array(100)].map((_, i) => <div key={i} className="confetti" style={{left: `${Math.random()*100}%`, animationDuration: `${Math.random()*3+2}s`, animationDelay: `${Math.random()*2}s`, backgroundColor: ['#FF6B35','#10B981','#3B82F6','#F59E0B'][i%4]}} />)}</div>
+                )}
+                
+                <header className="my-6 sm:my-10">
+                    <div className="relative flex items-center justify-center">
+                        <button onClick={() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'dashboard' } })} className="font-button absolute left-0 flex items-center justify-center w-11 h-11 rounded-full text-secondary bg-surface border border-border hover:bg-background transition-all duration-200 active:scale-95" aria-label="Retour au tableau de bord">
+                            <span className="material-symbols-outlined">arrow_back</span>
+                        </button>
+                        <div className="text-center">
+                            <p className="text-primary text-lg font-garamond italic">Plan de travail</p>
+                            <h1 className="text-3xl sm:text-4xl text-text font-playfair">{chapter.chapter}</h1>
                         </div>
                     </div>
+                </header>
+
+                <div className="space-y-6">
+                    {steps.map((step) => <LearningStep key={step.title} {...step} />)}
                 </div>
 
-                {/* Étape 2: Exercices */}
-                <div className={`bg-surface p-6 rounded-xl border border-border shadow-sm transition-opacity ${!quiz.isSubmitted && 'opacity-60'}`}>
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-                        <div className="flex-grow">
-                             <div className="flex items-center gap-4">
-                                <span className="flex items-center justify-center w-12 h-12 bg-primary-light text-primary rounded-full font-bold text-xl shrink-0">
-                                    <span className="material-symbols-outlined text-2xl">{quiz.isSubmitted ? 'draw' : 'lock'}</span>
-                                </span>
-                                <div>
-                                    <h2 className="text-3xl font-playfair text-text">Étape 2 : Les Exercices</h2>
-                                    <p className="text-secondary mt-1 text-sm max-w-md serif-text">
-                                        {areExercisesEvaluated ? 'Tous les exercices ont été auto-évalués.' : 'Mettez en pratique vos connaissances et évaluez votre maîtrise.'}
-                                    </p>
-                                </div>
-                            </div>
+                {isChapterLocked && (
+                    <div className="mt-12 text-center border-2 border-dashed border-success/50 bg-success/5 p-8 rounded-2xl animate-fadeIn">
+                        <div className="mx-auto w-16 h-16 flex items-center justify-center bg-success/10 rounded-full text-success mb-4">
+                            <span className="material-symbols-outlined !text-4xl">verified</span>
                         </div>
-                         <div className="w-full sm:w-auto sm:max-w-[240px] flex-shrink-0 flex flex-col items-end gap-4">
-                            {exercisesStatus.status !== 'todo' && (
-                                <div className="w-full">
-                                    <div className="flex items-baseline justify-between w-full mb-1">
-                                        <span className="text-sm font-semibold text-text-secondary">Progression</span>
-                                        {getStatusBadge(exercisesStatus.status, `${evaluatedExercisesCount}/${totalExercises}`)}
-                                    </div>
-                                    <div className="w-full bg-border/50 rounded-full h-3">
-                                        <div className={`h-3 rounded-full transition-all duration-500 ${areExercisesEvaluated ? 'bg-success' : 'bg-primary'}`} style={{ width: `${exercisesProgressPercent}%` }} />
-                                    </div>
-                                </div>
-                            )}
-                             <div className="w-full">
-                                <button 
-                                    onClick={handleStartExercises} 
-                                    disabled={!quiz.isSubmitted || (chapterProgress.isWorkSubmitted && !isOutdatedSubmission)} 
-                                    className="font-button w-full px-6 py-2 font-semibold text-primary bg-primary-light border border-primary/20 rounded-lg hover:bg-primary/20 transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-primary-light"
-                                >
-                                    {evaluatedExercisesCount > 0 ? 'Continuer les exercices' : 'Commencer les exercices'}
-                                </button>
-                            </div>
-                        </div>
+                        <h2 className="text-3xl font-playfair text-text">Travail Soumis !</h2>
+                        <p className="text-lg text-secondary mt-2 font-garamond italic">
+                            Félicitations ! Vos réponses ont bien été enregistrées. Nous les examinerons ensemble lors de notre prochaine séance.
+                        </p>
                     </div>
-                </div>
-                
-                {/* Étape 3: Soumission */}
-                <div className={`bg-surface p-6 rounded-xl border border-border shadow-sm transition-opacity ${!isSubmissionUnlocked && 'opacity-60'}`}>
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-                        <div className="flex-grow">
-                             <div className="flex items-center gap-4">
-                               <span className="flex items-center justify-center w-12 h-12 bg-primary-light text-primary rounded-full font-bold text-xl shrink-0">
-                                    <span className="material-symbols-outlined text-2xl">{isSubmissionUnlocked ? 'task_alt' : 'lock'}</span>
-                                </span>
-                                <div>
-                                    <h2 className="text-3xl font-playfair text-text">Étape 3 : Soumission</h2>
-                                     <p className="text-secondary mt-1 text-sm max-w-md serif-text">
-                                        {chapterProgress.isWorkSubmitted && !isOutdatedSubmission ? 'Excellent travail ! Votre progression a été enregistrée et envoyée.' : 'Une fois les étapes 1 et 2 terminées, vous pourrez envoyer votre travail.'}
-                                     </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="w-full sm:w-auto sm:max-w-[240px] flex-shrink-0 flex flex-col items-end gap-3">
-                           <div className="w-full">
-                               <div className="flex items-center justify-between w-full">
-                                    <span className="text-sm font-semibold text-text-secondary">Statut</span>
-                                    {getStatusBadge(submissionStatus.status, submissionStatus.text)}
-                                </div>
-                            </div>
-                             <div className="w-full">
-                                {(chapterProgress.isWorkSubmitted && !isOutdatedSubmission) ? (
-                                    <div className="flex items-center justify-center gap-2 w-full px-6 py-2 rounded-lg font-semibold bg-success/10 text-success">
-                                        <span className="material-symbols-outlined text-xl">check_circle</span>
-                                        <span>Travail Envoyé</span>
-                                    </div>
-                                ) : (
-                                    <div className="relative group w-full">
-                                        <button
-                                            onClick={() => setConfirmationModalOpen(true)}
-                                            disabled={!canSubmitWork || isSubmitting}
-                                            className="font-button w-full px-8 py-3 font-bold text-white bg-primary rounded-lg hover:bg-primary/90 transition-all duration-200 transform hover:scale-105 active:scale-95 disabled:bg-secondary/50 disabled:cursor-not-allowed disabled:transform-none"
-                                        >
-                                            {isSubmitting ? (
-                                                <span className="flex items-center justify-center gap-2">
-                                                    <span className="animate-spin">⏳</span>
-                                                    Envoi en cours...
-                                                </span>
-                                            ) : (
-                                                isOutdatedSubmission ? 'Renvoyer le travail' : 'Envoyer le travail'
-                                            )}
-                                        </button>
-                                        {!canSubmitWork && (
-                                             <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-max max-w-xs px-3 py-2 bg-text text-white text-sm rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                                                <ul className="list-none text-left space-y-1">
-                                                    {!areAllCurrentQuizQuestionsAnswered && <li>✓ Terminez le quiz</li>}
-                                                    {!areExercisesEvaluated && <li>✓ Évaluez tous les exercices</li>}
-                                                </ul>
-                                                <div className="absolute left-1/2 -translate-x-1/2 top-full w-0 h-0 border-x-4 border-x-transparent border-t-4 border-t-text"></div>
-                                            </div>
-                                        )}
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                )}
             </div>
 
-            <ConfirmationModal
-                isOpen={isConfirmationModalOpen}
-                onClose={() => !isSubmitting && setConfirmationModalOpen(false)}
-                onSubmit={handleSubmitWork}
-                isSubmitting={isSubmitting}
-                chapterTitle={chapter.chapter}
-            />
-            
-            {/* Effet confetti pour célébrer la soumission */}
-            {showConfetti && (
-                <div className="fixed inset-0 pointer-events-none z-50 overflow-hidden">
-                    <div className="confetti-container">
-                        {[...Array(50)].map((_, i) => (
-                            <div
-                                key={i}
-                                className="confetti"
-                                style={{
-                                    left: `${Math.random() * 100}%`,
-                                    animationDelay: `${Math.random() * 3}s`,
-                                    backgroundColor: ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#feca57', '#ff9ff3'][Math.floor(Math.random() * 6)]
-                                }}
-                            />
-                        ))}
-                    </div>
-                </div>
-            )}
-        </div>
+            <ConfirmationModal isOpen={isConfirmationModalOpen} onClose={() => setConfirmationModalOpen(false)} onSubmit={handleSubmitWork} isSubmitting={isSubmitting} chapterTitle={chapter.chapter ?? ''} />
+            <style>{`.confetti { position: absolute; width: 10px; height: 10px; opacity: 0; animation: confetti-fall 5s ease-in-out infinite; } @keyframes confetti-fall { 0% { transform: translateY(-10vh) rotateZ(0deg); opacity: 1; } 100% { transform: translateY(110vh) rotateZ(720deg); opacity: 0; } }`}</style>
+        </>
     );
 };
 

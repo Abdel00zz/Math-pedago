@@ -14,6 +14,7 @@ export interface Question {
     question: string;
     options: Option[];
     explanation?: string;
+    hints?: string[];
 }
 
 export interface Hint {
@@ -41,7 +42,7 @@ export interface Chapter {
     sessionDates: string[]; // Changed from sessionDate: string
     quiz: Question[];
     exercises: Exercise[];
-    version?: string;
+    version: string;
 }
 
 export type Feedback = 'Facile' | 'Moyen' | 'Difficile' | 'Non traité';
@@ -53,26 +54,28 @@ export interface QuizProgress {
     allAnswered: boolean;
     currentQuestionIndex: number;
     duration: number; // in seconds
+    hintsUsed: number;
 }
 
 export interface ChapterProgress {
     quiz: QuizProgress;
     exercisesFeedback: { [exId: string]: Feedback };
     isWorkSubmitted: boolean;
+    submittedVersion?: string; // Track version on submission
     exercisesDuration: number; // in seconds
-    submittedVersion?: string;
+    hasUpdate?: boolean;
 }
 
 export interface AppState {
     view: 'login' | 'dashboard' | 'work-plan' | 'activity';
     profile: Profile | null;
     activities: { [chapterId: string]: Chapter };
+    activityVersions: { [chapterId: string]: string }; // To track versions for update notifications
     progress: { [chapterId: string]: ChapterProgress };
     currentChapterId: string | null;
     activitySubView: 'quiz' | 'exercises' | null;
     isReviewMode: boolean;
     chapterOrder: string[];
-    shouldBlinkBackButton: boolean;
 }
 
 // Types for the specific JSON export structure
@@ -95,6 +98,14 @@ export interface ExportedProgressFile {
     results: ExportedChapterResult[];
 }
 
+// Notification for the Notification Center UI
+export interface UINotification {
+    id: string;
+    title: string;
+    message: string;
+    timestamp: number; // For sorting and expiration
+}
+
 
 export type Action =
     | { type: 'INIT'; payload: Partial<AppState> }
@@ -102,11 +113,9 @@ export type Action =
     | { type: 'LOGIN'; payload: Profile }
     | { type: 'NAVIGATE_QUIZ'; payload: number }
     | { type: 'UPDATE_QUIZ_ANSWER'; payload: { qId: string; answer: string } }
-    | { type: 'SUBMIT_QUIZ'; payload: { score: number; duration: number } }
+    | { type: 'SUBMIT_QUIZ'; payload: { score: number; duration: number; hintsUsed: number } }
     | { type: 'TOGGLE_REVIEW_MODE'; payload: boolean }
     | { type: 'UPDATE_EXERCISE_FEEDBACK'; payload: { exId: string; feedback: Feedback } }
     | { type: 'UPDATE_EXERCISES_DURATION'; payload: { duration: number } }
     | { type: 'SUBMIT_WORK'; payload: { chapterId: string } }
-    | { type: 'SYNC_ACTIVITIES'; payload: { activities: { [id: string]: Chapter }; progress: { [id: string]: ChapterProgress }; chapterOrder: string[] } }
-    | { type: 'TRIGGER_BACK_BUTTON_BLINK' }
-    | { type: 'STOP_BACK_BUTTON_BLINK' };
+    | { type: 'SYNC_ACTIVITIES'; payload: { activities: { [id: string]: Chapter }; progress: { [id: string]: ChapterProgress }; chapterOrder: string[] } };

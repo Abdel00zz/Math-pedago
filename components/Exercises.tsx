@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { useAppState, useAppDispatch } from '../context/AppContext';
 import { Feedback, SubQuestion } from '../types';
 import { MathJax } from 'better-react-mathjax';
@@ -8,21 +8,23 @@ const FeedbackButton: React.FC<{
     currentFeedback: Feedback | undefined;
     onClick: (feedback: Feedback) => void;
     disabled?: boolean;
-}> = ({ feedback, currentFeedback, onClick, disabled = false }) => {
+}> = ({ feedback, currentFeedback, onClick, disabled }) => {
     const isSelected = feedback === currentFeedback;
+
+    // Styles inspired by ChapterHubView's pill-like status badges
     const styles: { [key in Feedback]: { base: string; selected: string } } = {
-        'Facile': { base: 'border-success/50 hover:bg-success/10', selected: 'bg-success/10 border-success text-success' },
-        'Moyen': { base: 'border-warning/50 hover:bg-warning/10', selected: 'bg-warning/10 border-warning text-warning' },
-        'Difficile': { base: 'border-error/50 hover:bg-error/10', selected: 'bg-error/10 border-error text-error' },
-        'Non traité': { base: 'border-secondary/50 hover:bg-secondary/10', selected: 'bg-secondary/10 border-secondary text-secondary' },
+        'Facile':    { base: 'border-border hover:bg-success/5 hover:border-success/30', selected: 'bg-success/10 text-success border-success/30' },
+        'Moyen':     { base: 'border-border hover:bg-warning/5 hover:border-warning/30', selected: 'bg-warning/10 text-warning border-warning/30' },
+        'Difficile': { base: 'border-border hover:bg-error/5 hover:border-error/30',    selected: 'bg-error/10 text-error border-error/30' },
+        'Non traité':{ base: 'border-border hover:bg-secondary/5 hover:border-secondary/30', selected: 'bg-secondary/10 text-secondary border-secondary/30' },
     };
 
     return (
         <button
             onClick={() => onClick(feedback)}
             disabled={disabled}
-            className={`font-button flex-1 px-4 py-2 text-sm font-semibold rounded-lg border-2 transition-all transform active:scale-95 ${
-                isSelected ? styles[feedback].selected : styles[feedback].base
+            className={`font-button flex-1 px-4 py-1.5 text-sm font-semibold rounded-full border transition-all duration-200 transform active:scale-95 ${
+                isSelected ? styles[feedback].selected : `text-text-secondary ${styles[feedback].base}`
             } ${disabled ? 'opacity-60 cursor-not-allowed' : ''}`}
         >
             {feedback}
@@ -30,8 +32,11 @@ const FeedbackButton: React.FC<{
     );
 };
 
+interface ExercisesProps {
+    onAllCompleted: () => void;
+}
 
-const Exercises: React.FC = () => {
+const Exercises: React.FC<ExercisesProps> = ({ onAllCompleted }) => {
     const state = useAppState();
     const dispatch = useAppDispatch();
     const { currentChapterId, activities, progress } = state;
@@ -47,47 +52,20 @@ const Exercises: React.FC = () => {
             }
         };
     }, [dispatch, currentChapterId]);
-
-    // Effet pour détecter la complétion de tous les exercices
-    useEffect(() => {
-        if (!currentChapterId) return;
-        
-        const chapter = activities[currentChapterId];
-        const chapterProgress = progress[currentChapterId];
-        if (!chapter || !chapterProgress) return;
-
-        const isOutdated = chapter.version && chapterProgress.submittedVersion && chapter.version !== chapterProgress.submittedVersion;
-        // Don't trigger blink effect on re-evaluation.
-        if (chapterProgress.isWorkSubmitted && !isOutdated) return;
-
-        const exercisesFeedback = chapterProgress.exercisesFeedback;
-        const totalExercises = chapter.exercises.length;
-        const evaluatedExercisesCount = Object.keys(exercisesFeedback).length;
-        
-        // Vérifier si tous les exercices ont été évalués
-        if (totalExercises > 0 && evaluatedExercisesCount === totalExercises) {
-            // Scroll vers le haut de la page
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            
-            // Déclencher l'effet de clignotement du bouton retour
-            dispatch({ type: 'TRIGGER_BACK_BUTTON_BLINK' });
-        }
-    }, [currentChapterId, activities, progress, dispatch]);
     
     if (!currentChapterId) return null;
     const chapter = activities[currentChapterId];
     const chapterProgress = progress[currentChapterId];
     const exercisesFeedback = chapterProgress.exercisesFeedback;
 
-    const isReevaluating = useMemo(() => {
-        if (!chapter || !chapterProgress) return false;
-        return (
-            !!chapterProgress.isWorkSubmitted &&
-            !!chapterProgress.submittedVersion &&
-            !!chapter.version &&
-            chapterProgress.submittedVersion !== chapter.version
-        );
-    }, [chapter, chapterProgress]);
+    const isOutdatedSubmission = useMemo(() => (
+        chapterProgress.isWorkSubmitted &&
+        !!chapter.version &&
+        !!chapterProgress.submittedVersion &&
+        chapter.version !== chapterProgress.submittedVersion
+    ), [chapter, chapterProgress]);
+    
+    const isChapterLocked = chapterProgress.isWorkSubmitted && !isOutdatedSubmission;
 
     const [expandedExId, setExpandedExId] = useState<string | null>(null);
     const [visibleHints, setVisibleHints] = useState<{ [exId: string]: Set<number> }>({});
@@ -98,7 +76,16 @@ const Exercises: React.FC = () => {
         return Object.keys(exercisesFeedback).length;
     }, [exercisesFeedback]);
 
-    const progressPercentage = totalExercises > 0 ? (evaluatedExercisesCount / totalExercises) * 100 : 0;
+    const wasCompleted = useRef(false);
+    useEffect(() => {
+        const areAllEvaluated = totalExercises > 0 && evaluatedExercisesCount === totalExercises;
+        if (areAllEvaluated && !wasCompleted.current) {
+            onAllCompleted();
+            wasCompleted.current = true;
+        } else if (!areAllEvaluated) {
+            wasCompleted.current = false;
+        }
+    }, [evaluatedExercisesCount, totalExercises, onAllCompleted]);
 
 
     const handleToggleExercise = (exId: string) => {
@@ -113,6 +100,7 @@ const Exercises: React.FC = () => {
     };
     
     const handleFeedback = (exId: string, feedback: Feedback) => {
+        if (isChapterLocked) return;
         dispatch({ type: 'UPDATE_EXERCISE_FEEDBACK', payload: { exId, feedback } });
     };
 
@@ -148,42 +136,32 @@ const Exercises: React.FC = () => {
 
     return (
         <div className="space-y-4 pb-4">
-            {chapter.exercises.map((exercise, index) => {
-                const hasExistingFeedback = !!exercisesFeedback[exercise.id];
-                const areButtonsDisabled = isReevaluating && hasExistingFeedback;
+            {chapter.exercises.map((exercise, index) => (
+                <div key={exercise.id} className="bg-surface p-6 rounded-lg border border-border">
+                    <h3 className="text-3xl font-playfair text-text">{`Exercice ${index + 1} | ${exercise.title}`}</h3>
+                    <div className="mt-4 text-text-secondary serif-text">
+                        <MathJax dynamic>{exercise.statement}</MathJax>
+                    </div>
+                    
+                    {exercise.sub_questions && renderSubQuestions(exercise.sub_questions)}
+                    {exercise.hint && renderHints(exercise.id, exercise.hint)}
 
-                return (
-                    <div key={exercise.id} className="bg-surface p-6 rounded-lg border border-border">
-                        <h3 className="text-3xl font-playfair text-text">
-                            {`Exercice ${index + 1} | `}
-                            <span className="text-gray-500" style={{ fontSize: '0.7em' }}>
-                                {exercise.title}
-                            </span>
-                        </h3>
-                        <div className="mt-4 text-text-secondary serif-text">
-                            <MathJax dynamic>{exercise.statement}</MathJax>
-                        </div>
-                        
-                        {exercise.sub_questions && renderSubQuestions(exercise.sub_questions)}
-                        {exercise.hint && renderHints(exercise.id, exercise.hint)}
-
-                        <div className="mt-6 border-t border-border pt-4">
-                            <p className="text-sm font-semibold text-text mb-3 serif-text">Comment vous êtes-vous senti face à cet exercice ?</p>
-                            <div className="flex flex-col sm:flex-row gap-2">
-                               {(['Facile', 'Moyen', 'Difficile', 'Non traité'] as Feedback[]).map(f => (
-                                    <FeedbackButton 
-                                        key={f} 
-                                        feedback={f}
-                                        currentFeedback={exercisesFeedback[exercise.id]}
-                                        onClick={(fb) => handleFeedback(exercise.id, fb)}
-                                        disabled={areButtonsDisabled}
-                                    />
-                                ))}
-                            </div>
+                    <div className="mt-6 border-t border-border pt-4">
+                        <p className="text-sm font-semibold text-text mb-3 serif-text">Comment vous êtes-vous senti face à cet exercice ?</p>
+                        <div className="flex flex-col sm:flex-row gap-2">
+                           {(['Facile', 'Moyen', 'Difficile', 'Non traité'] as Feedback[]).map(f => (
+                                <FeedbackButton 
+                                    key={f} 
+                                    feedback={f}
+                                    currentFeedback={exercisesFeedback[exercise.id]}
+                                    onClick={(fb) => handleFeedback(exercise.id, fb)}
+                                    disabled={isChapterLocked}
+                                />
+                            ))}
                         </div>
                     </div>
-                );
-            })}
+                </div>
+            ))}
         </div>
     );
 };

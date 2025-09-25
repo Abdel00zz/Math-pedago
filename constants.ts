@@ -1,6 +1,11 @@
 
 
+
 export const DB_KEY = 'pedagoEleveData_V4.7_React';
+
+// Fix: Add shared constants for help click reset logic.
+export const HELP_RESET_DELAY_MS = 1500;
+export const HELP_CLICKS_TO_RESET = 5;
 
 export const CLASS_OPTIONS = [
     { value: 'tcs', label: 'Tronc Commun Scientifique' },

@@ -1,3 +1,5 @@
+
+
 import React, { createContext, useState, useCallback, ReactNode, useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -26,18 +28,12 @@ export const NotificationProvider: React.FC<{ children: ReactNode }> = ({ childr
     }, []);
 
     const addNotification = useCallback((message: string, type: NotificationType = 'success') => {
-        // Per user request, only show pop-up notifications for critical errors.
-        if (type !== 'error') {
-            return;
-        }
-
         const id = uuidv4();
         setNotifications(prev => [...prev, { id, message, type }]);
         setTimeout(() => {
             removeNotification(id);
-        }, 5000); // Errors can stay a bit longer
+        }, 4000);
     }, [removeNotification]);
-
 
     return (
         <NotificationContext.Provider value={{ addNotification, notifications, removeNotification }}>

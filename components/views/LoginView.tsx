@@ -37,126 +37,107 @@ const LoginView: React.FC = () => {
     };
 
     return (
-        <div className="flex items-center justify-center min-h-[80vh] animate-fadeIn p-4">
-            <div className="w-full max-w-md landscape:max-w-4xl bg-surface border border-border rounded-2xl shadow-claude">
+        <div className="flex items-center justify-center min-h-screen animate-fadeIn p-4 bg-[#fbf9f1]">
+            <div className="w-full max-w-md bg-[#fffcf5] border border-[#d7ccc8] rounded-lg shadow-xl shadow-[#5d4037]/10 p-8 sm:p-12">
                 
-                <div className="flex flex-col landscape:flex-row landscape:gap-10 landscape:items-center p-6 sm:p-8">
-                    
-                    {/* Colonne Gauche: Logo */}
-                    <div className="flex-shrink-0 landscape:w-2/5 flex justify-center items-center">
-                        <div className="w-48 h-48 mx-auto flex flex-col items-center justify-center border border-border p-4 px-2 rounded-xl bg-background/50 shadow-inner group transition-all duration-300 hover:border-border-hover">
-                            <span className="font-brand text-xl tracking-widest text-text-secondary transition-colors duration-300 group-hover:text-text">
-                                Le Centre
-                            </span>
-                            <div className="w-12 h-px bg-border my-2"></div>
-                            <span className="font-brand text-4xl text-primary font-semibold leading-none tracking-tight transition-all duration-300 group-hover:text-primary/90 group-hover:scale-105">
-                                Scientifique
-                            </span>
-                        </div>
-                    </div>
-
-                    {/* Colonne Droite: Formulaire et Messages */}
-                    <div className="flex-grow landscape:w-3/5 mt-6 landscape:mt-0">
-                         <div className="text-center mb-8">
-                            {hasPreloadedName ? (
-                                <>
-                                    <h2 className="text-4xl font-playfair text-text leading-tight">
-                                        Bon retour, <span className="text-primary font-medium">{name}</span> !
-                                    </h2>
-                                    <p className="mt-2 text-text-secondary font-garamond italic text-base">
-                                        Veuillez confirmer ou sélectionner votre classe.
-                                    </p>
-                                </>
-                            ) : (
-                                <>
-                                    <h2 className="text-4xl font-playfair text-text font-medium">Bienvenue</h2>
-                                    <p className="mt-2 text-text-secondary font-garamond italic text-base">
-                                        Commencez votre parcours d'apprentissage.
-                                    </p>
-                                </>
-                            )}
-                        </div>
-
-                        <form onSubmit={handleSubmit} className="space-y-6">
-                            <div>
-                                <label htmlFor="name" className="block text-base font-medium text-text-secondary font-garamond mb-2">
-                                    Nom complet
-                                </label>
-                                <div className="relative group">
-                                    <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-disabled pointer-events-none group-focus-within:text-primary transition-colors">
-                                        person
-                                    </span>
-                                    <input
-                                        id="name"
-                                        type="text"
-                                        value={name}
-                                        onChange={(e) => setName(e.target.value)}
-                                        className={`w-full pl-12 pr-4 py-3 bg-slate-50/80 border border-slate-300/70 rounded-lg focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300 font-garamond text-lg placeholder:text-text-disabled ${
-                                            hasPreloadedName 
-                                                ? 'bg-slate-100 text-slate-500 cursor-not-allowed' 
-                                                : 'hover:border-slate-400/70 hover:bg-slate-50'
-                                        }`}
-                                        placeholder="Votre nom et prénom"
-                                        required
-                                        readOnly={hasPreloadedName}
-                                    />
-                                </div>
-                            </div>
-
-                            <div>
-                                <label htmlFor="classId" className="block text-base font-medium text-text-secondary font-garamond mb-2">
-                                    Votre classe
-                                </label>
-                                <div className="relative group">
-                                     <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-disabled pointer-events-none group-focus-within:text-primary transition-colors">
-                                        school
-                                    </span>
-                                    <select
-                                        id="classId"
-                                        value={classId}
-                                        onChange={(e) => setClassId(e.target.value)}
-                                        className="w-full pl-12 pr-10 py-3 bg-slate-50/80 border border-slate-300/70 rounded-lg focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300 cursor-pointer font-garamond text-lg hover:border-slate-400/70 hover:bg-slate-50 appearance-none"
-                                        required
-                                    >
-                                        {CLASS_OPTIONS.map(option => (
-                                            <option key={option.value} value={option.value}>
-                                                {option.label}
-                                            </option>
-                                        ))}
-                                    </select>
-                                    <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none transition-colors group-focus-within:text-primary">
-                                        <span className="material-symbols-outlined text-text-disabled">unfold_more</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {error && (
-                                <p className="text-sm text-error text-center font-garamond font-medium">{error}</p>
-                            )}
-
-                            <button
-                                type="submit"
-                                className="relative w-full px-4 py-4 font-serif font-bold tracking-wider uppercase text-sm text-white bg-primary rounded-lg shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5 transition-all duration-300 overflow-hidden group"
-                            >
-                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
-                                <span className="relative">
-                                    {hasPreloadedName ? 'Accéder à mon espace' : 'Commencer'}
-                                </span>
-                            </button>
-                        </form>
-                    </div>
+                {/* Header: Logo */}
+                <div className="text-center mb-8 border-2 border-[#a1887f]/50 p-6 rounded-lg">
+                    <span className="font-brand text-5xl text-primary font-semibold tracking-tight">
+                        Le Centre
+                    </span>
+                    <div className="w-16 h-px bg-[#d7ccc8] my-2 mx-auto"></div>
+                    <span className="font-brand text-2xl tracking-widest text-[#a1887f]">
+                        Scientifique
+                    </span>
                 </div>
 
-                {!hasPreloadedName && (
-                    <div className="border-t border-border bg-background/50 p-6 rounded-b-2xl">
-                         <div className="flex items-center justify-center gap-3 text-center">
-                             
-                            <p className="text-base text-text-secondary font-serif leading-relaxed">
-                                Explorez l'excellence en <strong className="font-semibold text-text">mathématiques</strong>.
+                {/* Welcome Message */}
+                <div className="text-center mb-10">
+                    {hasPreloadedName ? (
+                        <>
+                            <h2 className="text-3xl font-playfair text-[#4e342e] leading-tight">
+                                Bon retour, <span className="text-[#8d6e63] font-medium">{name}</span> !
+                            </h2>
+                            <p className="mt-2 text-[#a1887f] font-garamond italic text-base">
+                                Confirmez votre classe pour continuer.
                             </p>
+                        </>
+                    ) : (
+                        <>
+                            <h2 className="text-3xl font-playfair text-[#4e342e] font-medium">Bienvenue</h2>
+                            <p className="mt-2 text-[#a1887f] font-garamond italic text-base">
+                                Commencez votre parcours d'apprentissage.
+                            </p>
+                        </>
+                    )}
+                </div>
+
+                {/* Form */}
+                <form onSubmit={handleSubmit} className="space-y-8">
+                    <div>
+                        <label htmlFor="name" className="block text-sm font-medium text-[#a1887f] font-garamond mb-2">
+                            Nom complet
+                        </label>
+                        <div className="relative group">
+                            <span className="material-symbols-outlined absolute left-0 top-1/2 -translate-y-1/2 text-[#a1887f]/80 pointer-events-none group-focus-within:text-[#5d4037] transition-colors">
+                                drive_file_rename_outline
+                            </span>
+                            <input
+                                id="name"
+                                type="text"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                className={`w-full pl-8 pr-4 py-2 bg-transparent border-0 border-b-2 border-[#d7ccc8] focus:outline-none focus:border-[#8d6e63] focus:ring-0 transition-colors duration-300 font-garamond text-lg text-[#4e342e] placeholder:text-[#a1887f]/60 ${
+                                    hasPreloadedName 
+                                        ? 'bg-[#d7ccc8]/20 text-[#a1887f] cursor-not-allowed' 
+                                        : ''
+                                }`}
+                                placeholder="Votre nom et prénom"
+                                required
+                                readOnly={hasPreloadedName}
+                            />
                         </div>
                     </div>
-                )}
+
+                    <div>
+                        <label htmlFor="classId" className="block text-sm font-medium text-[#a1887f] font-garamond mb-2">
+                            Votre classe
+                        </label>
+                        <div className="relative group">
+                             <span className="material-symbols-outlined absolute left-0 top-1/2 -translate-y-1/2 text-[#a1887f]/80 pointer-events-none group-focus-within:text-[#5d4037] transition-colors">
+                                account_balance
+                            </span>
+                            <select
+                                id="classId"
+                                value={classId}
+                                onChange={(e) => setClassId(e.target.value)}
+                                className="w-full pl-8 pr-10 py-2 bg-transparent border-0 border-b-2 border-[#d7ccc8] focus:outline-none focus:border-[#8d6e63] focus:ring-0 transition-colors duration-300 cursor-pointer font-garamond text-lg text-[#4e342e] appearance-none"
+                                required
+                            >
+                                {CLASS_OPTIONS.map(option => (
+                                    <option key={option.value} value={option.value}>
+                                        {option.label}
+                                    </option>
+                                ))}
+                            </select>
+                            <div className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none transition-colors group-focus-within:text-[#5d4037]">
+                                <span className="material-symbols-outlined text-[#a1887f]/80">unfold_more</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {error && (
+                        <p className="text-sm text-error text-center font-garamond font-medium">{error}</p>
+                    )}
+
+                    <button
+                        type="submit"
+                        className="w-full px-4 py-3 font-brand tracking-widest text-base text-[#fbf9f1] bg-[#5d4037] rounded-md shadow-lg shadow-[#5d4037]/20 hover:bg-[#4e342e] hover:-translate-y-px transition-all duration-300 active:scale-[0.98] mt-4"
+                    >
+                        {hasPreloadedName ? 'Accéder à mon espace' : 'Commencer'}
+                    </button>
+                </form>
+
             </div>
         </div>
     );

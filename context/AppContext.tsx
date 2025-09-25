@@ -1,29 +1,26 @@
 import React, { createContext, useReducer, useEffect, ReactNode, Dispatch, useContext, useRef } from 'react';
 // Fix: Removed unused 'ChapterData' type from import to resolve error. The other types are now correctly imported from the fixed types.ts file.
-import { AppState, Action, Chapter, Profile, QuizProgress, ChapterProgress, Feedback } from '../types';
+import { AppState, Action, Chapter, Profile, QuizProgress, ChapterProgress, Feedback, UINotification } from '../types';
 import { DB_KEY } from '../constants';
 import { useNotification } from './NotificationContext';
-
-const CHAPTER_VERSIONS_KEY = 'pedagoEleveChapterVersions_V1.2';
-const UI_NOTIFICATIONS_KEY = 'pedagoUiNotifications_V1';
 
 const initialState: AppState = {
     view: 'login',
     profile: null,
     activities: {},
+    activityVersions: {},
     progress: {},
     currentChapterId: null,
     activitySubView: null,
     isReviewMode: false,
     chapterOrder: [],
-    shouldBlinkBackButton: false,
 };
 
 // ... (appReducer remains the same)
 const appReducer = (state: AppState, action: Action): AppState => {
     switch (action.type) {
         case 'INIT': {
-            const { profile, progress = {}, view, currentChapterId, activitySubView, chapterOrder } = action.payload;
+            const { profile, progress = {}, view, currentChapterId, activitySubView, chapterOrder, activityVersions } = action.payload;
             const restoredView = profile && profile.classId ? (view || 'dashboard') : 'login';
 
             return {
@@ -31,15 +28,15 @@ const appReducer = (state: AppState, action: Action): AppState => {
                 profile: profile || null,
                 progress,
                 chapterOrder: chapterOrder || [],
+                activityVersions: activityVersions || {},
                 view: restoredView,
                 currentChapterId: currentChapterId || null,
                 activitySubView: activitySubView || null,
-                shouldBlinkBackButton: false,
             };
         }
         case 'CHANGE_VIEW': {
             const { view, chapterId, subView, review } = action.payload;
-            const newState: AppState = {
+            let newState: AppState = {
                 ...state,
                 view,
                 currentChapterId: chapterId !== undefined ? chapterId : state.currentChapterId,
@@ -82,7 +79,7 @@ const appReducer = (state: AppState, action: Action): AppState => {
             if (!state.currentChapterId) return state;
             const progress = state.progress[state.currentChapterId];
             const newAnswers = { ...progress.quiz.answers, [action.payload.qId]: action.payload.answer };
-            const allAnswered = Object.keys(newAnswers).length >= state.activities[state.currentChapterId].quiz.length;
+            const allAnswered = Object.keys(newAnswers).length === state.activities[state.currentChapterId].quiz.length;
             return {
                 ...state,
                 progress: {
@@ -108,6 +105,7 @@ const appReducer = (state: AppState, action: Action): AppState => {
                             isSubmitted: true, 
                             score: action.payload.score, 
                             duration: action.payload.duration,
+                            hintsUsed: action.payload.hintsUsed,
                             currentQuestionIndex: 0 
                         }
                     },
@@ -162,46 +160,121 @@ const appReducer = (state: AppState, action: Action): AppState => {
             if (!chapterId || !state.progress[chapterId] || !state.activities[chapterId]) return state;
             const progress = state.progress[chapterId];
             const chapter = state.activities[chapterId];
-            return {
+             return {
                 ...state,
                 progress: {
                     ...state.progress,
                     [chapterId]: { 
                         ...progress, 
                         isWorkSubmitted: true,
-                        submittedVersion: chapter.version 
+                        submittedVersion: chapter.version,
+                        hasUpdate: false,
                     }
                 },
             };
         }
-        case 'SYNC_ACTIVITIES': {
-            const { activities, progress, chapterOrder } = action.payload;
-            const updatedProgress = { ...progress };
+        case 'SYNC_ACTIVITIES':
+            const newActivityVersions = Object.values(action.payload.activities).reduce((acc, chapter) => {
+                if (chapter.version) {
+                    acc[chapter.id] = chapter.version;
+                }
+                return acc;
+            }, {} as { [id: string]: string });
 
-            // Re-evaluate progress based on new activities data
-            Object.keys(updatedProgress).forEach(chapterId => {
-                const chapter = activities[chapterId];
-                const p = updatedProgress[chapterId];
-        
-                if (chapter && p) {
-                    // Re-evaluate if all quiz questions are answered based on the latest chapter data
-                    const totalQuestions = chapter.quiz.length;
-                    const answeredQuestions = Object.keys(p.quiz.answers).length;
-                    p.quiz.allAnswered = totalQuestions > 0 && answeredQuestions >= totalQuestions;
+            const generatedNotifications: UINotification[] = [];
+            const newProgress = { ...state.progress };
+
+            Object.values(action.payload.activities).forEach(newChapter => {
+                // Ensure a progress object exists for every chapter
+                if (!newProgress[newChapter.id]) {
+                    newProgress[newChapter.id] = {
+                        quiz: { answers: {}, isSubmitted: false, score: 0, allAnswered: false, currentQuestionIndex: 0, duration: 0, hintsUsed: 0 },
+                        exercisesFeedback: {},
+                        isWorkSubmitted: false,
+                        exercisesDuration: 0,
+                    };
+                }
+
+                const currentProgress = newProgress[newChapter.id];
+                const oldVersion = state.activityVersions[newChapter.id];
+
+                // Check for updates by comparing versions
+                if (oldVersion && newChapter.version && oldVersion !== newChapter.version) {
+                    generatedNotifications.push({
+                        id: `update-${newChapter.id}-${newChapter.version}`,
+                        title: 'Chapitre mis à jour !',
+                        message: `Le contenu du chapitre "<b>${newChapter.chapter}</b>" a été amélioré.`,
+                        timestamp: Date.now()
+                    });
+                    currentProgress.hasUpdate = true;
+
+                    // Re-validate progress against the new chapter structure
+                    const newQuizIds = new Set(newChapter.quiz.map(q => q.id));
+                    const newExerciseIds = new Set(newChapter.exercises.map(ex => ex.id));
+
+                    // 1. Re-validate Quiz answers
+                    const validatedAnswers = Object.entries(currentProgress.quiz.answers)
+                        .filter(([qId]) => newQuizIds.has(qId))
+                        .reduce((acc, [qId, answer]) => ({ ...acc, [qId]: answer as string }), {});
+                    currentProgress.quiz.answers = validatedAnswers;
+                    
+                    const allAnsweredNow = newChapter.quiz.length > 0 ? Object.keys(validatedAnswers).length === newChapter.quiz.length : true;
+                    currentProgress.quiz.allAnswered = allAnsweredNow;
+                    
+                    if (currentProgress.quiz.isSubmitted && !allAnsweredNow) {
+                        currentProgress.quiz.isSubmitted = false;
+                    }
+
+                    // 2. Re-validate Exercises feedback
+                    const validatedFeedback = Object.entries(currentProgress.exercisesFeedback)
+                        .filter(([exId]) => newExerciseIds.has(exId))
+                        .reduce((acc, [exId, feedback]) => ({ ...acc, [exId]: feedback as Feedback }), {});
+                    currentProgress.exercisesFeedback = validatedFeedback;
+                    
+                    // 3. Reset overall work submission status to force re-completion
+                    if (currentProgress.isWorkSubmitted) {
+                        currentProgress.isWorkSubmitted = false;
+                        generatedNotifications.push({
+                            id: `resubmit-${newChapter.id}-${newChapter.version}`,
+                            title: 'Action requise',
+                            message: `Le chapitre "<b>${newChapter.chapter}</b>" a changé. Veuillez finaliser votre travail à nouveau.`,
+                            timestamp: Date.now() + 1000 
+                        });
+                    }
+                } else if (!oldVersion && newChapter.isActive) {
+                     generatedNotifications.push({
+                        id: `new-${newChapter.id}`,
+                        title: 'Nouveau Chapitre Disponible',
+                        message: `Un nouveau défi vous attend. Le chapitre "<b>${newChapter.chapter}</b>" est prêt.`,
+                        timestamp: Date.now()
+                    });
                 }
             });
 
+            // Persist notifications
+            const UI_NOTIFICATIONS_KEY = 'pedagoUiNotifications_V1';
+            if (generatedNotifications.length > 0) {
+                 try {
+                    const stored = localStorage.getItem(UI_NOTIFICATIONS_KEY);
+                    const existing = stored ? JSON.parse(stored) : [];
+                    const existingIds = new Set(existing.map((n: UINotification) => n.id));
+                    const uniqueNew = generatedNotifications.filter(n => !existingIds.has(n.id));
+                    if (uniqueNew.length > 0) {
+                        localStorage.setItem(UI_NOTIFICATIONS_KEY, JSON.stringify([...existing, ...uniqueNew]));
+                    }
+                } catch (e) {
+                    console.error("Failed to update UI notifications", e);
+                }
+            }
+
+
             return {
                 ...state,
-                activities: activities,
-                progress: updatedProgress,
-                chapterOrder: chapterOrder,
+                activities: action.payload.activities,
+                progress: newProgress,
+                chapterOrder: action.payload.chapterOrder,
+                activityVersions: newActivityVersions,
             };
-        }
-        case 'TRIGGER_BACK_BUTTON_BLINK':
-            return { ...state, shouldBlinkBackButton: true };
-        case 'STOP_BACK_BUTTON_BLINK':
-            return { ...state, shouldBlinkBackButton: false };
         default:
             return state;
     }
@@ -256,18 +329,10 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
             fetchedClassRef.current = classId;
 
             try {
-                const oldVersions = JSON.parse(localStorage.getItem(CHAPTER_VERSIONS_KEY) || '{}');
-                const newVersions: { [id: string]: string } = {};
-
                 const manifestRes = await fetch('/manifest.json');
-                if (!manifestRes.ok) throw new Error(`Manifest file not found (${manifestRes.status})`);
-                
-                const manifestContentType = manifestRes.headers.get("content-type");
-                if (!manifestContentType || !manifestContentType.includes("application/json")) {
-                    throw new Error(`Expected manifest to be JSON, but got ${manifestContentType}`);
-                }
+                if (!manifestRes.ok) throw new Error("Manifest file not found");
                 const manifest: { [id: string]: any[] } = await manifestRes.json();
-
+                
                 const chapterInfos = manifest[classId] || [];
                 const allActivities: { [id: string]: Chapter } = {};
                 const chapterOrderForClass = chapterInfos.map(info => info.id);
@@ -275,75 +340,15 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
                 if (chapterInfos.length > 0) {
                     const chapterPromises = chapterInfos.map(info => 
                         fetch(`/chapters/${info.file}`)
-                            .then(res => {
-                                if (!res.ok) return Promise.reject(new Error(`Could not load ${info.file} (${res.status})`));
-                                
-                                const contentType = res.headers.get("content-type");
-                                if (!contentType || !contentType.includes("application/json")) {
-                                    return Promise.reject(new Error(`Expected chapter to be JSON, but got ${contentType} for ${info.file}`));
-                                }
-                                return res.json();
-                            })
+                            .then(res => res.ok ? res.json() : Promise.reject(`Could not load ${info.file}`))
                             .then(data => {
-                                const newVersion = info.version;
-                                const oldVersion = oldVersions[info.id];
-                                const oldChapter = state.activities[info.id];
-
-                                if (newVersion && oldVersion && oldVersion !== newVersion) {
-                                    if (info.isActive) {
-                                        try {
-                                            const uiNotifications = JSON.parse(localStorage.getItem(UI_NOTIFICATIONS_KEY) || '[]');
-                                            let updateMessage = `Le chapitre "<b>${data.chapter}</b>" a été récemment mis à jour.`;
-                                            
-                                            if (oldChapter) {
-                                                const quizDiff = data.quiz.length - oldChapter.quiz.length;
-                                                const exDiff = data.exercises.length - oldChapter.exercises.length;
-                                                const changes = [];
-                                                if (quizDiff > 0) changes.push(`+${quizDiff} question(s) de quiz`);
-                                                else if (quizDiff < 0) changes.push(`${-quizDiff} question(s) de quiz en moins`);
-                                                
-                                                if (exDiff > 0) changes.push(`+${exDiff} exercice(s)`);
-                                                else if (exDiff < 0) changes.push(`${-exDiff} exercice(s) en moins`);
-
-                                                if (changes.length > 0) {
-                                                    updateMessage += `<br>Changements&nbsp;: ${changes.join(', ')}.`;
-                                                }
-                                            } else {
-                                                updateMessage += " Découvrez les nouveautés !";
-                                            }
-
-                                            const newNotif = {
-                                                id: `update-${info.id}-${newVersion}`,
-                                                title: 'Contenu Mis à Jour',
-                                                message: updateMessage,
-                                                timestamp: Date.now()
-                                            };
-                                            if (!uiNotifications.find((n: any) => n.id === newNotif.id)) {
-                                                uiNotifications.push(newNotif);
-                                                localStorage.setItem(UI_NOTIFICATIONS_KEY, JSON.stringify(uiNotifications));
-                                            }
-                                        } catch (e) {
-                                            console.error("Failed to create UI notification for chapter update", e);
-                                        }
-                                    }
-                                }
-                                
-                                if (newVersion) {
-                                    newVersions[info.id] = newVersion;
-                                }
-
                                 const normalizedData = { ...data };
-                                // Ensure sessionDates is an array, handling old 'sessionDate' format.
-                                if (normalizedData.sessionDate && !normalizedData.sessionDates) {
-                                    normalizedData.sessionDates = [normalizedData.sessionDate];
-                                } else if (!Array.isArray(normalizedData.sessionDates)) {
-                                    normalizedData.sessionDates = [];
+                                if (!Array.isArray(normalizedData.sessionDates)) {
+                                    normalizedData.sessionDates = typeof normalizedData.sessionDate === 'string' && normalizedData.sessionDate ? [normalizedData.sessionDate] : [];
                                 }
-                                // Clean up old property if it exists
                                 if ('sessionDate' in normalizedData) {
                                     delete normalizedData.sessionDate;
                                 }
-
                                 return { ...normalizedData, id: info.id, file: info.file, isActive: info.isActive, version: info.version };
                             })
                             .catch(err => { console.error(err); return null; })
@@ -352,21 +357,15 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
                     loadedChapters.forEach(ch => allActivities[ch.id] = ch);
                 }
                 
-                localStorage.setItem(CHAPTER_VERSIONS_KEY, JSON.stringify(newVersions));
-
-                const newProgress = { ...state.progress };
-                Object.values(allActivities).forEach(chapter => {
-                    if (!newProgress[chapter.id]) {
-                        newProgress[chapter.id] = {
-                            quiz: { answers: {}, isSubmitted: false, score: 0, allAnswered: false, currentQuestionIndex: 0, duration: 0 },
-                            exercisesFeedback: {},
-                            isWorkSubmitted: false,
-                            exercisesDuration: 0,
-                        };
-                    }
+                // The SYNC_ACTIVITIES dispatch will handle progress creation, validation and notifications.
+                dispatch({ 
+                    type: 'SYNC_ACTIVITIES', 
+                    payload: { 
+                        activities: allActivities, 
+                        progress: state.progress, // Pass current progress to be updated
+                        chapterOrder: chapterOrderForClass 
+                    } 
                 });
-                
-                dispatch({ type: 'SYNC_ACTIVITIES', payload: { activities: allActivities, progress: newProgress, chapterOrder: chapterOrderForClass } });
 
             } catch (error) {
                 console.error("Failed to load or sync chapter data:", error);
@@ -377,19 +376,20 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         if (state.profile?.classId) {
             syncChaptersForClass(state.profile.classId);
         } else {
-            // No profile, so no chapters to load/show. Ensure state is clean.
              if(Object.keys(state.activities).length > 0) {
                  dispatch({ type: 'SYNC_ACTIVITIES', payload: { activities: {}, progress: state.progress, chapterOrder: [] } });
             }
             fetchedClassRef.current = null;
         }
-    }, [state.profile, addNotification]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [state.profile]);
 
     // Effect 3: Persist state to localStorage immediately on any state change.
     useEffect(() => {
-        if (state.profile) { // Only save if logged in
-            // Exclude large 'activities' object and transient state from persistence
-            const { activities, isReviewMode, shouldBlinkBackButton, ...stateToSave } = state; 
+        if (state.profile) {
+            // We never save the full activities data to avoid bloating localStorage.
+            // We only save metadata like versions, progress, profile, etc.
+            const { activities, ...stateToSave } = state; 
             try {
                 localStorage.setItem(DB_KEY, JSON.stringify(stateToSave));
             } catch (error) {

@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback } from 'react';
 import { Chapter, ChapterProgress } from '../types';
 import SessionStatus from './SessionStatus';
 
@@ -17,28 +17,17 @@ interface StatusInfo {
 }
 
 const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress, onSelect }) => {
-    const evaluatedExercisesCount = useMemo(() => {
-        if (!chapter?.exercises || !progress?.exercisesFeedback) {
-            return 0;
-        }
-        const currentExerciseIds = new Set(chapter.exercises.map(ex => ex.id));
-        return Object.keys(progress.exercisesFeedback)
-            .filter(exId => currentExerciseIds.has(exId))
-            .length;
-    }, [chapter, progress]);
-
     const getStatusInfo = useCallback((): StatusInfo => {
+        if (progress?.hasUpdate) {
+            return {
+                text: 'Contenu mis à jour',
+                icon: 'update',
+                iconClasses: 'text-primary animate-pulse',
+                textClasses: 'text-primary font-semibold',
+                disabled: false,
+            };
+        }
         if (progress?.isWorkSubmitted) {
-            const isOutdated = chapter.version && progress.submittedVersion && chapter.version !== progress.submittedVersion;
-            if (isOutdated) {
-                return {
-                    text: 'Mis à jour',
-                    icon: 'update',
-                    iconClasses: 'text-info',
-                    textClasses: 'text-info font-semibold',
-                    disabled: false,
-                };
-            }
             return {
                 text: 'Terminé',
                 icon: 'check_circle',
@@ -56,7 +45,7 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
                 disabled: true,
             };
         }
-        if (progress?.quiz?.isSubmitted || evaluatedExercisesCount > 0) {
+        if (progress?.quiz?.isSubmitted || Object.keys(progress?.exercisesFeedback || {}).length > 0) {
             return {
                 text: 'En cours',
                 icon: 'autorenew',
@@ -72,7 +61,7 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
             textClasses: 'text-text-secondary',
             disabled: false,
         };
-    }, [chapter.isActive, chapter.version, progress, evaluatedExercisesCount]);
+    }, [chapter.isActive, progress]);
 
     const { text, icon, iconClasses, textClasses, disabled } = getStatusInfo();
 

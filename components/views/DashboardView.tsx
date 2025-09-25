@@ -1,13 +1,10 @@
 import React, { useMemo, useRef, useEffect, useState, useCallback } from 'react';
 import { useAppState, useAppDispatch } from '../../context/AppContext';
 import { Chapter } from '../../types';
-import HelpModal from '../HelpModal';
-import OrientationModal from '../OrientationModal';
-import { CLASS_OPTIONS, DB_KEY } from '../../constants';
+import { CLASS_OPTIONS } from '../../constants';
 import { useNotification } from '../../context/NotificationContext';
 import ChapterSection from '../ChapterSection';
-import NotificationCenter from '../NotificationCenter';
-import { useNotificationGenerator } from '../../hooks/useNotificationGenerator';
+import GlobalActionButtons from '../GlobalActionButtons';
 
 
 // Types pour une meilleure type-safety
@@ -16,12 +13,6 @@ interface CategorizedActivities {
     completed: Chapter[];
     upcoming: Chapter[];
 }
-
-// Constantes pour éviter les recalculs
-const HELP_RESET_DELAY_MS = 1500;
-const HELP_CLICKS_TO_RESET = 5;
-const NOTIFICATION_READ_KEY = 'pedagoEleveNotificationsRead_V1';
-
 
 // Styles personnalisés optimisés
 const customStyles = `
@@ -74,6 +65,39 @@ const customStyles = `
   .ornament:hover {
     opacity: 1;
   }
+  
+  .tooltip {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 8px;
+    padding: 6px 12px;
+    background: rgba(23, 23, 23, 0.95); /* text color with opacity */
+    color: white;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 6px;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    backdrop-filter: blur(4px);
+  }
+  
+  .tooltip::after {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent;
+    border-bottom-color: rgba(23, 23, 23, 0.95);
+  }
+  
+  .group:hover .tooltip {
+    opacity: 1;
+  }
 `;
 
 // Hook personnalisé pour la gestion du thème
@@ -93,33 +117,6 @@ const useThemePreference = () => {
     }, []);
     
     return theme;
-};
-
-// Hook pour les raccourcis clavier
-const useKeyboardShortcuts = (callbacks: { onHelp: () => void; onOrientation: () => void; onRefresh: () => void; }) => {
-    useEffect(() => {
-        const handleKeyPress = (e: KeyboardEvent) => {
-            if (e.ctrlKey || e.metaKey) {
-                switch(e.key) {
-                    case 'h':
-                        e.preventDefault();
-                        callbacks.onHelp();
-                        break;
-                    case 'o':
-                        e.preventDefault();
-                        callbacks.onOrientation();
-                        break;
-                    case 'r':
-                        e.preventDefault();
-                        callbacks.onRefresh();
-                        break;
-                }
-            }
-        };
-        
-        window.addEventListener('keydown', handleKeyPress);
-        return () => window.removeEventListener('keydown', handleKeyPress);
-    }, [callbacks]);
 };
 
 // Hook pour la détection de l'inactivité
@@ -207,61 +204,20 @@ const DashboardView: React.FC = () => {
     const state = useAppState();
     const dispatch = useAppDispatch();
     const { profile, activities, progress, chapterOrder } = state;
-    const [isHelpModalOpen, setHelpModalOpen] = useState(false);
-    const [isOrientationModalOpen, setOrientationModalOpen] = useState(false);
-    const [isNotificationCenterOpen, setNotificationCenterOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(!profile);
     
-    const [readNotificationIds, setReadNotificationIds] = useState<Set<string>>(() => {
-        try {
-            const stored = localStorage.getItem(NOTIFICATION_READ_KEY);
-            return stored ? new Set(JSON.parse(stored)) : new Set();
-        } catch {
-            return new Set();
-        }
-    });
-
-    const allNotifications = useNotificationGenerator(state);
-
-    const unreadNotificationsCount = useMemo(() => {
-        return allNotifications.filter(n => !readNotificationIds.has(n.id)).length;
-    }, [allNotifications, readNotificationIds]);
-
     const { addNotification } = useNotification();
-    const helpClickCountRef = useRef(0);
-    const helpClickTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     
     // Hooks personnalisés
     useThemePreference();
     const isIdle = useIdleDetection();
     CacheService.getInstance();
     
-    // Raccourcis clavier
-    useKeyboardShortcuts({
-        onHelp: () => setHelpModalOpen(true),
-        onOrientation: () => setOrientationModalOpen(true),
-        onRefresh: () => window.location.reload()
-    });
-
-    const handleOpenNotifications = () => {
-        setNotificationCenterOpen(true);
-        if (unreadNotificationsCount > 0) {
-            const currentAllIds = allNotifications.map(n => n.id);
-            const newReadIds = new Set([...readNotificationIds, ...currentAllIds]);
-            
-            setReadNotificationIds(newReadIds);
-            try {
-                localStorage.setItem(NOTIFICATION_READ_KEY, JSON.stringify(Array.from(newReadIds)));
-            } catch (error) {
-                console.error("Failed to save read notifications:", error);
-            }
-        }
-    };
     
     // Gestion de l'état idle
     useEffect(() => {
         if (isIdle) {
-             // Do not show popup notification per user request.
+            addNotification('Votre session est inactive. Les données seront rafraîchies.', 'info');
         }
     }, [isIdle, addNotification]);
 
@@ -281,38 +237,6 @@ const DashboardView: React.FC = () => {
     const formatClassNameHTML = (name: string): string => {
         return name.replace(/(\d+)(ère|ème|er|re|e)/gi, '$1<sup>$2</sup>');
     };
-
-    // Gestion optimisée du clic d'aide avec réinitialisation
-    const handleHelpClick = useCallback(() => {
-        setHelpModalOpen(true);
-        if (helpClickTimerRef.current) clearTimeout(helpClickTimerRef.current);
-
-        helpClickCountRef.current += 1;
-        const currentCount = helpClickCountRef.current;
-
-        if (currentCount === HELP_CLICKS_TO_RESET) {
-            if (state.profile) {
-                const profileToKeep = {
-                    profile: { name: state.profile.name, classId: '' },
-                };
-                localStorage.setItem(DB_KEY, JSON.stringify(profileToKeep));
-                
-                setTimeout(() => window.location.reload(), 500);
-            }
-            helpClickCountRef.current = 0;
-        } else {
-            helpClickTimerRef.current = setTimeout(() => {
-                helpClickCountRef.current = 0;
-            }, HELP_RESET_DELAY_MS);
-        }
-    }, [state.profile, addNotification]);
-
-    // Nettoyage du timer au démontage
-    useEffect(() => {
-        return () => {
-            if (helpClickTimerRef.current) clearTimeout(helpClickTimerRef.current);
-        };
-    }, []);
 
     // Simulation du chargement
     useEffect(() => {
@@ -361,7 +285,7 @@ const DashboardView: React.FC = () => {
         if (chapter && (chapter.isActive || progress[chapterId]?.isWorkSubmitted)) {
             dispatch({ type: 'CHANGE_VIEW', payload: { view: 'work-plan', chapterId } });
         } else {
-            // Do not show pop-up notification per user request
+            addNotification('Ce chapitre n\'est pas encore accessible', 'info');
         }
     }, [activities, progress, dispatch, addNotification]);
 
@@ -397,43 +321,7 @@ const DashboardView: React.FC = () => {
     return (
         <>
             <style>{customStyles}</style>
-
-             {/* Desktop Action Buttons */}
-             <div className="fixed top-4 right-4 z-40 hidden sm:flex items-center gap-3">
-                <div className="relative">
-                    <button 
-                        onClick={handleOpenNotifications}
-                        className="group w-14 h-14 rounded-full flex items-center justify-center bg-surface/50 hover:bg-surface border border-border/70 transition-all duration-200"
-                        aria-label="Notifications"
-                    >
-                        <span className="material-symbols-outlined text-text-secondary !text-2xl group-hover:text-primary transition-colors">notifications</span>
-                        {unreadNotificationsCount > 0 && (
-                            <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-error text-white text-xs font-bold">
-                                {unreadNotificationsCount}
-                            </span>
-                        )}
-                    </button>
-                    <NotificationCenter 
-                        isOpen={isNotificationCenterOpen} 
-                        onClose={() => setNotificationCenterOpen(false)}
-                        notifications={allNotifications}
-                    />
-                </div>
-                <button 
-                    onClick={() => setOrientationModalOpen(true)}
-                    className="group w-14 h-14 rounded-full flex items-center justify-center bg-surface/50 hover:bg-surface border border-border/70 transition-all duration-200"
-                    aria-label="Programme d'orientation (Ctrl+O)"
-                >
-                    <span className="material-symbols-outlined text-text-secondary !text-2xl group-hover:text-primary transition-colors">explore</span>
-                </button>
-                <button 
-                    onClick={handleHelpClick}
-                    className="group w-14 h-14 rounded-full flex items-center justify-center bg-surface/50 hover:bg-surface border border-border/70 transition-all duration-200"
-                    aria-label="Aide et support (Ctrl+H)"
-                >
-                    <span className="material-symbols-outlined text-text-secondary !text-2xl group-hover:text-primary transition-colors">help_outline</span>
-                </button>
-            </div>
+            <GlobalActionButtons />
 
             <div className="min-h-screen bg-background">
                 <div className="max-w-5xl mx-auto p-4 sm:p-6 pb-28">
@@ -509,50 +397,6 @@ const DashboardView: React.FC = () => {
                     </footer>
                 </div>
             </div>
-
-            {/* Mobile Bottom Navigation */}
-            <div className="sm:hidden fixed bottom-0 left-0 right-0 bg-surface/90 backdrop-blur-sm border-t border-border z-40 shadow-claude">
-                <nav className="flex justify-around items-center h-16">
-                    <button
-                        onClick={handleOpenNotifications}
-                        className="relative flex-1 flex flex-col items-center justify-center p-2 text-text-secondary hover:text-primary transition-colors"
-                        aria-label="Notifications"
-                    >
-                         {unreadNotificationsCount > 0 && (
-                            <span className="absolute top-2 right-1/2 translate-x-4 flex h-5 w-5 items-center justify-center rounded-full bg-error text-white text-[10px] font-bold">
-                                {unreadNotificationsCount}
-                            </span>
-                        )}
-                        <span className="material-symbols-outlined !text-[26px]">notifications</span>
-                        <span className="text-xs font-medium mt-1">Notifications</span>
-                    </button>
-                     <button
-                        onClick={() => setOrientationModalOpen(true)}
-                        className="flex-1 flex flex-col items-center justify-center p-2 text-text-secondary hover:text-primary transition-colors"
-                        aria-label="Programme d'orientation"
-                    >
-                        <span className="material-symbols-outlined !text-[26px]">explore</span>
-                        <span className="text-xs font-medium mt-1">Programme</span>
-                    </button>
-                    <button
-                        onClick={handleHelpClick}
-                        className="flex-1 flex flex-col items-center justify-center p-2 text-text-secondary hover:text-primary transition-colors"
-                        aria-label="Aide et support"
-                    >
-                        <span className="material-symbols-outlined !text-[26px]">help_outline</span>
-                        <span className="text-xs font-medium mt-1">Aide</span>
-                    </button>
-                </nav>
-            </div>
-
-
-            {/* Modals */}
-            <HelpModal isOpen={isHelpModalOpen} onClose={() => setHelpModalOpen(false)} />
-            <OrientationModal 
-                isOpen={isOrientationModalOpen} 
-                onClose={() => setOrientationModalOpen(false)} 
-                classId={profile.classId} 
-            />
         </>
     );
 };

@@ -1,5 +1,6 @@
 import React from 'react';
-import { UINotification } from '../hooks/useNotificationGenerator';
+// Fix: The UINotification type is defined in '../types' and should be imported from there directly.
+import { UINotification } from '../types';
 import Modal from './Modal';
 
 interface NotificationCenterProps {
@@ -8,42 +9,49 @@ interface NotificationCenterProps {
     notifications: UINotification[];
 }
 
+const getIconForNotification = (title: string): string => {
+    const lowerCaseTitle = title.toLowerCase();
+    if (lowerCaseTitle.includes('mis à jour')) return 'update';
+    if (lowerCaseTitle.includes('nouveau') || lowerCaseTitle.includes('disponible')) return 'new_releases';
+    if (lowerCaseTitle.includes('imminente')) return 'podcasts';
+    if (lowerCaseTitle.includes('score') || lowerCaseTitle.includes('travail') || lowerCaseTitle.includes('bravo') || lowerCaseTitle.includes('terminé')) return 'emoji_events';
+    if (lowerCaseTitle.includes('bienvenue')) return 'waving_hand';
+    return 'notifications';
+};
+
+const timeAgo = (timestamp: number): string => {
+    const now = new Date();
+    const seconds = Math.floor((now.getTime() - timestamp) / 1000);
+    
+    let interval = seconds / 31536000;
+    if (interval > 1) {
+        const years = Math.floor(interval);
+        return `il y a ${years} an${years > 1 ? 's' : ''}`;
+    }
+    interval = seconds / 2592000;
+    if (interval > 1) {
+        return `il y a ${Math.floor(interval)} mois`;
+    }
+    interval = seconds / 86400;
+    if (interval > 1) {
+        const days = Math.floor(interval);
+        return `il y a ${days} jour${days > 1 ? 's' : ''}`;
+    }
+    interval = seconds / 3600;
+    if (interval > 1) {
+        const hours = Math.floor(interval);
+        return `il y a ${hours} heure${hours > 1 ? 's' : ''}`;
+    }
+    interval = seconds / 60;
+    if (interval > 1) {
+        const minutes = Math.floor(interval);
+        return `il y a ${minutes} min`;
+    }
+    return "à l'instant";
+};
+
+
 const NotificationCenter: React.FC<NotificationCenterProps> = ({ isOpen, onClose, notifications }) => {
-    const formatTimestamp = (timestamp: number): string => {
-        const now = new Date();
-        const date = new Date(timestamp);
-        const diffSeconds = Math.round((now.getTime() - date.getTime()) / 1000);
-        const diffDays = Math.floor(diffSeconds / 86400);
-
-        const isSameDay = (d1: Date, d2: Date) => 
-            d1.getFullYear() === d2.getFullYear() &&
-            d1.getMonth() === d2.getMonth() &&
-            d1.getDate() === d2.getDate();
-
-        if (isSameDay(now, date)) {
-            const diffHours = Math.floor(diffSeconds / 3600);
-            if (diffHours < 1) {
-                const diffMinutes = Math.floor(diffSeconds / 60);
-                if (diffMinutes < 1) return "à l'instant";
-                if (diffMinutes === 1) return "il y a 1 minute";
-                return `il y a ${diffMinutes} minutes`;
-            }
-            if (diffHours === 1) return "il y a 1 heure";
-            return `il y a ${diffHours} heures`;
-        }
-        
-        const yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
-        if (isSameDay(yesterday, date)) {
-            return `Hier`;
-        }
-
-        if (diffDays < 7) {
-            return date.toLocaleDateString('fr-FR', { weekday: 'long' });
-        }
-
-        return date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' });
-    };
-
     return (
         <Modal 
             isOpen={isOpen} 
@@ -60,16 +68,15 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({ isOpen, onClose
                 <div className="max-h-[60vh] overflow-y-auto -mr-4 pr-4">
                     {notifications.length > 0 ? (
                         <ul className="space-y-4">
-                            {notifications.map((notif, index) => (
-                                <li key={index} className="p-4 bg-background/50 border-l-4 border-primary/50 rounded-r-lg">
-                                    <div className="font-garamond">
-                                        <div className="flex justify-between items-start">
-                                            <h4 className="font-semibold text-text text-lg pr-4">{notif.title}</h4>
-                                            {notif.timestamp && (
-                                                <span className="text-sm font-medium text-text-secondary flex-shrink-0 whitespace-nowrap">
-                                                    {formatTimestamp(notif.timestamp)}
-                                                </span>
-                                            )}
+                            {notifications.map((notif) => (
+                                <li key={notif.id} className="p-4 bg-background/50 rounded-lg flex items-start gap-4 border border-border transition-all hover:border-border-hover hover:bg-surface/50">
+                                     <span className="material-symbols-outlined text-primary mt-1">
+                                        {getIconForNotification(notif.title)}
+                                    </span>
+                                    <div className="font-garamond flex-1">
+                                        <div className="flex justify-between items-center">
+                                            <h4 className="font-semibold text-text text-lg">{notif.title}</h4>
+                                            <span className="text-xs text-text-secondary whitespace-nowrap">{timeAgo(notif.timestamp)}</span>
                                         </div>
                                         <p className="text-text-secondary text-base mt-1" dangerouslySetInnerHTML={{ __html: notif.message }}></p>
                                     </div>
