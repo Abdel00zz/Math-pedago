@@ -59,18 +59,25 @@ const Quiz: React.FC = () => {
     }, [chapter, answers, dispatch, timeSpent]);
 
     const getOptionClass = useCallback((option: Option, isSelected: boolean) => {
-        const base = 'w-full text-left p-4 rounded-lg border-2 transition-all duration-200 flex items-center gap-4 font-lato text-lg';
-        
+        const base = 'w-full text-left p-4 rounded-xl border-2 transition-all duration-300 ease-in-out flex items-start gap-4 font-sans text-lg';
+
         if (isReviewMode || isSubmitted) {
             const isCorrect = option.isCorrect;
-            if (isCorrect) return `${base} bg-success/10 border-success text-success`;
-            if (isSelected && !isCorrect) return `${base} bg-error/10 border-error text-error`;
-            return `${base} border-border/70 bg-gray-50 text-text-disabled cursor-default`;
+            if (isCorrect) {
+                return `${base} bg-success/10 border-success text-text`;
+            }
+            if (isSelected && !isCorrect) {
+                return `${base} bg-error/10 border-error text-text`;
+            }
+            return `${base} border-border bg-surface text-text-disabled cursor-default opacity-70`;
         }
-        
-        if (isSelected) return `${base} bg-primary-light border-primary ring-2 ring-primary/30 shadow-md`;
-        return `${base} bg-surface border-border hover:border-primary/50 hover:bg-primary-light/50 cursor-pointer`;
+
+        if (isSelected) {
+            return `${base} bg-primary/10 border-primary text-text ring-2 ring-primary/30 transform scale-[1.01]`;
+        }
+        return `${base} bg-surface border-border hover:border-primary/70 hover:bg-background cursor-pointer transform hover:scale-[1.01]`;
     }, [isReviewMode, isSubmitted]);
+
 
     if (!chapter || !quizProgress || !question) {
         return <div>Loading quiz...</div>;
@@ -126,7 +133,7 @@ const Quiz: React.FC = () => {
     }
     
     return (
-        <div className="font-lato max-w-3xl mx-auto">
+        <div className="font-sans max-w-3xl mx-auto">
             {/* Question Navigator */}
             <div className="flex justify-center gap-2 mb-8">
                 {chapter.quiz.map((q, index) => (
@@ -151,18 +158,24 @@ const Quiz: React.FC = () => {
                         {question.options?.map((option, index) => {
                             const isSelected = answers[question.id] === option.text;
                             const optionClass = getOptionClass(option, isSelected);
-                            const Icon = () => {
-                                 if (isReviewMode || isSubmitted) {
-                                    return option.isCorrect 
-                                        ? <span className="material-symbols-outlined">check_circle</span>
-                                        : isSelected ? <span className="material-symbols-outlined">cancel</span> : null
-                                 }
-                                 return <div className={`w-5 h-5 border-2 rounded-full flex items-center justify-center transition-colors ${isSelected ? 'border-primary bg-primary' : 'border-text-disabled'}`}><div className="w-2 h-2 bg-white rounded-full"></div></div>;
-                            }
                             
                             return (
                                 <button key={index} onClick={() => handleOptionChange(option.text)} className={optionClass} disabled={isSubmitted}>
-                                    <Icon/>
+                                    <div className="flex-shrink-0 mt-1">
+                                        {(isReviewMode || isSubmitted) ? (
+                                            option.isCorrect ? (
+                                                <span className="material-symbols-outlined text-success">check_circle</span>
+                                            ) : isSelected ? (
+                                                <span className="material-symbols-outlined text-error">cancel</span>
+                                            ) : (
+                                                <div className="w-6 h-6 border-2 border-text-disabled/50 rounded-full"></div>
+                                            )
+                                        ) : (
+                                            <div className={`w-6 h-6 border-2 rounded-full flex items-center justify-center transition-colors ${isSelected ? 'border-primary bg-primary/10' : 'border-text-secondary group-hover:border-primary'}`}>
+                                                {isSelected && <div className="w-3 h-3 bg-primary rounded-full transition-transform duration-300 scale-100"></div>}
+                                            </div>
+                                        )}
+                                    </div>
                                     <span className="flex-1"><MathJax dynamic>{option.text}</MathJax></span>
                                 </button>
                             );
@@ -173,6 +186,7 @@ const Quiz: React.FC = () => {
             
             {question.type === 'ordering' && (
                  <OrderingQuestion
+                    key={question.id}
                     question={question}
                     userAnswer={answers[question.id] as string[] | undefined}
                     isReviewMode={isReviewMode}

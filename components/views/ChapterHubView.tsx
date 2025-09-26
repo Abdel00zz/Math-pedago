@@ -332,7 +332,7 @@ const ChapterHubView: React.FC = () => {
                         </button>
                         <div className="text-center">
                             <p className="font-brand text-primary tracking-[0.2em] uppercase text-sm mb-2">Plan de travail</p>
-                            <h1 className="text-4xl sm:text-5xl text-text font-title">{chapter.chapter}</h1>
+                            <h1 className="text-3xl sm:text-4xl text-text font-title">{chapter.chapter}</h1>
                             <div className="w-24 h-px bg-border mx-auto mt-4"></div>
                         </div>
                     </div>
