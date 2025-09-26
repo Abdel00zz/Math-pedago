@@ -44,8 +44,8 @@ const ActivityView: React.FC = () => {
                     <span className="material-symbols-outlined">arrow_back</span>
                 </button>
                 <div className="text-center">
-                    <h1 className="text-5xl font-playfair text-text">{subViewTitle}</h1>
-                    <p className="text-primary text-xl font-garamond italic mt-1">{chapter.chapter}</p>
+                    <h1 className="text-5xl font-title text-text">{subViewTitle}</h1>
+                    <p className="text-primary text-xl font-sans italic mt-1">{chapter.chapter}</p>
                 </div>
             </header>
 

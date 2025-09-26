@@ -1,7 +1,16 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { useAppState, useAppDispatch } from '../context/AppContext';
-import { Feedback, SubQuestion } from '../types';
+import { Feedback, SubQuestion, Exercise } from '../types';
 import { MathJax } from 'better-react-mathjax';
+import HintModal from './HintModal';
+
+const feedbackConfig: { [key in Feedback]: { base: string; selected: string } } = {
+    'Facile':    { base: 'bg-surface border-border text-text-secondary hover:bg-border/50', selected: 'bg-success text-white border-success' },
+    'Moyen':     { base: 'bg-surface border-border text-text-secondary hover:bg-border/50', selected: 'bg-warning text-white border-warning' },
+    'Difficile': { base: 'bg-surface border-border text-text-secondary hover:bg-border/50', selected: 'bg-error text-white border-error' },
+    'Non traité':{ base: 'bg-surface border-border text-text-secondary hover:bg-border/50', selected: 'bg-secondary text-white border-secondary' },
+};
+
 
 const FeedbackButton: React.FC<{
     feedback: Feedback;
@@ -10,24 +19,17 @@ const FeedbackButton: React.FC<{
     disabled?: boolean;
 }> = ({ feedback, currentFeedback, onClick, disabled }) => {
     const isSelected = feedback === currentFeedback;
-
-    // Styles inspired by ChapterHubView's pill-like status badges
-    const styles: { [key in Feedback]: { base: string; selected: string } } = {
-        'Facile':    { base: 'border-border hover:bg-success/5 hover:border-success/30', selected: 'bg-success/10 text-success border-success/30' },
-        'Moyen':     { base: 'border-border hover:bg-warning/5 hover:border-warning/30', selected: 'bg-warning/10 text-warning border-warning/30' },
-        'Difficile': { base: 'border-border hover:bg-error/5 hover:border-error/30',    selected: 'bg-error/10 text-error border-error/30' },
-        'Non traité':{ base: 'border-border hover:bg-secondary/5 hover:border-secondary/30', selected: 'bg-secondary/10 text-secondary border-secondary/30' },
-    };
+    const config = feedbackConfig[feedback];
 
     return (
         <button
             onClick={() => onClick(feedback)}
             disabled={disabled}
-            className={`font-button flex-1 px-4 py-1.5 text-sm font-semibold rounded-full border transition-all duration-200 transform active:scale-95 ${
-                isSelected ? styles[feedback].selected : `text-text-secondary ${styles[feedback].base}`
+            className={`font-button px-3 py-1 text-xs font-semibold rounded-full border transition-all duration-200 transform active:scale-95 ${
+                isSelected ? config.selected : config.base
             } ${disabled ? 'opacity-60 cursor-not-allowed' : ''}`}
         >
-            {feedback}
+            <span>{feedback}</span>
         </button>
     );
 };
@@ -40,6 +42,7 @@ const Exercises: React.FC<ExercisesProps> = ({ onAllCompleted }) => {
     const state = useAppState();
     const dispatch = useAppDispatch();
     const { currentChapterId, activities, progress } = state;
+    const [hintModalExerciseId, setHintModalExerciseId] = useState<string | null>(null);
 
     useEffect(() => {
         const startTime = Date.now();
@@ -66,9 +69,6 @@ const Exercises: React.FC<ExercisesProps> = ({ onAllCompleted }) => {
     ), [chapter, chapterProgress]);
     
     const isChapterLocked = chapterProgress.isWorkSubmitted && !isOutdatedSubmission;
-
-    const [expandedExId, setExpandedExId] = useState<string | null>(null);
-    const [visibleHints, setVisibleHints] = useState<{ [exId: string]: Set<number> }>({});
     
     const totalExercises = chapter.exercises.length;
     
@@ -87,16 +87,8 @@ const Exercises: React.FC<ExercisesProps> = ({ onAllCompleted }) => {
         }
     }, [evaluatedExercisesCount, totalExercises, onAllCompleted]);
 
-
-    const handleToggleExercise = (exId: string) => {
-        setExpandedExId(prevId => (prevId === exId ? null : exId));
-    };
-
-    const handleShowHint = (exId: string, hintIndex: number) => {
-        setVisibleHints(prev => ({
-            ...prev,
-            [exId]: new Set(prev[exId] || []).add(hintIndex),
-        }));
+    const handleOpenHintModal = (exId: string) => {
+        setHintModalExerciseId(exId);
     };
     
     const handleFeedback = (exId: string, feedback: Feedback) => {
@@ -111,44 +103,41 @@ const Exercises: React.FC<ExercisesProps> = ({ onAllCompleted }) => {
             ))}
         </ol>
     );
-    
-    const renderHints = (exId: string, hints: { text: string; sub_questions?: SubQuestion[] }[] | undefined) => (
-        <div className="mt-4 space-y-2">
-            {hints?.map((hint, index) => {
-                 const isVisible = visibleHints[exId]?.has(index);
-                 return (
-                    <div key={index}>
-                        {!isVisible ? (
-                            <button onClick={() => handleShowHint(exId, index)} className="font-button text-sm text-info font-semibold flex items-center gap-1 hover:underline">
-                                <span className="material-symbols-outlined text-base">lightbulb</span> Afficher l'indice {index + 1}
-                            </button>
-                        ) : (
-                            <div className="p-3 bg-background rounded-md border border-border serif-text">
-                                <MathJax dynamic>{hint.text}</MathJax>
-                                {hint.sub_questions && renderSubQuestions(hint.sub_questions)}
-                            </div>
-                        )}
-                    </div>
-                 );
-            })}
-        </div>
-    );
+
+    const hintExercise = useMemo(() => {
+        if (!hintModalExerciseId) return null;
+        return chapter.exercises.find(ex => ex.id === hintModalExerciseId);
+    }, [hintModalExerciseId, chapter.exercises]);
 
     return (
         <div className="space-y-4 pb-4">
             {chapter.exercises.map((exercise, index) => (
                 <div key={exercise.id} className="bg-surface p-6 rounded-lg border border-border">
-                    <h3 className="text-3xl font-playfair text-text">{`Exercice ${index + 1} | ${exercise.title}`}</h3>
-                    <div className="mt-4 text-text-secondary serif-text">
+                    <div className="flex justify-between items-start mb-4">
+                        <h3 className="text-3xl font-playfair text-text pr-4">
+                            <span>{`Exercice ${index + 1}`}</span>
+                            <span className="text-2xl text-text-secondary font-normal">{` | ${exercise.title}`}</span>
+                        </h3>
+                        {exercise.hint && exercise.hint.length > 0 && (
+                            <button 
+                                onClick={() => handleOpenHintModal(exercise.id)}
+                                className="font-button flex-shrink-0 w-10 h-10 text-info bg-info/10 rounded-full flex items-center justify-center hover:bg-info/20 transition-colors active:scale-95"
+                                aria-label={`Voir l'indice pour l'exercice ${index + 1}`}
+                            >
+                                <span className="material-symbols-outlined text-base">lightbulb</span>
+                            </button>
+                        )}
+                    </div>
+                    
+                    <div className="text-text-secondary serif-text">
                         <MathJax dynamic>{exercise.statement}</MathJax>
                     </div>
                     
                     {exercise.sub_questions && renderSubQuestions(exercise.sub_questions)}
-                    {exercise.hint && renderHints(exercise.id, exercise.hint)}
 
                     <div className="mt-6 border-t border-border pt-4">
                         <p className="text-sm font-semibold text-text mb-3 serif-text">Comment vous êtes-vous senti face à cet exercice ?</p>
-                        <div className="flex flex-col sm:flex-row gap-2">
+                        <div className="flex flex-wrap gap-2">
                            {(['Facile', 'Moyen', 'Difficile', 'Non traité'] as Feedback[]).map(f => (
                                 <FeedbackButton 
                                     key={f} 
@@ -162,6 +151,11 @@ const Exercises: React.FC<ExercisesProps> = ({ onAllCompleted }) => {
                     </div>
                 </div>
             ))}
+            <HintModal
+                isOpen={!!hintModalExerciseId}
+                onClose={() => setHintModalExerciseId(null)}
+                exercise={hintExercise}
+            />
         </div>
     );
 };

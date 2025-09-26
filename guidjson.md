@@ -43,11 +43,13 @@ Chaque objet dans le tableau `quiz` représente une question.
 |---------------|-------------------|-------------|----------------------------------------------------------------------------------------|
 | `id`          | `String`          | Oui         | Un identifiant unique pour la question (ex: `"q_proposition_1"`).                      |
 | `question`    | `String`          | Oui         | Le texte de la question. Peut contenir du formatage MathJax (ex: `$P \\land Q$`).      |
-| `options`     | `Array<Option>`   | Oui         | Un tableau contenant 2 à 4 objets `Option`.                                            |
+| `type`        | `String`          | Non         | Le type de question. `"mcq"` (choix multiples) par défaut, ou `"ordering"` (ordonnancement). |
+| `options`     | `Array<Option>`   | Si `type`=`"mcq"` | Un tableau contenant 2 à 4 objets `Option`. Ne pas utiliser pour `type`=`"ordering"`. |
+| `steps`       | `Array<String>`   | Si `type`=`"ordering"` | Un tableau de chaînes de caractères représentant les étapes **dans l'ordre correct**. Ne pas utiliser pour `type`=`"mcq"`. |
 | `explanation` | `String`          | Non         | Une explication générale qui s'affiche après que l'utilisateur a répondu.                |
-| `hints`       | `Array<String>`   | Non         | Un tableau d'indices textuels pour aider l'élève. À réserver aux questions difficiles. |
+| `hints`       | `Array<String>`   | Non         | Un tableau d'indices textuels pour aider l'élève. |
 
-### Structure de l'objet `Option`
+### Structure de l'objet `Option` (pour `type: "mcq"`)
 
 Chaque objet dans le tableau `options` d'une question.
 
@@ -57,21 +59,35 @@ Chaque objet dans le tableau `options` d'une question.
 | `isCorrect`   | `Boolean` | Oui         | `true` si c'est la bonne réponse, sinon `false`. Une seule option doit être correcte. |
 | `explanation` | `String`  | Non         | Une explication spécifique si cette option est choisie (peut compléter l'explication générale). |
 
-### Exemple d'une `Question`
+### Exemple d'une `Question` de type `"mcq"`
 
 ```json
 {
   "id": "q_implication_5",
+  "type": "mcq",
   "question": "L'implication $P \\Rightarrow Q$ est fausse uniquement quand :",
   "options": [
     { "text": "$P$ est vraie et $Q$ est fausse", "isCorrect": true },
     { "text": "$P$ est fausse et $Q$ est vraie", "isCorrect": false }
   ],
-  "explanation": "Une implication $P \\Rightarrow Q$ n'est fausse que dans le cas où la prémisse $P$ est vraie et la conclusion $Q$ est fausse.",
-  "hints": [
-    "Une implication est comme une promesse. 'Si P, alors Q'.",
-    "La seule façon de briser la promesse est que P soit vrai, mais que Q soit fausse."
-  ]
+  "explanation": "Une implication $P \\Rightarrow Q$ n'est fausse que dans le cas où la prémisse $P$ est vraie et la conclusion $Q$ est fausse."
+}
+```
+
+### Exemple d'une `Question` de type `"ordering"`
+
+```json
+{
+  "id": "q_ordering_recurrence",
+  "type": "ordering",
+  "question": "Remettez dans l'ordre les étapes d'un raisonnement par récurrence.",
+  "steps": [
+    "Initialisation : Vérifier que la propriété est vraie pour le premier rang.",
+    "Hérédité : Supposer que la propriété est vraie pour un rang n (Hypothèse de récurrence).",
+    "Hérédité : Démontrer que la propriété est vraie pour le rang n+1.",
+    "Conclusion : Conclure que la propriété est vraie pour tous les rangs."
+  ],
+  "explanation": "Un raisonnement par récurrence se déroule en trois phases : l'initialisation, l'hérédité, et la conclusion."
 }
 ```
 

@@ -17,14 +17,14 @@ const ChapterSection: React.FC<ChapterSectionProps> = ({ title, chapters, progre
 
     return (
         <section>
-            <div className={`flex items-center gap-3 mb-6 ${!icon ? 'ml-1' : ''}`}>
-                {icon && <span className="text-text-secondary text-2xl">{icon}</span>}
-                <h2 className="text-3xl sm:text-4xl antique-title text-text">
+            <div className="flex items-baseline gap-4 mb-4 border-b border-border pb-3">
+                {icon && <span className="text-3xl text-primary/70 font-sans not-italic">{icon}</span>}
+                <h2 className="text-3xl sm:text-4xl font-playfair text-text tracking-tight">
                     {title}
-                    <span className="text-lg font-normal text-text-secondary ml-3">
-                        ({chapters.length})
-                    </span>
                 </h2>
+                <span className="text-xl font-garamond text-text-secondary -translate-y-px">
+                    ({chapters.length})
+                </span>
             </div>
             <div className="space-y-4">
                 {chapters.map((chapter) => (

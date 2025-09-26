@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo, useCallback } from 'react';
 import { useAppState, useAppDispatch } from '../../context/AppContext';
 import { CLASS_OPTIONS } from '../../constants';
@@ -29,7 +30,7 @@ interface LearningStepProps {
 const statusConfig: { [key in StepStatus]: { ringColor: string; textColor: string; barColor: string; icon: string; } } = {
     locked: { ringColor: 'ring-border', textColor: 'text-text-disabled', barColor: '#E5E5E5', icon: 'lock' },
     todo: { ringColor: 'ring-secondary/50', textColor: 'text-text', barColor: '#737373', icon: 'lock_open' },
-    'in-progress': { ringColor: 'ring-primary', textColor: 'text-primary', barColor: '#FF6B35', icon: 'autorenew' },
+    'in-progress': { ringColor: 'ring-primary', textColor: 'text-primary', barColor: '#FF6B35', icon: 'pending' },
     completed: { ringColor: 'ring-success', textColor: 'text-success', barColor: '#10B981', icon: 'check_circle' },
 };
 
@@ -54,13 +55,13 @@ const LearningStep: React.FC<LearningStepProps> = ({
                 {/* Left Side: Icon, Title, Description */}
                 <div className="flex-grow flex items-start gap-4">
                     <div className={`w-12 h-12 rounded-full flex items-center justify-center ring-2 ${currentStatus.ringColor} bg-background shrink-0`}>
-                        <span className={`material-symbols-outlined !text-2xl transition-colors ${currentStatus.textColor} ${status === 'in-progress' ? 'animate-spin' : ''}`}>
-                            {icon}
+                        <span className={`material-symbols-outlined !text-2xl transition-colors ${currentStatus.textColor}`}>
+                            {currentStatus.icon}
                         </span>
                     </div>
                     <div>
-                        <h2 className="text-2xl font-playfair text-text">{title}</h2>
-                        <p className="text-secondary text-sm mt-1 font-garamond italic max-w-md">{description}</p>
+                        <h2 className="text-2xl font-title text-text">{title}</h2>
+                        <p className="text-secondary text-sm mt-1 font-sans italic max-w-md">{description}</p>
                     </div>
                 </div>
 
@@ -125,7 +126,7 @@ const ChapterHubView: React.FC = () => {
         const prog = currentChapterId ? progress[currentChapterId] : null;
         const chap = currentChapterId ? activities[currentChapterId] : null;
 
-        const q = prog?.quiz || { isSubmitted: false, answers: {}, score: 0, duration: 0, hintsUsed: 0, allAnswered: false, currentQuestionIndex: 0 };
+        const q = prog?.quiz || { answers: {}, isSubmitted: false, score: 0, allAnswered: false, currentQuestionIndex: 0, duration: 0, hintsUsed: 0 };
         const tq = chap?.quiz?.length || 0;
         const aqc = Object.keys(q.answers).length;
         const te = chap?.exercises?.length || 0;
@@ -169,8 +170,6 @@ const ChapterHubView: React.FC = () => {
         setIsSubmitting(true);
     
         try {
-            // Dispatch state update immediately before submitting the form.
-            // This ensures progress is saved locally before the page reloads.
             dispatch({ type: 'SUBMIT_WORK', payload: { chapterId: chapter.id } });
             setConfirmationModalOpen(false);
             
@@ -197,30 +196,52 @@ const ChapterHubView: React.FC = () => {
             const className = CLASS_OPTIONS.find(c => c.value === profile.classId)?.label || profile.classId;
             const quizScorePercentage = totalQuestions > 0 ? (quiz.score / totalQuestions) * 100 : 0;
             
-            const quizAnswersWithIndices: { [qId: string]: number } = {};
+            const quizAnswersForExport: { [qId: string]: number | number[] } = {};
             Object.keys(quiz.answers).forEach(qId => {
                 const question = chapter.quiz.find(q => q.id === qId);
+                const userAnswer = quiz.answers[qId];
+
                 if (question) {
-                    const answerIndex = question.options.findIndex(opt => opt.text === quiz.answers[qId]);
-                    if (answerIndex !== -1) {
-                        quizAnswersWithIndices[qId] = answerIndex;
+                    if (question.type === 'ordering' && Array.isArray(userAnswer) && question.steps) {
+                        const correctSteps = question.steps;
+                        const answerIndices = (userAnswer as string[]).map(stepText => correctSteps.indexOf(stepText));
+                        if (!answerIndices.includes(-1)) {
+                            quizAnswersForExport[qId] = answerIndices;
+                        }
+                    } 
+                    else if ((!question.type || question.type === 'mcq') && typeof userAnswer === 'string' && question.options) {
+                        const answerIndex = question.options.findIndex(opt => opt.text === userAnswer);
+                        if (answerIndex !== -1) {
+                            quizAnswersForExport[qId] = answerIndex;
+                        }
                     }
                 }
+            });
+
+            const submissionTimestamp = Date.now();
+            const submissionDate = new Date(submissionTimestamp).toLocaleString('fr-FR', {
+                dateStyle: 'full', timeStyle: 'medium', timeZone: 'UTC' 
             });
     
             const submissionData: ExportedProgressFile = {
                 studentName: profile.name,
                 studentLevel: className,
-                timestamp: Date.now(),
+                submissionDate,
+                timestamp: submissionTimestamp,
                 results: [
                     {
                         chapter: chapter.chapter,
+                        version: chapter.version,
                         quiz: {
                             score: parseFloat(quizScorePercentage.toFixed(2)),
-                            answers: quizAnswersWithIndices,
+                            scoreRaw: `${quiz.score} / ${totalQuestions}`,
+                            durationSeconds: chapterProgress.quiz.duration || 0,
+                            hintsUsed: chapterProgress.quiz.hintsUsed || 0,
+                            answers: quizAnswersForExport,
                         },
                         exercisesFeedback: chapterProgress.exercisesFeedback,
-                        durationSeconds: (chapterProgress.quiz.duration || 0) + (chapterProgress.exercisesDuration || 0),
+                        exercisesDurationSeconds: chapterProgress.exercisesDuration || 0,
+                        totalDurationSeconds: (chapterProgress.quiz.duration || 0) + (chapterProgress.exercisesDuration || 0),
                     }
                 ]
             };
@@ -248,6 +269,7 @@ const ChapterHubView: React.FC = () => {
                 if (document.body.contains(form)) {
                     document.body.removeChild(form);
                 }
+                addNotification("Votre travail a été envoyé avec succès !", 'success');
             }, 2000);
             
         } catch (error) {
@@ -263,7 +285,7 @@ const ChapterHubView: React.FC = () => {
     
     const steps: LearningStepProps[] = [
         {
-            icon: 'fact_check', title: 'Étape 1 : Le Quiz',
+            icon: 'history_edu', title: 'Étape 1 : Le Quiz',
             description: 'Évaluez votre compréhension des concepts fondamentaux du chapitre.',
             status: isQuizCompleted ? 'completed' : answeredQuestionsCount > 0 ? 'in-progress' : 'todo',
             progressPercent: quizProgressPercent,
@@ -273,7 +295,7 @@ const ChapterHubView: React.FC = () => {
             buttonVariant: isChapterLocked || isQuizCompleted ? 'secondary' : 'primary',
         },
         {
-            icon: 'assignment', title: 'Étape 2 : Les Exercices',
+            icon: 'architecture', title: 'Étape 2 : Les Exercices',
             description: 'Mettez en pratique vos connaissances et auto-évaluez votre maîtrise.',
             status: !isQuizCompleted ? 'locked' : areAllExercisesDone ? 'completed' : evaluatedExercisesCount > 0 ? 'in-progress' : 'todo',
             progressPercent: exercisesProgressPercent,
@@ -284,7 +306,7 @@ const ChapterHubView: React.FC = () => {
             buttonVariant: !isQuizCompleted ? 'disabled' : (areAllExercisesDone || isChapterLocked) ? 'secondary' : 'primary',
         },
         ...(!isChapterLocked ? [{
-            icon: 'flag_circle', title: 'Étape 3 : Finalisation',
+            icon: 'workspace_premium', title: 'Étape 3 : Finalisation',
             description: isOutdatedSubmission 
                 ? 'Le contenu a été mis à jour. Veuillez revoir les étapes avant de renvoyer.' 
                 : 'Une fois les étapes terminées, envoyez votre travail pour validation.',
@@ -303,14 +325,15 @@ const ChapterHubView: React.FC = () => {
                     <div className="absolute inset-0 pointer-events-none z-50">{[...Array(100)].map((_, i) => <div key={i} className="confetti" style={{left: `${Math.random()*100}%`, animationDuration: `${Math.random()*3+2}s`, animationDelay: `${Math.random()*2}s`, backgroundColor: ['#FF6B35','#10B981','#3B82F6','#F59E0B'][i%4]}} />)}</div>
                 )}
                 
-                <header className="my-6 sm:my-10">
+                <header className="mb-8 sm:mb-12">
                     <div className="relative flex items-center justify-center">
                         <button onClick={() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'dashboard' } })} className="font-button absolute left-0 flex items-center justify-center w-11 h-11 rounded-full text-secondary bg-surface border border-border hover:bg-background transition-all duration-200 active:scale-95" aria-label="Retour au tableau de bord">
                             <span className="material-symbols-outlined">arrow_back</span>
                         </button>
                         <div className="text-center">
-                            <p className="text-primary text-lg font-garamond italic">Plan de travail</p>
-                            <h1 className="text-3xl sm:text-4xl text-text font-playfair">{chapter.chapter}</h1>
+                            <p className="font-brand text-primary tracking-[0.2em] uppercase text-sm mb-2">Plan de travail</p>
+                            <h1 className="text-4xl sm:text-5xl text-text font-title">{chapter.chapter}</h1>
+                            <div className="w-24 h-px bg-border mx-auto mt-4"></div>
                         </div>
                     </div>
                 </header>
@@ -324,8 +347,8 @@ const ChapterHubView: React.FC = () => {
                         <div className="mx-auto w-16 h-16 flex items-center justify-center bg-success/10 rounded-full text-success mb-4">
                             <span className="material-symbols-outlined !text-4xl">verified</span>
                         </div>
-                        <h2 className="text-3xl font-playfair text-text">Travail Soumis !</h2>
-                        <p className="text-lg text-secondary mt-2 font-garamond italic">
+                        <h2 className="text-3xl font-title text-text">Travail Soumis !</h2>
+                        <p className="text-lg text-secondary mt-2 font-sans italic">
                             Félicitations ! Vos réponses ont bien été enregistrées. Nous les examinerons ensemble lors de notre prochaine séance.
                         </p>
                     </div>

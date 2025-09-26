@@ -31,8 +31,8 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
             return {
                 text: 'Terminé',
                 icon: 'check_circle',
-                iconClasses: 'text-text-secondary',
-                textClasses: 'text-text-secondary',
+                iconClasses: 'text-success',
+                textClasses: 'text-success font-semibold',
                 disabled: false,
             };
         }
@@ -49,16 +49,16 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
             return {
                 text: 'En cours',
                 icon: 'autorenew',
-                iconClasses: 'text-text',
-                textClasses: 'text-text',
+                iconClasses: 'text-info',
+                textClasses: 'text-info font-semibold',
                 disabled: false,
             };
         }
         return {
             text: 'À faire',
             icon: 'edit_note',
-            iconClasses: 'text-text-secondary',
-            textClasses: 'text-text-secondary',
+            iconClasses: 'text-warning',
+            textClasses: 'text-warning font-semibold',
             disabled: false,
         };
     }, [chapter.isActive, progress]);
@@ -82,7 +82,7 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
             aria-disabled={disabled}
         >
             <div className="flex-1 text-left">
-                <h3 className="text-2xl antique-title text-primary mb-1">
+                <h3 className="text-2xl font-fira-sans font-semibold tracking-tight text-primary mb-1">
                     {chapter.chapter}
                 </h3>
                 <div className="mt-3">

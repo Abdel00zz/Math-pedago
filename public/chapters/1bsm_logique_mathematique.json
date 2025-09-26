@@ -9,7 +9,7 @@
   "quiz": [
     {
       "id": "q_proposition_1",
-      "question": "Une proposition est:",
+      "question": "Une proposition est :",
       "options": [
         {
           "text": "Un énoncé mathématique qui peut être vrai ou faux",
@@ -466,13 +466,26 @@
           "isCorrect": false
         }
       ]
+    },
+    {
+      "id": "q_ordering_recurrence_21",
+      "type": "ordering",
+      "question": "Remettez dans l'ordre les étapes d'un raisonnement par récurrence pour prouver une propriété $P(n)$ pour tout $n \\ge n_0$.",
+      "steps": [
+        "Énoncer la propriété $P(n)$ à démontrer.",
+        "Initialisation : Vérifier que la propriété $P(n_0)$ est vraie pour le premier rang $n_0$.",
+        "Hérédité : Supposer que $P(n)$ est vraie pour un entier $n \\ge n_0$ fixé (Hypothèse de récurrence).",
+        "Hérédité : Démontrer que sous cette hypothèse, la propriété $P(n+1)$ est également vraie.",
+        "Conclusion : Conclure que la propriété $P(n)$ est vraie pour tout entier $n \\ge n_0$."
+      ],
+      "explanation": "Un raisonnement par récurrence se déroule toujours en trois phases cruciales : l'initialisation qui amorce le processus, l'hérédité qui prouve que la propriété se transmet d'un rang au suivant, et la conclusion qui généralise le résultat."
     }
   ],
   "exercises": [
     {
       "id": "exo_propositions_quantificateurs",
       "title": "Propositions et Quantificateurs",
-      "statement": "AAA Exprimer les propositions suivantes à l'aide des quantificateurs et connecteurs logiques, puis indiquer la valeur de vérité de chacune d'elles :",
+      "statement": "Exprimer les propositions suivantes à l'aide des quantificateurs et connecteurs logiques, puis indiquer la valeur de vérité de chacune d'elles :",
       "sub_questions": [
         {
           "text": "Il existe au moins une solution de l'équation $x^2 - 2 = 0$."
@@ -594,7 +607,13 @@
           "text": "En déduire que $f(n)$ est divisible par 111 pour tout $n \\in \\mathbb{N}$."
         }
       ]
+    },
+    {
+      "id": "exo_f29e772b",
+      "title": "Nouvel Exercice 7",
+      "statement": "Énoncé de l'exercice...",
+      "sub_questions": []
     }
   ],
-  "version": "v1.1.0-11f0f8"
+  "version": "v1.2.0-ordering"
 }

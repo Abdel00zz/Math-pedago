@@ -16,8 +16,6 @@ interface CategorizedActivities {
 
 // Styles personnalisés optimisés
 const customStyles = `
-  @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap');
-  
   :root {
     --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
   }
@@ -34,17 +32,6 @@ const customStyles = `
   .claude-card:hover:not(:disabled) {
     border-color: #D4D4D4; /* border-hover */
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(0, 0, 0, 0.05);
-  }
-
-  .antique-title {
-    font-family: 'Crimson Text', serif;
-    letter-spacing: 0.03em;
-    font-weight: 600;
-  }
-  
-  .serif-text {
-    font-family: 'EB Garamond', serif;
-    font-feature-settings: 'liga' 1, 'calt' 1;
   }
   
   .pulse-dot {
@@ -295,8 +282,8 @@ const DashboardView: React.FC = () => {
             <div className="min-h-screen bg-background flex items-center justify-center">
                 <div className="text-center">
                     <div className="w-16 h-16 border-4 border-border border-t-secondary rounded-full animate-spin mb-6 mx-auto" />
-                    <h2 className="text-xl antique-title text-text">Chargement de votre espace...</h2>
-                    <p className="serif-text text-text-secondary italic mt-2">Préparation de vos chapitres</p>
+                    <h2 className="text-xl font-title text-text">Chargement de votre espace...</h2>
+                    <p className="font-sans text-text-secondary italic mt-2">Préparation de vos chapitres</p>
                 </div>
             </div>
         );
@@ -308,8 +295,8 @@ const DashboardView: React.FC = () => {
             <div className="min-h-screen bg-background flex items-center justify-center">
                 <div className="text-center p-8 claude-card rounded-2xl max-w-md">
                     <span className="text-5xl text-text-disabled block mb-4">⚠</span>
-                    <h2 className="text-xl antique-title text-text mb-2">Profil non trouvé</h2>
-                    <p className="serif-text text-text-secondary italic">Veuillez vous reconnecter pour accéder à votre espace</p>
+                    <h2 className="text-xl font-title text-text mb-2">Profil non trouvé</h2>
+                    <p className="font-sans text-text-secondary italic">Veuillez vous reconnecter pour accéder à votre espace</p>
                 </div>
             </div>
         );
@@ -329,7 +316,7 @@ const DashboardView: React.FC = () => {
                     <header className="sticky top-0 z-30 bg-background/90 backdrop-blur-md py-6 mb-6 -mx-4 -mt-4 sm:-mx-6 sm:-mt-6 px-4 sm:px-6">
                         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 max-w-5xl mx-auto">
                             <div>
-                                <h1 className="text-2xl sm:text-4xl font-playfair mb-2">
+                                <h1 className="text-2xl sm:text-4xl font-title text-text mb-2 tracking-tight">
                                     {greeting},
                                     <span className="text-[#FF7A00] ml-4">
                                         {profile.name}
@@ -337,7 +324,7 @@ const DashboardView: React.FC = () => {
                                 </h1>
                                 <div className="mt-2">
                                     <div
-                                        className="inline-block text-lg font-garamond text-text-secondary italic"
+                                        className="inline-block text-lg font-sans text-text-secondary italic"
                                         dangerouslySetInnerHTML={{ __html: formatClassNameHTML(className) }}
                                     />
                                 </div>
@@ -371,13 +358,13 @@ const DashboardView: React.FC = () => {
                     ) : (
                         <div className="claude-card text-center p-12 rounded-2xl mt-8">
                             <span className="text-5xl text-text-disabled block mb-4">◎</span>
-                            <h2 className="text-xl antique-title text-text mb-2">Aucun chapitre disponible</h2>
-                            <p className="serif-text text-text-secondary italic">
+                            <h2 className="text-xl font-title text-text mb-2">Aucun chapitre disponible</h2>
+                            <p className="font-sans text-text-secondary italic">
                                 Les chapitres pour votre classe seront bientôt révélés...
                             </p>
                             <button 
                                 onClick={() => window.location.reload()}
-                                className="mt-6 px-6 py-2 bg-background hover:bg-border/50 text-text rounded-lg transition-colors serif-text"
+                                className="mt-6 px-6 py-2 bg-background hover:bg-border/50 text-text rounded-lg transition-colors font-sans"
                             >
                                 Rafraîchir la page
                             </button>
@@ -391,7 +378,7 @@ const DashboardView: React.FC = () => {
                             <div className="w-8 h-px bg-border-hover my-1.5"></div>
                             <span className="font-brand text-2xl text-primary -mt-1">of Mathematics</span>
                         </div>
-                        <p className="text-xs text-text-secondary serif-text italic mt-4">
+                        <p className="text-xs text-text-secondary font-sans italic mt-4">
                             © {new Date().getFullYear()} - Votre parcours d'apprentissage interactif
                         </p>
                     </footer>

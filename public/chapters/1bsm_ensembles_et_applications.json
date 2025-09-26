@@ -1,157 +1,174 @@
 {
   "class": "1bsm",
   "chapter": "Ensembles et applications",
-  "sessionDates": [],
+  "sessionDates": [
+    "2025-10-02T18:00:00Z",
+    "2025-10-07T17:00:00Z",
+    "2025-10-09T18:00:00Z"
+  ],
   "quiz": [
     {
-      "id": "q_ensembles_1",
-      "question": "SAAoit $E = \\{a, b, c\\}$. Quel est le cardinal de l'ensemble AAdes parties de E, noté $\\mathcal{P}(E)$ ?",
+      "id": "q_ensemble_1",
+      "type": "mcq",
+      "question": "Soit $A = \\{1, 2, 3\\}$ et $B = \\{2, 3, 4\\}$. Que vaut $A \\cap B$ ?",
       "options": [
-        {
-          "text": "3",
-          "isCorrect": false
-        },
-        {
-          "text": "6",
-          "isCorrect": false
-        },
-        {
-          "text": "8",
-          "isCorrect": true
-        },
-        {
-          "text": "9",
-          "isCorrect": false
-        }
-      ]
+        { "text": "$\\{2, 3\\}$", "isCorrect": true },
+        { "text": "$\\{1, 2, 3, 4\\}$", "isCorrect": false },
+        { "text": "$\\{1, 4\\}$", "isCorrect": false },
+        { "text": "$\\emptyset$", "isCorrect": false }
+      ],
+      "explanation": "L'intersection $A \\cap B$ contient tous les éléments qui appartiennent à la fois à $A$ et à $B$.",
+      "hints": ["L'intersection contient les éléments communs aux deux ensembles."]
     },
     {
-      "id": "q_applications_1",
-      "question": "L'application $f: \\mathbb{R} \\to \\mathbb{R}$ définie par $f(x) = x^2$ est-elle surjective ?",
+      "id": "q_ensemble_2",
+      "type": "mcq",
+      "question": "Si $A \\subset B$ et $B \\subset C$, alors :",
       "options": [
-        {
-          "text": "Oui",
-          "isCorrect": false
-        },
-        {
-          "text": "Non",
-          "isCorrect": true
-        }
-      ]
+        { "text": "$A \\subset C$", "isCorrect": true, "explanation": "C'est la propriété de transitivité de l'inclusion." },
+        { "text": "$C \\subset A$", "isCorrect": false, "explanation": "Ceci serait l'inverse de la relation correcte." },
+        { "text": "$A = C$", "isCorrect": false, "explanation": "L'égalité n'est pas nécessairement vraie." },
+        { "text": "Aucune conclusion possible", "isCorrect": false, "explanation": "On peut conclure grâce à la transitivité." }
+      ],
+      "explanation": "La relation d'inclusion est transitive : si $A \\subset B$ et $B \\subset C$, alors $A \\subset C$."
     },
     {
-      "id": "q_c4cccf59",
-      "question": "Nouvelle question asd asa zddzdz zd",
+      "id": "q_application_1",
+      "type": "mcq",
+      "question": "Soit $f: \\mathbb{R} \\to \\mathbb{R}$ définie par $f(x) = x^2$. Cette fonction est :",
       "options": [
-        {
-          "text": "Option 1",
-          "isCorrect": true,
-          "explanation": "Ceci est la bonne réponse."
-        },
-        {
-          "text": "Option 2",
-          "isCorrect": false
-        }
-      ]
+        { "text": "Injective", "isCorrect": false, "explanation": "Non, car $f(-1) = f(1) = 1$ mais $-1 \\neq 1$." },
+        { "text": "Surjective", "isCorrect": false, "explanation": "Non, car les nombres négatifs n'ont pas d'antécédent." },
+        { "text": "Bijective", "isCorrect": false, "explanation": "Non, car elle n'est ni injective ni surjective." },
+        { "text": "Ni injective, ni surjective", "isCorrect": true }
+      ],
+      "explanation": "La fonction $f(x) = x^2$ n'est pas injective car $f(-a) = f(a)$ pour tout $a > 0$, et n'est pas surjective car les nombres négatifs n'ont pas d'antécédent."
     },
     {
-      "id": "q_b859ae8d",
-      "question": "Nouvelle questiondfesfesf",
+      "id": "q_application_2",
+      "type": "mcq",
+      "question": "Une fonction $f: E \\to F$ est bijective si et seulement si :",
       "options": [
-        {
-          "text": "Option 1",
-          "isCorrect": true,
-          "explanation": "Ceci est la bonne réponse.gr"
-        },
-        {
-          "text": "Option 2",
-          "isCorrect": false
-        },
-        {
-          "text": "rg",
-          "isCorrect": false
-        },
-        {
-          "text": "rg",
-          "isCorrect": false
-        }
-      ]
+        { "text": "Elle est injective", "isCorrect": false },
+        { "text": "Elle est surjective", "isCorrect": false },
+        { "text": "Elle est à la fois injective et surjective", "isCorrect": true },
+        { "text": "Elle est continue", "isCorrect": false }
+      ],
+      "explanation": "Une fonction est bijective si et seulement si elle est à la fois injective (un-à-un) et surjective (sur).",
+      "hints": ["Pensez aux définitions d'injectivité et de surjectivité."]
     },
     {
-      "id": "q_db1ec25c",
-      "question": "Nouvelle questiondzqd",
+      "id": "q_ordering_ensemble",
+      "type": "ordering",
+      "question": "Remettez dans l'ordre logique les étapes pour démontrer qu'une fonction est bijective :",
+      "steps": [
+        "Démontrer que la fonction est injective",
+        "Démontrer que la fonction est surjective", 
+        "Conclure que la fonction est bijective",
+        "Montrer l'existence de la fonction réciproque"
+      ],
+      "explanation": "Pour prouver qu'une fonction est bijective, on démontre d'abord l'injectivité, puis la surjectivité, on conclut qu'elle est bijective, et enfin on peut établir l'existence de sa réciproque."
+    },
+    {
+      "id": "q_ensemble_3",
+      "type": "mcq",
+      "question": "Soit $E$ un ensemble fini à $n$ éléments. Le nombre de parties (sous-ensembles) de $E$ est :",
       "options": [
-        {
-          "text": "Option 1",
-          "isCorrect": true,
-          "explanation": "Ceci est la bonne réponse."
-        },
-        {
-          "text": "Option 2",
-          "isCorrect": false
-        },
-        {
-          "text": "zdz",
-          "isCorrect": false
-        }
-      ]
+        { "text": "$n$", "isCorrect": false },
+        { "text": "$n!$", "isCorrect": false },
+        { "text": "$2^n$", "isCorrect": true },
+        { "text": "$n^2$", "isCorrect": false }
+      ],
+      "explanation": "Un ensemble à $n$ éléments possède $2^n$ parties, car pour chaque élément, on a le choix de l'inclure ou non dans une partie.",
+      "hints": ["Pour chaque élément, on a 2 choix : l'inclure ou ne pas l'inclure."]
     }
   ],
   "exercises": [
     {
-      "id": "exo_ensembles_1",
+      "id": "exo_operations_ensembles",
       "title": "Opérations sur les ensembles",
-      "statement": "Soient $A = \\{1, 2, 4, 5\\}$ et $B = \\{2, 3, 5, 6\\}$ deux parties d'un ensemble $E = \\{1, 2, 3, 4, 5, 6, 7\\}$.",
+      "statement": "Soient $A$, $B$ et $C$ trois ensembles. Démontrer les propriétés suivantes en utilisant la double inclusion :",
       "sub_questions": [
+        { "text": "$(A \\cup B) \\cap C = (A \\cap C) \\cup (B \\cap C)$ (Distributivité de l'intersection sur l'union)" },
+        { "text": "$\\overline{A \\cup B} = \\overline{A} \\cap \\overline{B}$ (Loi de De Morgan)" },
+        { "text": "$A \\setminus (B \\cup C) = (A \\setminus B) \\cap (A \\setminus C)$" }
+      ],
+      "hint": [
         {
-          "text": "Déterminer $A \\cup B$."
+          "text": "Pour démontrer une égalité d'ensembles $X = Y$, montrez la double inclusion : $X \\subset Y$ et $Y \\subset X$."
         },
         {
-          "text": "Déterminer $A \\cap B$."
-        },
-        {
-          "text": "Déterminer le complémentaire de A dans E, noté $\\overline{A}$."
+          "text": "Pour la loi de De Morgan, utilisez les définitions du complément et des opérations d'union/intersection.",
+          "sub_questions": [
+            { "text": "Montrez d'abord que $\\overline{A \\cup B} \\subset \\overline{A} \\cap \\overline{B}$" },
+            { "text": "Puis montrez que $\\overline{A} \\cap \\overline{B} \\subset \\overline{A \\cup B}$" }
+          ]
         }
       ]
     },
     {
-      "id": "exo_e1e6b757",
-      "title": "Nouvel Exercice 2",
-      "statement": "Énoncé de l'exercice...Soient $A = \\{1, 2, 4, 5\\}$ et $B = \\{2, 3, 5, 6\\}$ deux parties d'un ensemble $E = \\{1, 2, 3, 4, 5, 6, 7\\}$.",
+      "id": "exo_applications_proprietés",
+      "title": "Propriétés des applications",
+      "statement": "Soient $f: E \\to F$ et $g: F \\to G$ deux applications.",
       "sub_questions": [
+        { "text": "Montrer que si $f$ et $g$ sont injectives, alors $g \\circ f$ est injective." },
+        { "text": "Montrer que si $f$ et $g$ sont surjectives, alors $g \\circ f$ est surjective." },
+        { "text": "En déduire que si $f$ et $g$ sont bijectives, alors $g \\circ f$ est bijective." },
+        { "text": "Montrer que $(g \\circ f)^{-1} = f^{-1} \\circ g^{-1}$ lorsque $f$ et $g$ sont bijectives." }
+      ],
+      "hint": [
         {
-          "text": "Déterminer $A \\cup B$."
+          "text": "Pour l'injectivité, partez de $g \\circ f(x_1) = g \\circ f(x_2)$ et montrez que $x_1 = x_2$."
+        },
+        {
+          "text": "Pour la surjectivité, prenez un élément $z \\in G$ et montrez qu'il existe $x \\in E$ tel que $g \\circ f(x) = z$."
         }
       ]
     },
     {
-      "id": "exo_851b9549",
-      "title": "Nouvel Exercice 3",
-      "statement": "Énoncé de l'exercice...gfbndgfbhdtgf",
-      "sub_questions": []
-    },
-    {
-      "id": "exo_3f50e31c",
-      "title": "Nouvel Exercice 4",
-      "statement": "Énoncé de l'exercice...",
-      "sub_questions": []
-    },
-    {
-      "id": "exo_0a007e56",
-      "title": "Nouvel Exercice 5",
-      "statement": "Énoncé de l'exercice...",
-      "sub_questions": []
-    },
-    {
-      "id": "exo_bf856249",
-      "title": "Nouvel Exercice 6",
-      "statement": "Énoncé de l'exercice...ergfesz",
+      "id": "exo_fonction_reciproque",
+      "title": "Fonction réciproque",
+      "statement": "Soit $f: \\mathbb{R}^+ \\to \\mathbb{R}^+$ définie par $f(x) = x^2$ où $\\mathbb{R}^+ = [0, +\\infty[$.",
       "sub_questions": [
+        { "text": "Montrer que $f$ est injective sur $\\mathbb{R}^+$." },
+        { "text": "Montrer que $f$ est surjective de $\\mathbb{R}^+$ vers $\\mathbb{R}^+$." },
+        { "text": "En déduire que $f$ est bijective." },
+        { "text": "Déterminer la fonction réciproque $f^{-1}$ et préciser son domaine de définition." },
+        { "text": "Vérifier que $f \\circ f^{-1} = \\text{Id}_{\\mathbb{R}^+}$ et $f^{-1} \\circ f = \\text{Id}_{\\mathbb{R}^+}$." }
+      ],
+      "hint": [
         {
-          "text": "fefe"
+          "text": "Pour l'injectivité, utilisez le fait que si $x, y \\geq 0$ et $x^2 = y^2$, alors $x = y$."
+        },
+        {
+          "text": "Pour la surjectivité, montrez que pour tout $y \\in \\mathbb{R}^+$, il existe $x \\in \\mathbb{R}^+$ tel que $x^2 = y$."
+        },
+        {
+          "text": "La fonction réciproque est $f^{-1}(x) = \\sqrt{x}$ pour $x \\geq 0$."
+        }
+      ]
+    },
+    {
+      "id": "exo_image_reciproque",
+      "title": "Image directe et image réciproque",
+      "statement": "Soit $f: E \\to F$ une application et soient $A, B \\subset E$ et $C, D \\subset F$.",
+      "sub_questions": [
+        { "text": "Montrer que $f(A \\cup B) = f(A) \\cup f(B)$." },
+        { "text": "Montrer que $f(A \\cap B) \\subset f(A) \\cap f(B)$. Donner un exemple où l'inclusion est stricte." },
+        { "text": "Montrer que $f^{-1}(C \\cup D) = f^{-1}(C) \\cup f^{-1}(D)$." },
+        { "text": "Montrer que $f^{-1}(C \\cap D) = f^{-1}(C) \\cap f^{-1}(D)$." }
+      ],
+      "hint": [
+        {
+          "text": "Pour les images directes, utilisez les définitions : $y \\in f(A)$ si et seulement si il existe $x \\in A$ tel que $f(x) = y$."
+        },
+        {
+          "text": "Pour les images réciproques, utilisez : $x \\in f^{-1}(C)$ si et seulement si $f(x) \\in C$."
+        },
+        {
+          "text": "Pour l'exemple d'inclusion stricte en question 2, considérez $f: \\{1, 2\\} \\to \\{a\\}$ avec $f(1) = f(2) = a$, et $A = \\{1\\}$, $B = \\{2\\}$."
         }
       ]
     }
-  ],
-  "version": "v1.1.0-569723"
+  ]
 }

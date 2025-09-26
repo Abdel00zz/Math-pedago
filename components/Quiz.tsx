@@ -2,6 +2,7 @@ import React, { useMemo, useState, useEffect, useCallback } from 'react';
 import { useAppState, useAppDispatch } from '../context/AppContext';
 import { MathJax } from 'better-react-mathjax';
 import { Option } from '../types';
+import OrderingQuestion from './OrderingQuestion';
 
 const Quiz: React.FC = () => {
     const state = useAppState();
@@ -9,8 +10,6 @@ const Quiz: React.FC = () => {
     const { currentChapterId, activities, progress, isReviewMode } = state;
     
     const [timeSpent, setTimeSpent] = useState(0);
-    const [unlockedHintIndexes, setUnlockedHintIndexes] = useState<Set<number>>(new Set());
-    const [totalHintsUsed, setTotalHintsUsed] = useState(0);
     
     // Memoized values for stability
     const chapter = useMemo(() => currentChapterId ? activities[currentChapterId] : null, [currentChapterId, activities]);
@@ -25,11 +24,6 @@ const Quiz: React.FC = () => {
         const timer = setInterval(() => setTimeSpent(prev => prev + 1), 1000);
         return () => clearInterval(timer);
     }, [isReviewMode, isSubmitted]);
-    
-    // Reset local state when question changes
-    useEffect(() => {
-        setUnlockedHintIndexes(new Set());
-    }, [currentQuestionIndex]);
 
     const handleOptionChange = useCallback((answer: string) => {
         if (isSubmitted || !question) return;
@@ -45,20 +39,24 @@ const Quiz: React.FC = () => {
     const handleSubmit = useCallback(() => {
         if (!chapter) return;
         const finalScore = chapter.quiz.reduce((acc, q) => {
-            const correctOption = q.options.find(opt => opt.isCorrect)?.text;
-            return answers[q.id] === correctOption ? acc + 1 : acc;
+            const userAnswer = answers[q.id];
+            // Default to MCQ for backward compatibility
+            if (!q.type || q.type === 'mcq') {
+                const correctOption = q.options?.find(opt => opt.isCorrect)?.text;
+                if (typeof userAnswer === 'string' && userAnswer === correctOption) {
+                    return acc + 1;
+                }
+            } 
+            // Handle ordering questions
+            else if (q.type === 'ordering') {
+                if (Array.isArray(userAnswer) && q.steps && JSON.stringify(userAnswer) === JSON.stringify(q.steps)) {
+                    return acc + 1;
+                }
+            }
+            return acc;
         }, 0);
-        dispatch({ type: 'SUBMIT_QUIZ', payload: { score: finalScore, duration: timeSpent, hintsUsed: totalHintsUsed } });
-    }, [chapter, answers, dispatch, timeSpent, totalHintsUsed]);
-
-    const handleUnlockHint = useCallback(() => {
-        if (!question?.hints || unlockedHintIndexes.size >= question.hints.length) return;
-        
-        const newUnlocked = new Set(unlockedHintIndexes);
-        newUnlocked.add(unlockedHintIndexes.size);
-        setUnlockedHintIndexes(newUnlocked);
-        setTotalHintsUsed(prev => prev + 1);
-    }, [question, unlockedHintIndexes]);
+        dispatch({ type: 'SUBMIT_QUIZ', payload: { score: finalScore, duration: timeSpent, hintsUsed: 0 } });
+    }, [chapter, answers, dispatch, timeSpent]);
 
     const getOptionClass = useCallback((option: Option, isSelected: boolean) => {
         const base = 'w-full text-left p-4 rounded-lg border-2 transition-all duration-200 flex items-center gap-4 font-lato text-lg';
@@ -143,59 +141,50 @@ const Quiz: React.FC = () => {
                 ))}
             </div>
 
-            {/* Question Card */}
-            <div className="bg-surface p-6 sm:p-8 rounded-2xl border border-border shadow-claude animate-fadeIn">
-                <p className="text-sm text-secondary mb-4">Question {currentQuestionIndex + 1} / {chapter.quiz.length}</p>
-                <h3 className="text-2xl font-serif mb-6 text-text">
-                    <MathJax dynamic>{question.question}</MathJax>
-                </h3>
-                <div className="space-y-4">
-                    {question.options.map((option, index) => {
-                        const isSelected = answers[question.id] === option.text;
-                        const optionClass = getOptionClass(option, isSelected);
-                        const Icon = () => {
-                             if (isReviewMode || isSubmitted) {
-                                return option.isCorrect 
-                                    ? <span className="material-symbols-outlined">check_circle</span>
-                                    : isSelected ? <span className="material-symbols-outlined">cancel</span> : null
-                             }
-                             return <div className={`w-5 h-5 border-2 rounded-full flex items-center justify-center transition-colors ${isSelected ? 'border-primary bg-primary' : 'border-text-disabled'}`}><div className="w-2 h-2 bg-white rounded-full"></div></div>;
-                        }
-                        
-                        return (
-                            <button key={index} onClick={() => handleOptionChange(option.text)} className={optionClass} disabled={isSubmitted}>
-                                <Icon/>
-                                <span className="flex-1"><MathJax dynamic>{option.text}</MathJax></span>
-                            </button>
-                        );
-                    })}
-                </div>
-            </div>
-            
-            {/* Hints & Explanation Section */}
-            {(question.hints || (isReviewMode && question.explanation)) && (
-                <div className="mt-6 animate-fadeIn">
-                    {!isReviewMode && question.hints && question.hints.length > 0 && (
-                        <div className="bg-surface p-4 rounded-xl border border-border">
-                           {Array.from({ length: unlockedHintIndexes.size }).map((_, i) => (
-                                <div key={i} className="p-3 mb-2 bg-background rounded-md serif-text text-secondary animate-fadeIn">
-                                    <MathJax dynamic>{question.hints![i]}</MathJax>
-                                </div>
-                           ))}
-                            {unlockedHintIndexes.size < question.hints.length && (
-                                <button onClick={handleUnlockHint} className="font-button text-sm text-info font-semibold flex items-center gap-2 hover:underline p-2">
-                                    <span className="material-symbols-outlined text-base">lightbulb</span> 
-                                    Afficher un indice ({unlockedHintIndexes.size + 1}/{question.hints.length})
+            {(!question.type || question.type === 'mcq') && (
+                <div className="bg-surface p-6 sm:p-8 rounded-2xl border border-border shadow-claude animate-fadeIn">
+                    <p className="text-sm text-secondary mb-4">Question {currentQuestionIndex + 1} / {chapter.quiz.length}</p>
+                    <h3 className="text-2xl font-serif mb-6 text-text">
+                        <MathJax dynamic>{question.question}</MathJax>
+                    </h3>
+                    <div className="space-y-4">
+                        {question.options?.map((option, index) => {
+                            const isSelected = answers[question.id] === option.text;
+                            const optionClass = getOptionClass(option, isSelected);
+                            const Icon = () => {
+                                 if (isReviewMode || isSubmitted) {
+                                    return option.isCorrect 
+                                        ? <span className="material-symbols-outlined">check_circle</span>
+                                        : isSelected ? <span className="material-symbols-outlined">cancel</span> : null
+                                 }
+                                 return <div className={`w-5 h-5 border-2 rounded-full flex items-center justify-center transition-colors ${isSelected ? 'border-primary bg-primary' : 'border-text-disabled'}`}><div className="w-2 h-2 bg-white rounded-full"></div></div>;
+                            }
+                            
+                            return (
+                                <button key={index} onClick={() => handleOptionChange(option.text)} className={optionClass} disabled={isSubmitted}>
+                                    <Icon/>
+                                    <span className="flex-1"><MathJax dynamic>{option.text}</MathJax></span>
                                 </button>
-                            )}
-                        </div>
-                    )}
-                    {isReviewMode && (question.explanation || question.options.find(o => o.isCorrect)?.explanation) && (
-                         <div className="mt-6 p-4 bg-background rounded-lg border border-border">
-                            <h4 className="font-bold text-text mb-2 text-lg font-serif">Explication :</h4>
-                            <p className="text-secondary serif-text"><MathJax dynamic>{question.explanation || question.options.find(o => o.isCorrect)?.explanation}</MathJax></p>
-                        </div>
-                    )}
+                            );
+                        })}
+                    </div>
+                </div>
+            )}
+            
+            {question.type === 'ordering' && (
+                 <OrderingQuestion
+                    question={question}
+                    userAnswer={answers[question.id] as string[] | undefined}
+                    isReviewMode={isReviewMode}
+                    isSubmitted={isSubmitted}
+                />
+            )}
+
+            {/* Explanation Section */}
+            {isReviewMode && (question.explanation || (question.type === 'mcq' && question.options?.find(o => o.isCorrect)?.explanation)) && (
+                 <div className="mt-6 p-4 bg-background rounded-lg border border-border animate-fadeIn">
+                    <h4 className="font-bold text-text mb-2 text-lg font-serif">Explication :</h4>
+                    <p className="text-secondary serif-text"><MathJax dynamic>{question.explanation || question.options?.find(o => o.isCorrect)?.explanation}</MathJax></p>
                 </div>
             )}
 

@@ -12,13 +12,17 @@ export interface Option {
 export interface Question {
     id: string;
     question: string;
-    options: Option[];
+    type?: 'mcq' | 'ordering';
+    options?: Option[];
+    steps?: string[];
     explanation?: string;
     hints?: string[];
 }
 
 export interface Hint {
     text: string;
+    // Fix: Added optional 'sub_questions' to allow hints to contain sub-questions.
+    sub_questions?: SubQuestion[];
 }
 
 export interface SubQuestion {
@@ -48,7 +52,7 @@ export interface Chapter {
 export type Feedback = 'Facile' | 'Moyen' | 'Difficile' | 'Non traité';
 
 export interface QuizProgress {
-    answers: { [qId: string]: string };
+    answers: { [qId: string]: string | string[] };
     isSubmitted: boolean;
     score: number;
     allAnswered: boolean;
@@ -80,20 +84,26 @@ export interface AppState {
 
 // Types for the specific JSON export structure
 export interface ExportedQuizResult {
-    score: number;
-    answers: { [qId: string]: number };
+    score: number; // Percentage
+    scoreRaw: string;
+    durationSeconds: number;
+    hintsUsed: number;
+    answers: { [qId: string]: number | number[] }; // Standardized to numbers/indices
 }
 
 export interface ExportedChapterResult {
     chapter: string;
+    version: string;
     quiz: ExportedQuizResult;
     exercisesFeedback: { [exId: string]: Feedback };
-    durationSeconds?: number;
+    exercisesDurationSeconds: number;
+    totalDurationSeconds: number;
 }
 
 export interface ExportedProgressFile {
     studentName: string;
     studentLevel: string;
+    submissionDate: string;
     timestamp: number;
     results: ExportedChapterResult[];
 }
@@ -112,7 +122,7 @@ export type Action =
     | { type: 'CHANGE_VIEW'; payload: { view: AppState['view']; chapterId?: string; subView?: AppState['activitySubView']; review?: boolean } }
     | { type: 'LOGIN'; payload: Profile }
     | { type: 'NAVIGATE_QUIZ'; payload: number }
-    | { type: 'UPDATE_QUIZ_ANSWER'; payload: { qId: string; answer: string } }
+    | { type: 'UPDATE_QUIZ_ANSWER'; payload: { qId: string; answer: string | string[] } }
     | { type: 'SUBMIT_QUIZ'; payload: { score: number; duration: number; hintsUsed: number } }
     | { type: 'TOGGLE_REVIEW_MODE'; payload: boolean }
     | { type: 'UPDATE_EXERCISE_FEEDBACK'; payload: { exId: string; feedback: Feedback } }
