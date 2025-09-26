@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useAppState, useAppDispatch } from '../../context/AppContext';
-import Quiz from '../Quiz';
+import Quiz from '../quiz/Quiz';
 import Exercises from '../Exercises';
 
 const ActivityView: React.FC = () => {

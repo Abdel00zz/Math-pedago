@@ -254,7 +254,7 @@
     {
       "id": "q_vrai_faux_5",
       "type": "mcq",
-      "question": " $\\{a\\} \\in \\{a, b, c\\}$.",
+      "question": "$\\{a\\} \\in \\{a, b, c\\}$.",
       "options": [
         { "text": "Vrai", "isCorrect": false },
         { "text": "Faux", "isCorrect": true }

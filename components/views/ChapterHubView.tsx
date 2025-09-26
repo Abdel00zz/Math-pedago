@@ -331,8 +331,8 @@ const ChapterHubView: React.FC = () => {
                             <span className="material-symbols-outlined">arrow_back</span>
                         </button>
                         <div className="text-center">
-                            <p className="font-brand text-primary tracking-[0.2em] uppercase text-sm mb-2">Plan de travail</p>
-                            <h1 className="text-3xl sm:text-4xl text-text font-title">{chapter.chapter}</h1>
+                            <p className="font-brand text-primary tracking-[0.2em] uppercase text-xs mb-2">Plan de travail</p>
+                            <h1 className="text-2xl sm:text-3xl text-text font-title">{chapter.chapter}</h1>
                             <div className="w-24 h-px bg-border mx-auto mt-4"></div>
                         </div>
                     </div>

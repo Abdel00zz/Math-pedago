@@ -135,9 +135,9 @@ const Exercises: React.FC<ExercisesProps> = ({ onAllCompleted }) => {
                     
                     {exercise.sub_questions && renderSubQuestions(exercise.sub_questions)}
 
-                    <div className="mt-6 border-t border-border pt-4">
-                        <p className="text-sm font-semibold text-text mb-3 serif-text">Comment vous êtes-vous senti face à cet exercice ?</p>
-                        <div className="flex flex-wrap gap-2">
+                    <div className="mt-6 border-t border-border pt-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
+                        <p className="text-sm font-semibold text-text serif-text">Comment vous êtes-vous senti face à cet exercice ?</p>
+                        <div className="flex flex-wrap gap-2 shrink-0">
                            {(['Facile', 'Moyen', 'Difficile', 'Non traité'] as Feedback[]).map(f => (
                                 <FeedbackButton 
                                     key={f} 

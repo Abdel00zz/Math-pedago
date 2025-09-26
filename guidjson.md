@@ -45,7 +45,7 @@ Chaque objet dans le tableau `quiz` représente une question.
 | `question`    | `String`          | Oui         | Le texte de la question. Peut contenir du formatage MathJax (ex: `$P \\land Q$`).      |
 | `type`        | `String`          | Non         | Le type de question. `"mcq"` (choix multiples) par défaut, ou `"ordering"` (ordonnancement). |
 | `options`     | `Array<Option>`   | Si `type`=`"mcq"` | Un tableau contenant 2 à 4 objets `Option`. Ne pas utiliser pour `type`=`"ordering"`. |
-| `steps`       | `Array<String>`   | Si `type`=`"ordering"` | Un tableau de chaînes de caractères représentant les étapes **dans l'ordre correct**. Ne pas utiliser pour `type`=`"mcq"`. |
+| `steps`       | `Array<String>`   | Si `type`=`"ordering"` | Un tableau de chaînes de caractères représentant les étapes **dans l'ordre correct**. <br> **Attention :** Dans certains cas, plusieurs étapes peuvent être interchangeables. L'application considère la séquence définie ici comme la seule réponse correcte. Si plusieurs ordres sont valides, il est préférable d'utiliser une question de type `mcq`. |
 | `explanation` | `String`          | Non         | Une explication générale qui s'affiche après que l'utilisateur a répondu.                |
 | `hints`       | `Array<String>`   | Non         | Un tableau d'indices textuels pour aider l'élève. |
 

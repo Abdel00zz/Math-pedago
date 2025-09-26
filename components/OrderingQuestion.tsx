@@ -86,12 +86,11 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({ question, userAnswe
             return `${base} bg-error/10 border-error text-error cursor-default`;
         }
         
-        return `${base} bg-surface border-border cursor-grab active:cursor-grabbing hover:bg-background`;
+        return `${base} bg-surface border-border hover:bg-background`;
     }, [isReviewMode, isSubmitted, question.steps]);
 
     return (
         <div className="bg-surface p-6 sm:p-8 rounded-2xl border border-border shadow-claude animate-fadeIn">
-            <p className="text-sm text-secondary mb-4">Question {question.id.split('_').pop()} / Mettez les étapes dans le bon ordre</p>
             <h3 className="text-2xl font-serif mb-6 text-text">
                 <MathJax dynamic>{question.question}</MathJax>
             </h3>
@@ -107,16 +106,29 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({ question, userAnswe
                         onDragOver={(e) => e.preventDefault()}
                         className={getStepClass(item, index)}
                     >
-                        <span className={`material-symbols-outlined text-text-secondary hidden sm:inline ${!isSubmitted && !isReviewMode ? '' : 'opacity-50'}`}>drag_indicator</span>
-                        <span className="font-bold text-primary mr-2">{index + 1}.</span>
-                        <div className="flex-1"><MathJax dynamic>{item}</MathJax></div>
-                        {/* Mobile controls */}
-                        <div className="sm:hidden flex flex-col gap-1 ml-auto">
-                            <button onClick={() => handleMove(index, 'up')} disabled={index === 0 || isSubmitted || isReviewMode} className="p-1 rounded-full bg-background hover:bg-border disabled:opacity-50">
-                                <span className="material-symbols-outlined !text-base">arrow_drop_up</span>
+                        <span className={`material-symbols-outlined text-text-secondary hidden sm:inline ${!isSubmitted && !isReviewMode ? 'cursor-grab active:cursor-grabbing' : 'opacity-50'}`}>drag_indicator</span>
+                        
+                        <div className="flex-1 flex items-start gap-3">
+                            <span className="font-bold text-primary text-lg pt-0.5">{index + 1}.</span>
+                            <div className="flex-1"><MathJax dynamic>{item}</MathJax></div>
+                        </div>
+
+                        <div className="sm:hidden flex flex-col -my-2 ml-2">
+                            <button
+                                onClick={() => handleMove(index, 'up')}
+                                disabled={index === 0 || isSubmitted || isReviewMode}
+                                className="p-2 text-text-secondary hover:text-primary rounded-full disabled:opacity-30 disabled:cursor-not-allowed transition-all active:scale-90 active:bg-border"
+                                aria-label="Monter l'élément"
+                            >
+                                <span className="material-symbols-outlined !text-3xl">expand_less</span>
                             </button>
-                            <button onClick={() => handleMove(index, 'down')} disabled={index === orderedItems.length - 1 || isSubmitted || isReviewMode} className="p-1 rounded-full bg-background hover:bg-border disabled:opacity-50">
-                                <span className="material-symbols-outlined !text-base">arrow_drop_down</span>
+                            <button
+                                onClick={() => handleMove(index, 'down')}
+                                disabled={index === orderedItems.length - 1 || isSubmitted || isReviewMode}
+                                className="p-2 text-text-secondary hover:text-primary rounded-full disabled:opacity-30 disabled:cursor-not-allowed transition-all active:scale-90 active:bg-border"
+                                aria-label="Descendre l'élément"
+                            >
+                                <span className="material-symbols-outlined !text-3xl">expand_more</span>
                             </button>
                         </div>
                     </li>

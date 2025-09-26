@@ -208,30 +208,39 @@ const appReducer = (state: AppState, action: Action): AppState => {
                     });
                     currentProgress.hasUpdate = true;
 
-                    // Re-validate progress against the new chapter structure
+                    // 1. Re-validate progress: remove answers/feedback for deleted content
                     const newQuizIds = new Set(newChapter.quiz.map(q => q.id));
                     const newExerciseIds = new Set(newChapter.exercises.map(ex => ex.id));
 
-                    // 1. Re-validate Quiz answers
                     const validatedAnswers = Object.entries(currentProgress.quiz.answers)
                         .filter(([qId]) => newQuizIds.has(qId))
-                        .reduce((acc, [qId, answer]) => ({ ...acc, [qId]: answer as string }), {});
+                        .reduce((acc, [qId, answer]) => ({ ...acc, [qId]: answer as string | string[] }), {});
                     currentProgress.quiz.answers = validatedAnswers;
-                    
-                    const allAnsweredNow = newChapter.quiz.length > 0 ? Object.keys(validatedAnswers).length === newChapter.quiz.length : true;
-                    currentProgress.quiz.allAnswered = allAnsweredNow;
-                    
-                    if (currentProgress.quiz.isSubmitted && !allAnsweredNow) {
-                        currentProgress.quiz.isSubmitted = false;
-                    }
 
-                    // 2. Re-validate Exercises feedback
                     const validatedFeedback = Object.entries(currentProgress.exercisesFeedback)
                         .filter(([exId]) => newExerciseIds.has(exId))
                         .reduce((acc, [exId, feedback]) => ({ ...acc, [exId]: feedback as Feedback }), {});
                     currentProgress.exercisesFeedback = validatedFeedback;
                     
-                    // 3. Reset overall work submission status to force re-completion
+                    // 2. Intelligently update quiz status
+                    const totalNewQuestions = newChapter.quiz.length;
+                    const answeredCount = Object.keys(validatedAnswers).length;
+                    const isNowFullyAnswered = totalNewQuestions > 0 ? answeredCount === totalNewQuestions : true;
+                    currentProgress.quiz.allAnswered = isNowFullyAnswered;
+
+                    // CRITICAL: If the quiz was submitted but is no longer complete (due to new questions),
+                    // reset its submission status to force the user to complete it again.
+                    if (currentProgress.quiz.isSubmitted && !isNowFullyAnswered) {
+                        currentProgress.quiz.isSubmitted = false;
+                         generatedNotifications.push({
+                            id: `quiz-reset-${newChapter.id}`,
+                            title: 'Quiz mis à jour',
+                            message: `De nouvelles questions ont été ajoutées au quiz du chapitre "<b>${newChapter.chapter}</b>". Veuillez le compléter à nouveau.`,
+                            timestamp: Date.now() + 500 // Stagger notification
+                        });
+                    }
+
+                    // 3. Force re-submission of the entire chapter work if it was previously finalized.
                     if (currentProgress.isWorkSubmitted) {
                         currentProgress.isWorkSubmitted = false;
                         generatedNotifications.push({

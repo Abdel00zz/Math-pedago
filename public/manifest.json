@@ -157,8 +157,8 @@
     {
       "id": "ensembles-et-applications",
       "file": "1bsm_ensembles_et_applications.json",
-      "isActive": true,
-      "version": "v1.4.0-newquizzes"
+      "isActive": false,
+      "version": "v1.5.0-newquizzes"
     },
     {
       "id": "generalites-sur-les-fonctions",
