@@ -13,10 +13,10 @@ from dataclasses import dataclass, field
 # Importation des composants PyQt6 pour l'interface graphique
 from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QSplitter,
-    QTabWidget, QTableWidget, QListWidget, QTextEdit, QLineEdit, QRadioButton,
+    QTabWidget, QTableWidget, QListWidget, QListWidgetItem, QTextEdit, QLineEdit, QRadioButton,
     QPushButton, QLabel, QCheckBox, QDialog, QFormLayout, QDialogButtonBox,
     QMessageBox, QInputDialog, QFileDialog, QHeaderView, QAbstractItemView,
-    QDateTimeEdit, QTableWidgetItem, QProgressDialog, QStackedWidget, QComboBox
+    QDateTimeEdit, QTableWidgetItem, QProgressDialog
 )
 from PyQt6.QtCore import Qt, QDateTime
 from PyQt6.QtGui import QAction
@@ -45,74 +45,82 @@ class QuizOption:
 class QuizQuestion:
     """Représente une question de quiz complète."""
     id: str = ""
-    question_type: str = "mcq"  # "mcq" pour multiple choice, "ordering" pour ordonnancement
     question: str = ""
+    type: str = "mcq"  # Par défaut de type MCQ (choix multiple)
     options: List[QuizOption] = field(default_factory=list)
-    steps: List[str] = field(default_factory=list)  # Pour les questions d'ordonnancement
-    explanation: Optional[str] = None
-    hints: List[str] = field(default_factory=list)
+    steps: List[str] = field(default_factory=list)  # Pour les questions de type "ordering"
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'QuizQuestion':
         """Charge une question à partir d'un dictionnaire (format JSON)."""
         question_type = data.get('type', 'mcq')
-        question_id = data.get('id', '')
-        question_text = data.get('question', '')
-        explanation = data.get('explanation', '')
-        hints = data.get('hints', [])
+        question = cls(
+            id=data.get('id', ''),
+            question=data.get('question', ''),
+            type=question_type
+        )
         
-        if question_type == 'ordering':
-            steps = data.get('steps', [])
-            return cls(
-                id=question_id,
-                question_type=question_type,
-                question=question_text,
-                steps=steps,
-                explanation=explanation,
-                hints=hints
-            )
-        else:  # mcq
+        main_explanation = data.get('explanation', '')
+        
+        if question_type == 'mcq':
+            # Traitement des questions à choix multiples
             options = []
             for opt_data in data.get('options', []):
                 is_correct = opt_data.get('isCorrect', False)
-                option = QuizOption(
-                    text=opt_data.get('text', ''), 
-                    is_correct=is_correct,
-                    explanation=opt_data.get('explanation', '')
-                )
+                option = QuizOption(text=opt_data.get('text', ''), is_correct=is_correct)
+                if is_correct:
+                    explanation_in_option = opt_data.get('explanation', '')
+                    if explanation_in_option:
+                        main_explanation = explanation_in_option
                 options.append(option)
             
-            return cls(
-                id=question_id,
-                question_type=question_type,
-                question=question_text,
-                options=options,
-                explanation=explanation,
-                hints=hints
-            )
+            # Attribue l'explication à la bonne option pour l'éditeur
+            for opt in options:
+                if opt.is_correct:
+                    opt.explanation = main_explanation
+                    break
+                    
+            question.options = options
+            
+        elif question_type == 'ordering':
+            # Traitement des questions d'ordonnancement
+            question.steps = data.get('steps', [])
+            
+            # Créer des options pour la compatibilité avec l'éditeur
+            # Chaque étape devient une option, l'ordre est important
+            steps = question.steps
+            for i, step in enumerate(steps):
+                option = QuizOption(
+                    text=step,
+                    is_correct=(i == 0),  # La première étape est marquée comme correcte pour stocker l'explication
+                    explanation=main_explanation if i == 0 else None
+                )
+                question.options.append(option)
+                
+        return question
 
     def to_dict(self) -> Dict[str, Any]:
         """Convertit la question en dictionnaire pour la sauvegarde JSON."""
-        import hashlib
-        
-        base_data = {
+        result = {
             'id': self.id or f"q_{hashlib.md5(self.question.encode()).hexdigest()[:8]}",
-            'type': self.question_type,
+            'type': self.type,
             'question': self.question
         }
         
-        if self.explanation:
-            base_data['explanation'] = self.explanation
+        if self.type == 'mcq':
+            result['options'] = [opt.to_dict() for opt in self.options]
+        elif self.type == 'ordering':
+            # Pour les questions d'ordonnancement, extraire les étapes dans l'ordre correct
+            # et l'explication attachée à la première option
+            result['steps'] = self.steps if self.steps else [opt.text for opt in self.options]
             
-        if self.hints:
-            base_data['hints'] = self.hints
-        
-        if self.question_type == 'ordering':
-            base_data['steps'] = self.steps
-        else:  # mcq
-            base_data['options'] = [opt.to_dict() for opt in self.options]
-        
-        return base_data
+            # Récupérer l'explication de la première option marquée comme correcte
+            for opt in self.options:
+                if opt.is_correct and opt.explanation:
+                    result['explanation'] = opt.explanation
+                    break
+                    
+        return result
 
 @dataclass
 class SubQuestion:
@@ -237,7 +245,7 @@ class ChapterData:
 # Leur code sera repris ici avec des adaptations mineures pour les nouveaux modèles de données.
 
 class QuizEditor(QWidget):
-    """Éditeur de questions de quiz supportant MCQ et ordering."""
+    """Éditeur de questions de quiz."""
     def __init__(self, parent=None):
         super().__init__(parent)
         self.questions: List[QuizQuestion] = []
@@ -245,340 +253,222 @@ class QuizEditor(QWidget):
         self.init_ui()
 
     def init_ui(self):
+        # Interface pour l'éditeur de quiz
         layout = QVBoxLayout(self)
-        
-        # Toolbar
         toolbar = QHBoxLayout()
         toolbar.addWidget(QLabel("Questions de Quiz"))
         toolbar.addStretch()
         self.count_label = QLabel("0 question(s)")
         toolbar.addWidget(self.count_label)
         
-        add_mcq_btn = QPushButton("+ MCQ")
+        # Menu pour ajouter différents types de questions
+        add_mcq_btn = QPushButton("Nouvelle MCQ")
+        add_mcq_btn.setObjectName("modernButton")
+        add_mcq_btn.setToolTip("Ajouter une question à choix multiples")
         add_mcq_btn.clicked.connect(lambda: self.add_question("mcq"))
         toolbar.addWidget(add_mcq_btn)
         
-        add_ordering_btn = QPushButton("+ Ordonnancement")
+        add_ordering_btn = QPushButton("Nouvel Ordonnancement")
+        add_ordering_btn.setObjectName("modernButton")
+        add_ordering_btn.setToolTip("Ajouter une question d'ordonnancement")
         add_ordering_btn.clicked.connect(lambda: self.add_question("ordering"))
         toolbar.addWidget(add_ordering_btn)
         
-        delete_btn = QPushButton("🗑️ Supprimer")
+        delete_btn = QPushButton("Supprimer")
+        delete_btn.setObjectName("dangerButton")
         delete_btn.clicked.connect(self.delete_current)
         toolbar.addWidget(delete_btn)
         layout.addLayout(toolbar)
         
-        # Splitter principal
         splitter = QSplitter(Qt.Orientation.Horizontal)
-        
-        # Liste des questions
         self.question_list = QListWidget()
-        self.question_list.setMaximumWidth(350)
+        self.question_list.setMaximumWidth(300)
         self.question_list.currentRowChanged.connect(self.on_selection_changed)
         splitter.addWidget(self.question_list)
         
-        # Éditeur de question
-        self.editor_widget = QWidget()
-        editor_layout = QVBoxLayout(self.editor_widget)
+        # Conteneur principal de l'éditeur
+        self.editor_container = QWidget()
+        editor_main_layout = QVBoxLayout(self.editor_container)
         
-        # Type de question
-        type_layout = QHBoxLayout()
-        type_layout.addWidget(QLabel("Type de question:"))
-        self.type_combo = QComboBox()
-        self.type_combo.addItems(["MCQ (Choix multiple)", "Ordering (Ordonnancement)"])
-        self.type_combo.currentTextChanged.connect(self.on_type_changed)
-        type_layout.addWidget(self.type_combo)
-        type_layout.addStretch()
-        editor_layout.addLayout(type_layout)
-        
-        # Question
-        editor_layout.addWidget(QLabel("Question:"))
+        # Section commune pour toutes les questions
+        question_label = QLabel("Question :")
+        question_label.setObjectName("sectionLabel")
+        editor_main_layout.addWidget(question_label)
         self.question_edit = QTextEdit()
         self.question_edit.setMaximumHeight(100)
         self.question_edit.textChanged.connect(self.save_current)
-        editor_layout.addWidget(self.question_edit)
+        editor_main_layout.addWidget(self.question_edit)
         
-        # Stack widget pour les différents types d'éditeur
-        self.editor_stack = QStackedWidget()
+        # Type de question (affichage uniquement)
+        type_layout = QHBoxLayout()
+        type_layout.addWidget(QLabel("Type de question :"))
+        self.type_label = QLabel("MCQ")
+        self.type_label.setStyleSheet("font-weight: bold;")
+        type_layout.addWidget(self.type_label)
+        type_layout.addStretch()
+        editor_main_layout.addLayout(type_layout)
         
-        # Page 1: Éditeur MCQ
-        mcq_widget = QWidget()
-        mcq_layout = QVBoxLayout(mcq_widget)
+        # Conteneur pour les widgets spécifiques au type de question
+        self.type_specific_container = QWidget()
+        self.type_specific_layout = QVBoxLayout(self.type_specific_container)
+        editor_main_layout.addWidget(self.type_specific_container)
         
-        mcq_layout.addWidget(QLabel("Options de réponse:"))
+        # 1. Widget pour les questions MCQ
+        self.mcq_widget = QWidget()
+        mcq_layout = QVBoxLayout(self.mcq_widget)
+        
+        options_label = QLabel("Options de réponse :")
+        options_label.setObjectName("sectionLabel")
+        mcq_layout.addWidget(options_label)
+        help_label = QLabel("Cochez la case pour marquer la bonne réponse")
+        help_label.setObjectName("helpLabel")
+        mcq_layout.addWidget(help_label)
+        
         self.options_container = QWidget()
         self.options_layout = QVBoxLayout(self.options_container)
-        self.option_widgets = []
-        
+        self.option_widgets: List[tuple[QRadioButton, QLineEdit]] = []
         for i in range(4):
             opt_layout = QHBoxLayout()
             radio = QRadioButton()
             radio.toggled.connect(self.save_current)
             opt_layout.addWidget(radio)
-            option_edit = QLineEdit()
-            option_edit.setPlaceholderText(f"Option {i+1}")
+            option_edit = QLineEdit(placeholderText=f"Option {i+1}")
             option_edit.textChanged.connect(self.save_current)
             opt_layout.addWidget(option_edit)
             self.options_layout.addLayout(opt_layout)
             self.option_widgets.append((radio, option_edit))
-        
         mcq_layout.addWidget(self.options_container)
-        self.editor_stack.addWidget(mcq_widget)
         
-        # Page 2: Éditeur Ordering
-        ordering_widget = QWidget()
-        ordering_layout = QVBoxLayout(ordering_widget)
+        # 2. Widget pour les questions d'ordonnancement
+        self.ordering_widget = QWidget()
+        ordering_layout = QVBoxLayout(self.ordering_widget)
         
-        ordering_layout.addWidget(QLabel("Étapes à ordonner:"))
+        steps_header = QHBoxLayout()
+        steps_label = QLabel("Étapes à ordonner :")
+        steps_label.setObjectName("sectionLabel")
+        steps_header.addWidget(steps_label)
+        steps_header.addStretch()
         
-        steps_toolbar = QHBoxLayout()
-        add_step_btn = QPushButton("+ Ajouter étape")
+        add_step_btn = QPushButton("Ajouter une étape")
+        add_step_btn.setObjectName("smallButton")
         add_step_btn.clicked.connect(self.add_step)
-        steps_toolbar.addWidget(add_step_btn)
-        remove_step_btn = QPushButton("- Supprimer étape")
-        remove_step_btn.clicked.connect(self.remove_step)
-        steps_toolbar.addWidget(remove_step_btn)
-        steps_toolbar.addStretch()
-        ordering_layout.addLayout(steps_toolbar)
+        steps_header.addWidget(add_step_btn)
+        ordering_layout.addLayout(steps_header)
         
+        # Liste des étapes
         self.steps_list = QListWidget()
-        self.steps_list.setDragDropMode(QListWidget.DragDropMode.InternalMove)
+        self.steps_list.setDragDropMode(QAbstractItemView.DragDropMode.InternalMove)
+        self.steps_list.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
+        self.steps_list.model().rowsMoved.connect(self.save_current)  # Sauvegarder quand les étapes sont réarrangées
         ordering_layout.addWidget(self.steps_list)
         
-        step_edit_layout = QHBoxLayout()
-        step_edit_layout.addWidget(QLabel("Texte de l'étape:"))
-        self.step_edit = QLineEdit()
-        self.step_edit.returnPressed.connect(self.add_step)
-        step_edit_layout.addWidget(self.step_edit)
-        ordering_layout.addLayout(step_edit_layout)
+        # Boutons pour réorganiser
+        reorder_layout = QHBoxLayout()
+        move_up_btn = QPushButton("↑")
+        move_up_btn.setObjectName("smallButton")
+        move_up_btn.clicked.connect(self.move_step_up)
+        reorder_layout.addWidget(move_up_btn)
         
-        self.editor_stack.addWidget(ordering_widget)
+        move_down_btn = QPushButton("↓")
+        move_down_btn.setObjectName("smallButton")
+        move_down_btn.clicked.connect(self.move_step_down)
+        reorder_layout.addWidget(move_down_btn)
         
-        editor_layout.addWidget(self.editor_stack)
+        remove_step_btn = QPushButton("Supprimer l'étape")
+        remove_step_btn.setObjectName("dangerButton")
+        remove_step_btn.clicked.connect(self.remove_selected_step)
+        reorder_layout.addWidget(remove_step_btn)
         
-        # Explication générale
-        editor_layout.addWidget(QLabel("Explication (optionnelle):"))
+        reorder_layout.addStretch()
+        ordering_layout.addLayout(reorder_layout)
+        
+        # Section commune : explication
+        explanation_label = QLabel("Explication :")
+        explanation_label.setObjectName("sectionLabel")
+        editor_main_layout.addWidget(explanation_label)
         self.explanation_edit = QTextEdit()
         self.explanation_edit.setMaximumHeight(80)
         self.explanation_edit.textChanged.connect(self.save_current)
-        editor_layout.addWidget(self.explanation_edit)
+        editor_main_layout.addWidget(self.explanation_edit)
         
-        # Indices
-        editor_layout.addWidget(QLabel("Indices (optionnels):"))
-        hints_layout = QHBoxLayout()
-        self.hints_edit = QLineEdit()
-        self.hints_edit.setPlaceholderText("Ajoutez un indice...")
-        self.hints_edit.returnPressed.connect(self.add_hint)
-        hints_layout.addWidget(self.hints_edit)
-        add_hint_btn = QPushButton("Ajouter")
-        add_hint_btn.clicked.connect(self.add_hint)
-        hints_layout.addWidget(add_hint_btn)
-        editor_layout.addLayout(hints_layout)
-        
-        self.hints_list = QListWidget()
-        self.hints_list.setMaximumHeight(60)
-        editor_layout.addWidget(self.hints_list)
-        
-        editor_layout.addStretch()
-        splitter.addWidget(self.editor_widget)
-        splitter.setSizes([350, 650])
+        editor_main_layout.addStretch()
+        splitter.addWidget(self.editor_container)
+        splitter.setSizes([300, 700])
         layout.addWidget(splitter)
         
-        self.editor_widget.setEnabled(False)
-
-    def on_type_changed(self):
-        if hasattr(self, 'current_index') and 0 <= self.current_index < len(self.questions):
-            current_type = "mcq" if "MCQ" in self.type_combo.currentText() else "ordering"
-            self.questions[self.current_index].question_type = current_type
-            self.editor_stack.setCurrentIndex(0 if current_type == "mcq" else 1)
-            self.save_current()
-
-    def add_step(self):
-        step_text = self.step_edit.text().strip()
-        if step_text:
-            self.steps_list.addItem(step_text)
-            self.step_edit.clear()
-            self.save_current()
-
-    def remove_step(self):
-        current_row = self.steps_list.currentRow()
-        if current_row >= 0:
-            self.steps_list.takeItem(current_row)
-            self.save_current()
-
-    def add_hint(self):
-        hint_text = self.hints_edit.text().strip()
-        if hint_text:
-            self.hints_list.addItem(hint_text)
-            self.hints_edit.clear()
-            self.save_current()
+        # Initialiser l'éditeur désactivé
+        self.editor_container.setEnabled(False)
 
     def set_questions(self, questions: List[QuizQuestion]):
-        self.questions = questions.copy()
+        self.questions = [QuizQuestion.from_dict(q.to_dict()) for q in questions] # Deep copy
         self.refresh_list()
-        if self.questions:
-            self.question_list.setCurrentRow(0)
+        if self.questions: self.question_list.setCurrentRow(0)
 
     def get_questions(self) -> List[QuizQuestion]:
-        return self.questions.copy()
+        return self.questions
 
     def refresh_list(self):
         self.question_list.clear()
         for i, q in enumerate(self.questions):
-            type_prefix = "[ORD]" if q.question_type == "ordering" else "[MCQ]"
-            text = q.question.strip().split('\n')[0]
-            text = text[:40] + "..." if len(text) > 40 else text
-            if not text:
-                text = f"Question {i+1} (vide)"
-            self.question_list.addItem(f"{type_prefix} {text}")
+            # Préfixer le type de question pour une meilleure visibilité
+            prefix = "[MCQ] " if q.type == "mcq" else "[ORD] "
+            text = q.question.strip().split('\n')[0] or f"Question {i+1} (vide)"
+            self.question_list.addItem(prefix + (text[:60] + "..." if len(text) > 60 else text))
         self.count_label.setText(f"{len(self.questions)} question(s)")
 
     def on_selection_changed(self, index: int):
         self.current_index = index
         if 0 <= index < len(self.questions):
             self.load_question(self.questions[index])
-            self.editor_widget.setEnabled(True)
+            self.editor_container.setEnabled(True)
         else:
             self.clear_editor()
-            self.editor_widget.setEnabled(False)
-
-    def load_question(self, question: QuizQuestion):
-        # Bloquer les signaux temporairement
-        self.question_edit.blockSignals(True)
-        self.explanation_edit.blockSignals(True)
-        self.type_combo.blockSignals(True)
-        
-        # Charger les données de base
-        self.question_edit.setText(question.question)
-        self.explanation_edit.setText(question.explanation or "")
-        
-        # Type de question
-        if question.question_type == "ordering":
-            self.type_combo.setCurrentIndex(1)
-            self.editor_stack.setCurrentIndex(1)
-            # Charger les étapes
-            self.steps_list.clear()
-            for step in question.steps:
-                self.steps_list.addItem(step)
-        else:  # mcq
-            self.type_combo.setCurrentIndex(0)
-            self.editor_stack.setCurrentIndex(0)
-            # Charger les options
-            for i, (radio, edit) in enumerate(self.option_widgets):
-                radio.blockSignals(True)
-                edit.blockSignals(True)
-                if i < len(question.options):
-                    edit.setText(question.options[i].text)
-                    radio.setChecked(question.options[i].is_correct)
-                else:
-                    edit.clear()
-                    radio.setChecked(False)
-                radio.blockSignals(False)
-                edit.blockSignals(False)
-        
-        # Charger les indices
-        self.hints_list.clear()
-        for hint in question.hints:
-            self.hints_list.addItem(hint)
-        
-        # Réactiver les signaux
-        self.question_edit.blockSignals(False)
-        self.explanation_edit.blockSignals(False)
-        self.type_combo.blockSignals(False)
-
-    def clear_editor(self):
-        self.question_edit.clear()
-        self.explanation_edit.clear()
-        self.steps_list.clear()
-        self.hints_list.clear()
-        for radio, edit in self.option_widgets:
-            radio.setChecked(False)
-            edit.clear()
-
-    def save_current(self):
-        if 0 <= self.current_index < len(self.questions):
-            q = self.questions[self.current_index]
-            q.question = self.question_edit.toPlainText()
-            q.explanation = self.explanation_edit.toPlainText() or None
-            
-            # Sauver les indices
-            q.hints = [self.hints_list.item(i).text() for i in range(self.hints_list.count())]
-            
-            if q.question_type == "ordering":
-                # Sauver les étapes
-                q.steps = [self.steps_list.item(i).text() for i in range(self.steps_list.count())]
-            else:  # mcq
-                # Sauver les options
-                q.options = []
-                for i, (radio, edit) in enumerate(self.option_widgets):
-                    if edit.text().strip():
-                        q.options.append(QuizOption(
-                            text=edit.text(),
-                            is_correct=radio.isChecked()
-                        ))
-            
-            # Mettre à jour la liste
-            item = self.question_list.item(self.current_index)
-            if item:
-                type_prefix = "[ORD]" if q.question_type == "ordering" else "[MCQ]"
-                text = q.question.strip().split('\n')[0]
-                text = text[:40] + "..." if len(text) > 40 else text
-                if not text:
-                    text = f"Question {self.current_index+1} (vide)"
-                item.setText(f"{type_prefix} {text}")
-
-    def add_question(self, question_type="mcq"):
-        if question_type == "ordering":
-            new_question = QuizQuestion(
-                question_type="ordering",
-                question="Nouvelle question d'ordonnancement",
-                steps=["Étape 1", "Étape 2", "Étape 3"]
-            )
-        else:
-            new_question = QuizQuestion(
-                question_type="mcq",
-                question="Nouvelle question à choix multiples",
-                options=[
-                    QuizOption(text="Option 1", is_correct=True),
-                    QuizOption(text="Option 2", is_correct=False),
-                    QuizOption(text="Option 3", is_correct=False),
-                    QuizOption(text="Option 4", is_correct=False)
-                ]
-            )
-        
-        self.questions.append(new_question)
-        self.refresh_list()
-        self.question_list.setCurrentRow(len(self.questions) - 1)
-
-    def delete_current(self):
-        if 0 <= self.current_index < len(self.questions):
-            reply = QMessageBox.question(
-                self, "Confirmer",
-                "Supprimer cette question ?",
-                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No
-            )
-            if reply == QMessageBox.StandardButton.Yes:
-                del self.questions[self.current_index]
-                self.refresh_list()
-            self.load_question(self.questions[index])
-            self.editor_widget.setEnabled(True)
-        else:
-            self.clear_editor()
-            self.editor_widget.setEnabled(False)
+            self.editor_container.setEnabled(False)
 
     def load_question(self, question: QuizQuestion):
         """Charge une question dans l'éditeur."""
         self.block_all_signals(True)
         self.question_edit.setText(question.question)
         
-        correct_index = -1
+        # Afficher le type de question
+        self.type_label.setText(f"{'MCQ (Choix Multiple)' if question.type == 'mcq' else 'Ordonnancement'}")
+        
+        # Nettoyer le conteneur spécifique au type
+        self.type_specific_layout.removeWidget(self.mcq_widget)
+        self.type_specific_layout.removeWidget(self.ordering_widget)
+        self.mcq_widget.hide()
+        self.ordering_widget.hide()
+        
+        # Récupérer l'explication, peu importe le type
         explanation = ""
+        for opt in question.options:
+            if opt.is_correct and opt.explanation:
+                explanation = opt.explanation
+                break
+        self.explanation_edit.setText(explanation)
+        
+        # Charger les widgets spécifiques au type
+        if question.type == "mcq":
+            self.load_mcq_question(question)
+            self.type_specific_layout.addWidget(self.mcq_widget)
+            self.mcq_widget.show()
+        elif question.type == "ordering":
+            self.load_ordering_question(question)
+            self.type_specific_layout.addWidget(self.ordering_widget)
+            self.ordering_widget.show()
+            
+        self.block_all_signals(False)
+        
+    def load_mcq_question(self, question: QuizQuestion):
+        """Charge une question à choix multiples."""
+        # Trouver l'option correcte et son explication
+        correct_index = -1
         for i, opt in enumerate(question.options):
             if opt.is_correct:
                 correct_index = i
-                explanation = opt.explanation or ""
-
-        self.explanation_edit.setText(explanation)
-
+                break
+        
+        # Charger les options
         for i, (radio, edit) in enumerate(self.option_widgets):
             if i < len(question.options):
                 edit.setText(question.options[i].text)
@@ -586,16 +476,45 @@ class QuizEditor(QWidget):
             else:
                 edit.clear()
                 radio.setChecked(False)
-        self.block_all_signals(False)
+                
+    def load_ordering_question(self, question: QuizQuestion):
+        """Charge une question d'ordonnancement."""
+        # Vider la liste des étapes
+        self.steps_list.clear()
+        
+        # Charger les étapes
+        if question.steps:
+            # Si la question a déjà des étapes définies
+            for step in question.steps:
+                self.steps_list.addItem(step)
+        else:
+            # Sinon, utiliser les options comme étapes
+            for opt in question.options:
+                self.steps_list.addItem(opt.text)
     
     def save_current(self):
         """Sauvegarde la question actuellement éditée."""
-        if not (0 <= self.current_index < len(self.questions)): return
+        if not (0 <= self.current_index < len(self.questions)): 
+            return
         
         q = self.questions[self.current_index]
         q.question = self.question_edit.toPlainText()
-        
         explanation = self.explanation_edit.toPlainText()
+        
+        if q.type == "mcq":
+            self.save_mcq_question(q, explanation)
+        elif q.type == "ordering":
+            self.save_ordering_question(q, explanation)
+        
+        # Mettre à jour le titre dans la liste
+        item = self.question_list.item(self.current_index)
+        if item:
+            prefix = "[MCQ] " if q.type == "mcq" else "[ORD] "
+            text = q.question.strip().split('\n')[0] or f"Question {self.current_index + 1} (vide)"
+            item.setText(prefix + (text[:60] + "..." if len(text) > 60 else text))
+            
+    def save_mcq_question(self, question: QuizQuestion, explanation: str):
+        """Sauvegarde une question à choix multiples."""
         new_options: List[QuizOption] = []
         correct_answer_set = False
 
@@ -618,22 +537,51 @@ class QuizEditor(QWidget):
             self.option_widgets[0][0].setChecked(True)
             self.option_widgets[0][0].blockSignals(False)
 
-        q.options = new_options
+        question.options = new_options
         
-        # Mettre à jour le titre dans la liste
-        item = self.question_list.item(self.current_index)
-        if item:
-            text = q.question.strip().split('\n')[0] or f"Question {self.current_index + 1} (vide)"
-            item.setText(text[:60] + "..." if len(text) > 60 else text)
+    def save_ordering_question(self, question: QuizQuestion, explanation: str):
+        """Sauvegarde une question d'ordonnancement."""
+        # Récupérer les étapes dans l'ordre actuel
+        steps = []
+        for i in range(self.steps_list.count()):
+            steps.append(self.steps_list.item(i).text())
+        question.steps = steps
+        
+        # Mettre à jour les options pour compatibilité
+        new_options: List[QuizOption] = []
+        for i, step in enumerate(steps):
+            opt = QuizOption(
+                text=step,
+                is_correct=(i == 0),  # La première étape est marquée comme correcte pour stocker l'explication
+                explanation=explanation if i == 0 else None
+            )
+            new_options.append(opt)
+        question.options = new_options
 
-    def add_question(self):
-        new_q = QuizQuestion(
-            question="Nouvelle question",
-            options=[
-                QuizOption("Option 1", True, "Ceci est la bonne réponse."),
-                QuizOption("Option 2", False),
+    def add_question(self, question_type="mcq"):
+        """Ajoute une nouvelle question du type spécifié."""
+        if question_type == "mcq":
+            new_q = QuizQuestion(
+                question="Nouvelle question à choix multiples",
+                type="mcq",
+                options=[
+                    QuizOption("Option 1", True, "Ceci est la bonne réponse."),
+                    QuizOption("Option 2", False),
+                ]
+            )
+        elif question_type == "ordering":
+            new_q = QuizQuestion(
+                question="Nouvelle question d'ordonnancement",
+                type="ordering",
+                steps=["Première étape", "Deuxième étape", "Troisième étape"]
+            )
+            # Créer des options pour la compatibilité
+            new_q.options = [
+                QuizOption("Première étape", True, "L'ordre correct est important."),
+                QuizOption("Deuxième étape", False),
+                QuizOption("Troisième étape", False)
             ]
-        )
+            
         self.questions.append(new_q)
         self.refresh_list()
         self.question_list.setCurrentRow(len(self.questions) - 1)
@@ -643,22 +591,69 @@ class QuizEditor(QWidget):
             if QMessageBox.question(self, "Confirmer", "Supprimer cette question ?") == QMessageBox.StandardButton.Yes:
                 del self.questions[self.current_index]
                 self.refresh_list()
+                if self.current_index >= len(self.questions):
+                    self.current_index = len(self.questions) - 1
+                if self.questions:
+                    self.question_list.setCurrentRow(self.current_index)
+                else:
+                    self.clear_editor()
+                    self.editor_container.setEnabled(False)
     
     def clear_editor(self):
         self.block_all_signals(True)
         self.question_edit.clear()
         self.explanation_edit.clear()
+        
+        # Nettoyer les widgets MCQ
         for radio, edit in self.option_widgets:
             radio.setChecked(False)
             edit.clear()
+            
+        # Nettoyer la liste des étapes
+        self.steps_list.clear()
+        
         self.block_all_signals(False)
 
     def block_all_signals(self, block: bool):
         self.question_edit.blockSignals(block)
         self.explanation_edit.blockSignals(block)
+        self.steps_list.blockSignals(block)
         for radio, edit in self.option_widgets:
             radio.blockSignals(block)
             edit.blockSignals(block)
+            
+    # Méthodes pour gérer les questions d'ordonnancement
+    def add_step(self):
+        """Ajoute une nouvelle étape à la question d'ordonnancement."""
+        item = QListWidgetItem("Nouvelle étape")
+        self.steps_list.addItem(item)
+        self.steps_list.editItem(item)  # Permettre l'édition immédiate
+        self.save_current()
+        
+    def move_step_up(self):
+        """Déplace l'étape sélectionnée vers le haut."""
+        current_row = self.steps_list.currentRow()
+        if current_row > 0:
+            item = self.steps_list.takeItem(current_row)
+            self.steps_list.insertItem(current_row - 1, item)
+            self.steps_list.setCurrentRow(current_row - 1)
+            self.save_current()
+    
+    def move_step_down(self):
+        """Déplace l'étape sélectionnée vers le bas."""
+        current_row = self.steps_list.currentRow()
+        if current_row < self.steps_list.count() - 1 and current_row >= 0:
+            item = self.steps_list.takeItem(current_row)
+            self.steps_list.insertItem(current_row + 1, item)
+            self.steps_list.setCurrentRow(current_row + 1)
+            self.save_current()
+    
+    def remove_selected_step(self):
+        """Supprime l'étape sélectionnée."""
+        current_row = self.steps_list.currentRow()
+        if current_row >= 0:
+            self.steps_list.takeItem(current_row)
+            self.save_current()
 
 # ... De même, les autres classes d'UI (`ExerciseEditor`, `ChapterContentEditor`)
 # seraient ici, adaptées pour utiliser les modèles de données robustes.
