@@ -129,77 +129,89 @@ const GlobalActionButtons: React.FC = () => {
     return (
         <>
             {/* Desktop Action Buttons */}
-            <div className="fixed top-5 right-5 z-40 hidden sm:flex items-center gap-2">
-                <div className="group relative">
+            <div className="fixed top-5 right-5 z-40 hidden sm:flex items-center gap-3">
+                <div className="group relative flex items-center">
                     <button 
                         onClick={handleOpenNotifications}
-                        className="w-12 h-12 rounded-full flex items-center justify-center bg-surface/50 hover:bg-surface border border-border/70 transition-all duration-200"
+                        className="w-12 h-12 rounded-full flex items-center justify-center bg-surface/80 backdrop-blur-md border border-border/70 text-text-secondary hover:text-primary hover:scale-110 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-200"
                         aria-label="Notifications"
                     >
-                        <span className="material-symbols-outlined text-text-secondary !text-xl group-hover:text-primary transition-colors">notifications</span>
+                        <span className="material-symbols-outlined !text-xl">notifications</span>
                         {unreadNotificationsCount > 0 && (
-                            <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-error text-white text-xs font-bold">
-                                {unreadNotificationsCount}
+                            <span className="absolute -top-1 -right-1 flex h-5 w-5">
+                                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-error opacity-75"></span>
+                                <span className="relative inline-flex h-5 w-5 items-center justify-center rounded-full bg-error text-white text-xs font-bold">
+                                    {unreadNotificationsCount}
+                                </span>
                             </span>
                         )}
                     </button>
+                    <span className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-max rounded-md bg-text/90 px-3 py-1.5 text-xs font-semibold text-background/90 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+                        Notifications
+                    </span>
                     <NotificationCenter 
                         isOpen={isNotificationCenterOpen} 
                         onClose={() => setNotificationCenterOpen(false)}
                         notifications={allNotifications}
                     />
                 </div>
-                <div className="group relative">
+                <div className="group relative flex items-center">
                     <button 
                         onClick={() => setOrientationModalOpen(true)}
-                        className="w-12 h-12 rounded-full flex items-center justify-center bg-surface/50 hover:bg-surface border border-border/70 transition-all duration-200"
+                        className="w-12 h-12 rounded-full flex items-center justify-center bg-surface/80 backdrop-blur-md border border-border/70 text-text-secondary hover:text-primary hover:scale-110 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-200"
                         aria-label="Programme d'orientation"
                     >
-                        <span className="material-symbols-outlined text-text-secondary !text-xl group-hover:text-primary transition-colors">explore</span>
+                        <span className="material-symbols-outlined !text-xl">explore</span>
                     </button>
+                    <span className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-max rounded-md bg-text/90 px-3 py-1.5 text-xs font-semibold text-background/90 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+                        Programme
+                    </span>
                 </div>
-                <div className="group relative">
+                <div className="group relative flex items-center">
                     <button 
                         onClick={handleHelpClick}
-                        className="w-12 h-12 rounded-full flex items-center justify-center bg-surface/50 hover:bg-surface border border-border/70 transition-all duration-200"
+                        className="w-12 h-12 rounded-full flex items-center justify-center bg-surface/80 backdrop-blur-md border border-border/70 text-text-secondary hover:text-primary hover:scale-110 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-200"
                         aria-label="Aide et support"
                     >
-                        <span className="material-symbols-outlined text-text-secondary !text-xl group-hover:text-primary transition-colors">help_outline</span>
+                        <span className="material-symbols-outlined !text-xl">help_outline</span>
                     </button>
+                     <span className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-max rounded-md bg-text/90 px-3 py-1.5 text-xs font-semibold text-background/90 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+                        Aide
+                    </span>
                 </div>
             </div>
             
             {/* Mobile Bottom Navigation */}
-            <div className="sm:hidden fixed bottom-0 left-0 right-0 bg-surface/90 backdrop-blur-sm border-t border-border z-40 shadow-claude">
+            <div className="sm:hidden fixed bottom-0 left-0 right-0 bg-surface/80 backdrop-blur-lg border-t border-border/70 z-40">
                 <nav className="flex justify-around items-center h-16">
                     <button
                         onClick={handleOpenNotifications}
-                        className="relative flex-1 flex flex-col items-center justify-center p-2 text-text-secondary hover:text-primary transition-colors"
+                        className="relative flex-1 flex flex-col items-center justify-center p-2 text-text-secondary hover:text-primary focus:text-primary focus:outline-none transition-all duration-200 active:scale-95"
                         aria-label="Notifications"
                     >
                          {unreadNotificationsCount > 0 && (
-                            <span className="absolute top-2 right-1/2 translate-x-4 flex h-5 w-5 items-center justify-center rounded-full bg-error text-white text-[10px] font-bold">
+                            <span className="absolute top-1.5 right-1/2 translate-x-5 flex h-5 w-5 items-center justify-center rounded-full bg-error text-white text-[10px] font-bold ring-2 ring-surface">
                                 {unreadNotificationsCount}
                             </span>
                         )}
-                        <span className="material-symbols-outlined !text-[24px]">notifications</span>
-                        <span className="text-xs font-medium mt-0.5">Notifications</span>
+                        <span className="material-symbols-outlined !text-[26px]">notifications</span>
+                        <span className="text-xs font-medium mt-0.5 font-button">Notifications</span>
                     </button>
                      <button
                         onClick={() => setOrientationModalOpen(true)}
-                        className="flex-1 flex flex-col items-center justify-center p-2 text-text-secondary hover:text-primary transition-colors"
+                        className="flex-1 flex flex-col items-center justify-center p-2 text-text-secondary hover:text-primary focus:text-primary focus:outline-none transition-all duration-200 active:scale-95"
                         aria-label="Programme d'orientation"
                     >
-                        <span className="material-symbols-outlined !text-[24px]">explore</span>
-                        <span className="text-xs font-medium mt-0.5">Programme</span>
+                        <span className="material-symbols-outlined !text-[26px]">explore</span>
+                        <span className="text-xs font-medium mt-0.5 font-button">Programme</span>
                     </button>
                     <button
                         onClick={handleHelpClick}
-                        className="flex-1 flex flex-col items-center justify-center p-2 text-text-secondary hover:text-primary transition-colors"
+                        className="flex-1 flex flex-col items-center justify-center p-2 text-text-secondary hover:text-primary focus:text-primary focus:outline-none transition-all duration-200 active:scale-95"
                         aria-label="Aide et support"
                     >
-                        <span className="material-symbols-outlined !text-[24px]">help_outline</span>
-                        <span className="text-xs font-medium mt-0.5">Aide</span>
+                        <span className="material-symbols-outlined !text-[26px]">help_outline</span>
+                        <span className="text-xs font-medium mt-0.5 font-button">Aide</span>
                     </button>
                 </nav>
             </div>

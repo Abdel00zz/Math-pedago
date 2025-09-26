@@ -9,7 +9,7 @@
   "quiz": [
     {
       "id": "q_proposition_1",
-      "question": "Une proposition est AAA :",
+      "question": "Une proposition est:",
       "options": [
         {
           "text": "Un énoncé mathématique qui peut être vrai ou faux",
@@ -55,7 +55,7 @@
     },
     {
       "id": "q_connecteur_ou_3",
-      "question": "AAA La proposition $P \\lor Q$ est fausse quand :",
+      "question": "La proposition $P \\lor Q$ est fausse quand :",
       "options": [
         {
           "text": "$P$ et $Q$ sont toutes les deux fausses",
@@ -466,21 +466,6 @@
           "isCorrect": false
         }
       ]
-    },
-    {
-      "id": "q_c4cccf59",
-      "question": "Nouvelle question",
-      "options": [
-        {
-          "text": "Option 1",
-          "isCorrect": true,
-          "explanation": "Ceci est la bonne réponse."
-        },
-        {
-          "text": "Option 2",
-          "isCorrect": false
-        }
-      ]
     }
   ],
   "exercises": [
@@ -609,13 +594,7 @@
           "text": "En déduire que $f(n)$ est divisible par 111 pour tout $n \\in \\mathbb{N}$."
         }
       ]
-    },
-    {
-      "id": "exo_f29e772b",
-      "title": "Nouvel Exercice 7",
-      "statement": "Énoncé de l'exercice...",
-      "sub_questions": []
     }
   ],
-  "version": "v1.1.0-5e0ad5"
+  "version": "v1.1.0-11f0f8"
 }

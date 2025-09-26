@@ -9,7 +9,7 @@ interface HelpModalProps {
 const FrenchContent: React.FC = () => (
     <div className="space-y-5 text-text-secondary leading-relaxed">
         <div className="text-center mb-6">
-            <h3 className="text-xl font-bold text-text">Bienvenue au Centre Scientifique !</h3>
+            <h3 className="text-xl font-bold text-text">Bienvenue au center scientific of mathematics !</h3>
             <p>Votre centre scolaire interactif, ouvert 24h/24 et 7j/7 pour un apprentissage sans limites.</p>
         </div>
         
@@ -72,7 +72,7 @@ const FrenchContent: React.FC = () => (
 const ArabicContent: React.FC = () => (
     <div className="space-y-5 text-text-secondary leading-relaxed text-right" dir="rtl">
         <div className="text-center mb-6">
-            <h3 className="text-xl font-bold text-text">! مرحباً بكم في المركز العلمي</h3>
+            <h3 className="text-xl font-bold text-text">! مرحباً بكم في المركز العلمي للرياضيات</h3>
             <p>مركزكم الدراسي التفاعلي، مفتوح 24 ساعة طوال أيام الأسبوع لتعلم بلا حدود.</p>
         </div>
 

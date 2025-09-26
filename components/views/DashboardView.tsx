@@ -387,9 +387,9 @@ const DashboardView: React.FC = () => {
                     {/* Ornement de fin */}
                     <footer className="text-center mt-16 mb-8">
                         <div className="flex flex-col items-center justify-center opacity-70">
-                            <span className="font-brand text-xs tracking-wider text-text-secondary">Le Centre</span>
+                            <span className="font-brand text-xs tracking-wider text-text-secondary">Center Scientific</span>
                             <div className="w-8 h-px bg-border-hover my-1.5"></div>
-                            <span className="font-brand text-2xl text-primary -mt-1">Scientifique</span>
+                            <span className="font-brand text-2xl text-primary -mt-1">of Mathematics</span>
                         </div>
                         <p className="text-xs text-text-secondary serif-text italic mt-4">
                             © {new Date().getFullYear()} - Votre parcours d'apprentissage interactif

@@ -188,7 +188,6 @@ const ChapterHubView: React.FC = () => {
                 form.appendChild(input);
             };
     
-            // --- FormSubmit Config ---
             addHiddenField('_template', 'table');
             addHiddenField('_captcha', 'false');
             addHiddenField('_next', window.location.href);
@@ -196,42 +195,8 @@ const ChapterHubView: React.FC = () => {
             addHiddenField('_autoresponse', "Votre travail a été reçu avec succès. Nous l'examinerons dans les plus brefs délais.");
     
             const className = CLASS_OPTIONS.find(c => c.value === profile.classId)?.label || profile.classId;
-            const quizScorePercentage = totalQuestions > 0 ? (quiz.score / totalQuestions) * 100 : 100;
+            const quizScorePercentage = totalQuestions > 0 ? (quiz.score / totalQuestions) * 100 : 0;
             
-            const formatDuration = (seconds: number | undefined) => {
-                if (typeof seconds !== 'number' || seconds === 0) return 'Non enregistré';
-                if (seconds < 60) return `${seconds}s`;
-                const minutes = Math.floor(seconds / 60);
-                const remainingSeconds = seconds % 60;
-                return remainingSeconds > 0 ? `${minutes}m ${remainingSeconds}s` : `${minutes}m`;
-            };
-
-            const totalDuration = (quiz.duration || 0) + (chapterProgress.exercisesDuration || 0);
-
-            // --- Email Body Content (as a table) ---
-            addHiddenField('Élève', profile.name);
-            addHiddenField('Classe', className);
-            addHiddenField('Chapitre', chapter.chapter);
-            addHiddenField('Soumis le', new Date().toLocaleString('fr-FR', { dateStyle: 'full', timeStyle: 'short' }));
-            addHiddenField('Temps total estimé', formatDuration(totalDuration));
-
-            addHiddenField('--- Détails du Quiz ---', '---');
-            addHiddenField('Score Quiz', `${quiz.score} / ${totalQuestions} (${quizScorePercentage.toFixed(1)}%)`);
-            addHiddenField('Temps Quiz', formatDuration(quiz.duration));
-            addHiddenField('Indices utilisés', quiz.hintsUsed.toString());
-
-            addHiddenField('--- Détails des Exercices ---', '---');
-            addHiddenField('Exercices Évalués', `${evaluatedExercisesCount} / ${totalExercises}`);
-            addHiddenField('Temps Exercices', formatDuration(chapterProgress.exercisesDuration));
-
-            if (totalExercises > 0) {
-                chapter.exercises.forEach((ex, index) => {
-                    const feedback = chapterProgress.exercisesFeedback[ex.id] || 'Non évalué';
-                    addHiddenField(`Exercice ${index + 1}: ${ex.title}`, feedback);
-                });
-            }
-
-            // --- JSON Attachment for full data ---
             const quizAnswersWithIndices: { [qId: string]: number } = {};
             Object.keys(quiz.answers).forEach(qId => {
                 const question = chapter.quiz.find(q => q.id === qId);
@@ -255,7 +220,7 @@ const ChapterHubView: React.FC = () => {
                             answers: quizAnswersWithIndices,
                         },
                         exercisesFeedback: chapterProgress.exercisesFeedback,
-                        durationSeconds: totalDuration,
+                        durationSeconds: (chapterProgress.quiz.duration || 0) + (chapterProgress.exercisesDuration || 0),
                     }
                 ]
             };
@@ -306,7 +271,6 @@ const ChapterHubView: React.FC = () => {
             onClick: isQuizCompleted ? handleReviewQuiz : handleStartQuiz,
             buttonText: isChapterLocked ? 'Consulter' : isQuizCompleted ? 'Revoir' : answeredQuestionsCount > 0 ? 'Continuer' : 'Commencer',
             buttonVariant: isChapterLocked || isQuizCompleted ? 'secondary' : 'primary',
-            disabled: isChapterLocked,
         },
         {
             icon: 'assignment', title: 'Étape 2 : Les Exercices',
@@ -315,7 +279,7 @@ const ChapterHubView: React.FC = () => {
             progressPercent: exercisesProgressPercent,
             progressInfo: totalExercises > 0 ? `${evaluatedExercisesCount} / ${totalExercises}` : 'Aucun exercice',
             onClick: handleStartExercises,
-            disabled: !isQuizCompleted || isChapterLocked,
+            disabled: !isQuizCompleted,
             buttonText: isChapterLocked ? 'Consulter' : areAllExercisesDone ? 'Revoir' : evaluatedExercisesCount > 0 ? 'Continuer' : 'Commencer',
             buttonVariant: !isQuizCompleted ? 'disabled' : (areAllExercisesDone || isChapterLocked) ? 'secondary' : 'primary',
         },

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Le centre scientifique</title>
+    <title>Center Scientific of Mathematics</title>
 
     <!-- PWA Meta Tags -->
     <meta name="theme-color" content="#FF6B35" />
@@ -58,27 +58,9 @@
                 pulse: { '0%, 100%': { opacity: 1, transform: 'scale(1)' }, '50%': { opacity: .9, transform: 'scale(1.02)' } },
                 ping: { '75%, 100%': { transform: 'scale(2)', opacity: 0 } },
                 cursorBlink: { '0%, 100%': { opacity: 1 }, '50%': { opacity: 0 } },
-                futuristicWelcome: {
-                    '0%': {
-                        opacity: 0,
-                        transform: 'translateY(20px) scale(0.95)',
-                        filter: 'blur(5px)',
-                    },
-                    '100%': {
-                        opacity: 1,
-                        transform: 'translateY(0) scale(1)',
-                        filter: 'blur(0)',
-                    }
-                },
-                nameReveal: {
-                    '0%': {
-                        opacity: 0,
-                        transform: 'translateY(10px)',
-                    },
-                    '100%': {
-                        opacity: 1,
-                        transform: 'translateY(0)',
-                    }
+                clipPathReveal: {
+                    '0%': { clipPath: 'polygon(0 0, 100% 0, 100% 0, 0 0)' },
+                    '100%': { clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)' },
                 }
             },
             animation: {
@@ -88,8 +70,7 @@
                 pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                 ping: 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
                 cursorBlink: 'cursorBlink 1.2s step-end infinite',
-                futuristicWelcome: 'futuristicWelcome 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards',
-                nameReveal: 'nameReveal 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards'
+                clipPathReveal: 'clipPathReveal 1s cubic-bezier(0.4, 0, 0.2, 1) 0.5s forwards'
             },
           }
         }

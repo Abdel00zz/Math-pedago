@@ -40,15 +40,29 @@ const LoginView: React.FC = () => {
         <div className="flex items-center justify-center min-h-screen animate-fadeIn p-4 bg-[#fbf9f1]">
             <div className="w-full max-w-md bg-[#fffcf5] border border-[#d7ccc8] rounded-lg shadow-xl shadow-[#5d4037]/10 p-8 sm:p-12">
                 
-                {/* Header: Logo */}
-                <div className="text-center mb-8 border-2 border-[#a1887f]/50 p-6 rounded-lg">
-                    <span className="font-brand text-5xl text-primary font-semibold tracking-tight">
-                        Le Centre
-                    </span>
-                    <div className="w-16 h-px bg-[#d7ccc8] my-2 mx-auto"></div>
-                    <span className="font-brand text-2xl tracking-widest text-[#a1887f]">
-                        Scientifique
-                    </span>
+                {/* Header: Elegant Logo */}
+                <div className="text-center mb-10 flex flex-col items-center">
+                    {/* Ornate Divider */}
+                    <div className="flex items-center gap-4 text-[#a1887f]/60 w-full max-w-xs">
+                        <div className="flex-1 h-px bg-gradient-to-l from-[#a1887f]/80 to-transparent"></div>
+                        <span className="material-symbols-outlined !text-4xl">
+                            psychology_alt
+                        </span>
+                        <div className="flex-1 h-px bg-gradient-to-r from-[#a1887f]/80 to-transparent"></div>
+                    </div>
+
+                    <h1 className="font-playfair text-4xl text-[#4e342e] font-bold mt-5 tracking-tight">
+                        Center Scientific
+                    </h1>
+                    <p className="font-garamond text-lg text-primary tracking-[0.25em] mt-1 uppercase">
+                        of{' '}
+                        <span className="inline-block animate-clipPathReveal">
+                            Mathematics
+                        </span>
+                    </p>
+
+                    {/* Ornate Divider */}
+                    <div className="w-24 h-px bg-[#d7ccc8] mt-5"></div>
                 </div>
 
                 {/* Welcome Message */}
@@ -132,7 +146,7 @@ const LoginView: React.FC = () => {
 
                     <button
                         type="submit"
-                        className="w-full px-4 py-3 font-brand tracking-widest text-base text-[#fbf9f1] bg-[#5d4037] rounded-md shadow-lg shadow-[#5d4037]/20 hover:bg-[#4e342e] hover:-translate-y-px transition-all duration-300 active:scale-[0.98] mt-4"
+                        className="w-full px-4 py-3 font-garamond font-semibold text-lg tracking-wider text-[#fbf9f1] bg-[#5d4037] rounded-md shadow-lg shadow-[#5d4037]/20 hover:bg-[#4e342e] hover:-translate-y-px transition-all duration-300 active:scale-[0.98] mt-4"
                     >
                         {hasPreloadedName ? 'Accéder à mon espace' : 'Commencer'}
                     </button>

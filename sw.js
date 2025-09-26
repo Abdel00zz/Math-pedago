@@ -11,7 +11,7 @@ self.addEventListener('activate', event => {
     caches.keys().then(keyList => {
       // Supprimer tous les anciens caches de cette application
       return Promise.all(keyList.map(key => {
-        if (key.startsWith('le-centre-scientifique')) {
+        if (key.startsWith('center-scientific-of-mathematics')) {
           return caches.delete(key);
         }
       }));
