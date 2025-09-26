@@ -17,7 +17,7 @@ const ChapterSection: React.FC<ChapterSectionProps> = ({ title, chapters, progre
 
     return (
         <section>
-            <div className="flex items-baseline gap-4 mb-4 border-b border-border pb-3">
+            <div className="flex items-baseline gap-4 mb-6">
                 {icon && <span className="text-3xl text-primary/70 font-sans not-italic">{icon}</span>}
                 <h2 className="text-3xl sm:text-4xl font-playfair text-text tracking-tight">
                     {title}
