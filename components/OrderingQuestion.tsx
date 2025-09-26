@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { useAppDispatch } from '../../context/AppContext';
-import { Question } from '../../types';
+import { useAppDispatch } from '../context/AppContext';
+import { Question } from '../types';
 import { MathJax } from 'better-react-mathjax';
 
 interface OrderingQuestionProps {
