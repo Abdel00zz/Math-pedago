@@ -34,15 +34,17 @@ const ActivityView: React.FC = () => {
     const subViewTitle = activitySubView === 'quiz' ? 'Quiz' : 'Exercices';
 
     return (
-        <div className="max-w-3xl mx-auto animate-slideInUp">
-             <header ref={headerRef} className="relative flex items-center justify-center mb-8">
-                 <button 
-                    onClick={() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'work-plan' } })}
-                    className={`font-button absolute left-0 flex items-center justify-center w-11 h-11 rounded-full text-secondary bg-surface border border-border hover:bg-background transition-all duration-200 active:scale-95 ${highlightBackButton ? 'animate-pulse bg-primary-light/80' : ''}`}
-                    aria-label="Retour au plan de travail"
-                >
-                    <span className="material-symbols-outlined">arrow_back</span>
-                </button>
+        <div className="max-w-4xl mx-auto animate-slideInUp">
+             <header ref={headerRef} className="relative flex items-center justify-center mb-8 h-12">
+                <div className="absolute left-0">
+                    <button 
+                        onClick={() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'work-plan' } })}
+                        className={`w-12 h-12 rounded-full flex items-center justify-center text-text-secondary bg-surface border border-border hover:bg-primary/10 hover:text-primary hover:border-primary/30 transition-all duration-200 active:scale-95 shadow-sm hover:shadow-md ${highlightBackButton ? 'animate-pulse ring-2 ring-primary' : ''}`}
+                        aria-label="Retour au plan de travail"
+                    >
+                        <span className="material-symbols-outlined !text-2xl">arrow_back</span>
+                    </button>
+                </div>
                 <div className="text-center">
                     <h1 className="text-5xl font-title text-text">{subViewTitle}</h1>
                     <p className="text-primary text-xl font-sans italic mt-1">{chapter.chapter}</p>

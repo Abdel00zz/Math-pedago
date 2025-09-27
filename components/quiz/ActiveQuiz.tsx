@@ -2,7 +2,7 @@ import React from 'react';
 import { MathJax } from 'better-react-mathjax';
 import { Chapter, QuizProgress } from '../../types';
 import MCQQuestion from './MCQQuestion';
-import OrderingQuestion from './OrderingQuestion';
+import OrderingQuestion from '../OrderingQuestion';
 
 interface ActiveQuizProps {
     chapter: Chapter;
@@ -58,7 +58,7 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({
                     userAnswer={answers[question.id] as string[] | undefined}
                     isReviewMode={isReviewMode}
                     isSubmitted={isSubmitted}
-                    onOrderChange={onOptionChange}
+                    onOptionChange={onOptionChange}
                 />
             )}
 
@@ -78,7 +78,7 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({
                         </button>
                     )
                 ) : (
-                    <button onClick={() => onNavigate(currentQuestionIndex + 1)} disabled={!answers[question.id]} className="font-button px-6 py-2 font-semibold text-primary rounded-lg hover:bg-primary-light disabled:opacity-50 disabled:cursor-not-allowed">Suivant</button>
+                    <button onClick={() => onNavigate(currentQuestionIndex + 1)} disabled={!isReviewMode && !answers[question.id]} className="font-button px-6 py-2 font-semibold text-primary rounded-lg hover:bg-primary-light disabled:opacity-50 disabled:cursor-not-allowed">Suivant</button>
                 )}
             </div>
         </div>

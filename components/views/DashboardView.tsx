@@ -191,7 +191,6 @@ const DashboardView: React.FC = () => {
     const state = useAppState();
     const dispatch = useAppDispatch();
     const { profile, activities, progress, chapterOrder } = state;
-    const [isLoading, setIsLoading] = useState(!profile);
     
     const { addNotification } = useNotification();
     
@@ -204,7 +203,7 @@ const DashboardView: React.FC = () => {
     // Gestion de l'état idle
     useEffect(() => {
         if (isIdle) {
-            addNotification('Votre session est inactive. Les données seront rafraîchies.', 'info');
+            addNotification('Session inactive', 'info', { message: 'Les données seront rafraîchies à la prochaine action.'});
         }
     }, [isIdle, addNotification]);
 
@@ -224,16 +223,6 @@ const DashboardView: React.FC = () => {
     const formatClassNameHTML = (name: string): string => {
         return name.replace(/(\d+)(ère|ème|er|re|e)/gi, '$1<sup>$2</sup>');
     };
-
-    // Simulation du chargement
-    useEffect(() => {
-        if (!profile) {
-            const timer = setTimeout(() => setIsLoading(false), 1500);
-            return () => clearTimeout(timer);
-        } else {
-            setIsLoading(false);
-        }
-    }, [profile]);
 
     // Catégorisation optimisée des activités
     const categorizedActivities = useMemo((): CategorizedActivities => {
@@ -272,22 +261,9 @@ const DashboardView: React.FC = () => {
         if (chapter && (chapter.isActive || progress[chapterId]?.isWorkSubmitted)) {
             dispatch({ type: 'CHANGE_VIEW', payload: { view: 'work-plan', chapterId } });
         } else {
-            addNotification('Ce chapitre n\'est pas encore accessible', 'info');
+            addNotification('Chapitre indisponible', 'info', { message: 'Ce chapitre n\'est pas encore accessible.'});
         }
     }, [activities, progress, dispatch, addNotification]);
-
-    // État de chargement
-    if (isLoading) {
-        return (
-            <div className="min-h-screen bg-background flex items-center justify-center">
-                <div className="text-center">
-                    <div className="w-16 h-16 border-4 border-border border-t-secondary rounded-full animate-spin mb-6 mx-auto" />
-                    <h2 className="text-xl font-title text-text">Chargement de votre espace...</h2>
-                    <p className="font-sans text-text-secondary italic mt-2">Préparation de vos chapitres</p>
-                </div>
-            </div>
-        );
-    }
 
     // Pas de profil
     if (!profile) {

@@ -7,7 +7,7 @@ interface OrderingQuestionProps {
     userAnswer: string[] | undefined;
     isReviewMode: boolean;
     isSubmitted: boolean;
-    onOrderChange: (newOrder: string[]) => void;
+    onOptionChange: (newOrder: string[]) => void;
 }
 
 const shuffleArray = (array: string[]): string[] => {
@@ -20,7 +20,7 @@ const shuffleArray = (array: string[]): string[] => {
     return newArray;
 };
 
-const OrderingQuestion: React.FC<OrderingQuestionProps> = ({ question, userAnswer, isReviewMode, isSubmitted, onOrderChange }) => {
+const OrderingQuestion: React.FC<OrderingQuestionProps> = ({ question, userAnswer, isReviewMode, isSubmitted, onOptionChange }) => {
     const totalSteps = useMemo(() => question.steps?.length || 0, [question.steps]);
     const allSteps = useMemo(() => question.steps || [], [question.steps]);
 
@@ -35,9 +35,9 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({ question, userAnswe
 
     useEffect(() => {
         if (!isReviewMode && !isSubmitted) {
-            onOrderChange(selectedItems);
+            onOptionChange(selectedItems);
         }
-    }, [selectedItems, onOrderChange, isReviewMode, isSubmitted]);
+    }, [selectedItems, onOptionChange, isReviewMode, isSubmitted]);
 
     const handleSelectAvailable = (item: string) => {
         if (isSubmitted || isReviewMode) return;
@@ -60,7 +60,7 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({ question, userAnswe
     if (isReviewMode || isSubmitted) {
         return (
             <div className="bg-surface p-6 sm:p-8 rounded-2xl border border-border shadow-claude animate-fadeIn">
-                <h3 className="text-2xl font-serif mb-6 text-text">
+                <h3 className="text-2xl font-title mb-6 text-text">
                     <MathJax dynamic>{question.question}</MathJax>
                 </h3>
 
@@ -105,7 +105,7 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({ question, userAnswe
     // Active Quiz UI
     return (
         <div className="bg-surface p-6 sm:p-8 rounded-2xl border border-border shadow-claude animate-fadeIn">
-            <h3 className="text-2xl font-serif mb-6 text-text">
+            <h3 className="text-2xl font-title mb-6 text-text">
                 <MathJax dynamic>{question.question}</MathJax>
             </h3>
 

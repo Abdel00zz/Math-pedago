@@ -209,6 +209,7 @@ class ChapterData:
             'class': self.class_type,
             'chapter': self.chapter_name,
             'sessionDates': sorted(self.session_dates),
+            # Préserver l'ordre actuel des quiz et des exercices tel quel
             'quiz': [q.to_dict() for q in self.quiz_questions],
             'exercises': [e.to_dict() for e in self.exercises]
         }
@@ -273,6 +274,19 @@ class QuizEditor(QWidget):
         add_ordering_btn.setToolTip("Ajouter une question d'ordonnancement")
         add_ordering_btn.clicked.connect(lambda: self.add_question("ordering"))
         toolbar.addWidget(add_ordering_btn)
+        
+        # Boutons pour réordonner les questions
+        move_up_btn = QPushButton("↑")
+        move_up_btn.setObjectName("smallButton")
+        move_up_btn.setToolTip("Déplacer la question vers le haut")
+        move_up_btn.clicked.connect(self.move_question_up)
+        toolbar.addWidget(move_up_btn)
+        
+        move_down_btn = QPushButton("↓")
+        move_down_btn.setObjectName("smallButton")
+        move_down_btn.setToolTip("Déplacer la question vers le bas")
+        move_down_btn.clicked.connect(self.move_question_down)
+        toolbar.addWidget(move_down_btn)
         
         delete_btn = QPushButton("Supprimer")
         delete_btn.setObjectName("dangerButton")
@@ -622,6 +636,29 @@ class QuizEditor(QWidget):
             radio.blockSignals(block)
             edit.blockSignals(block)
             
+    # Méthodes pour gérer l'ordre des questions
+    def move_question_up(self):
+        """Déplace la question sélectionnée vers le haut dans la liste."""
+        if self.current_index > 0:
+            # Échanger la question actuelle avec celle d'au-dessus
+            self.questions[self.current_index], self.questions[self.current_index-1] = \
+                self.questions[self.current_index-1], self.questions[self.current_index]
+            
+            # Actualiser la liste et sélectionner la question à sa nouvelle position
+            self.refresh_list()
+            self.question_list.setCurrentRow(self.current_index - 1)
+    
+    def move_question_down(self):
+        """Déplace la question sélectionnée vers le bas dans la liste."""
+        if 0 <= self.current_index < len(self.questions) - 1:
+            # Échanger la question actuelle avec celle d'en-dessous
+            self.questions[self.current_index], self.questions[self.current_index+1] = \
+                self.questions[self.current_index+1], self.questions[self.current_index]
+            
+            # Actualiser la liste et sélectionner la question à sa nouvelle position
+            self.refresh_list()
+            self.question_list.setCurrentRow(self.current_index + 1)
+
     # Méthodes pour gérer les questions d'ordonnancement
     def add_step(self):
         """Ajoute une nouvelle étape à la question d'ordonnancement."""
@@ -685,6 +722,19 @@ class ExerciseEditor(QWidget):
         duplicate_btn.setObjectName("smallButton")
         duplicate_btn.clicked.connect(self.duplicate_current)
         toolbar.addWidget(duplicate_btn)
+        
+        # Boutons pour réordonner les exercices
+        move_up_btn = QPushButton("↑")
+        move_up_btn.setObjectName("smallButton")
+        move_up_btn.setToolTip("Déplacer l'exercice vers le haut")
+        move_up_btn.clicked.connect(self.move_exercise_up)
+        toolbar.addWidget(move_up_btn)
+        
+        move_down_btn = QPushButton("↓")
+        move_down_btn.setObjectName("smallButton")
+        move_down_btn.setToolTip("Déplacer l'exercice vers le bas")
+        move_down_btn.clicked.connect(self.move_exercise_down)
+        toolbar.addWidget(move_down_btn)
         
         delete_btn = QPushButton("Supprimer")
         delete_btn.setObjectName("dangerButton")
@@ -951,6 +1001,28 @@ class ExerciseEditor(QWidget):
         self.refresh_list()
         self.exercise_list.setCurrentRow(len(self.exercises) - 1)
 
+    def move_exercise_up(self):
+        """Déplace l'exercice sélectionné vers le haut dans la liste."""
+        if self.current_index > 0:
+            # Échanger l'exercice actuel avec celui d'au-dessus
+            self.exercises[self.current_index], self.exercises[self.current_index-1] = \
+                self.exercises[self.current_index-1], self.exercises[self.current_index]
+            
+            # Actualiser la liste et sélectionner l'exercice à sa nouvelle position
+            self.refresh_list()
+            self.exercise_list.setCurrentRow(self.current_index - 1)
+    
+    def move_exercise_down(self):
+        """Déplace l'exercice sélectionné vers le bas dans la liste."""
+        if 0 <= self.current_index < len(self.exercises) - 1:
+            # Échanger l'exercice actuel avec celui d'en-dessous
+            self.exercises[self.current_index], self.exercises[self.current_index+1] = \
+                self.exercises[self.current_index+1], self.exercises[self.current_index]
+            
+            # Actualiser la liste et sélectionner l'exercice à sa nouvelle position
+            self.refresh_list()
+            self.exercise_list.setCurrentRow(self.current_index + 1)
+    
     def delete_current(self):
         if 0 <= self.current_index < len(self.exercises):
             exercise_title = self.exercises[self.current_index].title or f"Exercice {self.current_index + 1}"
@@ -962,7 +1034,14 @@ class ExerciseEditor(QWidget):
             if reply == QMessageBox.StandardButton.Yes:
                 del self.exercises[self.current_index]
                 self.refresh_list()
-                self.editor_widget.setEnabled(len(self.exercises) > 0)
+                
+                # Mettre à jour la sélection après la suppression
+                if self.current_index >= len(self.exercises):
+                    self.current_index = len(self.exercises) - 1
+                if self.exercises:
+                    self.exercise_list.setCurrentRow(self.current_index)
+                else:
+                    self.editor_widget.setEnabled(False)
 
 class ChapterContentEditor(QDialog):
     """Éditeur complet du contenu d'un chapitre."""
@@ -977,6 +1056,19 @@ class ChapterContentEditor(QDialog):
 
     def init_ui(self):
         layout = QVBoxLayout(self)
+        
+        # Message d'aide pour la gestion de l'ordre
+        info_box = QWidget()
+        info_layout = QHBoxLayout(info_box)
+        info_icon = QLabel("ℹ️")
+        info_icon.setStyleSheet("font-size: 24px;")
+        info_layout.addWidget(info_icon)
+        info_text = QLabel("Vous pouvez maintenant réorganiser l'ordre des quiz et des exercices en utilisant les boutons ↑ et ↓. L'ordre défini ici sera l'ordre présenté aux élèves.")
+        info_text.setWordWrap(True)
+        info_text.setStyleSheet("color: #3b82f6; background-color: #dbeafe; padding: 10px; border-radius: 4px;")
+        info_layout.addWidget(info_text, 1)
+        layout.addWidget(info_box)
+        
         self.tabs = QTabWidget()
         
         info_widget = self.create_info_tab()

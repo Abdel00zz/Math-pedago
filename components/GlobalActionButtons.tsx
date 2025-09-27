@@ -129,7 +129,7 @@ const GlobalActionButtons: React.FC = () => {
     return (
         <>
             {/* Desktop Action Buttons */}
-            <div className="fixed top-5 right-5 z-40 hidden sm:flex items-center gap-3">
+            <div className="fixed top-8 right-8 z-40 hidden sm:flex items-center gap-3">
                 <div className="group relative flex items-center">
                     <button 
                         onClick={handleOpenNotifications}
@@ -183,10 +183,10 @@ const GlobalActionButtons: React.FC = () => {
             
             {/* Mobile Bottom Navigation */}
             <div className="sm:hidden fixed bottom-0 left-0 right-0 bg-surface/80 backdrop-blur-lg border-t border-border/70 z-40">
-                <nav className="flex justify-around items-center h-16">
+                <nav className="flex justify-around items-center py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))]">
                     <button
                         onClick={handleOpenNotifications}
-                        className="relative flex-1 flex flex-col items-center justify-center p-2 text-text-secondary hover:text-primary focus:text-primary focus:outline-none transition-all duration-200 active:scale-95"
+                        className="relative flex-1 flex flex-col items-center justify-center p-2 text-text-secondary rounded-lg hover:bg-white/5 hover:text-primary focus:text-primary focus:outline-none transition-all duration-200 active:scale-95"
                         aria-label="Notifications"
                     >
                          {unreadNotificationsCount > 0 && (
@@ -199,7 +199,7 @@ const GlobalActionButtons: React.FC = () => {
                     </button>
                      <button
                         onClick={() => setOrientationModalOpen(true)}
-                        className="flex-1 flex flex-col items-center justify-center p-2 text-text-secondary hover:text-primary focus:text-primary focus:outline-none transition-all duration-200 active:scale-95"
+                        className="flex-1 flex flex-col items-center justify-center p-2 text-text-secondary rounded-lg hover:bg-white/5 hover:text-primary focus:text-primary focus:outline-none transition-all duration-200 active:scale-95"
                         aria-label="Programme d'orientation"
                     >
                         <span className="material-symbols-outlined !text-[26px]">explore</span>
@@ -207,7 +207,7 @@ const GlobalActionButtons: React.FC = () => {
                     </button>
                     <button
                         onClick={handleHelpClick}
-                        className="flex-1 flex flex-col items-center justify-center p-2 text-text-secondary hover:text-primary focus:text-primary focus:outline-none transition-all duration-200 active:scale-95"
+                        className="flex-1 flex flex-col items-center justify-center p-2 text-text-secondary rounded-lg hover:bg-white/5 hover:text-primary focus:text-primary focus:outline-none transition-all duration-200 active:scale-95"
                         aria-label="Aide et support"
                     >
                         <span className="material-symbols-outlined !text-[26px]">help_outline</span>

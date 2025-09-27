@@ -97,7 +97,7 @@ const Exercises: React.FC<ExercisesProps> = ({ onAllCompleted }) => {
     };
 
     const renderSubQuestions = (subQuestions: SubQuestion[] | undefined) => (
-        <ol className="list-decimal pl-5 mt-4 space-y-2 antique-list text-text-secondary serif-text">
+        <ol className="list-decimal pl-5 mt-4 space-y-2 antique-list text-text-secondary text-sm leading-relaxed">
             {subQuestions?.map((sq, index) => (
                 <li key={index}><MathJax dynamic>{sq.text}</MathJax></li>
             ))}
@@ -114,9 +114,9 @@ const Exercises: React.FC<ExercisesProps> = ({ onAllCompleted }) => {
             {chapter.exercises.map((exercise, index) => (
                 <div key={exercise.id} className="bg-surface p-6 rounded-lg border border-border">
                     <div className="flex justify-between items-start mb-4">
-                        <h3 className="text-3xl font-playfair text-text pr-4">
+                        <h3 className="text-3xl font-title text-text pr-4">
                             <span>{`Exercice ${index + 1}`}</span>
-                            <span className="text-2xl text-text-secondary font-normal">{` | ${exercise.title}`}</span>
+                            <span className="text-lg text-text-secondary font-normal">{` | ${exercise.title}`}</span>
                         </h3>
                         {exercise.hint && exercise.hint.length > 0 && (
                             <button 
@@ -129,7 +129,7 @@ const Exercises: React.FC<ExercisesProps> = ({ onAllCompleted }) => {
                         )}
                     </div>
                     
-                    <div className="text-text-secondary serif-text">
+                    <div className="text-text-secondary text-sm leading-relaxed">
                         <MathJax dynamic>{exercise.statement}</MathJax>
                     </div>
                     

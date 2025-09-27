@@ -8,6 +8,12 @@ interface SessionStatusProps {
     dates: string[];
 }
 
+type SessionStatusInfo = 
+    | { status: 'live'; text: string; icon: string }
+    | { status: 'upcoming'; prefix: string; text: string; icon: string }
+    | { status: 'past'; text: string; icon: string }
+    | { status: 'none'; text: string; icon: string };
+
 const SessionStatus: React.FC<SessionStatusProps> = React.memo(({ dates }) => {
     const [now, setNow] = useState(() => new Date());
 
@@ -16,7 +22,7 @@ const SessionStatus: React.FC<SessionStatusProps> = React.memo(({ dates }) => {
         return () => clearInterval(timer);
     }, []);
 
-    const sessionInfo = useMemo(() => {
+    const sessionInfo = useMemo((): SessionStatusInfo => {
         if (!Array.isArray(dates) || dates.length === 0) {
             return { status: 'none', text: 'Aucune séance programmée', icon: 'event_busy' };
         }
@@ -74,7 +80,8 @@ const SessionStatus: React.FC<SessionStatusProps> = React.memo(({ dates }) => {
             
             return { 
                 status: 'upcoming', 
-                text: `Prochaine séance : ${formattedDate}`,
+                prefix: 'Prochaine séance Live : ',
+                text: formattedDate,
                 icon: 'update'
             };
         }
@@ -93,30 +100,40 @@ const SessionStatus: React.FC<SessionStatusProps> = React.memo(({ dates }) => {
 
     }, [dates, now]);
 
-    const statusStyles = {
-        live: 'text-text font-semibold',
-        upcoming: 'text-text-secondary font-medium',
-        past: 'text-text-secondary italic',
-        none: 'text-text-secondary italic',
-    };
-    
-    const currentStyle = statusStyles[sessionInfo.status] || statusStyles.none;
-
-    return (
-        <div className={`flex items-center gap-2 ${currentStyle}`}>
-            {sessionInfo.status === 'live' ? (
-                <span className="relative flex h-3 w-3">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
-                </span>
-            ) : sessionInfo.status === 'upcoming' ? (
-                <span className="w-2 h-2 rounded-full bg-secondary animate-cursorBlink"></span>
-            ) : (
-                <span className="material-symbols-outlined !text-base">{sessionInfo.icon}</span>
-            )}
-            <p className="text-base serif-text">{sessionInfo.text}</p>
-        </div>
-    );
+    switch (sessionInfo.status) {
+        case 'live':
+            return (
+                <div className="flex items-center gap-2 text-text font-semibold">
+                    <span className="relative flex h-3 w-3">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
+                    </span>
+                    <p className="text-base serif-text">{sessionInfo.text}</p>
+                </div>
+            );
+        case 'upcoming':
+            return (
+                <div className="flex items-center gap-2 font-medium">
+                    <span className="w-2 h-2 rounded-full bg-success animate-blink"></span>
+                    <p className="text-base serif-text">
+                        <span className="text-success">{sessionInfo.prefix}</span>
+                        <span className="text-text-secondary">{sessionInfo.text}</span>
+                    </p>
+                </div>
+            );
+        case 'past':
+        case 'none': {
+            const textStyle = "text-text-secondary italic";
+            return (
+                <div className={`flex items-center gap-2 ${textStyle}`}>
+                    <span className="material-symbols-outlined !text-base">{sessionInfo.icon}</span>
+                    <p className="text-base serif-text">{sessionInfo.text}</p>
+                </div>
+            );
+        }
+        default:
+            return null;
+    }
 });
 
 export default SessionStatus;

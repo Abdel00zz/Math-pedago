@@ -34,7 +34,7 @@ const MCQQuestion: React.FC<MCQQuestionProps> = ({ question, userAnswer, isRevie
 
     return (
         <div className="bg-surface p-6 sm:p-8 rounded-2xl border border-border shadow-claude animate-fadeIn">
-            <h3 className="text-2xl font-serif mb-6 text-text">
+            <h3 className="text-2xl font-title mb-6 text-text">
                 <MathJax dynamic>{question.question}</MathJax>
             </h3>
             <div className="space-y-4">

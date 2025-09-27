@@ -20,7 +20,7 @@ const QuizResult: React.FC<QuizResultProps> = ({ chapter, quizProgress }) => {
     return (
         <div className="text-center p-6 animate-fadeIn">
             <div className="bg-surface border border-border rounded-2xl shadow-claude max-w-2xl mx-auto p-8">
-                <h2 className="text-4xl font-playfair text-text mb-2">{message}</h2>
+                <h2 className="text-4xl font-title text-text mb-2">{message}</h2>
                 <p className="text-secondary serif-text text-lg">Votre score au quiz est de :</p>
                 <p className={`text-7xl font-bold my-4 ${color}`}>{percentage}%</p>
                 

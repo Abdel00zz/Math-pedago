@@ -1,39 +1,51 @@
-
-
 import React, { createContext, useState, useCallback, ReactNode, useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-
-// Fix: Add 'warning' to NotificationType to support warning notifications.
-export type NotificationType = 'success' | 'error' | 'info' | 'warning';
-
-export interface Notification {
-    id: string;
-    message: string;
-    type: NotificationType;
-}
+import { ToastNotification, ToastNotificationType } from '../types';
 
 interface NotificationContextType {
-    addNotification: (message: string, type?: NotificationType) => void;
-    notifications: Notification[];
+    addNotification: (
+        title: string,
+        type?: ToastNotificationType,
+        options?: Partial<Omit<ToastNotification, 'id' | 'title' | 'type'>>
+    ) => void;
+    notifications: ToastNotification[];
     removeNotification: (id: string) => void;
 }
 
 const NotificationContext = createContext<NotificationContextType | undefined>(undefined);
 
 export const NotificationProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [notifications, setNotifications] = useState<Notification[]>([]);
+    const [notifications, setNotifications] = useState<ToastNotification[]>([]);
 
     const removeNotification = useCallback((id: string) => {
         setNotifications(prev => prev.filter(n => n.id !== id));
     }, []);
 
-    const addNotification = useCallback((message: string, type: NotificationType = 'success') => {
-        const id = uuidv4();
-        setNotifications(prev => [...prev, { id, message, type }]);
-        setTimeout(() => {
-            removeNotification(id);
-        }, 4000);
-    }, [removeNotification]);
+    const addNotification = useCallback(
+        (
+            title: string,
+            type: ToastNotificationType = 'success',
+            options: Partial<Omit<ToastNotification, 'id' | 'title' | 'type'>> = {}
+        ) => {
+            const id = uuidv4();
+            const duration = options.duration || 5000;
+            const newNotification: ToastNotification = {
+                id,
+                title,
+                message: options.message || '',
+                type,
+                action: options.action,
+                duration,
+            };
+
+            setNotifications(prev => [newNotification, ...prev]);
+            
+            setTimeout(() => {
+                removeNotification(id);
+            }, duration);
+        },
+        [removeNotification]
+    );
 
     return (
         <NotificationContext.Provider value={{ addNotification, notifications, removeNotification }}>

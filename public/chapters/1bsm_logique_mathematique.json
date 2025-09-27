@@ -539,6 +539,41 @@
       ]
     },
     {
+      "id": "exo_irrationnel_racine2",
+      "title": "Propriétés d'Irrationalité et de Combinaison Linéaire",
+      "statement": "On rappelle que $\\sqrt{2}$ est un nombre irrationnel. $a, b, m, n, p, q$ sont des entiers relatifs.",
+      "sub_questions": [
+        {
+          "text": "Démontrer que si $a$ et $b$ sont deux entiers relatifs tels que $a + b\\sqrt{2} = 0$, alors $a = b = 0$."
+        },
+        {
+          "text": "En déduire que si $m, n, p$ et $q$ sont des entiers relatifs, alors $m + n\\sqrt{2} = p + q\\sqrt{2} \\iff (m = p \\text{ et } n = q)$."
+        }
+      ]
+    },
+    {
+      "id": "exo_solution_entiere_polynome",
+      "title": "Racines Entières d'un Polynôme",
+      "statement": "Démontrer que l'équation $9x^5 - 12x^4 + 6x - 5 = 0$ n'admet pas de solution entière.",
+      "sub_questions": []
+    },
+    {
+      "id": "exo_contraposee_divisibilite8",
+      "title": "Démonstration par Contraposition (Divisibilité par 8)",
+      "statement": "Le but de cet exercice est de démontrer par contraposition la propriété suivante, pour $n \\in \\mathbb{N}^*$ : Si l'entier $(n^2-1)$ n'est pas divisible par 8, alors l'entier $n$ est pair.",
+      "sub_questions": [
+        {
+          "text": "Écrire la contraposée de la proposition précédente."
+        },
+        {
+          "text": "En remarquant qu'un entier impair $n$ s'écrit sous la forme $n = 4k + r$ avec $k \\in \\mathbb{N}$ et $r \\in \\{1, 3\\}$ (à justifier), prouver la contraposée."
+        },
+        {
+          "text": "A-t-on démontré la propriété de l'énoncé ?"
+        }
+      ]
+    },
+    {
       "id": "exo_raisonnement_absurde",
       "title": "Raisonnement par l'Absurde",
       "statement": "Utiliser le raisonnement par l'absurde pour démontrer les propositions suivantes :",
@@ -567,6 +602,22 @@
         },
         {
           "text": "Montrer que : $(\\forall n \\in \\mathbb{N})$, $3$ divise $4^n - 1$."
+        }
+      ]
+    },
+    {
+      "id": "exo_divisibilite_pn_qn_9",
+      "title": "Propriétés de Divisibilité et Quantification (Exercice 9)",
+      "statement": "Pour $n \\in \\mathbb{N}$, on définit deux propriétés : $P_n : 3$ divise $4^n - 1$ et $Q_n : 3$ divise $4^n + 1$.",
+      "sub_questions": [
+        {
+          "text": "Prouver que pour tout $n \\in \\mathbb{N}, P_n \\Rightarrow P_{n+1}$ et $Q_n \\Rightarrow Q_{n+1}$."
+        },
+        {
+          "text": "Montrer que $P_n$ est vraie pour tout $n \\in \\mathbb{N}$."
+        },
+        {
+          "text": "Que penser, alors, de l'assertion : $\\exists n_0 \\in \\mathbb{N}, \\forall n \\in \\mathbb{N}, n \\ge n_0 \\Rightarrow Q_n$ ?"
         }
       ]
     },
@@ -607,12 +658,6 @@
           "text": "En déduire que $f(n)$ est divisible par 111 pour tout $n \\in \\mathbb{N}$."
         }
       ]
-    },
-    {
-      "id": "exo_f29e772b",
-      "title": "Nouvel Exercice 7",
-      "statement": "Énoncé de l'exercice...",
-      "sub_questions": []
     }
   ],
   "version": "v1.2.0-ordering"

@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo, useCallback } from 'react';
 import { useAppState, useAppDispatch } from '../../context/AppContext';
 import { CLASS_OPTIONS } from '../../constants';
@@ -154,8 +153,8 @@ const ChapterHubView: React.FC = () => {
             isQuizCompleted: iqc,
             areAllExercisesDone: aed,
             canSubmitWork: csw,
-            quizProgressPercent: iqc ? 100 : (tq > 0 ? (aqc / tq) * 100 : 0),
-            exercisesProgressPercent: te > 0 ? (eec / te) * 100 : 100,
+            quizProgressPercent: iqc ? 100 : (tq > 0 ? (Math.min(aqc, tq) / tq) * 100 : 0),
+            exercisesProgressPercent: te > 0 ? (Math.min(eec, te) / te) * 100 : 100,
             isOutdatedSubmission: outdated,
             isChapterLocked: locked
         };
@@ -269,12 +268,18 @@ const ChapterHubView: React.FC = () => {
                 if (document.body.contains(form)) {
                     document.body.removeChild(form);
                 }
-                addNotification("Votre travail a été envoyé avec succès !", 'success');
+                addNotification("Travail envoyé", 'success', {
+                    message: "Votre progression a été enregistrée et envoyée.",
+                    action: {
+                        label: 'Tableau de bord',
+                        onClick: () => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'dashboard' } })
+                    }
+                });
             }, 2000);
             
         } catch (error) {
             console.error("Erreur lors de la préparation de l'envoi:", error);
-            addNotification("Une erreur est survenue avant l'envoi. Veuillez réessayer.", 'error');
+            addNotification("Erreur d'envoi", 'error', { message: "Une erreur est survenue avant l'envoi. Veuillez réessayer." });
             setIsSubmitting(false);
         }
     };
@@ -326,10 +331,16 @@ const ChapterHubView: React.FC = () => {
                 )}
                 
                 <header className="mb-8 sm:mb-12">
-                    <div className="relative flex items-center justify-center">
-                        <button onClick={() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'dashboard' } })} className="font-button absolute left-0 flex items-center justify-center w-11 h-11 rounded-full text-secondary bg-surface border border-border hover:bg-background transition-all duration-200 active:scale-95" aria-label="Retour au tableau de bord">
-                            <span className="material-symbols-outlined">arrow_back</span>
-                        </button>
+                    <div className="relative flex items-center justify-center h-12">
+                        <div className="absolute left-0">
+                            <button 
+                                onClick={() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'dashboard' } })} 
+                                className="w-12 h-12 rounded-full flex items-center justify-center text-text-secondary bg-surface border border-border hover:bg-primary/10 hover:text-primary hover:border-primary/30 transition-all duration-200 active:scale-95 shadow-sm hover:shadow-md" 
+                                aria-label="Retour au tableau de bord"
+                            >
+                                <span className="material-symbols-outlined !text-2xl">arrow_back</span>
+                            </button>
+                        </div>
                         <div className="text-center">
                             <p className="font-brand text-primary tracking-[0.2em] uppercase text-xs mb-2">Plan de travail</p>
                             <h1 className="text-2xl sm:text-3xl text-text font-title">{chapter.chapter}</h1>

@@ -108,12 +108,27 @@ export interface ExportedProgressFile {
     results: ExportedChapterResult[];
 }
 
-// Notification for the Notification Center UI
+// Notification for the Notification Center UI (Modal)
 export interface UINotification {
     id: string;
     title: string;
     message: string;
     timestamp: number; // For sorting and expiration
+}
+
+// Notification for the Toast UI (transient pop-ups)
+export type ToastNotificationType = 'success' | 'error' | 'info' | 'warning';
+
+export interface ToastNotification {
+    id: string;
+    type: ToastNotificationType;
+    title?: string;
+    message: string;
+    duration?: number;
+    action?: {
+        label: string;
+        onClick: () => void;
+    };
 }
 
 

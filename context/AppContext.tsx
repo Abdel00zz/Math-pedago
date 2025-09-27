@@ -210,8 +210,8 @@ const appReducer = (state: AppState, action: Action): AppState => {
                 const currentProgress = newProgress[newChapter.id];
                 const oldVersion = state.activityVersions[newChapter.id];
 
-                // Check for updates by comparing versions
-                if (oldVersion && newChapter.version && oldVersion !== newChapter.version) {
+                // Check for updates by comparing versions, but ONLY for active chapters.
+                if (newChapter.isActive && oldVersion && newChapter.version && oldVersion !== newChapter.version) {
                     generatedNotifications.push({
                         id: `update-${newChapter.id}-${newChapter.version}`,
                         title: 'Chapitre mis à jour !',
@@ -264,7 +264,7 @@ const appReducer = (state: AppState, action: Action): AppState => {
                             timestamp: Date.now() + 1000 
                         });
                     }
-                } else if (!oldVersion && newChapter.isActive) {
+                } else if (newChapter.isActive && !oldVersion) {
                      generatedNotifications.push({
                         id: `new-${newChapter.id}`,
                         title: 'Nouveau Chapitre Disponible',
@@ -392,7 +392,14 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 
             } catch (error) {
                 console.error("Failed to load or sync chapter data:", error);
-                addNotification("Impossible de charger les chapitres. Vérifiez votre connexion.", "error");
+                addNotification("Chargement échoué", "error", { 
+                    message: "Impossible de charger les chapitres. Veuillez vérifier votre connexion.",
+                    action: {
+                        label: 'Réessayer',
+                        onClick: () => window.location.reload()
+                    },
+                    duration: 10000 
+                });
             }
         };
 
@@ -417,7 +424,14 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
                 localStorage.setItem(DB_KEY, JSON.stringify(stateToSave));
             } catch (error) {
                 console.error("Failed to save state to localStorage:", error);
-                addNotification("Impossible de sauvegarder votre progression.", "error");
+                addNotification("Sauvegarde échouée", "error", {
+                     message: "Impossible de sauvegarder votre progression.",
+                     action: {
+                        label: 'Réessayer',
+                        onClick: () => window.location.reload()
+                    },
+                    duration: 10000 
+                });
             }
         }
     }, [state, addNotification]);
