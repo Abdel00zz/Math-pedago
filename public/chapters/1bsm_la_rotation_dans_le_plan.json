@@ -5,6 +5,7 @@
   "quiz": [
     {
       "id": "q_rotation_1",
+      "type": "mcq",
       "question": "L'image d'un cercle par une rotation est :",
       "options": [
         {
@@ -30,5 +31,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-5ec613"
+  "version": "v1.1.0-4f4a46"
 }

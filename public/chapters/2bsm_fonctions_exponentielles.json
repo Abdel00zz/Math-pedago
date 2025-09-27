@@ -5,6 +5,7 @@
   "quiz": [
     {
       "id": "q1",
+      "type": "mcq",
       "question": "Quelle est la limite de $e^x$ en $+\\infty$ ?",
       "options": [
         {
@@ -26,5 +27,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-36e403"
+  "version": "v1.1.0-f69d96"
 }

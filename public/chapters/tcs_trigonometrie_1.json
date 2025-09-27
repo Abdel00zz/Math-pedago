@@ -5,6 +5,7 @@
   "quiz": [
     {
       "id": "q_tcs_trigo1_1",
+      "type": "mcq",
       "question": "Quelle est l'identité trigonométrique fondamentale ?",
       "options": [
         {
@@ -30,5 +31,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-0bc91a"
+  "version": "v1.1.0-6c322d"
 }

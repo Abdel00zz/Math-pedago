@@ -5,6 +5,7 @@
   "quiz": [
     {
       "id": "q1",
+      "type": "mcq",
       "question": "Que dit le théorème de Rolle ?",
       "options": [
         {
@@ -26,5 +27,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-ee9464"
+  "version": "v1.1.0-90ff86"
 }

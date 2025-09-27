@@ -5,6 +5,7 @@
   "quiz": [
     {
       "id": "q_suites_1",
+      "type": "mcq",
       "question": "Soit $(u_n)$ une suite arithmétique de premier terme $u_0 = 3$ et de raison $r=4$. Que vaut $u_5$ ?",
       "options": [
         {
@@ -30,5 +31,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-799687"
+  "version": "v1.1.0-566be6"
 }

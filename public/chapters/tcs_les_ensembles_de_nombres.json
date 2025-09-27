@@ -5,6 +5,7 @@
   "quiz": [
     {
       "id": "q_tcs_ensembles_1",
+      "type": "mcq",
       "question": "Lequel de ces nombres n'appartient pas à l'ensemble des nombres décimaux $\\mathbb{D}$ ?",
       "options": [
         {
@@ -30,5 +31,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-c557de"
+  "version": "v1.1.0-aad02e"
 }

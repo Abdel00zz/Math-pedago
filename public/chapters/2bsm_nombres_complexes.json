@@ -5,6 +5,7 @@
   "quiz": [
     {
       "id": "q1",
+      "type": "mcq",
       "question": "Que vaut $i^2$ ?",
       "options": [
         {
@@ -26,5 +27,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-244193"
+  "version": "v1.1.0-a3de65"
 }

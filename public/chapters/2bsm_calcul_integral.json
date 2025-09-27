@@ -5,6 +5,7 @@
   "quiz": [
     {
       "id": "q1",
+      "type": "mcq",
       "question": "Que représente géométriquement $\\int_a^b f(x) dx$ si $f$ est positive ?",
       "options": [
         {
@@ -26,5 +27,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-9ba779"
+  "version": "v1.1.0-6e8ee6"
 }

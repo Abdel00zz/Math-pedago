@@ -5,6 +5,7 @@
   "quiz": [
     {
       "id": "q_2bsm_limites_1",
+      "type": "mcq",
       "question": "Quelle est la limite de $f(x) = \\frac{\\ln(x)}{x}$ quand $x$ tend vers $+\\infty$ ?",
       "options": [
         {
@@ -30,5 +31,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-821b69"
+  "version": "v1.1.0-f3116d"
 }

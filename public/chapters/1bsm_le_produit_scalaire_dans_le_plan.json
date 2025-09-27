@@ -5,6 +5,7 @@
   "quiz": [
     {
       "id": "q_pscalaire_plan_1",
+      "type": "mcq",
       "question": "Dans un repère orthonormé, on a $\\vec{u}(2, -1)$ et $\\vec{v}(3, 6)$. Que vaut le produit scalaire $\\vec{u} \\cdot \\vec{v}$ ?",
       "options": [
         {
@@ -30,5 +31,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-fc6107"
+  "version": "v1.1.0-7e80a9"
 }
