@@ -5,6 +5,7 @@
   "quiz": [
     {
       "id": "q_fonctions_1",
+      "type": "mcq",
       "question": "La fonction $f(x) = x^3 - x$ est-elle paire ou impaire ?",
       "options": [
         {
@@ -30,5 +31,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-6048cb"
+  "version": "v1.1.0-373faa"
 }

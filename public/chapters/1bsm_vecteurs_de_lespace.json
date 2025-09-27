@@ -5,6 +5,7 @@
   "quiz": [
     {
       "id": "q_vecteurs_espace_1",
+      "type": "mcq",
       "question": "Trois vecteurs $\\vec{u}$, $\\vec{v}$ et $\\vec{w}$ sont dits coplanaires si :",
       "options": [
         {
@@ -30,5 +31,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-9b1a9b"
+  "version": "v1.1.0-1ed670"
 }

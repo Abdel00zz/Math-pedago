@@ -5,6 +5,7 @@
   "quiz": [
     {
       "id": "q_2bse_derivation_1",
+      "type": "mcq",
       "question": "Quelle est la dérivée de $\\ln(u(x))$ ?",
       "options": [
         {
@@ -30,5 +31,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-3fbe6d"
+  "version": "v1.1.0-d65dee"
 }

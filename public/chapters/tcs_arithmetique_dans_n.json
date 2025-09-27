@@ -5,6 +5,7 @@
   "quiz": [
     {
       "id": "q_tcs_arithmetique_1",
+      "type": "mcq",
       "question": "Un nombre premier est un nombre qui a exactement :",
       "options": [
         {
@@ -30,5 +31,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-e35a6b"
+  "version": "v1.1.0-a8a3d0"
 }

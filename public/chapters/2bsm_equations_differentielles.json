@@ -5,6 +5,7 @@
   "quiz": [
     {
       "id": "q1",
+      "type": "mcq",
       "question": "Quelle est la solution générale de $y' + y = 0$ ?",
       "options": [
         {
@@ -26,5 +27,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-3ba3a3"
+  "version": "v1.1.0-5aa37d"
 }

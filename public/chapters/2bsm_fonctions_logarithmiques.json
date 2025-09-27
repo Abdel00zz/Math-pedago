@@ -5,6 +5,7 @@
   "quiz": [
     {
       "id": "q1",
+      "type": "mcq",
       "question": "Quelle est la dérivée de $\\ln(x)$ ?",
       "options": [
         {
@@ -26,5 +27,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-2d0f6a"
+  "version": "v1.1.0-ab4a63"
 }

@@ -5,6 +5,7 @@
   "quiz": [
     {
       "id": "q_tcs_droite_1",
+      "type": "mcq",
       "question": "Le coefficient directeur de la droite d'équation $y = -2x + 5$ est :",
       "options": [
         {
@@ -30,5 +31,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-85676b"
+  "version": "v1.1.0-0c12c5"
 }

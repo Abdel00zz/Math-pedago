@@ -5,6 +5,7 @@
   "quiz": [
     {
       "id": "q_tcs_ordre_1",
+      "type": "mcq",
       "question": "L'intervalle $[2, 5[$ est :",
       "options": [
         {
@@ -30,5 +31,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-f239f8"
+  "version": "v1.1.0-e94590"
 }

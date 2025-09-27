@@ -5,6 +5,7 @@
   "quiz": [
     {
       "id": "q_pscalaire_espace_1",
+      "type": "mcq",
       "question": "Un vecteur normal à un plan est un vecteur qui est...",
       "options": [
         {
@@ -30,5 +31,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-99ae43"
+  "version": "v1.1.0-d99451"
 }

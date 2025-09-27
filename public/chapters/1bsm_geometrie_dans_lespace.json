@@ -5,6 +5,7 @@
   "quiz": [
     {
       "id": "q_geo_espace_1",
+      "type": "mcq",
       "question": "L'équation $x - 2y + 3z - 5 = 0$ est l'équation cartésienne :",
       "options": [
         {
@@ -30,5 +31,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-7a8daf"
+  "version": "v1.1.0-a8df7c"
 }
