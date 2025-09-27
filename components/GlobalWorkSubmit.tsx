@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useAppDispatch } from '../context/AppContext';
 import { useNotification } from '../context/NotificationContext';
 import ConfirmationModal from './ConfirmationModal';
-import Confetti from './Confetti';
+
 
 interface GlobalWorkSubmitProps {
     isReady: boolean;
@@ -31,16 +31,7 @@ const GlobalWorkSubmit: React.FC<GlobalWorkSubmitProps> = ({ isReady, isSubmitte
         setTimeout(() => setShowConfetti(false), 5000); // Confetti for 5 seconds
     };
 
-    if (isSubmitted) {
-        return (
-            <div className="text-center p-8 bg-success/10 border-2 border-dashed border-success/30 rounded-lg">
-                {showConfetti && <Confetti />}
-                <span className="material-symbols-outlined text-5xl text-success">task_alt</span>
-                <h3 className="mt-4 text-2xl font-bold text-success">Travail Envoyé !</h3>
-                <p className="text-secondary mt-2">Félicitations ! Votre travail pour ce chapitre a été soumis.</p>
-            </div>
-        );
-    }
+    
 
     return (
         <div className="p-6 bg-surface border border-border rounded-lg text-center">

@@ -32,6 +32,18 @@
       "explanation": "La double inclusion est la méthode standard : $A = B \\Leftrightarrow (A \\subset B \\text{ et } B \\subset A)$."
     },
     {
+      "id": "q_inclusion_egalite",
+      "type": "mcq",
+      "question": "Pour démontrer que deux ensembles A et B sont égaux, la méthode de double inclusion consiste à :",
+      "options": [
+        { "text": "Montrer que $A \\subset B$ et $B \\subset A$", "isCorrect": true },
+        { "text": "Montrer que $A \\cap B \\neq \\emptyset$ et $A \\cup B = E$", "isCorrect": false },
+        { "text": "Montrer que $|A| = |B|$ (même cardinal)", "isCorrect": false },
+        { "text": "Vérifier que $A$ et $B$ ont la même définition en compréhension", "isCorrect": false }
+      ],
+      "explanation": "La double inclusion est la méthode standard : $A = B \\Leftrightarrow (A \\subset B \\text{ et } B \\subset A)$."
+    },
+    {
       "id": "q_ensemble_vide",
       "type": "mcq",
       "question": "Quelle affirmation concernant l'ensemble vide $\\emptyset$ est FAUSSE ?",

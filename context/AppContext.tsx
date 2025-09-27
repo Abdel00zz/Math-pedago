@@ -1,3 +1,4 @@
+
 import React, { createContext, useReducer, useEffect, ReactNode, Dispatch, useContext, useRef } from 'react';
 // Fix: Removed unused 'ChapterData' type from import to resolve error. The other types are now correctly imported from the fixed types.ts file.
 import { AppState, Action, Chapter, Profile, QuizProgress, ChapterProgress, Feedback, UINotification } from '../types';
@@ -18,6 +19,17 @@ const initialState: AppState = {
 
 // ... (appReducer remains the same)
 const appReducer = (state: AppState, action: Action): AppState => {
+    const findFirstUnansweredIndex = (chapter: Chapter, answers: { [qId: string]: any }): number => {
+        if (!chapter?.quiz) return 0;
+        for (let i = 0; i < chapter.quiz.length; i++) {
+            const qId = chapter.quiz[i].id;
+            if (!answers.hasOwnProperty(qId)) {
+                return i;
+            }
+        }
+        return 0;
+    };
+
     switch (action.type) {
         case 'INIT': {
             const { profile, progress = {}, view, currentChapterId, activitySubView, chapterOrder, activityVersions } = action.payload;
@@ -232,6 +244,8 @@ const appReducer = (state: AppState, action: Action): AppState => {
                     // reset its submission status to force the user to complete it again.
                     if (currentProgress.quiz.isSubmitted && !isNowFullyAnswered) {
                         currentProgress.quiz.isSubmitted = false;
+                        // UX Enhancement: Navigate user to the first unanswered question
+                        currentProgress.quiz.currentQuestionIndex = findFirstUnansweredIndex(newChapter, validatedAnswers);
                          generatedNotifications.push({
                             id: `quiz-reset-${newChapter.id}`,
                             title: 'Quiz mis à jour',
