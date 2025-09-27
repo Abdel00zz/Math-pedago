@@ -5,7 +5,6 @@
   "quiz": [
     {
       "id": "q_2bse_etude_1",
-      "type": "mcq",
       "question": "Une asymptote verticale à la courbe d'une fonction $f$ en $a$ existe si :",
       "options": [
         {
@@ -31,5 +30,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-e0c506"
+  "version": "v1.1.0-61dbc5"
 }

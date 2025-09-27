@@ -5,7 +5,6 @@
   "quiz": [
     {
       "id": "q_trigo_1",
-      "type": "mcq",
       "question": "Quelle est la valeur exacte de $\\cos(\\frac{\\pi}{3}) + \\sin(\\frac{\\pi}{6})$ ?",
       "options": [
         {
@@ -31,5 +30,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-9442d3"
+  "version": "v1.1.0-237d2b"
 }

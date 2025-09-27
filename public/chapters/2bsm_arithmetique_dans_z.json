@@ -5,7 +5,6 @@
   "quiz": [
     {
       "id": "q1",
-      "type": "mcq",
       "question": "Que dit le théorème de Bézout ?",
       "options": [
         {
@@ -27,5 +26,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-a3096d"
+  "version": "v1.1.0-a9eca8"
 }

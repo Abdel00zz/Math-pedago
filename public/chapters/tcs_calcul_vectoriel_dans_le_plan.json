@@ -5,7 +5,6 @@
   "quiz": [
     {
       "id": "q_tcs_vectoriel_1",
-      "type": "mcq",
       "question": "Soient A, B, et C trois points. D'après la relation de Chasles, que vaut $\\vec{AB} + \\vec{BC}$ ?",
       "options": [
         {
@@ -31,5 +30,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-d7a0ba"
+  "version": "v1.1.0-8f7594"
 }

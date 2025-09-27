@@ -5,7 +5,6 @@
   "quiz": [
     {
       "id": "q1",
-      "type": "mcq",
       "question": "Qu'est-ce que la médiane d'une série statistique ?",
       "options": [
         {
@@ -27,5 +26,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-4763a6"
+  "version": "v1.1.0-4e7f04"
 }

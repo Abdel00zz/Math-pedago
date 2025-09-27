@@ -5,7 +5,6 @@
   "quiz": [
     {
       "id": "q_derivation_1",
-      "type": "mcq",
       "question": "Quelle est la dérivée de la fonction $f(x) = 3x^4 - 5x + 1$ ?",
       "options": [
         {
@@ -31,5 +30,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-e61e3b"
+  "version": "v1.1.0-93dd2d"
 }

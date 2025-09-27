@@ -5,7 +5,6 @@
   "quiz": [
     {
       "id": "q_limites_1",
-      "type": "mcq",
       "question": "Quelle est la limite de $f(x) = \\frac{2x^2 - 1}{x^2 + 1}$ quand $x$ tend vers $+\\infty$ ?",
       "options": [
         {
@@ -31,5 +30,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-34b1c2"
+  "version": "v1.1.0-08e09e"
 }

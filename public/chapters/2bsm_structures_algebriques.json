@@ -5,7 +5,6 @@
   "quiz": [
     {
       "id": "q1",
-      "type": "mcq",
       "question": "Qu'est-ce qu'un groupe abélien ?",
       "options": [
         {
@@ -27,5 +26,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-53130a"
+  "version": "v1.1.0-51490c"
 }

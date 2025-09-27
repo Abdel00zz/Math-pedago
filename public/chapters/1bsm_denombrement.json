@@ -5,7 +5,6 @@
   "quiz": [
     {
       "id": "q_denombrement_1",
-      "type": "mcq",
       "question": "On tire simultanément 3 boules d'une urne contenant 10 boules. Quel outil de dénombrement utilise-t-on ?",
       "options": [
         {
@@ -31,5 +30,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-1224b4"
+  "version": "v1.1.0-58e59c"
 }

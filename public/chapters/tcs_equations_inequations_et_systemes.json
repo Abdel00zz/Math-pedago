@@ -5,7 +5,6 @@
   "quiz": [
     {
       "id": "q_tcs_equations_1",
-      "type": "mcq",
       "question": "Pour une équation du second degré $ax^2+bx+c=0$, si le discriminant $\\Delta$ est strictement positif, l'équation admet :",
       "options": [
         {
@@ -31,5 +30,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-d2ddae"
+  "version": "v1.1.0-b69e9b"
 }

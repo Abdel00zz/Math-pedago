@@ -9,7 +9,6 @@
   "quiz": [
     {
       "id": "q_proposition_1",
-      "type": "mcq",
       "question": "Une proposition est :",
       "options": [
         {
@@ -33,7 +32,6 @@
     },
     {
       "id": "q_connecteur_et_2",
-      "type": "mcq",
       "question": "La proposition $P \\land Q$ est vraie quand :",
       "options": [
         {
@@ -57,7 +55,6 @@
     },
     {
       "id": "q_connecteur_ou_3",
-      "type": "mcq",
       "question": "La proposition $P \\lor Q$ est fausse quand :",
       "options": [
         {
@@ -81,7 +78,6 @@
     },
     {
       "id": "q_negation_4",
-      "type": "mcq",
       "question": "Si une proposition $P$ est vraie, alors $\\neg P$ est :",
       "options": [
         {
@@ -105,7 +101,6 @@
     },
     {
       "id": "q_implication_5",
-      "type": "mcq",
       "question": "L'implication $P \\Rightarrow Q$ est fausse uniquement quand :",
       "options": [
         {
@@ -129,7 +124,6 @@
     },
     {
       "id": "q_equivalence_6",
-      "type": "mcq",
       "question": "La proposition $P \\Leftrightarrow Q$ signifie :",
       "options": [
         {
@@ -153,7 +147,6 @@
     },
     {
       "id": "q_quantificateur_universel_7",
-      "type": "mcq",
       "question": "Le quantificateur universel $\\forall$ se lit :",
       "options": [
         {
@@ -177,7 +170,6 @@
     },
     {
       "id": "q_quantificateur_existentiel_8",
-      "type": "mcq",
       "question": "Le quantificateur existentiel $\\exists$ se lit :",
       "options": [
         {
@@ -201,7 +193,6 @@
     },
     {
       "id": "q_negation_quantificateur_9",
-      "type": "mcq",
       "question": "La négation de $(\\forall x \\in E, P(x))$ est :",
       "options": [
         {
@@ -225,7 +216,6 @@
     },
     {
       "id": "q_negation_existentiel_10",
-      "type": "mcq",
       "question": "La négation de $(\\exists x \\in E, P(x))$ est :",
       "options": [
         {
@@ -249,7 +239,6 @@
     },
     {
       "id": "q_contraposee_11",
-      "type": "mcq",
       "question": "La contraposée de $P \\Rightarrow Q$ est :",
       "options": [
         {
@@ -273,7 +262,6 @@
     },
     {
       "id": "q_reciproque_12",
-      "type": "mcq",
       "question": "La réciproque de $P \\Rightarrow Q$ est :",
       "options": [
         {
@@ -297,7 +285,6 @@
     },
     {
       "id": "q_raisonnement_direct_13",
-      "type": "mcq",
       "question": "Le raisonnement direct consiste à :",
       "options": [
         {
@@ -321,7 +308,6 @@
     },
     {
       "id": "q_raisonnement_absurde_14",
-      "type": "mcq",
       "question": "Le raisonnement par l'absurde consiste à :",
       "options": [
         {
@@ -345,7 +331,6 @@
     },
     {
       "id": "q_raisonnement_contraposee_15",
-      "type": "mcq",
       "question": "Le raisonnement par contraposée pour démontrer $P \\Rightarrow Q$ consiste à :",
       "options": [
         {
@@ -369,7 +354,6 @@
     },
     {
       "id": "q_disjonction_cas_16",
-      "type": "mcq",
       "question": "Le raisonnement par disjonction de cas consiste à :",
       "options": [
         {
@@ -393,7 +377,6 @@
     },
     {
       "id": "q_recurrence_principe_17",
-      "type": "mcq",
       "question": "Le principe de récurrence s'applique pour démontrer une propriété :",
       "options": [
         {
@@ -417,7 +400,6 @@
     },
     {
       "id": "q_recurrence_etapes_18",
-      "type": "mcq",
       "question": "Les étapes du raisonnement par récurrence sont :",
       "options": [
         {
@@ -441,7 +423,6 @@
     },
     {
       "id": "q_equivalence_logique_19",
-      "type": "mcq",
       "question": "Deux propositions sont logiquement équivalentes si :",
       "options": [
         {
@@ -465,7 +446,6 @@
     },
     {
       "id": "q_lois_morgan_20",
-      "type": "mcq",
       "question": "La loi de De Morgan indique que $\\neg(P \\land Q)$ est équivalent à :",
       "options": [
         {
@@ -635,5 +615,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-b87039"
+  "version": "v1.2.0-ordering"
 }

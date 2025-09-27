@@ -5,7 +5,6 @@
   "quiz": [
     {
       "id": "q1",
-      "type": "mcq",
       "question": "Quelle est la dimension de $\\mathbb{R}^3$ ?",
       "options": [
         {
@@ -27,5 +26,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-cbe2fd"
+  "version": "v1.1.0-2aae88"
 }

@@ -5,7 +5,6 @@
   "quiz": [
     {
       "id": "q1",
-      "type": "mcq",
       "question": "Une suite convergente est-elle bornée ?",
       "options": [
         {
@@ -27,5 +26,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-acd78a"
+  "version": "v1.1.0-f45bbc"
 }
