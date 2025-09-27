@@ -12,13 +12,13 @@
       "question": "Une proposition est :",
       "options": [
         {
+          "text": "Une question mathématique",
+          "isCorrect": false
+        },
+        {
           "text": "Un énoncé mathématique qui peut être vrai ou faux",
           "isCorrect": true,
           "explanation": "Une proposition est un énoncé mathématique qui a une valeur de vérité : soit vrai $V$, soit faux $F$."
-        },
-        {
-          "text": "Une question mathématique",
-          "isCorrect": false
         },
         {
           "text": "Une formule contenant des variables",
@@ -35,17 +35,17 @@
       "question": "La proposition $P \\land Q$ est vraie quand :",
       "options": [
         {
-          "text": "$P$ et $Q$ sont toutes les deux vraies",
-          "isCorrect": true,
-          "explanation": "Le connecteur logique ET ($\\land$) donne une proposition vraie seulement quand les deux propositions $P$ et $Q$ sont vraies."
-        },
-        {
           "text": "Au moins une des deux propositions est vraie",
           "isCorrect": false
         },
         {
           "text": "Exactement une des deux propositions est vraie",
           "isCorrect": false
+        },
+        {
+          "text": "$P$ et $Q$ sont toutes les deux vraies",
+          "isCorrect": true,
+          "explanation": "Le connecteur logique ET ($\\land$) donne une proposition vraie seulement quand les deux propositions $P$ et $Q$ sont vraies."
         },
         {
           "text": "Les deux propositions ont la même valeur de vérité",
@@ -58,13 +58,13 @@
       "question": "La proposition $P \\lor Q$ est fausse quand :",
       "options": [
         {
+          "text": "Au moins une des deux propositions est fausse",
+          "isCorrect": false
+        },
+        {
           "text": "$P$ et $Q$ sont toutes les deux fausses",
           "isCorrect": true,
           "explanation": "Le connecteur logique OU ($\\lor$) donne une proposition fausse seulement quand les deux propositions $P$ et $Q$ sont fausses."
-        },
-        {
-          "text": "Au moins une des deux propositions est fausse",
-          "isCorrect": false
         },
         {
           "text": "Exactement une des deux propositions est fausse",
@@ -81,11 +81,6 @@
       "question": "Si une proposition $P$ est vraie, alors $\\neg P$ est :",
       "options": [
         {
-          "text": "Fausse",
-          "isCorrect": true,
-          "explanation": "La négation $\\neg P$ d'une proposition $P$ a la valeur de vérité opposée à celle de $P$."
-        },
-        {
           "text": "Vraie",
           "isCorrect": false
         },
@@ -96,6 +91,11 @@
         {
           "text": "Équivalente à $P$",
           "isCorrect": false
+        },
+        {
+          "text": "Fausse",
+          "isCorrect": true,
+          "explanation": "La négation $\\neg P$ d'une proposition $P$ a la valeur de vérité opposée à celle de $P$."
         }
       ]
     },
@@ -127,17 +127,17 @@
       "question": "La proposition $P \\Leftrightarrow Q$ signifie :",
       "options": [
         {
-          "text": "$(P \\Rightarrow Q) \\land (Q \\Rightarrow P)$",
-          "isCorrect": true,
-          "explanation": "L'équivalence $P \\Leftrightarrow Q$ est vraie si et seulement si $P$ et $Q$ ont la même valeur de vérité. Cela équivaut à $(P \\Rightarrow Q) \\land (Q \\Rightarrow P)$."
-        },
-        {
           "text": "$(P \\Rightarrow Q) \\lor (Q \\Rightarrow P)$",
           "isCorrect": false
         },
         {
           "text": "$P \\land Q$",
           "isCorrect": false
+        },
+        {
+          "text": "$(P \\Rightarrow Q) \\land (Q \\Rightarrow P)$",
+          "isCorrect": true,
+          "explanation": "L'équivalence $P \\Leftrightarrow Q$ est vraie si et seulement si $P$ et $Q$ ont la même valeur de vérité. Cela équivaut à $(P \\Rightarrow Q) \\land (Q \\Rightarrow P)$."
         },
         {
           "text": "$P \\lor Q$",
@@ -150,13 +150,13 @@
       "question": "Le quantificateur universel $\\forall$ se lit :",
       "options": [
         {
+          "text": "Il existe",
+          "isCorrect": false
+        },
+        {
           "text": "Pour tout",
           "isCorrect": true,
           "explanation": "Le quantificateur universel $\\forall$ signifie \"pour tout\" ou \"quel que soit\"."
-        },
-        {
-          "text": "Il existe",
-          "isCorrect": false
         },
         {
           "text": "Il existe un unique",
@@ -173,17 +173,17 @@
       "question": "Le quantificateur existentiel $\\exists$ se lit :",
       "options": [
         {
-          "text": "Il existe",
-          "isCorrect": true,
-          "explanation": "Le quantificateur existentiel $\\exists$ signifie \"il existe\" ou \"il existe au moins un\"."
-        },
-        {
           "text": "Pour tout",
           "isCorrect": false
         },
         {
           "text": "Quel que soit",
           "isCorrect": false
+        },
+        {
+          "text": "Il existe",
+          "isCorrect": true,
+          "explanation": "Le quantificateur existentiel $\\exists$ signifie \"il existe\" ou \"il existe au moins un\"."
         },
         {
           "text": "Pour aucun",
@@ -196,11 +196,6 @@
       "question": "La négation de $(\\forall x \\in E, P(x))$ est :",
       "options": [
         {
-          "text": "$\\exists x \\in E, \\neg P(x)$",
-          "isCorrect": true,
-          "explanation": "La négation d'une proposition quantifiée universellement devient une proposition quantifiée existentiellement avec négation du prédicat."
-        },
-        {
           "text": "$\\forall x \\in E, \\neg P(x)$",
           "isCorrect": false
         },
@@ -211,6 +206,11 @@
         {
           "text": "$\\neg \\forall x \\in E, P(x)$",
           "isCorrect": false
+        },
+        {
+          "text": "$\\exists x \\in E, \\neg P(x)$",
+          "isCorrect": true,
+          "explanation": "La négation d'une proposition quantifiée universellement devient une proposition quantifiée existentiellement avec négation du prédicat."
         }
       ]
     },
@@ -242,13 +242,13 @@
       "question": "La contraposée de $P \\Rightarrow Q$ est :",
       "options": [
         {
+          "text": "$Q \\Rightarrow P$",
+          "isCorrect": false
+        },
+        {
           "text": "$\\neg Q \\Rightarrow \\neg P$",
           "isCorrect": true,
           "explanation": "La contraposée d'une implication $P \\Rightarrow Q$ est $\\neg Q \\Rightarrow \\neg P$, et elle est logiquement équivalente à l'implication originale."
-        },
-        {
-          "text": "$Q \\Rightarrow P$",
-          "isCorrect": false
         },
         {
           "text": "$\\neg P \\Rightarrow \\neg Q$",
@@ -265,17 +265,17 @@
       "question": "La réciproque de $P \\Rightarrow Q$ est :",
       "options": [
         {
-          "text": "$Q \\Rightarrow P$",
-          "isCorrect": true,
-          "explanation": "La réciproque d'une implication $P \\Rightarrow Q$ est $Q \\Rightarrow P$. Attention : la réciproque n'est pas toujours équivalente à l'implication originale."
-        },
-        {
           "text": "$\\neg Q \\Rightarrow \\neg P$",
           "isCorrect": false
         },
         {
           "text": "$\\neg P \\Rightarrow \\neg Q$",
           "isCorrect": false
+        },
+        {
+          "text": "$Q \\Rightarrow P$",
+          "isCorrect": true,
+          "explanation": "La réciproque d'une implication $P \\Rightarrow Q$ est $Q \\Rightarrow P$. Attention : la réciproque n'est pas toujours équivalente à l'implication originale."
         },
         {
           "text": "$P \\Leftrightarrow Q$",
@@ -288,13 +288,13 @@
       "question": "Le raisonnement direct consiste à :",
       "options": [
         {
+          "text": "Supposer le contraire de ce qu'on veut démontrer",
+          "isCorrect": false
+        },
+        {
           "text": "Partir des hypothèses et déduire logiquement la conclusion",
           "isCorrect": true,
           "explanation": "Le raisonnement direct part des hypothèses données et utilise des déductions logiques pour arriver à la conclusion souhaitée."
-        },
-        {
-          "text": "Supposer le contraire de ce qu'on veut démontrer",
-          "isCorrect": false
         },
         {
           "text": "Démontrer la contraposée",
@@ -311,17 +311,17 @@
       "question": "Le raisonnement par l'absurde consiste à :",
       "options": [
         {
-          "text": "Supposer le contraire de ce qu'on veut démontrer et arriver à une contradiction",
-          "isCorrect": true,
-          "explanation": "Le raisonnement par l'absurde suppose la négation de ce qu'on veut démontrer, puis établit une contradiction pour conclure que l'hypothèse est fausse."
-        },
-        {
           "text": "Partir directement des hypothèses",
           "isCorrect": false
         },
         {
           "text": "Démontrer la contraposée",
           "isCorrect": false
+        },
+        {
+          "text": "Supposer le contraire de ce qu'on veut démontrer et arriver à une contradiction",
+          "isCorrect": true,
+          "explanation": "Le raisonnement par l'absurde suppose la négation de ce qu'on veut démontrer, puis établit une contradiction pour conclure que l'hypothèse est fausse."
         },
         {
           "text": "Énumérer tous les cas possibles",
@@ -334,11 +334,6 @@
       "question": "Le raisonnement par contraposée pour démontrer $P \\Rightarrow Q$ consiste à :",
       "options": [
         {
-          "text": "Démontrer $\\neg Q \\Rightarrow \\neg P$",
-          "isCorrect": true,
-          "explanation": "Pour démontrer $P \\Rightarrow Q$, on peut démontrer sa contraposée $\\neg Q \\Rightarrow \\neg P$ qui lui est logiquement équivalente."
-        },
-        {
           "text": "Démontrer $Q \\Rightarrow P$",
           "isCorrect": false
         },
@@ -349,6 +344,11 @@
         {
           "text": "Supposer $P \\land \\neg Q$ et arriver à une contradiction",
           "isCorrect": false
+        },
+        {
+          "text": "Démontrer $\\neg Q \\Rightarrow \\neg P$",
+          "isCorrect": true,
+          "explanation": "Pour démontrer $P \\Rightarrow Q$, on peut démontrer sa contraposée $\\neg Q \\Rightarrow \\neg P$ qui lui est logiquement équivalente."
         }
       ]
     },
@@ -380,17 +380,17 @@
       "question": "Le principe de récurrence s'applique pour démontrer une propriété :",
       "options": [
         {
-          "text": "Sur tous les entiers naturels à partir d'un certain rang",
-          "isCorrect": true,
-          "explanation": "Le raisonnement par récurrence permet de démontrer qu'une propriété $P(n)$ est vraie pour tout entier naturel $n \\geq n_0$ en démontrant $P(n_0)$ (initialisation) et $P(n) \\Rightarrow P(n+1)$ (hérédité)."
-        },
-        {
           "text": "Sur tous les nombres réels",
           "isCorrect": false
         },
         {
           "text": "Sur un ensemble fini",
           "isCorrect": false
+        },
+        {
+          "text": "Sur tous les entiers naturels à partir d'un certain rang",
+          "isCorrect": true,
+          "explanation": "Le raisonnement par récurrence permet de démontrer qu'une propriété $P(n)$ est vraie pour tout entier naturel $n \\geq n_0$ en démontrant $P(n_0)$ (initialisation) et $P(n) \\Rightarrow P(n+1)$ (hérédité)."
         },
         {
           "text": "Sur les nombres rationnels",
@@ -403,13 +403,13 @@
       "question": "Les étapes du raisonnement par récurrence sont :",
       "options": [
         {
+          "text": "Hypothèse, contradiction, conclusion",
+          "isCorrect": false
+        },
+        {
           "text": "Initialisation, hypothèse de récurrence, hérédité",
           "isCorrect": true,
           "explanation": "Le raisonnement par récurrence comporte trois étapes : 1) Initialisation : vérifier $P(n_0)$, 2) Hypothèse de récurrence : supposer $P(n)$ vraie, 3) Hérédité : démontrer $P(n+1)$."
-        },
-        {
-          "text": "Hypothèse, contradiction, conclusion",
-          "isCorrect": false
         },
         {
           "text": "Cas de base, cas général",
@@ -426,13 +426,13 @@
       "question": "Deux propositions sont logiquement équivalentes si :",
       "options": [
         {
+          "text": "Elles contiennent les mêmes variables",
+          "isCorrect": false
+        },
+        {
           "text": "Elles ont la même table de vérité",
           "isCorrect": true,
           "explanation": "Deux propositions sont logiquement équivalentes si elles ont exactement la même valeur de vérité dans tous les cas possibles, c'est-à-dire la même table de vérité."
-        },
-        {
-          "text": "Elles contiennent les mêmes variables",
-          "isCorrect": false
         },
         {
           "text": "Elles sont écrites de la même façon",
@@ -449,17 +449,17 @@
       "question": "La loi de De Morgan indique que $\\neg(P \\land Q)$ est équivalent à :",
       "options": [
         {
-          "text": "$\\neg P \\lor \\neg Q$",
-          "isCorrect": true,
-          "explanation": "Les lois de De Morgan établissent que $\\neg(P \\land Q) \\equiv \\neg P \\lor \\neg Q$ et $\\neg(P \\lor Q) \\equiv \\neg P \\land \\neg Q$."
-        },
-        {
           "text": "$\\neg P \\land \\neg Q$",
           "isCorrect": false
         },
         {
           "text": "$P \\lor Q$",
           "isCorrect": false
+        },
+        {
+          "text": "$\\neg P \\lor \\neg Q$",
+          "isCorrect": true,
+          "explanation": "Les lois de De Morgan établissent que $\\neg(P \\land Q) \\equiv \\neg P \\lor \\neg Q$ et $\\neg(P \\lor Q) \\equiv \\neg P \\land \\neg Q$."
         },
         {
           "text": "$P \\land Q$",
@@ -660,5 +660,5 @@
       ]
     }
   ],
-  "version": "v1.2.0-ordering"
+  "version": "v1.2.1-mixed-answers"
 }
