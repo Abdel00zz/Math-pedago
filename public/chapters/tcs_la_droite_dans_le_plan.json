@@ -1,0 +1,35 @@
+{
+  "class": "tcs",
+  "chapter": "La droite dans le plan",
+  "sessionDates": [],
+  "quiz": [
+    {
+      "id": "q_tcs_droite_1",
+      "type": "mcq",
+      "question": "Le coefficient directeur de la droite d'équation $y = -2x + 5$ est :",
+      "options": [
+        {
+          "text": "5",
+          "isCorrect": false
+        },
+        {
+          "text": "-2",
+          "isCorrect": true
+        },
+        {
+          "text": "2",
+          "isCorrect": false
+        }
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "id": "exo_tcs_droite_1",
+      "title": "Équation de droite",
+      "statement": "Trouver l'équation réduite de la droite passant par les points $A(1, 3)$ et $B(3, 7)$.",
+      "sub_questions": []
+    }
+  ],
+  "version": "v1.1.0-0c12c5"
+}

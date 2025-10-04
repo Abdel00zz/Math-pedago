@@ -1,0 +1,31 @@
+{
+  "class": "2bsm",
+  "chapter": "Dérivation et étude des fonctions",
+  "sessionDates": [],
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "mcq",
+      "question": "Que dit le théorème de Rolle ?",
+      "options": [
+        {
+          "text": "Si f est continue sur [a,b], dérivable sur ]a,b[ et f(a)=f(b), alors il existe c dans ]a,b[ tel que f'(c)=0.",
+          "isCorrect": true
+        },
+        {
+          "text": "Toute fonction continue sur [a,b] atteint ses bornes.",
+          "isCorrect": false
+        }
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "title": "Tableau de variation",
+      "statement": "Étudier les variations de la fonction $f(x) = x e^{-x}$.",
+      "sub_questions": []
+    }
+  ],
+  "version": "v1.1.0-90ff86"
+}

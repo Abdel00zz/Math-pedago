@@ -1,0 +1,35 @@
+{
+  "class": "1bsm",
+  "chapter": "Géométrie dans l'espace",
+  "sessionDates": [],
+  "quiz": [
+    {
+      "id": "q_geo_espace_1",
+      "type": "mcq",
+      "question": "L'équation $x - 2y + 3z - 5 = 0$ est l'équation cartésienne :",
+      "options": [
+        {
+          "text": "D'une droite",
+          "isCorrect": false
+        },
+        {
+          "text": "D'un plan",
+          "isCorrect": true
+        },
+        {
+          "text": "D'une sphère",
+          "isCorrect": false
+        }
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "id": "exo_geo_espace_1",
+      "title": "Représentation paramétrique",
+      "statement": "Donner une représentation paramétrique de la droite (D) passant par le point $A(1,0,2)$ et dirigée par le vecteur $\\vec{u}(2, -1, 1)$.",
+      "sub_questions": []
+    }
+  ],
+  "version": "v1.1.0-a8df7c"
+}

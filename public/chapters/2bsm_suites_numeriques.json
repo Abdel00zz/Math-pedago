@@ -1,0 +1,31 @@
+{
+  "class": "2bsm",
+  "chapter": "Suites numériques",
+  "sessionDates": [],
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "mcq",
+      "question": "Une suite convergente est-elle bornée ?",
+      "options": [
+        {
+          "text": "Oui",
+          "isCorrect": true
+        },
+        {
+          "text": "Non",
+          "isCorrect": false
+        }
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "title": "Convergence",
+      "statement": "Étudier la convergence de la suite $u_n = \\frac{2n+1}{n+3}$.",
+      "sub_questions": []
+    }
+  ],
+  "version": "v1.1.0-acd78a"
+}
