@@ -1,7 +1,10 @@
 {
   "class": "1bsm",
-  "chapter": "Ensembles et applications",
-  "sessionDates": [],
+  "chapter": "Ensembles et Applications",
+  "sessionDates": [
+    "2025-10-15T18:00:00Z",
+    "2025-10-22T18:00:00Z"
+  ],
   "quiz": [
     {
       "id": "q_definition_ensemble_1",
@@ -533,49 +536,149 @@
   ],
   "exercises": [
     {
-      "id": "exo_concepts_fondamentaux",
-      "title": "Maîtrise des concepts fondamentaux",
-      "statement": "Cet exercice vise à approfondir la compréhension des notions de base sur les ensembles et leurs opérations.",
+      "id": "ex1",
+      "title": "Ensemble défini par une inéquation",
+      "statement": "Écrire en extension l'ensemble $E = \\{x \\in \\mathbb{N} \\mid |2x - 3| \\le 2\\}$.",
+      "sub_questions": []
+    },
+    {
+      "id": "ex2",
+      "title": "Opérations sur les ensembles d'entiers",
+      "statement": "On considère les ensembles : $B = \\{x \\in \\mathbb{Z} \\mid |x| < 3\\}$, $E = \\{x \\in \\mathbb{Z} \\mid -5 < x \\le 5\\}$, et $A = E \\cap \\mathbb{N}^*$. Déterminer en extension les ensembles suivants : $A \\cap B$, $\\mathcal{C}_E^{(A \\cup B)}$, $A \\setminus B$ et $(A \\cap B) \\cap \\mathcal{C}_E^{(A \\cup B)}$.",
+      "sub_questions": []
+    },
+    {
+      "id": "ex3",
+      "title": "Étude d'une fonction polynomiale",
+      "statement": "On considère l'application $f: \\mathbb{R} \\to \\mathbb{R}$ définie par $f(x) = x^2 + x + 2$.",
       "sub_questions": [
         {
-          "text": "Expliquer pourquoi $\\emptyset \\neq \\{\\emptyset\\}$ et donner la différence conceptuelle entre ces deux notations."
+          "text": "Montrer que $(\\forall x \\in \\mathbb{R}): f(-1-x) = f(x)$."
         },
         {
-          "text": "Démontrer rigoureusement que pour tout ensemble $A$, on a $A \\cap \\overline{A} = \\emptyset$ et $A \\cup \\overline{A} = E$ (où $E$ est l'ensemble de référence)."
+          "text": "L'application $f$ est-elle injective ?"
         },
         {
-          "text": "Soit $A$ et $B$ deux parties d'un ensemble $E$. Montrer que $A \\setminus B = A \\cap \\overline{B}$ et interpréter géométriquement cette égalité."
+          "text": "Résoudre dans $\\mathbb{R}$ l'équation $f(x) = \\frac{7}{4}$."
         },
         {
-          "text": "Établir la condition nécessaire et suffisante pour que $A \\triangle B = \\emptyset$, où $\\triangle$ désigne la différence symétrique."
+          "text": "L'application $f$ est-elle surjective ?"
         },
         {
-          "text": "Justifier pourquoi l'égalité $\\mathcal{P}(A \\cup B) = \\mathcal{P}(A) \\cup \\mathcal{P}(B)$ est généralement fausse et donner un contre-exemple simple."
+          "text": "Montrer que l'image de $f$ est $f(\\mathbb{R}) = [\\frac{7}{4}, +\\infty[$."
         }
       ]
     },
     {
-      "id": "exo_applications_niveau_bac",
-      "title": "Étude d'applications avec fonctions du programme",
-      "statement": "On considère les applications suivantes adaptées au niveau 1ère BAC Sciences Math :",
+      "id": "ex4",
+      "title": "Étude d'une fonction rationnelle",
+      "statement": "On considère l'application $f: \\mathbb{R} \\to \\mathbb{R}$ définie par $f(x) = \\frac{2x}{x^2 + 1}$.",
       "sub_questions": [
         {
-          "text": "Soit $f: \\mathbb{R} \\to \\mathbb{R}$, $x \\mapsto 2x + 3$. Montrer que $f$ est bijective et déterminer $f^{-1}$."
+          "text": "Vérifier que : $(\\forall x \\in \\mathbb{R}^*), f(\\frac{1}{x}) = f(x)$."
         },
         {
-          "text": "Soit $g: \\mathbb{R}^+ \\to \\mathbb{R}^+$, $x \\mapsto x^2$. Étudier l'injectivité et la surjectivité de $g$."
+          "text": "L'application $f$ est-elle injective ? Justifier votre réponse."
         },
         {
-          "text": "Soit $h: [1, +\\infty[ \\to [0, +\\infty[$, $x \\mapsto x^2 - 2x + 1$. Montrer que $h$ est bijective."
+          "text": "Montrer que $(\\forall x \\in \\mathbb{R}), |f(x)| \\le 1$. L'application $f$ est-elle surjective ?"
+        }
+      ]
+    },
+    {
+      "id": "ex5",
+      "title": "Ensembles définis en compréhension",
+      "statement": "Déterminer en extension les ensembles : $F = \\{x \\in \\mathbb{Z} \\mid \\frac{2x+1}{x+1} \\in \\mathbb{Z}\\}$ et $C = \\{(x,y) \\in (\\mathbb{Z}^*)^2 \\mid \\frac{1}{x} + \\frac{1}{y} = \\frac{1}{5}\\}$.",
+      "sub_questions": []
+    },
+    {
+      "id": "ex6",
+      "title": "Comparaison d'ensembles de fractions",
+      "statement": "On considère les ensembles $A = \\{\\frac{n}{n+1} \\mid n \\in \\mathbb{N}\\}$ et $B = \\{\\frac{n+1}{n+2} \\mid n \\in \\mathbb{N}\\}$.",
+      "sub_questions": [
+        {
+          "text": "Vérifier que $\\frac{2}{3} \\in A \\cap B$."
         },
         {
-          "text": "Étudier la composition $k = g \\circ f$ en adaptant les domaines de définition appropriés."
+          "text": "Montrer que $A \\subset B$ ($A$ inclus dans $B$ et $B$ inclus dans $A$)."
+        }
+      ]
+    },
+    {
+      "id": "ex7",
+      "title": "Preuve d'égalité d'ensembles",
+      "statement": "Soient A, B, C trois ensembles. Montrer que si $(B \\setminus A) = (C \\setminus A)$ et $A \\cap B = A \\cap C$, alors $B = C$.",
+      "sub_questions": []
+    },
+    {
+      "id": "ex8",
+      "title": "Ensembles avec racines",
+      "statement": "Soit l'ensemble $A = \\{\\frac{4x}{x+1} \\mid x \\in \\mathbb{R}\\}$.",
+      "sub_questions": [
+        {
+          "text": "Montrer que $\\frac{\\sqrt{3}}{2} \\in A$, en déduire que $A \\ne \\emptyset$."
         },
         {
-          "text": "Soit $A = [0, 2]$ et $B = [1, 5]$. Calculer $f(A)$, $f^{-1}(B)$, $g(A)$ et $h^{-1}([0, 4])$."
+          "text": "Montrer que $A \\subset [-1, 1]$."
+        }
+      ]
+    },
+    {
+      "id": "ex9",
+      "title": "Ensembles disjoints",
+      "statement": "On considère les ensembles $A = \\{\\frac{5 + 8k}{20} \\mid k \\in \\mathbb{N}\\}$ et $B = \\{\\frac{5 + 4k}{10} \\mid k \\in \\mathbb{N}\\}$. Montrer que $A \\cap B = \\emptyset$.",
+      "sub_questions": []
+    },
+    {
+      "id": "ex10",
+      "title": "Ensembles trigonométriques",
+      "statement": "On considère les ensembles $E = \\{\\frac{\\pi}{6} + \\frac{k\\pi}{3} \\mid k \\in \\mathbb{Z}\\}$ et $F = \\{\\frac{\\pi}{3} + \\frac{k\\pi}{6} \\mid k \\in \\mathbb{Z}\\}$.",
+      "sub_questions": [
+        {
+          "text": "Déterminer $E \\cap [\\frac{\\pi}{2}, \\pi]$."
+        },
+        {
+          "text": "Montrer que $E \\subset F$."
+        },
+        {
+          "text": "Montrer que $\\frac{\\pi}{3} \\notin E$."
+        },
+        {
+          "text": "L'inclusion $F \\subset E$ est-elle satisfaite ? Justifier."
+        }
+      ]
+    },
+    {
+      "id": "ex11",
+      "title": "Étude d'une bijection",
+      "statement": "On considère l'application $f: [-1, 0] \\to [1, 2]$ définie par $f(x) = 2\\sqrt{x+1} - x$.",
+      "sub_questions": [
+        {
+          "text": "Montrer que : $(\\forall x \\in [-1, 0]), 1 \\le 2\\sqrt{x+1} - x \\le 2$."
+        },
+        {
+          "text": "Vérifier que : $(\\forall x \\in [-1, 0]), f(x) = 2 - (\\sqrt{x+1} - 1)^2$."
+        },
+        {
+          "text": "Montrer que l'application f est bijective et donner sa bijection réciproque $f^{-1}$."
+        }
+      ]
+    },
+    {
+      "id": "ex12",
+      "title": "Application entre ensembles de parties",
+      "statement": "Soit E un ensemble non vide et A, B deux parties de E formant une partition de E (c'est-à-dire $A \\cup B = E$ et $A \\cap B = \\emptyset$). On considère l'application $f: \\mathcal{P}(E) \\to \\mathcal{P}(A) \\times \\mathcal{P}(B)$ définie par $f(X) = (A \\cap X, B \\cap X)$.",
+      "sub_questions": [
+        {
+          "text": "Montrer que f est injective."
+        },
+        {
+          "text": "Montrer que f est surjective."
+        },
+        {
+          "text": "Déterminer sa bijection réciproque $f^{-1}$."
         }
       ]
     }
-  ],
-  "version": "v1.1.0-449d58"
+  ]
 }
