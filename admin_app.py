@@ -17,9 +17,9 @@ from PyQt6.QtWidgets import (
     QPushButton, QLabel, QCheckBox, QDialog, QFormLayout, QDialogButtonBox,
     QMessageBox, QInputDialog, QFileDialog, QHeaderView, QAbstractItemView,
     QDateTimeEdit, QTableWidgetItem, QProgressDialog, QStyle, QGroupBox, QComboBox,
-    QSizePolicy, QScrollArea, QStatusBar
+    QSizePolicy, QScrollArea, QStatusBar, QToolBar
 )
-from PyQt6.QtCore import Qt, QDateTime, QTime
+from PyQt6.QtCore import Qt, QDateTime, QTime, QSize
 from PyQt6.QtGui import QAction
 
 
@@ -1657,96 +1657,745 @@ class SmartChapterManager(QMainWindow):
         self.auto_load()
 
     def init_ui(self):
-        self.setWindowTitle("Gestionnaire de Contenus Pédagogiques v2.0")
-        # Fenêtre plus large et moins haute
-        self.setMinimumSize(1400, 700)
+        self.setWindowTitle("📚 Gestionnaire de Contenus Pédagogiques - v2.5")
+        # Fenêtre optimale avec icône
+        self.setMinimumSize(1400, 750)
+        self.setWindowIcon(self.style().standardIcon(QStyle.StandardPixmap.SP_FileDialogDetailedView))
+        
         self.create_menus()
+        self.create_toolbar()
         
         central = QWidget()
         self.setCentralWidget(central)
         layout = QVBoxLayout(central)
+        layout.setContentsMargins(8, 8, 8, 8)
+        
+        # En-tête avec informations
+        self.header = self.create_header()
+        layout.addWidget(self.header)
         
         self.tabs = QTabWidget()
+        self.tabs.setDocumentMode(True)  # Style natif
+        self.tabs.setTabPosition(QTabWidget.TabPosition.North)
+        
         for class_id in self.CLASSES:
-            self.tabs.addTab(self.create_class_tab(class_id), self.CLASS_LABELS[class_id])
+            tab = self.create_class_tab(class_id)
+            icon = self.style().standardIcon(QStyle.StandardPixmap.SP_FileIcon)
+            self.tabs.addTab(tab, icon, self.CLASS_LABELS[class_id])
         layout.addWidget(self.tabs)
         
         self.status_bar = self.statusBar()
         self.update_status("Prêt. Ouvrez un fichier manifest.json pour commencer.")
+        
+        # Appliquer le style natif moderne
+        self.apply_native_style()
 
+    def create_header(self):
+        """Crée l'en-tête avec informations sur le projet."""
+        header = QWidget()
+        layout = QHBoxLayout(header)
+        layout.setContentsMargins(12, 8, 12, 8)
+        
+        # Icône et titre
+        icon_label = QLabel()
+        icon_label.setPixmap(self.style().standardIcon(
+            QStyle.StandardPixmap.SP_DriveHDIcon).pixmap(32, 32))
+        layout.addWidget(icon_label)
+        
+        # Informations du projet
+        info_layout = QVBoxLayout()
+        self.project_label = QLabel("Aucun projet chargé")
+        self.project_label.setStyleSheet("font-weight: bold; font-size: 14px;")
+        info_layout.addWidget(self.project_label)
+        
+        self.stats_label = QLabel("0 chapitres | 0 quiz | 0 exercices")
+        self.stats_label.setStyleSheet("color: #666; font-size: 11px;")
+        info_layout.addWidget(self.stats_label)
+        
+        layout.addLayout(info_layout)
+        layout.addStretch()
+        
+        # Bouton d'actualisation
+        refresh_btn = QPushButton()
+        refresh_btn.setIcon(self.style().standardIcon(QStyle.StandardPixmap.SP_BrowserReload))
+        refresh_btn.setToolTip("Recharger le manifest")
+        refresh_btn.clicked.connect(self.reload_manifest)
+        refresh_btn.setFixedSize(32, 32)
+        layout.addWidget(refresh_btn)
+        
+        header.setStyleSheet("""
+            QWidget {
+                background-color: #f5f5f5;
+                border-bottom: 1px solid #ddd;
+                border-radius: 4px;
+            }
+        """)
+        
+        return header
+    
+    def create_toolbar(self):
+        """Crée une barre d'outils native avec icônes système."""
+        toolbar = self.addToolBar("Barre d'outils principale")
+        toolbar.setMovable(False)
+        toolbar.setIconSize(QSize(24, 24))
+        
+        # Ouvrir
+        open_action = QAction(
+            self.style().standardIcon(QStyle.StandardPixmap.SP_DirOpenIcon),
+            "Ouvrir manifest", self
+        )
+        open_action.setShortcut("Ctrl+O")
+        open_action.setToolTip("Ouvrir un fichier manifest.json (Ctrl+O)")
+        open_action.triggered.connect(self.open_manifest)
+        toolbar.addAction(open_action)
+        
+        # Sauvegarder
+        save_action = QAction(
+            self.style().standardIcon(QStyle.StandardPixmap.SP_DialogSaveButton),
+            "Sauvegarder", self
+        )
+        save_action.setShortcut("Ctrl+S")
+        save_action.setToolTip("Sauvegarder tous les changements (Ctrl+S)")
+        save_action.triggered.connect(self.save_all)
+        toolbar.addAction(save_action)
+        
+        toolbar.addSeparator()
+        
+        # Actualiser
+        refresh_action = QAction(
+            self.style().standardIcon(QStyle.StandardPixmap.SP_BrowserReload),
+            "Actualiser", self
+        )
+        refresh_action.setShortcut("F5")
+        refresh_action.setToolTip("Recharger le manifest (F5)")
+        refresh_action.triggered.connect(self.reload_manifest)
+        toolbar.addAction(refresh_action)
+        
+        toolbar.addSeparator()
+        
+        # Vérifier l'intégrité
+        check_action = QAction(
+            self.style().standardIcon(QStyle.StandardPixmap.SP_MessageBoxInformation),
+            "Vérifier", self
+        )
+        check_action.setToolTip("Vérifier l'intégrité des fichiers")
+        check_action.triggered.connect(self.check_integrity)
+        toolbar.addAction(check_action)
+        
+        toolbar.addSeparator()
+        
+        # Aide
+        help_action = QAction(
+            self.style().standardIcon(QStyle.StandardPixmap.SP_MessageBoxQuestion),
+            "Aide", self
+        )
+        help_action.setToolTip("Afficher l'aide")
+        help_action.triggered.connect(self.show_help)
+        toolbar.addAction(help_action)
+    
     def create_menus(self):
         menubar = self.menuBar()
+        
         # Menu Fichier
         file_menu = menubar.addMenu("&Fichier")
         
-        open_action = QAction("Ouvrir manifest...", self)
+        open_action = QAction(
+            self.style().standardIcon(QStyle.StandardPixmap.SP_DirOpenIcon),
+            "Ouvrir manifest...", self
+        )
         open_action.setShortcut("Ctrl+O")
         open_action.triggered.connect(self.open_manifest)
         file_menu.addAction(open_action)
         
-        save_action = QAction("Sauvegarder Tout", self)
+        save_action = QAction(
+            self.style().standardIcon(QStyle.StandardPixmap.SP_DialogSaveButton),
+            "Sauvegarder Tout", self
+        )
         save_action.setShortcut("Ctrl+S")
         save_action.triggered.connect(self.save_all)
         file_menu.addAction(save_action)
         
         file_menu.addSeparator()
         
-        quit_action = QAction("Quitter", self)
+        export_action = QAction(
+            self.style().standardIcon(QStyle.StandardPixmap.SP_FileDialogContentsView),
+            "Exporter les statistiques...", self
+        )
+        export_action.triggered.connect(self.export_statistics)
+        file_menu.addAction(export_action)
+        
+        file_menu.addSeparator()
+        
+        quit_action = QAction(
+            self.style().standardIcon(QStyle.StandardPixmap.SP_DialogCloseButton),
+            "Quitter", self
+        )
+        quit_action.setShortcut("Ctrl+Q")
         quit_action.triggered.connect(self.close)
         file_menu.addAction(quit_action)
+        
+        # Menu Édition
+        edit_menu = menubar.addMenu("&Édition")
+        
+        undo_action = QAction(
+            self.style().standardIcon(QStyle.StandardPixmap.SP_ArrowBack),
+            "Annuler", self
+        )
+        undo_action.setShortcut("Ctrl+Z")
+        undo_action.setEnabled(False)  # Pour future implémentation
+        edit_menu.addAction(undo_action)
         
         # Menu Outils
         tools_menu = menubar.addMenu("&Outils")
         
-        integrity_action = QAction("Vérifier l'intégrité...", self)
+        integrity_action = QAction(
+            self.style().standardIcon(QStyle.StandardPixmap.SP_MessageBoxInformation),
+            "Vérifier l'intégrité...", self
+        )
         integrity_action.triggered.connect(self.check_integrity)
         tools_menu.addAction(integrity_action)
         
-        changes_action = QAction("Détecter les changements...", self)
+        changes_action = QAction(
+            self.style().standardIcon(QStyle.StandardPixmap.SP_FileDialogDetailedView),
+            "Détecter les changements...", self
+        )
         changes_action.triggered.connect(self.detect_content_changes)
         tools_menu.addAction(changes_action)
         
-        recalc_action = QAction("Recalculer et sauvegarder toutes les versions...", self)
+        recalc_action = QAction(
+            self.style().standardIcon(QStyle.StandardPixmap.SP_BrowserReload),
+            "Recalculer toutes les versions...", self
+        )
         recalc_action.triggered.connect(self.recalculate_all_versions)
         tools_menu.addAction(recalc_action)
+        
+        # Menu Aide
+        help_menu = menubar.addMenu("&Aide")
+        
+        help_action = QAction(
+            self.style().standardIcon(QStyle.StandardPixmap.SP_MessageBoxQuestion),
+            "Documentation", self
+        )
+        help_action.setShortcut("F1")
+        help_action.triggered.connect(self.show_help)
+        help_menu.addAction(help_action)
+        
+        about_action = QAction(
+            self.style().standardIcon(QStyle.StandardPixmap.SP_MessageBoxInformation),
+            "À propos", self
+        )
+        about_action.triggered.connect(self.show_about)
+        help_menu.addAction(about_action)
 
     def create_class_tab(self, class_id: str) -> QWidget:
         widget = QWidget()
         layout = QVBoxLayout(widget)
+        layout.setContentsMargins(12, 12, 12, 12)
+        layout.setSpacing(12)
+        
+        # Toolbar pour chaque classe
         toolbar = QHBoxLayout()
         
-        # Titre simplifié
+        # Titre avec icône
+        title_layout = QHBoxLayout()
+        icon_label = QLabel()
+        icon_label.setPixmap(self.style().standardIcon(
+            QStyle.StandardPixmap.SP_FileIcon).pixmap(20, 20))
+        title_layout.addWidget(icon_label)
+        
         title_label = QLabel(f"Chapitres - {self.CLASS_LABELS[class_id]}")
-        title_label.setObjectName("sectionLabel")
-        toolbar.addWidget(title_label)
+        title_label.setStyleSheet("font-weight: 600; font-size: 13px; color: #333;")
+        title_layout.addWidget(title_label)
+        toolbar.addLayout(title_layout)
+        
         toolbar.addStretch()
         
-        # Bouton natif pour ajouter un chapitre
-        add_btn = QPushButton("+ Nouveau chapitre")
+        # Bouton d'ajout avec icône native
+        add_btn = QPushButton(" Nouveau chapitre")
+        add_btn.setIcon(self.style().standardIcon(QStyle.StandardPixmap.SP_FileDialogNewFolder))
         add_btn.clicked.connect(lambda: self.add_chapter_to_class(class_id))
-        add_btn.setFixedHeight(25)
+        add_btn.setCursor(Qt.CursorShape.PointingHandCursor)
+        add_btn.setStyleSheet("""
+            QPushButton {
+                background-color: #0078d4;
+                color: white;
+                border: none;
+                padding: 6px 16px;
+                border-radius: 4px;
+                font-weight: 500;
+            }
+            QPushButton:hover {
+                background-color: #106ebe;
+            }
+            QPushButton:pressed {
+                background-color: #005a9e;
+            }
+        """)
         toolbar.addWidget(add_btn)
+        
         layout.addLayout(toolbar)
         
-        # Table avec en-têtes simples
+        # Table native et professionnelle
         table = QTableWidget()
         table.setObjectName(f"table_{class_id}")
-        table.setColumnCount(6)
-        table.setHorizontalHeaderLabels(["Actif", "Chapitre", "Version", "Quiz", "Exercices", "Actions"])
+        table.setColumnCount(7)  # Ajout d'une colonne pour l'icône de statut
+        table.setHorizontalHeaderLabels([
+            "", "Actif", "Chapitre", "Version", "Quiz", "Exercices", "Actions"
+        ])
+        
         header = table.horizontalHeader()
-        header.setSectionResizeMode(1, QHeaderView.ResizeMode.Stretch)
+        header.setSectionResizeMode(0, QHeaderView.ResizeMode.Fixed)
+        header.setSectionResizeMode(1, QHeaderView.ResizeMode.Fixed)
+        header.setSectionResizeMode(2, QHeaderView.ResizeMode.Stretch)
+        header.setSectionResizeMode(3, QHeaderView.ResizeMode.Fixed)
+        header.setSectionResizeMode(4, QHeaderView.ResizeMode.Fixed)
+        header.setSectionResizeMode(5, QHeaderView.ResizeMode.Fixed)
+        header.setSectionResizeMode(6, QHeaderView.ResizeMode.Fixed)
+        
+        table.setColumnWidth(0, 30)  # Icône
+        table.setColumnWidth(1, 60)  # Actif
+        table.setColumnWidth(3, 120)  # Version
+        table.setColumnWidth(4, 60)   # Quiz
+        table.setColumnWidth(5, 80)   # Exercices
+        table.setColumnWidth(6, 160)  # Actions
+        
         table.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
+        table.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
         table.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
         table.setAlternatingRowColors(True)
+        table.setShowGrid(True)
+        table.setGridStyle(Qt.PenStyle.SolidLine)
         
-        # Définir une hauteur minimale pour les lignes
-        table.verticalHeader().setMinimumSectionSize(44)
-        table.verticalHeader().setDefaultSectionSize(44)  # Hauteur par défaut des lignes
+        # Style natif pour la table
+        table.setStyleSheet("""
+            QTableWidget {
+                border: 1px solid #d0d0d0;
+                border-radius: 4px;
+                background-color: white;
+                gridline-color: #e8e8e8;
+            }
+            QTableWidget::item {
+                padding: 8px;
+                border-bottom: 1px solid #f0f0f0;
+            }
+            QTableWidget::item:selected {
+                background-color: #e5f3ff;
+                color: black;
+            }
+            QHeaderView::section {
+                background-color: #f8f8f8;
+                padding: 8px;
+                border: none;
+                border-bottom: 2px solid #d0d0d0;
+                border-right: 1px solid #e0e0e0;
+                font-weight: 600;
+                color: #333;
+            }
+            QTableWidget::item:alternate {
+                background-color: #fafafa;
+            }
+        """)
+        
+        # Hauteur des lignes
+        table.verticalHeader().setDefaultSectionSize(48)
+        table.verticalHeader().setVisible(False)
+        
         table.doubleClicked.connect(self.on_table_double_click)
         layout.addWidget(table)
+        
         return widget
     
+    def apply_native_style(self):
+        """Applique un style natif et professionnel à l'application."""
+        self.setStyleSheet("""
+            /* Style général - Natif et moderne */
+            QMainWindow, QDialog, QWidget {
+                background-color: #ffffff;
+                font-family: 'Segoe UI', 'San Francisco', 'Helvetica Neue', Arial, sans-serif;
+                font-size: 12px;
+                color: #333;
+            }
+            
+            /* Onglets natifs */
+            QTabWidget::pane {
+                border: 1px solid #d0d0d0;
+                background-color: white;
+                border-radius: 4px;
+            }
+            
+            QTabBar::tab {
+                background-color: #f0f0f0;
+                color: #555;
+                padding: 10px 20px;
+                margin-right: 2px;
+                border-top-left-radius: 4px;
+                border-top-right-radius: 4px;
+                border: 1px solid #d0d0d0;
+                border-bottom: none;
+            }
+            
+            QTabBar::tab:selected {
+                background-color: white;
+                color: #0078d4;
+                font-weight: 600;
+                border-bottom: 2px solid #0078d4;
+            }
+            
+            QTabBar::tab:hover:!selected {
+                background-color: #e8e8e8;
+            }
+            
+            /* Champs de saisie natifs */
+            QLineEdit, QTextEdit {
+                border: 1px solid #d0d0d0;
+                border-radius: 4px;
+                padding: 6px 10px;
+                background-color: white;
+                selection-background-color: #0078d4;
+            }
+            
+            QLineEdit:focus, QTextEdit:focus {
+                border: 2px solid #0078d4;
+                padding: 5px 9px;
+            }
+            
+            /* Listes natives */
+            QListWidget {
+                border: 1px solid #d0d0d0;
+                border-radius: 4px;
+                background-color: white;
+                outline: none;
+            }
+            
+            QListWidget::item {
+                padding: 8px;
+                border-bottom: 1px solid #f0f0f0;
+            }
+            
+            QListWidget::item:hover {
+                background-color: #f5f5f5;
+            }
+            
+            QListWidget::item:selected {
+                background-color: #e5f3ff;
+                color: black;
+                border-left: 3px solid #0078d4;
+            }
+            
+            /* Cases à cocher natives */
+            QCheckBox {
+                spacing: 8px;
+            }
+            
+            QCheckBox::indicator {
+                width: 18px;
+                height: 18px;
+                border: 1px solid #8a8a8a;
+                border-radius: 3px;
+                background-color: white;
+            }
+            
+            QCheckBox::indicator:hover {
+                border-color: #0078d4;
+            }
+            
+            QCheckBox::indicator:checked {
+                background-color: #0078d4;
+                border-color: #0078d4;
+                image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxMiAxMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTAgM0w0LjUgOC41TDIgNiIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48L3N2Zz4=);
+            }
+            
+            /* Radio buttons natifs */
+            QRadioButton::indicator {
+                width: 18px;
+                height: 18px;
+                border: 1px solid #8a8a8a;
+                border-radius: 9px;
+                background-color: white;
+            }
+            
+            QRadioButton::indicator:hover {
+                border-color: #0078d4;
+            }
+            
+            QRadioButton::indicator:checked {
+                background-color: white;
+                border: 2px solid #0078d4;
+            }
+            
+            QRadioButton::indicator:checked::after {
+                width: 10px;
+                height: 10px;
+                border-radius: 5px;
+                background-color: #0078d4;
+            }
+            
+            /* Boutons natifs */
+            QPushButton {
+                background-color: #f0f0f0;
+                color: #333;
+                border: 1px solid #d0d0d0;
+                padding: 6px 16px;
+                border-radius: 4px;
+                font-weight: 500;
+            }
+            
+            QPushButton:hover {
+                background-color: #e8e8e8;
+                border-color: #b8b8b8;
+            }
+            
+            QPushButton:pressed {
+                background-color: #d8d8d8;
+            }
+            
+            QPushButton:disabled {
+                background-color: #f8f8f8;
+                color: #a0a0a0;
+                border-color: #e0e0e0;
+            }
+            
+            /* Barres de défilement natives */
+            QScrollBar:vertical {
+                border: none;
+                background-color: #f5f5f5;
+                width: 12px;
+                margin: 0;
+            }
+            
+            QScrollBar::handle:vertical {
+                background-color: #c0c0c0;
+                min-height: 30px;
+                border-radius: 6px;
+            }
+            
+            QScrollBar::handle:vertical:hover {
+                background-color: #a0a0a0;
+            }
+            
+            QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+                height: 0px;
+            }
+            
+            /* Barre de statut */
+            QStatusBar {
+                background-color: #f8f8f8;
+                border-top: 1px solid #d0d0d0;
+                color: #555;
+                padding: 4px;
+            }
+            
+            /* Tooltips natifs */
+            QToolTip {
+                background-color: #333;
+                color: white;
+                border: none;
+                padding: 6px 10px;
+                border-radius: 4px;
+                font-size: 11px;
+            }
+            
+            /* Menus natifs */
+            QMenuBar {
+                background-color: #f8f8f8;
+                border-bottom: 1px solid #d0d0d0;
+            }
+            
+            QMenuBar::item {
+                background-color: transparent;
+                padding: 6px 12px;
+            }
+            
+            QMenuBar::item:selected {
+                background-color: #e8e8e8;
+            }
+            
+            QMenu {
+                background-color: white;
+                border: 1px solid #d0d0d0;
+                border-radius: 4px;
+                padding: 4px;
+            }
+            
+            QMenu::item {
+                padding: 6px 30px 6px 10px;
+                border-radius: 3px;
+            }
+            
+            QMenu::item:selected {
+                background-color: #e5f3ff;
+                color: #0078d4;
+            }
+            
+            QMenu::separator {
+                height: 1px;
+                background-color: #e0e0e0;
+                margin: 4px 8px;
+            }
+            
+            /* Barre d'outils */
+            QToolBar {
+                background-color: #f8f8f8;
+                border-bottom: 1px solid #d0d0d0;
+                spacing: 4px;
+                padding: 4px;
+            }
+            
+            QToolBar::separator {
+                background-color: #d0d0d0;
+                width: 1px;
+                margin: 4px 8px;
+            }
+        """)
+    
+    def reload_manifest(self):
+        """Recharge le manifest actuel."""
+        if self.manifest_path and self.manifest_path.exists():
+            self.load_manifest(self.manifest_path)
+        else:
+            QMessageBox.information(
+                self,
+                "Information",
+                "Aucun manifest chargé. Utilisez 'Fichier > Ouvrir manifest...' pour en charger un."
+            )
+    
+    def show_help(self):
+        """Affiche la fenêtre d'aide."""
+        help_text = """
+        <h2>📚 Gestionnaire de Contenus Pédagogiques</h2>
+        
+        <h3>🎯 Utilisation</h3>
+        <p><b>Ctrl+O</b> : Ouvrir un fichier manifest.json</p>
+        <p><b>Ctrl+S</b> : Sauvegarder tous les changements</p>
+        <p><b>F5</b> : Actualiser le manifest</p>
+        <p><b>Double-clic</b> : Éditer un chapitre</p>
+        
+        <h3>📝 Édition de Chapitres</h3>
+        <ul>
+            <li><b>Onglet Informations</b> : Nom, classe, dates de séances</li>
+            <li><b>Onglet Quiz</b> : Questions MCQ et questions d'ordonnancement</li>
+            <li><b>Onglet Exercices</b> : Exercices avec sous-questions</li>
+        </ul>
+        
+        <h3>🔄 Système de Versioning</h3>
+        <p>Chaque modification du contenu génère une nouvelle version basée sur un hash MD5 du contenu.
+        L'application web détecte automatiquement les mises à jour et notifie les élèves.</p>
+        
+        <h3>💾 Sauvegarde Automatique</h3>
+        <p>Les modifications sont automatiquement détectées et le manifest.json est mis à jour
+        après chaque sauvegarde de chapitre.</p>
+        """
+        
+        msg = QMessageBox(self)
+        msg.setWindowTitle("Aide - Gestionnaire de Contenus")
+        msg.setTextFormat(Qt.TextFormat.RichText)
+        msg.setText(help_text)
+        msg.setIcon(QMessageBox.Icon.Information)
+        msg.setStandardButtons(QMessageBox.StandardButton.Ok)
+        msg.exec()
+    
+    def show_about(self):
+        """Affiche la fenêtre À propos."""
+        about_text = """
+        <h2>📚 Gestionnaire de Contenus Pédagogiques</h2>
+        <p><b>Version 2.5</b></p>
+        <p>Application de gestion de contenu pour plateforme d'apprentissage en mathématiques.</p>
+        
+        <h3>Fonctionnalités</h3>
+        <ul>
+            <li>✅ Gestion multi-classes (TCS, 1BSE, 1BSM, 2BSE, 2BSM)</li>
+            <li>✅ Éditeur de quiz (MCQ et ordonnancement)</li>
+            <li>✅ Éditeur d'exercices avec sous-questions</li>
+            <li>✅ Système de versioning automatique</li>
+            <li>✅ Gestion des dates de séances</li>
+            <li>✅ Validation et vérification d'intégrité</li>
+        </ul>
+        
+        <p style="margin-top: 20px; color: #666; font-size: 10px;">
+        © 2025 - Math Pedagogy Platform
+        </p>
+        """
+        
+        msg = QMessageBox(self)
+        msg.setWindowTitle("À propos")
+        msg.setTextFormat(Qt.TextFormat.RichText)
+        msg.setText(about_text)
+        msg.setIcon(QMessageBox.Icon.Information)
+        msg.setStandardButtons(QMessageBox.StandardButton.Ok)
+        msg.exec()
+    
+    def export_statistics(self):
+        """Exporte les statistiques du projet."""
+        if not self.all_chapters:
+            QMessageBox.warning(self, "Attention", "Aucun chapitre chargé.")
+            return
+        
+        # Calculer les statistiques
+        stats = {
+            'total_chapters': len(self.all_chapters),
+            'active_chapters': sum(1 for ch in self.all_chapters.values() if ch.is_active),
+            'total_quiz': sum(len(ch.quiz_questions) for ch in self.all_chapters.values()),
+            'total_exercises': sum(len(ch.exercises) for ch in self.all_chapters.values()),
+            'by_class': {}
+        }
+        
+        for class_id in self.CLASSES:
+            chapters = self.chapters_by_class[class_id]
+            stats['by_class'][class_id] = {
+                'chapters': len(chapters),
+                'quiz': sum(len(ch.quiz_questions) for ch in chapters),
+                'exercises': sum(len(ch.exercises) for ch in chapters)
+            }
+        
+        # Afficher les statistiques
+        stats_text = f"""
+        <h2>📊 Statistiques du Projet</h2>
+        
+        <h3>Vue d'ensemble</h3>
+        <p><b>Chapitres totaux :</b> {stats['total_chapters']}</p>
+        <p><b>Chapitres actifs :</b> {stats['active_chapters']}</p>
+        <p><b>Questions de quiz :</b> {stats['total_quiz']}</p>
+        <p><b>Exercices :</b> {stats['total_exercises']}</p>
+        
+        <h3>Par classe</h3>
+        """
+        
+        for class_id in self.CLASSES:
+            class_stats = stats['by_class'][class_id]
+            if class_stats['chapters'] > 0:
+                stats_text += f"""
+                <p><b>{self.CLASS_LABELS[class_id]}</b><br>
+                &nbsp;&nbsp;Chapitres: {class_stats['chapters']} | 
+                Quiz: {class_stats['quiz']} | 
+                Exercices: {class_stats['exercises']}</p>
+                """
+        
+        msg = QMessageBox(self)
+        msg.setWindowTitle("Statistiques")
+        msg.setTextFormat(Qt.TextFormat.RichText)
+        msg.setText(stats_text)
+        msg.setIcon(QMessageBox.Icon.Information)
+        msg.setStandardButtons(QMessageBox.StandardButton.Ok)
+        msg.exec()
+    
+    def update_header_info(self):
+        """Met à jour les informations dans l'en-tête."""
+        if self.manifest_path:
+            self.project_label.setText(f"📁 {self.manifest_path.parent.name} / {self.manifest_path.name}")
+        else:
+            self.project_label.setText("Aucun projet chargé")
+        
+        total_chapters = len(self.all_chapters)
+        total_quiz = sum(len(ch.quiz_questions) for ch in self.all_chapters.values())
+        total_exercises = sum(len(ch.exercises) for ch in self.all_chapters.values())
+        
+        self.stats_label.setText(
+            f"{total_chapters} chapitres | {total_quiz} questions | {total_exercises} exercices"
+        )
+    
     def apply_style(self):
+        """Ancien nom de la fonction - redirige vers apply_native_style."""
+        self.apply_native_style()
         self.setStyleSheet("""
             /* Style minimaliste et moderne */
             QMainWindow, QDialog, QWidget { 
@@ -2184,6 +2833,9 @@ class SmartChapterManager(QMainWindow):
         
         self.refresh_all_tabs()
         
+        # Mettre à jour l'en-tête avec les informations du projet
+        self.update_header_info()
+        
         # Afficher un rapport détaillé
         status_message = f"{loaded_count} chapitres chargés avec succès."
         if error_count > 0:
@@ -2270,7 +2922,25 @@ class SmartChapterManager(QMainWindow):
         table.setRowCount(len(chapters))
 
         for row, chapter in enumerate(chapters):
-            # Colonne Actif (Checkbox)
+            # Colonne 0 : Icône de statut
+            status_label = QLabel()
+            if chapter.is_active:
+                status_icon = self.style().standardIcon(QStyle.StandardPixmap.SP_DialogYesButton)
+                status_label.setPixmap(status_icon.pixmap(16, 16))
+                status_label.setToolTip("Chapitre actif")
+            else:
+                status_icon = self.style().standardIcon(QStyle.StandardPixmap.SP_DialogNoButton)
+                status_label.setPixmap(status_icon.pixmap(16, 16))
+                status_label.setToolTip("Chapitre inactif")
+            
+            status_widget = QWidget()
+            status_layout = QHBoxLayout(status_widget)
+            status_layout.addWidget(status_label)
+            status_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
+            status_layout.setContentsMargins(0, 0, 0, 0)
+            table.setCellWidget(row, 0, status_widget)
+            
+            # Colonne 1 : Actif (Checkbox)
             check = QCheckBox()
             check.setChecked(chapter.is_active)
             check.toggled.connect(lambda state, ch=chapter: self.set_chapter_active(ch, state))
@@ -2278,43 +2948,131 @@ class SmartChapterManager(QMainWindow):
             layout = QHBoxLayout(cell_widget)
             layout.addWidget(check)
             layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
-            layout.setContentsMargins(0,0,0,0)
-            table.setCellWidget(row, 0, cell_widget)
+            layout.setContentsMargins(0, 0, 0, 0)
+            table.setCellWidget(row, 1, cell_widget)
             
-            table.setItem(row, 1, QTableWidgetItem(chapter.chapter_name))
-            table.setItem(row, 2, QTableWidgetItem(chapter.version))
-            table.setItem(row, 3, QTableWidgetItem(str(len(chapter.quiz_questions))))
-            table.setItem(row, 4, QTableWidgetItem(str(len(chapter.exercises))))
+            # Colonne 2 : Nom du chapitre
+            name_item = QTableWidgetItem(chapter.chapter_name)
+            name_item.setIcon(self.style().standardIcon(QStyle.StandardPixmap.SP_FileIcon))
+            table.setItem(row, 2, name_item)
+            
+            # Colonne 3 : Version avec badge
+            version_widget = QWidget()
+            version_layout = QHBoxLayout(version_widget)
+            version_layout.setContentsMargins(4, 0, 4, 0)
+            
+            version_label = QLabel(chapter.version)
+            version_label.setStyleSheet("""
+                QLabel {
+                    background-color: #e8f4f8;
+                    color: #0078d4;
+                    padding: 4px 8px;
+                    border-radius: 3px;
+                    font-family: 'Courier New', monospace;
+                    font-size: 10px;
+                    font-weight: 600;
+                }
+            """)
+            version_layout.addWidget(version_label)
+            version_layout.addStretch()
+            table.setCellWidget(row, 3, version_widget)
+            
+            # Colonne 4 : Quiz avec icône
+            quiz_item = QTableWidgetItem(f"  {len(chapter.quiz_questions)}")
+            quiz_item.setIcon(self.style().standardIcon(QStyle.StandardPixmap.SP_MessageBoxQuestion))
+            quiz_item.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
+            table.setItem(row, 4, quiz_item)
+            
+            # Colonne 5 : Exercices avec icône
+            ex_item = QTableWidgetItem(f"  {len(chapter.exercises)}")
+            ex_item.setIcon(self.style().standardIcon(QStyle.StandardPixmap.SP_FileDialogDetailedView))
+            ex_item.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
+            table.setItem(row, 5, ex_item)
 
-            # Colonne Actions avec boutons natifs et minimalistes
-            edit_btn = QPushButton("Éditer")
-            edit_btn.setFixedSize(60, 25)  # Taille plus petite et serrée
-            edit_btn.clicked.connect(lambda _, ch=chapter: self.edit_chapter(ch))
-            
-            del_btn = QPushButton("Suppr.")
-            del_btn.setToolTip("Supprimer ce chapitre")
-            del_btn.setFixedSize(50, 25)
-            del_btn.clicked.connect(lambda _, ch=chapter: self.delete_chapter(ch))
-            
-            # Créer un widget conteneur avec une mise en page optimisée
+            # Colonne 6 : Actions avec boutons natifs
             actions_widget = QWidget()
             actions_layout = QHBoxLayout(actions_widget)
-            actions_layout.addWidget(edit_btn)
-            actions_layout.addWidget(del_btn)
             actions_layout.setContentsMargins(4, 4, 4, 4)
-            actions_layout.setSpacing(8)
-            actions_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)  # Centrer les boutons verticalement
-            actions_widget.setLayout(actions_layout)
-            table.setCellWidget(row, 5, actions_widget)
+            actions_layout.setSpacing(4)
             
-            # S'assurer que la ligne a une hauteur suffisante
-            table.setRowHeight(row, 46)  # Légèrement plus haut pour plus d'espace
+            # Bouton Éditer
+            edit_btn = QPushButton(" Éditer")
+            edit_btn.setIcon(self.style().standardIcon(QStyle.StandardPixmap.SP_FileDialogContentsView))
+            edit_btn.setFixedSize(70, 30)
+            edit_btn.setCursor(Qt.CursorShape.PointingHandCursor)
+            edit_btn.setStyleSheet("""
+                QPushButton {
+                    background-color: #0078d4;
+                    color: white;
+                    border: none;
+                    border-radius: 3px;
+                    font-weight: 500;
+                    font-size: 11px;
+                }
+                QPushButton:hover {
+                    background-color: #106ebe;
+                }
+                QPushButton:pressed {
+                    background-color: #005a9e;
+                }
+            """)
+            edit_btn.clicked.connect(lambda _, ch=chapter: self.edit_chapter(ch))
+            actions_layout.addWidget(edit_btn)
             
-        table.resizeColumnsToContents()
-        table.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeMode.Stretch)
+            # Bouton Supprimer
+            del_btn = QPushButton(" Suppr.")
+            del_btn.setIcon(self.style().standardIcon(QStyle.StandardPixmap.SP_TrashIcon))
+            del_btn.setFixedSize(70, 30)
+            del_btn.setCursor(Qt.CursorShape.PointingHandCursor)
+            del_btn.setStyleSheet("""
+                QPushButton {
+                    background-color: #d13438;
+                    color: white;
+                    border: none;
+                    border-radius: 3px;
+                    font-weight: 500;
+                    font-size: 11px;
+                }
+                QPushButton:hover {
+                    background-color: #a72d2f;
+                }
+                QPushButton:pressed {
+                    background-color: #8b2426;
+                }
+            """)
+            del_btn.clicked.connect(lambda _, ch=chapter: self.delete_chapter(ch))
+            actions_layout.addWidget(del_btn)
+            
+            actions_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
+            table.setCellWidget(row, 6, actions_widget)
+            
+            # Hauteur de ligne
+            table.setRowHeight(row, 50)
+        
+        # Mise à jour de l'en-tête
+        self.update_header_info()
 
     def set_chapter_active(self, chapter: ChapterData, state: bool):
+        """
+        Active ou désactive un chapitre et met à jour le manifest immédiatement.
+        """
+        old_state = chapter.is_active
         chapter.is_active = state
+        
+        # Mettre à jour le manifest si l'état a changé
+        if old_state != state:
+            if self.update_manifest_entry(chapter):
+                status = "activé" if state else "désactivé"
+                self.update_status(f"✅ Chapitre '{chapter.chapter_name}' {status}")
+                self.refresh_class_tab(chapter.class_type)
+            else:
+                # Revenir à l'ancien état en cas d'échec
+                chapter.is_active = old_state
+                QMessageBox.warning(
+                    self,
+                    "Erreur",
+                    f"Impossible de mettre à jour le statut du chapitre dans le manifest."
+                )
 
     def add_chapter_to_class(self, class_id: str):
         name, ok = QInputDialog.getText(self, "Nouveau Chapitre", "Nom du chapitre:")
@@ -2351,6 +3109,7 @@ class SmartChapterManager(QMainWindow):
         """Édite un chapitre et le sauvegarde immédiatement après modification."""
         # Enregistrer les informations d'avant édition
         original_version = chapter.version
+        original_is_active = chapter.is_active
         
         # Créer et configurer l'éditeur
         editor = ChapterContentEditor(chapter, self)
@@ -2364,31 +3123,29 @@ class SmartChapterManager(QMainWindow):
         # Exécuter l'éditeur
         if editor.exec() == QDialog.DialogCode.Accepted:
             # Vérifier si des modifications ont été apportées
-            if chapter.has_changed() or editor.quiz_editor.property("modified") or editor.exercise_editor.property("modified"):
+            content_modified = (
+                chapter.has_changed() or 
+                editor.quiz_editor.property("modified") or 
+                editor.exercise_editor.property("modified")
+            )
+            
+            if content_modified or original_is_active != chapter.is_active:
                 # Sauvegarder uniquement ce chapitre spécifique
                 print(f"Sauvegarde du chapitre modifié: {chapter.chapter_name}")
                 
                 # Force la sauvegarde immédiate du fichier
                 if chapter.save_to_file():
-                    self.update_status(f"✅ Chapitre '{chapter.chapter_name}' sauvegardé")
+                    # ✅ CORRECTION CRITIQUE : Mise à jour du manifest APRÈS sauvegarde
+                    success = self.update_manifest_entry(chapter)
                     
-                    # Mettre à jour le manifest
-                    try:
-                        if self.manifest_path and self.manifest_path.exists():
-                            with open(self.manifest_path, 'r', encoding='utf-8') as f:
-                                manifest_data = json.load(f)
-                                
-                            # Mettre à jour la version dans le manifest
-                            for class_data in manifest_data.values():
-                                for ch_data in class_data:
-                                    if ch_data.get('id') == chapter.id:
-                                        ch_data['version'] = chapter.version
-                                        
-                            # Sauvegarder le manifest mis à jour
-                            with open(self.manifest_path, 'w', encoding='utf-8') as f:
-                                json.dump(manifest_data, f, indent=2, ensure_ascii=False)
-                    except Exception as e:
-                        print(f"Erreur lors de la mise à jour du manifest: {e}")
+                    if success:
+                        self.update_status(f"✅ Chapitre '{chapter.chapter_name}' sauvegardé (version: {chapter.version})")
+                    else:
+                        QMessageBox.warning(
+                            self, 
+                            "Attention", 
+                            f"Le chapitre a été sauvegardé mais le manifest n'a pas pu être mis à jour.\nVeuillez sauvegarder manuellement (Ctrl+S)."
+                        )
                 else:
                     QMessageBox.warning(
                         self, 
@@ -2400,6 +3157,64 @@ class SmartChapterManager(QMainWindow):
             
             # Rafraîchir l'interface
             self.refresh_class_tab(chapter.class_type)
+    
+    def update_manifest_entry(self, chapter: ChapterData) -> bool:
+        """
+        Met à jour l'entrée d'un chapitre dans le manifest.json.
+        Retourne True si la mise à jour a réussi, False sinon.
+        """
+        if not self.manifest_path or not self.manifest_path.exists():
+            print("⚠️ Aucun fichier manifest chargé")
+            return False
+        
+        try:
+            # Charger le manifest actuel
+            with open(self.manifest_path, 'r', encoding='utf-8') as f:
+                manifest_data = json.load(f)
+            
+            # Trouver et mettre à jour l'entrée du chapitre
+            updated = False
+            for class_id, chapters_list in manifest_data.items():
+                for ch_data in chapters_list:
+                    if ch_data.get('id') == chapter.id:
+                        # Mettre à jour toutes les informations
+                        ch_data['version'] = chapter.version
+                        ch_data['isActive'] = chapter.is_active
+                        ch_data['file'] = chapter.file_name
+                        updated = True
+                        print(f"✅ Manifest mis à jour pour '{chapter.id}' -> version: {chapter.version}, actif: {chapter.is_active}")
+                        break
+                if updated:
+                    break
+            
+            if not updated:
+                print(f"⚠️ Chapitre '{chapter.id}' non trouvé dans le manifest")
+                return False
+            
+            # Sauvegarder le manifest avec fichier temporaire pour sécurité
+            temp_manifest = self.manifest_path.with_suffix('.tmp.json')
+            
+            with open(temp_manifest, 'w', encoding='utf-8') as f:
+                json.dump(manifest_data, f, indent=2, ensure_ascii=False)
+            
+            # Valider le JSON
+            with open(temp_manifest, 'r', encoding='utf-8') as f:
+                json.load(f)  # Lève une exception si invalide
+            
+            # Remplacer l'ancien manifest
+            if self.manifest_path.exists():
+                self.manifest_path.unlink()
+            temp_manifest.rename(self.manifest_path)
+            
+            print(f"✅ Fichier manifest.json mis à jour avec succès")
+            return True
+            
+        except json.JSONDecodeError as e:
+            print(f"❌ Erreur JSON lors de la mise à jour du manifest: {e}")
+            return False
+        except Exception as e:
+            print(f"❌ Erreur lors de la mise à jour du manifest: {e}")
+            return False
 
     def delete_chapter(self, chapter: ChapterData):
         if QMessageBox.question(self, "Confirmer", f"Supprimer '{chapter.chapter_name}' et son fichier ?\nL'action est irréversible.") == QMessageBox.StandardButton.Yes:
