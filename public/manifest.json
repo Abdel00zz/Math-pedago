@@ -76,7 +76,7 @@
   "1bse": [
     {
       "id": "logique-mathematique",
-      "file": "1bse_logique_mathematique.json",
+      "file": "1bsm_logique_mathematique.json",
       "isActive": false,
       "version": "v1.1.0-064085"
     },
@@ -250,7 +250,7 @@
       "id": "limites-et-continuite",
       "file": "2bse_limites_et_continuite.json",
       "isActive": true,
-      "version": "v1.8.3-auto"
+      "version": "v1.1.0-04ca62"
     },
     {
       "id": "derivation-et-applications",

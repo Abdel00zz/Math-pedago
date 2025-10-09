@@ -10,11 +10,20 @@
       "id": "q_continuite_graphique_intuition",
       "type": "mcq",
       "question": "Graphiquement, une fonction est continue sur un intervalle si sa courbe peut être tracée...",
-      "explanation": "L'idée fondamentale de la continuité est celle d'un tracé ininterrompu, sans 'saut' ni 'rupture'.",
       "options": [
-        { "text": "en restant toujours au-dessus de l'axe des abscisses.", "isCorrect": false },
-        { "text": "sans jamais lever le crayon.", "isCorrect": true },
-        { "text": "en coupant l'axe des ordonnées en un seul point.", "isCorrect": false }
+        {
+          "text": "en restant toujours au-dessus de l'axe des abscisses.",
+          "isCorrect": false
+        },
+        {
+          "text": "sans jamais lever le crayon.",
+          "isCorrect": true,
+          "explanation": "L'idée fondamentale de la continuité est celle d'un tracé ininterrompu, sans 'saut' ni 'rupture'."
+        },
+        {
+          "text": "en coupant l'axe des ordonnées en un seul point.",
+          "isCorrect": false
+        }
       ]
     },
     {
@@ -22,9 +31,18 @@
       "type": "mcq",
       "question": "La définition mathématique de la continuité de $\\displaystyle f$ en un point $\\displaystyle a$ est :",
       "options": [
-        { "text": "$\\displaystyle \\lim_{x \\to a} f(x)$ existe.", "isCorrect": false },
-        { "text": "$\\displaystyle \\lim_{x \\to a} f(x) = f(a)$", "isCorrect": true },
-        { "text": "$f(a)$ est un nombre réel.", "isCorrect": false }
+        {
+          "text": "$\\displaystyle \\lim_{x \\to a} f(x)$ existe.",
+          "isCorrect": false
+        },
+        {
+          "text": "$\\displaystyle \\lim_{x \\to a} f(x) = f(a)$",
+          "isCorrect": true
+        },
+        {
+          "text": "$f(a)$ est un nombre réel.",
+          "isCorrect": false
+        }
       ]
     },
     {
@@ -43,10 +61,16 @@
       "id": "q_polynome_continu",
       "type": "mcq",
       "question": "Une fonction polynôme est continue sur l'intervalle $\\mathbb{R}$.",
-      "explanation": "Les fonctions polynômes sont des fonctions de référence ne présentant aucune rupture sur leur domaine de définition, qui est $\\mathbb{R}$.",
       "options": [
-        { "text": "Cette affirmation est Vraie.", "isCorrect": true },
-        { "text": "Cette affirmation est Fausse.", "isCorrect": false }
+        {
+          "text": "Cette affirmation est Vraie.",
+          "isCorrect": true,
+          "explanation": "Les fonctions polynômes sont des fonctions de référence ne présentant aucune rupture sur leur domaine de définition, qui est $\\mathbb{R}$."
+        },
+        {
+          "text": "Cette affirmation est Fausse.",
+          "isCorrect": false
+        }
       ]
     },
     {
@@ -54,9 +78,18 @@
       "type": "mcq",
       "question": "Une fonction rationnelle est continue :",
       "options": [
-        { "text": "sur $\\mathbb{R}$ tout entier.", "isCorrect": false },
-        { "text": "uniquement si le degré du numérateur est plus grand que celui du dénominateur.", "isCorrect": false },
-        { "text": "sur chaque intervalle de son ensemble de définition.", "isCorrect": true }
+        {
+          "text": "sur $\\mathbb{R}$ tout entier.",
+          "isCorrect": false
+        },
+        {
+          "text": "uniquement si le degré du numérateur est plus grand que celui du dénominateur.",
+          "isCorrect": false
+        },
+        {
+          "text": "sur chaque intervalle de son ensemble de définition.",
+          "isCorrect": true
+        }
       ]
     },
     {
@@ -64,9 +97,19 @@
       "type": "mcq",
       "question": "Si $f$ et $g$ sont continues sur I, quelle opération peut générer une discontinuité ?",
       "options": [
-        { "text": "La somme $\\displaystyle f+g$", "isCorrect": false },
-        { "text": "La composition $\\displaystyle f \\circ g$", "isCorrect": false },
-        { "text": "Le quotient $\\displaystyle f/g$", "isCorrect": true, "explanation": "Le quotient n'est pas défini là où le dénominateur s'annule ($g(x)=0$), créant des points de discontinuité." }
+        {
+          "text": "La somme $\\displaystyle f+g$",
+          "isCorrect": false
+        },
+        {
+          "text": "La composition $\\displaystyle f \\circ g$",
+          "isCorrect": false
+        },
+        {
+          "text": "Le quotient $\\displaystyle f/g$",
+          "isCorrect": true,
+          "explanation": "Le quotient n'est pas défini là où le dénominateur s'annule ($g(x)=0$), créant des points de discontinuité."
+        }
       ]
     },
     {
@@ -74,9 +117,18 @@
       "type": "mcq",
       "question": "La droite $\\displaystyle x=a$ est une asymptote verticale pour la courbe de $\\displaystyle f$ si :",
       "options": [
-        { "text": "$\\displaystyle \\lim_{x \\to a} f(x) = \\pm\\infty$", "isCorrect": true },
-        { "text": "$\\displaystyle \\lim_{x \\to \\pm\\infty} f(x) = a$", "isCorrect": false },
-        { "text": "$f(a)$ n'est pas défini.", "isCorrect": false }
+        {
+          "text": "$\\displaystyle \\lim_{x \\to a} f(x) = \\pm\\infty$",
+          "isCorrect": true
+        },
+        {
+          "text": "$\\displaystyle \\lim_{x \\to \\pm\\infty} f(x) = a$",
+          "isCorrect": false
+        },
+        {
+          "text": "$f(a)$ n'est pas défini.",
+          "isCorrect": false
+        }
       ]
     },
     {
@@ -84,9 +136,19 @@
       "type": "mcq",
       "question": "Soit $f$ continue sur $\\displaystyle [0, 1]$ avec $\\displaystyle f(0)=-5$ et $\\displaystyle f(1)=5$. Le TVI assure que l'équation $\\displaystyle f(x)=2$ :",
       "options": [
-        { "text": "admet une unique solution dans $\\displaystyle [0,1]$.", "isCorrect": false },
-        { "text": "n'admet pas de solution dans $\\displaystyle [0,1]$.", "isCorrect": false },
-        { "text": "admet au moins une solution dans $\\displaystyle [0,1]$.", "isCorrect": true, "explanation": "Correct. 2 est une valeur intermédiaire entre $\\displaystyle f(0)=-5$ et $\\displaystyle f(1)=5$." }
+        {
+          "text": "admet une unique solution dans $\\displaystyle [0,1]$.",
+          "isCorrect": false
+        },
+        {
+          "text": "n'admet pas de solution dans $\\displaystyle [0,1]$.",
+          "isCorrect": false
+        },
+        {
+          "text": "admet au moins une solution dans $\\displaystyle [0,1]$.",
+          "isCorrect": true,
+          "explanation": "Correct. 2 est une valeur intermédiaire entre $\\displaystyle f(0)=-5$ et $\\displaystyle f(1)=5$."
+        }
       ]
     },
     {
@@ -106,19 +168,34 @@
       "type": "mcq",
       "question": "Pour prouver qu'une équation $\\displaystyle f(x)=k$ admet une solution UNIQUE sur $\\displaystyle [a,b]$ (Théorème de la bijection), il faut que $\\displaystyle f$ soit :",
       "options": [
-        { "text": "Continue et strictement monotone.", "isCorrect": true },
-        { "text": "Continue et positive.", "isCorrect": false },
-        { "text": "Dérivable.", "isCorrect": false }
+        {
+          "text": "Continue et strictement monotone.",
+          "isCorrect": true
+        },
+        {
+          "text": "Continue et positive.",
+          "isCorrect": false
+        },
+        {
+          "text": "Dérivable.",
+          "isCorrect": false
+        }
       ]
     },
     {
       "id": "q_image_intervalle_general",
       "type": "mcq",
       "question": "L'image d'un intervalle par une fonction continue est toujours un intervalle.",
-      "explanation": "C'est une conséquence majeure du TVI : une fonction continue ne peut pas 'sauter' de valeurs, donc elle prend toutes les valeurs intermédiaires.",
       "options": [
-        { "text": "Cette affirmation est Vraie.", "isCorrect": true },
-        { "text": "Cette affirmation est Fausse.", "isCorrect": false }
+        {
+          "text": "Cette affirmation est Vraie.",
+          "isCorrect": true,
+          "explanation": "C'est une conséquence majeure du TVI : une fonction continue ne peut pas 'sauter' de valeurs, donc elle prend toutes les valeurs intermédiaires."
+        },
+        {
+          "text": "Cette affirmation est Fausse.",
+          "isCorrect": false
+        }
       ]
     },
     {
@@ -126,31 +203,58 @@
       "type": "mcq",
       "question": "Si $f$ est une bijection continue de l'intervalle $I$ sur l'intervalle $J$, sa réciproque $f^{-1}$ :",
       "options": [
-        { "text": "n'est pas forcément continue.", "isCorrect": false },
-        { "text": "est continue de $\\displaystyle J$ sur $\\displaystyle I$.", "isCorrect": true },
-        { "text": "a un sens de variation opposé à celui de $\\displaystyle f$.", "isCorrect": false }
+        {
+          "text": "n'est pas forcément continue.",
+          "isCorrect": false
+        },
+        {
+          "text": "est continue de $\\displaystyle J$ sur $\\displaystyle I$.",
+          "isCorrect": true
+        },
+        {
+          "text": "a un sens de variation opposé à celui de $\\displaystyle f$.",
+          "isCorrect": false
+        }
       ]
     },
     {
       "id": "q_reciproque_courbes",
       "type": "mcq",
       "question": "Les courbes représentatives d'une fonction $\\displaystyle f$ et de sa réciproque $\\displaystyle f^{-1}$ sont symétriques par rapport à :",
-      "explanation": "La symétrie entre une fonction et sa réciproque se fait toujours par rapport à la droite d'équation $\\displaystyle y=x$, car l'action d'inverser les rôles de $\\displaystyle x$ et $\\displaystyle y$ équivaut à cette symétrie.",
       "options": [
-        { "text": "L'axe des abscisses.", "isCorrect": false },
-        { "text": "L'axe des ordonnées.", "isCorrect": false },
-        { "text": "La première bissectrice (droite $\\displaystyle y=x$).", "isCorrect": true }
+        {
+          "text": "L'axe des abscisses.",
+          "isCorrect": false
+        },
+        {
+          "text": "L'axe des ordonnées.",
+          "isCorrect": false
+        },
+        {
+          "text": "La première bissectrice (droite $\\displaystyle y=x$).",
+          "isCorrect": true,
+          "explanation": "La symétrie entre une fonction et sa réciproque se fait toujours par rapport à la droite d'équation $\\displaystyle y=x$, car l'action d'inverser les rôles de $\\displaystyle x$ et $\\displaystyle y$ équivaut à cette symétrie."
+        }
       ]
     },
     {
       "id": "q_racine_nieme_propriete",
       "type": "mcq",
       "question": "Soit $\\displaystyle n \\in \\mathbb{N}^*$. La fonction racine $\\displaystyle n$-ième, $\\displaystyle x \\mapsto \\sqrt[n]{x}$ est :",
-      "explanation": "La fonction $\\displaystyle x \\mapsto x^n$ est strictement croissante sur $\\displaystyle [0, +\\infty[$, donc sa réciproque (la fonction racine $\\displaystyle n$-ième) hérite de la même stricte monotonie.",
       "options": [
-        { "text": "Strictement décroissante sur $\\displaystyle [0, +\\infty[$.", "isCorrect": false },
-        { "text": "Strictement croissante sur $\\displaystyle [0, +\\infty[$.", "isCorrect": true },
-        { "text": "Définie uniquement pour les $\\displaystyle n$ impairs sur $\\mathbb{R}$.", "isCorrect": false }
+        {
+          "text": "Strictement décroissante sur $\\displaystyle [0, +\\infty[$.",
+          "isCorrect": false
+        },
+        {
+          "text": "Strictement croissante sur $\\displaystyle [0, +\\infty[$.",
+          "isCorrect": true,
+          "explanation": "La fonction $\\displaystyle x \\mapsto x^n$ est strictement croissante sur $\\displaystyle [0, +\\infty[$, donc sa réciproque (la fonction racine $\\displaystyle n$-ième) hérite de la même stricte monotonie."
+        },
+        {
+          "text": "Définie uniquement pour les $\\displaystyle n$ impairs sur $\\mathbb{R}$.",
+          "isCorrect": false
+        }
       ]
     },
     {
@@ -170,9 +274,18 @@
       "type": "mcq",
       "question": "Une fonction $f$ qui n'est pas définie en $a$ peut être prolongée par continuité si :",
       "options": [
-        { "text": "Sa limite en $\\displaystyle a$ est infinie.", "isCorrect": false },
-        { "text": "Sa limite en $\\displaystyle a$ est un nombre fini.", "isCorrect": true },
-        { "text": "Sa limite à gauche et à droite en $\\displaystyle a$ sont différentes.", "isCorrect": false }
+        {
+          "text": "Sa limite en $\\displaystyle a$ est infinie.",
+          "isCorrect": false
+        },
+        {
+          "text": "Sa limite en $\\displaystyle a$ est un nombre fini.",
+          "isCorrect": true
+        },
+        {
+          "text": "Sa limite à gauche et à droite en $\\displaystyle a$ sont différentes.",
+          "isCorrect": false
+        }
       ]
     },
     {
@@ -180,8 +293,15 @@
       "type": "mcq",
       "question": "Si une fonction est dérivable en un point, alors elle est continue en ce point.",
       "options": [
-        { "text": "Cette affirmation est Vraie.", "isCorrect": true, "explanation": "La dérivabilité est une condition plus forte que la continuité. Si l'on peut calculer le nombre dérivé $\\displaystyle f'(a)$, la fonction doit être continue en $\\displaystyle a$." },
-        { "text": "Cette affirmation est Fausse.", "isCorrect": false }
+        {
+          "text": "Cette affirmation est Vraie.",
+          "isCorrect": true,
+          "explanation": "La dérivabilité est une condition plus forte que la continuité. Si l'on peut calculer le nombre dérivé $\\displaystyle f'(a)$, la fonction doit être continue en $\\displaystyle a$."
+        },
+        {
+          "text": "Cette affirmation est Fausse.",
+          "isCorrect": false
+        }
       ]
     },
     {
@@ -189,12 +309,17 @@
       "type": "mcq",
       "question": "Une fonction continue en un point est forcément dérivable en ce point.",
       "options": [
-        { "text": "Cette affirmation est Vraie.", "isCorrect": false },
-        { "text": "Cette affirmation est Fausse.", "isCorrect": true, "explanation": "Contre-exemple classique : la fonction $\\displaystyle f(x)=|x|$ est continue en 0 mais n'est pas dérivable en ce point (point anguleux)." }
+        {
+          "text": "Cette affirmation est Vraie.",
+          "isCorrect": false
+        },
+        {
+          "text": "Cette affirmation est Fausse.",
+          "isCorrect": true,
+          "explanation": "Contre-exemple classique : la fonction $\\displaystyle f(x)=|x|$ est continue en 0 mais n'est pas dérivable en ce point (point anguleux)."
+        }
       ]
     },
-    
-    
     {
       "id": "q_ordering_dichotomie",
       "type": "ordering",
@@ -208,210 +333,120 @@
       "explanation": "La dichotomie est un algorithme qui s'appuie sur le TVI pour réduire l'intervalle de recherche de moitié à chaque étape."
     }
   ],
-  
   "exercises": [
     {
-      "id": "exo_fonction_racine",
-      "title": "Étude d'une fonction avec racine carrée",
-      "statement": "Soit $\\displaystyle f$ la fonction numérique définie sur $\\displaystyle I = [1; +\\infty[$ par : $$\\displaystyle f(x) = \\frac{1}{x} - \\sqrt{x^2 - x}$$",
+      "id": "exo_continuite_parametres",
+      "title": "Déterminer des paramètres pour assurer la continuité",
+      "statement": "Soit $f$ la fonction définie sur $\\mathbb{R}$ par : $$\\displaystyle f(x) = \\begin{cases} \\displaystyle\\frac{x^2 - 4}{x - 2} & \\text{si } x < 2 \\\\ ax + b & \\text{si } 2 \\leq x < 4 \\\\ \\sqrt{x + 5} - 3 & \\text{si } x \\geq 4 \\end{cases}$$",
       "sub_questions": [
         {
-          "text": "Montrer que $\\displaystyle f$ est continue sur $\\displaystyle I$."
+          "text": "Déterminer les valeurs de $a$ et $b$ pour que $f$ soit continue sur $\\mathbb{R}$."
         },
         {
-          "text": "Montrer que $\\displaystyle f$ est strictement décroissante sur $\\displaystyle I$."
-        },
-        {
-          "text": "Montrer que l'équation $\\displaystyle f(x) = 0$ admet une unique solution $\\displaystyle \\alpha$ telle que $\\displaystyle 1 < \\alpha < 2$."
-        },
-        {
-          "text": "En déduire le signe de $\\displaystyle f(x)$ sur $\\displaystyle I$."
-        },
-        {
-          "text": "Déterminer un encadrement de $\\displaystyle \\alpha$ d'amplitude $\\displaystyle 0.25$."
-        },
-        {
-          "text": "Montrer que $\\displaystyle \\alpha^4 - \\alpha^3 - 1 = 0$."
-        }
-      ],
-      "hint": [
-        {
-          "text": "Pour la continuité, décomposez $\\displaystyle f$ comme somme et composée de fonctions continues (fonction inverse, fonction racine carrée, polynôme). Vérifiez que chaque fonction est bien définie sur $\\displaystyle I$."
-        },
-        {
-          "text": "Pour la monotonie, calculez la dérivée $\\displaystyle f'(x)$ en utilisant les formules : $\\displaystyle \\left(\\frac{1}{x}\\right)' = -\\frac{1}{x^2}$ et $\\displaystyle \\left(\\sqrt{u}\\right)' = \\frac{u'}{2\\sqrt{u}}$. Étudiez le signe de $\\displaystyle f'(x)$ sur $\\displaystyle I$."
-        },
-        {
-          "text": "Pour prouver l'existence et l'unicité de $\\displaystyle \\alpha$, utilisez le théorème de la bijection (corollaire du TVI) : une fonction continue et strictement monotone sur un intervalle établit une bijection. Calculez $\\displaystyle f(1)$ et $\\displaystyle f(2)$ pour vérifier que $\\displaystyle 0$ appartient à l'image."
-        },
-        {
-          "text": "Pour l'encadrement d'amplitude $\\displaystyle 0.25$, testez les valeurs $\\displaystyle f(1.25)$, $\\displaystyle f(1.5)$, $\\displaystyle f(1.75)$ à l'aide de la calculatrice. Cherchez deux valeurs consécutives espacées de $\\displaystyle 0.25$ qui encadrent $\\displaystyle 0$."
-        },
-        {
-          "text": "Pour établir l'équation $\\displaystyle \\alpha^4 - \\alpha^3 - 1 = 0$, partez de $\\displaystyle f(\\alpha) = 0$, soit $\\displaystyle \\frac{1}{\\alpha} = \\sqrt{\\alpha^2 - \\alpha}$. Élevez au carré les deux membres (attention aux conditions de validité) puis développez et simplifiez."
+          "text": "Vérifier alors la continuité de $f$ en $x_0 = 2$ et $x_0 = 4$ avec les valeurs trouvées."
         }
       ]
     },
     {
-      "id": "exo_87320aeb",
-      "title": "Continuité d'une fonction par morceaux",
-      "statement": "Soit la fonction $\\displaystyle f$ définie par : $\\displaystyle f(x) = \\begin{cases} \\frac{\\sqrt{x+3} - 2}{x-1} & \\text{si } x > 1 \\\\ ax^2 + x + \\frac{1}{4} & \\text{si } x \\le 1 \\end{cases}$.",
+      "id": "exo_tvi_unicite_solution",
+      "title": "TVI, Dichotomie et unicité de la solution",
+      "statement": "Soit $h$ la fonction définie sur $[0, 3]$ par : $\\displaystyle h(x) = x^3 - 2x - 1$",
       "sub_questions": [
-        { "text": "Calculer $\\displaystyle \\lim_{x \\to 1^+} f(x)$." },
-        { "text": "Exprimer $\\displaystyle f(1)$ et $\\displaystyle \\lim_{x \\to 1^-} f(x)$ en fonction de $\\displaystyle a$." },
-        { "text": "Déterminer la valeur de $\\displaystyle a$ pour que la fonction $\\displaystyle f$ soit continue en $\\displaystyle x=1$." }
-      ],
-      "hint": [
-        { "text": "Pour la limite en $\\displaystyle 1^+$, vous avez une forme indéterminée de type '$\\displaystyle \\frac{0}{0}$'. Multipliez par l'expression conjuguée du numérateur pour lever l'indétermination." },
-        { "text": "La continuité en $\\displaystyle x=1$ signifie que la limite à gauche, la limite à droite et $\\displaystyle f(1)$ doivent être égales." }
+        {
+          "text": "Montrer que $h$ est continue sur $[0, 3]$. Quel est le théorème qui justifie cette continuité ?"
+        },
+        {
+          "text": "Calculer $h(0)$, $h(1)$ et $h(2)$. En déduire le signe de ces valeurs."
+        },
+        {
+          "text": "En utilisant le TVI, montrer que l'équation $h(x) = 0$ admet au moins une solution $\\alpha$ dans l'intervalle $[1, 2]$."
+        },
+        {
+          "text": "Calculer $h'(x)$ et étudier son signe sur $[1, 2]$. Que peut-on en déduire sur les variations de $h$ ?"
+        },
+        {
+          "text": "Justifier que l'équation $h(x) = 0$ admet une solution **unique** $\\alpha$ dans $[1, 2]$."
+        },
+        {
+          "text": "Utiliser la méthode de dichotomie pour donner un encadrement de $\\alpha$ d'amplitude $0,25$."
+        }
       ]
     },
     {
       "id": "exo_fonction_reciproque",
-      "title": "Fonction réciproque d'une fonction du second degré",
-      "statement": "Soit $\\displaystyle f$ une fonction numérique définie sur $\\displaystyle I = [2; +\\infty[$ par : $$\\displaystyle f(x) = x^2 - 4x + 3$$",
+      "title": "Fonction réciproque et continuité",
+      "statement": "Soit $f$ la fonction définie sur $[1, +\\infty[$ par : $\\displaystyle f(x) = \\sqrt{x-1} + 2$",
       "sub_questions": [
         {
-          "text": "Montrer que $\\displaystyle f$ admet une fonction réciproque $\\displaystyle f^{-1}$ définie sur un intervalle $\\displaystyle J$ à déterminer."
+          "text": "Déterminer le domaine de définition $D_f$ de $f$ et justifier que $f$ est continue sur $D_f$."
         },
         {
-          "text": "Dresser le tableau de variations de $\\displaystyle f^{-1}$."
+          "text": "Calculer $f'(x)$ pour $x > 1$ et étudier le signe de $f'(x)$. En déduire le sens de variation de $f$."
         },
         {
-          "text": "Tracer les courbes $\\displaystyle (\\mathcal{C}_f)$ et $\\displaystyle (\\mathcal{C}_{f^{-1}})$ dans un repère orthonormé $\\displaystyle (O; \\vec{i}, \\vec{j})$."
+          "text": "Déterminer l'ensemble image $I_f = f(D_f)$ de la fonction $f$."
         },
         {
-          "text": "Déterminer $\\displaystyle f^{-1}(0)$."
+          "text": "Justifier que $f$ admet une fonction réciproque $f^{-1}$ définie sur $I_f$. Quel est le domaine de définition de $f^{-1}$ ?"
         },
         {
-          "text": "Calculer $\\displaystyle f^{-1}(x)$ pour tout $\\displaystyle x \\in J$."
-        }
-      ],
-      "hint": [
-        {
-          "text": "Pour qu'une fonction admette une réciproque, elle doit être continue et strictement monotone sur son intervalle de définition. Calculez $\\displaystyle f'(x) = 2x - 4$ et étudiez son signe sur $\\displaystyle [2; +\\infty[$. La fonction est-elle croissante ou décroissante ?"
+          "text": "Déterminer l'expression de $f^{-1}(x)$ pour tout $x \\in I_f$."
         },
         {
-          "text": "L'intervalle $\\displaystyle J$ est l'image de $\\displaystyle I$ par $\\displaystyle f$. Calculez $\\displaystyle f(2)$ (borne inférieure) et $\\displaystyle \\lim_{x \\to +\\infty} f(x)$ (borne supérieure). Vous obtenez ainsi $\\displaystyle J = [f(2); +\\infty[$."
-        },
-        {
-          "text": "Le tableau de variations de $\\displaystyle f^{-1}$ s'obtient en échangeant les lignes du tableau de $\\displaystyle f$ : les valeurs de $\\displaystyle x$ deviennent les valeurs prises par $\\displaystyle f^{-1}$, et réciproquement. La monotonie reste la même."
-        },
-        {
-          "text": "Pour tracer les courbes, rappelez-vous que $\\displaystyle (\\mathcal{C}_{f^{-1}})$ est le symétrique de $\\displaystyle (\\mathcal{C}_f)$ par rapport à la droite d'équation $\\displaystyle y = x$. Tracez d'abord la parabole $\\displaystyle f$, puis sa symétrique."
-        },
-        {
-          "text": "Pour calculer $\\displaystyle f^{-1}(0)$, cherchez $\\displaystyle x$ tel que $\\displaystyle f(x) = 0$. Résolvez $\\displaystyle x^2 - 4x + 3 = 0$ en factorisant ou avec le discriminant, puis choisissez la solution qui appartient à $\\displaystyle I = [2; +\\infty[$."
-        },
-        {
-          "text": "Pour trouver l'expression de $\\displaystyle f^{-1}(x)$, posez $\\displaystyle y = f(x)$, soit $\\displaystyle y = x^2 - 4x + 3$. Résolvez cette équation du second degré en $\\displaystyle x$ (forme canonique ou discriminant). Vous obtiendrez deux solutions ; choisissez celle qui vérifie $\\displaystyle x \\geq 2$."
+          "text": "Vérifier que $f^{-1}$ est continue sur son domaine de définition."
         }
       ]
     },
     {
-      "id": "exo_racines_limites",
-      "title": "Opérations sur les radicaux et limites",
-      "statement": "Exercices variés sur les racines carrées et les limites.",
+      "id": "exo_equation_point_fixe",
+      "title": "Équation du type $f(x) = x$ - Existence et unicité",
+      "statement": "Soit $k$ la fonction définie sur $[1, 3]$ par : $\\displaystyle k(x) = \\frac{2x + 3}{x + 1}$",
       "sub_questions": [
         {
-          "text": "Ranger dans l'ordre croissant les nombres suivants : $\\displaystyle \\sqrt{5}$, $\\displaystyle \\sqrt{2}$ et $\\displaystyle \\sqrt{10}$."
+          "text": "Justifier que $k$ est continue sur $[1, 3]$. Pourquoi le dénominateur ne pose-t-il pas de problème ?"
         },
         {
-          "text": "Simplifier les nombres suivants : $\\displaystyle A = \\frac{\\sqrt{2^{18}} \\times \\sqrt{\\sqrt{64}} \\times \\sqrt{6^2}}{\\sqrt{18} \\times \\sqrt{\\sqrt{256}}}$ et $\\displaystyle B = \\frac{(27)^2 \\times (8)! \\times 9!}{3 \\cdot 4!}$."
+          "text": "Calculer $k(1)$ et $k(3)$. Montrer que pour tout $x \\in [1, 3]$, on a $k(x) \\in [1, 3]$."
         },
         {
-          "text": "Résoudre dans $\\displaystyle \\mathbb{R}$ : (E) $\\displaystyle \\sqrt{1-x} + \\sqrt{x} = 1$ et (I) $\\displaystyle \\sqrt{x-5} < 2$."
+          "text": "On pose $\\varphi(x) = k(x) - x$. Calculer $\\varphi(1)$ et $\\varphi(3)$ puis déterminer leurs signes."
         },
         {
-          "text": "Calculer les limites suivantes : $\\displaystyle \\lim_{x \\to 0} \\frac{\\sqrt{x+8} - 2}{\\sin(x)}$, $\\displaystyle \\lim_{x \\to +\\infty} \\sqrt{x^3 + x^2 + 7 - 2x}$, et $\\displaystyle \\lim_{x \\to +\\infty} \\sqrt{8x^3 + x^2 + 7 - 2x}$."
-        }
-      ],
-      "hint": [
-        {
-          "text": "Pour comparer des racines carrées, utilisez le fait que la fonction racine est croissante sur $\\displaystyle [0; +\\infty[$. Ainsi, si $\\displaystyle a < b$ alors $\\displaystyle \\sqrt{a} < \\sqrt{b}$. Comparez d'abord les valeurs sous les racines : $\\displaystyle 2 < 5 < 10$."
+          "text": "En utilisant le TVI appliqué à $\\varphi$, montrer que l'équation $k(x) = x$ admet au moins une solution $\\alpha$ dans $[1, 3]$."
         },
         {
-          "text": "Pour simplifier $\\displaystyle A$, décomposez chaque radical étape par étape : $\\displaystyle \\sqrt{2^{18}} = 2^9$, $\\displaystyle \\sqrt{\\sqrt{64}} = \\sqrt{8} = 2\\sqrt{2}$, $\\displaystyle \\sqrt{6^2} = 6$, $\\displaystyle \\sqrt{18} = 3\\sqrt{2}$, et $\\displaystyle \\sqrt{\\sqrt{256}} = \\sqrt{16} = 4$. Puis simplifiez la fraction."
+          "text": "Calculer $k'(x)$ et montrer que $k$ est strictement décroissante sur $[1, 3]$."
         },
         {
-          "text": "Pour $\\displaystyle B$, calculez les factorielles : $\\displaystyle 8! = 40320$, $\\displaystyle 9! = 362880$, $\\displaystyle 4! = 24$. Remarquez aussi que $\\displaystyle 27 = 3^3$. Simplifiez progressivement en factorisant."
+          "text": "En déduire que la fonction $\\varphi$ est strictement décroissante sur $[1, 3]$. Conclure sur l'unicité de la solution $\\alpha$."
         },
         {
-          "text": "Pour résoudre $\\displaystyle \\sqrt{1-x} + \\sqrt{x} = 1$, commencez par déterminer le domaine de définition (conditions d'existence des deux racines). Ensuite, isolez une racine et élevez au carré. Attention, cette opération peut introduire des solutions parasites : vérifiez vos solutions dans l'équation initiale !"
-        },
-        {
-          "text": "Pour résoudre l'inéquation $\\displaystyle \\sqrt{x-5} < 2$, posez d'abord la condition d'existence : $\\displaystyle x - 5 \\geq 0$, soit $\\displaystyle x \\geq 5$. Ensuite, élevez au carré (opération croissante pour les nombres positifs) : $\\displaystyle x - 5 < 4$, d'où $\\displaystyle x < 9$. L'ensemble solution est donc $\\displaystyle [5; 9[$."
-        },
-        {
-          "text": "Pour la limite $\\displaystyle \\lim_{x \\to 0} \\frac{\\sqrt{x+8} - 2}{\\sin(x)}$, vous avez une forme indéterminée $\\displaystyle \\frac{0}{0}$. Multipliez numérateur et dénominateur par l'expression conjuguée $\\displaystyle \\sqrt{x+8} + 2$, puis utilisez le fait que $\\displaystyle \\lim_{x \\to 0} \\frac{\\sin(x)}{x} = 1$."
-        },
-        {
-          "text": "Pour les limites en $\\displaystyle +\\infty$ avec des racines, identifiez le terme prépondérant (celui de plus haut degré). Factorisez-le puis simplifiez. Par exemple, dans $\\displaystyle \\sqrt{x^3 + x^2 + 7}$, le terme prépondérant est $\\displaystyle x^3$, donc $\\displaystyle \\sqrt{x^3 + x^2 + 7} \\sim x\\sqrt{x}$ quand $\\displaystyle x \\to +\\infty$. Attention à bien gérer la différence entre deux termes infinis !"
+          "text": "Résoudre algébriquement l'équation $k(x) = x$ et vérifier que la solution appartient bien à $[1, 3]$."
         }
       ]
     },
     {
-      "id": "exo_fonction_composition_racine",
-      "title": "Étude complète d'une fonction avec racine carrée",
-      "statement": "Soit $\\displaystyle f$ la fonction numérique définie par : $$\\displaystyle f(x) = x - 2\\sqrt{x+4}$$",
+      "id": "exo_reflexion_continuite",
+      "title": "Questions de réflexion sur la continuité",
+      "statement": "On considère différentes situations impliquant la continuité de fonctions.",
       "sub_questions": [
         {
-          "text": "Déterminer $\\displaystyle D_f$ l'ensemble de définition de la fonction $\\displaystyle f$."
+          "text": "Soit $g(x) = \\displaystyle\\frac{|x - 1|}{x - 1}$ si $x \\neq 1$. Peut-on prolonger $g$ par continuité en $x = 1$ ? Justifier."
         },
         {
-          "text": "Vérifier que pour tout $\\displaystyle x \\in D_f$ : $\\displaystyle f(x) = \\left(\\sqrt{x+4} - 1\\right)^2 - 5$, puis en déduire $\\displaystyle \\lim_{x \\to +\\infty} f(x)$."
+          "text": "Soit $f$ continue sur $[a, b]$ telle que $f(a) < 0$ et $f(b) > 0$. Combien de solutions l'équation $f(x) = 0$ admet-elle dans $[a, b]$ ? (Au moins une, exactement une, ou on ne peut pas savoir ?)"
         },
         {
-          "text": "Montrer que $\\displaystyle f$ est continue sur $\\displaystyle D_f$."
+          "text": "Soit $h$ continue et strictement croissante sur $[0, 2]$ avec $h(0) = -1$ et $h(2) = 5$. Montrer que pour tout $k \\in [-1, 5]$, l'équation $h(x) = k$ admet une unique solution dans $[0, 2]$."
         },
         {
-          "text": "Montrer que pour tout $\\displaystyle x \\in ]-4; +\\infty[$ : $\\displaystyle f'(x) = \\frac{x+3}{\\sqrt{x+4}\\left(\\sqrt{x+4} + 1\\right)\\sqrt{x+4}}$."
+          "text": "Soit $u$ définie sur $\\mathbb{R}$ par : $\\displaystyle u(x) = \\begin{cases} x^2 + ax & \\text{si } x \\leq 1 \\\\ bx + 3 & \\text{si } x > 1 \\end{cases}$. Déterminer $a$ et $b$ pour que $u$ soit continue et dérivable en $x = 1$."
         },
         {
-          "text": "Dresser le tableau de variations de $\\displaystyle f$ sur $\\displaystyle D_f$."
-        },
-        {
-          "text": "Soit $\\displaystyle g$ la restriction de $\\displaystyle f$ sur l'intervalle $\\displaystyle I = [-3; +\\infty[$."
-        },
-        {
-          "text": "Montrer que $\\displaystyle g$ admet une fonction réciproque $\\displaystyle g^{-1}$ définie sur un intervalle $\\displaystyle J$ à déterminer."
-        },
-        {
-          "text": "Calculer $\\displaystyle g^{-1}(4)$."
-        },
-        {
-          "text": "Calculer $\\displaystyle g^{-1}(x)$ pour tout $\\displaystyle x \\in J$."
-        }
-      ],
-      "hint": [
-        {
-          "text": "Pour déterminer $\\displaystyle D_f$, identifiez les contraintes : la fonction contient une racine carrée $\\displaystyle \\sqrt{x+4}$, donc il faut $\\displaystyle x + 4 \\geq 0$, soit $\\displaystyle x \\geq -4$. Ainsi $\\displaystyle D_f = [-4; +\\infty[$."
-        },
-        {
-          "text": "Pour vérifier l'identité $\\displaystyle f(x) = \\left(\\sqrt{x+4} - 1\\right)^2 - 5$, développez le membre de droite en utilisant $\\displaystyle (a-b)^2 = a^2 - 2ab + b^2$ avec $\\displaystyle a = \\sqrt{x+4}$ et $\\displaystyle b = 1$. Vous devriez retrouver $\\displaystyle x - 2\\sqrt{x+4}$."
-        },
-        {
-          "text": "Pour la limite en $\\displaystyle +\\infty$, utilisez la forme factorisée. Quand $\\displaystyle x \\to +\\infty$, $\\displaystyle \\sqrt{x+4} \\to +\\infty$ donc $\\displaystyle \\left(\\sqrt{x+4} - 1\\right)^2 \\to +\\infty$, et ainsi $\\displaystyle f(x) \\to +\\infty$."
-        },
-        {
-          "text": "Pour la continuité, observez que $\\displaystyle f$ est la composée et la somme de fonctions continues : $\\displaystyle x \\mapsto x$ (continue), $\\displaystyle x \\mapsto x+4$ (continue), $\\displaystyle x \\mapsto \\sqrt{x}$ (continue sur $\\displaystyle [0; +\\infty[$), et $\\displaystyle x \\mapsto 2x$ (continue). Donc $\\displaystyle f$ est continue sur $\\displaystyle D_f$."
-        },
-        {
-          "text": "Pour calculer $\\displaystyle f'(x)$, dérivez terme à terme : $\\displaystyle f'(x) = 1 - 2 \\times \\frac{1}{2\\sqrt{x+4}} = 1 - \\frac{1}{\\sqrt{x+4}}$. Mettez au même dénominateur : $\\displaystyle f'(x) = \\frac{\\sqrt{x+4} - 1}{\\sqrt{x+4}}$. Ensuite, multipliez numérateur et dénominateur par $\\displaystyle \\sqrt{x+4} + 1$ pour obtenir la forme demandée (après simplification avec l'identité remarquable $\\displaystyle a^2 - b^2$)."
-        },
-        {
-          "text": "Pour le tableau de variations, étudiez le signe de $\\displaystyle f'(x) = \\frac{x+3}{\\sqrt{x+4}\\left(\\sqrt{x+4} + 1\\right)\\sqrt{x+4}}$. Le dénominateur est toujours strictement positif sur $\\displaystyle D_f$, donc le signe dépend uniquement de $\\displaystyle x+3$. La fonction est décroissante sur $\\displaystyle [-4; -3]$ et croissante sur $\\displaystyle [-3; +\\infty[$, avec un minimum en $\\displaystyle x = -3$."
-        },
-        {
-          "text": "Pour que $\\displaystyle g$ admette une réciproque, elle doit être continue et strictement monotone. Sur $\\displaystyle I = [-3; +\\infty[$, $\\displaystyle g$ est strictement croissante (d'après le tableau de variations). L'intervalle $\\displaystyle J$ est l'image de $\\displaystyle I$ par $\\displaystyle g$ : $\\displaystyle J = [g(-3); +\\infty[ = [-5; +\\infty[$."
-        },
-        {
-          "text": "Pour calculer $\\displaystyle g^{-1}(4)$, cherchez $\\displaystyle x$ tel que $\\displaystyle g(x) = 4$. Résolvez $\\displaystyle x - 2\\sqrt{x+4} = 4$. Isolez la racine : $\\displaystyle 2\\sqrt{x+4} = x - 4$, puis élevez au carré (en vérifiant les conditions). Vous obtiendrez une équation du second degré."
-        },
-        {
-          "text": "Pour trouver $\\displaystyle g^{-1}(x)$, posez $\\displaystyle y = g(t) = t - 2\\sqrt{t+4}$, et exprimez $\\displaystyle t$ en fonction de $\\displaystyle y$. Isolez $\\displaystyle \\sqrt{t+4}$, élevez au carré, puis résolvez le trinôme obtenu. Attention à choisir la bonne solution (celle qui appartient à $\\displaystyle [-3; +\\infty[$) !"
+          "text": "Une fonction peut-elle être continue sur $[0, 1]$ et prendre exactement 3 fois la valeur 2 sur cet intervalle ? Donner un exemple ou expliquer pourquoi c'est impossible."
         }
       ]
     }
-  ]
+  ],
+  "version": "v1.1.0-04ca62"
 }

@@ -62,16 +62,54 @@ const Quiz: React.FC = () => {
     }, [isReviewMode, isSubmitted]);
 
     // ✅ OPTIMISATION 3: Handlers mémorisés avec useCallback
+    const [pendingQuestionIds, setPendingQuestionIds] = useState<string[]>([]);
+
+    useEffect(() => {
+        setPendingQuestionIds([]);
+    }, [currentChapterId]);
+
+    const markQuestionAsPending = useCallback((questionId: string | undefined) => {
+        if (!questionId) return;
+        setPendingQuestionIds(prev => (prev.includes(questionId) ? prev : [...prev, questionId]));
+    }, []);
+
+    const clearPendingQuestion = useCallback((questionId: string | undefined) => {
+        if (!questionId) return;
+        setPendingQuestionIds(prev => prev.filter(id => id !== questionId));
+    }, []);
+
+    const isQuestionAnswered = useCallback((questionId: string | undefined) => {
+        if (!questionId) return false;
+        const answer = answers[questionId];
+        if (Array.isArray(answer)) {
+            return answer.length > 0;
+        }
+        if (answer === undefined || answer === null) {
+            return false;
+        }
+        if (typeof answer === 'string') {
+            return answer.trim().length > 0;
+        }
+        return true;
+    }, [answers]);
+
     const handleOptionChange = useCallback((answer: string) => {
         if (isSubmitted || !question) return;
         dispatch({ type: 'UPDATE_QUIZ_ANSWER', payload: { qId: question.id, answer } });
-    }, [dispatch, isSubmitted, question]);
+        clearPendingQuestion(question.id);
+    }, [dispatch, isSubmitted, question, clearPendingQuestion]);
 
     const handleNavigate = useCallback((index: number) => {
-        if (index >= 0 && chapter && index < chapter.quiz.length) {
-            dispatch({ type: 'NAVIGATE_QUIZ', payload: index });
+        if (!chapter) return;
+        if (index < 0 || index >= chapter.quiz.length || index === currentQuestionIndex) return;
+
+        const currentQuestion = chapter.quiz[currentQuestionIndex];
+        if (currentQuestion && !isQuestionAnswered(currentQuestion.id)) {
+            markQuestionAsPending(currentQuestion.id);
         }
-    }, [dispatch, chapter]);
+
+        dispatch({ type: 'NAVIGATE_QUIZ', payload: index });
+    }, [chapter, currentQuestionIndex, dispatch, isQuestionAnswered, markQuestionAsPending]);
 
     const handleSubmit = useCallback(() => {
         if (!chapter) return;
@@ -120,6 +158,12 @@ const Quiz: React.FC = () => {
         }
         return `${base} bg-surface border-border hover:border-primary/70 hover:bg-background cursor-pointer transform hover:scale-[1.01]`;
     }, [isReviewMode, isSubmitted]);
+
+    const handleOrderingChange = useCallback((answer: string[]) => {
+        if (!question) return;
+        dispatch({ type: 'UPDATE_QUIZ_ANSWER', payload: { qId: question.id, answer } });
+        clearPendingQuestion(question.id);
+    }, [dispatch, question, clearPendingQuestion]);
 
     if (!chapter || !quizProgress || !question) {
         return <div>Loading quiz...</div>;
@@ -185,20 +229,29 @@ const Quiz: React.FC = () => {
         <div className="font-sans max-w-3xl mx-auto">
             {/* Question Navigator */}
             <div className="flex justify-center gap-2 mb-8">
-                {chapter.quiz.map((q, index) => (
-                    <button 
-                        key={q.id}
-                        onClick={() => handleNavigate(index)}
-                        className={`w-7 h-2 rounded-full transition-colors ${
-                            index === currentQuestionIndex 
-                                ? 'bg-primary' 
-                                : answers[q.id] 
-                                ? 'bg-primary/50' 
-                                : 'bg-border'
-                        }`}
-                        aria-label={`Aller à la question ${index + 1}`}
-                    />
-                ))}
+                {chapter.quiz.map((q, index) => {
+                    const isActive = index === currentQuestionIndex;
+                    const isAnswered = isQuestionAnswered(q.id);
+                    const isPendingAttention = !isAnswered && pendingQuestionIds.includes(q.id) && !isActive;
+                    const baseColor = isActive
+                        ? 'bg-primary'
+                        : isAnswered
+                        ? 'bg-primary/50'
+                        : 'bg-border';
+                    const activeClasses = isActive ? 'ring-2 ring-primary/80 shadow-[0_0_6px_rgba(255,107,53,0.45)]' : '';
+                    const pendingClasses = isPendingAttention
+                        ? 'animate-alertPulse bg-error text-white ring-2 ring-[rgba(239,68,68,0.7)] shadow-[0_0_12px_rgba(239,68,68,0.55)] scale-[1.2]'
+                        : '';
+
+                    return (
+                        <button 
+                            key={q.id}
+                            onClick={() => handleNavigate(index)}
+                            className={`w-7 h-2 rounded-full transition-colors transition-transform transform ${baseColor} ${activeClasses} ${pendingClasses}`}
+                            aria-label={`Aller à la question ${index + 1}`}
+                        />
+                    );
+                })}
             </div>
 
             {(!question.type || question.type === 'mcq') && (
@@ -259,10 +312,7 @@ const Quiz: React.FC = () => {
                     userAnswer={answers[question.id] as string[] | undefined}
                     isReviewMode={isReviewMode}
                     isSubmitted={isSubmitted}
-                    onOptionChange={(answer) => dispatch({ 
-                        type: 'UPDATE_QUIZ_ANSWER', 
-                        payload: { qId: question.id, answer } 
-                    })}
+                    onOptionChange={handleOrderingChange}
                 />
             )}
 
@@ -303,8 +353,7 @@ const Quiz: React.FC = () => {
                 ) : (
                     <button 
                         onClick={() => handleNavigate(currentQuestionIndex + 1)} 
-                        disabled={!answers[question.id]} 
-                        className="font-button px-6 py-2 font-semibold text-primary rounded-lg hover:bg-primary-light disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="font-button px-6 py-2 font-semibold text-primary rounded-lg hover:bg-primary-light"
                     >
                         Suivant
                     </button>
