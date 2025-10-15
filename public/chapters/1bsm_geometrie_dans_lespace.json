@@ -27,9 +27,8 @@
     {
       "id": "exo_geo_espace_1",
       "title": "Représentation paramétrique",
-      "statement": "Donner une représentation paramétrique de la droite (D) passant par le point $A(1,0,2)$ et dirigée par le vecteur $\\vec{u}(2, -1, 1)$.",
-      "sub_questions": []
+      "statement": "Donner une représentation paramétrique de la droite (D) passant par le point $A(1,0,2)$ et dirigée par le vecteur $\\vec{u}(2, -1, 1)$."
     }
   ],
-  "version": "v1.1.0-a8df7c"
+  "version": "v1.1.0-acacf3"
 }

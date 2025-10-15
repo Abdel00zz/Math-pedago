@@ -39,19 +39,30 @@ self.addEventListener('activate', event => {
   );
 });
 
-// Stratégie de cache: "Stale While Revalidate" pour le contenu dynamique
-const staleWhileRevalidate = async (request) => {
+// Stratégie de cache: "Network First" pour les chapitres (développement)
+const networkFirstForChapters = async (request) => {
+  try {
+    // Essayer d'abord le réseau
+    const networkResponse = await fetch(request);
+    if (networkResponse.ok) {
+      // Mettre à jour le cache
+      const cache = await caches.open(DYNAMIC_CACHE_NAME);
+      cache.put(request, networkResponse.clone());
+      return networkResponse;
+    }
+  } catch (err) {
+    console.warn('[Service Worker] Network failed; trying cache.', err);
+  }
+  
+  // Fallback sur le cache si le réseau échoue
   const cache = await caches.open(DYNAMIC_CACHE_NAME);
   const cachedResponse = await cache.match(request);
   
-  const fetchPromise = fetch(request).then(networkResponse => {
-    cache.put(request, networkResponse.clone());
-    return networkResponse;
-  }).catch(err => {
-    console.warn('[Service Worker] Fetch failed; serving from cache if available.', err);
-  });
-
-  return cachedResponse || fetchPromise;
+  if (cachedResponse) {
+    return cachedResponse;
+  }
+  
+  throw new Error('No network and no cache available');
 };
 
 // Stratégie de cache: "Cache First" pour les ressources statiques
@@ -65,9 +76,9 @@ self.addEventListener('fetch', event => {
   const { request } = event;
   const url = new URL(request.url);
 
-  // Pour les chapitres et le manifest, utiliser "stale-while-revalidate"
+  // Pour les chapitres et le manifest, utiliser "network-first" (toujours frais)
   if (url.pathname.startsWith('/chapters/') || url.pathname === '/manifest.json') {
-    event.respondWith(staleWhileRevalidate(request));
+    event.respondWith(networkFirstForChapters(request));
   } 
   // Pour les assets statiques de l'app shell, utiliser "cache-first"
   else if (STATIC_ASSETS.some(asset => url.pathname === new URL(asset, self.location.origin).pathname)) {

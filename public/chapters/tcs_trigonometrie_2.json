@@ -27,9 +27,8 @@
     {
       "id": "exo_tcs_trigo2_1",
       "title": "Résolution d'équation",
-      "statement": "Résoudre dans $[0, 2\\pi]$ l'équation $\\sin(x) = \\frac{1}{2}$.",
-      "sub_questions": []
+      "statement": "Résoudre dans $[0, 2\\pi]$ l'équation $\\sin(x) = \\frac{1}{2}$."
     }
   ],
-  "version": "v1.1.0-3bd3b4"
+  "version": "v1.1.0-ff9211"
 }

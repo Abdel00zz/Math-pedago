@@ -125,7 +125,7 @@ const ChapterHubView: React.FC = () => {
         const prog = currentChapterId ? progress[currentChapterId] : null;
         const chap = currentChapterId ? activities[currentChapterId] : null;
 
-        const q = prog?.quiz || { answers: {}, isSubmitted: false, score: 0, allAnswered: false, currentQuestionIndex: 0, duration: 0, hintsUsed: 0 };
+    const q = prog?.quiz || { answers: {}, isSubmitted: false, score: 0, allAnswered: false, currentQuestionIndex: 0, duration: 0, hintsUsed: 0, isTimerPaused: true };
         const tq = chap?.quiz?.length || 0;
         const aqc = Object.keys(q.answers).length;
         const te = chap?.exercises?.length || 0;

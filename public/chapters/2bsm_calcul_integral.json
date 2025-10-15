@@ -23,9 +23,8 @@
     {
       "id": "ex1",
       "title": "Intégration par parties",
-      "statement": "Calculer $\\int_0^1 x e^x dx$.",
-      "sub_questions": []
+      "statement": "Calculer $\\int_0^1 x e^x dx$."
     }
   ],
-  "version": "v1.1.0-6e8ee6"
+  "version": "v1.1.0-fe8938"
 }

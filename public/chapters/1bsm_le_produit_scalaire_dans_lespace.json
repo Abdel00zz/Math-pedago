@@ -27,9 +27,8 @@
     {
       "id": "exo_pscalaire_espace_1",
       "title": "Équation de plan",
-      "statement": "Déterminer l'équation cartésienne du plan (P) passant par le point $A(1,1,1)$ et de vecteur normal $\\vec{n}(2, 1, -3)$.",
-      "sub_questions": []
+      "statement": "Déterminer l'équation cartésienne du plan (P) passant par le point $A(1,1,1)$ et de vecteur normal $\\vec{n}(2, 1, -3)$."
     }
   ],
-  "version": "v1.1.0-d99451"
+  "version": "v1.1.0-1efd35"
 }

@@ -27,9 +27,8 @@
     {
       "id": "exo_2bse_log_1",
       "title": "Équation logarithmique",
-      "statement": "Résoudre dans $\\mathbb{R}$ l'équation $\\ln(x+2) + \\ln(x) = \\ln(3)$.",
-      "sub_questions": []
+      "statement": "Résoudre dans $\\mathbb{R}$ l'équation $\\ln(x+2) + \\ln(x) = \\ln(3)$."
     }
   ],
-  "version": "v1.1.0-ddef46"
+  "version": "v1.1.0-7e9555"
 }

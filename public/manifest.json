@@ -4,61 +4,61 @@
       "id": "les-ensembles-de-nombres-n-z-q-d-et-r",
       "file": "tcs_les_ensembles_de_nombres.json",
       "isActive": false,
-      "version": "v1.1.0-aad02e"
+      "version": "v1.1.0-f2be37"
     },
     {
       "id": "arithmetique-dans-n",
       "file": "tcs_arithmetique_dans_n.json",
       "isActive": false,
-      "version": "v1.1.0-a8a3d0"
+      "version": "v1.1.0-5cfa06"
     },
     {
       "id": "calcul-vectoriel-dans-le-plan",
       "file": "tcs_calcul_vectoriel_dans_le_plan.json",
       "isActive": false,
-      "version": "v1.1.0-d7a0ba"
+      "version": "v1.1.0-97dba0"
     },
     {
       "id": "la-projection-dans-le-plan",
       "file": "tcs_la_projection_dans_le_plan.json",
       "isActive": false,
-      "version": "v1.1.0-97273f"
+      "version": "v1.1.0-04bb98"
     },
     {
       "id": "lordre-dans-r",
       "file": "tcs_lordre_dans_r.json",
       "isActive": false,
-      "version": "v1.1.0-e94590"
+      "version": "v1.1.0-f74f0e"
     },
     {
       "id": "la-droite-dans-le-plan",
       "file": "tcs_la_droite_dans_le_plan.json",
       "isActive": false,
-      "version": "v1.1.0-0c12c5"
+      "version": "v1.1.0-0a29e5"
     },
     {
       "id": "les-polynomes",
       "file": "tcs_les_polynomes.json",
       "isActive": false,
-      "version": "v1.1.0-762c27"
+      "version": "v1.1.0-707987"
     },
     {
       "id": "equations-inequations-et-systemes",
       "file": "tcs_equations_inequations_et_systemes.json",
       "isActive": false,
-      "version": "v1.1.0-d2ddae"
+      "version": "v1.1.0-f1e3ec"
     },
     {
       "id": "trigonometrie-1-regles-du-calcul-trigonometrique",
       "file": "tcs_trigonometrie_1.json",
       "isActive": false,
-      "version": "v1.1.0-6c322d"
+      "version": "v1.1.0-f3ccb9"
     },
     {
       "id": "trigonometrie-2-equations-et-inequations-trigonometriques",
       "file": "tcs_trigonometrie_2.json",
       "isActive": false,
-      "version": "v1.1.0-3bd3b4"
+      "version": "v1.1.0-ff9211"
     },
     {
       "id": "generalites-sur-les-fonctions",
@@ -79,12 +79,6 @@
       "file": "1bsm_logique_mathematique.json",
       "isActive": false,
       "version": "v1.1.0-064085"
-    },
-    {
-      "id": "ensembles-et-applications",
-      "file": "1bse_ensembles_et_applications.json",
-      "isActive": false,
-      "version": "v1.1.0-dcb53c"
     },
     {
       "id": "generalites-sur-les-fonctions",
@@ -144,7 +138,7 @@
       "id": "statistiques",
       "file": "1bse_statistiques.json",
       "isActive": false,
-      "version": "v1.1.0-4763a6"
+      "version": "v1.1.0-ffba25"
     }
   ],
   "1bsm": [
@@ -152,91 +146,91 @@
       "id": "logique-mathematique",
       "file": "1bsm_logique_mathematique.json",
       "isActive": true,
-      "version": "v1.1.0-064085"
+      "version": "v1.1.0-f45996"
     },
     {
       "id": "ensembles-et-applications",
       "file": "1bsm_ensembles_et_applications.json",
       "isActive": true,
-      "version": "v1.1.0-449d58"
+      "version": "v1.1.0-af836a"
     },
     {
       "id": "generalites-sur-les-fonctions",
       "file": "1bsm_generalites_sur_les_fonctions.json",
       "isActive": false,
-      "version": "v1.1.0-373faa"
+      "version": "v1.1.0-7f3abf"
     },
     {
       "id": "le-barycentre-dans-le-plan",
       "file": "1bsm_le_barycentre_dans_le_plan.json",
       "isActive": false,
-      "version": "v1.1.0-c7375d"
+      "version": "v1.1.0-340a6f"
     },
     {
       "id": "le-produit-scalaire-dans-le-plan",
       "file": "1bsm_le_produit_scalaire_dans_le_plan.json",
       "isActive": false,
-      "version": "v1.1.0-7e80a9"
+      "version": "v1.1.0-c085cc"
     },
     {
       "id": "calcul-trigonometrique",
       "file": "1bsm_calcul_trigonometrique.json",
       "isActive": false,
-      "version": "v1.1.0-9442d3"
+      "version": "v1.1.0-b9ab59"
     },
     {
       "id": "les-suites-numeriques",
       "file": "1bsm_les_suites_numeriques.json",
       "isActive": false,
-      "version": "v1.1.0-566be6"
+      "version": "v1.1.0-0b1cd4"
     },
     {
       "id": "limites-dune-fonction",
       "file": "1bsm_limites_dune_fonction.json",
       "isActive": false,
-      "version": "v1.1.0-34b1c2"
+      "version": "v1.1.0-da1b63"
     },
     {
       "id": "la-rotation-dans-le-plan",
       "file": "1bsm_la_rotation_dans_le_plan.json",
       "isActive": false,
-      "version": "v1.1.0-4f4a46"
+      "version": "v1.1.0-cb4b47"
     },
     {
       "id": "la-derivation",
       "file": "1bsm_la_derivation.json",
       "isActive": false,
-      "version": "v1.1.0-e61e3b"
+      "version": "v1.1.0-752524"
     },
     {
       "id": "etude-des-fonctions",
       "file": "1bsm_etude_des_fonctions.json",
       "isActive": false,
-      "version": "v1.1.0-349b5e"
+      "version": "v1.1.0-fc347d"
     },
     {
       "id": "vecteurs-de-lespace",
       "file": "1bsm_vecteurs_de_lespace.json",
       "isActive": false,
-      "version": "v1.1.0-1ed670"
+      "version": "v1.1.0-1e6cfc"
     },
     {
       "id": "geometrie-dans-lespace",
       "file": "1bsm_geometrie_dans_lespace.json",
       "isActive": false,
-      "version": "v1.1.0-a8df7c"
+      "version": "v1.1.0-acacf3"
     },
     {
       "id": "denombrement",
       "file": "1bsm_denombrement.json",
       "isActive": false,
-      "version": "v1.1.0-1224b4"
+      "version": "v1.1.0-1b3dbf"
     },
     {
       "id": "le-produit-scalaire-dans-lespace",
       "file": "1bsm_le_produit_scalaire_dans_lespace.json",
       "isActive": false,
-      "version": "v1.1.0-d99451"
+      "version": "v1.1.0-1efd35"
     },
     {
       "id": "arithmetique-dans-z",
@@ -250,25 +244,25 @@
       "id": "limites-et-continuite",
       "file": "2bse_limites_et_continuite.json",
       "isActive": true,
-      "version": "v1.1.0-04ca62"
+      "version": "v1.1.0-2e195f"
     },
     {
       "id": "derivation-et-applications",
       "file": "2bse_derivation_et_applications.json",
       "isActive": false,
-      "version": "v1.1.0-d65dee"
+      "version": "v1.1.0-4c4608"
     },
     {
       "id": "etude-de-fonctions-et-representation-graphique",
       "file": "2bse_etude_de_fonctions_et_representation_graphique.json",
       "isActive": false,
-      "version": "v1.1.0-e0c506"
+      "version": "v1.1.0-006a12"
     },
     {
       "id": "fonctions-logarithmes",
       "file": "2bse_fonctions_logarithmes.json",
       "isActive": false,
-      "version": "v1.1.0-ddef46"
+      "version": "v1.1.0-7e9555"
     },
     {
       "id": "fonctions-exponentielles",
@@ -306,73 +300,73 @@
       "id": "limites-et-continuite",
       "file": "2bsm_limites_et_continuite.json",
       "isActive": false,
-      "version": "v1.1.0-f3116d"
+      "version": "v1.1.0-34fa8d"
     },
     {
       "id": "suites-numeriques",
       "file": "2bsm_suites_numeriques.json",
       "isActive": false,
-      "version": "v1.1.0-acd78a"
+      "version": "v1.1.0-c02628"
     },
     {
       "id": "derivation-et-etude-des-fonctions",
       "file": "2bsm_derivation_et_etude_des_fonctions.json",
       "isActive": false,
-      "version": "v1.1.0-90ff86"
+      "version": "v1.1.0-bee6be"
     },
     {
       "id": "fonctions-logarithmiques",
       "file": "2bsm_fonctions_logarithmiques.json",
       "isActive": false,
-      "version": "v1.1.0-ab4a63"
+      "version": "v1.1.0-a33c20"
     },
     {
       "id": "fonctions-exponentielles",
       "file": "2bsm_fonctions_exponentielles.json",
       "isActive": false,
-      "version": "v1.1.0-f69d96"
+      "version": "v1.1.0-6ce2c9"
     },
     {
       "id": "nombres-complexes",
       "file": "2bsm_nombres_complexes.json",
       "isActive": false,
-      "version": "v1.1.0-a3de65"
+      "version": "v1.1.0-27dc3b"
     },
     {
       "id": "calcul-integral",
       "file": "2bsm_calcul_integral.json",
       "isActive": false,
-      "version": "v1.1.0-6e8ee6"
+      "version": "v1.1.0-fe8938"
     },
     {
       "id": "equations-differentielles",
       "file": "2bsm_equations_differentielles.json",
       "isActive": false,
-      "version": "v1.1.0-5aa37d"
+      "version": "v1.1.0-8e8996"
     },
     {
       "id": "arithmetique-dans-z",
       "file": "2bsm_arithmetique_dans_z.json",
       "isActive": false,
-      "version": "v1.1.0-a3096d"
+      "version": "v1.1.0-c0675e"
     },
     {
       "id": "structures-algebriques",
       "file": "2bsm_structures_algebriques.json",
       "isActive": false,
-      "version": "v1.1.0-53130a"
+      "version": "v1.1.0-c3dfb4"
     },
     {
       "id": "espaces-vectoriels",
       "file": "2bsm_espaces_vectoriels.json",
       "isActive": false,
-      "version": "v1.1.0-cbe2fd"
+      "version": "v1.1.0-d89411"
     },
     {
       "id": "calcul-de-probabilites",
       "file": "2bsm_calcul_de_probabilites.json",
       "isActive": false,
-      "version": "v1.1.0-f012cc"
+      "version": "v1.1.0-54971d"
     }
   ]
 }

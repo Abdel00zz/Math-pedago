@@ -27,9 +27,8 @@
     {
       "id": "exo_rotation_1",
       "title": "Image d'un point",
-      "statement": "Dans le plan muni d'un repère orthonormé, on considère le point $A(2,0)$. Déterminer les coordonnées du point $A'$ image de A par la rotation de centre O et d'angle $\\frac{\\pi}{2}$.",
-      "sub_questions": []
+      "statement": "Dans le plan muni d'un repère orthonormé, on considère le point $A(2,0)$. Déterminer les coordonnées du point $A'$ image de A par la rotation de centre O et d'angle $\\frac{\\pi}{2}$."
     }
   ],
-  "version": "v1.1.0-4f4a46"
+  "version": "v1.1.0-cb4b47"
 }

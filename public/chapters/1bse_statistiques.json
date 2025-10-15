@@ -23,9 +23,8 @@
     {
       "id": "ex1",
       "title": "Calcul de moyenne",
-      "statement": "Calculer la moyenne de la série de notes suivantes : 10, 12, 8, 15, 11.",
-      "sub_questions": []
+      "statement": "Calculer la moyenne de la série de notes suivantes : 10, 12, 8, 15, 11."
     }
   ],
-  "version": "v1.1.0-4763a6"
+  "version": "v1.1.0-ffba25"
 }

@@ -27,9 +27,8 @@
     {
       "id": "exo_etudefonction_1",
       "title": "Tableau de variation",
-      "statement": "Dresser le tableau de variation complet de la fonction $f(x) = x^3 - 3x + 2$ sur $\\mathbb{R}$.",
-      "sub_questions": []
+      "statement": "Dresser le tableau de variation complet de la fonction $f(x) = x^3 - 3x + 2$ sur $\\mathbb{R}$."
     }
   ],
-  "version": "v1.1.0-349b5e"
+  "version": "v1.1.0-fc347d"
 }

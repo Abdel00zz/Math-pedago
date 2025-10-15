@@ -27,9 +27,8 @@
     {
       "id": "exo_tcs_equations_1",
       "title": "Résolution de système",
-      "statement": "Résoudre le système d'équations suivant : $\\begin{cases} x + y = 5 \\\\ x - y = 1 \\end{cases}$",
-      "sub_questions": []
+      "statement": "Résoudre le système d'équations suivant : $\\begin{cases} x + y = 5 \\\\ x - y = 1 \\end{cases}$"
     }
   ],
-  "version": "v1.1.0-d2ddae"
+  "version": "v1.1.0-f1e3ec"
 }

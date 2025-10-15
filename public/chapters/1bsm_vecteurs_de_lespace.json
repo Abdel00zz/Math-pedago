@@ -27,9 +27,8 @@
     {
       "id": "exo_vecteurs_espace_1",
       "title": "Coordonnées de vecteurs",
-      "statement": "Dans un repère de l'espace, on donne les points $A(1, 2, 3)$ et $B(4, 0, 5)$. Déterminer les coordonnées du vecteur $\\vec{AB}$.",
-      "sub_questions": []
+      "statement": "Dans un repère de l'espace, on donne les points $A(1, 2, 3)$ et $B(4, 0, 5)$. Déterminer les coordonnées du vecteur $\\vec{AB}$."
     }
   ],
-  "version": "v1.1.0-1ed670"
+  "version": "v1.1.0-1e6cfc"
 }

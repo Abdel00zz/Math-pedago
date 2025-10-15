@@ -1,6 +1,6 @@
 import React, { useCallback, Fragment } from 'react';
-import { MathJax } from 'better-react-mathjax';
 import { Question, Option } from '../../types';
+import FormattedText from '../FormattedText';
 
 interface MCQQuestionProps {
     question: Question;
@@ -35,7 +35,7 @@ const MCQQuestion: React.FC<MCQQuestionProps> = ({ question, userAnswer, isRevie
     return (
         <div className="bg-surface p-6 sm:p-8 rounded-2xl border border-border shadow-claude animate-fadeIn">
             <h3 className="text-2xl font-title mb-6 text-text">
-                <MathJax dynamic>{question.question}</MathJax>
+                <FormattedText text={question.question} />
             </h3>
             <div className="space-y-4">
                 {question.options?.map((option, index) => {
@@ -60,11 +60,11 @@ const MCQQuestion: React.FC<MCQQuestionProps> = ({ question, userAnswer, isRevie
                                         </div>
                                     )}
                                 </div>
-                                <span className="flex-1"><MathJax dynamic>{option.text}</MathJax></span>
+                                <span className="flex-1"><FormattedText text={option.text} /></span>
                             </button>
                             {(isReviewMode || isSubmitted) && isSelected && !option.isCorrect && option.explanation && (
                                 <div className="pl-14 -mt-3 mb-2 text-sm text-error/90 animate-fadeIn serif-text italic">
-                                    <MathJax dynamic>{option.explanation}</MathJax>
+                                    <FormattedText text={option.explanation} />
                                 </div>
                             )}
                         </Fragment>

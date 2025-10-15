@@ -27,9 +27,8 @@
     {
       "id": "exo_barycentre_1",
       "title": "Construction d'un barycentre",
-      "statement": "Soit un triangle ABC. Construire le point G, barycentre de $(A, 1)$, $(B, 2)$ et $(C, -1)$.",
-      "sub_questions": []
+      "statement": "Soit un triangle ABC. Construire le point G, barycentre de $(A, 1)$, $(B, 2)$ et $(C, -1)$."
     }
   ],
-  "version": "v1.1.0-c7375d"
+  "version": "v1.1.0-340a6f"
 }

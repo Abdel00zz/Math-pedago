@@ -27,9 +27,8 @@
     {
       "id": "exo_limites_1",
       "title": "Forme indéterminée",
-      "statement": "Calculer la limite suivante : $\\lim_{x\\to 2} \\frac{x^2 - 4}{x - 2}$.",
-      "sub_questions": []
+      "statement": "Calculer la limite suivante : $\\lim_{x\\to 2} \\frac{x^2 - 4}{x - 2}$."
     }
   ],
-  "version": "v1.1.0-34b1c2"
+  "version": "v1.1.0-da1b63"
 }

@@ -27,9 +27,8 @@
     {
       "id": "exo_tcs_vectoriel_1",
       "title": "Coordonnées de vecteurs",
-      "statement": "Dans un repère, on a les points $A(1, 2)$ et $B(-3, 5)$. Quelles sont les coordonnées du vecteur $\\vec{AB}$ ?",
-      "sub_questions": []
+      "statement": "Dans un repère, on a les points $A(1, 2)$ et $B(-3, 5)$. Quelles sont les coordonnées du vecteur $\\vec{AB}$ ?"
     }
   ],
-  "version": "v1.1.0-d7a0ba"
+  "version": "v1.1.0-97dba0"
 }

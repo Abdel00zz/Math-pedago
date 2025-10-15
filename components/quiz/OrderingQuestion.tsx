@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Question } from '../../types';
-import { MathJax } from 'better-react-mathjax';
+import { useMathJax } from '../../hooks/useMathJax';
 
 interface OrderingQuestionProps {
     question: Question;
@@ -64,6 +64,17 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({
 
     const [items, setItems] = useState<string[]>(initialItems);
     const [draggingIndex, setDraggingIndex] = useState<number | null>(null);
+    const [hoverIndex, setHoverIndex] = useState<number | null>(null);
+    const containerId = useMemo(() => `ordering-question-${question.id}`, [question.id]);
+
+    useMathJax(
+        [question, userAnswer, isReviewMode, isSubmitted, items],
+        {
+            containerId,
+            delay: 80,
+            onError: (error) => console.error('❌ Erreur MathJax OrderingQuestion:', error),
+        }
+    );
 
     // Reset state si la question change
     useEffect(() => {
@@ -102,25 +113,39 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({
         });
         
         setDraggingIndex(index);
+        setHoverIndex(index);
     }, [isReviewMode, isSubmitted, draggingIndex]);
 
     const handleDragEnd = useCallback((e: React.DragEvent<HTMLLIElement>) => {
         if (isReviewMode || isSubmitted) return;
         e.currentTarget.classList.remove('opacity-50');
         setDraggingIndex(null);
+        setHoverIndex(null);
     }, [isReviewMode, isSubmitted]);
 
     const handleDragOver = useCallback((e: React.DragEvent<HTMLLIElement>) => {
         e.preventDefault();
     }, []);
 
+    const handleDragLeave = useCallback(() => {
+        if (isReviewMode || isSubmitted) return;
+        setHoverIndex(null);
+    }, [isReviewMode, isSubmitted]);
+
+    const handleReset = useCallback(() => {
+        if (isReviewMode || isSubmitted) return;
+        const nextOrder = [...initialItems];
+        setItems(nextOrder);
+        setHoverIndex(null);
+    }, [initialItems, isReviewMode, isSubmitted]);
+
     // --- RENDER LOGIC ---
 
     if (isReviewMode || isSubmitted) {
         return (
-            <div className="bg-surface p-6 sm:p-8 rounded-2xl border border-border shadow-claude animate-fadeIn">
+            <div id={containerId} className="bg-surface p-6 sm:p-8 rounded-2xl border border-border shadow-claude animate-fadeIn">
                 <h3 className="text-2xl font-title mb-6 text-text">
-                    <MathJax dynamic>{question.question}</MathJax>
+                    {question.question}
                 </h3>
 
                 <div className="space-y-8">
@@ -138,9 +163,7 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({
                                 return (
                                     <li key={index} className={stepClass}>
                                         <span className="font-bold text-lg text-text">{index + 1}.</span>
-                                        <div className="flex-1 text-text">
-                                            <MathJax dynamic>{item}</MathJax>
-                                        </div>
+                                        <div className="flex-1 text-text">{item}</div>
                                         <span className={`material-symbols-outlined !text-xl mt-0.5 ${iconClass}`}>
                                             {icon}
                                         </span>
@@ -161,7 +184,7 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({
                                 <li key={index} className="flex items-start gap-3 p-3 rounded-lg bg-background border border-border">
                                     <span className="font-bold text-primary text-lg">{index + 1}.</span>
                                     <div className="flex-1 text-text-secondary">
-                                        <MathJax dynamic>{item}</MathJax>
+                                        {item}
                                     </div>
                                 </li>
                             ))}
@@ -174,10 +197,13 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({
 
     // --- Active Drag-and-Drop UI ---
     return (
-        <div className="bg-surface p-6 sm:p-8 rounded-2xl border border-border shadow-claude animate-fadeIn">
-            <h3 className="text-2xl font-title mb-8 text-text text-center">
-                <MathJax dynamic>{question.question}</MathJax>
+        <div id={containerId} className="bg-surface p-6 sm:p-8 rounded-2xl border border-border shadow-claude animate-fadeIn">
+            <h3 className="text-2xl font-title mb-4 text-text text-center">
+                {question.question}
             </h3>
+            <p className="text-sm text-text-secondary text-center mb-6">
+                Maintenez, glissez et déposez les étapes pour construire la démarche correcte.
+            </p>
 
             <ul className="space-y-3 max-w-lg mx-auto">
                 {items.map((item, index) => (
@@ -188,9 +214,12 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({
                         onDragEnter={(e) => handleDragEnter(e, index)}
                         onDragEnd={handleDragEnd}
                         onDragOver={handleDragOver}
+                        onDragLeave={handleDragLeave}
                         className={`group flex items-center gap-4 p-4 rounded-lg border-2 bg-background cursor-grab active:cursor-grabbing transition-all duration-200 ${
                             draggingIndex === index 
                                 ? 'shadow-2xl scale-105 bg-border/50' 
+                                : hoverIndex === index
+                                ? 'border-warning bg-warning/15 shadow-[0_8px_24px_rgba(245,158,11,0.15)]'
                                 : 'hover:border-primary/50'
                         }`}
                     >
@@ -201,12 +230,20 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({
                             drag_indicator
                         </span>
                         <span className="font-bold text-lg text-primary">{index + 1}.</span>
-                        <div className="flex-1 text-text font-sans">
-                            <MathJax dynamic>{item}</MathJax>
-                        </div>
+                        <div className="flex-1 text-text font-sans">{item}</div>
                     </li>
                 ))}
             </ul>
+
+            <div className="text-center mt-6">
+                <button
+                    type="button"
+                    onClick={handleReset}
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-border text-text-secondary hover:text-text hover:border-primary/60 transition-colors text-sm"
+                >
+                    Réinitialiser le mélange
+                </button>
+            </div>
         </div>
     );
 };

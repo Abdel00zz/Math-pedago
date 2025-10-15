@@ -23,9 +23,8 @@
     {
       "id": "ex1",
       "title": "Équation",
-      "statement": "Résoudre l'équation $\\ln(x-1) = 2$.",
-      "sub_questions": []
+      "statement": "Résoudre l'équation $\\ln(x-1) = 2$."
     }
   ],
-  "version": "v1.1.0-ab4a63"
+  "version": "v1.1.0-a33c20"
 }

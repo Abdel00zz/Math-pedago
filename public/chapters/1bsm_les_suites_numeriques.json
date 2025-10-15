@@ -27,9 +27,8 @@
     {
       "id": "exo_suites_1",
       "title": "Suite géométrique",
-      "statement": "Soit $(v_n)$ une suite géométrique de premier terme $v_0=2$ et de raison $q=3$. Calculer la somme des 4 premiers termes $S = v_0+v_1+v_2+v_3$.",
-      "sub_questions": []
+      "statement": "Soit $(v_n)$ une suite géométrique de premier terme $v_0=2$ et de raison $q=3$. Calculer la somme des 4 premiers termes $S = v_0+v_1+v_2+v_3$."
     }
   ],
-  "version": "v1.1.0-566be6"
+  "version": "v1.1.0-0b1cd4"
 }

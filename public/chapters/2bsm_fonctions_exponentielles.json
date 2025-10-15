@@ -23,9 +23,8 @@
     {
       "id": "ex1",
       "title": "Inéquation",
-      "statement": "Résoudre l'inéquation $e^{2x} < 1$.",
-      "sub_questions": []
+      "statement": "Résoudre l'inéquation $e^{2x} < 1$."
     }
   ],
-  "version": "v1.1.0-f69d96"
+  "version": "v1.1.0-6ce2c9"
 }

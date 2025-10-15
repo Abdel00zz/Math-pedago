@@ -25,8 +25,13 @@ export interface Hint {
     sub_questions?: SubQuestion[];
 }
 
+export interface SubSubQuestion {
+    text: string;
+}
+
 export interface SubQuestion {
     text: string;
+    sub_sub_questions?: SubSubQuestion[];
 }
 
 export interface Exercise {
@@ -140,6 +145,7 @@ export type Action =
     | { type: 'UPDATE_QUIZ_ANSWER'; payload: { qId: string; answer: string | string[] } }
     | { type: 'SUBMIT_QUIZ'; payload: { score: number; duration: number; hintsUsed: number } }
     | { type: 'TOGGLE_REVIEW_MODE'; payload: boolean }
+    | { type: 'SET_QUIZ_DURATION'; payload: { chapterId: string; duration: number } }
     | { type: 'UPDATE_EXERCISE_FEEDBACK'; payload: { exId: string; feedback: Feedback } }
     | { type: 'UPDATE_EXERCISES_DURATION'; payload: { duration: number } }
     | { type: 'SUBMIT_WORK'; payload: { chapterId: string } }

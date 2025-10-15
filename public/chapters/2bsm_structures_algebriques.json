@@ -23,9 +23,8 @@
     {
       "id": "ex1",
       "title": "Exemple de groupe",
-      "statement": "Montrer que $(\\mathbb{Z}, +)$ est un groupe.",
-      "sub_questions": []
+      "statement": "Montrer que $(\\mathbb{Z}, +)$ est un groupe."
     }
   ],
-  "version": "v1.1.0-53130a"
+  "version": "v1.1.0-c3dfb4"
 }

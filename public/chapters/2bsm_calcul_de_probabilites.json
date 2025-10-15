@@ -23,9 +23,8 @@
     {
       "id": "ex1",
       "title": "Loi binomiale",
-      "statement": "On lance 10 fois une pièce équilibrée. Quelle est la probabilité d'obtenir exactement 6 fois 'Face' ?",
-      "sub_questions": []
+      "statement": "On lance 10 fois une pièce équilibrée. Quelle est la probabilité d'obtenir exactement 6 fois 'Face' ?"
     }
   ],
-  "version": "v1.1.0-f012cc"
+  "version": "v1.1.0-54971d"
 }

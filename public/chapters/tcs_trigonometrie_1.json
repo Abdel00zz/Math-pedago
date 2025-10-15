@@ -27,9 +27,8 @@
     {
       "id": "exo_tcs_trigo1_1",
       "title": "Simplification d'expression",
-      "statement": "Simplifier l'expression suivante : $\\cos(\\pi - x) + \\sin(\\frac{\\pi}{2} - x)$.",
-      "sub_questions": []
+      "statement": "Simplifier l'expression suivante : $\\cos(\\pi - x) + \\sin(\\frac{\\pi}{2} - x)$."
     }
   ],
-  "version": "v1.1.0-6c322d"
+  "version": "v1.1.0-f3ccb9"
 }

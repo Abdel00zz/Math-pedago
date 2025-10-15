@@ -23,9 +23,8 @@
     {
       "id": "ex1",
       "title": "Module et argument",
-      "statement": "Déterminer le module et un argument de $z = 1 + i\\sqrt{3}$.",
-      "sub_questions": []
+      "statement": "Déterminer le module et un argument de $z = 1 + i\\sqrt{3}$."
     }
   ],
-  "version": "v1.1.0-a3de65"
+  "version": "v1.1.0-27dc3b"
 }

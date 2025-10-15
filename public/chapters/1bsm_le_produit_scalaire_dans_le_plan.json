@@ -27,9 +27,8 @@
     {
       "id": "exo_pscalaire_plan_1",
       "title": "Équation de droite",
-      "statement": "Déterminer une équation cartésienne de la droite (D) passant par le point $A(1, 2)$ et de vecteur normal $\\vec{n}(3, -1)$.",
-      "sub_questions": []
+      "statement": "Déterminer une équation cartésienne de la droite (D) passant par le point $A(1, 2)$ et de vecteur normal $\\vec{n}(3, -1)$."
     }
   ],
-  "version": "v1.1.0-7e80a9"
+  "version": "v1.1.0-c085cc"
 }

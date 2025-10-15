@@ -574,8 +574,7 @@
     {
       "id": "exo_solution_entiere_polynome",
       "title": "Racines Entières d'un Polynôme",
-      "statement": "Démontrer que l'équation $9x^5 - 12x^4 + 6x - 5 = 0$ n'admet pas de solution entière.",
-      "sub_questions": []
+      "statement": "Démontrer que l'équation $9x^5 - 12x^4 + 6x - 5 = 0$ n'admet pas de solution entière."
     },
     {
       "id": "exo_contraposee_divisibilite8",
@@ -680,5 +679,5 @@
       ]
     }
   ],
-  "version": "v1.1.0-064085"
+  "version": "v1.1.0-f45996"
 }

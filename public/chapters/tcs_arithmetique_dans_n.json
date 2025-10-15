@@ -27,9 +27,8 @@
     {
       "id": "exo_tcs_arithmetique_1",
       "title": "Décomposition en facteurs premiers",
-      "statement": "Décomposer le nombre 180 en produit de facteurs premiers.",
-      "sub_questions": []
+      "statement": "Décomposer le nombre 180 en produit de facteurs premiers."
     }
   ],
-  "version": "v1.1.0-a8a3d0"
+  "version": "v1.1.0-5cfa06"
 }

@@ -27,9 +27,8 @@
     {
       "id": "exo_tcs_polynomes_1",
       "title": "Racine d'un polynôme",
-      "statement": "Vérifier si $x=2$ est une racine du polynôme $Q(x) = x^3 - x^2 - 4$.",
-      "sub_questions": []
+      "statement": "Vérifier si $x=2$ est une racine du polynôme $Q(x) = x^3 - x^2 - 4$."
     }
   ],
-  "version": "v1.1.0-762c27"
+  "version": "v1.1.0-707987"
 }

@@ -27,9 +27,8 @@
     {
       "id": "exo_2bsm_limites_1",
       "title": "Continuité",
-      "statement": "Étudier la continuité de la fonction $f$ définie par $f(x) = \\begin{cases} x^2+1 & \\text{si } x \\ge 0 \\\\ \\cos(x) & \\text{si } x < 0 \\end{cases}$ au point $x_0=0$.",
-      "sub_questions": []
+      "statement": "Étudier la continuité de la fonction $f$ définie par $f(x) = \\begin{cases} x^2+1 & \\text{si } x \\ge 0 \\\\ \\cos(x) & \\text{si } x < 0 \\end{cases}$ au point $x_0=0$."
     }
   ],
-  "version": "v1.1.0-f3116d"
+  "version": "v1.1.0-34fa8d"
 }

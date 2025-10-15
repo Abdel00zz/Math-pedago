@@ -4,7 +4,7 @@
   "sessionDates": [
     "2025-10-08T18:00:00Z",
     "2025-10-10T18:45:00Z",
-    "2025-10-17T18:00:00Z"
+    "2025-10-15T18:00:52Z"
   ],
   "quiz": [
     {
@@ -539,14 +539,12 @@
     {
       "id": "ex1",
       "title": "Ensemble défini par une inéquation",
-      "statement": "Écrire en extension l'ensemble $E = \\{x \\in \\mathbb{N} \\mid |2x - 3| \\le 2\\}$.",
-      "sub_questions": []
+      "statement": "Écrire en extension l'ensemble $E = \\{x \\in \\mathbb{N} \\mid |2x - 3| \\le 2\\}$."
     },
     {
       "id": "ex2",
       "title": "Opérations sur les ensembles d'entiers",
-      "statement": "On considère les ensembles : $B = \\{x \\in \\mathbb{Z} \\mid |x| < 3\\}$, $E = \\{x \\in \\mathbb{Z} \\mid -5 < x \\le 5\\}$, et $A = E \\cap \\mathbb{N}^*$. Déterminer en extension les ensembles suivants : $A \\cap B$, $\\mathcal{C}_E^{(A \\cup B)}$, $A \\setminus B$ et $(A \\cap B) \\cap \\mathcal{C}_E^{(A \\cup B)}$.",
-      "sub_questions": []
+      "statement": "On considère les ensembles : $B = \\{x \\in \\mathbb{Z} \\mid |x| < 3\\}$, $E = \\{x \\in \\mathbb{Z} \\mid -5 < x \\le 5\\}$, et $A = E \\cap \\mathbb{N}^*$. Déterminer en extension les ensembles suivants : $A \\cap B$, $\\mathcal{C}_E^{(A \\cup B)}$, $A \\setminus B$ et $(A \\cap B) \\cap \\mathcal{C}_E^{(A \\cup B)}$."
     },
     {
       "id": "ex3",
@@ -589,8 +587,7 @@
     {
       "id": "ex5",
       "title": "Ensembles définis en compréhension",
-      "statement": "Déterminer en extension les ensembles : $F = \\{x \\in \\mathbb{Z} \\mid \\frac{2x+1}{x+1} \\in \\mathbb{Z}\\}$ et $C = \\{(x,y) \\in (\\mathbb{Z}^*)^2 \\mid \\frac{1}{x} + \\frac{1}{y} = \\frac{1}{5}\\}$.",
-      "sub_questions": []
+      "statement": "Déterminer en extension les ensembles : $F = \\{x \\in \\mathbb{Z} \\mid \\frac{2x+1}{x+1} \\in \\mathbb{Z}\\}$ et $C = \\{(x,y) \\in (\\mathbb{Z}^*)^2 \\mid \\frac{1}{x} + \\frac{1}{y} = \\frac{1}{5}\\}$."
     },
     {
       "id": "ex6",
@@ -608,8 +605,7 @@
     {
       "id": "ex7",
       "title": "Preuve d'égalité d'ensembles",
-      "statement": "Soient A, B, C trois ensembles. Montrer que si $(B \\setminus A) = (C \\setminus A)$ et $A \\cap B = A \\cap C$, alors $B = C$.",
-      "sub_questions": []
+      "statement": "Soient A, B, C trois ensembles. Montrer que si $(B \\setminus A) = (C \\setminus A)$ et $A \\cap B = A \\cap C$, alors $B = C$."
     },
     {
       "id": "ex8",
@@ -627,8 +623,7 @@
     {
       "id": "ex9",
       "title": "Ensembles disjoints",
-      "statement": "On considère les ensembles $A = \\{\\frac{5 + 8k}{20} \\mid k \\in \\mathbb{N}\\}$ et $B = \\{\\frac{5 + 4k}{10} \\mid k \\in \\mathbb{N}\\}$. Montrer que $A \\cap B = \\emptyset$.",
-      "sub_questions": []
+      "statement": "On considère les ensembles $A = \\{\\frac{5 + 8k}{20} \\mid k \\in \\mathbb{N}\\}$ et $B = \\{\\frac{5 + 4k}{10} \\mid k \\in \\mathbb{N}\\}$. Montrer que $A \\cap B = \\emptyset$."
     },
     {
       "id": "ex10",
@@ -681,5 +676,6 @@
         }
       ]
     }
-  ]
+  ],
+  "version": "v1.1.0-af836a"
 }

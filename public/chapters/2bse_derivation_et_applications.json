@@ -27,9 +27,8 @@
     {
       "id": "exo_2bse_derivation_1",
       "title": "Tangente",
-      "statement": "Déterminer l'équation de la tangente à la courbe de la fonction $f(x) = e^x$ au point d'abscisse 0.",
-      "sub_questions": []
+      "statement": "Déterminer l'équation de la tangente à la courbe de la fonction $f(x) = e^x$ au point d'abscisse 0."
     }
   ],
-  "version": "v1.1.0-d65dee"
+  "version": "v1.1.0-4c4608"
 }

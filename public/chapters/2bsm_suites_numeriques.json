@@ -23,9 +23,8 @@
     {
       "id": "ex1",
       "title": "Convergence",
-      "statement": "Étudier la convergence de la suite $u_n = \\frac{2n+1}{n+3}$.",
-      "sub_questions": []
+      "statement": "Étudier la convergence de la suite $u_n = \\frac{2n+1}{n+3}$."
     }
   ],
-  "version": "v1.1.0-acd78a"
+  "version": "v1.1.0-c02628"
 }

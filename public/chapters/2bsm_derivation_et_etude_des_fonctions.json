@@ -23,9 +23,8 @@
     {
       "id": "ex1",
       "title": "Tableau de variation",
-      "statement": "Étudier les variations de la fonction $f(x) = x e^{-x}$.",
-      "sub_questions": []
+      "statement": "Étudier les variations de la fonction $f(x) = x e^{-x}$."
     }
   ],
-  "version": "v1.1.0-90ff86"
+  "version": "v1.1.0-bee6be"
 }

@@ -3,6 +3,7 @@ import { useAppState, useAppDispatch } from '../context/AppContext';
 import { Feedback, SubQuestion, Exercise } from '../types';
 import { MathJax } from 'better-react-mathjax';
 import HintModal from './HintModal';
+import { useMathJax } from '../hooks/useMathJax';
 
 const feedbackConfig: { [key in Feedback]: { base: string; selected: string } } = {
     'Facile':    { base: 'bg-white border-[#d7ccc8] text-[#a1887f] hover:bg-gray-100', selected: 'bg-success text-white border-success' },
@@ -96,13 +97,87 @@ const Exercises: React.FC<ExercisesProps> = ({ onAllCompleted }) => {
         dispatch({ type: 'UPDATE_EXERCISE_FEEDBACK', payload: { exId, feedback } });
     };
 
-    const renderSubQuestions = (subQuestions: SubQuestion[] | undefined) => (
-        <ol className="styled-list text-gray-700 text-base leading-relaxed">
-            {subQuestions?.map((sq, index) => (
-                <li key={index}><MathJax dynamic>{sq.text}</MathJax></li>
-            ))}
-        </ol>
+    // Hook MathJax optimisé pour le rendu des formules
+    useMathJax(
+        [chapter, exercisesFeedback], 
+        { 
+            delay: 150,
+            containerId: 'exercises-container',
+            onSuccess: () => console.log('✅ Formules mathématiques rendues'),
+            onError: (error) => console.error('❌ Erreur rendu MathJax:', error)
+        }
     );
+
+    // Fonction pour formater le texte HTML (gras, italique, etc.)
+    const formatText = (text: string) => {
+        // Remplacer les balises <br> par des sauts de ligne
+        let formatted = text.replace(/<br\s*\/?>/gi, '\n');
+        
+        // Convertir le Markdown **texte** en <strong>
+        formatted = formatted.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+        
+        // Convertir le Markdown *texte* en <em>
+        formatted = formatted.replace(/\*(.+?)\*/g, '<em>$1</em>');
+        
+        // Convertir le Markdown __texte__ en <strong>
+        formatted = formatted.replace(/__(.+?)__/g, '<strong>$1</strong>');
+        
+        // Convertir le Markdown _texte_ en <em>
+        formatted = formatted.replace(/_(.+?)_/g, '<em>$1</em>');
+        
+        return formatted;
+    };
+
+    const renderSubQuestions = (subQuestions: SubQuestion[] | undefined) => {
+        if (!subQuestions || subQuestions.length === 0) return null;
+        
+        return (
+            <ol className="list-decimal pl-6 mt-4 space-y-4 text-gray-800">
+                {subQuestions.map((sq, index) => (
+                    <li key={index} className="pl-2 text-base leading-relaxed">
+                        <div className="font-medium text-gray-900">
+                            <MathJax dynamic>
+                                <span dangerouslySetInnerHTML={{ __html: formatText(sq.text) }} />
+                            </MathJax>
+                        </div>
+                        
+                        {sq.sub_sub_questions && sq.sub_sub_questions.length > 0 && (
+                            <ol 
+                                className="list-none pl-0 mt-2 space-y-2"
+                                style={{ 
+                                    counterReset: 'subsub-counter',
+                                    marginLeft: '1.5rem'
+                                }}
+                            >
+                                {sq.sub_sub_questions.map((ssq, ssqIndex) => (
+                                    <li 
+                                        key={ssqIndex} 
+                                        className="relative pl-8 text-sm leading-relaxed text-gray-700"
+                                        style={{
+                                            counterIncrement: 'subsub-counter',
+                                            textAlign: 'left'
+                                        }}
+                                    >
+                                        <span 
+                                            className="absolute left-0 top-0 font-medium text-gray-600"
+                                            style={{
+                                                content: 'counter(subsub-counter, lower-alpha) ". "',
+                                            }}
+                                        >
+                                            {String.fromCharCode(97 + ssqIndex)}.
+                                        </span>
+                                        <MathJax dynamic>
+                                            <span dangerouslySetInnerHTML={{ __html: formatText(ssq.text) }} />
+                                        </MathJax>
+                                    </li>
+                                ))}
+                            </ol>
+                        )}
+                    </li>
+                ))}
+            </ol>
+        );
+    };
 
     const hintExercise = useMemo(() => {
         if (!hintModalExerciseId) return null;
@@ -110,7 +185,7 @@ const Exercises: React.FC<ExercisesProps> = ({ onAllCompleted }) => {
     }, [hintModalExerciseId, chapter.exercises]);
 
     return (
-        <div className="space-y-4 pb-4">
+        <div id="exercises-container" className="space-y-4 pb-4">
             {chapter.exercises.map((exercise, index) => (
                 <div key={exercise.id} className="bg-amber-50 p-6 rounded-lg border border-amber-200 shadow-lg shadow-amber-900/5">
                     <div className="flex justify-between items-start mb-4">

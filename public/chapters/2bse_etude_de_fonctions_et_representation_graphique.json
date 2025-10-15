@@ -27,9 +27,8 @@
     {
       "id": "exo_2bse_etude_1",
       "title": "Étude complète",
-      "statement": "Étudier la fonction $f(x) = \\frac{2x-1}{x+1}$ (domaine de définition, limites, dérivée, tableau de variation et asymptotes).",
-      "sub_questions": []
+      "statement": "Étudier la fonction $f(x) = \\frac{2x-1}{x+1}$ (domaine de définition, limites, dérivée, tableau de variation et asymptotes)."
     }
   ],
-  "version": "v1.1.0-e0c506"
+  "version": "v1.1.0-006a12"
 }

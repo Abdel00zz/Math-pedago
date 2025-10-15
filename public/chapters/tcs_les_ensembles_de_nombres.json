@@ -27,9 +27,8 @@
     {
       "id": "exo_tcs_ensembles_1",
       "title": "Classification des nombres",
-      "statement": "Classer les nombres suivants dans le plus petit ensemble (ℕ, ℤ, ℚ, 𝔻, ℝ) auquel ils appartiennent : $-5$; $3.14$; $\\sqrt{2}$; $\\frac{7}{4}$.",
-      "sub_questions": []
+      "statement": "Classer les nombres suivants dans le plus petit ensemble (ℕ, ℤ, ℚ, 𝔻, ℝ) auquel ils appartiennent : $-5$; $3.14$; $\\sqrt{2}$; $\\frac{7}{4}$."
     }
   ],
-  "version": "v1.1.0-aad02e"
+  "version": "v1.1.0-f2be37"
 }

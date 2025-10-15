@@ -107,9 +107,16 @@ Chaque objet dans le tableau `exercises` représente un exercice.
 
 ### Structure de l'objet `SubQuestion`
 
-| Clé    | Type     | Obligatoire | Description                               |
-|--------|----------|-------------|-------------------------------------------|
-| `text` | `String` | Oui         | Le texte de la sous-question. Peut contenir du MathJax. |
+| Clé                  | Type                      | Obligatoire | Description                                                    |
+|----------------------|---------------------------|-------------|----------------------------------------------------------------|
+| `text`               | `String`                  | Oui         | Le texte de la sous-question. Peut contenir du MathJax.       |
+| `sub_sub_questions`  | `Array<SubSubQuestion>`   | Non         | Un tableau de sous-sous-questions (a., b., c., etc.).         |
+
+### Structure de l'objet `SubSubQuestion`
+
+| Clé    | Type     | Obligatoire | Description                                      |
+|--------|----------|-------------|--------------------------------------------------|
+| `text` | `String` | Oui         | Le texte de la sous-sous-question. Peut contenir du MathJax. |
 
 ### Structure de l'objet `ExerciseHint`
 
@@ -118,7 +125,7 @@ Chaque objet dans le tableau `exercises` représente un exercice.
 | `text`          | `String`             | Oui         | Le texte de l'indice. Peut contenir du MathJax.                           |
 | `sub_questions` | `Array<SubQuestion>` | Non         | L'indice peut lui-même contenir une liste de sous-questions pour guider l'élève. |
 
-### Exemple d'un `Exercise`
+### Exemple d'un `Exercise` sans sous-sous-questions
 
 ```json
 {
@@ -136,3 +143,43 @@ Chaque objet dans le tableau `exercises` représente un exercice.
   ]
 }
 ```
+
+### Exemple d'un `Exercise` avec sous-sous-questions
+
+```json
+{
+  "id": "exo_derivation_complete",
+  "title": "Étude d'une Fonction Dérivée",
+  "statement": "Soit la fonction $f$ définie sur $\\mathbb{R}$ par : $f(x) = x^3 - 6x^2 + 9x + 1$",
+  "sub_questions": [
+    {
+      "text": "Calculer la dérivée $f'(x)$ de la fonction $f$.",
+      "sub_sub_questions": [
+        { "text": "Appliquer la règle de dérivation : $(x^n)' = nx^{n-1}$" },
+        { "text": "Simplifier l'expression obtenue." }
+      ]
+    },
+    {
+      "text": "Étudier le signe de la dérivée $f'(x)$.",
+      "sub_sub_questions": [
+        { "text": "Factoriser $f'(x)$." },
+        { "text": "Résoudre l'équation $f'(x) = 0$." },
+        { "text": "Construire le tableau de signes de $f'(x)$." }
+      ]
+    },
+    {
+      "text": "En déduire les variations de la fonction $f$."
+    }
+  ],
+  "hint": [
+    { "text": "Pour factoriser le trinôme, cherchez deux nombres dont la somme et le produit correspondent aux coefficients." }
+  ]
+}
+```
+
+**Notes importantes :**
+- Les **sous-questions** sont numérotées automatiquement : 1., 2., 3., etc.
+- Les **sous-sous-questions** sont lettrées automatiquement : a., b., c., etc.
+- Les sous-sous-questions permettent de décomposer une question complexe en étapes guidées.
+- Une sous-question peut avoir zéro, une ou plusieurs sous-sous-questions.
+- Les sous-sous-questions s'affichent avec une indentation pour une meilleure lisibilité.

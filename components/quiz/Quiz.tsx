@@ -3,20 +3,25 @@ import { useAppState, useAppDispatch } from '../../context/AppContext';
 import { MathJax } from 'better-react-mathjax';
 import { Option } from '../../types';
 import OrderingQuestion from './OrderingQuestion';
+import { useMathJax } from '../../hooks/useMathJax';
 
 const Quiz: React.FC = () => {
     const state = useAppState();
     const dispatch = useAppDispatch();
     const { currentChapterId, activities, progress, isReviewMode } = state;
-    
-    const [timeSpent, setTimeSpent] = useState(0);
-    
+
+    const windowSize = 7;
+
+    // Références pour le timer et la fenêtre de navigation
+    const timerRef = useRef<number | null>(null);
+    const latestTimeRef = useRef<number>(0);
+
     // ✅ OPTIMISATION 1: Références stables mémorisées
     const chapter = useMemo(() => 
         currentChapterId ? activities[currentChapterId] : null, 
         [currentChapterId, activities]
     );
-    
+
     const quizProgress = useMemo(() => 
         currentChapterId ? progress[currentChapterId]?.quiz : null, 
         [currentChapterId, progress]
@@ -24,21 +29,73 @@ const Quiz: React.FC = () => {
     
     const { 
         currentQuestionIndex = 0, 
-        answers = {}, 
-        isSubmitted = false, 
+        answers = {},
+        isSubmitted = false,
         allAnswered = false, 
         score = 0, 
-        hintsUsed = 0 
+        hintsUsed = 0, 
+        duration: persistedDuration = 0
     } = quizProgress || {};
-    
+
+    const [timeSpent, setTimeSpent] = useState(() => persistedDuration);
+
+    useEffect(() => {
+        setTimeSpent(persistedDuration);
+        latestTimeRef.current = persistedDuration;
+    }, [persistedDuration]);
+
+    useEffect(() => {
+        latestTimeRef.current = timeSpent;
+    }, [timeSpent]);
+
     const question = useMemo(() => 
         chapter?.quiz[currentQuestionIndex], 
         [chapter, currentQuestionIndex]
     );
 
-    // ✅ OPTIMISATION 2: Timer optimisé avec useRef
-    const timerRef = useRef<number | null>(null);
-    
+    const [windowStart, setWindowStart] = useState(() => Math.max(0, Math.floor(currentQuestionIndex / windowSize) * windowSize));
+
+    useEffect(() => {
+        if (!chapter) return;
+        const total = chapter.quiz.length;
+        const maxStart = Math.max(0, total - windowSize);
+        const desiredStart = Math.min(Math.max(0, Math.floor(currentQuestionIndex / windowSize) * windowSize), maxStart);
+        setWindowStart(prev => (prev === desiredStart ? prev : desiredStart));
+    }, [chapter, currentQuestionIndex]);
+
+    const answeredCount = useMemo(() => Object.keys(answers).length, [answers]);
+
+    const navigationWindow = useMemo(() => {
+        if (!chapter) return [] as { id: string; globalIndex: number }[];
+        return chapter.quiz.slice(windowStart, windowStart + windowSize).map((q, localIndex) => ({
+            id: q.id,
+            globalIndex: windowStart + localIndex,
+        }));
+    }, [chapter, windowStart]);
+
+    const canScrollPrev = windowStart > 0;
+    const canScrollNext = useMemo(() => {
+        if (!chapter) return false;
+        return windowStart + windowSize < chapter.quiz.length;
+    }, [chapter, windowStart]);
+
+    const handleWindowShift = useCallback((direction: 'prev' | 'next') => {
+        if (!chapter) return;
+        const total = chapter.quiz.length;
+        const maxStart = Math.max(0, total - windowSize);
+        setWindowStart(prev => {
+            if (direction === 'prev') {
+                return Math.max(0, prev - windowSize);
+            }
+            return Math.min(maxStart, prev + windowSize);
+        });
+    }, [chapter]);
+
+    const formattedTime = useMemo(() => {
+        const minutes = Math.floor(timeSpent / 60).toString().padStart(2, '0');
+        const seconds = (timeSpent % 60).toString().padStart(2, '0');
+        return `${minutes}:${seconds}`;
+    }, [timeSpent]);
     useEffect(() => {
         // Ne démarrer le timer que si nécessaire
         if (isReviewMode || isSubmitted) {
@@ -61,6 +118,51 @@ const Quiz: React.FC = () => {
         };
     }, [isReviewMode, isSubmitted]);
 
+    useEffect(() => {
+        if (!chapter) return;
+        return () => {
+            dispatch({
+                type: 'SET_QUIZ_DURATION',
+                payload: { chapterId: chapter.id, duration: latestTimeRef.current },
+            });
+        };
+    }, [chapter, dispatch]);
+
+    useEffect(() => {
+        if (!chapter) return;
+        const handleBeforeUnload = () => {
+            dispatch({
+                type: 'SET_QUIZ_DURATION',
+                payload: { chapterId: chapter.id, duration: latestTimeRef.current },
+            });
+        };
+        window.addEventListener('beforeunload', handleBeforeUnload);
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, [chapter, dispatch]);
+
+    useEffect(() => {
+        if (!chapter) return;
+        if (isReviewMode || isSubmitted) {
+            dispatch({
+                type: 'SET_QUIZ_DURATION',
+                payload: { chapterId: chapter.id, duration: latestTimeRef.current },
+            });
+        }
+    }, [chapter, dispatch, isReviewMode, isSubmitted]);
+
+    // Hook MathJax optimisé pour le rendu des questions
+    useMathJax(
+        [question, isSubmitted, isReviewMode], 
+        { 
+            delay: 100,
+            containerId: 'quiz-container',
+            onSuccess: () => console.log('✅ Question rendue avec MathJax'),
+            onError: (error) => console.error('❌ Erreur MathJax Quiz:', error)
+        }
+    );
+
     // ✅ OPTIMISATION 3: Handlers mémorisés avec useCallback
     const handleOptionChange = useCallback((answer: string) => {
         if (isSubmitted || !question) return;
@@ -73,8 +175,18 @@ const Quiz: React.FC = () => {
         }
     }, [dispatch, chapter]);
 
+    // ✅ Calculer les questions non répondues
+    const unansweredQuestions = useMemo(() => {
+        if (!chapter) return [];
+        return chapter.quiz.filter(q => !answers[q.id]);
+    }, [chapter, answers]);
+
+    const allQuestionsAnswered = useMemo(() => {
+        return unansweredQuestions.length === 0;
+    }, [unansweredQuestions]);
+
     const handleSubmit = useCallback(() => {
-        if (!chapter) return;
+        if (!chapter || !allQuestionsAnswered) return;
         
         // ✅ OPTIMISATION 4: Calcul de score optimisé
         const finalScore = chapter.quiz.reduce((acc, q) => {
@@ -103,22 +215,22 @@ const Quiz: React.FC = () => {
 
     // ✅ OPTIMISATION 5: Fonction getOptionClass mémorisée
     const getOptionClass = useCallback((option: Option, isSelected: boolean) => {
-        const base = 'w-full text-left p-4 rounded-xl border-2 transition-all duration-300 ease-in-out flex items-start gap-4 font-sans text-lg';
+        const base = 'group relative w-full text-left px-5 py-4 rounded-3xl border transition-all duration-300 ease-in-out flex items-start gap-4 font-sans text-lg shadow-[0_18px_38px_rgba(15,23,42,0.28)] backdrop-blur-sm';
 
         if (isReviewMode || isSubmitted) {
             if (option.isCorrect) {
-                return `${base} bg-success/10 border-success text-text`;
+                return `${base} bg-success/15 border-success/70 text-text`;
             }
             if (isSelected && !option.isCorrect) {
-                return `${base} bg-error/10 border-error text-text`;
+                return `${base} bg-error/15 border-error/70 text-text`;
             }
-            return `${base} border-border bg-surface text-text-disabled cursor-default opacity-70`;
+            return `${base} border-border/60 bg-surface/60 text-text-secondary cursor-default opacity-80`;
         }
 
         if (isSelected) {
-            return `${base} bg-primary/10 border-primary text-text ring-2 ring-primary/30 transform scale-[1.01]`;
+            return `${base} border-primary bg-primary/10 text-text shadow-[0_24px_55px_rgba(59,130,246,0.26)] scale-[1.01]`;
         }
-        return `${base} bg-surface border-border hover:border-primary/70 hover:bg-background cursor-pointer transform hover:scale-[1.01]`;
+        return `${base} border-border/50 bg-surface/60 hover:border-primary/60 hover:bg-surface/80 cursor-pointer hover:shadow-[0_28px_60px_rgba(59,130,246,0.2)]`;
     }, [isReviewMode, isSubmitted]);
 
     if (!chapter || !quizProgress || !question) {
@@ -182,31 +294,80 @@ const Quiz: React.FC = () => {
     }
     
     return (
-        <div className="font-sans max-w-3xl mx-auto">
+        <div id="quiz-container" className="font-sans max-w-3xl mx-auto px-2">
+
             {/* Question Navigator */}
-            <div className="flex justify-center gap-2 mb-8">
-                {chapter.quiz.map((q, index) => (
-                    <button 
-                        key={q.id}
-                        onClick={() => handleNavigate(index)}
-                        className={`w-7 h-2 rounded-full transition-colors ${
-                            index === currentQuestionIndex 
-                                ? 'bg-primary' 
-                                : answers[q.id] 
-                                ? 'bg-primary/50' 
-                                : 'bg-border'
-                        }`}
-                        aria-label={`Aller à la question ${index + 1}`}
-                    />
-                ))}
+            <div className="mb-8 flex items-center justify-center gap-4">
+                <button
+                    type="button"
+                    onClick={() => handleWindowShift('prev')}
+                    disabled={!canScrollPrev}
+                    className="flex h-10 w-10 items-center justify-center rounded-full border border-border/60 bg-background/70 text-text-secondary transition-colors hover:border-primary/60 disabled:cursor-not-allowed disabled:opacity-40"
+                    aria-label="Afficher les questions précédentes"
+                >
+                    <span className="material-symbols-outlined text-base">chevron_left</span>
+                </button>
+                <div key={windowStart} className="flex items-center gap-3">
+                    {navigationWindow.map(({ id, globalIndex }) => {
+                        const isAnswered = !!answers[id];
+                        const isCurrent = globalIndex === currentQuestionIndex;
+                        const isUnanswered = !isAnswered;
+
+                        const baseClasses = 'flex h-10 w-10 items-center justify-center rounded-full border font-semibold text-sm transition-all duration-300 shadow-[0_12px_22px_rgba(15,23,42,0.18)]';
+
+                        const stateClasses = isCurrent
+                            ? 'bg-primary text-[#F8FAFC] border-primary shadow-[0_14px_32px_rgba(59,130,246,0.28)] scale-105'
+                            : isAnswered
+                            ? 'bg-surface/70 text-[#E2E8F0] border-primary/35 hover:border-primary/60'
+                            : 'border-warning/70 bg-warning/30 text-[#F9FAFF] animate-alertBeacon';
+
+                        return (
+                            <button
+                                key={id}
+                                onClick={() => handleNavigate(globalIndex)}
+                                className={`${baseClasses} ${stateClasses}`}
+                                title={isUnanswered ? `Question ${globalIndex + 1} non répondue` : `Question ${globalIndex + 1}`}
+                                aria-label={`Aller à la question ${globalIndex + 1}${isUnanswered ? ' (non répondue)' : ''}`}
+                                disabled={isCurrent}
+                            >
+                                <span>{globalIndex + 1}</span>
+                            </button>
+                        );
+                    })}
+                </div>
+                <button
+                    type="button"
+                    onClick={() => handleWindowShift('next')}
+                    disabled={!canScrollNext}
+                    className="flex h-10 w-10 items-center justify-center rounded-full border border-border/60 bg-background/70 text-text-secondary transition-colors hover:border-primary/60 disabled:cursor-not-allowed disabled:opacity-40"
+                    aria-label="Afficher les questions suivantes"
+                >
+                    <span className="material-symbols-outlined text-base">chevron_right</span>
+                </button>
             </div>
+            
+            {/* Alerte questions non répondues */}
+            {!allQuestionsAnswered && currentQuestionIndex === chapter.quiz.length - 1 && (
+                <div className="mb-6 px-5 py-4 rounded-2xl border border-warning/35 bg-warning/5 backdrop-blur-sm shadow-[0_12px_30px_rgba(245,158,11,0.12)] animate-alertCard">
+                    <p className="text-sm text-warning">Encore {unansweredQuestions.length} question(s) à compléter avant l'envoi.</p>
+                    <p className="text-text-secondary text-sm mt-2">
+                        Rejoignez-les via les pastilles lumineuses ci-dessus.
+                    </p>
+                </div>
+            )}
 
             {(!question.type || question.type === 'mcq') && (
-                <div className="bg-surface p-6 sm:p-8 rounded-2xl border border-border shadow-claude animate-fadeIn">
-                    <p className="text-sm text-secondary mb-4">
-                        Question {currentQuestionIndex + 1} / {chapter.quiz.length}
-                    </p>
-                    <h3 className="text-2xl font-serif mb-6 text-text">
+                <div className="rounded-3xl border border-border/60 bg-surface/70 backdrop-blur-sm shadow-[0_28px_68px_rgba(15,23,42,0.45)] p-6 sm:p-8 animate-fadeIn">
+                    <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
+                        <p className="text-sm text-text-secondary">
+                            Question {currentQuestionIndex + 1} sur {chapter.quiz.length}
+                        </p>
+                        <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-background/70 border border-border/70 text-xs text-text">
+                            <span className="uppercase tracking-[0.28em] text-[9px] text-text-secondary">Timer</span>
+                            <span className="font-mono text-sm leading-none">{formattedTime}</span>
+                        </span>
+                    </div>
+                    <h3 className="text-2xl font-display mb-6 text-text leading-snug">
                         <MathJax dynamic>{question.question}</MathJax>
                     </h3>
                     <div className="space-y-4">
@@ -228,16 +389,16 @@ const Quiz: React.FC = () => {
                                             ) : isSelected ? (
                                                 <span className="material-symbols-outlined text-error">cancel</span>
                                             ) : (
-                                                <div className="w-6 h-6 border-2 border-text-disabled/50 rounded-full"></div>
+                                                <div className="w-7 h-7 border-2 border-text-disabled/40 rounded-full"></div>
                                             )
                                         ) : (
-                                            <div className={`w-6 h-6 border-2 rounded-full flex items-center justify-center transition-colors ${
+                                            <div className={`w-8 h-8 rounded-full border flex items-center justify-center transition-all duration-300 ${
                                                 isSelected 
-                                                    ? 'border-primary bg-primary/10' 
-                                                    : 'border-text-secondary group-hover:border-primary'
+                                                    ? 'border-primary bg-primary/15 shadow-[0_12px_24px_rgba(59,130,246,0.3)]' 
+                                                    : 'border-border/60 group-hover:border-primary/70 group-hover:shadow-[0_14px_32px_rgba(59,130,246,0.22)]'
                                             }`}>
                                                 {isSelected && (
-                                                    <div className="w-3 h-3 bg-primary rounded-full transition-transform duration-300 scale-100"></div>
+                                                    <div className="w-3.5 h-3.5 bg-primary rounded-full transition-transform duration-300 scale-110"></div>
                                                 )}
                                             </div>
                                         )}
@@ -294,17 +455,17 @@ const Quiz: React.FC = () => {
                     !isSubmitted && (
                         <button 
                             onClick={handleSubmit} 
-                            disabled={!allAnswered} 
-                            className="font-button px-8 py-3 font-semibold text-white bg-primary rounded-lg hover:bg-primary/90 disabled:bg-primary/50 disabled:cursor-not-allowed shadow-lg shadow-primary/20 hover:shadow-primary/30 transform hover:-translate-y-0.5 transition-all"
+                            disabled={!allQuestionsAnswered} 
+                            className="font-button px-8 py-3 font-semibold text-white bg-primary rounded-lg hover:bg-primary/90 disabled:bg-warning/40 disabled:text-warning disabled:cursor-not-allowed shadow-lg shadow-primary/20 hover:shadow-primary/30 transform hover:-translate-y-0.5 transition-all"
+                            title={!allQuestionsAnswered ? `Encore ${unansweredQuestions.length} question(s) à compléter` : ''}
                         >
-                            Soumettre le Quiz
+                            {allQuestionsAnswered ? 'Soumettre le Quiz' : `Compléter ${unansweredQuestions.length} question(s)`}
                         </button>
                     )
                 ) : (
                     <button 
                         onClick={() => handleNavigate(currentQuestionIndex + 1)} 
-                        disabled={!answers[question.id]} 
-                        className="font-button px-6 py-2 font-semibold text-primary rounded-lg hover:bg-primary-light disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="font-button px-6 py-2 font-semibold text-primary rounded-lg hover:bg-primary-light transition-all"
                     >
                         Suivant
                     </button>

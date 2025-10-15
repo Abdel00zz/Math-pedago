@@ -27,9 +27,8 @@
     {
       "id": "exo_derivation_1",
       "title": "Équation de la tangente",
-      "statement": "Soit la fonction $g(x) = x^2 + 2x - 3$. Déterminer l'équation de la tangente à la courbe de $g$ au point d'abscisse $x_0 = 1$.",
-      "sub_questions": []
+      "statement": "Soit la fonction $g(x) = x^2 + 2x - 3$. Déterminer l'équation de la tangente à la courbe de $g$ au point d'abscisse $x_0 = 1$."
     }
   ],
-  "version": "v1.1.0-e61e3b"
+  "version": "v1.1.0-752524"
 }

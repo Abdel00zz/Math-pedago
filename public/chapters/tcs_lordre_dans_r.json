@@ -27,9 +27,8 @@
     {
       "id": "exo_tcs_ordre_1",
       "title": "Valeur absolue",
-      "statement": "Résoudre dans $\\mathbb{R}$ l'inéquation $|x - 3| \\le 2$.",
-      "sub_questions": []
+      "statement": "Résoudre dans $\\mathbb{R}$ l'inéquation $|x - 3| \\le 2$."
     }
   ],
-  "version": "v1.1.0-e94590"
+  "version": "v1.1.0-f74f0e"
 }

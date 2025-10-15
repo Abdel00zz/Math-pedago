@@ -27,9 +27,8 @@
     {
       "id": "exo_fonctions_1",
       "title": "Domaine de définition",
-      "statement": "Quel est le domaine de définition de la fonction $g(x) = \\sqrt{x-2}$ ?",
-      "sub_questions": []
+      "statement": "Quel est le domaine de définition de la fonction $g(x) = \\sqrt{x-2}$ ?"
     }
   ],
-  "version": "v1.1.0-373faa"
+  "version": "v1.1.0-7f3abf"
 }

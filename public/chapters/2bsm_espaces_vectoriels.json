@@ -23,9 +23,8 @@
     {
       "id": "ex1",
       "title": "Sous-espace vectoriel",
-      "statement": "Montrer que $F = \\{(x,y,z) \\in \\mathbb{R}^3 | x+y+z=0\\}$ est un sous-espace vectoriel de $\\mathbb{R}^3$.",
-      "sub_questions": []
+      "statement": "Montrer que $F = \\{(x,y,z) \\in \\mathbb{R}^3 | x+y+z=0\\}$ est un sous-espace vectoriel de $\\mathbb{R}^3$."
     }
   ],
-  "version": "v1.1.0-cbe2fd"
+  "version": "v1.1.0-d89411"
 }

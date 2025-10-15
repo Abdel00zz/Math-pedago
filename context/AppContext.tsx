@@ -105,6 +105,26 @@ const appReducer = (state: AppState, action: Action): AppState => {
             };
         }
         
+        case 'SET_QUIZ_DURATION': {
+            const { chapterId, duration } = action.payload;
+            const chapterProgress = state.progress[chapterId];
+            if (!chapterProgress) return state;
+
+            return {
+                ...state,
+                progress: {
+                    ...state.progress,
+                    [chapterId]: {
+                        ...chapterProgress,
+                        quiz: {
+                            ...chapterProgress.quiz,
+                            duration,
+                        },
+                    },
+                },
+            };
+        }
+
         case 'SUBMIT_QUIZ': {
             if (!state.currentChapterId) return state;
             const progress = state.progress[state.currentChapterId];

@@ -23,9 +23,8 @@
     {
       "id": "ex1",
       "title": "PGCD",
-      "statement": "Calculer le PGCD de 120 et 84 en utilisant l'algorithme d'Euclide.",
-      "sub_questions": []
+      "statement": "Calculer le PGCD de 120 et 84 en utilisant l'algorithme d'Euclide."
     }
   ],
-  "version": "v1.1.0-a3096d"
+  "version": "v1.1.0-c0675e"
 }

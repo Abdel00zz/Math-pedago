@@ -124,12 +124,24 @@ class QuizQuestion:
         return result
 
 @dataclass
-class SubQuestion:
-    """Représente une sous-question d'un exercice."""
+class SubSubQuestion:
+    """Représente une sous-sous-question (a., b., c., etc.)."""
     text: str
 
     def to_dict(self) -> Dict[str, str]:
         return {'text': self.text}
+
+@dataclass
+class SubQuestion:
+    """Représente une sous-question d'un exercice."""
+    text: str
+    sub_sub_questions: List[SubSubQuestion] = field(default_factory=list)
+
+    def to_dict(self) -> Dict[str, Any]:
+        result = {'text': self.text}
+        if self.sub_sub_questions:
+            result['sub_sub_questions'] = [ssq.to_dict() for ssq in self.sub_sub_questions]
+        return result
 
 @dataclass
 class Exercise:
@@ -143,21 +155,35 @@ class Exercise:
     def from_dict(cls, data: Dict[str, Any]) -> 'Exercise':
         """Charge un exercice depuis un dictionnaire JSON."""
         sub_questions_data = data.get('sub_questions', [])
+        sub_questions = []
+        for sq_data in sub_questions_data:
+            # Charger les sous-sous-questions si elles existent
+            sub_sub_questions_data = sq_data.get('sub_sub_questions', [])
+            sub_sub_questions = [SubSubQuestion(ssq.get('text', '')) for ssq in sub_sub_questions_data]
+            
+            sub_question = SubQuestion(
+                text=sq_data.get('text', ''),
+                sub_sub_questions=sub_sub_questions
+            )
+            sub_questions.append(sub_question)
+            
         return cls(
             id=data.get('id', ''),
             title=data.get('title', ''),
             statement=data.get('statement', ''),
-            sub_questions=[SubQuestion(sq.get('text', '')) for sq in sub_questions_data]
+            sub_questions=sub_questions
         )
 
     def to_dict(self) -> Dict[str, Any]:
         """Convertit l'exercice en dictionnaire pour la sauvegarde JSON."""
-        return {
+        result = {
             'id': self.id or f"exo_{hashlib.md5(self.title.encode()).hexdigest()[:8]}",
             'title': self.title,
-            'statement': self.statement,
-            'sub_questions': [sq.to_dict() for sq in self.sub_questions]
+            'statement': self.statement
         }
+        if self.sub_questions:
+            result['sub_questions'] = [sq.to_dict() for sq in self.sub_questions]
+        return result
 
 class ChapterData:
     """Modèle de données complet pour un chapitre, gérant le chargement, la sauvegarde et le versioning."""
@@ -1086,45 +1112,151 @@ class ExerciseEditor(QWidget):
         self.editor_widget = editor_widget
         self.editor_widget.setEnabled(False)
 
-    def create_sub_question_widget(self, text=""):
-        """Crée un widget pour une sous-question."""
-        widget = QWidget()
-        layout = QHBoxLayout(widget)
-        layout.setContentsMargins(0, 5, 0, 5)
+    def create_sub_question_widget(self, text="", sub_sub_questions=None):
+        """Crée un widget pour une sous-question avec possibilité d'avoir des sous-sous-questions."""
+        if sub_sub_questions is None:
+            sub_sub_questions = []
+            
+        # Container principal
+        main_widget = QWidget()
+        main_layout = QVBoxLayout(main_widget)
+        main_layout.setContentsMargins(0, 5, 0, 5)
+        main_layout.setSpacing(5)
+        
+        # Ligne principale de la sous-question
+        sq_widget = QWidget()
+        sq_layout = QHBoxLayout(sq_widget)
+        sq_layout.setContentsMargins(0, 0, 0, 0)
         
         # Numéro de la sous-question
         num_label = QLabel(f"{len(self.sub_question_widgets) + 1}.")
-        num_label.setMinimumWidth(20)
-        layout.addWidget(num_label)
+        num_label.setMinimumWidth(30)
+        num_label.setStyleSheet("font-weight: bold; font-size: 13px;")
+        sq_layout.addWidget(num_label)
         
-        # Champ de texte
+        # Champ de texte pour la sous-question
         text_edit = QLineEdit(text)
         text_edit.textChanged.connect(self.save_current)
-        layout.addWidget(text_edit)
+        text_edit.setPlaceholderText("Texte de la sous-question...")
+        sq_layout.addWidget(text_edit)
+        
+        # Bouton ajouter sous-sous-question
+        add_ssq_btn = QPushButton("+ a,b,c")
+        add_ssq_btn.setObjectName("smallButton")
+        add_ssq_btn.setMaximumWidth(60)
+        add_ssq_btn.setToolTip("Ajouter une sous-sous-question")
+        sq_layout.addWidget(add_ssq_btn)
         
         # Bouton supprimer
         remove_btn = QPushButton("×")
         remove_btn.setObjectName("removeButton")
         remove_btn.setMaximumWidth(25)
-        remove_btn.clicked.connect(lambda: self.remove_sub_question(widget))
+        remove_btn.clicked.connect(lambda: self.remove_sub_question(main_widget))
+        sq_layout.addWidget(remove_btn)
+        
+        main_layout.addWidget(sq_widget)
+        
+        # Container pour les sous-sous-questions
+        ssq_container = QWidget()
+        ssq_layout = QVBoxLayout(ssq_container)
+        ssq_layout.setContentsMargins(40, 0, 0, 0)  # Indentation
+        ssq_layout.setSpacing(3)
+        main_layout.addWidget(ssq_container)
+        
+        # Stocker les widgets de sous-sous-questions
+        sub_sub_widgets = []
+        
+        # Créer les widgets pour les sous-sous-questions existantes
+        for ssq_text in sub_sub_questions:
+            ssq_widget, ssq_edit = self.create_sub_sub_question_widget(ssq_text, ssq_container, sub_sub_widgets)
+            ssq_layout.addWidget(ssq_widget)
+            sub_sub_widgets.append((ssq_widget, ssq_edit))
+        
+        # Connecter le bouton d'ajout
+        add_ssq_btn.clicked.connect(
+            lambda: self.add_sub_sub_question(ssq_container, ssq_layout, sub_sub_widgets)
+        )
+        
+        return main_widget, text_edit, num_label, ssq_container, sub_sub_widgets
+    
+    def create_sub_sub_question_widget(self, text="", parent_container=None, sub_sub_widgets=None):
+        """Crée un widget pour une sous-sous-question (a., b., c., etc.)."""
+        widget = QWidget()
+        layout = QHBoxLayout(widget)
+        layout.setContentsMargins(0, 2, 0, 2)
+        
+        # Calculer la lettre (a, b, c...)
+        if sub_sub_widgets is not None:
+            letter_index = len(sub_sub_widgets)
+        else:
+            letter_index = 0
+        letter = chr(97 + letter_index)  # 97 = 'a' en ASCII
+        
+        # Label avec la lettre
+        letter_label = QLabel(f"{letter}.")
+        letter_label.setMinimumWidth(25)
+        letter_label.setStyleSheet("font-style: italic; color: #666;")
+        layout.addWidget(letter_label)
+        
+        # Champ de texte
+        text_edit = QLineEdit(text)
+        text_edit.textChanged.connect(self.save_current)
+        text_edit.setPlaceholderText("Texte de la sous-sous-question...")
+        text_edit.setStyleSheet("font-size: 12px;")
+        layout.addWidget(text_edit)
+        
+        # Bouton supprimer
+        remove_btn = QPushButton("×")
+        remove_btn.setObjectName("removeButton")
+        remove_btn.setMaximumWidth(20)
+        remove_btn.clicked.connect(
+            lambda: self.remove_sub_sub_question(widget, parent_container, sub_sub_widgets)
+        )
         layout.addWidget(remove_btn)
         
         return widget, text_edit
+    
+    def add_sub_sub_question(self, container, layout, sub_sub_widgets):
+        """Ajoute une sous-sous-question."""
+        ssq_widget, ssq_edit = self.create_sub_sub_question_widget("", container, sub_sub_widgets)
+        layout.addWidget(ssq_widget)
+        sub_sub_widgets.append((ssq_widget, ssq_edit))
+        self.update_sub_sub_question_letters(sub_sub_widgets)
+        ssq_edit.setFocus()
+        self.save_current()
+    
+    def remove_sub_sub_question(self, widget_to_remove, container, sub_sub_widgets):
+        """Supprime une sous-sous-question."""
+        for i, (widget, text_edit) in enumerate(sub_sub_widgets):
+            if widget == widget_to_remove:
+                widget.deleteLater()
+                sub_sub_widgets.pop(i)
+                break
+        self.update_sub_sub_question_letters(sub_sub_widgets)
+        self.save_current()
+    
+    def update_sub_sub_question_letters(self, sub_sub_widgets):
+        """Met à jour la numérotation (lettres) des sous-sous-questions."""
+        for i, (widget, text_edit) in enumerate(sub_sub_widgets):
+            letter = chr(97 + i)  # a, b, c, ...
+            letter_label = widget.layout().itemAt(0).widget()
+            letter_label.setText(f"{letter}.")
 
     def add_sub_question(self):
         """Ajoute une nouvelle sous-question."""
-        widget, text_edit = self.create_sub_question_widget()
-        self.sub_question_widgets.append((widget, text_edit))
-        self.sub_questions_layout.addWidget(widget)
+        main_widget, text_edit, num_label, ssq_container, sub_sub_widgets = self.create_sub_question_widget()
+        self.sub_question_widgets.append((main_widget, text_edit, num_label, ssq_container, sub_sub_widgets))
+        self.sub_questions_layout.addWidget(main_widget)
         self.update_sub_question_numbers()
         text_edit.setFocus()
 
     def remove_sub_question(self, widget_to_remove):
         """Supprime une sous-question."""
-        for i, (widget, text_edit) in enumerate(self.sub_question_widgets):
-            if widget == widget_to_remove:
-                self.sub_questions_layout.removeWidget(widget)
-                widget.deleteLater()
+        for i, widget_tuple in enumerate(self.sub_question_widgets):
+            main_widget = widget_tuple[0]
+            if main_widget == widget_to_remove:
+                self.sub_questions_layout.removeWidget(main_widget)
+                main_widget.deleteLater()
                 self.sub_question_widgets.pop(i)
                 break
         self.update_sub_question_numbers()
@@ -1132,8 +1264,8 @@ class ExerciseEditor(QWidget):
 
     def update_sub_question_numbers(self):
         """Met à jour la numérotation des sous-questions."""
-        for i, (widget, text_edit) in enumerate(self.sub_question_widgets):
-            num_label = widget.layout().itemAt(0).widget()
+        for i, widget_tuple in enumerate(self.sub_question_widgets):
+            num_label = widget_tuple[2]  # Le num_label est le 3ème élément
             num_label.setText(f"{i + 1}.")
 
     def update_char_count(self):
@@ -1207,16 +1339,23 @@ class ExerciseEditor(QWidget):
         self.statement_edit.setText(exercise.statement)
         
         # Nettoyer les sous-questions existantes
-        for widget, _ in self.sub_question_widgets:
-            self.sub_questions_layout.removeWidget(widget)
-            widget.deleteLater()
+        for widget_tuple in self.sub_question_widgets:
+            main_widget = widget_tuple[0]
+            self.sub_questions_layout.removeWidget(main_widget)
+            main_widget.deleteLater()
         self.sub_question_widgets.clear()
         
-        # Charger les sous-questions
+        # Charger les sous-questions avec leurs sous-sous-questions
         for sub_question in exercise.sub_questions:
-            widget, text_edit = self.create_sub_question_widget(sub_question.text)
-            self.sub_question_widgets.append((widget, text_edit))
-            self.sub_questions_layout.addWidget(widget)
+            # Extraire les textes des sous-sous-questions
+            sub_sub_texts = [ssq.text for ssq in sub_question.sub_sub_questions]
+            
+            # Créer le widget avec les sous-sous-questions
+            main_widget, text_edit, num_label, ssq_container, sub_sub_widgets = \
+                self.create_sub_question_widget(sub_question.text, sub_sub_texts)
+            
+            self.sub_question_widgets.append((main_widget, text_edit, num_label, ssq_container, sub_sub_widgets))
+            self.sub_questions_layout.addWidget(main_widget)
         
         # Réactiver les signaux
         self.title_edit.blockSignals(False)
@@ -1226,7 +1365,7 @@ class ExerciseEditor(QWidget):
         self.update_char_count()
 
     def save_current(self):
-        """Sauvegarde l'exercice actuellement édité."""
+        """Sauvegarde l'exercice actuellement édité avec support des sous-sous-questions."""
         if not (0 <= self.current_index < len(self.exercises)):
             return
         
@@ -1234,12 +1373,24 @@ class ExerciseEditor(QWidget):
         ex.title = self.title_edit.text().strip()
         ex.statement = self.statement_edit.toPlainText().strip()
         
-        # Sauvegarder les sous-questions
+        # Sauvegarder les sous-questions et leurs sous-sous-questions
         ex.sub_questions = []
-        for widget, text_edit in self.sub_question_widgets:
-            text = text_edit.text().strip()
-            if text:
-                ex.sub_questions.append(SubQuestion(text))
+        for widget_tuple in self.sub_question_widgets:
+            main_widget, text_edit, num_label, ssq_container, sub_sub_widgets = widget_tuple
+            sq_text = text_edit.text().strip()
+            
+            if sq_text:
+                # Créer la sous-question
+                sub_question = SubQuestion(text=sq_text)
+                
+                # Ajouter les sous-sous-questions
+                sub_question.sub_sub_questions = []
+                for ssq_widget, ssq_edit in sub_sub_widgets:
+                    ssq_text = ssq_edit.text().strip()
+                    if ssq_text:
+                        sub_question.sub_sub_questions.append(SubSubQuestion(text=ssq_text))
+                
+                ex.sub_questions.append(sub_question)
         
         # Mettre à jour la liste
         item = self.exercise_list.item(self.current_index)

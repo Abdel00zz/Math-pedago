@@ -23,9 +23,8 @@
     {
       "id": "ex1",
       "title": "Équation du second ordre",
-      "statement": "Résoudre l'équation différentielle $y'' + 4y = 0$.",
-      "sub_questions": []
+      "statement": "Résoudre l'équation différentielle $y'' + 4y = 0$."
     }
   ],
-  "version": "v1.1.0-5aa37d"
+  "version": "v1.1.0-8e8996"
 }
