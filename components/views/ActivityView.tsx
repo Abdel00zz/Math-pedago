@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useAppState, useAppDispatch } from '../../context/AppContext';
 import Quiz from '../quiz/Quiz';
 import Exercises from '../Exercises';
+import VideoCapsules from '../VideoCapsules';
 
 const ActivityView: React.FC = () => {
     const state = useAppState();
@@ -31,13 +32,13 @@ const ActivityView: React.FC = () => {
     }
 
     const chapter = activities[currentChapterId];
-    const subViewTitle = activitySubView === 'quiz' ? 'Quiz' : 'Exercices';
+    const subViewTitle = activitySubView === 'videos' ? 'Vidéos' : activitySubView === 'quiz' ? 'Quiz' : 'Exercices';
 
     return (
         <div className="max-w-4xl mx-auto animate-slideInUp">
              <header ref={headerRef} className="relative flex items-center justify-center mb-8 h-12">
                 <div className="absolute left-0">
-                    <button 
+                    <button
                         onClick={() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'work-plan' } })}
                         className={`w-12 h-12 rounded-full flex items-center justify-center text-text-secondary bg-surface border border-border hover:bg-primary/10 hover:text-primary hover:border-primary/30 transition-all duration-200 active:scale-95 shadow-sm hover:shadow-md ${highlightBackButton ? 'animate-pulse ring-2 ring-primary' : ''}`}
                         aria-label="Retour au plan de travail"
@@ -51,6 +52,7 @@ const ActivityView: React.FC = () => {
                 </div>
             </header>
 
+            {activitySubView === 'videos' && <VideoCapsules />}
             {activitySubView === 'quiz' && <Quiz />}
             {activitySubView === 'exercises' && <Exercises onAllCompleted={onAllExercisesCompleted} />}
         </div>

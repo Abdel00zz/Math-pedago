@@ -125,6 +125,72 @@ const appReducer = (state: AppState, action: Action): AppState => {
             };
         }
 
+        case 'MARK_VIDEO_WATCHED': {
+            if (!state.currentChapterId) return state;
+            const { videoId } = action.payload;
+            const chapter = state.activities[state.currentChapterId];
+            const progress = state.progress[state.currentChapterId];
+
+            if (!chapter?.videos) return state;
+
+            // Initialiser videosProgress si nécessaire
+            const videosProgress = progress.videos || {
+                watched: {},
+                allWatched: false,
+                duration: 0,
+            };
+
+            // Marquer la vidéo comme regardée
+            const newWatched = { ...videosProgress.watched, [videoId]: true };
+
+            // Vérifier si toutes les vidéos sont regardées
+            const totalVideos = chapter.videos.length;
+            const watchedCount = Object.values(newWatched).filter(Boolean).length;
+            const allWatched = watchedCount === totalVideos;
+
+            return {
+                ...state,
+                progress: {
+                    ...state.progress,
+                    [state.currentChapterId]: {
+                        ...progress,
+                        videos: {
+                            ...videosProgress,
+                            watched: newWatched,
+                            allWatched,
+                        },
+                    },
+                },
+            };
+        }
+
+        case 'SET_VIDEOS_DURATION': {
+            if (!state.currentChapterId) return state;
+            const { duration } = action.payload;
+            const progress = state.progress[state.currentChapterId];
+
+            // Initialiser videosProgress si nécessaire
+            const videosProgress = progress.videos || {
+                watched: {},
+                allWatched: false,
+                duration: 0,
+            };
+
+            return {
+                ...state,
+                progress: {
+                    ...state.progress,
+                    [state.currentChapterId]: {
+                        ...progress,
+                        videos: {
+                            ...videosProgress,
+                            duration,
+                        },
+                    },
+                },
+            };
+        }
+
         case 'SUBMIT_QUIZ': {
             if (!state.currentChapterId) return state;
             const progress = state.progress[state.currentChapterId];
