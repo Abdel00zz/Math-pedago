@@ -8,6 +8,7 @@ const VideoCapsules: React.FC = () => {
     const { currentChapterId, activities, progress } = state;
 
     const [startTime] = useState(Date.now());
+    const [playingVideoId, setPlayingVideoId] = useState<string | null>(null);
     const timerRef = useRef<NodeJS.Timeout | null>(null);
 
     const chapter = currentChapterId ? activities[currentChapterId] : null;
@@ -31,6 +32,35 @@ const VideoCapsules: React.FC = () => {
         dispatch({ type: 'MARK_VIDEO_WATCHED', payload: { videoId } });
     }, [dispatch]);
 
+    const handlePlayVideo = useCallback((videoId: string) => {
+        setPlayingVideoId(videoId);
+    }, []);
+
+    const handleClosePlayer = useCallback(() => {
+        setPlayingVideoId(null);
+    }, []);
+
+    // Fermer avec ESC et gérer le scroll du body
+    useEffect(() => {
+        if (playingVideoId) {
+            // Désactiver le scroll du body
+            document.body.style.overflow = 'hidden';
+
+            // Handler pour la touche ESC
+            const handleEsc = (e: KeyboardEvent) => {
+                if (e.key === 'Escape') {
+                    handleClosePlayer();
+                }
+            };
+            document.addEventListener('keydown', handleEsc);
+
+            return () => {
+                document.body.style.overflow = 'unset';
+                document.removeEventListener('keydown', handleEsc);
+            };
+        }
+    }, [playingVideoId, handleClosePlayer]);
+
     if (!chapter || !chapter.videos || chapter.videos.length === 0) {
         return (
             <div className="max-w-4xl mx-auto p-8 text-center">
@@ -45,8 +75,81 @@ const VideoCapsules: React.FC = () => {
     const watchedCount = Object.values(watchedVideos).filter(Boolean).length;
     const allWatched = videosProgress?.allWatched || false;
 
+    // Trouver la vidéo en cours de lecture
+    const currentVideo = playingVideoId ? videos.find(v => v.id === playingVideoId) : null;
+
     return (
-        <div className="max-w-5xl mx-auto animate-slideInUp">
+        <>
+            {/* Modal plein écran pour le player vidéo */}
+            {playingVideoId && currentVideo && (
+                <div
+                    className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center animate-fadeIn backdrop-blur-sm"
+                    onClick={handleClosePlayer}
+                >
+                    <div
+                        className="w-full h-full max-w-7xl max-h-screen p-4 md:p-8 flex flex-col"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        {/* Header du modal */}
+                        <div className="flex items-start justify-between mb-4 text-white">
+                            <div className="flex-1">
+                                <h2 className="text-2xl md:text-3xl font-title mb-2">{currentVideo.title}</h2>
+                                {currentVideo.description && (
+                                    <p className="text-white/80 text-sm md:text-base">{currentVideo.description}</p>
+                                )}
+                            </div>
+                            <button
+                                onClick={handleClosePlayer}
+                                className="ml-4 bg-white/10 hover:bg-white/20 text-white p-3 rounded-full transition-colors flex-shrink-0"
+                                aria-label="Fermer le lecteur"
+                            >
+                                <span className="material-symbols-outlined !text-3xl">close</span>
+                            </button>
+                        </div>
+
+                        {/* Player YouTube */}
+                        <div className="flex-1 relative bg-black rounded-xl overflow-hidden shadow-2xl">
+                            <iframe
+                                src={`https://www.youtube.com/embed/${currentVideo.youtubeId}?autoplay=1&rel=0&modestbranding=1`}
+                                title={currentVideo.title}
+                                className="absolute inset-0 w-full h-full"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                            />
+                        </div>
+
+                        {/* Bouton "Bien assimilé" dans le modal */}
+                        <div className="mt-4 flex justify-center">
+                            <button
+                                onClick={() => {
+                                    handleMarkWatched(currentVideo.id);
+                                    handleClosePlayer();
+                                }}
+                                disabled={watchedVideos[currentVideo.id]}
+                                className={`px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-200 flex items-center gap-3 ${
+                                    watchedVideos[currentVideo.id]
+                                        ? 'bg-success/20 text-success border-2 border-success cursor-default'
+                                        : 'bg-primary text-white hover:bg-primary-hover active:scale-95 shadow-lg hover:shadow-xl'
+                                }`}
+                            >
+                                {watchedVideos[currentVideo.id] ? (
+                                    <>
+                                        <span className="material-symbols-outlined !text-2xl">check_circle</span>
+                                        <span>Déjà assimilé</span>
+                                    </>
+                                ) : (
+                                    <>
+                                        <span className="material-symbols-outlined !text-2xl">task_alt</span>
+                                        <span>Marquer comme assimilé et fermer</span>
+                                    </>
+                                )}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            <div className="max-w-5xl mx-auto animate-slideInUp">
             {/* Header avec progression */}
             <div className="mb-8 bg-surface p-6 rounded-2xl border border-border shadow-claude">
                 <div className="flex items-center justify-between mb-4">
@@ -106,16 +209,14 @@ const VideoCapsules: React.FC = () => {
                                 />
 
                                 {/* Overlay avec play button */}
-                                <a
-                                    href={`https://www.youtube.com/watch?v=${video.youtubeId}`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="absolute inset-0 flex items-center justify-center bg-black/40 group-hover:bg-black/60 transition-colors"
+                                <button
+                                    onClick={() => handlePlayVideo(video.id)}
+                                    className="absolute inset-0 flex items-center justify-center bg-black/40 group-hover:bg-black/60 transition-colors cursor-pointer"
                                 >
                                     <div className="w-16 h-16 rounded-full bg-error flex items-center justify-center transform group-hover:scale-110 transition-transform shadow-2xl">
                                         <span className="material-symbols-outlined text-white !text-4xl ml-1">play_arrow</span>
                                     </div>
-                                </a>
+                                </button>
 
                                 {/* Badge numéro */}
                                 <div className="absolute top-3 left-3 bg-black/80 text-white px-3 py-1 rounded-full text-sm font-bold backdrop-blur-sm">
@@ -187,6 +288,7 @@ const VideoCapsules: React.FC = () => {
                 </div>
             )}
         </div>
+        </>
     );
 };
 
