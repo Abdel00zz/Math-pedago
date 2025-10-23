@@ -134,14 +134,18 @@ const ChapterHubView: React.FC = () => {
         const iqc = q.isSubmitted;
         const aed = te > 0 ? eec === te : true;
 
+        // Vérifier si les vidéos sont complétées (si le chapitre en a)
+        const hasVids = chap?.videos && chap.videos.length > 0;
+        const areVideosCompleted = hasVids ? (prog?.videos?.allWatched || false) : true;
+
         const outdated = prog?.isWorkSubmitted && !!chap?.version && !!prog?.submittedVersion && chap.version !== prog.submittedVersion;
         const locked = prog?.isWorkSubmitted && !outdated;
 
         let csw = false;
         if (outdated) {
-            csw = iqc && aed;
+            csw = iqc && aed && areVideosCompleted;
         } else {
-            csw = iqc && aed && !prog?.isWorkSubmitted;
+            csw = iqc && aed && areVideosCompleted && !prog?.isWorkSubmitted;
         }
 
         return {
@@ -160,6 +164,7 @@ const ChapterHubView: React.FC = () => {
         };
     }, [currentChapterId, activities, progress]);
 
+    const handleStartVideos = useCallback(() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'activity', chapterId: chapter?.id, subView: 'videos' } }), [dispatch, chapter?.id]);
     const handleStartQuiz = useCallback(() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'activity', chapterId: chapter?.id, subView: 'quiz' } }), [dispatch, chapter?.id]);
     const handleReviewQuiz = useCallback(() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'activity', chapterId: chapter?.id, subView: 'quiz', review: true } }), [dispatch, chapter?.id]);
     const handleStartExercises = useCallback(() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'activity', chapterId: chapter?.id, subView: 'exercises' } }), [dispatch, chapter?.id]);
@@ -219,9 +224,19 @@ const ChapterHubView: React.FC = () => {
 
             const submissionTimestamp = Date.now();
             const submissionDate = new Date(submissionTimestamp).toLocaleString('fr-FR', {
-                dateStyle: 'full', timeStyle: 'medium', timeZone: 'UTC' 
+                dateStyle: 'full', timeStyle: 'medium', timeZone: 'UTC'
             });
-    
+
+            // Préparer les données d'export des vidéos si le chapitre en contient
+            const videosExport = chapter.videos && chapter.videos.length > 0 && chapterProgress.videos ? {
+                watchedCount: Object.values(chapterProgress.videos.watched || {}).filter(Boolean).length,
+                totalCount: chapter.videos.length,
+                allWatched: chapterProgress.videos.allWatched,
+                durationSeconds: chapterProgress.videos.duration || 0,
+            } : undefined;
+
+            const videosDuration = chapterProgress.videos?.duration || 0;
+
             const submissionData: ExportedProgressFile = {
                 studentName: profile.name,
                 studentLevel: className,
@@ -231,6 +246,7 @@ const ChapterHubView: React.FC = () => {
                     {
                         chapter: chapter.chapter,
                         version: chapter.version,
+                        ...(videosExport && { videos: videosExport }),
                         quiz: {
                             score: parseFloat(quizScorePercentage.toFixed(2)),
                             scoreRaw: `${quiz.score} / ${totalQuestions}`,
@@ -240,7 +256,7 @@ const ChapterHubView: React.FC = () => {
                         },
                         exercisesFeedback: chapterProgress.exercisesFeedback,
                         exercisesDurationSeconds: chapterProgress.exercisesDuration || 0,
-                        totalDurationSeconds: (chapterProgress.quiz.duration || 0) + (chapterProgress.exercisesDuration || 0),
+                        totalDurationSeconds: videosDuration + (chapterProgress.quiz.duration || 0) + (chapterProgress.exercisesDuration || 0),
                     }
                 ]
             };
@@ -334,9 +350,29 @@ const ChapterHubView: React.FC = () => {
         </div>;
     }
     
+    // Calcul de la progression des vidéos
+    const hasVideos = chapter.videos && chapter.videos.length > 0;
+    const videosProgress = chapterProgress.videos;
+    const totalVideos = chapter.videos?.length || 0;
+    const watchedVideosCount = videosProgress ? Object.values(videosProgress.watched || {}).filter(Boolean).length : 0;
+    const areAllVideosWatched = videosProgress?.allWatched || false;
+    const videosProgressPercent = totalVideos > 0 ? (watchedVideosCount / totalVideos) * 100 : 0;
+
     const steps: LearningStepProps[] = [
+        ...(hasVideos ? [{
+            icon: 'play_circle',
+            title: 'Étape 1 : Les Vidéos',
+            description: 'Visionnez les capsules vidéo pour comprendre les concepts clés du chapitre.',
+            status: (areAllVideosWatched ? 'completed' : watchedVideosCount > 0 ? 'in-progress' : 'todo') as StepStatus,
+            progressPercent: videosProgressPercent,
+            progressInfo: `${watchedVideosCount} / ${totalVideos}`,
+            onClick: handleStartVideos,
+            buttonText: isChapterLocked ? 'Consulter' : areAllVideosWatched ? 'Revoir' : watchedVideosCount > 0 ? 'Continuer' : 'Commencer',
+            buttonVariant: (isChapterLocked || areAllVideosWatched ? 'secondary' : 'primary') as ButtonVariant,
+        }] : []),
         {
-            icon: 'history_edu', title: 'Étape 1 : Le Quiz',
+            icon: 'history_edu',
+            title: hasVideos ? 'Étape 2 : Le Quiz' : 'Étape 1 : Le Quiz',
             description: 'Évaluez votre compréhension des concepts fondamentaux du chapitre.',
             status: isQuizCompleted ? 'completed' : answeredQuestionsCount > 0 ? 'in-progress' : 'todo',
             progressPercent: quizProgressPercent,
@@ -346,7 +382,8 @@ const ChapterHubView: React.FC = () => {
             buttonVariant: isChapterLocked || isQuizCompleted ? 'secondary' : 'primary',
         },
         {
-            icon: 'architecture', title: 'Étape 2 : Les Exercices',
+            icon: 'architecture',
+            title: hasVideos ? 'Étape 3 : Les Exercices' : 'Étape 2 : Les Exercices',
             description: 'Mettez en pratique vos connaissances et auto-évaluez votre maîtrise.',
             status: !isQuizCompleted ? 'locked' : areAllExercisesDone ? 'completed' : evaluatedExercisesCount > 0 ? 'in-progress' : 'todo',
             progressPercent: exercisesProgressPercent,
@@ -357,7 +394,8 @@ const ChapterHubView: React.FC = () => {
             buttonVariant: !isQuizCompleted ? 'disabled' : (areAllExercisesDone || isChapterLocked) ? 'secondary' : 'primary',
         },
         ...(!isChapterLocked ? [{
-            icon: 'workspace_premium', title: 'Étape 3 : Finalisation',
+            icon: 'workspace_premium',
+            title: hasVideos ? 'Étape 4 : Finalisation' : 'Étape 3 : Finalisation',
             description: isOutdatedSubmission 
                 ? 'Le contenu a été mis à jour. Veuillez revoir les étapes avant de renvoyer.' 
                 : 'Une fois les étapes terminées, envoyez votre travail pour validation.',

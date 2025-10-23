@@ -2,6 +2,29 @@
   "class": "tcs",
   "chapter": "Généralités sur les fonctions",
   "sessionDate": "À définir",
+  "videos": [
+    {
+      "id": "video_fonctions_1",
+      "title": "Introduction aux fonctions",
+      "youtubeId": "dQw4w9WgXcQ",
+      "duration": "5:42",
+      "description": "Découvrez les concepts de base des fonctions mathématiques : définition, notation et représentation graphique."
+    },
+    {
+      "id": "video_fonctions_2",
+      "title": "Ensemble de définition",
+      "youtubeId": "9bZkp7q19f0",
+      "duration": "7:15",
+      "description": "Apprenez à déterminer l'ensemble de définition d'une fonction avec des exemples concrets."
+    },
+    {
+      "id": "video_fonctions_3",
+      "title": "Opérations sur les fonctions",
+      "youtubeId": "kJQP7kiw5Fk",
+      "duration": "6:30",
+      "description": "Maîtrisez les opérations fondamentales : addition, soustraction, multiplication et composition de fonctions."
+    }
+  ],
   "quiz": [
     {
       "id": "q_tcs_fonctions_1",

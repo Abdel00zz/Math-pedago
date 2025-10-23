@@ -293,18 +293,33 @@ const appReducer = (state: AppState, action: Action): AppState => {
                 // Assurer l'existence d'un objet progress pour chaque chapitre
                 if (!newProgress[newChapter.id]) {
                     newProgress[newChapter.id] = {
-                        quiz: { 
-                            answers: {}, 
-                            isSubmitted: false, 
-                            score: 0, 
-                            allAnswered: false, 
-                            currentQuestionIndex: 0, 
-                            duration: 0, 
-                            hintsUsed: 0 
+                        // Initialiser videosProgress si le chapitre contient des vidéos
+                        ...(newChapter.videos && newChapter.videos.length > 0 && {
+                            videos: {
+                                watched: {},
+                                allWatched: false,
+                                duration: 0,
+                            }
+                        }),
+                        quiz: {
+                            answers: {},
+                            isSubmitted: false,
+                            score: 0,
+                            allAnswered: false,
+                            currentQuestionIndex: 0,
+                            duration: 0,
+                            hintsUsed: 0
                         },
                         exercisesFeedback: {},
                         isWorkSubmitted: false,
                         exercisesDuration: 0,
+                    };
+                } else if (newChapter.videos && newChapter.videos.length > 0 && !newProgress[newChapter.id].videos) {
+                    // Si le chapitre existe déjà mais n'a pas de videosProgress et que des vidéos ont été ajoutées
+                    newProgress[newChapter.id].videos = {
+                        watched: {},
+                        allWatched: false,
+                        duration: 0,
                     };
                 }
 
