@@ -27,9 +27,9 @@ const MCQQuestion: React.FC<MCQQuestionProps> = ({ question, userAnswer, isRevie
         }
 
         if (isSelected) {
-            return `${base} border-green-500 bg-green-50 text-[#000000] shadow-[0_12px_40px_rgba(34,197,94,0.3)] scale-[1.02] font-medium ring-2 ring-green-200`;
+            return `${base} border-blue-500 bg-blue-50 text-[#000000] shadow-[0_12px_40px_rgba(59,130,246,0.3)] scale-[1.02] font-medium ring-2 ring-blue-200`;
         }
-        return `${base} border-slate-300 bg-white text-[#1a1a1a] hover:border-green-400 hover:bg-green-50/50 cursor-pointer hover:shadow-[0_8px_30px_rgba(34,197,94,0.15)] hover:scale-[1.01]`;
+        return `${base} border-slate-300 bg-white text-[#1a1a1a] hover:border-blue-400 hover:bg-blue-50/50 cursor-pointer hover:shadow-[0_8px_30px_rgba(59,130,246,0.15)] hover:scale-[1.01]`;
     }, [isReviewMode, isSubmitted]);
 
     return (
@@ -80,18 +80,18 @@ const MCQQuestion: React.FC<MCQQuestionProps> = ({ question, userAnswer, isRevie
                                         ) : (
                                             <div className={`relative w-9 h-9 rounded-full border-2 flex items-center justify-center transition-all duration-300 ${
                                                 isSelected
-                                                    ? 'border-green-500 bg-green-50 shadow-[0_0_20px_rgba(34,197,94,0.4)]'
-                                                    : 'border-slate-300 bg-white group-hover:border-green-400 group-hover:bg-green-50/30 group-hover:shadow-[0_0_15px_rgba(34,197,94,0.2)]'
+                                                    ? 'border-blue-500 bg-blue-50 shadow-[0_0_20px_rgba(59,130,246,0.4)]'
+                                                    : 'border-slate-300 bg-white group-hover:border-blue-400 group-hover:bg-blue-50/30 group-hover:shadow-[0_0_15px_rgba(59,130,246,0.2)]'
                                             }`}>
                                                 {isSelected && (
                                                     <svg
-                                                        className="w-5 h-5 text-green-600 animate-[scaleIn_0.3s_ease-out]"
+                                                        className="w-5 h-5 text-blue-600 animate-[scaleIn_0.3s_ease-out]"
                                                         fill="none"
                                                         viewBox="0 0 24 24"
                                                         stroke="currentColor"
                                                         strokeWidth="3"
                                                     >
-                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                                                     </svg>
                                                 )}
                                             </div>
