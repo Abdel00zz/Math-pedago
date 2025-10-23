@@ -144,9 +144,11 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({
     if (isReviewMode || isSubmitted) {
         return (
             <div id={containerId} className="bg-surface p-6 sm:p-8 rounded-2xl border border-border shadow-claude animate-fadeIn">
-                <h3 className="text-[22px] font-title mb-6 text-[#1a1a1a] leading-relaxed font-semibold">
-                    {question.question}
-                </h3>
+                <div className="bg-black text-white px-6 py-4 rounded-xl mb-6 shadow-lg">
+                    <h3 className="text-[22px] font-title leading-relaxed font-semibold">
+                        {question.question}
+                    </h3>
+                </div>
 
                 <div className="space-y-8">
                     <div>
@@ -198,9 +200,11 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({
     // --- Active Drag-and-Drop UI ---
     return (
         <div id={containerId} className="bg-surface p-6 sm:p-8 rounded-2xl border border-border shadow-claude animate-fadeIn">
-            <h3 className="text-[22px] font-title mb-4 text-[#1a1a1a] text-center leading-relaxed font-semibold">
-                {question.question}
-            </h3>
+            <div className="bg-black text-white px-6 py-4 rounded-xl mb-4 shadow-lg">
+                <h3 className="text-[22px] font-title text-center leading-relaxed font-semibold">
+                    {question.question}
+                </h3>
+            </div>
             <p className="text-[15px] text-gray-600 text-center mb-6 leading-relaxed">
                 Maintenez, glissez et déposez les étapes pour construire la démarche correcte.
             </p>

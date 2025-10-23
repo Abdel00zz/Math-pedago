@@ -50,9 +50,11 @@ const MCQQuestion: React.FC<MCQQuestionProps> = ({ question, userAnswer, isRevie
                 }
             `}</style>
             <div className="bg-surface p-6 sm:p-8 rounded-2xl border border-border shadow-claude animate-fadeIn">
-                <h3 className="text-[22px] font-title mb-6 text-[#1a1a1a] leading-relaxed font-semibold">
-                    <FormattedText text={question.question} />
-                </h3>
+                <div className="bg-black text-white px-6 py-4 rounded-xl mb-6 shadow-lg">
+                    <h3 className="text-[22px] font-title leading-relaxed font-semibold">
+                        <FormattedText text={question.question} />
+                    </h3>
+                </div>
                 <div className="space-y-4">
                     {question.options?.map((option, index) => {
                         const isSelected = userAnswer === option.text;
@@ -60,14 +62,8 @@ const MCQQuestion: React.FC<MCQQuestionProps> = ({ question, userAnswer, isRevie
 
                         return (
                             <Fragment key={index}>
-                                <button onClick={() => onOptionChange(option.text)} className={optionClass} disabled={isSubmitted || isReviewMode} aria-label={`Option ${index + 1}`}>
-                                    <div className="flex-shrink-0 flex items-center gap-3">
-                                        <span className={`text-xs font-bold px-2 py-1 rounded ${
-                                            isSelected ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-600'
-                                        }`}>
-                                            {index + 1}
-                                        </span>
-                                        <div className="mt-1">
+                                <button onClick={() => onOptionChange(option.text)} className={optionClass} disabled={isSubmitted || isReviewMode}>
+                                    <div className="flex-shrink-0 mt-1">
                                         {(isReviewMode || isSubmitted) ? (
                                             option.isCorrect ? (
                                                 <div className="relative w-7 h-7 flex items-center justify-center">
@@ -100,7 +96,6 @@ const MCQQuestion: React.FC<MCQQuestionProps> = ({ question, userAnswer, isRevie
                                                 )}
                                             </div>
                                         )}
-                                        </div>
                                     </div>
                                     <span className="flex-1 text-left text-[17px] leading-relaxed"><FormattedText text={option.text} /></span>
                                 </button>

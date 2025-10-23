@@ -415,22 +415,19 @@ const Quiz: React.FC = () => {
             {(!question.type || question.type === 'mcq') && (
                 <div className="rounded-3xl border border-border/60 bg-surface/70 backdrop-blur-sm shadow-[0_28px_68px_rgba(15,23,42,0.45)] p-6 sm:p-8 animate-fadeIn">
                     <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
-                        <div>
-                            <p className="text-sm text-text-secondary">
-                                Question {currentQuestionIndex + 1} sur {chapter.quiz.length}
-                            </p>
-                            <p className="text-xs text-gray-400 mt-1">
-                                ⌨️ Flèches ← → pour naviguer • Touches 1-4 pour répondre
-                            </p>
-                        </div>
+                        <p className="text-sm text-text-secondary">
+                            Question {currentQuestionIndex + 1} sur {chapter.quiz.length}
+                        </p>
                         <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-background/70 border border-border/70 text-xs text-text">
                             <span className="uppercase tracking-[0.28em] text-[9px] text-text-secondary">Timer</span>
                             <span className="font-mono text-sm leading-none">{formattedTime}</span>
                         </span>
                     </div>
-                    <h3 className="text-[22px] font-display mb-6 text-[#1a1a1a] leading-relaxed font-semibold">
-                        <MathJax dynamic>{question.question}</MathJax>
-                    </h3>
+                    <div className="bg-black text-white px-6 py-4 rounded-xl mb-6 shadow-lg">
+                        <h3 className="text-[22px] font-display leading-relaxed font-semibold">
+                            <MathJax dynamic>{question.question}</MathJax>
+                        </h3>
+                    </div>
                     <div className="space-y-4">
                         {question.options?.map((option, index) => {
                             const isSelected = answers[question.id] === option.text;
@@ -442,15 +439,8 @@ const Quiz: React.FC = () => {
                                     onClick={() => handleOptionChange(option.text)}
                                     className={optionClass}
                                     disabled={isSubmitted}
-                                    aria-label={`Option ${index + 1}`}
                                 >
-                                    <div className="flex-shrink-0 flex items-center gap-3">
-                                        <span className={`text-xs font-bold px-2 py-1 rounded ${
-                                            isSelected ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-600'
-                                        }`}>
-                                            {index + 1}
-                                        </span>
-                                        <div className="mt-1">
+                                    <div className="flex-shrink-0 mt-1">
                                         {(isReviewMode || isSubmitted) ? (
                                             option.isCorrect ? (
                                                 <div className="relative w-7 h-7 flex items-center justify-center">
@@ -483,7 +473,6 @@ const Quiz: React.FC = () => {
                                                 )}
                                             </div>
                                         )}
-                                        </div>
                                     </div>
                                     <span className="flex-1 text-left text-[17px] leading-relaxed">
                                         <MathJax dynamic>{option.text}</MathJax>
