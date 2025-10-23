@@ -144,6 +144,43 @@ class SubQuestion:
         return result
 
 @dataclass
+class Video:
+    """Représente une capsule vidéo YouTube."""
+    id: str = ""
+    title: str = ""
+    youtubeId: str = ""  # ID YouTube (ex: "dQw4w9WgXcQ")
+    duration: str = ""  # Durée affichée (ex: "5:42")
+    description: str = ""  # Description courte
+    thumbnail: str = ""  # URL de la miniature (optionnel)
+
+    @classmethod
+    def from_dict(cls, data: Dict[str, Any]) -> 'Video':
+        """Charge une vidéo depuis un dictionnaire JSON."""
+        return cls(
+            id=data.get('id', ''),
+            title=data.get('title', ''),
+            youtubeId=data.get('youtubeId', ''),
+            duration=data.get('duration', ''),
+            description=data.get('description', ''),
+            thumbnail=data.get('thumbnail', '')
+        )
+
+    def to_dict(self) -> Dict[str, Any]:
+        """Convertit la vidéo en dictionnaire pour la sauvegarde JSON."""
+        result = {
+            'id': self.id or f"video_{hashlib.md5(self.title.encode()).hexdigest()[:8]}",
+            'title': self.title,
+            'youtubeId': self.youtubeId
+        }
+        if self.duration:
+            result['duration'] = self.duration
+        if self.description:
+            result['description'] = self.description
+        if self.thumbnail:
+            result['thumbnail'] = self.thumbnail
+        return result
+
+@dataclass
 class Exercise:
     """Représente un exercice, en préservant la structure originale."""
     id: str = ""
@@ -196,6 +233,7 @@ class ChapterData:
         self.class_type: str = ""
         self.chapter_name: str = ""
         self.session_dates: List[str] = []
+        self.videos: List[Video] = []
         self.quiz_questions: List[QuizQuestion] = []
         self.exercises: List[Exercise] = []
 
@@ -227,7 +265,16 @@ class ChapterData:
             self.chapter_name = data.get('chapter', self.id.replace('-', ' ').title())
             self.class_type = data.get('class', self.class_type)
             self.session_dates = sorted(data.get('sessionDates', []))
-            
+
+            # Charger les vidéos avec gestion d'erreurs
+            self.videos = []
+            for i, v_data in enumerate(data.get('videos', [])):
+                try:
+                    video = Video.from_dict(v_data)
+                    self.videos.append(video)
+                except Exception as e:
+                    print(f"Avertissement: Vidéo #{i+1} dans {file_path} ignorée en raison d'une erreur: {e}")
+
             # Charger les quiz avec gestion d'erreurs
             self.quiz_questions = []
             for i, q_data in enumerate(data.get('quiz', [])):
@@ -324,11 +371,16 @@ class ChapterData:
         data_to_save = {
             'class': self.class_type,
             'chapter': self.chapter_name,
-            'sessionDates': sorted(self.session_dates),
-            # Préserver l'ordre actuel des quiz et des exercices tel quel
-            'quiz': [q.to_dict() for q in self.quiz_questions],
-            'exercises': [e.to_dict() for e in self.exercises]
+            'sessionDates': sorted(self.session_dates)
         }
+
+        # Ajouter les vidéos seulement si elles existent
+        if self.videos:
+            data_to_save['videos'] = [v.to_dict() for v in self.videos]
+
+        # Préserver l'ordre actuel des quiz et des exercices tel quel
+        data_to_save['quiz'] = [q.to_dict() for q in self.quiz_questions]
+        data_to_save['exercises'] = [e.to_dict() for e in self.exercises]
         
         # Vérifier si le contenu a réellement changé avant de modifier la version
         new_content_version = self._calculate_content_version(data_to_save)
@@ -948,6 +1000,215 @@ class QuizEditor(QWidget):
 # seraient ici, adaptées pour utiliser les modèles de données robustes.
 # Pour la concision, je vais simplifier l'éditeur d'exercices.
 
+class VideoEditor(QWidget):
+    """Éditeur de vidéos YouTube pour les capsules pédagogiques."""
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.videos: List[Video] = []
+        self.current_index = -1
+        self.init_ui()
+
+    def init_ui(self):
+        layout = QVBoxLayout(self)
+
+        # Toolbar
+        toolbar = QHBoxLayout()
+        toolbar.addWidget(QLabel("Capsules Vidéo"))
+        toolbar.addStretch()
+        self.count_label = QLabel("0 vidéo(s)")
+        toolbar.addWidget(self.count_label)
+
+        add_btn = QPushButton("+ Vidéo")
+        add_btn.setToolTip("Ajouter une nouvelle vidéo")
+        add_btn.clicked.connect(self.add_video)
+        add_btn.setFixedHeight(25)
+        toolbar.addWidget(add_btn)
+
+        duplicate_btn = QPushButton("Dupliquer")
+        duplicate_btn.setToolTip("Dupliquer la vidéo")
+        duplicate_btn.clicked.connect(self.duplicate_current)
+        duplicate_btn.setFixedHeight(25)
+        toolbar.addWidget(duplicate_btn)
+
+        move_up_btn = QPushButton("↑")
+        move_up_btn.setToolTip("Déplacer la vidéo vers le haut")
+        move_up_btn.clicked.connect(self.move_video_up)
+        move_up_btn.setFixedSize(25, 25)
+        toolbar.addWidget(move_up_btn)
+
+        move_down_btn = QPushButton("↓")
+        move_down_btn.setToolTip("Déplacer la vidéo vers le bas")
+        move_down_btn.clicked.connect(self.move_video_down)
+        move_down_btn.setFixedSize(25, 25)
+        toolbar.addWidget(move_down_btn)
+
+        delete_btn = QPushButton("Suppr.")
+        delete_btn.setToolTip("Supprimer la vidéo")
+        delete_btn.clicked.connect(self.delete_current)
+        delete_btn.setFixedSize(50, 25)
+        toolbar.addWidget(delete_btn)
+        layout.addLayout(toolbar)
+
+        splitter = QSplitter(Qt.Orientation.Horizontal)
+
+        # Liste des vidéos
+        self.video_list = QListWidget()
+        self.video_list.setMaximumWidth(300)
+        self.video_list.currentRowChanged.connect(self.on_selection_changed)
+        splitter.addWidget(self.video_list)
+
+        # Éditeur principal
+        editor_panel = QWidget()
+        editor_layout = QFormLayout(editor_panel)
+
+        self.title_edit = QLineEdit()
+        self.title_edit.setPlaceholderText("Titre de la vidéo")
+        self.title_edit.textChanged.connect(self.on_video_modified)
+        editor_layout.addRow("Titre:", self.title_edit)
+
+        self.youtube_id_edit = QLineEdit()
+        self.youtube_id_edit.setPlaceholderText("Ex: dQw4w9WgXcQ")
+        self.youtube_id_edit.textChanged.connect(self.on_video_modified)
+        editor_layout.addRow("ID YouTube:", self.youtube_id_edit)
+
+        # Label d'aide pour l'ID YouTube
+        help_label = QLabel("ℹ️ L'ID YouTube se trouve dans l'URL: youtube.com/watch?v=<ID>")
+        help_label.setWordWrap(True)
+        help_label.setStyleSheet("color: gray; font-size: 10px;")
+        editor_layout.addRow("", help_label)
+
+        self.duration_edit = QLineEdit()
+        self.duration_edit.setPlaceholderText("Ex: 5:42")
+        self.duration_edit.textChanged.connect(self.on_video_modified)
+        editor_layout.addRow("Durée:", self.duration_edit)
+
+        self.description_edit = QTextEdit()
+        self.description_edit.setPlaceholderText("Description courte de la vidéo...")
+        self.description_edit.setMaximumHeight(100)
+        self.description_edit.textChanged.connect(self.on_video_modified)
+        editor_layout.addRow("Description:", self.description_edit)
+
+        self.thumbnail_edit = QLineEdit()
+        self.thumbnail_edit.setPlaceholderText("URL miniature (optionnel)")
+        self.thumbnail_edit.textChanged.connect(self.on_video_modified)
+        editor_layout.addRow("Miniature (opt.):", self.thumbnail_edit)
+
+        splitter.addWidget(editor_panel)
+        splitter.setStretchFactor(1, 1)
+        layout.addWidget(splitter)
+
+    def set_videos(self, videos: List[Video]):
+        self.videos = videos
+        self.refresh_list()
+        if videos:
+            self.video_list.setCurrentRow(0)
+
+    def get_videos(self) -> List[Video]:
+        return self.videos
+
+    def refresh_list(self):
+        self.video_list.clear()
+        for i, video in enumerate(self.videos):
+            title = video.title if video.title else f"Vidéo {i+1}"
+            self.video_list.addItem(f"{i+1}. {title}")
+        self.count_label.setText(f"{len(self.videos)} vidéo(s)")
+
+    def add_video(self):
+        new_video = Video(
+            id=f"video_{len(self.videos)+1}",
+            title="Nouvelle vidéo",
+            youtubeId="",
+            duration="",
+            description=""
+        )
+        self.videos.append(new_video)
+        self.refresh_list()
+        self.video_list.setCurrentRow(len(self.videos) - 1)
+
+    def duplicate_current(self):
+        if self.current_index >= 0:
+            current_video = self.videos[self.current_index]
+            new_video = Video(
+                id=f"video_{len(self.videos)+1}",
+                title=f"{current_video.title} (copie)",
+                youtubeId=current_video.youtubeId,
+                duration=current_video.duration,
+                description=current_video.description,
+                thumbnail=current_video.thumbnail
+            )
+            self.videos.insert(self.current_index + 1, new_video)
+            self.refresh_list()
+            self.video_list.setCurrentRow(self.current_index + 1)
+
+    def delete_current(self):
+        if self.current_index >= 0:
+            reply = QMessageBox.question(
+                self, "Confirmation",
+                f"Supprimer la vidéo '{self.videos[self.current_index].title}' ?",
+                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No
+            )
+            if reply == QMessageBox.StandardButton.Yes:
+                del self.videos[self.current_index]
+                self.refresh_list()
+                if self.videos and self.current_index >= len(self.videos):
+                    self.video_list.setCurrentRow(len(self.videos) - 1)
+
+    def move_video_up(self):
+        if self.current_index > 0:
+            self.videos[self.current_index], self.videos[self.current_index - 1] = \
+                self.videos[self.current_index - 1], self.videos[self.current_index]
+            self.refresh_list()
+            self.video_list.setCurrentRow(self.current_index - 1)
+
+    def move_video_down(self):
+        if 0 <= self.current_index < len(self.videos) - 1:
+            self.videos[self.current_index], self.videos[self.current_index + 1] = \
+                self.videos[self.current_index + 1], self.videos[self.current_index]
+            self.refresh_list()
+            self.video_list.setCurrentRow(self.current_index + 1)
+
+    def on_selection_changed(self, index: int):
+        if self.current_index >= 0 and self.current_index < len(self.videos):
+            self.save_current_video()
+
+        self.current_index = index
+        if index >= 0 and index < len(self.videos):
+            video = self.videos[index]
+            self.title_edit.blockSignals(True)
+            self.youtube_id_edit.blockSignals(True)
+            self.duration_edit.blockSignals(True)
+            self.description_edit.blockSignals(True)
+            self.thumbnail_edit.blockSignals(True)
+
+            self.title_edit.setText(video.title)
+            self.youtube_id_edit.setText(video.youtubeId)
+            self.duration_edit.setText(video.duration)
+            self.description_edit.setPlainText(video.description)
+            self.thumbnail_edit.setText(video.thumbnail)
+
+            self.title_edit.blockSignals(False)
+            self.youtube_id_edit.blockSignals(False)
+            self.duration_edit.blockSignals(False)
+            self.description_edit.blockSignals(False)
+            self.thumbnail_edit.blockSignals(False)
+
+    def save_current_video(self):
+        if self.current_index >= 0 and self.current_index < len(self.videos):
+            video = self.videos[self.current_index]
+            video.title = self.title_edit.text()
+            video.youtubeId = self.youtube_id_edit.text()
+            video.duration = self.duration_edit.text()
+            video.description = self.description_edit.toPlainText()
+            video.thumbnail = self.thumbnail_edit.text()
+
+    def on_video_modified(self):
+        if self.current_index >= 0:
+            self.save_current_video()
+            item = self.video_list.item(self.current_index)
+            if item:
+                title = self.title_edit.text() if self.title_edit.text() else f"Vidéo {self.current_index+1}"
+                item.setText(f"{self.current_index+1}. {title}")
+
 class ExerciseEditor(QWidget):
     """Éditeur d'exercices amélioré avec plus de fonctionnalités."""
     def __init__(self, parent=None):
@@ -1489,13 +1750,15 @@ class ChapterContentEditor(QDialog):
         layout = QVBoxLayout(self)
         
         self.tabs = QTabWidget()
-        
+
         info_widget = self.create_info_tab()
+        self.video_editor = VideoEditor()
         self.quiz_editor = QuizEditor()
         self.exercise_editor = ExerciseEditor()
-        
-        # Onglets simplifiés
+
+        # Onglets avec vidéos
         self.tabs.addTab(info_widget, "Informations")
+        self.tabs.addTab(self.video_editor, "📹 Vidéos")
         self.tabs.addTab(self.quiz_editor, "Quiz")
         self.tabs.addTab(self.exercise_editor, "Exercices")
         layout.addWidget(self.tabs)
@@ -1596,10 +1859,12 @@ class ChapterContentEditor(QDialog):
         return widget
 
     def load_chapter_data(self):
+        self.video_editor.set_videos(self.chapter.videos)
         self.quiz_editor.set_questions(self.chapter.quiz_questions)
         self.exercise_editor.set_exercises(self.chapter.exercises)
-        
+
         # Réinitialiser les indicateurs de modification
+        self.video_editor.setProperty("modified", False)
         self.quiz_editor.setProperty("modified", False)
         self.exercise_editor.setProperty("modified", False)
 
@@ -1732,20 +1997,21 @@ class ChapterContentEditor(QDialog):
         # Enregistrer l'état initial
         original_name = self.chapter.chapter_name
         original_dates_count = len(self.chapter.session_dates)
+        original_videos_count = len(self.chapter.videos)
         original_quiz_count = len(self.chapter.quiz_questions)
         original_exercises_count = len(self.chapter.exercises)
-        
+
         # Récupérer les nouvelles données
         new_name = self.name_edit.text().strip()
         # Pour les dates, on utilise les données déjà mises à jour dans self.chapter.session_dates
+        new_videos = self.video_editor.get_videos()
         new_quiz_questions = self.quiz_editor.get_questions()
         new_exercises = self.exercise_editor.get_exercises()
-        new_quiz_questions = self.quiz_editor.get_questions()
-        new_exercises = self.exercise_editor.get_exercises()
-        
+
         # Appliquer les modifications à l'objet chapitre
         self.chapter.chapter_name = new_name
         # self.chapter.session_dates est déjà mis à jour par les méthodes add_date, edit_selected_date et remove_date
+        self.chapter.videos = new_videos
         self.chapter.quiz_questions = new_quiz_questions
         self.chapter.exercises = new_exercises
         
@@ -1759,19 +2025,23 @@ class ChapterContentEditor(QDialog):
         if original_dates_count != len(self.chapter.session_dates):
             modified = True
             print(f"Dates modifiées: {original_dates_count} -> {len(self.chapter.session_dates)}")
-            
+
+        if original_videos_count != len(new_videos):
+            modified = True
+            print(f"Nombre de vidéos modifié: {original_videos_count} -> {len(new_videos)}")
+
         if original_quiz_count != len(new_quiz_questions):
             modified = True
             print(f"Nombre de quiz modifié: {original_quiz_count} -> {len(new_quiz_questions)}")
-            
+
         if original_exercises_count != len(new_exercises):
             modified = True
             print(f"Nombre d'exercices modifié: {original_exercises_count} -> {len(new_exercises)}")
-        
+
         # Vérifier si l'ordre a été modifié via les propriétés
-        if self.quiz_editor.property("modified") or self.exercise_editor.property("modified"):
+        if self.video_editor.property("modified") or self.quiz_editor.property("modified") or self.exercise_editor.property("modified"):
             modified = True
-            print("L'ordre des questions ou exercices a été modifié")
+            print("L'ordre des vidéos, questions ou exercices a été modifié")
             
         # Si des modifications sont détectées, forcer une sauvegarde immédiate
         if modified:
