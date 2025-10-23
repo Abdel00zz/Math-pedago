@@ -15,12 +15,12 @@ interface CategorizedActivities {
     upcoming: Chapter[];
 }
 
-// ✅ OPTIMISATION 2: Styles en constante (évite recréation)
+// ✅ OPTIMISATION 2: Styles en constante (évite recréation) avec animations pour le nom
 const customStyles = `
   :root {
     --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
   }
-  
+
   .claude-card {
     background-color: #FFFFFF;
     border: 1px solid #E5E5E5;
@@ -29,25 +29,72 @@ const customStyles = `
     position: relative;
     overflow: hidden;
   }
-  
+
   .claude-card:hover:not(:disabled) {
     border-color: #D4D4D4;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(0, 0, 0, 0.05);
   }
-  
+
   .pulse-dot {
     animation: pulse 2s var(--transition-smooth) infinite;
   }
-  
+
   @keyframes pulse {
-    0%, 100% { 
-      opacity: 1; 
+    0%, 100% {
+      opacity: 1;
       transform: scale(1);
     }
-    50% { 
-      opacity: 0.7; 
+    50% {
+      opacity: 0.7;
       transform: scale(1.1);
     }
+  }
+
+  @keyframes welcomeBounce {
+    0% {
+      transform: scale(0.8) translateY(-20px);
+      opacity: 0;
+    }
+    50% {
+      transform: scale(1.1) translateY(0);
+    }
+    70% {
+      transform: scale(0.95);
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% center;
+    }
+    100% {
+      background-position: 200% center;
+    }
+  }
+
+  .student-name-animated {
+    animation: welcomeBounce 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    background: linear-gradient(
+      90deg,
+      #FF7A00 0%,
+      #FFB84D 25%,
+      #FF7A00 50%,
+      #FFB84D 75%,
+      #FF7A00 100%
+    );
+    background-size: 200% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: welcomeBounce 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards,
+               shimmer 3s linear infinite;
+    display: inline-block;
+    font-weight: 700;
+    text-shadow: 0 0 30px rgba(255, 122, 0, 0.3);
   }
 `;
 
@@ -131,8 +178,8 @@ const DashboardView: React.FC = () => {
                         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 max-w-5xl mx-auto">
                             <div>
                                 <h1 className="text-2xl sm:text-4xl font-title text-text mb-2 tracking-tight">
-                                    {greeting},
-                                    <span className="text-[#FF7A00] ml-4">
+                                    {greeting},{' '}
+                                    <span className="student-name-animated">
                                         {profile.name}
                                     </span>
                                 </h1>
