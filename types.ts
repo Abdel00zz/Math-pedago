@@ -19,6 +19,16 @@ export interface Question {
     hints?: string[];
 }
 
+// Nouveau type pour les vidéos YouTube
+export interface Video {
+    id: string;
+    title: string;
+    youtubeId: string; // ID de la vidéo YouTube (ex: "dQw4w9WgXcQ")
+    duration?: string; // Durée affichée (ex: "3:24")
+    description?: string; // Description courte
+    thumbnail?: string; // URL de la miniature (optionnel, peut être généré depuis YouTube)
+}
+
 export interface Hint {
     text: string;
     // Fix: Added optional 'sub_questions' to allow hints to contain sub-questions.
@@ -49,6 +59,7 @@ export interface Chapter {
     class: string;
     chapter: string;
     sessionDates: string[]; // Changed from sessionDate: string
+    videos?: Video[]; // Nouveau champ pour les capsules vidéo
     quiz: Question[];
     exercises: Exercise[];
     version: string;
@@ -66,7 +77,15 @@ export interface QuizProgress {
     hintsUsed: number;
 }
 
+// Nouveau type pour le progrès des vidéos
+export interface VideosProgress {
+    watched: { [videoId: string]: boolean }; // true si "Bien assimilé" cliqué
+    allWatched: boolean; // true si toutes les vidéos sont marquées comme assimilées
+    duration: number; // temps passé total en secondes
+}
+
 export interface ChapterProgress {
+    videos?: VideosProgress; // Nouveau champ pour le tracking des vidéos
     quiz: QuizProgress;
     exercisesFeedback: { [exId: string]: Feedback };
     isWorkSubmitted: boolean;
@@ -82,7 +101,7 @@ export interface AppState {
     activityVersions: { [chapterId: string]: string }; // To track versions for update notifications
     progress: { [chapterId: string]: ChapterProgress };
     currentChapterId: string | null;
-    activitySubView: 'quiz' | 'exercises' | null;
+    activitySubView: 'videos' | 'quiz' | 'exercises' | null; // Ajout de 'videos'
     isReviewMode: boolean;
     chapterOrder: string[];
 }
@@ -96,9 +115,17 @@ export interface ExportedQuizResult {
     answers: { [qId: string]: number | number[] }; // Standardized to numbers/indices
 }
 
+export interface ExportedVideosResult {
+    watchedCount: number; // Nombre de vidéos regardées
+    totalCount: number; // Nombre total de vidéos
+    allWatched: boolean; // Toutes les vidéos sont-elles assimilées ?
+    durationSeconds: number; // Temps passé
+}
+
 export interface ExportedChapterResult {
     chapter: string;
     version: string;
+    videos?: ExportedVideosResult; // Nouveau champ pour l'export
     quiz: ExportedQuizResult;
     exercisesFeedback: { [exId: string]: Feedback };
     exercisesDurationSeconds: number;
@@ -146,6 +173,8 @@ export type Action =
     | { type: 'SUBMIT_QUIZ'; payload: { score: number; duration: number; hintsUsed: number } }
     | { type: 'TOGGLE_REVIEW_MODE'; payload: boolean }
     | { type: 'SET_QUIZ_DURATION'; payload: { chapterId: string; duration: number } }
+    | { type: 'MARK_VIDEO_WATCHED'; payload: { videoId: string } } // Nouvelle action
+    | { type: 'SET_VIDEOS_DURATION'; payload: { duration: number } } // Nouvelle action
     | { type: 'UPDATE_EXERCISE_FEEDBACK'; payload: { exId: string; feedback: Feedback } }
     | { type: 'UPDATE_EXERCISES_DURATION'; payload: { duration: number } }
     | { type: 'SUBMIT_WORK'; payload: { chapterId: string } }
