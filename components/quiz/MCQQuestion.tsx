@@ -97,7 +97,7 @@ const MCQQuestion: React.FC<MCQQuestionProps> = ({ question, userAnswer, isRevie
                                             </div>
                                         )}
                                     </div>
-                                    <span className="flex-1 text-left text-[17px] leading-relaxed"><FormattedText text={option.text} /></span>
+                                    <span className="flex-1 text-left text-[19px] leading-relaxed font-medium"><FormattedText text={option.text} /></span>
                                 </button>
                                 {(isReviewMode || isSubmitted) && isSelected && !option.isCorrect && option.explanation && (
                                     <div className="pl-14 -mt-3 mb-2 text-sm text-red-600/90 animate-fadeIn serif-text italic">

@@ -474,7 +474,7 @@ const Quiz: React.FC = () => {
                                             </div>
                                         )}
                                     </div>
-                                    <span className="flex-1 text-left text-[17px] leading-relaxed">
+                                    <span className="flex-1 text-left text-[19px] leading-relaxed font-medium">
                                         <MathJax dynamic>{option.text}</MathJax>
                                     </span>
                                 </button>

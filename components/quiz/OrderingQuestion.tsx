@@ -219,22 +219,22 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({
                         onDragEnd={handleDragEnd}
                         onDragOver={handleDragOver}
                         onDragLeave={handleDragLeave}
-                        className={`group flex items-center gap-4 p-4 rounded-lg border-2 bg-background cursor-grab active:cursor-grabbing transition-all duration-200 ${
-                            draggingIndex === index 
-                                ? 'shadow-2xl scale-105 bg-border/50' 
+                        className={`group flex items-center gap-4 p-5 rounded-lg border-2 cursor-grab active:cursor-grabbing transition-all duration-200 ${
+                            draggingIndex === index
+                                ? 'shadow-2xl scale-105 bg-slate-700 border-slate-500'
                                 : hoverIndex === index
-                                ? 'border-warning bg-warning/15 shadow-[0_8px_24px_rgba(245,158,11,0.15)]'
-                                : 'hover:border-primary/50'
+                                ? 'border-warning bg-slate-800 shadow-[0_8px_24px_rgba(245,158,11,0.15)]'
+                                : 'bg-slate-800 border-slate-600 hover:border-primary/70 hover:bg-slate-700'
                         }`}
                     >
-                        <span 
-                            className="material-symbols-outlined text-text-secondary touch-none cursor-grab active:cursor-grabbing"
+                        <span
+                            className="material-symbols-outlined text-gray-300 touch-none cursor-grab active:cursor-grabbing"
                             aria-label="Déplacer l'élément"
                         >
                             drag_indicator
                         </span>
-                        <span className="font-bold text-lg text-primary">{index + 1}.</span>
-                        <div className="flex-1 text-[#1a1a1a] font-sans text-[17px] leading-relaxed">{item}</div>
+                        <span className="font-bold text-lg text-green-400">{index + 1}.</span>
+                        <div className="flex-1 text-white font-sans text-[19px] leading-relaxed font-medium">{item}</div>
                     </li>
                 ))}
             </ul>
