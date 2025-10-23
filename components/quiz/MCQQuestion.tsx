@@ -13,23 +13,23 @@ interface MCQQuestionProps {
 const MCQQuestion: React.FC<MCQQuestionProps> = ({ question, userAnswer, isReviewMode, isSubmitted, onOptionChange }) => {
 
     const getOptionClass = useCallback((option: Option, isSelected: boolean) => {
-        const base = 'group relative w-full text-left px-6 py-5 rounded-2xl border-2 transition-all duration-300 ease-in-out flex items-start gap-4 font-sans text-lg backdrop-blur-sm';
+        const base = 'group relative w-full text-left px-6 py-5 rounded-2xl border-2 transition-all duration-200 ease-in-out flex items-start gap-4 font-sans backdrop-blur-sm active:scale-[0.99]';
 
         if (isReviewMode || isSubmitted) {
             const isCorrect = option.isCorrect;
             if (isCorrect) {
-                return `${base} bg-green-50 border-green-500 text-gray-800 shadow-[0_8px_30px_rgba(34,197,94,0.25)]`;
+                return `${base} bg-green-50 border-green-500 text-[#1a1a1a] shadow-[0_8px_30px_rgba(34,197,94,0.25)]`;
             }
             if (isSelected && !isCorrect) {
-                return `${base} bg-red-50 border-red-400 text-gray-800 shadow-[0_8px_30px_rgba(239,68,68,0.25)]`;
+                return `${base} bg-red-50 border-red-400 text-[#1a1a1a] shadow-[0_8px_30px_rgba(239,68,68,0.25)]`;
             }
-            return `${base} border-gray-200 bg-gray-50 text-gray-500 cursor-default opacity-70`;
+            return `${base} border-gray-200 bg-gray-50 text-gray-600 cursor-default opacity-70`;
         }
 
         if (isSelected) {
-            return `${base} border-green-500 bg-green-50 text-gray-900 shadow-[0_12px_40px_rgba(34,197,94,0.3)] scale-[1.02] font-medium`;
+            return `${base} border-green-500 bg-green-50 text-[#000000] shadow-[0_12px_40px_rgba(34,197,94,0.3)] scale-[1.02] font-medium ring-2 ring-green-200`;
         }
-        return `${base} border-slate-200 bg-white hover:border-green-400 hover:bg-green-50/50 cursor-pointer hover:shadow-[0_8px_30px_rgba(34,197,94,0.15)] hover:scale-[1.01]`;
+        return `${base} border-slate-300 bg-white text-[#1a1a1a] hover:border-green-400 hover:bg-green-50/50 cursor-pointer hover:shadow-[0_8px_30px_rgba(34,197,94,0.15)] hover:scale-[1.01]`;
     }, [isReviewMode, isSubmitted]);
 
     return (
@@ -50,7 +50,7 @@ const MCQQuestion: React.FC<MCQQuestionProps> = ({ question, userAnswer, isRevie
                 }
             `}</style>
             <div className="bg-surface p-6 sm:p-8 rounded-2xl border border-border shadow-claude animate-fadeIn">
-                <h3 className="text-2xl font-title mb-6 text-text">
+                <h3 className="text-[22px] font-title mb-6 text-[#1a1a1a] leading-relaxed font-semibold">
                     <FormattedText text={question.question} />
                 </h3>
                 <div className="space-y-4">
@@ -60,8 +60,14 @@ const MCQQuestion: React.FC<MCQQuestionProps> = ({ question, userAnswer, isRevie
 
                         return (
                             <Fragment key={index}>
-                                <button onClick={() => onOptionChange(option.text)} className={optionClass} disabled={isSubmitted || isReviewMode}>
-                                    <div className="flex-shrink-0 mt-1">
+                                <button onClick={() => onOptionChange(option.text)} className={optionClass} disabled={isSubmitted || isReviewMode} aria-label={`Option ${index + 1}`}>
+                                    <div className="flex-shrink-0 flex items-center gap-3">
+                                        <span className={`text-xs font-bold px-2 py-1 rounded ${
+                                            isSelected ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-600'
+                                        }`}>
+                                            {index + 1}
+                                        </span>
+                                        <div className="mt-1">
                                         {(isReviewMode || isSubmitted) ? (
                                             option.isCorrect ? (
                                                 <div className="relative w-7 h-7 flex items-center justify-center">
@@ -94,8 +100,9 @@ const MCQQuestion: React.FC<MCQQuestionProps> = ({ question, userAnswer, isRevie
                                                 )}
                                             </div>
                                         )}
+                                        </div>
                                     </div>
-                                    <span className="flex-1 text-left"><FormattedText text={option.text} /></span>
+                                    <span className="flex-1 text-left text-[17px] leading-relaxed"><FormattedText text={option.text} /></span>
                                 </button>
                                 {(isReviewMode || isSubmitted) && isSelected && !option.isCorrect && option.explanation && (
                                     <div className="pl-14 -mt-3 mb-2 text-sm text-red-600/90 animate-fadeIn serif-text italic">

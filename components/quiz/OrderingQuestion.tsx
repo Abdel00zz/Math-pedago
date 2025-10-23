@@ -144,7 +144,7 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({
     if (isReviewMode || isSubmitted) {
         return (
             <div id={containerId} className="bg-surface p-6 sm:p-8 rounded-2xl border border-border shadow-claude animate-fadeIn">
-                <h3 className="text-2xl font-title mb-6 text-text">
+                <h3 className="text-[22px] font-title mb-6 text-[#1a1a1a] leading-relaxed font-semibold">
                     {question.question}
                 </h3>
 
@@ -162,8 +162,8 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({
 
                                 return (
                                     <li key={index} className={stepClass}>
-                                        <span className="font-bold text-lg text-text">{index + 1}.</span>
-                                        <div className="flex-1 text-text">{item}</div>
+                                        <span className="font-bold text-lg text-[#1a1a1a]">{index + 1}.</span>
+                                        <div className="flex-1 text-[#1a1a1a] text-[17px] leading-relaxed">{item}</div>
                                         <span className={`material-symbols-outlined !text-xl mt-0.5 ${iconClass}`}>
                                             {icon}
                                         </span>
@@ -183,7 +183,7 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({
                             {correctOrder.map((item, index) => (
                                 <li key={index} className="flex items-start gap-3 p-3 rounded-lg bg-background border border-border">
                                     <span className="font-bold text-primary text-lg">{index + 1}.</span>
-                                    <div className="flex-1 text-text-secondary">
+                                    <div className="flex-1 text-[#1a1a1a] text-[17px] leading-relaxed">
                                         {item}
                                     </div>
                                 </li>
@@ -198,10 +198,10 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({
     // --- Active Drag-and-Drop UI ---
     return (
         <div id={containerId} className="bg-surface p-6 sm:p-8 rounded-2xl border border-border shadow-claude animate-fadeIn">
-            <h3 className="text-2xl font-title mb-4 text-text text-center">
+            <h3 className="text-[22px] font-title mb-4 text-[#1a1a1a] text-center leading-relaxed font-semibold">
                 {question.question}
             </h3>
-            <p className="text-sm text-text-secondary text-center mb-6">
+            <p className="text-[15px] text-gray-600 text-center mb-6 leading-relaxed">
                 Maintenez, glissez et déposez les étapes pour construire la démarche correcte.
             </p>
 
@@ -230,7 +230,7 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({
                             drag_indicator
                         </span>
                         <span className="font-bold text-lg text-primary">{index + 1}.</span>
-                        <div className="flex-1 text-text font-sans">{item}</div>
+                        <div className="flex-1 text-[#1a1a1a] font-sans text-[17px] leading-relaxed">{item}</div>
                     </li>
                 ))}
             </ul>

@@ -187,50 +187,76 @@ const Quiz: React.FC = () => {
 
     const handleSubmit = useCallback(() => {
         if (!chapter || !allQuestionsAnswered) return;
-        
+
         // ✅ OPTIMISATION 4: Calcul de score optimisé
         const finalScore = chapter.quiz.reduce((acc, q) => {
             const userAnswer = answers[q.id];
-            
+
             if (!q.type || q.type === 'mcq') {
                 const correctOption = q.options?.find(opt => opt.isCorrect)?.text;
                 return (typeof userAnswer === 'string' && userAnswer === correctOption) ? acc + 1 : acc;
-            } 
-            
+            }
+
             if (q.type === 'ordering') {
-                const isCorrect = Array.isArray(userAnswer) && 
-                                 q.steps && 
+                const isCorrect = Array.isArray(userAnswer) &&
+                                 q.steps &&
                                  JSON.stringify(userAnswer) === JSON.stringify(q.steps);
                 return isCorrect ? acc + 1 : acc;
             }
-            
+
             return acc;
         }, 0);
-        
-        dispatch({ 
-            type: 'SUBMIT_QUIZ', 
-            payload: { score: finalScore, duration: timeSpent, hintsUsed: 0 } 
+
+        dispatch({
+            type: 'SUBMIT_QUIZ',
+            payload: { score: finalScore, duration: timeSpent, hintsUsed: 0 }
         });
     }, [chapter, answers, dispatch, timeSpent]);
 
-    // ✅ OPTIMISATION 5: Fonction getOptionClass mémorisée avec couleurs pédagogiques
+    // ✅ AMÉLIORATION: Navigation au clavier (flèches gauche/droite et touches 1-4 pour les options)
+    useEffect(() => {
+        const handleKeyPress = (e: KeyboardEvent) => {
+            if (isSubmitted || isReviewMode) return;
+
+            // Navigation avec flèches
+            if (e.key === 'ArrowLeft' && currentQuestionIndex > 0) {
+                handleNavigate(currentQuestionIndex - 1);
+            } else if (e.key === 'ArrowRight' && currentQuestionIndex < (chapter?.quiz.length || 0) - 1) {
+                handleNavigate(currentQuestionIndex + 1);
+            }
+
+            // Sélection rapide avec touches numériques (1-4)
+            if (question && (!question.type || question.type === 'mcq') && question.options) {
+                const numKey = parseInt(e.key);
+                if (numKey >= 1 && numKey <= question.options.length) {
+                    const selectedOption = question.options[numKey - 1];
+                    handleOptionChange(selectedOption.text);
+                }
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyPress);
+        return () => window.removeEventListener('keydown', handleKeyPress);
+    }, [currentQuestionIndex, chapter, question, isSubmitted, isReviewMode, handleNavigate, handleOptionChange]);
+
+    // ✅ OPTIMISATION 5: Fonction getOptionClass mémorisée avec couleurs pédagogiques et lisibilité améliorée
     const getOptionClass = useCallback((option: Option, isSelected: boolean) => {
-        const base = 'group relative w-full text-left px-6 py-5 rounded-2xl border-2 transition-all duration-300 ease-in-out flex items-start gap-4 font-sans text-lg backdrop-blur-sm';
+        const base = 'group relative w-full text-left px-6 py-5 rounded-2xl border-2 transition-all duration-200 ease-in-out flex items-start gap-4 font-sans backdrop-blur-sm active:scale-[0.99]';
 
         if (isReviewMode || isSubmitted) {
             if (option.isCorrect) {
-                return `${base} bg-green-50 border-green-500 text-gray-800 shadow-[0_8px_30px_rgba(34,197,94,0.25)]`;
+                return `${base} bg-green-50 border-green-500 text-[#1a1a1a] shadow-[0_8px_30px_rgba(34,197,94,0.25)]`;
             }
             if (isSelected && !option.isCorrect) {
-                return `${base} bg-red-50 border-red-400 text-gray-800 shadow-[0_8px_30px_rgba(239,68,68,0.25)]`;
+                return `${base} bg-red-50 border-red-400 text-[#1a1a1a] shadow-[0_8px_30px_rgba(239,68,68,0.25)]`;
             }
-            return `${base} border-gray-200 bg-gray-50 text-gray-500 cursor-default opacity-70`;
+            return `${base} border-gray-200 bg-gray-50 text-gray-600 cursor-default opacity-70`;
         }
 
         if (isSelected) {
-            return `${base} border-green-500 bg-green-50 text-gray-900 shadow-[0_12px_40px_rgba(34,197,94,0.3)] scale-[1.02] font-medium`;
+            return `${base} border-green-500 bg-green-50 text-[#000000] shadow-[0_12px_40px_rgba(34,197,94,0.3)] scale-[1.02] font-medium ring-2 ring-green-200`;
         }
-        return `${base} border-slate-200 bg-white hover:border-green-400 hover:bg-green-50/50 cursor-pointer hover:shadow-[0_8px_30px_rgba(34,197,94,0.15)] hover:scale-[1.01]`;
+        return `${base} border-slate-300 bg-white text-[#1a1a1a] hover:border-green-400 hover:bg-green-50/50 cursor-pointer hover:shadow-[0_8px_30px_rgba(34,197,94,0.15)] hover:scale-[1.01]`;
     }, [isReviewMode, isSubmitted]);
 
     if (!chapter || !quizProgress || !question) {
@@ -309,6 +335,20 @@ const Quiz: React.FC = () => {
                         opacity: 1;
                     }
                 }
+
+                /* Harmonisation MathJax avec texte normal */
+                .MathJax, .MathJax_Display {
+                    font-size: 1em !important;
+                    line-height: 1.6 !important;
+                }
+
+                mjx-container[jax="CHTML"][display="true"] {
+                    margin: 0.5em 0 !important;
+                }
+
+                mjx-container {
+                    color: inherit !important;
+                }
             `}</style>
             <div id="quiz-container" className="font-sans max-w-3xl mx-auto px-2">
 
@@ -375,15 +415,20 @@ const Quiz: React.FC = () => {
             {(!question.type || question.type === 'mcq') && (
                 <div className="rounded-3xl border border-border/60 bg-surface/70 backdrop-blur-sm shadow-[0_28px_68px_rgba(15,23,42,0.45)] p-6 sm:p-8 animate-fadeIn">
                     <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
-                        <p className="text-sm text-text-secondary">
-                            Question {currentQuestionIndex + 1} sur {chapter.quiz.length}
-                        </p>
+                        <div>
+                            <p className="text-sm text-text-secondary">
+                                Question {currentQuestionIndex + 1} sur {chapter.quiz.length}
+                            </p>
+                            <p className="text-xs text-gray-400 mt-1">
+                                ⌨️ Flèches ← → pour naviguer • Touches 1-4 pour répondre
+                            </p>
+                        </div>
                         <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-background/70 border border-border/70 text-xs text-text">
                             <span className="uppercase tracking-[0.28em] text-[9px] text-text-secondary">Timer</span>
                             <span className="font-mono text-sm leading-none">{formattedTime}</span>
                         </span>
                     </div>
-                    <h3 className="text-2xl font-display mb-6 text-text leading-snug">
+                    <h3 className="text-[22px] font-display mb-6 text-[#1a1a1a] leading-relaxed font-semibold">
                         <MathJax dynamic>{question.question}</MathJax>
                     </h3>
                     <div className="space-y-4">
@@ -397,8 +442,15 @@ const Quiz: React.FC = () => {
                                     onClick={() => handleOptionChange(option.text)}
                                     className={optionClass}
                                     disabled={isSubmitted}
+                                    aria-label={`Option ${index + 1}`}
                                 >
-                                    <div className="flex-shrink-0 mt-1">
+                                    <div className="flex-shrink-0 flex items-center gap-3">
+                                        <span className={`text-xs font-bold px-2 py-1 rounded ${
+                                            isSelected ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-600'
+                                        }`}>
+                                            {index + 1}
+                                        </span>
+                                        <div className="mt-1">
                                         {(isReviewMode || isSubmitted) ? (
                                             option.isCorrect ? (
                                                 <div className="relative w-7 h-7 flex items-center justify-center">
@@ -431,8 +483,9 @@ const Quiz: React.FC = () => {
                                                 )}
                                             </div>
                                         )}
+                                        </div>
                                     </div>
-                                    <span className="flex-1 text-left">
+                                    <span className="flex-1 text-left text-[17px] leading-relaxed">
                                         <MathJax dynamic>{option.text}</MathJax>
                                     </span>
                                 </button>
