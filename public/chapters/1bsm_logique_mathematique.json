@@ -6,6 +6,29 @@
     "2025-10-01T18:00:00Z",
     "2025-10-03T18:00:00Z"
   ],
+  "videos": [
+    {
+      "id": "video_logique_1",
+      "title": "Introduction à la logique mathématique",
+      "youtubeId": "dQw4w9WgXcQ",
+      "duration": "8:24",
+      "description": "Découvrez les concepts fondamentaux de la logique : propositions, valeurs de vérité, et connecteurs logiques."
+    },
+    {
+      "id": "video_logique_2",
+      "title": "Les quantificateurs universels et existentiels",
+      "youtubeId": "9bZkp7q19f0",
+      "duration": "6:45",
+      "description": "Apprenez à utiliser les quantificateurs ∀ (pour tout) et ∃ (il existe) dans les démonstrations mathématiques."
+    },
+    {
+      "id": "video_logique_3",
+      "title": "Techniques de démonstration",
+      "youtubeId": "kJQP7kiw5Fk",
+      "duration": "9:12",
+      "description": "Maîtrisez les méthodes de démonstration : directe, par contraposée, par l'absurde et par récurrence."
+    }
+  ],
   "quiz": [
     {
       "id": "q_proposition_1",

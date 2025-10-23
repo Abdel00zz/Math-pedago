@@ -6,6 +6,29 @@
     "2025-10-10T18:45:00Z",
     "2025-10-15T18:00:52Z"
   ],
+  "videos": [
+    {
+      "id": "video_ensembles_1",
+      "title": "Les ensembles : notations et opérations",
+      "youtubeId": "dQw4w9WgXcQ",
+      "duration": "7:30",
+      "description": "Comprenez les notations d'ensembles (extension, compréhension) et les opérations fondamentales (union, intersection, complémentaire)."
+    },
+    {
+      "id": "video_ensembles_2",
+      "title": "Les applications entre ensembles",
+      "youtubeId": "9bZkp7q19f0",
+      "duration": "9:15",
+      "description": "Découvrez les concepts d'application, de fonction : définition, domaine, ensemble d'arrivée et image."
+    },
+    {
+      "id": "video_ensembles_3",
+      "title": "Injections, surjections et bijections",
+      "youtubeId": "kJQP7kiw5Fk",
+      "duration": "8:45",
+      "description": "Maîtrisez les trois types d'applications : injective, surjective et bijective avec des exemples concrets."
+    }
+  ],
   "quiz": [
     {
       "id": "q_definition_ensemble_1",

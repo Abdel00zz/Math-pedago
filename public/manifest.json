@@ -146,13 +146,13 @@
       "id": "logique-mathematique",
       "file": "1bsm_logique_mathematique.json",
       "isActive": true,
-      "version": "v1.1.0-f45996"
+      "version": "v1.2.0-videos"
     },
     {
       "id": "ensembles-et-applications",
       "file": "1bsm_ensembles_et_applications.json",
       "isActive": true,
-      "version": "v1.1.0-af836a"
+      "version": "v1.2.0-videos"
     },
     {
       "id": "generalites-sur-les-fonctions",
