@@ -4,6 +4,7 @@ import { Feedback, SubQuestion, Exercise } from '../types';
 import { MathJax } from 'better-react-mathjax';
 import HintModal from './HintModal';
 import { useMathJax } from '../hooks/useMathJax';
+import VideoPlayer from './VideoPlayer';
 
 const feedbackConfig: { [key in Feedback]: { base: string; selected: string } } = {
     'Facile':    { base: 'bg-white border-[#d7ccc8] text-[#a1887f] hover:bg-gray-100', selected: 'bg-success text-white border-success' },
@@ -204,10 +205,17 @@ const Exercises: React.FC<ExercisesProps> = ({ onAllCompleted }) => {
                         )}
                     </div>
                     
+                    {/* Vidéo pédagogique si disponible */}
+                    {exercise.video && (
+                        <div className="mb-6">
+                            <VideoPlayer video={exercise.video} />
+                        </div>
+                    )}
+
                     <div className="text-gray-800 text-base leading-relaxed">
                         <MathJax dynamic>{exercise.statement}</MathJax>
                     </div>
-                    
+
                     {exercise.sub_questions && renderSubQuestions(exercise.sub_questions)}
 
                     <div className="mt-6 border-t border-amber-200 pt-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-3">

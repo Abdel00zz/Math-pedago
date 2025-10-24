@@ -34,12 +34,25 @@ export interface SubQuestion {
     sub_sub_questions?: SubSubQuestion[];
 }
 
+export interface VideoResource {
+    url: string;
+    title?: string;
+    duration?: string; // Format: "5:30"
+    timestamps?: VideoTimestamp[];
+}
+
+export interface VideoTimestamp {
+    time: number; // in seconds
+    label: string;
+}
+
 export interface Exercise {
     id: string;
     title: string;
     statement: string;
     sub_questions?: SubQuestion[];
     hint?: Hint[];
+    video?: VideoResource; // Optional video resource
 }
 
 export interface Chapter {
