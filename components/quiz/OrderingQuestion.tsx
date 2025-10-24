@@ -144,9 +144,11 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({
     if (isReviewMode || isSubmitted) {
         return (
             <div id={containerId} className="bg-surface p-6 sm:p-8 rounded-2xl border border-border shadow-claude animate-fadeIn">
-                <h3 className="text-2xl font-title mb-6 text-text">
-                    {question.question}
-                </h3>
+                <div className="bg-black text-white px-6 py-4 rounded-xl mb-6 shadow-lg">
+                    <h3 className="text-[22px] font-title leading-relaxed font-semibold">
+                        {question.question}
+                    </h3>
+                </div>
 
                 <div className="space-y-8">
                     <div>
@@ -162,8 +164,8 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({
 
                                 return (
                                     <li key={index} className={stepClass}>
-                                        <span className="font-bold text-lg text-text">{index + 1}.</span>
-                                        <div className="flex-1 text-text">{item}</div>
+                                        <span className="font-bold text-lg text-[#1a1a1a]">{index + 1}.</span>
+                                        <div className="flex-1 text-[#1a1a1a] text-[17px] leading-relaxed">{item}</div>
                                         <span className={`material-symbols-outlined !text-xl mt-0.5 ${iconClass}`}>
                                             {icon}
                                         </span>
@@ -183,7 +185,7 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({
                             {correctOrder.map((item, index) => (
                                 <li key={index} className="flex items-start gap-3 p-3 rounded-lg bg-background border border-border">
                                     <span className="font-bold text-primary text-lg">{index + 1}.</span>
-                                    <div className="flex-1 text-text-secondary">
+                                    <div className="flex-1 text-[#1a1a1a] text-[17px] leading-relaxed">
                                         {item}
                                     </div>
                                 </li>
@@ -198,10 +200,12 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({
     // --- Active Drag-and-Drop UI ---
     return (
         <div id={containerId} className="bg-surface p-6 sm:p-8 rounded-2xl border border-border shadow-claude animate-fadeIn">
-            <h3 className="text-2xl font-title mb-4 text-text text-center">
-                {question.question}
-            </h3>
-            <p className="text-sm text-text-secondary text-center mb-6">
+            <div className="bg-black text-white px-6 py-4 rounded-xl mb-4 shadow-lg">
+                <h3 className="text-[22px] font-title text-center leading-relaxed font-semibold">
+                    {question.question}
+                </h3>
+            </div>
+            <p className="text-[15px] text-gray-600 text-center mb-6 leading-relaxed">
                 Maintenez, glissez et déposez les étapes pour construire la démarche correcte.
             </p>
 
@@ -215,22 +219,22 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({
                         onDragEnd={handleDragEnd}
                         onDragOver={handleDragOver}
                         onDragLeave={handleDragLeave}
-                        className={`group flex items-center gap-4 p-4 rounded-lg border-2 bg-background cursor-grab active:cursor-grabbing transition-all duration-200 ${
-                            draggingIndex === index 
-                                ? 'shadow-2xl scale-105 bg-border/50' 
+                        className={`group flex items-center gap-4 p-5 rounded-lg border-2 cursor-grab active:cursor-grabbing transition-all duration-200 ${
+                            draggingIndex === index
+                                ? 'shadow-2xl scale-105 bg-slate-700 border-slate-500'
                                 : hoverIndex === index
-                                ? 'border-warning bg-warning/15 shadow-[0_8px_24px_rgba(245,158,11,0.15)]'
-                                : 'hover:border-primary/50'
+                                ? 'border-warning bg-slate-800 shadow-[0_8px_24px_rgba(245,158,11,0.15)]'
+                                : 'bg-slate-800 border-slate-600 hover:border-primary/70 hover:bg-slate-700'
                         }`}
                     >
-                        <span 
-                            className="material-symbols-outlined text-text-secondary touch-none cursor-grab active:cursor-grabbing"
+                        <span
+                            className="material-symbols-outlined text-gray-300 touch-none cursor-grab active:cursor-grabbing"
                             aria-label="Déplacer l'élément"
                         >
                             drag_indicator
                         </span>
-                        <span className="font-bold text-lg text-primary">{index + 1}.</span>
-                        <div className="flex-1 text-text font-sans">{item}</div>
+                        <span className="font-bold text-lg text-green-400">{index + 1}.</span>
+                        <div className="flex-1 text-white font-sans text-[19px] leading-relaxed font-medium">{item}</div>
                     </li>
                 ))}
             </ul>

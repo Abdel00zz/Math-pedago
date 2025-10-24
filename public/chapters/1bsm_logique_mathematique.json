@@ -6,6 +6,15 @@
     "2025-10-01T18:00:00Z",
     "2025-10-03T18:00:00Z"
   ],
+  "videos": [
+    {
+      "id": "video_1",
+      "title": "Nouvelle vidéo",
+      "youtubeId": "q-PkKYUvxu0",
+      "duration": "5:48",
+      "description": "efz"
+    }
+  ],
   "quiz": [
     {
       "id": "q_proposition_1",
@@ -93,13 +102,13 @@
           "isCorrect": false
         },
         {
-          "text": "Équivalente à $P$",
+          "text": "Équivalente à  $P$",
           "isCorrect": false
         },
         {
           "text": "Fausse",
           "isCorrect": true,
-          "explanation": "La négation $\\neg P$ d'une proposition $P$ a la valeur de vérité opposée à celle de $P$."
+          "explanation": "La négation $\\neg P$ d'une proposition $P$ a la valeur de vérité opposée à  celle de $P$."
         }
       ]
     },
@@ -143,7 +152,7 @@
         {
           "text": "$(P \\Rightarrow Q) \\land (Q \\Rightarrow P)$",
           "isCorrect": true,
-          "explanation": "L'équivalence $P \\Leftrightarrow Q$ est vraie si et seulement si $P$ et $Q$ ont la même valeur de vérité. Cela équivaut à $(P \\Rightarrow Q) \\land (Q \\Rightarrow P)$."
+          "explanation": "L'équivalence $P \\Leftrightarrow Q$ est vraie si et seulement si $P$ et $Q$ ont la même valeur de vérité. Cela équivaut à  $(P \\Rightarrow Q) \\land (Q \\Rightarrow P)$."
         },
         {
           "text": "$P \\lor Q$",
@@ -259,7 +268,7 @@
         {
           "text": "$\\neg Q \\Rightarrow \\neg P$",
           "isCorrect": true,
-          "explanation": "La contraposée d'une implication $P \\Rightarrow Q$ est $\\neg Q \\Rightarrow \\neg P$, et elle est logiquement équivalente à l'implication originale."
+          "explanation": "La contraposée d'une implication $P \\Rightarrow Q$ est $\\neg Q \\Rightarrow \\neg P$, et elle est logiquement équivalente à  l'implication originale."
         },
         {
           "text": "$\\neg P \\Rightarrow \\neg Q$",
@@ -287,7 +296,7 @@
         {
           "text": "$Q \\Rightarrow P$",
           "isCorrect": true,
-          "explanation": "La réciproque d'une implication $P \\Rightarrow Q$ est $Q \\Rightarrow P$. Attention : la réciproque n'est pas toujours équivalente à l'implication originale."
+          "explanation": "La réciproque d'une implication $P \\Rightarrow Q$ est $Q \\Rightarrow P$. Attention : la réciproque n'est pas toujours équivalente à  l'implication originale."
         },
         {
           "text": "$P \\Leftrightarrow Q$",
@@ -298,7 +307,7 @@
     {
       "id": "q_raisonnement_direct_13",
       "type": "mcq",
-      "question": "Le raisonnement direct consiste à :",
+      "question": "Le raisonnement direct consiste à  :",
       "options": [
         {
           "text": "Supposer le contraire de ce qu'on veut démontrer",
@@ -307,7 +316,7 @@
         {
           "text": "Partir des hypothèses et déduire logiquement la conclusion",
           "isCorrect": true,
-          "explanation": "Le raisonnement direct part des hypothèses données et utilise des déductions logiques pour arriver à la conclusion souhaitée."
+          "explanation": "Le raisonnement direct part des hypothèses données et utilise des déductions logiques pour arriver à  la conclusion souhaitée."
         },
         {
           "text": "Démontrer la contraposée",
@@ -322,7 +331,7 @@
     {
       "id": "q_raisonnement_absurde_14",
       "type": "mcq",
-      "question": "Le raisonnement par l'absurde consiste à :",
+      "question": "Le raisonnement par l'absurde consiste à  :",
       "options": [
         {
           "text": "Partir directement des hypothèses",
@@ -333,7 +342,7 @@
           "isCorrect": false
         },
         {
-          "text": "Supposer le contraire de ce qu'on veut démontrer et arriver à une contradiction",
+          "text": "Supposer le contraire de ce qu'on veut démontrer et arriver à  une contradiction",
           "isCorrect": true,
           "explanation": "Le raisonnement par l'absurde suppose la négation de ce qu'on veut démontrer, puis établit une contradiction pour conclure que l'hypothèse est fausse."
         },
@@ -346,7 +355,7 @@
     {
       "id": "q_raisonnement_contraposee_15",
       "type": "mcq",
-      "question": "Le raisonnement par contraposée pour démontrer $P \\Rightarrow Q$ consiste à :",
+      "question": "Le raisonnement par contraposée pour démontrer $P \\Rightarrow Q$ consiste à  :",
       "options": [
         {
           "text": "Démontrer $Q \\Rightarrow P$",
@@ -357,7 +366,7 @@
           "isCorrect": false
         },
         {
-          "text": "Supposer $P \\land \\neg Q$ et arriver à une contradiction",
+          "text": "Supposer $P \\land \\neg Q$ et arriver à  une contradiction",
           "isCorrect": false
         },
         {
@@ -370,7 +379,7 @@
     {
       "id": "q_disjonction_cas_16",
       "type": "mcq",
-      "question": "Le raisonnement par disjonction de cas consiste à :",
+      "question": "Le raisonnement par disjonction de cas consiste à  :",
       "options": [
         {
           "text": "Diviser l'ensemble des possibilités en cas exhaustifs et traiter chaque cas séparément",
@@ -405,7 +414,7 @@
           "isCorrect": false
         },
         {
-          "text": "Sur tous les entiers naturels à partir d'un certain rang",
+          "text": "Sur tous les entiers naturels à  partir d'un certain rang",
           "isCorrect": true,
           "explanation": "Le raisonnement par récurrence permet de démontrer qu'une propriété $P(n)$ est vraie pour tout entier naturel $n \\geq n_0$ en démontrant $P(n_0)$ (initialisation) et $P(n) \\Rightarrow P(n+1)$ (hérédité)."
         },
@@ -451,7 +460,7 @@
         {
           "text": "Elles ont la même table de vérité",
           "isCorrect": true,
-          "explanation": "Deux propositions sont logiquement équivalentes si elles ont exactement la même valeur de vérité dans tous les cas possibles, c'est-à-dire la même table de vérité."
+          "explanation": "Deux propositions sont logiquement équivalentes si elles ont exactement la même valeur de vérité dans tous les cas possibles, c'est-à -dire la même table de vérité."
         },
         {
           "text": "Elles sont écrites de la même façon",
@@ -466,7 +475,7 @@
     {
       "id": "q_lois_morgan_20",
       "type": "mcq",
-      "question": "La loi de De Morgan indique que $\\neg(P \\land Q)$ est équivalent à :",
+      "question": "La loi de De Morgan indique que $\\neg(P \\land Q)$ est équivalent à  :",
       "options": [
         {
           "text": "$\\neg P \\land \\neg Q$",
@@ -492,7 +501,7 @@
       "type": "ordering",
       "question": "Remettez dans l'ordre les étapes d'un raisonnement par récurrence pour prouver une propriété $P(n)$ pour tout $n \\ge n_0$.",
       "steps": [
-        "Énoncer la propriété $P(n)$ à démontrer.",
+        "Énoncer la propriété $P(n)$ à  démontrer.",
         "Initialisation : Vérifier que la propriété $P(n_0)$ est vraie pour le premier rang $n_0$.",
         "Hérédité : Supposer que $P(n)$ est vraie pour un entier $n \\ge n_0$ fixé (Hypothèse de récurrence).",
         "Hérédité : Démontrer que sous cette hypothèse, la propriété $P(n+1)$ est également vraie.",
@@ -505,7 +514,7 @@
     {
       "id": "exo_propositions_quantificateurs",
       "title": "Propositions et Quantificateurs",
-      "statement": "Exprimer les propositions suivantes à l'aide des quantificateurs et connecteurs logiques, puis indiquer la valeur de vérité de chacune d'elles :",
+      "statement": "Exprimer les propositions suivantes à  l'aide des quantificateurs et connecteurs logiques, puis indiquer la valeur de vérité de chacune d'elles :",
       "sub_questions": [
         {
           "text": "Il existe au moins une solution de l'équation $x^2 - 2 = 0$."
@@ -517,13 +526,13 @@
           "text": "Il existe un réel plus petit que tous les réels."
         },
         {
-          "text": "Le carré d'un réel quelconque est supérieur ou égal à -1."
+          "text": "Le carré d'un réel quelconque est supérieur ou égal à  -1."
         },
         {
-          "text": "Aucun entier naturel n'est supérieur à tous les autres."
+          "text": "Aucun entier naturel n'est supérieur à  tous les autres."
         },
         {
-          "text": "Tout réel inférieur ou égal à -2 est négatif."
+          "text": "Tout réel inférieur ou égal à  -2 est négatif."
         },
         {
           "text": "Tout entier naturel divisible par 4 est un nombre pair."
@@ -585,7 +594,7 @@
           "text": "Écrire la contraposée de la proposition précédente."
         },
         {
-          "text": "En remarquant qu'un entier impair $n$ s'écrit sous la forme $n = 4k + r$ avec $k \\in \\mathbb{N}$ et $r \\in \\{1, 3\\}$ (à justifier), prouver la contraposée."
+          "text": "En remarquant qu'un entier impair $n$ s'écrit sous la forme $n = 4k + r$ avec $k \\in \\mathbb{N}$ et $r \\in \\{1, 3\\}$ (à  justifier), prouver la contraposée."
         },
         {
           "text": "A-t-on démontré la propriété de l'énoncé ?"
@@ -643,7 +652,7 @@
     {
       "id": "exo_types_raisonnements",
       "title": "Application des Différents Types de Raisonnements",
-      "statement": "Pour chaque énoncé, identifier le type de raisonnement le plus approprié et le mettre en œuvre :",
+      "statement": "Pour chaque énoncé, identifier le type de raisonnement le plus approprié et le mettre en Å“uvre :",
       "sub_questions": [
         {
           "text": "Soit $n \\in \\mathbb{N}$. Montrer que si $n$ est pair, alors $n^2$ est pair."
@@ -679,5 +688,5 @@
       ]
     }
   ],
-  "version": "v1.1.0-f45996"
+  "version": "v1.1.0-6a13f5"
 }

@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { useAppState, useAppDispatch } from '../context/AppContext';
-import { Feedback, SubQuestion, Exercise } from '../types';
+import { Feedback, SubQuestion, Exercise, ExerciseImage } from '../types';
 import { MathJax } from 'better-react-mathjax';
 import HintModal from './HintModal';
 import { useMathJax } from '../hooks/useMathJax';
@@ -184,48 +184,185 @@ const Exercises: React.FC<ExercisesProps> = ({ onAllCompleted }) => {
         return chapter.exercises.find(ex => ex.id === hintModalExerciseId);
     }, [hintModalExerciseId, chapter.exercises]);
 
+    // Fonction pour obtenir les classes CSS basées sur la taille de l'image
+    const getImageSizeClass = (image: ExerciseImage): string => {
+        switch (image.size) {
+            case 'small': return 'max-w-xs'; // 320px
+            case 'medium': return 'max-w-md'; // 448px
+            case 'large': return 'max-w-2xl'; // 672px
+            case 'full': return 'w-full max-w-full';
+            case 'custom': return ''; // Utilise les dimensions personnalisées
+            default: return 'max-w-md';
+        }
+    };
+
+    // Fonction pour obtenir les classes CSS basées sur l'alignement horizontal
+    const getImageAlignmentClass = (alignment: string = 'center'): string => {
+        switch (alignment) {
+            case 'left': return 'mr-auto';
+            case 'center': return 'mx-auto';
+            case 'right': return 'ml-auto';
+            case 'justify': return 'w-full';
+            default: return 'mx-auto';
+        }
+    };
+
+    // Fonction intelligente pour obtenir les classes CSS basées sur la position de l'image
+    const getImagePositionClass = (position: string = 'center', alignment: string = 'center'): string => {
+        const baseClasses = 'block'; // Toujours en display block pour un meilleur contrôle
+        const alignmentClass = getImageAlignmentClass(alignment);
+        
+        switch (position) {
+            case 'top': 
+                return `${baseClasses} ${alignmentClass} mb-6`;
+            case 'bottom': 
+                return `${baseClasses} ${alignmentClass} mt-6`;
+            case 'float-left': 
+                return `float-left mr-4 mb-4 clear-left`;
+            case 'float-right': 
+                return `float-right ml-4 mb-4 clear-right`;
+            case 'center': 
+                return `${baseClasses} ${alignmentClass} my-6`;
+            case 'inline': 
+                return `inline-block ${alignmentClass} mx-2 my-2`;
+            default: 
+                return `${baseClasses} ${alignmentClass} my-6`;
+        }
+    };
+
+    // Composant pour rendre une image avec toutes ses options
+    const renderImage = (image: ExerciseImage, index: number) => {
+        const sizeClass = getImageSizeClass(image);
+        const positionClass = getImagePositionClass(image.position, image.alignment);
+        const alignment = image.alignment || 'center';
+        
+        const customStyle = image.size === 'custom' ? {
+            width: image.customWidth ? `${image.customWidth}px` : 'auto',
+            height: image.customHeight ? `${image.customHeight}px` : 'auto'
+        } : {};
+
+        // Container avec alignement approprié
+        const containerAlignmentClass = alignment === 'center' ? 'flex justify-center' : 
+                                       alignment === 'right' ? 'flex justify-end' : 
+                                       alignment === 'left' ? 'flex justify-start' : '';
+
+        return (
+            <figure 
+                key={image.id || `img-${index}`} 
+                className={`${positionClass} ${containerAlignmentClass}`}
+            >
+                <div className={alignment === 'center' || alignment === 'right' || alignment === 'left' ? '' : 'inline-block'}>
+                    <img
+                        src={`/${image.path}`}
+                        alt={image.alt || image.caption || 'Image de l\'exercice'}
+                        className={`${sizeClass} rounded-lg shadow-md object-contain`}
+                        style={customStyle}
+                    />
+                    {image.caption && (
+                        <figcaption className={`text-sm text-gray-600 italic mt-2 ${
+                            alignment === 'center' ? 'text-center' : 
+                            alignment === 'right' ? 'text-right' : 
+                            alignment === 'left' ? 'text-left' : 'text-center'
+                        }`}>
+                            {image.caption}
+                        </figcaption>
+                    )}
+                </div>
+            </figure>
+        );
+    };
+
+    // Fonction intelligente pour organiser les images selon leur position
+    const organizeImages = (images: ExerciseImage[] | undefined) => {
+        if (!images || images.length === 0) return { top: [], bottom: [], content: [] };
+        
+        const top: ExerciseImage[] = [];
+        const bottom: ExerciseImage[] = [];
+        const content: ExerciseImage[] = [];
+        
+        images.forEach(img => {
+            const position = img.position || 'center';
+            if (position === 'top') {
+                top.push(img);
+            } else if (position === 'bottom') {
+                bottom.push(img);
+            } else {
+                // center, float-left, float-right, inline vont dans le contenu
+                content.push(img);
+            }
+        });
+        
+        return { top, bottom, content };
+    };
+
     return (
         <div id="exercises-container" className="space-y-4 pb-4">
-            {chapter.exercises.map((exercise, index) => (
-                <div key={exercise.id} className="bg-amber-50 p-6 rounded-lg border border-amber-200 shadow-lg shadow-amber-900/5">
-                    <div className="flex justify-between items-start mb-4">
-                        <h3 className="text-2xl font-title text-gray-900 pr-4">
-                            <span className="text-blue-600 font-bold">{`Exercice ${index + 1}`}</span>
-                            <span className="text-lg text-gray-700 font-normal">{` | ${exercise.title}`}</span>
-                        </h3>
-                        {exercise.hint && exercise.hint.length > 0 && (
-                            <button 
-                                onClick={() => handleOpenHintModal(exercise.id)}
-                                className="font-button flex-shrink-0 w-10 h-10 text-info bg-info/10 rounded-full flex items-center justify-center hover:bg-info/20 transition-colors active:scale-95"
-                                aria-label={`Voir l'indice pour l'exercice ${index + 1}`}
-                            >
-                                <span className="material-symbols-outlined text-base">lightbulb</span>
-                            </button>
+            {chapter.exercises.map((exercise, index) => {
+                const organizedImages = organizeImages(exercise.images);
+                
+                return (
+                    <div key={exercise.id} className="bg-amber-50 p-6 rounded-lg border border-amber-200 shadow-lg shadow-amber-900/5">
+                        <div className="flex justify-between items-start mb-4">
+                            <h3 className="text-2xl font-title text-gray-900 pr-4">
+                                <span className="text-blue-600 font-bold">{`Exercice ${index + 1}`}</span>
+                                <span className="text-lg text-gray-700 font-normal">{` | ${exercise.title}`}</span>
+                            </h3>
+                            {exercise.hint && exercise.hint.length > 0 && (
+                                <button 
+                                    onClick={() => handleOpenHintModal(exercise.id)}
+                                    className="font-button flex-shrink-0 w-10 h-10 text-info bg-info/10 rounded-full flex items-center justify-center hover:bg-info/20 transition-colors active:scale-95"
+                                    aria-label={`Voir l'indice pour l'exercice ${index + 1}`}
+                                >
+                                    <span className="material-symbols-outlined text-base">lightbulb</span>
+                                </button>
+                            )}
+                        </div>
+                        
+                        {/* Images en position top */}
+                        {organizedImages.top.length > 0 && (
+                            <div className="mb-6 space-y-4">
+                                {organizedImages.top.map((img, imgIndex) => renderImage(img, imgIndex))}
+                            </div>
                         )}
-                    </div>
-                    
-                    <div className="text-gray-800 text-base leading-relaxed">
-                        <MathJax dynamic>{exercise.statement}</MathJax>
-                    </div>
-                    
-                    {exercise.sub_questions && renderSubQuestions(exercise.sub_questions)}
+                        
+                        {/* Énoncé avec images de contenu (center, float-left, float-right, inline) */}
+                        <div className="text-gray-800 text-base leading-relaxed">
+                            <MathJax dynamic>{exercise.statement}</MathJax>
+                            
+                            {/* Images dans le contenu (center/float-left/float-right/inline) */}
+                            {organizedImages.content.length > 0 && (
+                                <div className="my-6 space-y-4 clear-both">
+                                    {organizedImages.content.map((img, imgIndex) => renderImage(img, imgIndex))}
+                                </div>
+                            )}
+                        </div>
+                        
+                        {exercise.sub_questions && renderSubQuestions(exercise.sub_questions)}
+                        
+                        {/* Images en position bottom */}
+                        {organizedImages.bottom.length > 0 && (
+                            <div className="mt-6 space-y-4 clear-both">
+                                {organizedImages.bottom.map((img, imgIndex) => renderImage(img, imgIndex))}
+                            </div>
+                        )}
 
-                    <div className="mt-6 border-t border-amber-200 pt-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
-                        <p className="text-sm font-semibold text-gray-800 serif-text">Comment vous êtes-vous senti face à cet exercice ?</p>
-                        <div className="flex flex-wrap gap-2 shrink-0">
-                           {(['Facile', 'Moyen', 'Difficile', 'Non traité'] as Feedback[]).map(f => (
-                                <FeedbackButton 
-                                    key={f} 
-                                    feedback={f}
-                                    currentFeedback={exercisesFeedback[exercise.id]}
-                                    onClick={(fb) => handleFeedback(exercise.id, fb)}
-                                    disabled={isChapterLocked}
-                                />
-                            ))}
+                        <div className="mt-6 border-t border-amber-200 pt-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
+                            <p className="text-sm font-semibold text-gray-800 serif-text">Comment vous êtes-vous senti face à cet exercice ?</p>
+                            <div className="flex flex-wrap gap-2 shrink-0">
+                               {(['Facile', 'Moyen', 'Difficile', 'Non traité'] as Feedback[]).map(f => (
+                                    <FeedbackButton 
+                                        key={f} 
+                                        feedback={f}
+                                        currentFeedback={exercisesFeedback[exercise.id]}
+                                        onClick={(fb) => handleFeedback(exercise.id, fb)}
+                                        disabled={isChapterLocked}
+                                    />
+                                ))}
+                            </div>
                         </div>
                     </div>
-                </div>
-            ))}
+                );
+            })}
             <HintModal
                 isOpen={!!hintModalExerciseId}
                 onClose={() => setHintModalExerciseId(null)}

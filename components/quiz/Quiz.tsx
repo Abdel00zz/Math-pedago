@@ -187,50 +187,76 @@ const Quiz: React.FC = () => {
 
     const handleSubmit = useCallback(() => {
         if (!chapter || !allQuestionsAnswered) return;
-        
+
         // ✅ OPTIMISATION 4: Calcul de score optimisé
         const finalScore = chapter.quiz.reduce((acc, q) => {
             const userAnswer = answers[q.id];
-            
+
             if (!q.type || q.type === 'mcq') {
                 const correctOption = q.options?.find(opt => opt.isCorrect)?.text;
                 return (typeof userAnswer === 'string' && userAnswer === correctOption) ? acc + 1 : acc;
-            } 
-            
+            }
+
             if (q.type === 'ordering') {
-                const isCorrect = Array.isArray(userAnswer) && 
-                                 q.steps && 
+                const isCorrect = Array.isArray(userAnswer) &&
+                                 q.steps &&
                                  JSON.stringify(userAnswer) === JSON.stringify(q.steps);
                 return isCorrect ? acc + 1 : acc;
             }
-            
+
             return acc;
         }, 0);
-        
-        dispatch({ 
-            type: 'SUBMIT_QUIZ', 
-            payload: { score: finalScore, duration: timeSpent, hintsUsed: 0 } 
+
+        dispatch({
+            type: 'SUBMIT_QUIZ',
+            payload: { score: finalScore, duration: timeSpent, hintsUsed: 0 }
         });
     }, [chapter, answers, dispatch, timeSpent]);
 
-    // ✅ OPTIMISATION 5: Fonction getOptionClass mémorisée
+    // ✅ AMÉLIORATION: Navigation au clavier (flèches gauche/droite et touches 1-4 pour les options)
+    useEffect(() => {
+        const handleKeyPress = (e: KeyboardEvent) => {
+            if (isSubmitted || isReviewMode) return;
+
+            // Navigation avec flèches
+            if (e.key === 'ArrowLeft' && currentQuestionIndex > 0) {
+                handleNavigate(currentQuestionIndex - 1);
+            } else if (e.key === 'ArrowRight' && currentQuestionIndex < (chapter?.quiz.length || 0) - 1) {
+                handleNavigate(currentQuestionIndex + 1);
+            }
+
+            // Sélection rapide avec touches numériques (1-4)
+            if (question && (!question.type || question.type === 'mcq') && question.options) {
+                const numKey = parseInt(e.key);
+                if (numKey >= 1 && numKey <= question.options.length) {
+                    const selectedOption = question.options[numKey - 1];
+                    handleOptionChange(selectedOption.text);
+                }
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyPress);
+        return () => window.removeEventListener('keydown', handleKeyPress);
+    }, [currentQuestionIndex, chapter, question, isSubmitted, isReviewMode, handleNavigate, handleOptionChange]);
+
+    // ✅ OPTIMISATION 5: Fonction getOptionClass mémorisée avec couleurs pédagogiques et lisibilité améliorée
     const getOptionClass = useCallback((option: Option, isSelected: boolean) => {
-        const base = 'group relative w-full text-left px-5 py-4 rounded-3xl border transition-all duration-300 ease-in-out flex items-start gap-4 font-sans text-lg shadow-[0_18px_38px_rgba(15,23,42,0.28)] backdrop-blur-sm';
+        const base = 'group relative w-full text-left px-6 py-5 rounded-2xl border-2 transition-all duration-200 ease-in-out flex items-start gap-4 font-sans backdrop-blur-sm active:scale-[0.99]';
 
         if (isReviewMode || isSubmitted) {
             if (option.isCorrect) {
-                return `${base} bg-success/15 border-success/70 text-text`;
+                return `${base} bg-green-50 border-green-500 text-[#1a1a1a] shadow-[0_8px_30px_rgba(34,197,94,0.25)]`;
             }
             if (isSelected && !option.isCorrect) {
-                return `${base} bg-error/15 border-error/70 text-text`;
+                return `${base} bg-red-50 border-red-400 text-[#1a1a1a] shadow-[0_8px_30px_rgba(239,68,68,0.25)]`;
             }
-            return `${base} border-border/60 bg-surface/60 text-text-secondary cursor-default opacity-80`;
+            return `${base} border-gray-200 bg-gray-50 text-gray-600 cursor-default opacity-70`;
         }
 
         if (isSelected) {
-            return `${base} border-primary bg-primary/10 text-text shadow-[0_24px_55px_rgba(59,130,246,0.26)] scale-[1.01]`;
+            return `${base} border-blue-500 bg-blue-50 text-[#000000] shadow-[0_12px_40px_rgba(59,130,246,0.3)] scale-[1.02] font-medium ring-2 ring-blue-200`;
         }
-        return `${base} border-border/50 bg-surface/60 hover:border-primary/60 hover:bg-surface/80 cursor-pointer hover:shadow-[0_28px_60px_rgba(59,130,246,0.2)]`;
+        return `${base} border-slate-300 bg-white text-[#1a1a1a] hover:border-blue-400 hover:bg-blue-50/50 cursor-pointer hover:shadow-[0_8px_30px_rgba(59,130,246,0.15)] hover:scale-[1.01]`;
     }, [isReviewMode, isSubmitted]);
 
     if (!chapter || !quizProgress || !question) {
@@ -294,7 +320,37 @@ const Quiz: React.FC = () => {
     }
     
     return (
-        <div id="quiz-container" className="font-sans max-w-3xl mx-auto px-2">
+        <>
+            <style>{`
+                @keyframes scaleIn {
+                    0% {
+                        transform: scale(0);
+                        opacity: 0;
+                    }
+                    50% {
+                        transform: scale(1.2);
+                    }
+                    100% {
+                        transform: scale(1);
+                        opacity: 1;
+                    }
+                }
+
+                /* Harmonisation MathJax avec texte normal */
+                .MathJax, .MathJax_Display {
+                    font-size: 1em !important;
+                    line-height: 1.6 !important;
+                }
+
+                mjx-container[jax="CHTML"][display="true"] {
+                    margin: 0.5em 0 !important;
+                }
+
+                mjx-container {
+                    color: inherit !important;
+                }
+            `}</style>
+            <div id="quiz-container" className="font-sans max-w-3xl mx-auto px-2">
 
             {/* Question Navigator */}
             <div className="mb-8 flex items-center justify-center gap-4">
@@ -367,43 +423,58 @@ const Quiz: React.FC = () => {
                             <span className="font-mono text-sm leading-none">{formattedTime}</span>
                         </span>
                     </div>
-                    <h3 className="text-2xl font-display mb-6 text-text leading-snug">
-                        <MathJax dynamic>{question.question}</MathJax>
-                    </h3>
+                    <div className="bg-black text-white px-6 py-4 rounded-xl mb-6 shadow-lg">
+                        <h3 className="text-[22px] font-display leading-relaxed font-semibold">
+                            <MathJax dynamic>{question.question}</MathJax>
+                        </h3>
+                    </div>
                     <div className="space-y-4">
                         {question.options?.map((option, index) => {
                             const isSelected = answers[question.id] === option.text;
                             const optionClass = getOptionClass(option, isSelected);
-                            
+
                             return (
-                                <button 
-                                    key={index} 
-                                    onClick={() => handleOptionChange(option.text)} 
-                                    className={optionClass} 
+                                <button
+                                    key={index}
+                                    onClick={() => handleOptionChange(option.text)}
+                                    className={optionClass}
                                     disabled={isSubmitted}
                                 >
                                     <div className="flex-shrink-0 mt-1">
                                         {(isReviewMode || isSubmitted) ? (
                                             option.isCorrect ? (
-                                                <span className="material-symbols-outlined text-success">check_circle</span>
+                                                <div className="relative w-7 h-7 flex items-center justify-center">
+                                                    <div className="absolute inset-0 bg-green-500/20 rounded-full animate-ping"></div>
+                                                    <span className="material-symbols-outlined text-green-600 relative z-10 drop-shadow-lg">check_circle</span>
+                                                </div>
                                             ) : isSelected ? (
-                                                <span className="material-symbols-outlined text-error">cancel</span>
+                                                <div className="relative w-7 h-7 flex items-center justify-center">
+                                                    <span className="material-symbols-outlined text-red-500 relative z-10 drop-shadow-lg">cancel</span>
+                                                </div>
                                             ) : (
                                                 <div className="w-7 h-7 border-2 border-text-disabled/40 rounded-full"></div>
                                             )
                                         ) : (
-                                            <div className={`w-8 h-8 rounded-full border flex items-center justify-center transition-all duration-300 ${
-                                                isSelected 
-                                                    ? 'border-primary bg-primary/15 shadow-[0_12px_24px_rgba(59,130,246,0.3)]' 
-                                                    : 'border-border/60 group-hover:border-primary/70 group-hover:shadow-[0_14px_32px_rgba(59,130,246,0.22)]'
+                                            <div className={`relative w-9 h-9 rounded-full border-2 flex items-center justify-center transition-all duration-300 ${
+                                                isSelected
+                                                    ? 'border-blue-500 bg-blue-50 shadow-[0_0_20px_rgba(59,130,246,0.4)]'
+                                                    : 'border-slate-300 bg-white group-hover:border-blue-400 group-hover:bg-blue-50/30 group-hover:shadow-[0_0_15px_rgba(59,130,246,0.2)]'
                                             }`}>
                                                 {isSelected && (
-                                                    <div className="w-3.5 h-3.5 bg-primary rounded-full transition-transform duration-300 scale-110"></div>
+                                                    <svg
+                                                        className="w-5 h-5 text-blue-600 animate-[scaleIn_0.3s_ease-out]"
+                                                        fill="none"
+                                                        viewBox="0 0 24 24"
+                                                        stroke="currentColor"
+                                                        strokeWidth="3"
+                                                    >
+                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                                    </svg>
                                                 )}
                                             </div>
                                         )}
                                     </div>
-                                    <span className="flex-1">
+                                    <span className="flex-1 text-left text-[19px] leading-relaxed font-medium">
                                         <MathJax dynamic>{option.text}</MathJax>
                                     </span>
                                 </button>
@@ -472,6 +543,7 @@ const Quiz: React.FC = () => {
                 )}
             </div>
         </div>
+        </>
     );
 };
 

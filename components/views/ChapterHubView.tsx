@@ -5,6 +5,7 @@ import ConfirmationModal from '../ConfirmationModal';
 import { useNotification } from '../../context/NotificationContext';
 import GlobalActionButtons from '../GlobalActionButtons';
 import { ExportedProgressFile } from '../../types';
+import BackButton from '../BackButton';
 
 
 // --- TYPES ---
@@ -43,48 +44,52 @@ const LearningStep: React.FC<LearningStepProps> = ({
     const isStepDisabled = status === 'locked' || disabled;
 
     const buttonStyles: { [key in ButtonVariant]: string } = {
-        primary: 'bg-primary text-white hover:bg-primary/90 shadow-md shadow-primary/20',
-        secondary: 'bg-surface text-text hover:bg-border border border-border',
-        disabled: 'bg-border text-text-disabled cursor-not-allowed'
+        primary: 'bg-gradient-to-r from-primary to-primary hover:from-primary/90 hover:to-primary/80 text-white shadow-md shadow-primary/30 hover:shadow-lg hover:shadow-primary/40',
+        secondary: 'bg-surface/50 text-text hover:bg-surface border-2 border-border/50 hover:border-border',
+        disabled: 'bg-border/30 text-text-disabled cursor-not-allowed border-2 border-transparent'
     };
 
     return (
-        <div className={`p-6 rounded-xl border border-border transition-all duration-200 bg-surface ${isStepDisabled ? 'opacity-70' : 'shadow-sm'}`}>
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+        <div className={`group p-6 md:p-8 rounded-2xl border transition-all duration-300 ${
+            isStepDisabled
+                ? 'opacity-60 border-border/50 bg-surface/50'
+                : 'border-border/70 bg-surface/80 backdrop-blur-sm hover:border-border shadow-soft hover:shadow-medium hover:bg-surface'
+        }`}>
+            <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 lg:gap-8">
                 {/* Left Side: Icon, Title, Description */}
-                <div className="flex-grow flex items-start gap-4">
-                    <div className={`w-12 h-12 rounded-full flex items-center justify-center ring-2 ${currentStatus.ringColor} bg-background shrink-0`}>
-                        <span className={`material-symbols-outlined !text-2xl transition-colors ${currentStatus.textColor}`}>
+                <div className="flex-grow flex items-start gap-4 md:gap-5">
+                    <div className={`w-14 h-14 md:w-16 md:h-16 rounded-2xl flex items-center justify-center ring-2 ${currentStatus.ringColor} bg-gradient-to-br from-background to-background/50 shrink-0 transition-all duration-300 ${!isStepDisabled && 'group-hover:scale-105'}`}>
+                        <span className={`material-symbols-outlined !text-3xl md:!text-4xl transition-colors ${currentStatus.textColor}`}>
                             {currentStatus.icon}
                         </span>
                     </div>
-                    <div>
-                        <h2 className="text-2xl font-title text-text">{title}</h2>
-                        <p className="text-secondary text-sm mt-1 font-sans italic max-w-md">{description}</p>
+                    <div className="flex-1 min-w-0">
+                        <h2 className="text-xl md:text-2xl font-display font-bold text-text mb-1.5 tracking-tight">{title}</h2>
+                        <p className="text-text-secondary text-sm md:text-base leading-relaxed max-w-2xl">{description}</p>
                     </div>
                 </div>
 
                 {/* Right Side: Progress & Button */}
-                <div className="w-full sm:w-auto sm:max-w-sm flex-shrink-0 flex flex-col items-end gap-4">
+                <div className="w-full lg:w-auto lg:min-w-[240px] flex-shrink-0 flex flex-col items-stretch lg:items-end gap-4">
                     {typeof progressPercent !== 'undefined' && status !== 'locked' && (
                         <div className="w-full">
-                            <div className="flex justify-between items-baseline mb-1">
-                                <span className="text-sm font-button font-semibold text-secondary">{progressInfo}</span>
-                                {status !== 'completed' && 
-                                    <span className="text-sm font-button font-bold" style={{color: currentStatus.barColor}}>
+                            <div className="flex justify-between items-baseline mb-2">
+                                <span className="text-xs md:text-sm font-sans font-medium text-text-secondary tracking-wide">{progressInfo}</span>
+                                {status !== 'completed' &&
+                                    <span className="text-sm md:text-base font-display font-bold tabular-nums" style={{color: currentStatus.barColor}}>
                                         {Math.round(progressPercent)}%
                                     </span>
                                 }
                             </div>
-                            <div className="h-2.5 w-full bg-border/50 rounded-full overflow-hidden">
-                                <div className="h-full transition-all duration-500 rounded-full" style={{ width: `${progressPercent}%`, backgroundColor: currentStatus.barColor }}></div>
+                            <div className="h-2 w-full bg-border/30 rounded-full overflow-hidden">
+                                <div className="h-full transition-all duration-700 ease-out rounded-full" style={{ width: `${progressPercent}%`, backgroundColor: currentStatus.barColor }}></div>
                             </div>
                         </div>
                     )}
                      <button
                         onClick={onClick}
                         disabled={isStepDisabled}
-                        className={`font-button font-semibold px-6 py-2 rounded-lg text-sm transition-all duration-200 whitespace-nowrap w-full text-center active:scale-95 ${buttonStyles[buttonVariant]}`}
+                        className={`font-sans font-bold px-8 py-3.5 rounded-xl text-xs md:text-sm tracking-wider transition-all duration-300 whitespace-nowrap w-full text-center active:scale-95 shadow-sm ${buttonStyles[buttonVariant]}`}
                     >
                         {buttonText}
                     </button>
@@ -134,6 +139,9 @@ const ChapterHubView: React.FC = () => {
         const iqc = q.isSubmitted;
         const aed = te > 0 ? eec === te : true;
 
+        // Les vidéos sont optionnelles - ne pas les inclure dans canSubmitWork
+        // Seuls le quiz et les exercices sont nécessaires pour la finalisation
+
         const outdated = prog?.isWorkSubmitted && !!chap?.version && !!prog?.submittedVersion && chap.version !== prog.submittedVersion;
         const locked = prog?.isWorkSubmitted && !outdated;
 
@@ -160,6 +168,7 @@ const ChapterHubView: React.FC = () => {
         };
     }, [currentChapterId, activities, progress]);
 
+    const handleStartVideos = useCallback(() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'activity', chapterId: chapter?.id, subView: 'videos' } }), [dispatch, chapter?.id]);
     const handleStartQuiz = useCallback(() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'activity', chapterId: chapter?.id, subView: 'quiz' } }), [dispatch, chapter?.id]);
     const handleReviewQuiz = useCallback(() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'activity', chapterId: chapter?.id, subView: 'quiz', review: true } }), [dispatch, chapter?.id]);
     const handleStartExercises = useCallback(() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'activity', chapterId: chapter?.id, subView: 'exercises' } }), [dispatch, chapter?.id]);
@@ -219,9 +228,19 @@ const ChapterHubView: React.FC = () => {
 
             const submissionTimestamp = Date.now();
             const submissionDate = new Date(submissionTimestamp).toLocaleString('fr-FR', {
-                dateStyle: 'full', timeStyle: 'medium', timeZone: 'UTC' 
+                dateStyle: 'full', timeStyle: 'medium', timeZone: 'UTC'
             });
-    
+
+            // Préparer les données d'export des vidéos si le chapitre en contient
+            const videosExport = chapter.videos && chapter.videos.length > 0 && chapterProgress.videos ? {
+                watchedCount: Object.values(chapterProgress.videos.watched || {}).filter(Boolean).length,
+                totalCount: chapter.videos.length,
+                allWatched: chapterProgress.videos.allWatched,
+                durationSeconds: chapterProgress.videos.duration || 0,
+            } : undefined;
+
+            const videosDuration = chapterProgress.videos?.duration || 0;
+
             const submissionData: ExportedProgressFile = {
                 studentName: profile.name,
                 studentLevel: className,
@@ -231,6 +250,7 @@ const ChapterHubView: React.FC = () => {
                     {
                         chapter: chapter.chapter,
                         version: chapter.version,
+                        ...(videosExport && { videos: videosExport }),
                         quiz: {
                             score: parseFloat(quizScorePercentage.toFixed(2)),
                             scoreRaw: `${quiz.score} / ${totalQuestions}`,
@@ -240,7 +260,7 @@ const ChapterHubView: React.FC = () => {
                         },
                         exercisesFeedback: chapterProgress.exercisesFeedback,
                         exercisesDurationSeconds: chapterProgress.exercisesDuration || 0,
-                        totalDurationSeconds: (chapterProgress.quiz.duration || 0) + (chapterProgress.exercisesDuration || 0),
+                        totalDurationSeconds: videosDuration + (chapterProgress.quiz.duration || 0) + (chapterProgress.exercisesDuration || 0),
                     }
                 ]
             };
@@ -334,9 +354,38 @@ const ChapterHubView: React.FC = () => {
         </div>;
     }
     
+    // Calcul de la progression des vidéos
+    const hasVideos = chapter.videos && chapter.videos.length > 0;
+    const videosProgress = chapterProgress.videos;
+    const totalVideos = chapter.videos?.length || 0;
+    const watchedVideosCount = videosProgress ? Object.values(videosProgress.watched || {}).filter(Boolean).length : 0;
+    const areAllVideosWatched = videosProgress?.allWatched || false;
+    const videosProgressPercent = totalVideos > 0 ? (watchedVideosCount / totalVideos) * 100 : 0;
+
     const steps: LearningStepProps[] = [
         {
-            icon: 'history_edu', title: 'Étape 1 : Le Quiz',
+            icon: 'play_circle',
+            title: 'Étape 1 : Les Vidéos',
+            description: hasVideos 
+                ? 'Capsules vidéo recommandées pour mieux comprendre le chapitre. Vous pouvez passer directement au quiz si vous le souhaitez.'
+                : 'Les vidéos pour ce chapitre seront bientôt disponibles.',
+            status: hasVideos 
+                ? (areAllVideosWatched ? 'completed' : watchedVideosCount > 0 ? 'in-progress' : 'todo') as StepStatus
+                : 'locked' as StepStatus,
+            progressPercent: hasVideos ? videosProgressPercent : 0,
+            progressInfo: hasVideos ? `${watchedVideosCount} / ${totalVideos}` : undefined,
+            onClick: hasVideos ? handleStartVideos : () => {},
+            disabled: !hasVideos,
+            buttonText: hasVideos 
+                ? (isChapterLocked ? 'Consulter' : areAllVideosWatched ? 'Revoir' : watchedVideosCount > 0 ? 'Continuer' : 'Commencer')
+                : 'À venir',
+            buttonVariant: hasVideos 
+                ? ((isChapterLocked || areAllVideosWatched ? 'secondary' : 'primary') as ButtonVariant)
+                : 'disabled' as ButtonVariant,
+        },
+        {
+            icon: 'history_edu',
+            title: 'Étape 2 : Le Quiz',
             description: 'Évaluez votre compréhension des concepts fondamentaux du chapitre.',
             status: isQuizCompleted ? 'completed' : answeredQuestionsCount > 0 ? 'in-progress' : 'todo',
             progressPercent: quizProgressPercent,
@@ -346,7 +395,8 @@ const ChapterHubView: React.FC = () => {
             buttonVariant: isChapterLocked || isQuizCompleted ? 'secondary' : 'primary',
         },
         {
-            icon: 'architecture', title: 'Étape 2 : Les Exercices',
+            icon: 'architecture',
+            title: 'Étape 3 : Les Exercices',
             description: 'Mettez en pratique vos connaissances et auto-évaluez votre maîtrise.',
             status: !isQuizCompleted ? 'locked' : areAllExercisesDone ? 'completed' : evaluatedExercisesCount > 0 ? 'in-progress' : 'todo',
             progressPercent: exercisesProgressPercent,
@@ -357,7 +407,8 @@ const ChapterHubView: React.FC = () => {
             buttonVariant: !isQuizCompleted ? 'disabled' : (areAllExercisesDone || isChapterLocked) ? 'secondary' : 'primary',
         },
         ...(!isChapterLocked ? [{
-            icon: 'workspace_premium', title: 'Étape 3 : Finalisation',
+            icon: 'workspace_premium',
+            title: 'Étape 4 : Finalisation',
             description: isOutdatedSubmission 
                 ? 'Le contenu a été mis à jour. Veuillez revoir les étapes avant de renvoyer.' 
                 : 'Une fois les étapes terminées, envoyez votre travail pour validation.',
@@ -371,42 +422,46 @@ const ChapterHubView: React.FC = () => {
     return (
         <>
             <GlobalActionButtons />
-            <div className="max-w-3xl mx-auto animate-slideInUp pb-24 sm:pb-8">
+            <div className="max-w-5xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 animate-slideInUp pb-20 sm:pb-16 md:pb-12">
                 {showConfetti && (
                     <div className="absolute inset-0 pointer-events-none z-50">{[...Array(100)].map((_, i) => <div key={i} className="confetti" style={{left: `${Math.random()*100}%`, animationDuration: `${Math.random()*3+2}s`, animationDelay: `${Math.random()*2}s`, backgroundColor: ['#FF6B35','#10B981','#3B82F6','#F59E0B'][i%4]}} />)}</div>
                 )}
-                
+
+                {/* En-tête avec bouton retour et titre */}
                 <header className="mb-8 sm:mb-12">
-                    <div className="relative flex items-center justify-center h-12">
-                        <div className="absolute left-0">
-                            <button 
-                                onClick={() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'dashboard' } })} 
-                                className="w-12 h-12 rounded-full flex items-center justify-center text-text-secondary bg-surface border border-border hover:bg-primary/10 hover:text-primary hover:border-primary/30 transition-all duration-200 active:scale-95 shadow-sm hover:shadow-md" 
-                                aria-label="Retour au tableau de bord"
-                            >
-                                <span className="material-symbols-outlined !text-2xl">arrow_back</span>
-                            </button>
-                        </div>
-                        <div className="text-center">
-                            <p className="font-brand text-primary tracking-[0.2em] uppercase text-xs mb-2">Plan de travail</p>
-                            <h1 className="text-2xl sm:text-3xl text-text font-title">{chapter.chapter}</h1>
-                            <div className="w-24 h-px bg-border mx-auto mt-4"></div>
-                        </div>
+                    {/* Bouton retour à l'extrême gauche */}
+                    <div className="fixed left-4 top-4 z-50 sm:absolute sm:left-0 sm:top-0">
+                        <BackButton
+                            onClick={() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'dashboard' } })}
+                            label="Retour au tableau de bord"
+                            showLabel={false}
+                        />
                     </div>
+
+                    {/* Titre centré */}
+                    <div className="text-center pt-2 sm:pt-0">
+                        <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-3">
+                            <span className="material-symbols-outlined !text-sm text-primary">assignment</span>
+                            <p className="font-display text-primary tracking-wider uppercase text-xs font-bold">Plan de travail</p>
+                        </div>
+                        <h1 className="text-2xl sm:text-3xl md:text-4xl text-text font-display font-bold tracking-tight px-4">{chapter.chapter}</h1>
+                    </div>
+                    
+                    <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent mt-6"></div>
                 </header>
 
-                <div className="space-y-6">
+                <div className="space-y-4 md:space-y-5">
                     {steps.map((step) => <LearningStep key={step.title} {...step} />)}
                 </div>
 
                 {isChapterLocked && (
-                    <div className="mt-12 text-center border-2 border-dashed border-success/50 bg-success/5 p-8 rounded-2xl animate-fadeIn">
-                        <div className="mx-auto w-16 h-16 flex items-center justify-center bg-success/10 rounded-full text-success mb-4">
-                            <span className="material-symbols-outlined !text-4xl">verified</span>
+                    <div className="mt-8 md:mt-12 text-center border-2 border-dashed border-success/40 bg-gradient-to-br from-success/10 to-success/5 p-6 md:p-10 rounded-2xl md:rounded-3xl animate-fadeIn shadow-glow-success">
+                        <div className="mx-auto w-16 h-16 md:w-20 md:h-20 flex items-center justify-center bg-success/20 rounded-xl md:rounded-2xl text-success mb-4 md:mb-5 shadow-lg">
+                            <span className="material-symbols-outlined !text-4xl md:!text-5xl">verified</span>
                         </div>
-                        <h2 className="text-3xl font-title text-text">Travail Soumis !</h2>
-                        <p className="text-lg text-secondary mt-2 font-sans italic">
-                            Félicitations ! Vos réponses ont bien été enregistrées. Nous les examinerons ensemble lors de notre prochaine séance.
+                        <h2 className="text-2xl md:text-3xl lg:text-4xl font-display font-bold text-text mb-2 md:mb-3 tracking-tight">Travail Soumis !</h2>
+                        <p className="text-sm md:text-base lg:text-lg text-text-secondary max-w-2xl mx-auto leading-relaxed px-4">
+                            Félicitations ! Vos réponses ont bien été enregistrées. Nous les examinerons lors de notre prochaine séance.
                         </p>
                     </div>
                 )}

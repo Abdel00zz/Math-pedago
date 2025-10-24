@@ -1,0 +1,51 @@
+{
+  "id": "exemple_avec_images",
+  "title": "Exemple d'exercice avec images",
+  "statement": "Dans cet exercice, nous allons étudier les propriétés d'un triangle rectangle.",
+  "images": [
+    {
+      "id": "img_example_001",
+      "path": "pictures/1bse/geometrie/triangle_rectangle.png",
+      "caption": "Triangle rectangle ABC avec angle droit en A",
+      "size": "medium",
+      "position": "top",
+      "alignment": "center",
+      "alt": "Schéma d'un triangle rectangle ABC"
+    },
+    {
+      "id": "img_example_002",
+      "path": "pictures/1bse/geometrie/theoreme_pythagore.svg",
+      "caption": "Illustration du théorème de Pythagore",
+      "size": "small",
+      "position": "float-right",
+      "alignment": "right",
+      "alt": "Formule du théorème de Pythagore"
+    },
+    {
+      "id": "img_example_003",
+      "path": "pictures/1bse/geometrie/resultat_final.png",
+      "caption": "Résultat final avec toutes les mesures",
+      "size": "large",
+      "position": "bottom",
+      "alignment": "center",
+      "alt": "Triangle avec toutes les mesures calculées"
+    }
+  ],
+  "sub_questions": [
+    {
+      "text": "Calculer la longueur de l'hypoténuse BC.",
+      "sub_sub_questions": []
+    },
+    {
+      "text": "Déterminer les valeurs des angles aigus.",
+      "sub_sub_questions": [
+        {
+          "text": "Angle en B"
+        },
+        {
+          "text": "Angle en C"
+        }
+      ]
+    }
+  ]
+}

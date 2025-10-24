@@ -144,12 +144,98 @@ class SubQuestion:
         return result
 
 @dataclass
+class ExerciseImage:
+    """Représente une image dans un exercice."""
+    id: str = ""
+    path: str = ""  # Chemin relatif depuis public/
+    caption: str = ""
+    size: str = "medium"  # small, medium, large, full, custom
+    custom_width: Optional[int] = None
+    custom_height: Optional[int] = None
+    position: str = "center"  # top, bottom, left, right, center, inline, float-left, float-right
+    alignment: str = "center"  # left, center, right, justify
+    alt: str = ""
+
+    @classmethod
+    def from_dict(cls, data: Dict[str, Any]) -> 'ExerciseImage':
+        """Charge une image depuis un dictionnaire JSON."""
+        return cls(
+            id=data.get('id', ''),
+            path=data.get('path', ''),
+            caption=data.get('caption', ''),
+            size=data.get('size', 'medium'),
+            custom_width=data.get('customWidth'),
+            custom_height=data.get('customHeight'),
+            position=data.get('position', 'center'),
+            alignment=data.get('alignment', 'center'),
+            alt=data.get('alt', '')
+        )
+
+    def to_dict(self) -> Dict[str, Any]:
+        """Convertit l'image en dictionnaire pour la sauvegarde JSON."""
+        result = {
+            'id': self.id or f"img_{hashlib.md5(self.path.encode()).hexdigest()[:8]}",
+            'path': self.path,
+            'position': self.position,
+            'alignment': self.alignment,
+            'size': self.size
+        }
+        if self.caption:
+            result['caption'] = self.caption
+        if self.alt:
+            result['alt'] = self.alt
+        if self.size == 'custom':
+            if self.custom_width:
+                result['customWidth'] = self.custom_width
+            if self.custom_height:
+                result['customHeight'] = self.custom_height
+        return result
+
+@dataclass
+class Video:
+    """Représente une capsule vidéo YouTube."""
+    id: str = ""
+    title: str = ""
+    youtubeId: str = ""  # ID YouTube (ex: "dQw4w9WgXcQ")
+    duration: str = ""  # Durée affichée (ex: "5:42")
+    description: str = ""  # Description courte
+    thumbnail: str = ""  # URL de la miniature (optionnel)
+
+    @classmethod
+    def from_dict(cls, data: Dict[str, Any]) -> 'Video':
+        """Charge une vidéo depuis un dictionnaire JSON."""
+        return cls(
+            id=data.get('id', ''),
+            title=data.get('title', ''),
+            youtubeId=data.get('youtubeId', ''),
+            duration=data.get('duration', ''),
+            description=data.get('description', ''),
+            thumbnail=data.get('thumbnail', '')
+        )
+
+    def to_dict(self) -> Dict[str, Any]:
+        """Convertit la vidéo en dictionnaire pour la sauvegarde JSON."""
+        result = {
+            'id': self.id or f"video_{hashlib.md5(self.title.encode()).hexdigest()[:8]}",
+            'title': self.title,
+            'youtubeId': self.youtubeId
+        }
+        if self.duration:
+            result['duration'] = self.duration
+        if self.description:
+            result['description'] = self.description
+        if self.thumbnail:
+            result['thumbnail'] = self.thumbnail
+        return result
+
+@dataclass
 class Exercise:
     """Représente un exercice, en préservant la structure originale."""
     id: str = ""
     title: str = ""
     statement: str = ""
     sub_questions: List[SubQuestion] = field(default_factory=list)
+    images: List[ExerciseImage] = field(default_factory=list)
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'Exercise':
@@ -166,12 +252,17 @@ class Exercise:
                 sub_sub_questions=sub_sub_questions
             )
             sub_questions.append(sub_question)
+        
+        # Charger les images si elles existent
+        images_data = data.get('images', [])
+        images = [ExerciseImage.from_dict(img_data) for img_data in images_data]
             
         return cls(
             id=data.get('id', ''),
             title=data.get('title', ''),
             statement=data.get('statement', ''),
-            sub_questions=sub_questions
+            sub_questions=sub_questions,
+            images=images
         )
 
     def to_dict(self) -> Dict[str, Any]:
@@ -183,6 +274,8 @@ class Exercise:
         }
         if self.sub_questions:
             result['sub_questions'] = [sq.to_dict() for sq in self.sub_questions]
+        if self.images:
+            result['images'] = [img.to_dict() for img in self.images]
         return result
 
 class ChapterData:
@@ -196,6 +289,7 @@ class ChapterData:
         self.class_type: str = ""
         self.chapter_name: str = ""
         self.session_dates: List[str] = []
+        self.videos: List[Video] = []
         self.quiz_questions: List[QuizQuestion] = []
         self.exercises: List[Exercise] = []
 
@@ -227,7 +321,16 @@ class ChapterData:
             self.chapter_name = data.get('chapter', self.id.replace('-', ' ').title())
             self.class_type = data.get('class', self.class_type)
             self.session_dates = sorted(data.get('sessionDates', []))
-            
+
+            # Charger les vidéos avec gestion d'erreurs
+            self.videos = []
+            for i, v_data in enumerate(data.get('videos', [])):
+                try:
+                    video = Video.from_dict(v_data)
+                    self.videos.append(video)
+                except Exception as e:
+                    print(f"Avertissement: Vidéo #{i+1} dans {file_path} ignorée en raison d'une erreur: {e}")
+
             # Charger les quiz avec gestion d'erreurs
             self.quiz_questions = []
             for i, q_data in enumerate(data.get('quiz', [])):
@@ -324,11 +427,15 @@ class ChapterData:
         data_to_save = {
             'class': self.class_type,
             'chapter': self.chapter_name,
-            'sessionDates': sorted(self.session_dates),
-            # Préserver l'ordre actuel des quiz et des exercices tel quel
-            'quiz': [q.to_dict() for q in self.quiz_questions],
-            'exercises': [e.to_dict() for e in self.exercises]
+            'sessionDates': sorted(self.session_dates)
         }
+
+        # Toujours sauvegarder la liste de vidéos (même si vide) pour permettre la suppression
+        data_to_save['videos'] = [v.to_dict() for v in self.videos]
+
+        # Préserver l'ordre actuel des quiz et des exercices tel quel
+        data_to_save['quiz'] = [q.to_dict() for q in self.quiz_questions]
+        data_to_save['exercises'] = [e.to_dict() for e in self.exercises]
         
         # Vérifier si le contenu a réellement changé avant de modifier la version
         new_content_version = self._calculate_content_version(data_to_save)
@@ -405,6 +512,7 @@ class ChapterData:
                 'class': self.class_type,
                 'chapter': self.chapter_name,
                 'sessionDates': sorted(self.session_dates),
+                'videos': [v.to_dict() for v in self.videos],
                 'quiz': [q.to_dict() for q in self.quiz_questions],
                 'exercises': [e.to_dict() for e in self.exercises]
             }
@@ -433,6 +541,13 @@ class ChapterData:
             current_exercises_json = json.dumps(current_data['exercises'], sort_keys=True)
             if file_exercises_json != current_exercises_json:
                 print(f"Les exercices du chapitre {self.chapter_name} ont été modifiés.")
+                return True
+            
+            # Comparer les vidéos aussi
+            file_videos_json = json.dumps(file_data.get('videos', []), sort_keys=True)
+            current_videos_json = json.dumps([v.to_dict() for v in self.videos], sort_keys=True)
+            if file_videos_json != current_videos_json:
+                print(f"Les vidéos du chapitre {self.chapter_name} ont été modifiées.")
                 return True
                 
             # Si aucune différence n'est trouvée, le chapitre n'a pas changé
@@ -948,10 +1063,226 @@ class QuizEditor(QWidget):
 # seraient ici, adaptées pour utiliser les modèles de données robustes.
 # Pour la concision, je vais simplifier l'éditeur d'exercices.
 
-class ExerciseEditor(QWidget):
-    """Éditeur d'exercices amélioré avec plus de fonctionnalités."""
+class VideoEditor(QWidget):
+    """Éditeur de vidéos YouTube pour les capsules pédagogiques."""
     def __init__(self, parent=None):
         super().__init__(parent)
+        self.videos: List[Video] = []
+        self.current_index = -1
+        self.init_ui()
+
+    def init_ui(self):
+        layout = QVBoxLayout(self)
+
+        # Toolbar
+        toolbar = QHBoxLayout()
+        toolbar.addWidget(QLabel("Capsules Vidéo"))
+        toolbar.addStretch()
+        self.count_label = QLabel("0 vidéo(s)")
+        toolbar.addWidget(self.count_label)
+
+        add_btn = QPushButton("+ Vidéo")
+        add_btn.setToolTip("Ajouter une nouvelle vidéo")
+        add_btn.clicked.connect(self.add_video)
+        add_btn.setFixedHeight(25)
+        toolbar.addWidget(add_btn)
+
+        duplicate_btn = QPushButton("Dupliquer")
+        duplicate_btn.setToolTip("Dupliquer la vidéo")
+        duplicate_btn.clicked.connect(self.duplicate_current)
+        duplicate_btn.setFixedHeight(25)
+        toolbar.addWidget(duplicate_btn)
+
+        move_up_btn = QPushButton("↑")
+        move_up_btn.setToolTip("Déplacer la vidéo vers le haut")
+        move_up_btn.clicked.connect(self.move_video_up)
+        move_up_btn.setFixedSize(25, 25)
+        toolbar.addWidget(move_up_btn)
+
+        move_down_btn = QPushButton("↓")
+        move_down_btn.setToolTip("Déplacer la vidéo vers le bas")
+        move_down_btn.clicked.connect(self.move_video_down)
+        move_down_btn.setFixedSize(25, 25)
+        toolbar.addWidget(move_down_btn)
+
+        delete_btn = QPushButton("Suppr.")
+        delete_btn.setToolTip("Supprimer la vidéo")
+        delete_btn.clicked.connect(self.delete_current)
+        delete_btn.setFixedSize(50, 25)
+        toolbar.addWidget(delete_btn)
+        layout.addLayout(toolbar)
+
+        splitter = QSplitter(Qt.Orientation.Horizontal)
+
+        # Liste des vidéos
+        self.video_list = QListWidget()
+        self.video_list.setMaximumWidth(300)
+        self.video_list.currentRowChanged.connect(self.on_selection_changed)
+        splitter.addWidget(self.video_list)
+
+        # Éditeur principal
+        editor_panel = QWidget()
+        editor_layout = QFormLayout(editor_panel)
+
+        self.title_edit = QLineEdit()
+        self.title_edit.setPlaceholderText("Titre de la vidéo")
+        self.title_edit.textChanged.connect(self.on_video_modified)
+        editor_layout.addRow("Titre:", self.title_edit)
+
+        self.youtube_id_edit = QLineEdit()
+        self.youtube_id_edit.setPlaceholderText("Ex: dQw4w9WgXcQ")
+        self.youtube_id_edit.textChanged.connect(self.on_video_modified)
+        editor_layout.addRow("ID YouTube:", self.youtube_id_edit)
+
+        # Label d'aide pour l'ID YouTube
+        help_label = QLabel("ℹ️ L'ID YouTube se trouve dans l'URL: youtube.com/watch?v=<ID>")
+        help_label.setWordWrap(True)
+        help_label.setStyleSheet("color: gray; font-size: 10px;")
+        editor_layout.addRow("", help_label)
+
+        self.duration_edit = QLineEdit()
+        self.duration_edit.setPlaceholderText("Ex: 5:42")
+        self.duration_edit.textChanged.connect(self.on_video_modified)
+        editor_layout.addRow("Durée:", self.duration_edit)
+
+        self.description_edit = QTextEdit()
+        self.description_edit.setPlaceholderText("Description courte de la vidéo...")
+        self.description_edit.setMaximumHeight(100)
+        self.description_edit.textChanged.connect(self.on_video_modified)
+        editor_layout.addRow("Description:", self.description_edit)
+
+        self.thumbnail_edit = QLineEdit()
+        self.thumbnail_edit.setPlaceholderText("URL miniature (optionnel)")
+        self.thumbnail_edit.textChanged.connect(self.on_video_modified)
+        editor_layout.addRow("Miniature (opt.):", self.thumbnail_edit)
+
+        splitter.addWidget(editor_panel)
+        splitter.setStretchFactor(1, 1)
+        layout.addWidget(splitter)
+
+    def set_videos(self, videos: List[Video]):
+        self.videos = videos
+        self.refresh_list()
+        if videos:
+            self.video_list.setCurrentRow(0)
+
+    def get_videos(self) -> List[Video]:
+        return self.videos
+
+    def refresh_list(self):
+        self.video_list.clear()
+        for i, video in enumerate(self.videos):
+            title = video.title if video.title else f"Vidéo {i+1}"
+            self.video_list.addItem(f"{i+1}. {title}")
+        self.count_label.setText(f"{len(self.videos)} vidéo(s)")
+
+    def add_video(self):
+        new_video = Video(
+            id=f"video_{len(self.videos)+1}",
+            title="Nouvelle vidéo",
+            youtubeId="",
+            duration="",
+            description=""
+        )
+        self.videos.append(new_video)
+        self.setProperty("modified", True)
+        self.refresh_list()
+        self.video_list.setCurrentRow(len(self.videos) - 1)
+
+    def duplicate_current(self):
+        if self.current_index >= 0:
+            current_video = self.videos[self.current_index]
+            new_video = Video(
+                id=f"video_{len(self.videos)+1}",
+                title=f"{current_video.title} (copie)",
+                youtubeId=current_video.youtubeId,
+                duration=current_video.duration,
+                description=current_video.description,
+                thumbnail=current_video.thumbnail
+            )
+            self.videos.insert(self.current_index + 1, new_video)
+            self.setProperty("modified", True)
+            self.refresh_list()
+            self.video_list.setCurrentRow(self.current_index + 1)
+
+    def delete_current(self):
+        if self.current_index >= 0:
+            reply = QMessageBox.question(
+                self, "Confirmation",
+                f"Supprimer la vidéo '{self.videos[self.current_index].title}' ?",
+                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No
+            )
+            if reply == QMessageBox.StandardButton.Yes:
+                del self.videos[self.current_index]
+                self.setProperty("modified", True)
+                self.refresh_list()
+                if self.videos and self.current_index >= len(self.videos):
+                    self.video_list.setCurrentRow(len(self.videos) - 1)
+
+    def move_video_up(self):
+        if self.current_index > 0:
+            self.videos[self.current_index], self.videos[self.current_index - 1] = \
+                self.videos[self.current_index - 1], self.videos[self.current_index]
+            self.setProperty("modified", True)
+            self.refresh_list()
+            self.video_list.setCurrentRow(self.current_index - 1)
+
+    def move_video_down(self):
+        if 0 <= self.current_index < len(self.videos) - 1:
+            self.videos[self.current_index], self.videos[self.current_index + 1] = \
+                self.videos[self.current_index + 1], self.videos[self.current_index]
+            self.setProperty("modified", True)
+            self.refresh_list()
+            self.video_list.setCurrentRow(self.current_index + 1)
+
+    def on_selection_changed(self, index: int):
+        if self.current_index >= 0 and self.current_index < len(self.videos):
+            self.save_current_video()
+
+        self.current_index = index
+        if index >= 0 and index < len(self.videos):
+            video = self.videos[index]
+            self.title_edit.blockSignals(True)
+            self.youtube_id_edit.blockSignals(True)
+            self.duration_edit.blockSignals(True)
+            self.description_edit.blockSignals(True)
+            self.thumbnail_edit.blockSignals(True)
+
+            self.title_edit.setText(video.title)
+            self.youtube_id_edit.setText(video.youtubeId)
+            self.duration_edit.setText(video.duration)
+            self.description_edit.setPlainText(video.description)
+            self.thumbnail_edit.setText(video.thumbnail)
+
+            self.title_edit.blockSignals(False)
+            self.youtube_id_edit.blockSignals(False)
+            self.duration_edit.blockSignals(False)
+            self.description_edit.blockSignals(False)
+            self.thumbnail_edit.blockSignals(False)
+
+    def save_current_video(self):
+        if self.current_index >= 0 and self.current_index < len(self.videos):
+            video = self.videos[self.current_index]
+            video.title = self.title_edit.text()
+            video.youtubeId = self.youtube_id_edit.text()
+            video.duration = self.duration_edit.text()
+            video.description = self.description_edit.toPlainText()
+            video.thumbnail = self.thumbnail_edit.text()
+            self.setProperty("modified", True)
+
+    def on_video_modified(self):
+        if self.current_index >= 0:
+            self.save_current_video()
+            item = self.video_list.item(self.current_index)
+            if item:
+                title = self.title_edit.text() if self.title_edit.text() else f"Vidéo {self.current_index+1}"
+                item.setText(f"{self.current_index+1}. {title}")
+
+class ExerciseEditor(QWidget):
+    """Éditeur d'exercices amélioré avec plus de fonctionnalités."""
+    def __init__(self, chapter: ChapterData = None, parent=None):
+        super().__init__(parent)
+        self.chapter = chapter  # Référence au chapitre pour obtenir class_type et chapter_id
         self.exercises: List[Exercise] = []
         self.current_index = -1
         self.init_ui()
@@ -1105,6 +1436,26 @@ class ExerciseEditor(QWidget):
         
         subq_section.addWidget(scroll_area)
         editor_layout.addLayout(subq_section)
+
+        # Section images
+        images_section = QVBoxLayout()
+        images_header = QHBoxLayout()
+        images_label = QLabel("Images de l'exercice :")
+        images_label.setObjectName("sectionLabel")
+        images_header.addWidget(images_label)
+        images_header.addStretch()
+        
+        self.images_count_label = QLabel("0 image(s)")
+        self.images_count_label.setStyleSheet("color: #666; font-size: 11px;")
+        images_header.addWidget(self.images_count_label)
+        
+        manage_images_btn = QPushButton("🖼️ Gérer les images")
+        manage_images_btn.setObjectName("smallButton")
+        manage_images_btn.clicked.connect(self.open_image_manager)
+        images_header.addWidget(manage_images_btn)
+        
+        images_section.addLayout(images_header)
+        editor_layout.addLayout(images_section)
 
         splitter.addWidget(editor_widget)
         splitter.setSizes([300, 800])
@@ -1363,6 +1714,7 @@ class ExerciseEditor(QWidget):
         
         # Mettre à jour les compteurs
         self.update_char_count()
+        self.update_images_count()
 
     def save_current(self):
         """Sauvegarde l'exercice actuellement édité avec support des sous-sous-questions."""
@@ -1470,6 +1822,436 @@ class ExerciseEditor(QWidget):
         except ValueError:
             QMessageBox.information(self, "Information", 
                                    "Veuillez saisir un numéro d'exercice valide")
+    
+    def open_image_manager(self):
+        """Ouvre le gestionnaire d'images pour l'exercice courant."""
+        if 0 <= self.current_index < len(self.exercises):
+            if not self.chapter:
+                QMessageBox.warning(
+                    self,
+                    "Erreur",
+                    "Impossible d'ouvrir le gestionnaire d'images: informations du chapitre manquantes."
+                )
+                return
+            
+            exercise = self.exercises[self.current_index]
+            
+            # Créer un dialog pour le gestionnaire d'images
+            dialog = QDialog(self)
+            dialog.setWindowTitle(f"Images - {exercise.title}")
+            dialog.setModal(True)
+            dialog.resize(900, 600)
+            
+            layout = QVBoxLayout(dialog)
+            image_manager = ImageManager(
+                exercise,
+                self.chapter.class_type,
+                self.chapter.id,
+                dialog
+            )
+            layout.addWidget(image_manager)
+            
+            # Boutons
+            buttons = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok)
+            buttons.accepted.connect(dialog.accept)
+            layout.addWidget(buttons)
+            
+            dialog.exec()
+            
+            # Mettre à jour le compteur d'images
+            self.update_images_count()
+        else:
+            QMessageBox.information(
+                self,
+                "Information",
+                "Veuillez d'abord sélectionner un exercice."
+            )
+    
+    def update_images_count(self):
+        """Met à jour le compteur d'images."""
+        if 0 <= self.current_index < len(self.exercises):
+            count = len(self.exercises[self.current_index].images)
+            self.images_count_label.setText(f"{count} image(s)")
+        else:
+            self.images_count_label.setText("0 image(s)")
+
+class ImageManager(QWidget):
+    """Gestionnaire d'images pour les exercices avec import, configuration et prévisualisation."""
+    
+    def __init__(self, exercise: Exercise, class_type: str, chapter_id: str, parent=None):
+        super().__init__(parent)
+        self.exercise = exercise
+        self.class_type = class_type
+        self.chapter_id = chapter_id
+        self.current_image_index = -1
+        self.init_ui()
+        self.load_images()
+    
+    def init_ui(self):
+        layout = QVBoxLayout(self)
+        
+        # Toolbar
+        toolbar = QHBoxLayout()
+        toolbar.addWidget(QLabel("Images de l'exercice"))
+        toolbar.addStretch()
+        self.count_label = QLabel("0 image(s)")
+        toolbar.addWidget(self.count_label)
+        
+        import_btn = QPushButton("📁 Importer")
+        import_btn.setToolTip("Importer une image (SVG, PNG, JPG)")
+        import_btn.clicked.connect(self.import_image)
+        import_btn.setFixedHeight(25)
+        toolbar.addWidget(import_btn)
+        
+        delete_btn = QPushButton("Suppr.")
+        delete_btn.setToolTip("Supprimer l'image sélectionnée")
+        delete_btn.clicked.connect(self.delete_image)
+        delete_btn.setFixedSize(50, 25)
+        toolbar.addWidget(delete_btn)
+        layout.addLayout(toolbar)
+        
+        # Splitter
+        splitter = QSplitter(Qt.Orientation.Horizontal)
+        
+        # Liste des images
+        self.image_list = QListWidget()
+        self.image_list.setMaximumWidth(250)
+        self.image_list.currentRowChanged.connect(self.on_image_selected)
+        splitter.addWidget(self.image_list)
+        
+        # Panneau d'édition et prévisualisation
+        editor_panel = QWidget()
+        editor_layout = QVBoxLayout(editor_panel)
+        
+        # Prévisualisation
+        preview_group = QGroupBox("Prévisualisation")
+        preview_layout = QVBoxLayout(preview_group)
+        self.preview_label = QLabel()
+        self.preview_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.preview_label.setMinimumHeight(200)
+        self.preview_label.setStyleSheet("border: 1px solid #ddd; background-color: #f9f9f9;")
+        self.preview_label.setScaledContents(False)
+        preview_layout.addWidget(self.preview_label)
+        editor_layout.addWidget(preview_group)
+        
+        # Configuration de l'image
+        config_group = QGroupBox("Configuration")
+        config_layout = QFormLayout(config_group)
+        
+        self.caption_edit = QLineEdit()
+        self.caption_edit.setPlaceholderText("Légende de l'image...")
+        self.caption_edit.textChanged.connect(self.save_current_image)
+        config_layout.addRow("Légende:", self.caption_edit)
+        
+        self.alt_edit = QLineEdit()
+        self.alt_edit.setPlaceholderText("Texte alternatif (accessibilité)...")
+        self.alt_edit.textChanged.connect(self.save_current_image)
+        config_layout.addRow("Texte alt:", self.alt_edit)
+        
+        # Taille
+        size_layout = QHBoxLayout()
+        self.size_combo = QComboBox()
+        self.size_combo.addItems(["small", "medium", "large", "full", "custom"])
+        self.size_combo.setCurrentText("medium")
+        self.size_combo.currentTextChanged.connect(self.on_size_changed)
+        size_layout.addWidget(self.size_combo)
+        config_layout.addRow("Taille:", size_layout)
+        
+        # Dimensions personnalisées
+        custom_size_layout = QHBoxLayout()
+        self.width_spin = QComboBox()
+        self.width_spin.setEditable(True)
+        self.width_spin.addItems(["200", "300", "400", "500", "600", "800"])
+        self.width_spin.setEnabled(False)
+        self.width_spin.currentTextChanged.connect(self.save_current_image)
+        custom_size_layout.addWidget(QLabel("Largeur (px):"))
+        custom_size_layout.addWidget(self.width_spin)
+        
+        self.height_spin = QComboBox()
+        self.height_spin.setEditable(True)
+        self.height_spin.addItems(["200", "300", "400", "500", "600", "800"])
+        self.height_spin.setEnabled(False)
+        self.height_spin.currentTextChanged.connect(self.save_current_image)
+        custom_size_layout.addWidget(QLabel("Hauteur (px):"))
+        custom_size_layout.addWidget(self.height_spin)
+        config_layout.addRow("Dimensions:", custom_size_layout)
+        
+        # Position
+        position_layout = QHBoxLayout()
+        self.position_combo = QComboBox()
+        self.position_combo.addItems([
+            "top - En haut (avant l'énoncé)",
+            "center - Centré (dans le contenu)",
+            "bottom - En bas (après les questions)",
+            "float-left - Flottant à gauche",
+            "float-right - Flottant à droite",
+            "inline - En ligne (dans le texte)"
+        ])
+        # Extraire juste la valeur (avant le tiret)
+        self.position_combo.setCurrentText("center - Centré (dans le contenu)")
+        self.position_combo.currentTextChanged.connect(self.save_current_image)
+        position_layout.addWidget(self.position_combo)
+        config_layout.addRow("Position:", position_layout)
+        
+        # Alignement horizontal
+        alignment_layout = QHBoxLayout()
+        self.alignment_combo = QComboBox()
+        self.alignment_combo.addItems([
+            "left - Aligné à gauche",
+            "center - Centré",
+            "right - Aligné à droite",
+            "justify - Justifié"
+        ])
+        self.alignment_combo.setCurrentText("center - Centré")
+        self.alignment_combo.currentTextChanged.connect(self.save_current_image)
+        alignment_layout.addWidget(self.alignment_combo)
+        config_layout.addRow("Alignement:", alignment_layout)
+        
+        editor_layout.addWidget(config_group)
+        editor_layout.addStretch()
+        
+        splitter.addWidget(editor_panel)
+        splitter.setSizes([250, 550])
+        layout.addWidget(splitter)
+        
+        self.editor_panel = editor_panel
+        self.editor_panel.setEnabled(False)
+    
+    def load_images(self):
+        """Charge les images de l'exercice."""
+        self.image_list.clear()
+        for i, img in enumerate(self.exercise.images):
+            item_text = f"{i+1}. {img.caption if img.caption else Path(img.path).name}"
+            self.image_list.addItem(item_text)
+        self.count_label.setText(f"{len(self.exercise.images)} image(s)")
+        
+        if self.exercise.images:
+            self.image_list.setCurrentRow(0)
+    
+    def on_image_selected(self, index: int):
+        """Appelé quand une image est sélectionnée."""
+        self.current_image_index = index
+        if 0 <= index < len(self.exercise.images):
+            self.load_image_config(self.exercise.images[index])
+            self.editor_panel.setEnabled(True)
+        else:
+            self.clear_editor()
+            self.editor_panel.setEnabled(False)
+    
+    def load_image_config(self, image: ExerciseImage):
+        """Charge la configuration d'une image dans l'éditeur."""
+        self.caption_edit.blockSignals(True)
+        self.alt_edit.blockSignals(True)
+        self.size_combo.blockSignals(True)
+        self.width_spin.blockSignals(True)
+        self.height_spin.blockSignals(True)
+        self.position_combo.blockSignals(True)
+        self.alignment_combo.blockSignals(True)
+        
+        self.caption_edit.setText(image.caption)
+        self.alt_edit.setText(image.alt)
+        self.size_combo.setCurrentText(image.size)
+        
+        # Définir la position avec le texte complet
+        position_map = {
+            'top': 'top - En haut (avant l\'énoncé)',
+            'center': 'center - Centré (dans le contenu)',
+            'bottom': 'bottom - En bas (après les questions)',
+            'float-left': 'float-left - Flottant à gauche',
+            'float-right': 'float-right - Flottant à droite',
+            'inline': 'inline - En ligne (dans le texte)'
+        }
+        self.position_combo.setCurrentText(position_map.get(image.position, 'center - Centré (dans le contenu)'))
+        
+        # Définir l'alignement avec le texte complet
+        alignment_map = {
+            'left': 'left - Aligné à gauche',
+            'center': 'center - Centré',
+            'right': 'right - Aligné à droite',
+            'justify': 'justify - Justifié'
+        }
+        self.alignment_combo.setCurrentText(alignment_map.get(image.alignment, 'center - Centré'))
+        
+        if image.size == 'custom':
+            self.width_spin.setEnabled(True)
+            self.height_spin.setEnabled(True)
+            if image.custom_width:
+                self.width_spin.setCurrentText(str(image.custom_width))
+            if image.custom_height:
+                self.height_spin.setCurrentText(str(image.custom_height))
+        else:
+            self.width_spin.setEnabled(False)
+            self.height_spin.setEnabled(False)
+        
+        # Charger la prévisualisation
+        self.load_preview(image.path)
+        
+        self.caption_edit.blockSignals(False)
+        self.alt_edit.blockSignals(False)
+        self.size_combo.blockSignals(False)
+        self.width_spin.blockSignals(False)
+        self.height_spin.blockSignals(False)
+        self.position_combo.blockSignals(False)
+        self.alignment_combo.blockSignals(False)
+    
+    def load_preview(self, image_path: str):
+        """Charge la prévisualisation de l'image."""
+        from PyQt6.QtGui import QPixmap
+        
+        # Construire le chemin complet
+        base_dir = Path(__file__).parent / "public"
+        full_path = base_dir / image_path
+        
+        if full_path.exists():
+            pixmap = QPixmap(str(full_path))
+            if not pixmap.isNull():
+                # Redimensionner pour la prévisualisation
+                scaled_pixmap = pixmap.scaled(
+                    400, 300,
+                    Qt.AspectRatioMode.KeepAspectRatio,
+                    Qt.TransformationMode.SmoothTransformation
+                )
+                self.preview_label.setPixmap(scaled_pixmap)
+            else:
+                self.preview_label.setText("❌ Impossible de charger l'image")
+        else:
+            self.preview_label.setText(f"❌ Fichier introuvable:\n{full_path}")
+    
+    def on_size_changed(self, size: str):
+        """Appelé quand la taille est modifiée."""
+        is_custom = (size == "custom")
+        self.width_spin.setEnabled(is_custom)
+        self.height_spin.setEnabled(is_custom)
+        self.save_current_image()
+    
+    def save_current_image(self):
+        """Sauvegarde la configuration de l'image actuelle."""
+        if 0 <= self.current_image_index < len(self.exercise.images):
+            img = self.exercise.images[self.current_image_index]
+            img.caption = self.caption_edit.text()
+            img.alt = self.alt_edit.text()
+            img.size = self.size_combo.currentText()
+            
+            # Extraire la valeur de position (avant le tiret)
+            position_text = self.position_combo.currentText()
+            img.position = position_text.split(' - ')[0] if ' - ' in position_text else position_text
+            
+            # Extraire la valeur d'alignement (avant le tiret)
+            alignment_text = self.alignment_combo.currentText()
+            img.alignment = alignment_text.split(' - ')[0] if ' - ' in alignment_text else alignment_text
+            
+            if img.size == 'custom':
+                try:
+                    img.custom_width = int(self.width_spin.currentText())
+                except:
+                    img.custom_width = None
+                try:
+                    img.custom_height = int(self.height_spin.currentText())
+                except:
+                    img.custom_height = None
+            
+            # Mettre à jour l'affichage dans la liste
+            item = self.image_list.item(self.current_image_index)
+            if item:
+                item_text = f"{self.current_image_index+1}. {img.caption if img.caption else Path(img.path).name}"
+                item.setText(item_text)
+    
+    def import_image(self):
+        """Importe une nouvelle image."""
+        file_path, _ = QFileDialog.getOpenFileName(
+            self,
+            "Importer une image",
+            "",
+            "Images (*.png *.jpg *.jpeg *.svg);;Tous les fichiers (*.*)"
+        )
+        
+        if not file_path:
+            return
+        
+        source_path = Path(file_path)
+        
+        # Créer la structure de dossiers
+        base_dir = Path(__file__).parent / "public" / "pictures"
+        class_dir = base_dir / self.class_type
+        chapter_dir = class_dir / self.chapter_id
+        
+        # Créer les dossiers si nécessaire
+        chapter_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Générer un nom de fichier unique
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        file_extension = source_path.suffix
+        dest_filename = f"img_{timestamp}{file_extension}"
+        dest_path = chapter_dir / dest_filename
+        
+        # Copier le fichier
+        try:
+            shutil.copy2(source_path, dest_path)
+            
+            # Créer l'objet ExerciseImage
+            relative_path = f"pictures/{self.class_type}/{self.chapter_id}/{dest_filename}"
+            new_image = ExerciseImage(
+                path=relative_path,
+                caption="",
+                size="medium",
+                position="center",
+                alignment="center",
+                alt=""
+            )
+            
+            self.exercise.images.append(new_image)
+            self.load_images()
+            self.image_list.setCurrentRow(len(self.exercise.images) - 1)
+            
+            QMessageBox.information(
+                self,
+                "Image importée",
+                f"L'image a été importée avec succès dans:\n{relative_path}"
+            )
+        except Exception as e:
+            QMessageBox.critical(
+                self,
+                "Erreur d'importation",
+                f"Impossible d'importer l'image:\n{str(e)}"
+            )
+    
+    def delete_image(self):
+        """Supprime l'image sélectionnée."""
+        if 0 <= self.current_image_index < len(self.exercise.images):
+            img = self.exercise.images[self.current_image_index]
+            reply = QMessageBox.question(
+                self,
+                "Confirmer la suppression",
+                f"Voulez-vous vraiment supprimer cette image?\n{img.caption or Path(img.path).name}",
+                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No
+            )
+            
+            if reply == QMessageBox.StandardButton.Yes:
+                del self.exercise.images[self.current_image_index]
+                self.load_images()
+                
+                if self.current_image_index >= len(self.exercise.images):
+                    self.current_image_index = len(self.exercise.images) - 1
+                
+                if self.exercise.images:
+                    self.image_list.setCurrentRow(self.current_image_index)
+                else:
+                    self.clear_editor()
+                    self.editor_panel.setEnabled(False)
+    
+    def clear_editor(self):
+        """Efface l'éditeur."""
+        self.caption_edit.clear()
+        self.alt_edit.clear()
+        self.size_combo.setCurrentText("medium")
+        self.position_combo.setCurrentText("center - Centré (dans le contenu)")
+        self.alignment_combo.setCurrentText("center - Centré")
+        self.preview_label.clear()
+        self.preview_label.setText("Aucune image sélectionnée")
+    
+    def get_images(self) -> List[ExerciseImage]:
+        """Retourne la liste des images."""
+        return self.exercise.images
 
 class ChapterContentEditor(QDialog):
     """Éditeur complet du contenu d'un chapitre."""
@@ -1489,13 +2271,15 @@ class ChapterContentEditor(QDialog):
         layout = QVBoxLayout(self)
         
         self.tabs = QTabWidget()
-        
+
         info_widget = self.create_info_tab()
+        self.video_editor = VideoEditor()
         self.quiz_editor = QuizEditor()
-        self.exercise_editor = ExerciseEditor()
-        
-        # Onglets simplifiés
+        self.exercise_editor = ExerciseEditor(self.chapter)
+
+        # Onglets avec vidéos
         self.tabs.addTab(info_widget, "Informations")
+        self.tabs.addTab(self.video_editor, "📹 Vidéos")
         self.tabs.addTab(self.quiz_editor, "Quiz")
         self.tabs.addTab(self.exercise_editor, "Exercices")
         layout.addWidget(self.tabs)
@@ -1596,10 +2380,12 @@ class ChapterContentEditor(QDialog):
         return widget
 
     def load_chapter_data(self):
+        self.video_editor.set_videos(self.chapter.videos)
         self.quiz_editor.set_questions(self.chapter.quiz_questions)
         self.exercise_editor.set_exercises(self.chapter.exercises)
-        
+
         # Réinitialiser les indicateurs de modification
+        self.video_editor.setProperty("modified", False)
         self.quiz_editor.setProperty("modified", False)
         self.exercise_editor.setProperty("modified", False)
 
@@ -1732,22 +2518,30 @@ class ChapterContentEditor(QDialog):
         # Enregistrer l'état initial
         original_name = self.chapter.chapter_name
         original_dates_count = len(self.chapter.session_dates)
+        original_videos_count = len(self.chapter.videos)
         original_quiz_count = len(self.chapter.quiz_questions)
         original_exercises_count = len(self.chapter.exercises)
-        
+
         # Récupérer les nouvelles données
         new_name = self.name_edit.text().strip()
         # Pour les dates, on utilise les données déjà mises à jour dans self.chapter.session_dates
+        new_videos = self.video_editor.get_videos()
         new_quiz_questions = self.quiz_editor.get_questions()
         new_exercises = self.exercise_editor.get_exercises()
-        new_quiz_questions = self.quiz_editor.get_questions()
-        new_exercises = self.exercise_editor.get_exercises()
-        
+
+        # DEBUG: Afficher les vidéos récupérées
+        print(f"🎬 DEBUG: Nombre de vidéos récupérées depuis l'éditeur: {len(new_videos)}")
+        for i, video in enumerate(new_videos):
+            print(f"   Vidéo {i+1}: ID={video.id}, Titre={video.title}, YouTube={video.youtubeId}")
+
         # Appliquer les modifications à l'objet chapitre
         self.chapter.chapter_name = new_name
         # self.chapter.session_dates est déjà mis à jour par les méthodes add_date, edit_selected_date et remove_date
+        self.chapter.videos = new_videos
         self.chapter.quiz_questions = new_quiz_questions
         self.chapter.exercises = new_exercises
+        
+        print(f"✅ Chapitre mis à jour avec {len(self.chapter.videos)} vidéo(s)")
         
         # Vérifier si des modifications ont été apportées
         modified = False
@@ -1759,19 +2553,23 @@ class ChapterContentEditor(QDialog):
         if original_dates_count != len(self.chapter.session_dates):
             modified = True
             print(f"Dates modifiées: {original_dates_count} -> {len(self.chapter.session_dates)}")
-            
+
+        if original_videos_count != len(new_videos):
+            modified = True
+            print(f"Nombre de vidéos modifié: {original_videos_count} -> {len(new_videos)}")
+
         if original_quiz_count != len(new_quiz_questions):
             modified = True
             print(f"Nombre de quiz modifié: {original_quiz_count} -> {len(new_quiz_questions)}")
-            
+
         if original_exercises_count != len(new_exercises):
             modified = True
             print(f"Nombre d'exercices modifié: {original_exercises_count} -> {len(new_exercises)}")
-        
+
         # Vérifier si l'ordre a été modifié via les propriétés
-        if self.quiz_editor.property("modified") or self.exercise_editor.property("modified"):
+        if self.video_editor.property("modified") or self.quiz_editor.property("modified") or self.exercise_editor.property("modified"):
             modified = True
-            print("L'ordre des questions ou exercices a été modifié")
+            print("L'ordre des vidéos, questions ou exercices a été modifié")
             
         # Si des modifications sont détectées, forcer une sauvegarde immédiate
         if modified:
@@ -1805,6 +2603,8 @@ class SmartChapterManager(QMainWindow):
         self.chapters_by_class: Dict[str, List[ChapterData]] = {cls: [] for cls in self.CLASSES}
         self.all_chapters: Dict[str, ChapterData] = {}
         self.init_ui()
+        # Ouvrir en mode maximisé
+        self.showMaximized()
         self.auto_load()
 
     def init_ui(self):
@@ -2545,10 +3345,9 @@ class SmartChapterManager(QMainWindow):
         )
     
     def apply_style(self):
-        """Ancien nom de la fonction - redirige vers apply_native_style."""
-        self.apply_native_style()
+        """Applique un style unifié et professionnel à l'application."""
         self.setStyleSheet("""
-            /* Style minimaliste et moderne */
+            /* Style général */
             QMainWindow, QDialog, QWidget { 
                 background-color: #ffffff; 
                 font-family: 'Segoe UI', 'Arial', sans-serif;
@@ -2567,131 +3366,172 @@ class SmartChapterManager(QMainWindow):
             }
             
             QTableWidget::item {
-                padding: 8px;
-                min-height: 36px;  /* Hauteur minimale pour les cellules */
+                padding: 10px;
+                min-height: 40px;
             }
             
             QHeaderView::section { 
                 background-color: #f8fafc;
                 color: #334155;
-                padding: 12px;
+                padding: 14px;
                 border: none;
                 font-weight: 600;
                 font-size: 13px;
                 letter-spacing: 0.3px;
             }
             
-            /* Boutons principaux - style minimaliste moderne */
-            QPushButton[objectName="modernButton"] {
-                background-color: #0ea5e9;
-                color: white;
-                border: none;
-                padding: 6px 12px;  /* Padding réduit pour éviter les coupures */
-                margin: 2px;        /* Marge pour éviter les coupures aux bords */
-                border-radius: 4px;  /* Rayon réduit pour meilleure visibilité */
+            /* BOUTONS - Style unifié et natif */
+            
+            /* Boutons standards */
+            QPushButton {
+                background-color: #e5e7eb;
+                color: #1f2937;
+                border: 1px solid #d1d5db;
+                padding: 8px 16px;
+                margin: 3px;
+                border-radius: 6px;
                 font-weight: 500;
-                min-width: 80px;    /* Largeur minimale réduite */
-                min-height: 28px;   /* Hauteur minimale définie */
-                font-size: 12px;    /* Taille de police légèrement réduite */
+                font-size: 13px;
+                min-height: 32px;
+                min-width: 85px;
             }
             
-            /* Style spécifique pour les boutons dans les cellules de tableau */
-            QTableWidget QPushButton[objectName="modernButton"] {
-                padding: 4px 8px;  /* Padding encore plus compact pour les tableaux */
-                margin: 1px;
-                min-height: 26px;
-                font-size: 11px;
-                border-radius: 3px;
+            QPushButton:hover {
+                background-color: #d1d5db;
+                border-color: #9ca3af;
+            }
+            
+            QPushButton:pressed {
+                background-color: #9ca3af;
+            }
+            
+            QPushButton:disabled {
+                background-color: #f3f4f6;
+                color: #9ca3af;
+                border-color: #e5e7eb;
+            }
+            
+            /* Boutons dans les tableaux - plus compacts */
+            QTableWidget QPushButton {
+                padding: 6px 12px;
+                margin: 2px;
+                min-height: 30px;
+                min-width: 75px;
+                font-size: 12px;
+            }
+            
+            /* Boutons principaux modernes (bleu) */
+            QPushButton[objectName="modernButton"] {
+                background-color: #3b82f6;
+                color: white;
+                border: 1px solid #2563eb;
+                padding: 8px 16px;
+                margin: 3px;
+                border-radius: 6px;
+                font-weight: 600;
+                min-height: 34px;
+                min-width: 90px;
+                font-size: 13px;
             }
             
             QPushButton[objectName="modernButton"]:hover {
-                background-color: #0284c7;
+                background-color: #2563eb;
+                border-color: #1d4ed8;
             }
             
             QPushButton[objectName="modernButton"]:pressed {
-                background-color: #0369a1;
+                background-color: #1d4ed8;
             }
             
-            /* Boutons de suppression */
-            QPushButton[objectName="dangerButton"] {
-                background-color: #f43f5e;
-                color: white;
-                border: none;
-                padding: 6px 12px;
-                border-radius: 4px;
-                font-weight: 500;
-                min-height: 28px;
+            QTableWidget QPushButton[objectName="modernButton"] {
+                padding: 6px 14px;
                 margin: 2px;
-                font-size: 12px;
+                min-height: 30px;
+                min-width: 80px;
+            }
+            
+            /* Boutons de danger/suppression (rouge) */
+            QPushButton[objectName="dangerButton"] {
+                background-color: #ef4444;
+                color: white;
+                border: 1px solid #dc2626;
+                padding: 8px 16px;
+                margin: 3px;
+                border-radius: 6px;
+                font-weight: 600;
+                min-height: 34px;
+                min-width: 90px;
+                font-size: 13px;
             }
             
             QPushButton[objectName="dangerButton"]:hover {
-                background-color: #e11d48;
+                background-color: #dc2626;
+                border-color: #b91c1c;
             }
             
-            /* Style spécifique pour les boutons dangereux dans les tableaux */
+            QPushButton[objectName="dangerButton"]:pressed {
+                background-color: #b91c1c;
+            }
+            
             QTableWidget QPushButton[objectName="dangerButton"] {
-                padding: 4px 8px;
-                margin: 1px;
-                min-height: 26px;
-                font-size: 11px;
-                border-radius: 3px;
+                padding: 6px 14px;
+                margin: 2px;
+                min-height: 30px;
+                min-width: 80px;
             }
             
-            /* Petits boutons */
+            /* Petits boutons (vert) */
             QPushButton[objectName="smallButton"] {
                 background-color: #10b981;
                 color: white;
-                border: none;
-                padding: 4px 10px;
-                border-radius: 4px;
+                border: 1px solid #059669;
+                padding: 7px 14px;
+                margin: 3px;
+                border-radius: 6px;
                 font-weight: 500;
                 font-size: 12px;
-                min-height: 28px;
-                margin: 2px;
+                min-height: 32px;
+                min-width: 85px;
             }
             
             QPushButton[objectName="smallButton"]:hover {
                 background-color: #059669;
+                border-color: #047857;
             }
             
-            /* Style spécifique pour les petits boutons dans les tableaux */
+            QPushButton[objectName="smallButton"]:pressed {
+                background-color: #047857;
+            }
+            
             QTableWidget QPushButton[objectName="smallButton"] {
-                padding: 3px 6px;
-                margin: 1px;
-                min-height: 26px;
-                font-size: 11px;
-                border-radius: 3px;
+                padding: 5px 12px;
+                margin: 2px;
+                min-height: 28px;
+                min-width: 75px;
             }
             
+            /* Bouton de suppression simple (×) */
             QPushButton[objectName="removeButton"] {
-                background-color: #f43f5e;
+                background-color: #ef4444;
                 color: white;
-                border: none;
+                border: 1px solid #dc2626;
                 border-radius: 4px;
                 font-weight: bold;
-                font-size: 12px;
-                width: 22px;
-                height: 22px;
+                font-size: 16px;
+                min-width: 28px;
+                max-width: 28px;
+                min-height: 28px;
+                max-height: 28px;
+                padding: 0px;
+                margin: 2px;
             }
             
             QPushButton[objectName="removeButton"]:hover {
-                background-color: #e11d48;
+                background-color: #dc2626;
             }
             
-            /* Boutons par défaut */
-            QPushButton {
-                background-color: #64748b;
-                color: white;
-                border: none;
-                padding: 8px 12px;
-                border-radius: 6px;
-                font-weight: 500;
-                letter-spacing: 0.3px;
-            }
-            
-            QPushButton:hover {
-                background-color: #475569;
+            QPushButton[objectName="removeButton"]:pressed {
+                background-color: #b91c1c;
             }
             
             /* Labels */
@@ -2726,8 +3566,9 @@ class SmartChapterManager(QMainWindow):
             }
             
             QLineEdit:focus, QTextEdit:focus {
-                border-color: #0ea5e9;
-                border-width: 1px;
+                border-color: #3b82f6;
+                border-width: 2px;
+                padding: 9px;
                 background-color: #f8fafc;
             }
             

@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useEffect, ReactNode, Dispatch, useContext, useRef } from 'react';
+import React, { createContext, useReducer, useEffect, ReactNode, Dispatch, useContext, useRef, useCallback } from 'react';
 import { AppState, Action, Chapter, Profile, QuizProgress, ChapterProgress, Feedback, UINotification } from '../types';
 import { DB_KEY } from '../constants';
 import { useNotification } from './NotificationContext';
@@ -125,6 +125,72 @@ const appReducer = (state: AppState, action: Action): AppState => {
             };
         }
 
+        case 'MARK_VIDEO_WATCHED': {
+            if (!state.currentChapterId) return state;
+            const { videoId } = action.payload;
+            const chapter = state.activities[state.currentChapterId];
+            const progress = state.progress[state.currentChapterId];
+
+            if (!chapter?.videos) return state;
+
+            // Initialiser videosProgress si nécessaire
+            const videosProgress = progress.videos || {
+                watched: {},
+                allWatched: false,
+                duration: 0,
+            };
+
+            // Marquer la vidéo comme regardée
+            const newWatched = { ...videosProgress.watched, [videoId]: true };
+
+            // Vérifier si toutes les vidéos sont regardées
+            const totalVideos = chapter.videos.length;
+            const watchedCount = Object.values(newWatched).filter(Boolean).length;
+            const allWatched = watchedCount === totalVideos;
+
+            return {
+                ...state,
+                progress: {
+                    ...state.progress,
+                    [state.currentChapterId]: {
+                        ...progress,
+                        videos: {
+                            ...videosProgress,
+                            watched: newWatched,
+                            allWatched,
+                        },
+                    },
+                },
+            };
+        }
+
+        case 'SET_VIDEOS_DURATION': {
+            if (!state.currentChapterId) return state;
+            const { duration } = action.payload;
+            const progress = state.progress[state.currentChapterId];
+
+            // Initialiser videosProgress si nécessaire
+            const videosProgress = progress.videos || {
+                watched: {},
+                allWatched: false,
+                duration: 0,
+            };
+
+            return {
+                ...state,
+                progress: {
+                    ...state.progress,
+                    [state.currentChapterId]: {
+                        ...progress,
+                        videos: {
+                            ...videosProgress,
+                            duration,
+                        },
+                    },
+                },
+            };
+        }
+
         case 'SUBMIT_QUIZ': {
             if (!state.currentChapterId) return state;
             const progress = state.progress[state.currentChapterId];
@@ -227,18 +293,33 @@ const appReducer = (state: AppState, action: Action): AppState => {
                 // Assurer l'existence d'un objet progress pour chaque chapitre
                 if (!newProgress[newChapter.id]) {
                     newProgress[newChapter.id] = {
-                        quiz: { 
-                            answers: {}, 
-                            isSubmitted: false, 
-                            score: 0, 
-                            allAnswered: false, 
-                            currentQuestionIndex: 0, 
-                            duration: 0, 
-                            hintsUsed: 0 
+                        // Initialiser videosProgress si le chapitre contient des vidéos
+                        ...(newChapter.videos && newChapter.videos.length > 0 && {
+                            videos: {
+                                watched: {},
+                                allWatched: false,
+                                duration: 0,
+                            }
+                        }),
+                        quiz: {
+                            answers: {},
+                            isSubmitted: false,
+                            score: 0,
+                            allAnswered: false,
+                            currentQuestionIndex: 0,
+                            duration: 0,
+                            hintsUsed: 0
                         },
                         exercisesFeedback: {},
                         isWorkSubmitted: false,
                         exercisesDuration: 0,
+                    };
+                } else if (newChapter.videos && newChapter.videos.length > 0 && !newProgress[newChapter.id].videos) {
+                    // Si le chapitre existe déjà mais n'a pas de videosProgress et que des vidéos ont été ajoutées
+                    newProgress[newChapter.id].videos = {
+                        watched: {},
+                        allWatched: false,
+                        duration: 0,
                     };
                 }
 
@@ -394,6 +475,7 @@ const appReducer = (state: AppState, action: Action): AppState => {
 
 const AppStateContext = createContext<AppState | undefined>(undefined);
 const AppDispatchContext = createContext<Dispatch<Action> | undefined>(undefined);
+const AppSyncContext = createContext<(() => Promise<void>) | undefined>(undefined);
 
 export const useAppState = () => {
     const context = useContext(AppStateContext);
@@ -434,12 +516,11 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         dispatch({ type: 'INIT', payload: savedData });
     }, []);
 
-    // Effect 2: Fetch and sync chapter data when profile class changes.
-    useEffect(() => {
-        const syncChaptersForClass = async (classId: string) => {
-            console.log('AppContext - Syncing chapters for class:', classId);
+    // Fonction de synchronisation des chapitres (utilisable manuellement ou automatiquement)
+    const syncChaptersForClass = useCallback(async (classId: string, forceReload: boolean = false) => {
+        console.log('AppContext - Syncing chapters for class:', classId);
             
-            if (classId === fetchedClassRef.current) {
+            if (!forceReload && classId === fetchedClassRef.current) {
                 console.log('AppContext - Class already fetched, skipping');
                 return;
             }
@@ -448,7 +529,9 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 
             try {
                 console.log('AppContext - Fetching manifest...');
-                const manifestRes = await fetch('/manifest.json');
+                // Ajouter un timestamp pour forcer le rechargement et éviter le cache
+                const cacheBuster = `?t=${Date.now()}`;
+                const manifestRes = await fetch(`/manifest.json${cacheBuster}`);
                 if (!manifestRes.ok) throw new Error("Manifest file not found");
                 const manifest: { [id: string]: any[] } = await manifestRes.json();
                 
@@ -463,7 +546,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
                 if (chapterInfos.length > 0) {
                     console.log('AppContext - Loading chapter files...');
                     const chapterPromises = chapterInfos.map(info => 
-                        fetch(`/chapters/${info.file}`)
+                        // Ajouter un timestamp unique pour chaque fichier pour éviter le cache
+                        fetch(`/chapters/${info.file}${cacheBuster}`)
                             .then(res => {
                                 if (!res.ok) {
                                     console.error(`Failed to load ${info.file}:`, res.status, res.statusText);
@@ -517,13 +601,15 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
                     duration: 10000 
                 });
             }
-        };
+    }, [state.progress, addNotification]);
 
+    // Effect 2: Fetch and sync chapter data when profile class changes.
+    useEffect(() => {
         console.log('AppContext - Profile effect triggered. Profile:', state.profile);
         
         if (state.profile?.classId) {
             console.log('AppContext - Profile has classId, syncing chapters...');
-            syncChaptersForClass(state.profile.classId);
+            syncChaptersForClass(state.profile.classId, false);
         } else {
             console.log('AppContext - No profile or classId, clearing activities');
             if(Object.keys(state.activities).length > 0) {
@@ -532,7 +618,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
             fetchedClassRef.current = null;
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [state.profile]);
+    }, [state.profile, syncChaptersForClass]);
 
     // Effect 3: Persist state to localStorage immediately on any state change.
     useEffect(() => {
@@ -554,10 +640,24 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         }
     }, [state, addNotification]);
 
+    // Fonction de synchronisation manuelle exposée
+    const syncManually = useCallback(async () => {
+        if (state.profile?.classId) {
+            console.log('Manual sync triggered for class:', state.profile.classId);
+            await syncChaptersForClass(state.profile.classId, true); // forceReload = true
+            addNotification("Synchronisation réussie", "success", {
+                message: "Les données ont été rechargées depuis le serveur.",
+                duration: 3000
+            });
+        }
+    }, [state.profile, syncChaptersForClass, addNotification]);
+
     return (
         <AppStateContext.Provider value={state}>
             <AppDispatchContext.Provider value={dispatch}>
-                {children}
+                <AppSyncContext.Provider value={syncManually}>
+                    {children}
+                </AppSyncContext.Provider>
             </AppDispatchContext.Provider>
         </AppStateContext.Provider>
     );

@@ -15,12 +15,12 @@ interface CategorizedActivities {
     upcoming: Chapter[];
 }
 
-// ✅ OPTIMISATION 2: Styles en constante (évite recréation)
+// ✅ OPTIMISATION 2: Styles en constante (évite recréation) avec animations pour le nom
 const customStyles = `
   :root {
     --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
   }
-  
+
   .claude-card {
     background-color: #FFFFFF;
     border: 1px solid #E5E5E5;
@@ -29,25 +29,72 @@ const customStyles = `
     position: relative;
     overflow: hidden;
   }
-  
+
   .claude-card:hover:not(:disabled) {
     border-color: #D4D4D4;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(0, 0, 0, 0.05);
   }
-  
+
   .pulse-dot {
     animation: pulse 2s var(--transition-smooth) infinite;
   }
-  
+
   @keyframes pulse {
-    0%, 100% { 
-      opacity: 1; 
+    0%, 100% {
+      opacity: 1;
       transform: scale(1);
     }
-    50% { 
-      opacity: 0.7; 
+    50% {
+      opacity: 0.7;
       transform: scale(1.1);
     }
+  }
+
+  @keyframes welcomeBounce {
+    0% {
+      transform: scale(0.8) translateY(-20px);
+      opacity: 0;
+    }
+    50% {
+      transform: scale(1.1) translateY(0);
+    }
+    70% {
+      transform: scale(0.95);
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% center;
+    }
+    100% {
+      background-position: 200% center;
+    }
+  }
+
+  .student-name-animated {
+    animation: welcomeBounce 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    background: linear-gradient(
+      90deg,
+      #FF7A00 0%,
+      #FFB84D 25%,
+      #FF7A00 50%,
+      #FFB84D 75%,
+      #FF7A00 100%
+    );
+    background-size: 200% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: welcomeBounce 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards,
+               shimmer 3s linear infinite;
+    display: inline-block;
+    font-weight: 700;
+    text-shadow: 0 0 30px rgba(255, 122, 0, 0.3);
   }
 `;
 
@@ -126,19 +173,19 @@ const DashboardView: React.FC = () => {
             <GlobalActionButtons />
 
             <div className="min-h-screen bg-background">
-                <div className="max-w-5xl mx-auto p-4 sm:p-6 pb-28">
-                    <header className="sticky top-0 z-30 bg-background/90 backdrop-blur-md py-6 mb-6 -mx-4 -mt-4 sm:-mx-6 sm:-mt-6 px-4 sm:px-6">
-                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 max-w-5xl mx-auto">
+                <div className="max-w-5xl mx-auto p-3 sm:p-4 md:p-6 pb-20 sm:pb-24 md:pb-28">
+                    <header className="sticky top-0 z-30 bg-background/90 backdrop-blur-md py-4 sm:py-5 md:py-6 mb-4 sm:mb-5 md:mb-6 -mx-3 sm:-mx-4 md:-mx-6 -mt-3 sm:-mt-4 md:-mt-6 px-3 sm:px-4 md:px-6">
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-6 max-w-5xl mx-auto">
                             <div>
-                                <h1 className="text-2xl sm:text-4xl font-title text-text mb-2 tracking-tight">
-                                    {greeting},
-                                    <span className="text-[#FF7A00] ml-4">
+                                <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-title text-text mb-2 tracking-tight">
+                                    {greeting},{' '}
+                                    <span className="student-name-animated">
                                         {profile.name}
                                     </span>
                                 </h1>
-                                <div className="mt-2">
+                                <div className="mt-1 sm:mt-2">
                                     <div
-                                        className="inline-block text-lg font-sans text-text-secondary italic"
+                                        className="inline-block text-base sm:text-lg text-text-secondary italic"
                                         dangerouslySetInnerHTML={{ __html: formatClassNameHTML(className) }}
                                     />
                                 </div>
@@ -147,7 +194,7 @@ const DashboardView: React.FC = () => {
                     </header>
 
                     {hasAnyActivity ? (
-                        <div className="space-y-12">
+                        <div className="space-y-8 sm:space-y-10 md:space-y-12">
                             <ChapterSection
                                 title="Chapitres en cours"
                                 chapters={inProgress}
@@ -169,28 +216,28 @@ const DashboardView: React.FC = () => {
                             />
                         </div>
                     ) : (
-                        <div className="claude-card text-center p-12 rounded-2xl mt-8">
-                            <span className="text-5xl text-text-disabled block mb-4">◎</span>
-                            <h2 className="text-xl font-title text-text mb-2">Aucun chapitre disponible</h2>
-                            <p className="font-sans text-text-secondary italic">
+                        <div className="claude-card text-center p-8 sm:p-10 md:p-12 rounded-xl md:rounded-2xl mt-6 sm:mt-8">
+                            <span className="text-4xl sm:text-5xl text-text-disabled block mb-3 sm:mb-4">◎</span>
+                            <h2 className="text-lg sm:text-xl font-title text-text mb-2">Aucun chapitre disponible</h2>
+                            <p className="font-sans text-sm sm:text-base text-text-secondary italic">
                                 Les chapitres pour votre classe seront bientôt révélés...
                             </p>
                             <button 
                                 onClick={() => window.location.reload()}
-                                className="mt-6 px-6 py-2 bg-background hover:bg-border/50 text-text rounded-lg transition-colors font-sans"
+                                className="mt-5 sm:mt-6 px-5 sm:px-6 py-2.5 sm:py-3 bg-background hover:bg-border/50 text-text rounded-lg transition-colors font-sans text-sm touch-manipulation active:scale-95"
                             >
                                 Rafraîchir la page
                             </button>
                         </div>
                     )}
 
-                    <footer className="text-center mt-16 mb-8">
+                    <footer className="text-center mt-12 sm:mt-14 md:mt-16 mb-6 sm:mb-8">
                         <div className="flex flex-col items-center justify-center opacity-70">
-                            <span className="font-brand text-xs tracking-wider text-text-secondary">Center Scientific</span>
-                            <div className="w-8 h-px bg-border-hover my-1.5"></div>
-                            <span className="font-brand text-2xl text-primary -mt-1">of Mathematics</span>
+                            <span className="font-brand text-[10px] sm:text-xs tracking-wider text-text-secondary">Center Scientific</span>
+                            <div className="w-6 sm:w-8 h-px bg-border-hover my-1 sm:my-1.5"></div>
+                            <span className="font-brand text-xl sm:text-2xl text-primary -mt-1">of Mathematics</span>
                         </div>
-                        <p className="text-xs text-text-secondary font-sans italic mt-4">
+                        <p className="text-[10px] sm:text-xs text-text-secondary font-sans italic mt-3 sm:mt-4 px-4">
                             © {new Date().getFullYear()} - Votre parcours d'apprentissage interactif
                         </p>
                     </footer>

@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useAppState, useAppDispatch } from '../../context/AppContext';
 import Quiz from '../quiz/Quiz';
 import Exercises from '../Exercises';
+import VideoCapsules from '../VideoCapsules';
+import BackButton from '../BackButton';
 
 const ActivityView: React.FC = () => {
     const state = useAppState();
@@ -31,26 +33,29 @@ const ActivityView: React.FC = () => {
     }
 
     const chapter = activities[currentChapterId];
-    const subViewTitle = activitySubView === 'quiz' ? 'Quiz' : 'Exercices';
+    const subViewTitle = activitySubView === 'videos' ? 'Vidéos' : activitySubView === 'quiz' ? 'Quiz' : 'Exercices';
 
     return (
-        <div className="max-w-4xl mx-auto animate-slideInUp">
-             <header ref={headerRef} className="relative flex items-center justify-center mb-8 h-12">
-                <div className="absolute left-0">
-                    <button 
+        <div className="max-w-4xl mx-auto animate-slideInUp px-4 sm:px-6">
+            <header ref={headerRef} className="mb-6 sm:mb-10">
+                {/* Bouton retour fixe à l'extrême gauche */}
+                <div className={`fixed left-4 top-4 z-50 sm:absolute sm:left-0 sm:top-0 transition-all duration-300 ${highlightBackButton ? 'animate-pulse' : ''}`}>
+                    <BackButton
                         onClick={() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'work-plan' } })}
-                        className={`w-12 h-12 rounded-full flex items-center justify-center text-text-secondary bg-surface border border-border hover:bg-primary/10 hover:text-primary hover:border-primary/30 transition-all duration-200 active:scale-95 shadow-sm hover:shadow-md ${highlightBackButton ? 'animate-pulse ring-2 ring-primary' : ''}`}
-                        aria-label="Retour au plan de travail"
-                    >
-                        <span className="material-symbols-outlined !text-2xl">arrow_back</span>
-                    </button>
+                        label="Retour au plan de travail"
+                        showLabel={false}
+                        className={highlightBackButton ? 'ring-2 ring-primary ring-offset-2 ring-offset-background' : ''}
+                    />
                 </div>
-                <div className="text-center">
-                    <h1 className="text-5xl font-title text-text">{subViewTitle}</h1>
-                    <p className="text-primary text-xl font-sans italic mt-1">{chapter.chapter}</p>
+
+                {/* Titre centré */}
+                <div className="text-center pt-2 sm:pt-0">
+                    <h1 className="text-2xl sm:text-3xl md:text-4xl font-title text-text tracking-tight">{subViewTitle}</h1>
+                    <p className="text-primary text-base sm:text-lg md:text-xl font-sans italic mt-2 px-4">{chapter.chapter}</p>
                 </div>
             </header>
 
+            {activitySubView === 'videos' && <VideoCapsules />}
             {activitySubView === 'quiz' && <Quiz />}
             {activitySubView === 'exercises' && <Exercises onAllCompleted={onAllExercisesCompleted} />}
         </div>

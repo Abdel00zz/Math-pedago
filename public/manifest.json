@@ -77,8 +77,8 @@
     {
       "id": "logique-mathematique",
       "file": "1bsm_logique_mathematique.json",
-      "isActive": false,
-      "version": "v1.1.0-064085"
+      "isActive": true,
+      "version": "v1.1.0-6a13f5"
     },
     {
       "id": "generalites-sur-les-fonctions",
@@ -146,7 +146,7 @@
       "id": "logique-mathematique",
       "file": "1bsm_logique_mathematique.json",
       "isActive": true,
-      "version": "v1.1.0-f45996"
+      "version": "v1.1.0-7b613f"
     },
     {
       "id": "ensembles-et-applications",

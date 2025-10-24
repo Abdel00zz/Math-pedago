@@ -24,7 +24,7 @@ const getChaptersForClass = (classId: string): Chapter[] => {
                 {
                     id: 1, section: 'Géométrie', title: 'Le barycentre dans le plan',
                     contents: [
-                        'Barycentre de n points ($2 \\le n \\le 4$) ; centre de gravité ;',
+                        'Barycentre de n points ($\\displaystyle 2 \\le n \\le 4$) ; centre de gravité ;',
                         'Propriété caractéristique du barycentre; invariance; associativité ;',
                         'Coordonnées du barycentre dans un repère donné.'
                     ],
@@ -32,7 +32,7 @@ const getChaptersForClass = (classId: string): Chapter[] => {
                         'Utiliser le barycentre pour simplifier une expression vectorielle ;',
                         'Utiliser le barycentre pour établir l\'alignement de trois points d\'un plan ;',
                         'Utiliser le barycentre pour établir l\'intersection de droites ;',
-                        'Construire le barycentre de n points ($2 \\le n \\le 4$);',
+                        'Construire le barycentre de n points ($\\displaystyle 2 \\le n \\le 4$);',
                         'Utiliser le barycentre pour résoudre des problèmes et pour déterminer des lieux géométriques.'
                     ]
                 },
@@ -41,17 +41,17 @@ const getChaptersForClass = (classId: string): Chapter[] => {
                     contents: [
                         'Expression analytique du produit scalaire dans un repère orthonormé ;',
                         'Expression analytique de la norme d\'un vecteur et de la distance de deux points.',
-                        'Expression de $\\cos \\theta$ et expression de $\\sin \\theta$;',
+                        'Expression de $\\displaystyle \\cos \\theta$ et expression de $\\displaystyle \\sin \\theta$;',
                         'Inégalité de Cauchy-Schwartz et inégalité triangulaire.',
                         'La droite dans le plan (Etude analytique)',
-                        'Le cercle (Etude analytique) : Équation cartésienne, représentation paramétrique, étude de l\'ensemble $\\{M(x,y) / x^2+y^2 + ax + by +c = 0\\}$',
+                        'Le cercle (Etude analytique) : Équation cartésienne, représentation paramétrique, étude de l\'ensemble $\\displaystyle \\{M(x,y) \\mid x^2+y^2 + ax + by +c = 0\\}$',
                         'Etude de la position relative d\'un cercle et d\'une droite ;',
                         'Equation cartésienne d\'une droite tangente à un cercle en un point donné de ce cercle.'
                     ],
                     capacities: [
                         'Exprimer le parallélisme et l\'orthogonalité de deux droites ;',
                         'Utiliser le produit scalaire pour calculer des distances, des aires et des mesures d\'angles ;',
-                        'Reconnaitre l\'ensemble des points M du plan vérifiant la relation : $\\vec{MA}.\\vec{MB} = 0$',
+                        'Reconnaitre l\'ensemble des points M du plan vérifiant la relation : $\\displaystyle \\vec{MA} \\cdot \\vec{MB} = 0$',
                         'Déterminer le centre et le rayon d\'un cercle défini à l\'aide d\'une équation cartésienne ;',
                         'Passer d\'une équation cartésienne à une représentation paramétrique et inversement;',
                         'Utiliser l\'analytique du produit scalaire pour résoudre des problèmes géométriques et algébriques.'
@@ -96,10 +96,10 @@ const getChaptersForClass = (classId: string): Chapter[] => {
                         'Définition; Propriétés: symétrie, bilinéarité; Orthogonalité de deux vecteurs ;',
                         'Repère orthonormé, base orthonormée ;',
                         'Expression analytique du produit scalaire, de la norme d\'un vecteur et de la distance de deux points.',
-                        'Détermination analytique de l\'ensemble $\\{M \\in P / \\vec{u} \\cdot \\vec{AM} = k\\}$;',
+                        'Détermination analytique de l\'ensemble $\\displaystyle \\{M \\in P \\mid \\vec{u} \\cdot \\vec{AM} = k\\}$;',
                         'Vecteur normal à un plan ; Équation cartésienne d\'un plan défini par un point et un vecteur normal à ce plan;',
                         'Distance d\'un point à un plan; Étude analytique de la sphère ;',
-                        'Etude de l\'ensemble des points $M(x,y,z)$ tels que : $x^2+y^2+z^2+ax+by+cz+d = 0$;',
+                        'Etude de l\'ensemble des points $\\displaystyle M(x,y,z)$ tels que : $\\displaystyle x^2+y^2+z^2+ax+by+cz+d = 0$;',
                         'Intersection d\'une sphère et d\'un plan; plan tangent à une sphère en un point donné; intersection d\'une sphère et d\'une droite.'
                     ],
                     capacities: [
@@ -109,7 +109,7 @@ const getChaptersForClass = (classId: string): Chapter[] => {
                         'Déterminer la droite passant par un point et orthogonale à un plan ;',
                         'Déterminer une équation cartésienne d\'une sphère définie par son centre et son rayon ;',
                         'Déterminer une représentation paramétrique d\'une sphère ;',
-                        'Reconnaitre l\'ensemble des points M de l\'espace tels que : $\\vec{MA} \\cdot \\vec{MB} = 0$'
+                        'Reconnaitre l\'ensemble des points M de l\'espace tels que : $\\displaystyle \\vec{MA} \\cdot \\vec{MB} = 0$'
                     ]
                 },
                 {
@@ -172,17 +172,17 @@ const getChaptersForClass = (classId: string): Chapter[] => {
                     ]
                 },
                 {
-                    id: 10, section: 'Algèbre', title: 'Arithmétique dans $\\mathbb{Z}$',
+                    id: 10, section: 'Algèbre', title: 'Arithmétique dans $\\displaystyle \\mathbb{Z}$',
                     contents: [
                         'La division euclidienne et ses propriétés ;',
                         'Les nombres premiers ; la décomposition en produit de facteurs premiers ;',
-                        'Le plus petit commun multiple (PPCM ; $a \\lor b$ ); le plus grand commun diviseur (PGCD ; $a \\land b$ ) ; propriétés ;',
+                        'Le plus petit commun multiple (PPCM ; $\\displaystyle a \\lor b$ ); le plus grand commun diviseur (PGCD ; $\\displaystyle a \\land b$ ) ; propriétés ;',
                         'Algorithme d\'Euclide ;',
-                        'Congruence modulo n ; l\'ensemble $\\mathbb{Z} / n\\mathbb{Z}$ et opérations.'
+                        'Congruence modulo n ; l\'ensemble $\\displaystyle \\mathbb{Z} / n\\mathbb{Z}$ et opérations.'
                     ],
                     capacities: [
                         'Appliquer l\'algorithme d\'Euclide pour la détermination du PGCD de deux nombres entiers ;',
-                        'Reconnaitre l\'ensemble $\\mathbb{Z}/n\\mathbb{Z}$ et les règles de calcul modulo n ;',
+                        'Reconnaitre l\'ensemble $\\displaystyle \\mathbb{Z}/n\\mathbb{Z}$ et les règles de calcul modulo n ;',
                         'Utiliser la congruence modulo n dans l\'étude de la divisibilité et inversement.'
                     ]
                 },
@@ -194,10 +194,10 @@ const getChaptersForClass = (classId: string): Chapter[] => {
                         'Cardinal de l\'ensemble des applications d\'un ensemble fini vers un autre ensemble fini ;',
                         'Cardinal de l\'ensemble des parties d\'un ensemble fini;',
                         'Cardinal de la réunion et de l\'intersection de deux ensembles finis ;',
-                        'Nombre d\'arrangements; la notation $A_n^p$;',
-                        'Nombre de permutations ; la notation $n!$;',
-                        'Nombre de combinaisons ; la notation $C_n^p$;',
-                        'Propriétés des nombres $C_n^p$',
+                        'Nombre d\'arrangements; la notation $\\displaystyle A_n^p$;',
+                        'Nombre de permutations ; la notation $\\displaystyle n!$;',
+                        'Nombre de combinaisons ; la notation $\\displaystyle C_n^p$;',
+                        'Propriétés des nombres $\\displaystyle C_n^p$',
                         'Formule du binôme.'
                     ],
                     capacities: [
@@ -216,13 +216,13 @@ const getChaptersForClass = (classId: string): Chapter[] => {
                         'Monotonie d\'une fonction numérique ;',
                         'Composée de deux fonctions numériques;',
                         'Monotonie de la composée de deux fonctions numériques monotones ;',
-                        'Représentation graphique des fonctions : $x \\mapsto \\sqrt{x+a}$, $x \\mapsto ax^3$ et $x \\mapsto E(x)$.'
+                        'Représentation graphique des fonctions : $\\displaystyle x \\mapsto \\sqrt{x+a}$, $\\displaystyle x \\mapsto ax^3$ et $\\displaystyle x \\mapsto E(x)$.'
                     ],
                     capacities: [
                         'Comparer deux expressions en utilisant différentes techniques ;',
                         'Déduire les variations ou les extrémums ou le signe d\'une fonction à partir de sa représentation graphique ou à partir de son tableau de variation ;',
-                        'Déterminer les variations des fonctions $f + \\lambda$ et $\\lambda f$ à partir des variations de la fonction $f$ ;',
-                        'Discuter les solutions d\'une équation de type $f(x)=c$ et $f(x) = g(x)$ à partir de la représentation graphique ;',
+                        'Déterminer les variations des fonctions $\\displaystyle f + \\lambda$ et $\\displaystyle \\lambda f$ à partir des variations de la fonction $\\displaystyle f$ ;',
+                        'Discuter les solutions d\'une équation de type $\\displaystyle f(x)=c$ et $\\displaystyle f(x) = g(x)$ à partir de la représentation graphique ;',
                         'Etude d\'équations et d\'inéquations en utilisant et en représentant les fonctions.'
                     ]
                 },
@@ -245,7 +245,7 @@ const getChaptersForClass = (classId: string): Chapter[] => {
                 {
                     id: 14, section: 'Analyse', title: 'Trigonométrie',
                     contents: [
-                        'Formules de transformation ; Transformation de l\'expression : $a \\cos x+b \\sin x$.'
+                        'Formules de transformation ; Transformation de l\'expression : $\\displaystyle a \\cos x + b \\sin x$.'
                     ],
                     capacities: [
                         'Maitriser les différentes formules de transformation ;',
@@ -257,16 +257,16 @@ const getChaptersForClass = (classId: string): Chapter[] => {
                     id: 15, section: 'Analyse', title: 'Limite d’une fonction numérique',
                     contents: [
                         'Limite finie en un point; limite infinie en un point;',
-                        'Limite finie en $+\\infty$ et en $-\\infty$; limite infinie en $+\\infty$ et en $-\\infty$;',
+                        'Limite finie en $\\displaystyle +\\infty$ et en $\\displaystyle -\\infty$; limite infinie en $\\displaystyle +\\infty$ et en $\\displaystyle -\\infty$;',
                         'Limite à gauche, limite à droite ; Opérations sur les limites ;',
-                        'Limites de fonction polynôme, de fonction rationnelle et limites de fonction de la forme $\\sqrt{f}$ où f est une fonction usuelle ;',
-                        'Les limites: $\\lim_{x\\to 0} \\frac{\\sin x}{x}$, $\\lim_{x\\to 0} \\frac{\\tan x}{x}$, $\\lim_{x\\to 0} \\frac{1-\\cos x}{x^2}$ et $\\lim_{x\\to 0} \\frac{\\sin(ax)}{x}$;',
+                        'Limites de fonction polynôme, de fonction rationnelle et limites de fonction de la forme $\\displaystyle \\sqrt{f}$ où f est une fonction usuelle ;',
+                        'Les limites: $\\displaystyle \\lim_{x\\to 0} \\frac{\\sin x}{x}$, $\\displaystyle \\lim_{x\\to 0} \\frac{\\tan x}{x}$, $\\displaystyle \\lim_{x\\to 0} \\frac{1-\\cos x}{x^2}$ et $\\displaystyle \\lim_{x\\to 0} \\frac{\\sin(ax)}{x}$;',
                         'Limites et ordre.'
                     ],
                     capacities: [
                         'Calculer les limites des fonctions polynômes, des fonctions rationnelles et des fonctions irrationnelles ;',
                         'Calculer les limites de fonctions trigonométriques simples en utilisant les limites usuelles ;',
-                        'Résoudre des inéquations de type $|f(x)-l| < \\varepsilon$ et de type $f(x) > A$ pour montrer que $f(x)$ tend vers $l$ dans des situations simples.'
+                        'Résoudre des inéquations de type $\\displaystyle |f(x)-l| < \\varepsilon$ et de type $\\displaystyle f(x) > A$ pour montrer que $\\displaystyle f(x)$ tend vers $\\displaystyle l$ dans des situations simples.'
                     ]
                 },
                 {
@@ -275,12 +275,12 @@ const getChaptersForClass = (classId: string): Chapter[] => {
                         'Dérivabilité en un point; nombre dérivé ; interprétation géométrique ; tangente à une courbe; approximation d\'une fonction dérivable par une fonction affine en un point;',
                         'Dérivabilité à droite ; dérivabilité à gauche; interprétation géométrique et, demi- tangente; tangente ou demi- tangente verticale; point anguleux ;',
                         'Dérivabilité sur un intervalle; dérivée première; dérivée seconde ; dérivées successives ;',
-                        'Dérivation de $f+g$, $\\lambda f$, $f \\times g$, $1/g$, $f/g$, $f^n (n \\in \\mathbb{Z}^*)$, $f(ax+b)$ et $\\sqrt{f}$;',
-                        'Equation différentielle : $y\'\' + \\omega^2y = 0$.'
+                        'Dérivation de $\\displaystyle f+g$, $\\displaystyle \\lambda f$, $\\displaystyle f \\times g$, $\\displaystyle 1/g$, $\\displaystyle f/g$, $\\displaystyle f^n$ ($\\displaystyle n \\in \\mathbb{Z}^*$), $\\displaystyle f(ax+b)$ et $\\displaystyle \\sqrt{f}$;',
+                        'Equation différentielle : $\\displaystyle y\'\' + \\omega^2y = 0$.'
                     ],
                     capacities: [
                         'Approcher une fonction au voisinage d\'un point;',
-                        'Reconnaitre que le nombre dérivée de la fonction en $x_0$ est le coefficient directeur de la tangente à cette courbe au point d\'abscisse $x_0$',
+                        'Reconnaitre que le nombre dérivée de la fonction en $\\displaystyle x_0$ est le coefficient directeur de la tangente à cette courbe au point d\'abscisse $\\displaystyle x_0$',
                         'Reconnaitre les dérivées des fonctions de référence ;',
                         'Maitriser les techniques de calcul de la dérivée de fonctions ;',
                         'Déterminer une équation de la tangente à une courbe en un point et construire cette tangente;',
@@ -332,24 +332,24 @@ const OrientationModal: React.FC<OrientationModalProps> = ({ isOpen, onClose, cl
             isOpen={isOpen} 
             onClose={onClose} 
             title="Programme d'Orientation" 
-            className="sm:max-w-7xl font-serif"
+            className="sm:max-w-6xl lg:max-w-7xl"
         >
-            <div className="mt-4 max-h-[75vh] overflow-y-auto -mr-2 pr-2 space-y-4">
+            <div className="mt-4 max-h-[78vh] overflow-y-auto -mr-2 pr-2 space-y-5">
                 {chapters.length > 0 ? sectionOrder.map(sectionName => sections[sectionName] && (
                     <div key={sectionName}>
-                        <h3 className="text-2xl font-bold text-primary mb-3 sticky top-0 bg-surface/80 backdrop-blur-sm py-2">{sectionName}</h3>
+                        <h3 className="text-xl sm:text-2xl font-semibold text-slate-800 dark:text-slate-100 mb-3 sticky top-0 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md py-2.5 px-4 border-l-3 border-l-[3px] border-orange-500 shadow-sm">{sectionName}</h3>
                         <div className="space-y-2">
                         {sections[sectionName].map((chapter) => (
-                            <div key={chapter.id} className="border border-border rounded-lg overflow-hidden transition-all duration-300">
+                            <div key={chapter.id} className="border border-slate-200/80 dark:border-slate-700/80 rounded-lg overflow-hidden transition-all duration-200 hover:border-orange-500/30 dark:hover:border-orange-500/30 bg-white dark:bg-slate-900">
                                 <button
                                     onClick={() => toggleChapter(chapter.id)}
-                                    className="font-button w-full flex justify-between items-center p-4 text-left hover:bg-background transition"
+                                    className="w-full flex justify-between items-center px-4 py-3.5 text-left hover:bg-orange-50/50 dark:hover:bg-orange-950/20 transition-colors duration-200"
                                     aria-expanded={openChapterId === chapter.id}
                                 >
-                                    <span className="font-bold text-text pr-4 text-lg">
+                                    <span className="font-medium text-slate-800 dark:text-slate-100 pr-4 text-sm sm:text-base leading-relaxed">
                                         <MathJax dynamic>{`${chapter.title}`}</MathJax>
                                     </span>
-                                    <span className={`material-symbols-outlined text-secondary transition-transform duration-300 ${openChapterId === chapter.id ? 'rotate-180' : ''}`}>
+                                    <span className={`material-symbols-outlined text-orange-500 transition-transform duration-200 text-[20px] ${openChapterId === chapter.id ? 'rotate-180' : ''}`}>
                                         expand_more
                                     </span>
                                 </button>
@@ -358,20 +358,30 @@ const OrientationModal: React.FC<OrientationModalProps> = ({ isOpen, onClose, cl
                                         openChapterId === chapter.id ? 'max-h-[2000px]' : 'max-h-0'
                                     }`}
                                 >
-                                    <div className="px-4 pb-4 pt-2 border-t border-border bg-background/50">
+                                    <div className="px-4 pb-4 pt-1 border-t border-slate-100 dark:border-slate-800 bg-slate-50/30 dark:bg-slate-800/30">
                                         <div>
-                                            <h4 className="font-bold text-text text-base mb-3 mt-2">Contenus</h4>
-                                            <ul className="list-disc pl-5 space-y-2 text-text-secondary">
+                                            <h4 className="font-bold text-red-600 dark:text-red-500 text-sm sm:text-base mb-2.5 mt-3 underline decoration-2 underline-offset-4">
+                                                Contenus
+                                            </h4>
+                                            <ul className="list-none pl-0 space-y-2 text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed">
                                                 {chapter.contents.map((content, index) => (
-                                                    <li key={index}><MathJax dynamic>{content}</MathJax></li>
+                                                    <li key={index} className="flex gap-2.5">
+                                                        <span className="text-orange-400 mt-1 flex-shrink-0 text-[10px]">●</span>
+                                                        <span><MathJax dynamic>{content}</MathJax></span>
+                                                    </li>
                                                 ))}
                                             </ul>
                                         </div>
-                                         <div className="mt-6">
-                                            <h4 className="font-bold text-text text-base mt-2 mb-3">Capacités attendues</h4>
-                                            <ul className="list-disc pl-5 space-y-2 text-text-secondary">
+                                         <div className="mt-5">
+                                            <h4 className="font-bold text-red-600 dark:text-red-500 text-sm sm:text-base mb-2.5 underline decoration-2 underline-offset-4">
+                                                Capacités attendues
+                                            </h4>
+                                            <ul className="list-none pl-0 space-y-2 text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed">
                                                 {chapter.capacities.map((capacity, index) => (
-                                                    <li key={index}><MathJax dynamic>{capacity}</MathJax></li>
+                                                    <li key={index} className="flex gap-2.5">
+                                                        <span className="text-orange-400 mt-1 flex-shrink-0 text-[10px]">●</span>
+                                                        <span><MathJax dynamic>{capacity}</MathJax></span>
+                                                    </li>
                                                 ))}
                                             </ul>
                                         </div>
@@ -382,8 +392,8 @@ const OrientationModal: React.FC<OrientationModalProps> = ({ isOpen, onClose, cl
                         </div>
                     </div>
                 )) : (
-                    <div className="text-center p-8 text-secondary">
-                        <span className="material-symbols-outlined text-4xl">upcoming</span>
+                    <div className="text-center p-8 text-slate-500 dark:text-slate-400">
+                        <span className="material-symbols-outlined text-4xl text-orange-500">upcoming</span>
                         <p className="mt-2">Le programme pour cette classe sera bientôt disponible.</p>
                     </div>
                 )}

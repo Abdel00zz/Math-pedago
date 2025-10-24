@@ -13,65 +13,103 @@ interface MCQQuestionProps {
 const MCQQuestion: React.FC<MCQQuestionProps> = ({ question, userAnswer, isReviewMode, isSubmitted, onOptionChange }) => {
 
     const getOptionClass = useCallback((option: Option, isSelected: boolean) => {
-        const base = 'w-full text-left p-4 rounded-xl border-2 transition-all duration-300 ease-in-out flex items-start gap-4 font-sans text-lg';
+        const base = 'group relative w-full text-left px-6 py-5 rounded-2xl border-2 transition-all duration-200 ease-in-out flex items-start gap-4 font-sans backdrop-blur-sm active:scale-[0.99]';
 
         if (isReviewMode || isSubmitted) {
             const isCorrect = option.isCorrect;
             if (isCorrect) {
-                return `${base} bg-success/10 border-success text-text`;
+                return `${base} bg-green-50 border-green-500 text-[#1a1a1a] shadow-[0_8px_30px_rgba(34,197,94,0.25)]`;
             }
             if (isSelected && !isCorrect) {
-                return `${base} bg-error/10 border-error text-text`;
+                return `${base} bg-red-50 border-red-400 text-[#1a1a1a] shadow-[0_8px_30px_rgba(239,68,68,0.25)]`;
             }
-            return `${base} border-border bg-surface text-text-disabled cursor-default opacity-70`;
+            return `${base} border-gray-200 bg-gray-50 text-gray-600 cursor-default opacity-70`;
         }
 
         if (isSelected) {
-            return `${base} bg-primary/10 border-primary text-text ring-2 ring-primary/30 transform scale-[1.01]`;
+            return `${base} border-blue-500 bg-blue-50 text-[#000000] shadow-[0_12px_40px_rgba(59,130,246,0.3)] scale-[1.02] font-medium ring-2 ring-blue-200`;
         }
-        return `${base} bg-surface border-border hover:border-primary/70 hover:bg-background cursor-pointer transform hover:scale-[1.01]`;
+        return `${base} border-slate-300 bg-white text-[#1a1a1a] hover:border-blue-400 hover:bg-blue-50/50 cursor-pointer hover:shadow-[0_8px_30px_rgba(59,130,246,0.15)] hover:scale-[1.01]`;
     }, [isReviewMode, isSubmitted]);
 
     return (
-        <div className="bg-surface p-6 sm:p-8 rounded-2xl border border-border shadow-claude animate-fadeIn">
-            <h3 className="text-2xl font-title mb-6 text-text">
-                <FormattedText text={question.question} />
-            </h3>
-            <div className="space-y-4">
-                {question.options?.map((option, index) => {
-                    const isSelected = userAnswer === option.text;
-                    const optionClass = getOptionClass(option, isSelected);
-                    
-                    return (
-                        <Fragment key={index}>
-                            <button onClick={() => onOptionChange(option.text)} className={optionClass} disabled={isSubmitted || isReviewMode}>
-                                <div className="flex-shrink-0 mt-1">
-                                    {(isReviewMode || isSubmitted) ? (
-                                        option.isCorrect ? (
-                                            <span className="material-symbols-outlined text-success">check_circle</span>
-                                        ) : isSelected ? (
-                                            <span className="material-symbols-outlined text-error">cancel</span>
+        <>
+            <style>{`
+                @keyframes scaleIn {
+                    0% {
+                        transform: scale(0);
+                        opacity: 0;
+                    }
+                    50% {
+                        transform: scale(1.2);
+                    }
+                    100% {
+                        transform: scale(1);
+                        opacity: 1;
+                    }
+                }
+            `}</style>
+            <div className="bg-surface p-6 sm:p-8 rounded-2xl border border-border shadow-claude animate-fadeIn">
+                <div className="bg-black text-white px-6 py-4 rounded-xl mb-6 shadow-lg">
+                    <h3 className="text-[22px] font-title leading-relaxed font-semibold">
+                        <FormattedText text={question.question} />
+                    </h3>
+                </div>
+                <div className="space-y-4">
+                    {question.options?.map((option, index) => {
+                        const isSelected = userAnswer === option.text;
+                        const optionClass = getOptionClass(option, isSelected);
+
+                        return (
+                            <Fragment key={index}>
+                                <button onClick={() => onOptionChange(option.text)} className={optionClass} disabled={isSubmitted || isReviewMode}>
+                                    <div className="flex-shrink-0 mt-1">
+                                        {(isReviewMode || isSubmitted) ? (
+                                            option.isCorrect ? (
+                                                <div className="relative w-7 h-7 flex items-center justify-center">
+                                                    <div className="absolute inset-0 bg-green-500/20 rounded-full animate-ping"></div>
+                                                    <span className="material-symbols-outlined text-green-600 relative z-10 drop-shadow-lg">check_circle</span>
+                                                </div>
+                                            ) : isSelected ? (
+                                                <div className="relative w-7 h-7 flex items-center justify-center">
+                                                    <span className="material-symbols-outlined text-red-500 relative z-10 drop-shadow-lg">cancel</span>
+                                                </div>
+                                            ) : (
+                                                <div className="w-7 h-7 border-2 border-text-disabled/40 rounded-full"></div>
+                                            )
                                         ) : (
-                                            <div className="w-6 h-6 border-2 border-text-disabled/50 rounded-full"></div>
-                                        )
-                                    ) : (
-                                        <div className={`w-6 h-6 border-2 rounded-full flex items-center justify-center transition-colors ${isSelected ? 'border-primary bg-primary/10' : 'border-text-secondary group-hover:border-primary'}`}>
-                                            {isSelected && <div className="w-3 h-3 bg-primary rounded-full transition-transform duration-300 scale-100"></div>}
-                                        </div>
-                                    )}
-                                </div>
-                                <span className="flex-1"><FormattedText text={option.text} /></span>
-                            </button>
-                            {(isReviewMode || isSubmitted) && isSelected && !option.isCorrect && option.explanation && (
-                                <div className="pl-14 -mt-3 mb-2 text-sm text-error/90 animate-fadeIn serif-text italic">
-                                    <FormattedText text={option.explanation} />
-                                </div>
-                            )}
-                        </Fragment>
-                    );
-                })}
+                                            <div className={`relative w-9 h-9 rounded-full border-2 flex items-center justify-center transition-all duration-300 ${
+                                                isSelected
+                                                    ? 'border-blue-500 bg-blue-50 shadow-[0_0_20px_rgba(59,130,246,0.4)]'
+                                                    : 'border-slate-300 bg-white group-hover:border-blue-400 group-hover:bg-blue-50/30 group-hover:shadow-[0_0_15px_rgba(59,130,246,0.2)]'
+                                            }`}>
+                                                {isSelected && (
+                                                    <svg
+                                                        className="w-5 h-5 text-blue-600 animate-[scaleIn_0.3s_ease-out]"
+                                                        fill="none"
+                                                        viewBox="0 0 24 24"
+                                                        stroke="currentColor"
+                                                        strokeWidth="3"
+                                                    >
+                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                                    </svg>
+                                                )}
+                                            </div>
+                                        )}
+                                    </div>
+                                    <span className="flex-1 text-left text-[19px] leading-relaxed font-medium"><FormattedText text={option.text} /></span>
+                                </button>
+                                {(isReviewMode || isSubmitted) && isSelected && !option.isCorrect && option.explanation && (
+                                    <div className="pl-14 -mt-3 mb-2 text-sm text-red-600/90 animate-fadeIn serif-text italic">
+                                        <FormattedText text={option.explanation} />
+                                    </div>
+                                )}
+                            </Fragment>
+                        );
+                    })}
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 
