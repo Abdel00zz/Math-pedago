@@ -43,48 +43,52 @@ const LearningStep: React.FC<LearningStepProps> = ({
     const isStepDisabled = status === 'locked' || disabled;
 
     const buttonStyles: { [key in ButtonVariant]: string } = {
-        primary: 'bg-primary text-white hover:bg-primary/90 shadow-md shadow-primary/20',
-        secondary: 'bg-surface text-text hover:bg-border border border-border',
-        disabled: 'bg-border text-text-disabled cursor-not-allowed'
+        primary: 'bg-gradient-to-r from-primary to-primary hover:from-primary/90 hover:to-primary/80 text-white shadow-md shadow-primary/30 hover:shadow-lg hover:shadow-primary/40',
+        secondary: 'bg-surface/50 text-text hover:bg-surface border-2 border-border/50 hover:border-border',
+        disabled: 'bg-border/30 text-text-disabled cursor-not-allowed border-2 border-transparent'
     };
 
     return (
-        <div className={`p-6 rounded-xl border border-border transition-all duration-200 bg-surface ${isStepDisabled ? 'opacity-70' : 'shadow-sm'}`}>
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+        <div className={`group p-6 md:p-8 rounded-2xl border transition-all duration-300 ${
+            isStepDisabled
+                ? 'opacity-60 border-border/50 bg-surface/50'
+                : 'border-border/70 bg-surface/80 backdrop-blur-sm hover:border-border shadow-soft hover:shadow-medium hover:bg-surface'
+        }`}>
+            <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 lg:gap-8">
                 {/* Left Side: Icon, Title, Description */}
-                <div className="flex-grow flex items-start gap-4">
-                    <div className={`w-12 h-12 rounded-full flex items-center justify-center ring-2 ${currentStatus.ringColor} bg-background shrink-0`}>
-                        <span className={`material-symbols-outlined !text-2xl transition-colors ${currentStatus.textColor}`}>
+                <div className="flex-grow flex items-start gap-4 md:gap-5">
+                    <div className={`w-14 h-14 md:w-16 md:h-16 rounded-2xl flex items-center justify-center ring-2 ${currentStatus.ringColor} bg-gradient-to-br from-background to-background/50 shrink-0 transition-all duration-300 ${!isStepDisabled && 'group-hover:scale-105'}`}>
+                        <span className={`material-symbols-outlined !text-3xl md:!text-4xl transition-colors ${currentStatus.textColor}`}>
                             {currentStatus.icon}
                         </span>
                     </div>
-                    <div>
-                        <h2 className="text-2xl font-title text-text">{title}</h2>
-                        <p className="text-secondary text-sm mt-1 font-sans italic max-w-md">{description}</p>
+                    <div className="flex-1 min-w-0">
+                        <h2 className="text-xl md:text-2xl font-display font-bold text-text mb-1.5 tracking-tight">{title}</h2>
+                        <p className="text-text-secondary text-sm md:text-base leading-relaxed max-w-2xl">{description}</p>
                     </div>
                 </div>
 
                 {/* Right Side: Progress & Button */}
-                <div className="w-full sm:w-auto sm:max-w-sm flex-shrink-0 flex flex-col items-end gap-4">
+                <div className="w-full lg:w-auto lg:min-w-[240px] flex-shrink-0 flex flex-col items-stretch lg:items-end gap-4">
                     {typeof progressPercent !== 'undefined' && status !== 'locked' && (
                         <div className="w-full">
-                            <div className="flex justify-between items-baseline mb-1">
-                                <span className="text-sm font-button font-semibold text-secondary">{progressInfo}</span>
-                                {status !== 'completed' && 
-                                    <span className="text-sm font-button font-bold" style={{color: currentStatus.barColor}}>
+                            <div className="flex justify-between items-baseline mb-2">
+                                <span className="text-xs md:text-sm font-sans font-medium text-text-secondary tracking-wide">{progressInfo}</span>
+                                {status !== 'completed' &&
+                                    <span className="text-sm md:text-base font-display font-bold tabular-nums" style={{color: currentStatus.barColor}}>
                                         {Math.round(progressPercent)}%
                                     </span>
                                 }
                             </div>
-                            <div className="h-2.5 w-full bg-border/50 rounded-full overflow-hidden">
-                                <div className="h-full transition-all duration-500 rounded-full" style={{ width: `${progressPercent}%`, backgroundColor: currentStatus.barColor }}></div>
+                            <div className="h-2 w-full bg-border/30 rounded-full overflow-hidden">
+                                <div className="h-full transition-all duration-700 ease-out rounded-full" style={{ width: `${progressPercent}%`, backgroundColor: currentStatus.barColor }}></div>
                             </div>
                         </div>
                     )}
                      <button
                         onClick={onClick}
                         disabled={isStepDisabled}
-                        className={`font-button font-semibold px-6 py-2 rounded-lg text-sm transition-all duration-200 whitespace-nowrap w-full text-center active:scale-95 ${buttonStyles[buttonVariant]}`}
+                        className={`font-sans font-bold px-8 py-3.5 rounded-xl text-xs md:text-sm tracking-wider transition-all duration-300 whitespace-nowrap w-full text-center active:scale-95 shadow-sm ${buttonStyles[buttonVariant]}`}
                     >
                         {buttonText}
                     </button>
@@ -408,41 +412,42 @@ const ChapterHubView: React.FC = () => {
     return (
         <>
             <GlobalActionButtons />
-            <div className="max-w-3xl mx-auto animate-slideInUp pb-24 sm:pb-8">
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 animate-slideInUp pb-24 sm:pb-12">
                 {showConfetti && (
                     <div className="absolute inset-0 pointer-events-none z-50">{[...Array(100)].map((_, i) => <div key={i} className="confetti" style={{left: `${Math.random()*100}%`, animationDuration: `${Math.random()*3+2}s`, animationDelay: `${Math.random()*2}s`, backgroundColor: ['#FF6B35','#10B981','#3B82F6','#F59E0B'][i%4]}} />)}</div>
                 )}
-                
-                <header className="mb-8 sm:mb-12">
-                    <div className="relative flex items-center justify-center h-12">
-                        <div className="absolute left-0">
-                            <button 
-                                onClick={() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'dashboard' } })} 
-                                className="w-12 h-12 rounded-full flex items-center justify-center text-text-secondary bg-surface border border-border hover:bg-primary/10 hover:text-primary hover:border-primary/30 transition-all duration-200 active:scale-95 shadow-sm hover:shadow-md" 
-                                aria-label="Retour au tableau de bord"
-                            >
-                                <span className="material-symbols-outlined !text-2xl">arrow_back</span>
-                            </button>
-                        </div>
-                        <div className="text-center">
-                            <p className="font-brand text-primary tracking-[0.2em] uppercase text-xs mb-2">Plan de travail</p>
-                            <h1 className="text-2xl sm:text-3xl text-text font-title">{chapter.chapter}</h1>
-                            <div className="w-24 h-px bg-border mx-auto mt-4"></div>
+
+                <header className="mb-10 sm:mb-16">
+                    <div className="relative flex items-center justify-between sm:justify-center mb-6 sm:mb-8">
+                        <button
+                            onClick={() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'dashboard' } })}
+                            className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center text-text-secondary bg-surface/80 backdrop-blur-sm border border-border/50 hover:bg-primary/10 hover:text-primary hover:border-primary/50 hover:scale-105 transition-all duration-300 active:scale-95 shadow-soft hover:shadow-medium"
+                            aria-label="Retour au tableau de bord"
+                        >
+                            <span className="material-symbols-outlined !text-xl sm:!text-2xl">arrow_back</span>
+                        </button>
+                        <div className="sm:absolute sm:left-1/2 sm:-translate-x-1/2 text-center">
+                            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-3">
+                                <span className="material-symbols-outlined !text-sm text-primary">assignment</span>
+                                <p className="font-display text-primary tracking-wider uppercase text-xs font-bold">Plan de travail</p>
+                            </div>
+                            <h1 className="text-2xl sm:text-3xl md:text-4xl text-text font-display font-bold tracking-tight">{chapter.chapter}</h1>
                         </div>
                     </div>
+                    <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent"></div>
                 </header>
 
-                <div className="space-y-6">
+                <div className="space-y-5 md:space-y-6">
                     {steps.map((step) => <LearningStep key={step.title} {...step} />)}
                 </div>
 
                 {isChapterLocked && (
-                    <div className="mt-12 text-center border-2 border-dashed border-success/50 bg-success/5 p-8 rounded-2xl animate-fadeIn">
-                        <div className="mx-auto w-16 h-16 flex items-center justify-center bg-success/10 rounded-full text-success mb-4">
-                            <span className="material-symbols-outlined !text-4xl">verified</span>
+                    <div className="mt-12 text-center border-2 border-dashed border-success/40 bg-gradient-to-br from-success/10 to-success/5 p-10 md:p-12 rounded-3xl animate-fadeIn shadow-glow-success">
+                        <div className="mx-auto w-20 h-20 flex items-center justify-center bg-success/20 rounded-2xl text-success mb-5 shadow-lg">
+                            <span className="material-symbols-outlined !text-5xl">verified</span>
                         </div>
-                        <h2 className="text-3xl font-title text-text">Travail Soumis !</h2>
-                        <p className="text-lg text-secondary mt-2 font-sans italic">
+                        <h2 className="text-3xl md:text-4xl font-display font-bold text-text mb-3 tracking-tight">Travail Soumis !</h2>
+                        <p className="text-base md:text-lg text-text-secondary max-w-2xl mx-auto leading-relaxed">
                             Félicitations ! Vos réponses ont bien été enregistrées. Nous les examinerons ensemble lors de notre prochaine séance.
                         </p>
                     </div>
