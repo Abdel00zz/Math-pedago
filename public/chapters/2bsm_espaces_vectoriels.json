@@ -2,29 +2,35 @@
   "class": "2bsm",
   "chapter": "Espaces vectoriels",
   "sessionDates": [],
+  "videos": [],
   "quiz": [
     {
       "id": "q1",
-      "type": "mcq",
       "question": "Quelle est la dimension de $\\mathbb{R}^3$ ?",
+      "type": "mcq",
       "options": [
         {
           "text": "2",
-          "isCorrect": false
+          "is_correct": false,
+          "explanation": null
         },
         {
           "text": "3",
-          "isCorrect": true
+          "is_correct": false,
+          "explanation": null
         }
-      ]
+      ],
+      "steps": []
     }
   ],
   "exercises": [
     {
       "id": "ex1",
       "title": "Sous-espace vectoriel",
-      "statement": "Montrer que $F = \\{(x,y,z) \\in \\mathbb{R}^3 | x+y+z=0\\}$ est un sous-espace vectoriel de $\\mathbb{R}^3$."
+      "statement": "Montrer que $F = \\{(x,y,z) \\in \\mathbb{R}^3 | x+y+z=0\\}$ est un sous-espace vectoriel de $\\mathbb{R}^3$.",
+      "sub_questions": [],
+      "images": []
     }
   ],
-  "version": "v1.1.0-d89411"
+  "version": "v1.1.0-6619c0"
 }

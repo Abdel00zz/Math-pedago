@@ -2,33 +2,40 @@
   "class": "tcs",
   "chapter": "Trigonométrie 2 (Équations et inéquations trigonométriques)",
   "sessionDates": [],
+  "videos": [],
   "quiz": [
     {
       "id": "q_tcs_trigo2_1",
-      "type": "mcq",
       "question": "L'équation $\\cos(x) = 1$ a pour solutions :",
+      "type": "mcq",
       "options": [
         {
           "text": "$x = \\frac{\\pi}{2} + 2k\\pi$",
-          "isCorrect": false
+          "is_correct": false,
+          "explanation": null
         },
         {
           "text": "$x = 2k\\pi$",
-          "isCorrect": true
+          "is_correct": false,
+          "explanation": null
         },
         {
           "text": "$x = k\\pi$",
-          "isCorrect": false
+          "is_correct": false,
+          "explanation": null
         }
-      ]
+      ],
+      "steps": []
     }
   ],
   "exercises": [
     {
       "id": "exo_tcs_trigo2_1",
       "title": "Résolution d'équation",
-      "statement": "Résoudre dans $[0, 2\\pi]$ l'équation $\\sin(x) = \\frac{1}{2}$."
+      "statement": "Résoudre dans $[0, 2\\pi]$ l'équation $\\sin(x) = \\frac{1}{2}$.",
+      "sub_questions": [],
+      "images": []
     }
   ],
-  "version": "v1.1.0-ff9211"
+  "version": "v1.1.0-b7d6c5"
 }

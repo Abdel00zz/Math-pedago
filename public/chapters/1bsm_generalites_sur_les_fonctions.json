@@ -2,33 +2,40 @@
   "class": "1bsm",
   "chapter": "Généralités sur les fonctions",
   "sessionDates": [],
+  "videos": [],
   "quiz": [
     {
       "id": "q_fonctions_1",
-      "type": "mcq",
       "question": "La fonction $f(x) = x^3 - x$ est-elle paire ou impaire ?",
+      "type": "mcq",
       "options": [
         {
           "text": "Paire",
-          "isCorrect": false
+          "is_correct": false,
+          "explanation": null
         },
         {
           "text": "Impaire",
-          "isCorrect": true
+          "is_correct": false,
+          "explanation": null
         },
         {
           "text": "Ni paire, ni impaire",
-          "isCorrect": false
+          "is_correct": false,
+          "explanation": null
         }
-      ]
+      ],
+      "steps": []
     }
   ],
   "exercises": [
     {
       "id": "exo_fonctions_1",
       "title": "Domaine de définition",
-      "statement": "Quel est le domaine de définition de la fonction $g(x) = \\sqrt{x-2}$ ?"
+      "statement": "Quel est le domaine de définition de la fonction $g(x) = \\sqrt{x-2}$ ?",
+      "sub_questions": [],
+      "images": []
     }
   ],
-  "version": "v1.1.0-7f3abf"
+  "version": "v1.1.0-9c7e40"
 }

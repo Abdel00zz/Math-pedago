@@ -2,29 +2,35 @@
   "class": "2bsm",
   "chapter": "Structures algébriques",
   "sessionDates": [],
+  "videos": [],
   "quiz": [
     {
       "id": "q1",
-      "type": "mcq",
       "question": "Qu'est-ce qu'un groupe abélien ?",
+      "type": "mcq",
       "options": [
         {
           "text": "Un groupe dont la loi est associative",
-          "isCorrect": false
+          "is_correct": false,
+          "explanation": null
         },
         {
           "text": "Un groupe dont la loi est commutative",
-          "isCorrect": true
+          "is_correct": false,
+          "explanation": null
         }
-      ]
+      ],
+      "steps": []
     }
   ],
   "exercises": [
     {
       "id": "ex1",
       "title": "Exemple de groupe",
-      "statement": "Montrer que $(\\mathbb{Z}, +)$ est un groupe."
+      "statement": "Montrer que $(\\mathbb{Z}, +)$ est un groupe.",
+      "sub_questions": [],
+      "images": []
     }
   ],
-  "version": "v1.1.0-c3dfb4"
+  "version": "v1.1.0-a8dac8"
 }

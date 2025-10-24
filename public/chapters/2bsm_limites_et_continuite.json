@@ -2,33 +2,40 @@
   "class": "2bsm",
   "chapter": "Limites et continuité",
   "sessionDates": [],
+  "videos": [],
   "quiz": [
     {
       "id": "q_2bsm_limites_1",
-      "type": "mcq",
       "question": "Quelle est la limite de $f(x) = \\frac{\\ln(x)}{x}$ quand $x$ tend vers $+\\infty$ ?",
+      "type": "mcq",
       "options": [
         {
           "text": "$+\\infty$",
-          "isCorrect": false
+          "is_correct": false,
+          "explanation": null
         },
         {
           "text": "1",
-          "isCorrect": false
+          "is_correct": false,
+          "explanation": null
         },
         {
           "text": "0",
-          "isCorrect": true
+          "is_correct": false,
+          "explanation": null
         }
-      ]
+      ],
+      "steps": []
     }
   ],
   "exercises": [
     {
       "id": "exo_2bsm_limites_1",
       "title": "Continuité",
-      "statement": "Étudier la continuité de la fonction $f$ définie par $f(x) = \\begin{cases} x^2+1 & \\text{si } x \\ge 0 \\\\ \\cos(x) & \\text{si } x < 0 \\end{cases}$ au point $x_0=0$."
+      "statement": "Étudier la continuité de la fonction $f$ définie par $f(x) = \\begin{cases} x^2+1 & \\text{si } x \\ge 0 \\\\ \\cos(x) & \\text{si } x < 0 \\end{cases}$ au point $x_0=0$.",
+      "sub_questions": [],
+      "images": []
     }
   ],
-  "version": "v1.1.0-34fa8d"
+  "version": "v1.1.0-297de3"
 }

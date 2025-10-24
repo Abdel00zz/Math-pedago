@@ -332,21 +332,23 @@ const OrientationModal: React.FC<OrientationModalProps> = ({ isOpen, onClose, cl
             isOpen={isOpen} 
             onClose={onClose} 
             title="Programme d'Orientation" 
+            titleClassName="text-red-600 text-2xl sm:text-3xl font-bold text-center mx-auto"
+            hideHeaderBorder={true}
             className="sm:max-w-6xl lg:max-w-7xl"
         >
             <div className="mt-4 max-h-[78vh] overflow-y-auto -mr-2 pr-2 space-y-5">
                 {chapters.length > 0 ? sectionOrder.map(sectionName => sections[sectionName] && (
                     <div key={sectionName}>
-                        <h3 className="text-xl sm:text-2xl font-semibold text-slate-800 dark:text-slate-100 mb-3 sticky top-0 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md py-2.5 px-4 border-l-3 border-l-[3px] border-orange-500 shadow-sm">{sectionName}</h3>
+                        <h3 className="text-xl sm:text-2xl font-semibold text-text mb-3 sticky top-0 bg-surface/90 backdrop-blur-md py-2.5 px-4 border-l-3 border-primary shadow-sm">{sectionName}</h3>
                         <div className="space-y-2">
                         {sections[sectionName].map((chapter) => (
-                            <div key={chapter.id} className="border border-slate-200/80 dark:border-slate-700/80 rounded-lg overflow-hidden transition-all duration-200 hover:border-orange-500/30 dark:hover:border-orange-500/30 bg-white dark:bg-slate-900">
-                                <button
+                            <div key={chapter.id} className="border border-border/70 rounded-lg overflow-hidden transition-all duration-200 hover:border-border-hover bg-surface">
+                                    <button
                                     onClick={() => toggleChapter(chapter.id)}
-                                    className="w-full flex justify-between items-center px-4 py-3.5 text-left hover:bg-orange-50/50 dark:hover:bg-orange-950/20 transition-colors duration-200"
+                                    className="w-full flex justify-between items-center px-4 py-3.5 text-left hover:bg-surface/80 transition-colors duration-200"
                                     aria-expanded={openChapterId === chapter.id}
                                 >
-                                    <span className="font-medium text-slate-800 dark:text-slate-100 pr-4 text-sm sm:text-base leading-relaxed">
+                                    <span className="font-medium text-text pr-4 text-sm sm:text-base leading-relaxed">
                                         <MathJax dynamic>{`${chapter.title}`}</MathJax>
                                     </span>
                                     <span className={`material-symbols-outlined text-orange-500 transition-transform duration-200 text-[20px] ${openChapterId === chapter.id ? 'rotate-180' : ''}`}>
@@ -358,12 +360,12 @@ const OrientationModal: React.FC<OrientationModalProps> = ({ isOpen, onClose, cl
                                         openChapterId === chapter.id ? 'max-h-[2000px]' : 'max-h-0'
                                     }`}
                                 >
-                                    <div className="px-4 pb-4 pt-1 border-t border-slate-100 dark:border-slate-800 bg-slate-50/30 dark:bg-slate-800/30">
+                                    <div className="px-4 pb-4 pt-1 border-t border-border bg-surface/90">
                                         <div>
-                                            <h4 className="font-bold text-red-600 dark:text-red-500 text-sm sm:text-base mb-2.5 mt-3 underline decoration-2 underline-offset-4">
+                                            <h4 className="font-bold text-primary text-sm sm:text-base mb-2.5 mt-3 underline decoration-2 underline-offset-4">
                                                 Contenus
                                             </h4>
-                                            <ul className="list-none pl-0 space-y-2 text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed">
+                                            <ul className="list-none pl-0 space-y-2 text-text-secondary text-xs sm:text-sm leading-relaxed">
                                                 {chapter.contents.map((content, index) => (
                                                     <li key={index} className="flex gap-2.5">
                                                         <span className="text-orange-400 mt-1 flex-shrink-0 text-[10px]">●</span>
@@ -373,10 +375,10 @@ const OrientationModal: React.FC<OrientationModalProps> = ({ isOpen, onClose, cl
                                             </ul>
                                         </div>
                                          <div className="mt-5">
-                                            <h4 className="font-bold text-red-600 dark:text-red-500 text-sm sm:text-base mb-2.5 underline decoration-2 underline-offset-4">
+                                            <h4 className="font-bold text-primary text-sm sm:text-base mb-2.5 underline decoration-2 underline-offset-4">
                                                 Capacités attendues
                                             </h4>
-                                            <ul className="list-none pl-0 space-y-2 text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed">
+                                            <ul className="list-none pl-0 space-y-2 text-text-secondary text-xs sm:text-sm leading-relaxed">
                                                 {chapter.capacities.map((capacity, index) => (
                                                     <li key={index} className="flex gap-2.5">
                                                         <span className="text-orange-400 mt-1 flex-shrink-0 text-[10px]">●</span>

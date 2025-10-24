@@ -2,33 +2,40 @@
   "class": "1bsm",
   "chapter": "La dérivation",
   "sessionDates": [],
+  "videos": [],
   "quiz": [
     {
       "id": "q_derivation_1",
-      "type": "mcq",
       "question": "Quelle est la dérivée de la fonction $f(x) = 3x^4 - 5x + 1$ ?",
+      "type": "mcq",
       "options": [
         {
           "text": "$12x^3 - 5$",
-          "isCorrect": true
+          "is_correct": false,
+          "explanation": null
         },
         {
           "text": "$12x^3$",
-          "isCorrect": false
+          "is_correct": false,
+          "explanation": null
         },
         {
           "text": "$4x^3 - 5$",
-          "isCorrect": false
+          "is_correct": false,
+          "explanation": null
         }
-      ]
+      ],
+      "steps": []
     }
   ],
   "exercises": [
     {
       "id": "exo_derivation_1",
       "title": "Équation de la tangente",
-      "statement": "Soit la fonction $g(x) = x^2 + 2x - 3$. Déterminer l'équation de la tangente à la courbe de $g$ au point d'abscisse $x_0 = 1$."
+      "statement": "Soit la fonction $g(x) = x^2 + 2x - 3$. Déterminer l'équation de la tangente à la courbe de $g$ au point d'abscisse $x_0 = 1$.",
+      "sub_questions": [],
+      "images": []
     }
   ],
-  "version": "v1.1.0-752524"
+  "version": "v1.1.0-ea6b5a"
 }

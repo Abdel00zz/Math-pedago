@@ -53,10 +53,10 @@ const HintModal: React.FC<HintModalProps> = ({ isOpen, onClose, exercise }) => {
                 ))}
             </ul>
             
-             <div className="mt-6 text-right">
+                <div className="mt-6 text-right">
                 <button
                     onClick={onClose}
-                    className="font-button px-6 py-2 font-semibold text-primary bg-primary-light rounded-lg hover:bg-primary/20"
+                    className="font-button px-6 py-2 font-semibold text-primary bg-primary/10 rounded-lg hover:bg-primary/20"
                 >
                     Fermer
                 </button>

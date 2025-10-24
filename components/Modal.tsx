@@ -7,9 +7,13 @@ interface ModalProps {
     title: string;
     children: ReactNode;
     className?: string;
+    /** Remove the bottom border under the header */
+    hideHeaderBorder?: boolean;
+    /** Additional classes to apply to the title element */
+    titleClassName?: string;
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, className }) => {
+const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, className, hideHeaderBorder = false, titleClassName = '' }) => {
     useEffect(() => {
         const handleEsc = (event: KeyboardEvent) => {
             if (event.key === 'Escape') {
@@ -30,16 +34,17 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, classNa
             aria-modal="true"
             aria-labelledby="modal-title"
         >
-            <div className="fixed inset-0 bg-slate-950/30 backdrop-blur-sm animate-fadeIn" aria-hidden="true"></div>
+            {/* Backdrop: use themed modal backdrop color for consistency */}
+            <div className="fixed inset-0 bg-modal-backdrop backdrop-blur-sm animate-fadeIn" aria-hidden="true"></div>
             <div 
-                className={`relative w-full max-w-full sm:max-w-lg px-5 py-4 sm:px-6 sm:py-5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl animate-slideInUp ${className}`}
+                className={`relative w-full max-w-full sm:max-w-lg px-5 py-4 sm:px-6 sm:py-5 bg-surface text-text border border-border rounded-lg shadow-xl animate-slideInUp ${className}`}
                 onClick={e => e.stopPropagation()}
             >
-                <div className="flex items-center justify-between mb-0.5 border-b border-slate-100 dark:border-slate-800 pb-3">
-                    <h2 id="modal-title" className="text-lg sm:text-xl font-semibold text-slate-800 dark:text-slate-100 pr-4">{title}</h2>
+                <div className={`flex items-center justify-between mb-0.5 ${hideHeaderBorder ? '' : 'border-b border-border pb-3'}`}>
+                    <h2 id="modal-title" className={`text-lg sm:text-xl font-semibold text-text pr-4 ${titleClassName}`}>{title}</h2>
                     <button 
                         onClick={onClose} 
-                        className="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors duration-200 rounded hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-orange-500/40"
+                        className="p-1.5 text-text-secondary hover:text-text transition-colors duration-200 rounded hover:bg-surface/60 focus:outline-none focus:ring-2 focus:ring-primary/30"
                         aria-label="Fermer"
                     >
                          <span className="material-symbols-outlined text-[20px]">close</span>

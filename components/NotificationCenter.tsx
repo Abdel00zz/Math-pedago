@@ -56,14 +56,12 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({ isOpen, onClose
         <Modal 
             isOpen={isOpen} 
             onClose={onClose} 
-            title="" // Le titre est géré à l'intérieur pour un style personnalisé
+            title="Notifications"
+            titleClassName="text-red-600 text-2xl sm:text-3xl font-bold text-center mx-auto"
+            hideHeaderBorder={true}
             className="sm:max-w-xl"
         >
             <div className="p-2">
-                <div className="text-center mb-6">
-                    <h2 className="text-4xl font-playfair text-text">Notifications</h2>
-                    <div className="w-24 h-px bg-border-hover mx-auto mt-3"></div>
-                </div>
                 
                 <div className="max-h-[60vh] overflow-y-auto -mr-4 pr-4">
                     {notifications.length > 0 ? (

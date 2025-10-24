@@ -140,6 +140,8 @@ const HelpModal: React.FC<HelpModalProps> = ({ isOpen, onClose }) => {
             isOpen={isOpen} 
             onClose={onClose} 
             title="Guide d'utilisation"
+            titleClassName="text-red-600 text-2xl sm:text-3xl font-bold text-center mx-auto"
+            hideHeaderBorder={true}
             className="sm:max-w-2xl"
         >
             <div className="mt-4">

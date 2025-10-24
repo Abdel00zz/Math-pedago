@@ -2,33 +2,40 @@
   "class": "tcs",
   "chapter": "Les polynômes",
   "sessionDates": [],
+  "videos": [],
   "quiz": [
     {
       "id": "q_tcs_polynomes_1",
-      "type": "mcq",
       "question": "Quel est le degré du polynôme $P(x) = 3x^4 - 2x^5 + 7$ ?",
+      "type": "mcq",
       "options": [
         {
           "text": "4",
-          "isCorrect": false
+          "is_correct": false,
+          "explanation": null
         },
         {
           "text": "5",
-          "isCorrect": true
+          "is_correct": false,
+          "explanation": null
         },
         {
           "text": "7",
-          "isCorrect": false
+          "is_correct": false,
+          "explanation": null
         }
-      ]
+      ],
+      "steps": []
     }
   ],
   "exercises": [
     {
       "id": "exo_tcs_polynomes_1",
       "title": "Racine d'un polynôme",
-      "statement": "Vérifier si $x=2$ est une racine du polynôme $Q(x) = x^3 - x^2 - 4$."
+      "statement": "Vérifier si $x=2$ est une racine du polynôme $Q(x) = x^3 - x^2 - 4$.",
+      "sub_questions": [],
+      "images": []
     }
   ],
-  "version": "v1.1.0-707987"
+  "version": "v1.1.0-a88a6d"
 }
