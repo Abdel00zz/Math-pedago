@@ -134,18 +134,17 @@ const ChapterHubView: React.FC = () => {
         const iqc = q.isSubmitted;
         const aed = te > 0 ? eec === te : true;
 
-        // Vérifier si les vidéos sont complétées (si le chapitre en a)
-        const hasVids = chap?.videos && chap.videos.length > 0;
-        const areVideosCompleted = hasVids ? (prog?.videos?.allWatched || false) : true;
+        // Les vidéos sont optionnelles - ne pas les inclure dans canSubmitWork
+        // Seuls le quiz et les exercices sont nécessaires pour la finalisation
 
         const outdated = prog?.isWorkSubmitted && !!chap?.version && !!prog?.submittedVersion && chap.version !== prog.submittedVersion;
         const locked = prog?.isWorkSubmitted && !outdated;
 
         let csw = false;
         if (outdated) {
-            csw = iqc && aed && areVideosCompleted;
+            csw = iqc && aed;
         } else {
-            csw = iqc && aed && areVideosCompleted && !prog?.isWorkSubmitted;
+            csw = iqc && aed && !prog?.isWorkSubmitted;
         }
 
         return {
@@ -361,8 +360,8 @@ const ChapterHubView: React.FC = () => {
     const steps: LearningStepProps[] = [
         ...(hasVideos ? [{
             icon: 'play_circle',
-            title: 'Étape 1 : Les Vidéos',
-            description: 'Visionnez les capsules vidéo pour comprendre les concepts clés du chapitre.',
+            title: 'Étape 1 : Les Vidéos (optionnel)',
+            description: 'Capsules vidéo recommandées pour mieux comprendre le chapitre. Vous pouvez passer directement au quiz si vous le souhaitez.',
             status: (areAllVideosWatched ? 'completed' : watchedVideosCount > 0 ? 'in-progress' : 'todo') as StepStatus,
             progressPercent: videosProgressPercent,
             progressInfo: `${watchedVideosCount} / ${totalVideos}`,

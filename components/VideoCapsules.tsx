@@ -183,8 +183,8 @@ const VideoCapsules: React.FC = () => {
             <div className="mb-6 md:mb-8 bg-surface p-4 md:p-6 rounded-2xl border border-border shadow-claude">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4">
                     <div className="flex-1">
-                        <h2 className="text-2xl md:text-3xl font-title text-text">Capsules Vidéo</h2>
-                        <p className="text-text-secondary mt-1 text-sm md:text-base">Regardez les vidéos et marquez-les comme assimilées</p>
+                        <h2 className="text-2xl md:text-3xl font-title text-text">Capsules Vidéo <span className="text-sm md:text-base text-info">(optionnel)</span></h2>
+                        <p className="text-text-secondary mt-1 text-sm md:text-base">Ressources recommandées pour mieux comprendre le chapitre</p>
                     </div>
                     <div className="text-left sm:text-right">
                         <div className="text-3xl md:text-4xl font-bold text-primary">{watchedCount}/{videos.length}</div>
