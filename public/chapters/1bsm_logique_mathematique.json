@@ -6,15 +6,7 @@
     "2025-10-01T18:00:00Z",
     "2025-10-03T18:00:00Z"
   ],
-  "videos": [
-    {
-      "id": "video_1",
-      "title": "Nouvelle vidéo",
-      "youtubeId": "q-PkKYUvxu0",
-      "duration": "5:48",
-      "description": "efz"
-    }
-  ],
+  "videos": [],
   "quiz": [
     {
       "id": "q_proposition_1",
@@ -688,5 +680,5 @@
       ]
     }
   ],
-  "version": "v1.1.0-6a13f5"
+  "version": "v1.1.0-9673ac"
 }
