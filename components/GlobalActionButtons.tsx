@@ -173,7 +173,7 @@ const GlobalActionButtons: React.FC = () => {
     return (
         <>
             {/* Desktop Action Buttons - Aligné avec les cartes et couleurs douces */}
-            <div className="fixed top-4 left-4 z-40 hidden sm:flex items-center gap-3 p-1.5">
+            <div className="fixed top-4 right-4 z-40 hidden sm:flex items-center gap-3 p-1.5">
                 {/* Bouton Notifications - Couleur vert doux */}
                 <div className="group relative flex items-center">
                     <button
@@ -184,7 +184,7 @@ const GlobalActionButtons: React.FC = () => {
                         <span className="material-symbols-outlined !text-xl">notifications</span>
                         {NotificationBadge}
                     </button>
-                    <span className="absolute left-0 -translate-x-0 top-full mt-3 w-max rounded-lg bg-surface/95 backdrop-blur-sm px-3 py-2 text-xs font-semibold text-text opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none shadow z-50">
+                    <span className="absolute right-0 translate-x-0 top-full mt-3 w-max rounded-lg bg-surface/95 backdrop-blur-sm px-3 py-2 text-xs font-semibold text-text opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none shadow z-50">
                         Notifications
                     </span>
                 </div>
@@ -198,7 +198,7 @@ const GlobalActionButtons: React.FC = () => {
                     >
                         <span className="material-symbols-outlined !text-xl">explore</span>
                     </button>
-                    <span className="absolute left-0 -translate-x-0 top-full mt-3 w-max rounded-lg bg-surface/95 backdrop-blur-sm px-3 py-2 text-xs font-semibold text-text opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none shadow z-50">
+                    <span className="absolute right-0 translate-x-0 top-full mt-3 w-max rounded-lg bg-surface/95 backdrop-blur-sm px-3 py-2 text-xs font-semibold text-text opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none shadow z-50">
                         Programme
                     </span>
                 </div>
@@ -212,7 +212,7 @@ const GlobalActionButtons: React.FC = () => {
                     >
                         <span className="material-symbols-outlined !text-xl">help_outline</span>
                     </button>
-                    <span className="absolute left-0 -translate-x-0 top-full mt-3 w-max rounded-lg bg-surface/95 backdrop-blur-sm px-3 py-2 text-xs font-semibold text-text opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none shadow z-50">
+                    <span className="absolute right-0 translate-x-0 top-full mt-3 w-max rounded-lg bg-surface/95 backdrop-blur-sm px-3 py-2 text-xs font-semibold text-text opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none shadow z-50">
                         Aide
                     </span>
                 </div>
