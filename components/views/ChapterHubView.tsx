@@ -267,7 +267,7 @@ const ChapterHubView: React.FC = () => {
             let submitSuccessful = false;
             let lastError: Error | null = null;
             const maxRetries = 3;
-            const timeoutMs = 15000; // 15 seconds timeout
+            const timeoutMs = 30000; // 30 seconds timeout (FormSubmit.co can be slow)
 
             for (let attempt = 0; attempt < maxRetries && !submitSuccessful; attempt++) {
                 try {
@@ -280,15 +280,20 @@ const ChapterHubView: React.FC = () => {
                         method: 'POST',
                         body: formData,
                         signal: controller.signal,
+                        mode: 'cors',
+                        credentials: 'omit',
+                        redirect: 'follow', // Follow redirects (FormSubmit.co redirects on success)
                     });
 
                     clearTimeout(timeoutId);
 
-                    if (response.ok || response.status === 200 || response.status === 302) {
+                    // FormSubmit.co responds with 200 after following the redirect
+                    // The response might be the redirected page content, which is fine
+                    if (response.ok || response.status === 200) {
                         // Success - remove from pending submissions
                         localStorage.removeItem(submissionKey);
                         submitSuccessful = true;
-                        console.log('Submission successful!');
+                        console.log('Submission successful! Server responded with status:', response.status);
 
                         addNotification("Travail envoyé", 'success', {
                             message: "Votre progression a été enregistrée et envoyée avec succès.",
@@ -307,6 +312,7 @@ const ChapterHubView: React.FC = () => {
                     // Wait before retrying (exponential backoff: 2s, 4s, 8s)
                     if (attempt < maxRetries - 1) {
                         const waitTime = Math.pow(2, attempt + 1) * 1000;
+                        console.log(`Waiting ${waitTime / 1000}s before retry...`);
                         await new Promise(resolve => setTimeout(resolve, waitTime));
                     }
                 }
@@ -315,12 +321,15 @@ const ChapterHubView: React.FC = () => {
             if (!submitSuccessful) {
                 // All retries failed - notify user and keep in localStorage for manual retry
                 const errorMessage = lastError?.name === 'AbortError'
-                    ? "Le délai d'envoi a expiré. Vérifiez votre connexion internet."
+                    ? "Le délai d'envoi a expiré (30s). Le serveur FormSubmit.co pourrait être lent ou inaccessible."
                     : lastError?.message?.includes('500')
-                    ? "Le serveur rencontre des problèmes (erreur 500). Vos données sont sauvegardées et seront envoyées automatiquement plus tard."
+                    ? "Le serveur rencontre des problèmes (erreur 500). Vos données sont sauvegardées."
+                    : lastError?.message?.includes('CORS') || lastError?.message?.includes('cors')
+                    ? "Problème de sécurité CORS. Vos données sont sauvegardées localement."
                     : "Impossible d'envoyer le rapport. Vos données sont sauvegardées localement.";
 
                 console.error('All submission attempts failed. Data stored locally:', submissionKey);
+                console.error('Last error details:', lastError);
 
                 addNotification("Échec d'envoi", 'error', {
                     message: errorMessage,
