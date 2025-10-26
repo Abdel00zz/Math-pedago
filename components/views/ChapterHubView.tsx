@@ -285,28 +285,16 @@ const ChapterHubView: React.FC = () => {
             };
 
             const progressJson = JSON.stringify(submissionData, null, 2);
-            const blob = new Blob([progressJson], { type: 'application/json' });
-            const sanitizedName = profile.name.replace(/[^a-z0-9]/gi, '_').toLowerCase();
-            const filename = `progression_${sanitizedName}_${chapter.id}.json`;
-
-            // Use fetch API with proper error handling instead of form.submit()
-            const formData = new FormData();
-            formData.append('_template', 'table');
-            formData.append('_captcha', 'false');
-            formData.append('_next', window.location.href);
-            formData.append('_subject', `✅ Nouveau travail soumis: ${profile.name} - ${chapter.chapter}`);
-            formData.append('_autoresponse', "Votre travail a été reçu avec succès. Nous l'examinerons dans les plus brefs délais.");
-            formData.append('attachment', blob, filename);
 
             // Store submission data locally before attempting to send
             const submissionKey = `pending_submission_${submissionTimestamp}`;
             localStorage.setItem(submissionKey, progressJson);
 
-            // Attempt submission with timeout and retry logic
+            // Attempt submission with timeout and retry logic using our own API
             let submitSuccessful = false;
             let lastError: Error | null = null;
             const maxRetries = 3;
-            const timeoutMs = 30000; // 30 seconds timeout (FormSubmit.co can be slow)
+            const timeoutMs = 15000; // 15 seconds timeout (our API is faster than FormSubmit.co)
 
             for (let attempt = 0; attempt < maxRetries && !submitSuccessful; attempt++) {
                 try {
@@ -315,24 +303,28 @@ const ChapterHubView: React.FC = () => {
                     const controller = new AbortController();
                     const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
-                    const response = await fetch('https://formsubmit.co/bdh.malek@gmail.com', {
+                    // Call our Vercel API endpoint
+                    const response = await fetch('/api/submit-work', {
                         method: 'POST',
-                        body: formData,
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            studentName: profile.name,
+                            chapterTitle: chapter.chapter,
+                            progressData: submissionData
+                        }),
                         signal: controller.signal,
-                        mode: 'cors',
-                        credentials: 'omit',
-                        redirect: 'follow', // Follow redirects (FormSubmit.co redirects on success)
                     });
 
                     clearTimeout(timeoutId);
 
-                    // FormSubmit.co responds with 200 after following the redirect
-                    // The response might be the redirected page content, which is fine
-                    if (response.ok || response.status === 200) {
+                    if (response.ok) {
+                        const result = await response.json();
                         // Success - remove from pending submissions
                         localStorage.removeItem(submissionKey);
                         submitSuccessful = true;
-                        console.log('Submission successful! Server responded with status:', response.status);
+                        console.log('Submission successful! Message ID:', result.messageId);
 
                         addNotification("Travail envoyé", 'success', {
                             message: "Votre progression a été enregistrée et envoyée avec succès.",
@@ -342,7 +334,8 @@ const ChapterHubView: React.FC = () => {
                             }
                         });
                     } else {
-                        throw new Error(`Server responded with status ${response.status}: ${response.statusText}`);
+                        const errorData = await response.json().catch(() => ({}));
+                        throw new Error(`Server responded with status ${response.status}: ${errorData.error || response.statusText}`);
                     }
                 } catch (error) {
                     lastError = error as Error;
@@ -360,11 +353,11 @@ const ChapterHubView: React.FC = () => {
             if (!submitSuccessful) {
                 // All retries failed - notify user and keep in localStorage for manual retry
                 const errorMessage = lastError?.name === 'AbortError'
-                    ? "Le délai d'envoi a expiré (30s). Le serveur FormSubmit.co pourrait être lent ou inaccessible."
+                    ? "Le délai d'envoi a expiré (15s). Vérifiez votre connexion internet."
                     : lastError?.message?.includes('500')
                     ? "Le serveur rencontre des problèmes (erreur 500). Vos données sont sauvegardées."
-                    : lastError?.message?.includes('CORS') || lastError?.message?.includes('cors')
-                    ? "Problème de sécurité CORS. Vos données sont sauvegardées localement."
+                    : lastError?.message?.includes('Failed to send email')
+                    ? "Erreur lors de l'envoi de l'email. Vos données sont sauvegardées localement."
                     : "Impossible d'envoyer le rapport. Vos données sont sauvegardées localement.";
 
                 console.error('All submission attempts failed. Data stored locally:', submissionKey);
