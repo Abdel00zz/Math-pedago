@@ -8,11 +8,31 @@ import ErrorBoundary from './components/ErrorBoundary';
 
 const config = {
   tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']]
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']]
   },
   svg: {
     fontCache: 'global',
-    scale: 0.9
+    scale: 1.15, // Increased from 0.9 for better readability and harmony with text
+    minScale: 1,
+    mtextInheritFont: true, // Inherit font from surrounding text for better integration
+    merrorInheritFont: true,
+    mathmlSpacing: false,
+    displayAlign: 'center',
+    displayIndent: '0'
+  },
+  chtml: {
+    scale: 1.15,
+    matchFontHeight: true, // Match the height of surrounding text
+    mtextInheritFont: true,
+    merrorInheritFont: true
+  },
+  options: {
+    enableMenu: false, // Disable MathJax context menu for cleaner UX
+    renderActions: {
+      addMenu: [],
+      checkLoading: []
+    }
   }
 };
 

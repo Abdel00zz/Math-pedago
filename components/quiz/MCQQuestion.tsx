@@ -51,7 +51,7 @@ const MCQQuestion: React.FC<MCQQuestionProps> = ({ question, userAnswer, isRevie
             `}</style>
             <div className="bg-surface p-6 sm:p-8 rounded-2xl border border-border shadow-claude animate-fadeIn">
                 <div className="bg-black text-white px-6 py-4 rounded-xl mb-6 shadow-lg">
-                    <h3 className="text-[22px] font-title leading-relaxed font-semibold">
+                    <h3 className="text-[23px] md:text-[25px] font-title leading-relaxed font-semibold">
                         <FormattedText text={question.question} />
                     </h3>
                 </div>
@@ -97,7 +97,7 @@ const MCQQuestion: React.FC<MCQQuestionProps> = ({ question, userAnswer, isRevie
                                             </div>
                                         )}
                                     </div>
-                                    <span className="flex-1 text-left text-[19px] leading-relaxed font-medium"><FormattedText text={option.text} /></span>
+                                    <span className="flex-1 text-left text-[20px] md:text-[21px] leading-relaxed font-medium"><FormattedText text={option.text} /></span>
                                 </button>
                                 {(isReviewMode || isSubmitted) && isSelected && !option.isCorrect && option.explanation && (
                                     <div className="pl-14 -mt-3 mb-2 text-sm text-red-600/90 animate-fadeIn serif-text italic">
