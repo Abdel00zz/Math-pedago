@@ -652,6 +652,54 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         }
     }, [state.profile, syncChaptersForClass, addNotification]);
 
+    // Effect 4: Check for pending submissions on app load and notify user
+    useEffect(() => {
+        const checkPendingSubmissions = () => {
+            try {
+                const pendingKeys: string[] = [];
+                for (let i = 0; i < localStorage.length; i++) {
+                    const key = localStorage.key(i);
+                    if (key && key.startsWith('pending_submission_')) {
+                        pendingKeys.push(key);
+                    }
+                }
+
+                if (pendingKeys.length > 0) {
+                    console.log(`Found ${pendingKeys.length} pending submission(s):`, pendingKeys);
+
+                    const message = pendingKeys.length === 1
+                        ? "Vous avez 1 rapport non envoyé. Cliquez pour réessayer."
+                        : `Vous avez ${pendingKeys.length} rapports non envoyés. Cliquez pour réessayer.`;
+
+                    addNotification("Rapports en attente", "warning", {
+                        message,
+                        duration: 10000,
+                        action: {
+                            label: 'Voir détails',
+                            onClick: () => {
+                                const details = pendingKeys.map(key => {
+                                    try {
+                                        const data = JSON.parse(localStorage.getItem(key) || '{}');
+                                        return `- ${data.studentName || 'Inconnu'}: ${data.results?.[0]?.chapter || 'Chapitre inconnu'}`;
+                                    } catch {
+                                        return `- Rapport corrompu (${key})`;
+                                    }
+                                }).join('\n');
+
+                                alert(`Rapports en attente d'envoi:\n\n${details}\n\nVeuillez soumettre à nouveau vos chapitres depuis le tableau de bord.`);
+                            }
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('Error checking pending submissions:', error);
+            }
+        };
+
+        // Run only once when app initializes
+        checkPendingSubmissions();
+    }, [addNotification]);
+
     return (
         <AppStateContext.Provider value={state}>
             <AppDispatchContext.Provider value={dispatch}>

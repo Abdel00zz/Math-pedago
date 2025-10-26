@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, useRef } from 'react';
 import { useAppState, useAppDispatch } from '../../context/AppContext';
 import { CLASS_OPTIONS } from '../../constants';
 import ConfirmationModal from '../ConfirmationModal';
@@ -109,7 +109,11 @@ const ChapterHubView: React.FC = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isConfirmationModalOpen, setConfirmationModalOpen] = useState(false);
     const [showConfetti, setShowConfetti] = useState(false);
-    
+
+    // Easter egg: Triple-click on verified badge to resend work
+    const [verifiedClickCount, setVerifiedClickCount] = useState(0);
+    const verifiedClickTimerRef = useRef<NodeJS.Timeout | null>(null);
+
     const chapter = useMemo(() => currentChapterId ? activities[currentChapterId] : null, [currentChapterId, activities]);
     const chapterProgress = useMemo(() => currentChapterId ? progress[currentChapterId] : null, [currentChapterId, progress]);
     
@@ -173,37 +177,52 @@ const ChapterHubView: React.FC = () => {
     const handleReviewQuiz = useCallback(() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'activity', chapterId: chapter?.id, subView: 'quiz', review: true } }), [dispatch, chapter?.id]);
     const handleStartExercises = useCallback(() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'activity', chapterId: chapter?.id, subView: 'exercises' } }), [dispatch, chapter?.id]);
 
-    const handleSubmitWork = () => {
-        if (!canSubmitWork || isSubmitting || !profile || !chapter || !chapterProgress) return;
+    // Easter egg: Triple-click on verified badge to resend work
+    const handleVerifiedBadgeClick = () => {
+        // Clear existing timer if any
+        if (verifiedClickTimerRef.current) {
+            clearTimeout(verifiedClickTimerRef.current);
+        }
+
+        const newCount = verifiedClickCount + 1;
+        setVerifiedClickCount(newCount);
+
+        if (newCount === 3) {
+            // Triple-click achieved! Reset counter and resend work
+            setVerifiedClickCount(0);
+            console.log('Easter egg activated! Resending work...');
+
+            addNotification("Renvoi du travail", 'info', {
+                message: "Fonctionnalité cachée activée ! Le travail sera renvoyé.",
+                duration: 3000
+            });
+
+            // Trigger resubmission (bypassing the canSubmitWork check since work was already submitted)
+            if (!isSubmitting && profile && chapter && chapterProgress) {
+                handleSubmitWork(true); // Force resend
+            }
+        } else {
+            // Reset counter after 2 seconds if not clicked again
+            verifiedClickTimerRef.current = setTimeout(() => {
+                setVerifiedClickCount(0);
+                verifiedClickTimerRef.current = null;
+            }, 2000);
+        }
+    };
+
+    const handleSubmitWork = async (forceResend: boolean = false) => {
+        // Allow resubmission if forceResend is true (easter egg feature)
+        const canProceed = forceResend || canSubmitWork;
+        if (!canProceed || isSubmitting || !profile || !chapter || !chapterProgress) return;
         setIsSubmitting(true);
-    
+
         try {
             dispatch({ type: 'SUBMIT_WORK', payload: { chapterId: chapter.id } });
             setConfirmationModalOpen(false);
-            
-            const form = document.createElement('form');
-            form.action = 'https://formsubmit.co/bdh.malek@gmail.com';
-            form.method = 'POST';
-            form.enctype = 'multipart/form-data';
-            form.style.display = 'none';
-    
-            const addHiddenField = (name: string, value: string) => {
-                const input = document.createElement('input');
-                input.type = 'hidden';
-                input.name = name;
-                input.value = value;
-                form.appendChild(input);
-            };
-    
-            addHiddenField('_template', 'table');
-            addHiddenField('_captcha', 'false');
-            addHiddenField('_next', window.location.href);
-            addHiddenField('_subject', `✅ Nouveau travail soumis: ${profile.name} - ${chapter.chapter}`);
-            addHiddenField('_autoresponse', "Votre travail a été reçu avec succès. Nous l'examinerons dans les plus brefs délais.");
-    
+
             const className = CLASS_OPTIONS.find(c => c.value === profile.classId)?.label || profile.classId;
             const quizScorePercentage = totalQuestions > 0 ? (quiz.score / totalQuestions) * 100 : 0;
-            
+
             const quizAnswersForExport: { [qId: string]: number | number[] } = {};
             Object.keys(quiz.answers).forEach(qId => {
                 const question = chapter.quiz.find(q => q.id === qId);
@@ -216,7 +235,7 @@ const ChapterHubView: React.FC = () => {
                         if (!answerIndices.includes(-1)) {
                             quizAnswersForExport[qId] = answerIndices;
                         }
-                    } 
+                    }
                     else if ((!question.type || question.type === 'mcq') && typeof userAnswer === 'string' && question.options) {
                         const answerIndex = question.options.findIndex(opt => opt.text === userAnswer);
                         if (answerIndex !== -1) {
@@ -264,42 +283,112 @@ const ChapterHubView: React.FC = () => {
                     }
                 ]
             };
-            
+
             const progressJson = JSON.stringify(submissionData, null, 2);
-            const blob = new Blob([progressJson], { type: 'application/json' });
-            const sanitizedName = profile.name.replace(/[^a-z0-9]/gi, '_').toLowerCase();
-            const filename = `progression_${sanitizedName}_${chapter.id}.json`;
-            
-            const fileInput = document.createElement('input');
-            fileInput.type = 'file';
-            fileInput.name = 'attachment';
-            fileInput.style.display = 'none';
-            
-            const file = new File([blob], filename, { type: 'application/json' });
-            const dataTransfer = new DataTransfer();
-            dataTransfer.items.add(file);
-            fileInput.files = dataTransfer.files;
-            
-            form.appendChild(fileInput);
-            document.body.appendChild(form);
-            form.submit();
-            
-            setTimeout(() => {
-                if (document.body.contains(form)) {
-                    document.body.removeChild(form);
+
+            // Store submission data locally before attempting to send
+            const submissionKey = `pending_submission_${submissionTimestamp}`;
+            localStorage.setItem(submissionKey, progressJson);
+
+            // Attempt submission with timeout and retry logic using our own API
+            let submitSuccessful = false;
+            let lastError: Error | null = null;
+            const maxRetries = 3;
+            const timeoutMs = 15000; // 15 seconds timeout (our API is faster than FormSubmit.co)
+
+            for (let attempt = 0; attempt < maxRetries && !submitSuccessful; attempt++) {
+                try {
+                    console.log(`Submission attempt ${attempt + 1}/${maxRetries}...`);
+
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+
+                    // Call our Vercel API endpoint
+                    const response = await fetch('/api/submit-work', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            studentName: profile.name,
+                            chapterTitle: chapter.chapter,
+                            progressData: submissionData
+                        }),
+                        signal: controller.signal,
+                    });
+
+                    clearTimeout(timeoutId);
+
+                    if (response.ok) {
+                        const result = await response.json();
+                        // Success - remove from pending submissions
+                        localStorage.removeItem(submissionKey);
+                        submitSuccessful = true;
+                        console.log('Submission successful! Message ID:', result.messageId);
+
+                        addNotification("Travail envoyé", 'success', {
+                            message: "Votre progression a été enregistrée et envoyée avec succès.",
+                            action: {
+                                label: 'Tableau de bord',
+                                onClick: () => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'dashboard' } })
+                            }
+                        });
+                    } else {
+                        const errorData = await response.json().catch(() => ({}));
+                        throw new Error(`Server responded with status ${response.status}: ${errorData.error || response.statusText}`);
+                    }
+                } catch (error) {
+                    lastError = error as Error;
+                    console.error(`Submission attempt ${attempt + 1} failed:`, error);
+
+                    // Wait before retrying (exponential backoff: 2s, 4s, 8s)
+                    if (attempt < maxRetries - 1) {
+                        const waitTime = Math.pow(2, attempt + 1) * 1000;
+                        console.log(`Waiting ${waitTime / 1000}s before retry...`);
+                        await new Promise(resolve => setTimeout(resolve, waitTime));
+                    }
                 }
-                addNotification("Travail envoyé", 'success', {
-                    message: "Votre progression a été enregistrée et envoyée.",
+            }
+
+            if (!submitSuccessful) {
+                // All retries failed - notify user and keep in localStorage for manual retry
+                const errorMessage = lastError?.name === 'AbortError'
+                    ? "Le délai d'envoi a expiré (15s). Vérifiez votre connexion internet."
+                    : lastError?.message?.includes('500')
+                    ? "Le serveur rencontre des problèmes (erreur 500). Vos données sont sauvegardées."
+                    : lastError?.message?.includes('Failed to send email')
+                    ? "Erreur lors de l'envoi de l'email. Vos données sont sauvegardées localement."
+                    : "Impossible d'envoyer le rapport. Vos données sont sauvegardées localement.";
+
+                console.error('All submission attempts failed. Data stored locally:', submissionKey);
+                console.error('Last error details:', lastError);
+
+                addNotification("Échec d'envoi", 'error', {
+                    message: errorMessage,
                     action: {
-                        label: 'Tableau de bord',
-                        onClick: () => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'dashboard' } })
+                        label: 'Réessayer',
+                        onClick: () => handleSubmitWork()
                     }
                 });
-            }, 2000);
-            
+
+                setIsSubmitting(false);
+                return;
+            }
+
+            setIsSubmitting(false);
+
         } catch (error) {
             console.error("Erreur lors de la préparation de l'envoi:", error);
-            addNotification("Erreur d'envoi", 'error', { message: "Une erreur est survenue avant l'envoi. Veuillez réessayer." });
+            addNotification("Erreur d'envoi", 'error', {
+                message: "Une erreur est survenue lors de la préparation. Veuillez réessayer.",
+                action: {
+                    label: 'Réessayer',
+                    onClick: () => {
+                        setIsSubmitting(false);
+                        setConfirmationModalOpen(true);
+                    }
+                }
+            });
             setIsSubmitting(false);
         }
     };
@@ -456,8 +545,12 @@ const ChapterHubView: React.FC = () => {
 
                 {isChapterLocked && (
                     <div className="mt-8 md:mt-12 text-center border-2 border-dashed border-success/40 bg-gradient-to-br from-success/10 to-success/5 p-6 md:p-10 rounded-2xl md:rounded-3xl animate-fadeIn shadow-glow-success">
-                        <div className="mx-auto w-16 h-16 md:w-20 md:h-20 flex items-center justify-center bg-success/20 rounded-xl md:rounded-2xl text-success mb-4 md:mb-5 shadow-lg">
-                            <span className="material-symbols-outlined !text-4xl md:!text-5xl">verified</span>
+                        <div
+                            className="mx-auto w-16 h-16 md:w-20 md:h-20 flex items-center justify-center bg-success/20 rounded-xl md:rounded-2xl text-success mb-4 md:mb-5 shadow-lg cursor-pointer hover:bg-success/30 transition-all duration-200 active:scale-95 select-none"
+                            onClick={handleVerifiedBadgeClick}
+                            title="Cliquez 3 fois pour renvoyer le travail"
+                        >
+                            <span className="material-symbols-outlined !text-4xl md:!text-5xl pointer-events-none">verified</span>
                         </div>
                         <h2 className="text-2xl md:text-3xl lg:text-4xl font-display font-bold text-text mb-2 md:mb-3 tracking-tight">Travail Soumis !</h2>
                         <p className="text-sm md:text-base lg:text-lg text-text-secondary max-w-2xl mx-auto leading-relaxed px-4">
