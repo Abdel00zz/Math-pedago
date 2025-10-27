@@ -144,6 +144,38 @@ class SubQuestion:
         return result
 
 @dataclass
+class Hint:
+    """Représente un indice pour un exercice."""
+    text: str = ""
+    sub_questions: List[SubQuestion] = field(default_factory=list)
+
+    @classmethod
+    def from_dict(cls, data: Dict[str, Any]) -> 'Hint':
+        """Charge un indice depuis un dictionnaire JSON."""
+        sub_questions_data = data.get('sub_questions', [])
+        sub_questions = []
+        for sq_data in sub_questions_data:
+            sub_sub_questions_data = sq_data.get('sub_sub_questions', [])
+            sub_sub_questions = [SubSubQuestion(ssq.get('text', '')) for ssq in sub_sub_questions_data]
+            sub_question = SubQuestion(
+                text=sq_data.get('text', ''),
+                sub_sub_questions=sub_sub_questions
+            )
+            sub_questions.append(sub_question)
+
+        return cls(
+            text=data.get('text', ''),
+            sub_questions=sub_questions
+        )
+
+    def to_dict(self) -> Dict[str, Any]:
+        """Convertit l'indice en dictionnaire pour la sauvegarde JSON."""
+        result = {'text': self.text}
+        if self.sub_questions:
+            result['sub_questions'] = [sq.to_dict() for sq in self.sub_questions]
+        return result
+
+@dataclass
 class ExerciseImage:
     """Représente une image dans un exercice."""
     id: str = ""
@@ -236,6 +268,7 @@ class Exercise:
     statement: str = ""
     sub_questions: List[SubQuestion] = field(default_factory=list)
     images: List[ExerciseImage] = field(default_factory=list)
+    hint: List[Hint] = field(default_factory=list)
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'Exercise':
@@ -246,23 +279,28 @@ class Exercise:
             # Charger les sous-sous-questions si elles existent
             sub_sub_questions_data = sq_data.get('sub_sub_questions', [])
             sub_sub_questions = [SubSubQuestion(ssq.get('text', '')) for ssq in sub_sub_questions_data]
-            
+
             sub_question = SubQuestion(
                 text=sq_data.get('text', ''),
                 sub_sub_questions=sub_sub_questions
             )
             sub_questions.append(sub_question)
-        
+
         # Charger les images si elles existent
         images_data = data.get('images', [])
         images = [ExerciseImage.from_dict(img_data) for img_data in images_data]
-            
+
+        # Charger les indices si ils existent
+        hint_data = data.get('hint', [])
+        hints = [Hint.from_dict(h_data) for h_data in hint_data]
+
         return cls(
             id=data.get('id', ''),
             title=data.get('title', ''),
             statement=data.get('statement', ''),
             sub_questions=sub_questions,
-            images=images
+            images=images,
+            hint=hints
         )
 
     def to_dict(self) -> Dict[str, Any]:
@@ -276,6 +314,8 @@ class Exercise:
             result['sub_questions'] = [sq.to_dict() for sq in self.sub_questions]
         if self.images:
             result['images'] = [img.to_dict() for img in self.images]
+        if self.hint:
+            result['hint'] = [h.to_dict() for h in self.hint]
         return result
 
 class ChapterData:
@@ -1405,8 +1445,41 @@ class ExerciseEditor(QWidget):
         self.statement_char_count = QLabel("0 caractères")
         self.statement_char_count.setObjectName("charCount")
         statement_section.addWidget(self.statement_char_count)
-        
+
         editor_layout.addLayout(statement_section)
+
+        # Section indices (hints)
+        hints_section = QVBoxLayout()
+        hints_header = QHBoxLayout()
+        hints_label = QLabel("💡 Indices pour l'exercice :")
+        hints_label.setObjectName("sectionLabel")
+        hints_header.addWidget(hints_label)
+        hints_header.addStretch()
+
+        self.hints_count_label = QLabel("0 indice(s)")
+        self.hints_count_label.setStyleSheet("color: #666; font-size: 11px;")
+        hints_header.addWidget(self.hints_count_label)
+
+        add_hint_btn = QPushButton("Ajouter un indice")
+        add_hint_btn.setObjectName("smallButton")
+        add_hint_btn.clicked.connect(self.add_hint)
+        hints_header.addWidget(add_hint_btn)
+
+        hints_section.addLayout(hints_header)
+
+        # Container pour les indices
+        self.hints_container = QWidget()
+        self.hints_layout = QVBoxLayout(self.hints_container)
+        self.hint_widgets = []
+
+        # Scroll area pour les indices
+        hints_scroll_area = QWidget()
+        hints_scroll_layout = QVBoxLayout(hints_scroll_area)
+        hints_scroll_layout.addWidget(self.hints_container)
+        hints_scroll_layout.addStretch()
+
+        hints_section.addWidget(hints_scroll_area)
+        editor_layout.addLayout(hints_section)
 
         # Section sous-questions améliorée
         subq_section = QVBoxLayout()
@@ -1624,10 +1697,63 @@ class ExerciseEditor(QWidget):
         if hasattr(self, 'title_edit'):
             title_count = len(self.title_edit.text())
             self.title_char_count.setText(f"{title_count} caractères")
-        
+
         if hasattr(self, 'statement_edit'):
             statement_count = len(self.statement_edit.toPlainText())
             self.statement_char_count.setText(f"{statement_count} caractères")
+
+    def add_hint(self):
+        """Ajoute un nouvel indice."""
+        hint_widget, text_edit = self.create_hint_widget()
+        self.hint_widgets.append((hint_widget, text_edit))
+        self.hints_layout.addWidget(hint_widget)
+        self.update_hints_count()
+        self.save_current()
+
+    def remove_hint(self, widget_to_remove):
+        """Supprime un indice."""
+        for i, (hint_widget, text_edit) in enumerate(self.hint_widgets):
+            if hint_widget == widget_to_remove:
+                self.hints_layout.removeWidget(hint_widget)
+                hint_widget.deleteLater()
+                self.hint_widgets.pop(i)
+                self.update_hints_count()
+                self.save_current()
+                break
+
+    def create_hint_widget(self, text=""):
+        """Crée un widget pour un indice."""
+        hint_widget = QWidget()
+        hint_layout = QHBoxLayout(hint_widget)
+        hint_layout.setContentsMargins(0, 5, 0, 5)
+
+        # Numéro de l'indice
+        num_label = QLabel(f"{len(self.hint_widgets) + 1}.")
+        num_label.setMinimumWidth(30)
+        num_label.setStyleSheet("font-weight: bold; font-size: 13px; color: #f59e0b;")
+        hint_layout.addWidget(num_label)
+
+        # Champ de texte multiligne pour l'indice
+        text_edit = QTextEdit()
+        text_edit.setPlainText(text)
+        text_edit.textChanged.connect(self.save_current)
+        text_edit.setPlaceholderText("Texte de l'indice (peut contenir du LaTeX)...")
+        text_edit.setMaximumHeight(100)
+        hint_layout.addWidget(text_edit)
+
+        # Bouton supprimer
+        remove_btn = QPushButton("×")
+        remove_btn.setObjectName("removeButton")
+        remove_btn.setMaximumWidth(25)
+        remove_btn.clicked.connect(lambda: self.remove_hint(hint_widget))
+        hint_layout.addWidget(remove_btn)
+
+        return hint_widget, text_edit
+
+    def update_hints_count(self):
+        """Met à jour le compteur d'indices."""
+        count = len(self.hint_widgets)
+        self.hints_count_label.setText(f"{count} indice(s)")
 
     def filter_exercises(self):
         """Filtre les exercices selon le texte de recherche."""
@@ -1696,25 +1822,39 @@ class ExerciseEditor(QWidget):
             main_widget.deleteLater()
         self.sub_question_widgets.clear()
         
+        # Nettoyer les indices existants
+        for widget_tuple in self.hint_widgets:
+            hint_widget = widget_tuple[0]
+            self.hints_layout.removeWidget(hint_widget)
+            hint_widget.deleteLater()
+        self.hint_widgets.clear()
+
+        # Charger les indices
+        for hint in exercise.hint:
+            hint_widget, text_edit = self.create_hint_widget(hint.text)
+            self.hint_widgets.append((hint_widget, text_edit))
+            self.hints_layout.addWidget(hint_widget)
+
         # Charger les sous-questions avec leurs sous-sous-questions
         for sub_question in exercise.sub_questions:
             # Extraire les textes des sous-sous-questions
             sub_sub_texts = [ssq.text for ssq in sub_question.sub_sub_questions]
-            
+
             # Créer le widget avec les sous-sous-questions
             main_widget, text_edit, num_label, ssq_container, sub_sub_widgets = \
                 self.create_sub_question_widget(sub_question.text, sub_sub_texts)
-            
+
             self.sub_question_widgets.append((main_widget, text_edit, num_label, ssq_container, sub_sub_widgets))
             self.sub_questions_layout.addWidget(main_widget)
-        
+
         # Réactiver les signaux
         self.title_edit.blockSignals(False)
         self.statement_edit.blockSignals(False)
-        
+
         # Mettre à jour les compteurs
         self.update_char_count()
         self.update_images_count()
+        self.update_hints_count()
 
     def save_current(self):
         """Sauvegarde l'exercice actuellement édité avec support des sous-sous-questions."""
@@ -1724,26 +1864,35 @@ class ExerciseEditor(QWidget):
         ex = self.exercises[self.current_index]
         ex.title = self.title_edit.text().strip()
         ex.statement = self.statement_edit.toPlainText().strip()
-        
+
+        # Sauvegarder les indices
+        ex.hint = []
+        for widget_tuple in self.hint_widgets:
+            hint_widget, text_edit = widget_tuple
+            hint_text = text_edit.toPlainText().strip()
+
+            if hint_text:
+                ex.hint.append(Hint(text=hint_text))
+
         # Sauvegarder les sous-questions et leurs sous-sous-questions
         ex.sub_questions = []
         for widget_tuple in self.sub_question_widgets:
             main_widget, text_edit, num_label, ssq_container, sub_sub_widgets = widget_tuple
             sq_text = text_edit.text().strip()
-            
+
             if sq_text:
                 # Créer la sous-question
                 sub_question = SubQuestion(text=sq_text)
-                
+
                 # Ajouter les sous-sous-questions
                 sub_question.sub_sub_questions = []
                 for ssq_widget, ssq_edit in sub_sub_widgets:
                     ssq_text = ssq_edit.text().strip()
                     if ssq_text:
                         sub_question.sub_sub_questions.append(SubSubQuestion(text=ssq_text))
-                
+
                 ex.sub_questions.append(sub_question)
-        
+
         # Mettre à jour la liste
         item = self.exercise_list.item(self.current_index)
         if item:

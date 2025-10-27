@@ -125,6 +125,28 @@ Chaque objet dans le tableau `exercises` représente un exercice.
 | `text`          | `String`             | Oui         | Le texte de l'indice. Peut contenir du MathJax.                           |
 | `sub_questions` | `Array<SubQuestion>` | Non         | L'indice peut lui-même contenir une liste de sous-questions pour guider l'élève. |
 
+### Remarque sur le paramètre "indice"
+
+Dans certains fichiers JSON existants, vous pouvez rencontrer la clé francisée `"indice"` au lieu de `"hint"` pour définir les indices d'un exercice. Les deux usages décrivent la même chose : une liste d'objets contenant le texte de l'indice et éventuellement des sous-questions.
+
+Recommandation :
+- Préférez `"hint"` (standard anglais) pour la cohérence avec le code et les composants front-end.
+- Si vous conservez `"indice"` (pour compatibilité manuelle), assurez-vous que le code consommant ces fichiers effectue un mappage/normalisation côté serveur ou lors du chargement (ex. : renommer `indice` en `hint`).
+
+Exemple (équivalent) :
+
+```json
+"hint": [ { "text": "Commencez par regarder le comportement aux limites." } ]
+```
+
+ou
+
+```json
+"indice": [ { "text": "Commencez par regarder le comportement aux limites." } ]
+```
+
+Si vous souhaitez que j'ajoute un convertisseur automatique (migration simple) pour renommer `indice` en `hint` dans les fichiers existants, je peux l'implémenter dans un script Python ou Node.js.
+
 ### Exemple d'un `Exercise` sans sous-sous-questions
 
 ```json

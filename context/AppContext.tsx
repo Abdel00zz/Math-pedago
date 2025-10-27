@@ -564,6 +564,20 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
                                 if ('sessionDate' in normalizedData) {
                                     delete normalizedData.sessionDate;
                                 }
+
+                                // Transform snake_case to camelCase for quiz options
+                                if (normalizedData.quiz && Array.isArray(normalizedData.quiz)) {
+                                    normalizedData.quiz = normalizedData.quiz.map((q: any) => {
+                                        if (q.options && Array.isArray(q.options)) {
+                                            q.options = q.options.map((opt: any) => ({
+                                                ...opt,
+                                                isCorrect: opt.is_correct !== undefined ? opt.is_correct : opt.isCorrect,
+                                            }));
+                                        }
+                                        return q;
+                                    });
+                                }
+
                                 return { ...normalizedData, id: info.id, file: info.file, isActive: info.isActive, version: info.version };
                             })
                             .catch(err => { 

@@ -487,5 +487,27 @@
       ]
     }
   ],
+  "exercises": [
+    {
+      "id": "exo_derivabilite_01",
+      "title": "Vérifier la dérivabilité",
+      "statement": "Étudier la dérivabilité en 0 de la fonction $f(x)=|x|$ et justifier le résultat.",
+      "sub_questions": [],
+      "images": [],
+      "hint": [
+        { "text": "Calculez les taux d'accroissement à gauche et à droite : \\lim_{h\\to0^-} (f(h)-f(0))/h et \\lim_{h\\to0^+} ... et comparez-les." }
+      ]
+    },
+    {
+      "id": "exo_tangente_02",
+      "title": "Equation de la tangente",
+      "statement": "Soit $f(x)=x^3-3x+1$. Déterminez l'équation de la tangente en $x=1$.",
+      "sub_questions": [],
+      "images": [],
+      "hint": [
+        { "text": "Calculez f(1) et f'(1) puis utilisez la formule y = f'(1)(x-1)+f(1)." }
+      ]
+    }
+  ],
   "version": "7a26b0364a64e783c608e5514326d8a1"
 }

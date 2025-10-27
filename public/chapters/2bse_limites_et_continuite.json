@@ -374,11 +374,19 @@
           ]
         }
       ]
+      ,
+      "hint": [
+        { "text": "Étudiez d'abord la fonction auxiliaire g puis reliez ses racines aux propriétés de f; faites un tableau de signes pour f'." }
+      ]
     },
     {
       "id": "exo_continuite_parametres_02",
       "title": "Continuité d'une fonction définie par morceaux",
       "statement": "Soit $a$ et $b$ deux réels et $f$ la fonction définie sur $\\mathbb{R}$ par : \n$$f(x) = \\begin{cases} \\frac{a - x}{x + 1} & \\text{si } x \\in ]-\\infty; -2[ \\cup ]1; +\\infty[ \\\\ \\frac{1}{2}x^2 + x + b & \\text{si } x \\in [-2; 1] \\end{cases}$$\nDéterminer les réels $a$ et $b$ pour que $f$ soit continue sur $\\mathbb{R}$."
+      ,
+      "hint": [
+        { "text": "Calculez les limites aux points de jonction et imposez l'égalité des valeurs pour déterminer a et b." }
+      ]
     },
     {
       "id": "exo_continuite_tvi_dichotomie_10",
@@ -434,6 +442,10 @@
           ]
         }
       ]
+      ,
+      "hint": [
+        { "text": "Pour la dichotomie, vérifiez d'abord f(a)f(b)<0 et suivez la méthode en calculant des milieux successifs." }
+      ]
     },
     {
       "id": "exo_fonction_reciproque_continuite_03",
@@ -458,6 +470,10 @@
         {
           "text": "Vérifier que $f^{-1}$ est continue sur son domaine de définition."
         }
+      ]
+      ,
+      "hint": [
+        { "text": "Montrez la continuité et la stricte monotonie de f pour assurer l'existence de la réciproque; calculez f' pour le signe." }
       ]
     },
     {
@@ -486,6 +502,10 @@
         {
           "text": "Résoudre algébriquement l'équation $k(x) = x$ et vérifier que la solution appartient bien à $[1, 3]$."
         }
+      ]
+      ,
+      "hint": [
+        { "text": "Utilisez le TVI et l'encadrement des valeurs aux bornes; calculez k(1) et k(3) pour l'utiliser." }
       ]
     }
   ],

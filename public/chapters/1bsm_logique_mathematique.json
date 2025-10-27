@@ -617,7 +617,12 @@
           "sub_sub_questions": []
         }
       ],
-      "images": []
+      "images": [],
+      "hint": [
+        {
+          "text": "Réécrivez chaque énoncé en identifiant l'univers puis choisissez \\forall ou \\exists selon le sens; vérifiez ensuite la valeur de vérité par un contre-exemple ou une démonstration."
+        }
+      ]
     },
     {
       "id": "exo_negation_propositions",
@@ -653,7 +658,10 @@
           "sub_sub_questions": []
         }
       ],
-      "images": []
+      "images": [],
+      "hint": [
+        { "text": "Pour négativer un quantificateur, changez \\forall en \\exists et inversez le prédicat (et vice-versa). Exemple : la négation de \\forall x P(x) est \\exists x \\neg P(x)." }
+      ]
     },
     {
       "id": "exo_irrationnel_racine2",
@@ -669,14 +677,20 @@
           "sub_sub_questions": []
         }
       ],
-      "images": []
+      "images": [],
+      "hint": [
+        { "text": "Supposez qu'une combinaison linéaire donne zéro et regardez séparément les parties rationnelle et irrationnelle pour conclure; pour \\sqrt{2}, raisonnez par réduction au premier terme non nul." }
+      ]
     },
     {
       "id": "exo_solution_entiere_polynome",
       "title": "Racines Entières d'un Polynôme",
       "statement": "Démontrer que l'équation $9x^5 - 12x^4 + 6x - 5 = 0$ n'admet pas de solution entière.",
       "sub_questions": [],
-      "images": []
+      "images": [],
+      "hint": [
+        { "text": "Utilisez le critère de Gauss ou regardez l'équation modulo un petit entier (par ex. modulo 2 ou 3) pour montrer qu'aucun entier ne peut satisfaire l'équation." }
+      ]
     },
     {
       "id": "exo_contraposee_divisibilite8",
@@ -696,7 +710,10 @@
           "sub_sub_questions": []
         }
       ],
-      "images": []
+      "images": [],
+      "hint": [
+        { "text": "Écrivez la contraposée : si n est impair, montrez que n^2-1 est divisible par 8; testez n=2k+1 et développez." }
+      ]
     },
     {
       "id": "exo_raisonnement_absurde",
@@ -716,7 +733,10 @@
           "sub_sub_questions": []
         }
       ],
-      "images": []
+      "images": [],
+      "hint": [
+        { "text": "Pour chaque sous-question, supposez la négation de ce que l'on veut prouver et cherchez une contradiction (par exemple en examinant les propriétés arithmétiques ou d'inéquations)." }
+      ]
     },
     {
       "id": "exo_raisonnement_recurrence",
@@ -736,7 +756,10 @@
           "sub_sub_questions": []
         }
       ],
-      "images": []
+      "images": [],
+      "hint": [
+        { "text": "Identifiez la propriété P(n). Faites l'initialisation pour n=1 (ou n_0) puis supposez P(n) et montrez P(n+1); pensez à factoriser les différences si nécessaire." }
+      ]
     },
     {
       "id": "exo_divisibilite_pn_qn_9",
@@ -756,7 +779,10 @@
           "sub_sub_questions": []
         }
       ],
-      "images": []
+      "images": [],
+      "hint": [
+        { "text": "Commencez par calculer quelques puissances de 4 modulo 3; repérez la périodicité et utilisez-la pour prouver l'implication entre P_n et P_{n+1}." }
+      ]
     },
     {
       "id": "exo_types_raisonnements",
@@ -780,7 +806,10 @@
           "sub_sub_questions": []
         }
       ],
-      "images": []
+      "images": [],
+      "hint": [
+        { "text": "Pour chaque item, listez les hypothèses et ce qu'il faut démontrer; associez un type (direct, contraposée, contradiction, récurrence) qui permet de 'mener' la preuve efficacement." }
+      ]
     },
     {
       "id": "exo_fonction_recurrence",
@@ -804,7 +833,10 @@
           "sub_sub_questions": []
         }
       ],
-      "images": []
+      "images": [],
+      "hint": [
+        { "text": "Calculez f(0) et f(1) explicitement pour repérer un motif puis essayez une factorisation ou une extraction de 10^{3n} pour simplifier l'expression." }
+      ]
     }
   ],
   "version": "v1.1.0-e767f8"
