@@ -349,7 +349,7 @@ const OrientationModal: React.FC<OrientationModalProps> = ({ isOpen, onClose, cl
                                     aria-expanded={openChapterId === chapter.id}
                                 >
                                     <span className="font-medium text-text pr-4 text-sm sm:text-base leading-relaxed">
-                                        <MathJax dynamic>{`${chapter.title}`}</MathJax>
+                                        <span className="app-math"><MathJax dynamic>{`${chapter.title}`}</MathJax></span>
                                     </span>
                                     <span className={`material-symbols-outlined text-orange-500 transition-transform duration-200 text-[20px] ${openChapterId === chapter.id ? 'rotate-180' : ''}`}>
                                         expand_more
@@ -369,7 +369,7 @@ const OrientationModal: React.FC<OrientationModalProps> = ({ isOpen, onClose, cl
                                                 {chapter.contents.map((content, index) => (
                                                     <li key={index} className="flex gap-2.5">
                                                         <span className="text-orange-400 mt-1 flex-shrink-0 text-[10px]">●</span>
-                                                        <span><MathJax dynamic>{content}</MathJax></span>
+                                                        <span className="app-math"><MathJax dynamic>{content}</MathJax></span>
                                                     </li>
                                                 ))}
                                             </ul>
@@ -382,7 +382,7 @@ const OrientationModal: React.FC<OrientationModalProps> = ({ isOpen, onClose, cl
                                                 {chapter.capacities.map((capacity, index) => (
                                                     <li key={index} className="flex gap-2.5">
                                                         <span className="text-orange-400 mt-1 flex-shrink-0 text-[10px]">●</span>
-                                                        <span><MathJax dynamic>{capacity}</MathJax></span>
+                                                        <span className="app-math"><MathJax dynamic>{capacity}</MathJax></span>
                                                     </li>
                                                 ))}
                                             </ul>

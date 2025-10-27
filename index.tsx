@@ -5,6 +5,7 @@ import { AppProvider } from './context/AppContext';
 import { NotificationProvider } from './context/NotificationContext';
 import { MathJaxContext } from 'better-react-mathjax';
 import ErrorBoundary from './components/ErrorBoundary';
+import './src/styles/typography.css';
 
 const config = {
   tex: {

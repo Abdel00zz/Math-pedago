@@ -129,55 +129,55 @@ const Exercises: React.FC<ExercisesProps> = ({ onAllCompleted }) => {
     };
 
     const renderSubQuestions = (subQuestions: SubQuestion[] | undefined) => {
-        if (!subQuestions || subQuestions.length === 0) return null;
-        
-        return (
-            <ol className="list-decimal pl-6 mt-4 space-y-4 text-gray-800">
-                {subQuestions.map((sq, index) => (
-                    <li key={index} className="pl-2 text-base leading-relaxed">
-                        <div className="font-medium text-gray-900">
-                            <MathJax dynamic>
-                                <span dangerouslySetInnerHTML={{ __html: formatText(sq.text) }} />
-                            </MathJax>
-                        </div>
-                        
-                        {sq.sub_sub_questions && sq.sub_sub_questions.length > 0 && (
-                            <ol 
-                                className="list-none pl-0 mt-2 space-y-2"
-                                style={{ 
-                                    counterReset: 'subsub-counter',
-                                    marginLeft: '1.5rem'
-                                }}
-                            >
-                                {sq.sub_sub_questions.map((ssq, ssqIndex) => (
-                                    <li 
-                                        key={ssqIndex} 
-                                        className="relative pl-8 text-sm leading-relaxed text-gray-700"
-                                        style={{
-                                            counterIncrement: 'subsub-counter',
-                                            textAlign: 'left'
-                                        }}
-                                    >
-                                        <span 
-                                            className="absolute left-0 top-0 font-medium text-gray-600"
+            if (!subQuestions || subQuestions.length === 0) return null;
+
+            return (
+                <ol className="list-decimal pl-6 mt-4 space-y-4 text-base sm:text-lg text-black">
+                    {subQuestions.map((sq, index) => (
+                        <li key={index} className="pl-2 text-sm sm:text-base leading-relaxed">
+                            <div className="font-medium text-black">
+                                <MathJax dynamic>
+                                    <span className="text-sm sm:text-base" dangerouslySetInnerHTML={{ __html: formatText(sq.text) }} />
+                                </MathJax>
+                            </div>
+
+                            {sq.sub_sub_questions && sq.sub_sub_questions.length > 0 && (
+                                <ol 
+                                    className="list-none pl-0 mt-2 space-y-2"
+                                    style={{ 
+                                        counterReset: 'subsub-counter',
+                                        marginLeft: '1.5rem'
+                                    }}
+                                >
+                                    {sq.sub_sub_questions.map((ssq, ssqIndex) => (
+                                        <li 
+                                            key={ssqIndex} 
+                                            className="relative pl-8 text-sm sm:text-base leading-relaxed text-black"
                                             style={{
-                                                content: 'counter(subsub-counter, lower-alpha) ". "',
+                                                counterIncrement: 'subsub-counter',
+                                                textAlign: 'left'
                                             }}
                                         >
-                                            {String.fromCharCode(97 + ssqIndex)}.
-                                        </span>
-                                        <MathJax dynamic>
-                                            <span dangerouslySetInnerHTML={{ __html: formatText(ssq.text) }} />
-                                        </MathJax>
-                                    </li>
-                                ))}
-                            </ol>
-                        )}
-                    </li>
-                ))}
-            </ol>
-        );
-    };
+                                            <span 
+                                                className="absolute left-0 top-0 font-medium text-black"
+                                                style={{
+                                                    content: 'counter(subsub-counter, lower-alpha) ". "',
+                                                }}
+                                            >
+                                                {String.fromCharCode(97 + ssqIndex)}.
+                                            </span>
+                                            <MathJax dynamic>
+                                                <span className="text-sm sm:text-base" dangerouslySetInnerHTML={{ __html: formatText(ssq.text) }} />
+                                            </MathJax>
+                                        </li>
+                                    ))}
+                                </ol>
+                            )}
+                        </li>
+                    ))}
+                </ol>
+            );
+        };
 
     const hintExercise = useMemo(() => {
         if (!hintModalExerciseId) return null;
@@ -259,7 +259,7 @@ const Exercises: React.FC<ExercisesProps> = ({ onAllCompleted }) => {
                         style={customStyle}
                     />
                     {image.caption && (
-                        <figcaption className={`text-sm text-gray-600 italic mt-2 ${
+                        <figcaption className={`text-sm text-black italic mt-2 ${
                             alignment === 'center' ? 'text-center' : 
                             alignment === 'right' ? 'text-right' : 
                             alignment === 'left' ? 'text-left' : 'text-center'
@@ -303,9 +303,9 @@ const Exercises: React.FC<ExercisesProps> = ({ onAllCompleted }) => {
                 return (
                     <div key={exercise.id} className="bg-amber-50 p-6 rounded-lg border border-amber-200 shadow-lg shadow-amber-900/5">
                         <div className="flex justify-between items-start mb-4">
-                            <h3 className="text-2xl font-title text-gray-900 pr-4">
-                                <span className="text-blue-600 font-bold">{`Exercice ${index + 1}`}</span>
-                                <span className="text-lg text-gray-700 font-normal">{` | ${exercise.title}`}</span>
+                            <h3 className="text-xl sm:text-2xl font-display text-black pr-4">
+                                <span className="text-primary font-bold">{`Exercice ${index + 1}`}</span>
+                                <span className="text-base sm:text-lg text-black font-normal">{` | ${exercise.title}`}</span>
                             </h3>
                             {exercise.hint && exercise.hint.length > 0 && (
                                 <button 
@@ -326,8 +326,10 @@ const Exercises: React.FC<ExercisesProps> = ({ onAllCompleted }) => {
                         )}
                         
                         {/* Énoncé avec images de contenu (center, float-left, float-right, inline) */}
-                        <div className="text-gray-800 text-base leading-relaxed">
-                            <MathJax dynamic>{exercise.statement}</MathJax>
+                        <div className="text-base sm:text-lg font-sans text-black leading-relaxed">
+                            <div className="math-render text-sm sm:text-base font-sans leading-relaxed">
+                                <MathJax dynamic>{exercise.statement}</MathJax>
+                            </div>
                             
                             {/* Images dans le contenu (center/float-left/float-right/inline) */}
                             {organizedImages.content.length > 0 && (
@@ -347,7 +349,7 @@ const Exercises: React.FC<ExercisesProps> = ({ onAllCompleted }) => {
                         )}
 
                         <div className="mt-6 border-t border-amber-200 pt-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
-                            <p className="text-sm font-semibold text-gray-800 serif-text">Comment vous êtes-vous senti face à cet exercice ?</p>
+                            <p className="text-sm font-semibold text-black serif-text">Comment vous êtes-vous senti face à cet exercice ?</p>
                             <div className="flex flex-wrap gap-2 shrink-0">
                                {(['Facile', 'Moyen', 'Difficile', 'Non traité'] as Feedback[]).map(f => (
                                     <FeedbackButton 
