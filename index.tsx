@@ -13,7 +13,7 @@ const config = {
   },
   svg: {
     fontCache: 'global',
-    scale: 1.15, // Increased from 0.9 for better readability and harmony with text
+    scale: 0.95, // Reduced for more compact math display
     minScale: 1,
     mtextInheritFont: true, // Inherit font from surrounding text for better integration
     merrorInheritFont: true,
@@ -22,7 +22,7 @@ const config = {
     displayIndent: '0'
   },
   chtml: {
-    scale: 1.15,
+    scale: 0.95,
     matchFontHeight: true, // Match the height of surrounding text
     mtextInheritFont: true,
     merrorInheritFont: true
