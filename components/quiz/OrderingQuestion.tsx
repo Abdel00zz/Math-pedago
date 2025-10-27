@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Question } from '../../types';
-import { useMathJax } from '../../hooks/useMathJax';
+import FormattedText from '../FormattedText';
 
 interface OrderingQuestionProps {
     question: Question;
@@ -10,7 +10,7 @@ interface OrderingQuestionProps {
     onOptionChange: (answer: string[]) => void;
 }
 
-// ✅ OPTIMISATION 1: Fisher-Yates shuffle optimisé
+// Fisher-Yates shuffle optimisé
 const shuffleArray = (array: string[]): string[] => {
     if (!array || array.length === 0) return [];
     const newArray = [...array];
@@ -21,158 +21,137 @@ const shuffleArray = (array: string[]): string[] => {
     return newArray;
 };
 
-// ✅ OPTIMISATION 2: Cache pour éviter reshuffle constant
+// Cache pour éviter reshuffle constant
 const shuffleCache = new Map<string, string[]>();
 
 const getShuffledSteps = (steps: string[], cacheKey: string): string[] => {
     if (shuffleCache.has(cacheKey)) {
         return shuffleCache.get(cacheKey)!;
     }
-    
+
     const shuffled = shuffleArray(steps);
     shuffleCache.set(cacheKey, shuffled);
-    
+
     // Limiter la taille du cache
     if (shuffleCache.size > 20) {
         const firstKey = shuffleCache.keys().next().value;
         shuffleCache.delete(firstKey);
     }
-    
+
     return shuffled;
 };
 
-const OrderingQuestion: React.FC<OrderingQuestionProps> = ({ 
-    question, 
-    userAnswer, 
-    isReviewMode, 
-    isSubmitted, 
-    onOptionChange 
+const OrderingQuestion: React.FC<OrderingQuestionProps> = ({
+    question,
+    userAnswer,
+    isReviewMode,
+    isSubmitted,
+    onOptionChange
 }) => {
-    // ✅ OPTIMISATION 3: Mémorisation de l'ordre correct
+    // Mémorisation de l'ordre correct
     const correctOrder = useMemo(() => question.steps || [], [question.steps]);
 
-    // ✅ OPTIMISATION 4: Initialisation avec cache
+    // Initialisation avec cache
     const initialItems = useMemo(() => {
         if (userAnswer && userAnswer.length > 0) {
             return userAnswer;
         }
-        
-        // Utiliser un cache basé sur l'ID de la question
+
         const cacheKey = `${question.id}-shuffle`;
         return getShuffledSteps(correctOrder, cacheKey);
     }, [correctOrder, userAnswer, question.id]);
 
     const [items, setItems] = useState<string[]>(initialItems);
-    const [draggingIndex, setDraggingIndex] = useState<number | null>(null);
-    const [hoverIndex, setHoverIndex] = useState<number | null>(null);
-    const containerId = useMemo(() => `ordering-question-${question.id}`, [question.id]);
-
-    useMathJax(
-        [question, userAnswer, isReviewMode, isSubmitted, items],
-        {
-            containerId,
-            delay: 80,
-            onError: (error) => console.error('❌ Erreur MathJax OrderingQuestion:', error),
-        }
-    );
+    const [animatingIndex, setAnimatingIndex] = useState<number | null>(null);
 
     // Reset state si la question change
     useEffect(() => {
         setItems(initialItems);
     }, [initialItems]);
 
-    // ✅ OPTIMISATION 5: Notification parent avec debounce
+    // Notification parent avec debounce
     useEffect(() => {
         if (isReviewMode || isSubmitted) return;
-        
-        // Petit délai pour éviter trop d'appels
+
         const timer = setTimeout(() => {
             onOptionChange(items);
         }, 100);
-        
+
         return () => clearTimeout(timer);
     }, [items, isReviewMode, isSubmitted, onOptionChange]);
 
-    // ✅ OPTIMISATION 6: Handlers mémorisés
-    const handleDragStart = useCallback((e: React.DragEvent<HTMLLIElement>, index: number) => {
-        if (isReviewMode || isSubmitted) return;
-        setDraggingIndex(index);
-        e.dataTransfer.effectAllowed = 'move';
-        e.currentTarget.classList.add('opacity-50');
+    // Move item up
+    const moveUp = useCallback((index: number) => {
+        if (index === 0 || isReviewMode || isSubmitted) return;
+
+        setAnimatingIndex(index);
+        setTimeout(() => {
+            setItems(prevItems => {
+                const newItems = [...prevItems];
+                [newItems[index - 1], newItems[index]] = [newItems[index], newItems[index - 1]];
+                return newItems;
+            });
+            setTimeout(() => setAnimatingIndex(null), 300);
+        }, 150);
     }, [isReviewMode, isSubmitted]);
 
-    const handleDragEnter = useCallback((e: React.DragEvent<HTMLLIElement>, index: number) => {
-        if (isReviewMode || isSubmitted || draggingIndex === null || draggingIndex === index) return;
-        
-        // Live reordering
-        setItems(prevItems => {
-            const reorderedItems = [...prevItems];
-            const [draggedItem] = reorderedItems.splice(draggingIndex, 1);
-            reorderedItems.splice(index, 0, draggedItem);
-            return reorderedItems;
-        });
-        
-        setDraggingIndex(index);
-        setHoverIndex(index);
-    }, [isReviewMode, isSubmitted, draggingIndex]);
+    // Move item down
+    const moveDown = useCallback((index: number) => {
+        if (index === items.length - 1 || isReviewMode || isSubmitted) return;
 
-    const handleDragEnd = useCallback((e: React.DragEvent<HTMLLIElement>) => {
-        if (isReviewMode || isSubmitted) return;
-        e.currentTarget.classList.remove('opacity-50');
-        setDraggingIndex(null);
-        setHoverIndex(null);
-    }, [isReviewMode, isSubmitted]);
-
-    const handleDragOver = useCallback((e: React.DragEvent<HTMLLIElement>) => {
-        e.preventDefault();
-    }, []);
-
-    const handleDragLeave = useCallback(() => {
-        if (isReviewMode || isSubmitted) return;
-        setHoverIndex(null);
-    }, [isReviewMode, isSubmitted]);
+        setAnimatingIndex(index);
+        setTimeout(() => {
+            setItems(prevItems => {
+                const newItems = [...prevItems];
+                [newItems[index], newItems[index + 1]] = [newItems[index + 1], newItems[index]];
+                return newItems;
+            });
+            setTimeout(() => setAnimatingIndex(null), 300);
+        }, 150);
+    }, [items.length, isReviewMode, isSubmitted]);
 
     const handleReset = useCallback(() => {
         if (isReviewMode || isSubmitted) return;
-        const nextOrder = [...initialItems];
-        setItems(nextOrder);
-        setHoverIndex(null);
+        setItems([...initialItems]);
     }, [initialItems, isReviewMode, isSubmitted]);
 
-    // --- RENDER LOGIC ---
-
+    // --- REVIEW/SUBMITTED MODE ---
     if (isReviewMode || isSubmitted) {
         return (
-            <div id={containerId} className="bg-surface p-6 sm:p-8 rounded-2xl border border-border shadow-claude animate-fadeIn">
+            <div className="bg-surface p-6 sm:p-8 rounded-2xl border border-border shadow-claude animate-fadeIn">
                 <div className="bg-black text-white px-6 py-4 rounded-xl mb-6 shadow-lg">
-                    <h3 className="text-[22px] font-title leading-relaxed font-semibold">
-                        {question.question}
+                    <h3 className="text-[23px] md:text-[25px] font-title leading-relaxed font-semibold">
+                        <FormattedText text={question.question} />
                     </h3>
                 </div>
 
                 <div className="space-y-8">
                     <div>
-                        <h4 className="text-lg font-semibold text-text mb-3 font-serif">Votre réponse :</h4>
+                        <h4 className="text-lg font-semibold text-text mb-3">Votre réponse :</h4>
                         <ul className="space-y-3">
                             {(userAnswer && userAnswer.length > 0) ? userAnswer.map((item, index) => {
                                 const isCorrect = correctOrder[index] === item;
-                                const stepClass = `flex items-start gap-3 p-3 rounded-lg border-2 ${
-                                    isCorrect ? 'bg-success/10 border-success' : 'bg-error/10 border-error'
+                                const stepClass = `flex items-start gap-4 p-4 rounded-xl border-2 transition-all ${
+                                    isCorrect
+                                        ? 'bg-green-50 border-green-500 shadow-[0_4px_12px_rgba(34,197,94,0.15)]'
+                                        : 'bg-red-50 border-red-400 shadow-[0_4px_12px_rgba(239,68,68,0.15)]'
                                 }`;
                                 const icon = isCorrect ? 'check_circle' : 'cancel';
-                                const iconClass = isCorrect ? 'text-success' : 'text-error';
+                                const iconClass = isCorrect ? 'text-green-600' : 'text-red-500';
 
                                 return (
                                     <li key={index} className={stepClass}>
-                                        <span className="font-bold text-lg text-[#1a1a1a]">{index + 1}.</span>
-                                        <div className="flex-1 text-[#1a1a1a] text-[17px] leading-relaxed">{item}</div>
-                                        <span className={`material-symbols-outlined !text-xl mt-0.5 ${iconClass}`}>
+                                        <span className="font-bold text-lg text-[#1a1a1a] min-w-[24px]">{index + 1}.</span>
+                                        <div className="flex-1 text-[#1a1a1a] text-[18px] leading-relaxed">
+                                            <FormattedText text={item} />
+                                        </div>
+                                        <span className={`material-symbols-outlined !text-2xl ${iconClass}`}>
                                             {icon}
                                         </span>
                                     </li>
                                 );
                             }) : (
-                                <li className="text-text-secondary italic p-3">
+                                <li className="text-text-secondary italic p-4 text-center">
                                     Vous n'avez pas répondu à cette question.
                                 </li>
                             )}
@@ -180,13 +159,13 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({
                     </div>
 
                     <div className="pt-6 border-t border-border">
-                        <h4 className="text-lg font-semibold text-text mb-3 font-serif">Réponse correcte :</h4>
+                        <h4 className="text-lg font-semibold text-text mb-3">Réponse correcte :</h4>
                         <ul className="space-y-3">
                             {correctOrder.map((item, index) => (
-                                <li key={index} className="flex items-start gap-3 p-3 rounded-lg bg-background border border-border">
-                                    <span className="font-bold text-primary text-lg">{index + 1}.</span>
-                                    <div className="flex-1 text-[#1a1a1a] text-[17px] leading-relaxed">
-                                        {item}
+                                <li key={index} className="flex items-start gap-4 p-4 rounded-xl bg-surface border-2 border-primary/30">
+                                    <span className="font-bold text-primary text-lg min-w-[24px]">{index + 1}.</span>
+                                    <div className="flex-1 text-text text-[18px] leading-relaxed">
+                                        <FormattedText text={item} />
                                     </div>
                                 </li>
                             ))}
@@ -197,62 +176,99 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({
         );
     }
 
-    // --- Active Drag-and-Drop UI ---
+    // --- ACTIVE MODE - BUTTON-BASED REORDERING ---
     return (
-        <div id={containerId} className="bg-surface p-6 sm:p-8 rounded-2xl border border-border shadow-claude animate-fadeIn">
-            <div className="bg-black text-white px-6 py-4 rounded-xl mb-4 shadow-lg">
-                <h3 className="text-[22px] font-title text-center leading-relaxed font-semibold">
-                    {question.question}
-                </h3>
-            </div>
-            <p className="text-[15px] text-gray-600 text-center mb-6 leading-relaxed">
-                Maintenez, glissez et déposez les étapes pour construire la démarche correcte.
-            </p>
+        <>
+            <style>{`
+                @keyframes slideUp {
+                    0% { transform: translateY(0); }
+                    50% { transform: translateY(-8px); opacity: 0.7; }
+                    100% { transform: translateY(0); }
+                }
+                @keyframes slideDown {
+                    0% { transform: translateY(0); }
+                    50% { transform: translateY(8px); opacity: 0.7; }
+                    100% { transform: translateY(0); }
+                }
+                .animating {
+                    animation: slideUp 0.3s ease-in-out;
+                }
+            `}</style>
+            <div className="bg-surface p-6 sm:p-8 rounded-2xl border border-border shadow-claude animate-fadeIn">
+                <div className="bg-black text-white px-6 py-4 rounded-xl mb-4 shadow-lg">
+                    <h3 className="text-[23px] md:text-[25px] font-title text-center leading-relaxed font-semibold">
+                        <FormattedText text={question.question} />
+                    </h3>
+                </div>
+                <p className="text-[16px] text-text-secondary text-center mb-6 leading-relaxed">
+                    ⬆️ Utilisez les flèches pour réordonner les étapes ⬇️
+                </p>
 
-            <ul className="space-y-3 max-w-lg mx-auto">
-                {items.map((item, index) => (
-                    <li
-                        key={item}
-                        draggable
-                        onDragStart={(e) => handleDragStart(e, index)}
-                        onDragEnter={(e) => handleDragEnter(e, index)}
-                        onDragEnd={handleDragEnd}
-                        onDragOver={handleDragOver}
-                        onDragLeave={handleDragLeave}
-                        className={`group flex items-center gap-4 p-5 rounded-lg border-2 cursor-grab active:cursor-grabbing transition-all duration-200 ${
-                            draggingIndex === index
-                                ? 'shadow-2xl scale-105 bg-slate-700 border-slate-500'
-                                : hoverIndex === index
-                                ? 'border-warning bg-slate-800 shadow-[0_8px_24px_rgba(245,158,11,0.15)]'
-                                : 'bg-slate-800 border-slate-600 hover:border-primary/70 hover:bg-slate-700'
-                        }`}
-                    >
-                        <span
-                            className="material-symbols-outlined text-gray-300 touch-none cursor-grab active:cursor-grabbing"
-                            aria-label="Déplacer l'élément"
+                <ul className="space-y-3 max-w-2xl mx-auto">
+                    {items.map((item, index) => (
+                        <li
+                            key={item}
+                            className={`group flex items-center gap-3 p-4 sm:p-5 rounded-xl border-2 bg-white transition-all duration-200 shadow-md hover:shadow-lg ${
+                                animatingIndex === index ? 'animating scale-[1.02]' : ''
+                            } border-slate-300 hover:border-blue-400`}
                         >
-                            drag_indicator
-                        </span>
-                        <span className="font-bold text-lg text-green-400">{index + 1}.</span>
-                        <div className="flex-1 text-white font-sans text-[19px] leading-relaxed font-medium">{item}</div>
-                    </li>
-                ))}
-            </ul>
+                            {/* Numéro */}
+                            <span className="font-bold text-xl text-primary min-w-[32px] text-center">{index + 1}</span>
 
-            <div className="text-center mt-6">
-                <button
-                    type="button"
-                    onClick={handleReset}
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-border text-text-secondary hover:text-text hover:border-primary/60 transition-colors text-sm"
-                >
-                    Réinitialiser le mélange
-                </button>
+                            {/* Texte */}
+                            <div className="flex-1 text-[#1a1a1a] text-[18px] sm:text-[19px] leading-relaxed font-medium px-2">
+                                <FormattedText text={item} />
+                            </div>
+
+                            {/* Boutons Up/Down */}
+                            <div className="flex flex-col gap-1">
+                                <button
+                                    type="button"
+                                    onClick={() => moveUp(index)}
+                                    disabled={index === 0}
+                                    className={`w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center rounded-lg transition-all duration-200 ${
+                                        index === 0
+                                            ? 'bg-gray-100 text-gray-300 cursor-not-allowed'
+                                            : 'bg-blue-500 text-white hover:bg-blue-600 active:scale-95 shadow-md hover:shadow-lg'
+                                    }`}
+                                    aria-label="Déplacer vers le haut"
+                                >
+                                    <span className="material-symbols-outlined !text-2xl">arrow_upward</span>
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => moveDown(index)}
+                                    disabled={index === items.length - 1}
+                                    className={`w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center rounded-lg transition-all duration-200 ${
+                                        index === items.length - 1
+                                            ? 'bg-gray-100 text-gray-300 cursor-not-allowed'
+                                            : 'bg-blue-500 text-white hover:bg-blue-600 active:scale-95 shadow-md hover:shadow-lg'
+                                    }`}
+                                    aria-label="Déplacer vers le bas"
+                                >
+                                    <span className="material-symbols-outlined !text-2xl">arrow_downward</span>
+                                </button>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+
+                <div className="text-center mt-6">
+                    <button
+                        type="button"
+                        onClick={handleReset}
+                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-surface border-2 border-border text-text hover:text-primary hover:border-primary transition-all shadow-sm hover:shadow-md text-sm font-medium"
+                    >
+                        <span className="material-symbols-outlined !text-xl">refresh</span>
+                        Réinitialiser l'ordre
+                    </button>
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 
-// ✅ OPTIMISATION 7: Fonction pour nettoyer le cache
+// Fonction pour nettoyer le cache
 export const clearShuffleCache = () => {
     shuffleCache.clear();
 };
