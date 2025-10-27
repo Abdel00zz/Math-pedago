@@ -101,6 +101,7 @@ const customStyles = `
 const DashboardView: React.FC = () => {
     const state = useAppState();
     const dispatch = useAppDispatch();
+    const { addNotification } = useNotification();
     const { profile, activities, progress, chapterOrder } = state;
 
     // ✅ OPTIMISATION 3: Calcul du greeting mémorisé (ne change qu'une fois par session)
@@ -148,9 +149,15 @@ const DashboardView: React.FC = () => {
     const handleChapterSelect = useCallback((chapterId: string) => {
         const chapter = activities[chapterId];
         if (chapter && (chapter.isActive || progress[chapterId]?.isWorkSubmitted)) {
+            // If the chapter had an update flag, mark it as seen and remove related UI notifications
+            if (progress[chapterId]?.hasUpdate) {
+                dispatch({ type: 'MARK_UPDATE_SEEN', payload: { chapterId } });
+                addNotification('Contenu consulté', 'info', { message: `Vous avez ouvert le chapitre "${chapter.chapter}".`, duration: 3000 });
+            }
+
             dispatch({ type: 'CHANGE_VIEW', payload: { view: 'work-plan', chapterId } });
         }
-    }, [activities, progress, dispatch]);
+    }, [activities, progress, dispatch, addNotification]);
 
     if (!profile) {
         return (

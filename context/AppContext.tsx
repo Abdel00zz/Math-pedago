@@ -277,6 +277,42 @@ const appReducer = (state: AppState, action: Action): AppState => {
                 },
             };
         }
+
+        case 'MARK_UPDATE_SEEN': {
+            const { chapterId } = action.payload;
+            if (!chapterId || !state.progress[chapterId]) return state;
+
+            // Clear the update flag in progress
+            const chapterProgress = state.progress[chapterId];
+            const newProgress = {
+                ...state.progress,
+                [chapterId]: { ...chapterProgress, hasUpdate: false }
+            };
+
+            // Also remove stored UI notifications related to this chapter (updates/resubmit/quiz-reset)
+            try {
+                const UI_NOTIFICATIONS_KEY = 'pedagoUiNotifications_V1';
+                const stored = localStorage.getItem(UI_NOTIFICATIONS_KEY);
+                if (stored) {
+                    const parsed = JSON.parse(stored) as any[];
+                    const filtered = parsed.filter(n => {
+                        const id: string = n.id || '';
+                        // keep notifications that are NOT related to this chapter update
+                        if (id.startsWith(`update-${chapterId}`) || id.startsWith(`resubmit-${chapterId}`) || id.startsWith(`quiz-reset-${chapterId}`)) {
+                            return false;
+                        }
+                        return true;
+                    });
+                    localStorage.setItem(UI_NOTIFICATIONS_KEY, JSON.stringify(filtered));
+                    // notify listeners
+                    if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('notificationsUpdated'));
+                }
+            } catch (e) {
+                console.error('Failed to remove update notifications from storage', e);
+            }
+
+            return { ...state, progress: newProgress };
+        }
         
         case 'SYNC_ACTIVITIES': {
             const newActivityVersions = Object.values(action.payload.activities).reduce((acc, chapter) => {

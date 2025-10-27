@@ -47,11 +47,13 @@ export const Notifications: React.FC = () => {
     const portalRoot = document.body;
     if (!portalRoot) return null;
 
+    // Use subtle, theme-coherent toast styles (soft background + colored accent)
     const typeInfo: { [key in ToastNotificationType]: { bg: string; borderColor: string; icon: string; iconColor: string } } = {
-        success: { bg: 'bg-green-500', borderColor: 'border-green-400', icon: 'check_circle', iconColor: 'text-green-100' },
-        warning: { bg: 'bg-amber-500', borderColor: 'border-amber-400', icon: 'warning', iconColor: 'text-amber-100' },
-        error: { bg: 'bg-red-500', borderColor: 'border-red-400', icon: 'error', iconColor: 'text-red-100' },
-        info: { bg: 'bg-blue-500', borderColor: 'border-blue-400', icon: 'info', iconColor: 'text-blue-100' },
+        // success uses the app primary as a gentle accent; other types use subtle accent colors
+        success: { bg: 'bg-surface/90', borderColor: 'border-primary/40', icon: 'check_circle', iconColor: 'text-primary' },
+        warning: { bg: 'bg-surface/90', borderColor: 'border-amber-400/25', icon: 'warning', iconColor: 'text-amber-400' },
+        error: { bg: 'bg-surface/90', borderColor: 'border-red-400/25', icon: 'error', iconColor: 'text-red-400' },
+        info: { bg: 'bg-surface/90', borderColor: 'border-blue-400/25', icon: 'info', iconColor: 'text-blue-400' },
     };
 
     // Filtrer les notifications à afficher (y compris celles qui partent)
@@ -65,7 +67,7 @@ export const Notifications: React.FC = () => {
 
     return ReactDOM.createPortal(
         <div
-            className="fixed top-5 right-5 sm:top-8 sm:right-8 z-[1000] space-y-3 w-full max-w-sm pointer-events-none"
+            className="fixed bottom-5 right-5 sm:bottom-8 sm:right-8 z-[1000] flex flex-col-reverse gap-3 w-full max-w-sm pointer-events-none"
             role="region"
             aria-label="Notifications"
         >
@@ -97,10 +99,10 @@ export const Notifications: React.FC = () => {
                         aria-atomic="true"
                         onClick={isClickable ? handleActionClick : undefined}
                         className={`
-                            relative w-full p-4 rounded-xl shadow-2xl
-                            flex items-start gap-4 text-white overflow-hidden
-                            border-2 backdrop-blur-sm pointer-events-auto
-                            transition-all duration-300 ease-out
+                            relative w-full p-3 rounded-lg
+                            flex items-start gap-3 text-text overflow-hidden
+                            border backdrop-blur-sm pointer-events-auto
+                            transition-all duration-250 ease-out
                             ${info.bg} ${info.borderColor}
                             ${isClickable ? 'cursor-pointer hover:scale-[1.02]' : ''}
                             ${isLeaving
@@ -113,21 +115,19 @@ export const Notifications: React.FC = () => {
                         }}
                     >
                         {/* Background subtle icon */}
-                        <span className="material-symbols-outlined absolute -right-4 -bottom-4 !text-8xl text-white/10 select-none -rotate-12 pointer-events-none">{info.icon}</span>
-
                         <div className="flex-shrink-0 mt-0.5 z-10">
-                            <span className={`material-symbols-outlined !text-2xl ${info.iconColor} drop-shadow-lg`}>{info.icon}</span>
+                            <span className={`material-symbols-outlined !text-2xl ${info.iconColor}`}>{info.icon}</span>
                         </div>
 
                         <div className="flex-grow z-10 min-w-0">
                             {notif.title && (
-                                <h4 className="font-bold text-white font-title text-lg leading-tight break-words">
+                                <h4 className="font-semibold text-text font-title text-base leading-tight break-words">
                                     {notif.title}
                                 </h4>
                             )}
                             {notif.message && (
                                 <p
-                                    className="text-sm text-white/95 font-sans mt-1 leading-relaxed break-words"
+                                    className="text-sm text-text-secondary font-sans mt-1 leading-relaxed break-words"
                                     dangerouslySetInnerHTML={{ __html: notif.message }}
                                 />
                             )}

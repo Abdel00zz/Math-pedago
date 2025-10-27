@@ -196,4 +196,5 @@ export type Action =
     | { type: 'UPDATE_EXERCISE_FEEDBACK'; payload: { exId: string; feedback: Feedback } }
     | { type: 'UPDATE_EXERCISES_DURATION'; payload: { duration: number } }
     | { type: 'SUBMIT_WORK'; payload: { chapterId: string } }
+    | { type: 'MARK_UPDATE_SEEN'; payload: { chapterId: string } }
     | { type: 'SYNC_ACTIVITIES'; payload: { activities: { [id: string]: Chapter }; progress: { [id: string]: ChapterProgress }; chapterOrder: string[] } };
