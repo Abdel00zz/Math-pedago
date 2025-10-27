@@ -17,46 +17,67 @@ const renderSubQuestions = (subQuestions: SubQuestion[] | undefined) => (
     </ol>
 );
 
+// Fonction pour parser le markdown simple
+const parseMarkdown = (text: string): string => {
+    // **texte** ou __texte__ -> <strong>texte</strong>
+    let parsed = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    parsed = parsed.replace(/__(.+?)__/g, '<strong>$1</strong>');
+
+    // *texte* ou _texte_ -> <em>texte</em>
+    parsed = parsed.replace(/\*(.+?)\*/g, '<em>$1</em>');
+    parsed = parsed.replace(/_(.+?)_/g, '<em>$1</em>');
+
+    return parsed;
+};
+
 const HintModal: React.FC<HintModalProps> = ({ isOpen, onClose, exercise }) => {
     if (!isOpen || !exercise || !exercise.hint || exercise.hint.length === 0) {
         return null;
     }
 
     return (
-        <Modal 
-            isOpen={isOpen} 
-            onClose={onClose} 
+        <Modal
+            isOpen={isOpen}
+            onClose={onClose}
             title=""
-            className="sm:max-w-2xl"
+            className="sm:max-w-xl"
         >
-            <div className="text-center mb-6">
-                <div className="mx-auto w-16 h-16 flex items-center justify-center bg-amber-500/10 rounded-full text-amber-500 mb-4">
-                    <span className="material-symbols-outlined text-4xl">lightbulb</span>
+            {/* Header compact et moderne */}
+            <div className="text-center mb-4">
+                <div className="inline-flex items-center justify-center w-12 h-12 bg-amber-100 rounded-full mb-3">
+                    <span className="material-symbols-outlined text-2xl text-amber-600">lightbulb</span>
                 </div>
-                <h2 className="text-3xl font-playfair text-text">Indice</h2>
-                <p className="text-base text-text-secondary font-garamond italic mt-1">
-                    {`Pour l'exercice : "${exercise.title}"`}
+                <h2 className="text-2xl font-semibold text-text mb-1">Indices</h2>
+                <p className="text-sm text-text-secondary">
+                    {exercise.title}
                 </p>
             </div>
-            
-            <ul className="space-y-3 max-h-[50vh] overflow-y-auto pr-2">
+
+            {/* Liste des indices - compact et moderne */}
+            <div className="space-y-2.5 max-h-[60vh] overflow-y-auto pr-1">
                 {exercise.hint.map((hint, index) => (
-                    <li key={index} className="flex items-start gap-4 p-4 bg-background rounded-lg border border-border serif-text text-text-secondary">
-                        <div className="flex-shrink-0 w-5 h-5 flex items-center justify-center bg-amber-500/20 rounded-full mt-1">
-                            <span className="material-symbols-outlined !text-sm text-amber-500">spark</span>
+                    <div key={index} className="flex gap-3 p-3.5 bg-amber-50/50 rounded-lg border border-amber-200/60">
+                        {/* Numéro moderne et minimal */}
+                        <div className="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-amber-500 text-white rounded-full text-xs font-semibold">
+                            {index + 1}
                         </div>
-                        <div className="flex-1">
-                            <MathJax dynamic>{hint.text}</MathJax>
+
+                        {/* Contenu de l'indice */}
+                        <div className="flex-1 text-sm text-text-secondary leading-relaxed">
+                            <MathJax dynamic>
+                                <span dangerouslySetInnerHTML={{ __html: parseMarkdown(hint.text) }} />
+                            </MathJax>
                             {hint.sub_questions && renderSubQuestions(hint.sub_questions)}
                         </div>
-                    </li>
+                    </div>
                 ))}
-            </ul>
-            
-                <div className="mt-6 text-right">
+            </div>
+
+            {/* Bouton fermer compact */}
+            <div className="mt-4 text-center">
                 <button
                     onClick={onClose}
-                    className="font-button px-6 py-2 font-semibold text-primary bg-primary/10 rounded-lg hover:bg-primary/20"
+                    className="font-button px-5 py-2 text-sm font-semibold text-amber-600 bg-amber-100 rounded-lg hover:bg-amber-200 transition-colors"
                 >
                     Fermer
                 </button>
