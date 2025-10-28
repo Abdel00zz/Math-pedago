@@ -6,42 +6,39 @@ import { Profile } from '../../types';
 // --- Sous-composants pour la clarté ---
 
 const LoginHeader: React.FC = () => (
-    <div className="text-center mb-10 flex flex-col items-center">
-        {/* Ornate Divider */}
-        <div className="flex items-center gap-4 text-[#a1887f]/60 w-full max-w-xs">
-            <div className="flex-1 h-px bg-gradient-to-l from-[#a1887f]/80 to-transparent"></div>
-            <span className="material-symbols-outlined !text-4xl">psychology_alt</span>
-            <div className="flex-1 h-px bg-gradient-to-r from-[#a1887f]/80 to-transparent"></div>
+    <div className="text-center mb-12 flex flex-col items-center animate-fade-in">
+        {/* Modern Icon Badge */}
+        <div className="w-20 h-20 bg-gradient-to-br from-primary to-primary-700 rounded-2xl flex items-center justify-center mb-6 shadow-button-hover animate-bounce-in">
+            <span className="material-symbols-outlined !text-5xl text-white">functions</span>
         </div>
-        <h1 className="font-playfair text-4xl text-[#4e342e] font-bold mt-5 tracking-tight">
+        <h1 className="font-display text-display-md text-text-primary font-bold tracking-tight">
             Center Scientific
         </h1>
-        <p className="font-garamond text-lg text-primary tracking-[0.25em] mt-1 uppercase">
-            of{' '}
-            <span className="inline-block animate-textGlow">
-                Mathematics
+        <p className="font-sans text-body-lg text-text-secondary mt-2 tracking-wide">
+            <span className="text-primary font-semibold animate-pulse-subtle">
+                of Mathematics
             </span>
         </p>
-        <div className="w-24 h-px bg-[#d7ccc8] mt-5"></div>
+        <div className="w-16 h-1 bg-gradient-to-r from-transparent via-primary to-transparent mt-6 rounded-full"></div>
     </div>
 );
 
 const WelcomeMessage: React.FC<{ hasPreloadedName: boolean; name: string }> = ({ hasPreloadedName, name }) => (
-    <div className="text-center mb-10">
+    <div className="text-center mb-10 animate-slide-in-up">
         {hasPreloadedName ? (
             <>
-                <h2 className="text-3xl font-playfair text-[#4e342e] leading-tight">
-                    Bon retour, <span className="text-[#8d6e63] font-medium">{name}</span> !
+                <h2 className="text-display-sm font-display text-text-primary leading-tight">
+                    Bon retour, <span className="text-primary font-bold">{name}</span> !
                 </h2>
-                <p className="mt-2 text-[#a1887f] font-garamond italic text-base">
-                    Confirmez votre classe pour continuer.
+                <p className="mt-3 text-text-secondary font-sans text-body-md">
+                    Confirmez votre classe pour continuer votre parcours.
                 </p>
             </>
         ) : (
             <>
-                <h2 className="text-3xl font-playfair text-[#4e342e] font-medium">Bienvenue</h2>
-                <p className="mt-2 text-[#a1887f] font-garamond italic text-base">
-                    Commencez votre parcours d'apprentissage.
+                <h2 className="text-display-sm font-display text-text-primary font-bold">Bienvenue</h2>
+                <p className="mt-3 text-text-secondary font-sans text-body-md">
+                    Commencez votre parcours d'excellence en mathématiques.
                 </p>
             </>
         )}
@@ -59,22 +56,22 @@ interface LoginFormProps {
 }
 
 const LoginForm: React.FC<LoginFormProps> = ({ name, setName, classId, setClassId, error, handleSubmit, hasPreloadedName }) => (
-    <form onSubmit={handleSubmit} className="space-y-8">
-        <div>
-            <label htmlFor="name" className="block text-sm font-medium text-[#a1887f] font-garamond mb-2">
+    <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="animate-slide-in-left" style={{ animationDelay: '0.1s' }}>
+            <label htmlFor="name" className="block text-label-lg font-sans text-text-primary mb-2">
                 Nom complet
             </label>
             <div className="relative group">
-                <span className="material-symbols-outlined absolute left-0 top-1/2 -translate-y-1/2 text-[#a1887f]/80 pointer-events-none group-focus-within:text-[#5d4037] transition-colors">
-                    drive_file_rename_outline
+                <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-tertiary pointer-events-none group-focus-within:text-primary transition-colors duration-200">
+                    person
                 </span>
                 <input
                     id="name"
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className={`w-full pl-8 pr-4 py-2 bg-transparent border-0 border-b-2 border-[#d7ccc8] focus:outline-none focus:border-[#8d6e63] focus:ring-0 transition-colors duration-300 font-garamond text-lg text-[#4e342e] placeholder:text-[#a1887f]/60 ${
-                        hasPreloadedName ? 'bg-[#d7ccc8]/20 text-[#a1887f] cursor-not-allowed' : ''
+                    className={`w-full pl-12 pr-4 py-3.5 bg-background-secondary border border-border rounded-lg focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 font-sans text-body-md text-text-primary placeholder:text-text-tertiary ${
+                        hasPreloadedName ? 'bg-background-tertiary text-text-secondary cursor-not-allowed' : 'hover:border-border-hover'
                     }`}
                     placeholder="Votre nom et prénom"
                     required
@@ -83,19 +80,19 @@ const LoginForm: React.FC<LoginFormProps> = ({ name, setName, classId, setClassI
             </div>
         </div>
 
-        <div>
-            <label htmlFor="classId" className="block text-sm font-medium text-[#a1887f] font-garamond mb-2">
+        <div className="animate-slide-in-right" style={{ animationDelay: '0.2s' }}>
+            <label htmlFor="classId" className="block text-label-lg font-sans text-text-primary mb-2">
                 Votre classe
             </label>
             <div className="relative group">
-                 <span className="material-symbols-outlined absolute left-0 top-1/2 -translate-y-1/2 text-[#a1887f]/80 pointer-events-none group-focus-within:text-[#5d4037] transition-colors">
-                    account_balance
+                 <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-tertiary pointer-events-none group-focus-within:text-primary transition-colors duration-200">
+                    school
                 </span>
                 <select
                     id="classId"
                     value={classId}
                     onChange={(e) => setClassId(e.target.value)}
-                    className="w-full pl-8 pr-10 py-2 bg-transparent border-0 border-b-2 border-[#d7ccc8] focus:outline-none focus:border-[#8d6e63] focus:ring-0 transition-colors duration-300 cursor-pointer font-garamond text-lg text-[#4e342e] appearance-none"
+                    className="w-full pl-12 pr-12 py-3.5 bg-background-secondary border border-border rounded-lg focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 cursor-pointer font-sans text-body-md text-text-primary appearance-none hover:border-border-hover"
                     required
                 >
                     {CLASS_OPTIONS.map(option => (
@@ -104,21 +101,24 @@ const LoginForm: React.FC<LoginFormProps> = ({ name, setName, classId, setClassI
                         </option>
                     ))}
                 </select>
-                <div className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none transition-colors group-focus-within:text-[#5d4037]">
-                    <span className="material-symbols-outlined text-[#a1887f]/80">unfold_more</span>
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none transition-colors group-focus-within:text-primary">
+                    <span className="material-symbols-outlined text-text-tertiary">expand_more</span>
                 </div>
             </div>
         </div>
 
         {error && (
-            <p className="text-sm text-error text-center font-garamond font-medium">{error}</p>
+            <div className="bg-error-50 border border-error-500 text-error-700 px-4 py-3 rounded-lg text-sm font-sans font-medium text-center animate-scale-in">
+                {error}
+            </div>
         )}
 
         <button
             type="submit"
-            className="w-full px-4 py-3 font-garamond font-semibold text-lg tracking-wider text-[#fbf9f1] bg-[#5d4037] rounded-md shadow-lg shadow-[#5d4037]/20 hover:bg-[#4e342e] hover:-translate-y-px transition-all duration-300 active:scale-[0.98] mt-4"
+            className="w-full px-6 py-4 font-sans font-semibold text-body-lg text-white bg-primary rounded-xl shadow-button hover:bg-primary-600 hover:shadow-button-hover hover:-translate-y-0.5 transition-all duration-200 active:scale-[0.98] mt-6 animate-bounce-in"
+            style={{ animationDelay: '0.3s' }}
         >
-            {hasPreloadedName ? 'Accéder à mon espace' : 'Commencer'}
+            {hasPreloadedName ? 'Accéder à mon espace' : 'Commencer mon parcours'}
         </button>
     </form>
 );
@@ -157,8 +157,8 @@ const LoginView: React.FC = () => {
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen animate-fadeIn p-4 bg-[#fbf9f1]">
-            <div className="w-full max-w-md bg-[#fffcf5] border border-[#d7ccc8] rounded-lg shadow-xl shadow-[#5d4037]/10 p-8 sm:p-12">
+        <div className="flex items-center justify-center min-h-screen p-4 bg-gradient-to-br from-background via-background-secondary to-background-tertiary">
+            <div className="w-full max-w-lg bg-white border border-border rounded-3xl shadow-2xl p-8 sm:p-12 animate-scale-in">
                 <LoginHeader />
                 <WelcomeMessage hasPreloadedName={hasPreloadedName} name={name} />
                 <LoginForm

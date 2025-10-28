@@ -15,7 +15,7 @@ interface CategorizedActivities {
     upcoming: Chapter[];
 }
 
-// ✅ OPTIMISATION 2: Styles en constante (évite recréation) avec animations pour le nom
+// ✅ OPTIMISATION 2: Styles modernes avec animations Coursera-inspired
 const customStyles = `
   :root {
     --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
@@ -23,16 +23,17 @@ const customStyles = `
 
   .claude-card {
     background-color: #FFFFFF;
-    border: 1px solid #E5E5E5;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    border: 1px solid #E0E7EF;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     transition: all 0.3s var(--transition-smooth);
     position: relative;
     overflow: hidden;
   }
 
   .claude-card:hover:not(:disabled) {
-    border-color: #D4D4D4;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(0, 0, 0, 0.05);
+    border-color: #C5D0DC;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
   }
 
   .pulse-dot {
@@ -52,14 +53,14 @@ const customStyles = `
 
   @keyframes welcomeBounce {
     0% {
-      transform: scale(0.8) translateY(-20px);
+      transform: scale(0.95) translateY(-10px);
       opacity: 0;
     }
-    50% {
-      transform: scale(1.1) translateY(0);
+    60% {
+      transform: scale(1.02) translateY(0);
     }
-    70% {
-      transform: scale(0.95);
+    80% {
+      transform: scale(0.98);
     }
     100% {
       transform: scale(1);
@@ -77,24 +78,24 @@ const customStyles = `
   }
 
   .student-name-animated {
-    animation: welcomeBounce 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation: welcomeBounce 0.6s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
     background: linear-gradient(
-      90deg,
-      #FF7A00 0%,
-      #FFB84D 25%,
-      #FF7A00 50%,
-      #FFB84D 75%,
-      #FF7A00 100%
+      135deg,
+      #0056D2 0%,
+      #3387FF 25%,
+      #0056D2 50%,
+      #3387FF 75%,
+      #0056D2 100%
     );
     background-size: 200% auto;
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: welcomeBounce 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards,
-               shimmer 3s linear infinite;
+    animation: welcomeBounce 0.6s cubic-bezier(0.34, 1.2, 0.64, 1) forwards,
+               shimmer 4s linear infinite;
     display: inline-block;
-    font-weight: 700;
-    text-shadow: 0 0 30px rgba(255, 122, 0, 0.3);
+    font-weight: 800;
+    filter: drop-shadow(0 0 20px rgba(0, 86, 210, 0.2));
   }
 `;
 
@@ -161,11 +162,13 @@ const DashboardView: React.FC = () => {
 
     if (!profile) {
         return (
-            <div className="min-h-screen bg-background flex items-center justify-center">
-                <div className="text-center p-8 claude-card rounded-2xl max-w-md">
-                    <span className="text-5xl text-text-disabled block mb-4">⚠</span>
-                    <h2 className="text-xl font-title text-text mb-2">Profil non trouvé</h2>
-                    <p className="font-sans text-text-secondary italic">Veuillez vous reconnecter pour accéder à votre espace</p>
+            <div className="min-h-screen bg-background-secondary flex items-center justify-center p-4">
+                <div className="text-center p-10 claude-card rounded-2xl max-w-md animate-scale-in">
+                    <div className="w-20 h-20 mx-auto mb-6 bg-warning-50 rounded-full flex items-center justify-center">
+                        <span className="material-symbols-outlined !text-5xl text-warning">warning</span>
+                    </div>
+                    <h2 className="text-heading-xl font-display text-text-primary mb-3">Profil non trouvé</h2>
+                    <p className="font-sans text-body-md text-text-secondary">Veuillez vous reconnecter pour accéder à votre espace</p>
                 </div>
             </div>
         );
@@ -179,20 +182,21 @@ const DashboardView: React.FC = () => {
             <style>{customStyles}</style>
             <GlobalActionButtons />
 
-            <div className="min-h-screen bg-background">
-                <div className="max-w-5xl mx-auto p-3 sm:p-4 md:p-6 pb-20 sm:pb-24 md:pb-28">
-                    <header className="sticky top-0 z-30 bg-background/90 backdrop-blur-md py-4 sm:py-5 md:py-6 mb-4 sm:mb-5 md:mb-6 -mx-3 sm:-mx-4 md:-mx-6 -mt-3 sm:-mt-4 md:-mt-6 px-3 sm:px-4 md:px-6">
-                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-6 max-w-5xl mx-auto">
+            <div className="min-h-screen bg-gradient-to-br from-background via-background-secondary to-background-tertiary">
+                <div className="max-w-6xl mx-auto p-4 sm:p-6 md:p-8 pb-24 sm:pb-28 md:pb-32">
+                    <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-lg py-5 sm:py-6 md:py-8 mb-6 sm:mb-8 md:mb-10 -mx-4 sm:-mx-6 md:-mx-8 -mt-4 sm:-mt-6 md:-mt-8 px-4 sm:px-6 md:px-8 border-b border-border shadow-sm">
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-6 max-w-6xl mx-auto animate-slide-in-down">
                             <div>
-                                <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-title text-text mb-2 tracking-tight">
+                                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display text-text-primary mb-2 tracking-tight font-bold">
                                     {greeting},{' '}
                                     <span className="student-name-animated">
                                         {profile.name}
                                     </span>
                                 </h1>
-                                <div className="mt-1 sm:mt-2">
+                                <div className="mt-2 flex items-center gap-2">
+                                    <span className="material-symbols-outlined text-primary !text-xl">school</span>
                                     <div
-                                        className="inline-block text-base sm:text-lg text-text-secondary italic"
+                                        className="inline-block text-base sm:text-lg text-text-secondary font-sans font-medium"
                                         dangerouslySetInnerHTML={{ __html: formatClassNameHTML(className) }}
                                     />
                                 </div>
@@ -223,29 +227,31 @@ const DashboardView: React.FC = () => {
                             />
                         </div>
                     ) : (
-                        <div className="claude-card text-center p-8 sm:p-10 md:p-12 rounded-xl md:rounded-2xl mt-6 sm:mt-8">
-                            <span className="text-4xl sm:text-5xl text-text-disabled block mb-3 sm:mb-4">◎</span>
-                            <h2 className="text-lg sm:text-xl font-title text-text mb-2">Aucun chapitre disponible</h2>
-                            <p className="font-sans text-sm sm:text-base text-text-secondary italic">
-                                Les chapitres pour votre classe seront bientôt révélés...
+                        <div className="claude-card text-center p-10 sm:p-12 md:p-16 rounded-2xl md:rounded-3xl mt-8 sm:mt-10 animate-scale-in">
+                            <div className="w-24 h-24 mx-auto mb-6 bg-primary-50 rounded-full flex items-center justify-center">
+                                <span className="material-symbols-outlined !text-6xl text-primary">pending_actions</span>
+                            </div>
+                            <h2 className="text-heading-xl font-display text-text-primary mb-3">Aucun chapitre disponible</h2>
+                            <p className="font-sans text-body-md text-text-secondary max-w-md mx-auto">
+                                Les chapitres pour votre classe seront bientôt disponibles. Revenez plus tard pour découvrir votre contenu.
                             </p>
-                            <button 
+                            <button
                                 onClick={() => window.location.reload()}
-                                className="mt-5 sm:mt-6 px-5 sm:px-6 py-2.5 sm:py-3 bg-background hover:bg-border/50 text-text rounded-lg transition-colors font-sans text-sm touch-manipulation active:scale-95"
+                                className="mt-8 px-8 py-3.5 bg-primary hover:bg-primary-600 text-white rounded-xl transition-all font-sans font-semibold shadow-button hover:shadow-button-hover hover:-translate-y-0.5 active:scale-95"
                             >
                                 Rafraîchir la page
                             </button>
                         </div>
                     )}
 
-                    <footer className="text-center mt-12 sm:mt-14 md:mt-16 mb-6 sm:mb-8">
+                    <footer className="text-center mt-16 sm:mt-20 md:mt-24 mb-8 sm:mb-10">
                         <div className="flex flex-col items-center justify-center opacity-70">
-                            <span className="font-brand text-[10px] sm:text-xs tracking-wider text-text-secondary">Center Scientific</span>
-                            <div className="w-6 sm:w-8 h-px bg-border-hover my-1 sm:my-1.5"></div>
-                            <span className="font-brand text-xl sm:text-2xl text-primary -mt-1">of Mathematics</span>
+                            <span className="font-display text-xs sm:text-sm tracking-wider text-text-tertiary font-semibold">Center Scientific</span>
+                            <div className="w-12 sm:w-16 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent my-2 sm:my-3 rounded-full"></div>
+                            <span className="font-display text-2xl sm:text-3xl text-primary font-bold">of Mathematics</span>
                         </div>
-                        <p className="text-[10px] sm:text-xs text-text-secondary font-sans italic mt-3 sm:mt-4 px-4">
-                            © {new Date().getFullYear()} - Votre parcours d'apprentissage interactif
+                        <p className="text-xs sm:text-sm text-text-tertiary font-sans mt-4 sm:mt-6 px-4">
+                            © {new Date().getFullYear()} - Votre parcours d'excellence en mathématiques
                         </p>
                     </footer>
                 </div>

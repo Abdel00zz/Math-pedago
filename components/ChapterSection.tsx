@@ -16,23 +16,27 @@ const ChapterSection: React.FC<ChapterSectionProps> = ({ title, chapters, progre
     }
 
     return (
-        <section>
-            <div className="flex items-baseline gap-4 mb-6">
-                {icon && <span className="text-3xl text-primary/70 font-sans not-italic">{icon}</span>}
-                <h2 className="text-3xl sm:text-4xl font-playfair text-text tracking-tight">
+        <section className="animate-slide-in-up">
+            <div className="flex items-center gap-4 mb-6 sm:mb-8">
+                {icon && <span className="text-4xl text-primary-600 font-sans not-italic">{icon}</span>}
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-display text-text-primary tracking-tight font-bold">
                     {title}
                 </h2>
-                <span className="text-xl font-garamond text-text-secondary -translate-y-px">
-                    ({chapters.length})
+                <span className="px-3 py-1 bg-primary-50 text-primary-700 font-sans font-bold text-sm rounded-full">
+                    {chapters.length}
                 </span>
             </div>
-            <div className="space-y-4">
-                {chapters.map((chapter) => (
-                    <div key={chapter.id}>
-                        <ChapterCard 
-                            chapter={chapter} 
-                            progress={progress[chapter.id]} 
-                            onSelect={onSelect} 
+            <div className="grid grid-cols-1 gap-4 sm:gap-5">
+                {chapters.map((chapter, index) => (
+                    <div
+                        key={chapter.id}
+                        className="animate-scale-in"
+                        style={{ animationDelay: `${index * 0.05}s` }}
+                    >
+                        <ChapterCard
+                            chapter={chapter}
+                            progress={progress[chapter.id]}
+                            onSelect={onSelect}
                         />
                     </div>
                 ))}
