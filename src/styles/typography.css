@@ -1,0 +1,252 @@
+/* ===========================
+   SYSTÈME TYPOGRAPHIQUE AVANCÉ
+   Échelle harmonique basée sur le ratio d'or (1.618)
+   =========================== */
+
+:root {
+  /* Échelle typographique harmonique */
+  --text-xs: 0.75rem;     /* 12px */
+  --text-sm: 0.875rem;    /* 14px */
+  --text-base: 1rem;      /* 16px - Baseline */
+  --text-lg: 1.125rem;    /* 18px */
+  --text-xl: 1.25rem;     /* 20px */
+  --text-2xl: 1.5rem;     /* 24px */
+  --text-3xl: 1.875rem;   /* 30px */
+  --text-4xl: 2.25rem;    /* 36px */
+
+  /* Hauteurs de ligne optimisées */
+  --leading-tight: 1.25;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.75;
+  --leading-loose: 2;
+
+  /* Espacement des lettres */
+  --tracking-tight: -0.025em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.025em;
+}
+
+/* ===========================
+   HARMONISATION MATHÉMATIQUES
+   =========================== */
+
+/* Conteneur MathJax - Alignement parfait */
+mjx-container[jax="SVG"] {
+  display: inline-flex !important;
+  align-items: baseline !important;
+  vertical-align: baseline !important;
+  margin: 0 0.1em !important;
+  line-height: 0 !important;
+  position: relative;
+  top: 0.05em; /* Micro-ajustement pour alignement optique parfait */
+}
+
+/* SVG MathJax - Harmonisation avec texte */
+mjx-container[jax="SVG"] svg {
+  vertical-align: baseline !important;
+  height: auto !important;
+  max-width: 100% !important;
+}
+
+/* Éléments math inline - Taille cohérente */
+mjx-math {
+  display: inline-flex !important;
+  align-items: baseline !important;
+  font-size: 1em !important; /* Hérite de la taille du parent */
+}
+
+/* Adaptation contextuelle des couleurs */
+mjx-container[jax="SVG"] svg g[fill] {
+  fill: currentColor !important; /* Utilise la couleur du texte parent */
+  transition: fill 0.2s ease;
+}
+
+/* Contexte sombre (en-têtes de questions) */
+.bg-black mjx-container[jax="SVG"] svg g[fill],
+.text-white mjx-container[jax="SVG"] svg g[fill] {
+  fill: #ffffff !important;
+}
+
+/* Contexte clair (options de réponse) */
+.bg-white mjx-container[jax="SVG"] svg g[fill],
+.bg-blue-50 mjx-container[jax="SVG"] svg g[fill],
+.bg-green-50 mjx-container[jax="SVG"] svg g[fill],
+.bg-red-50 mjx-container[jax="SVG"] svg g[fill],
+.bg-gray-50 mjx-container[jax="SVG"] svg g[fill] {
+  fill: #0a0a0a !important; /* Noir profond pour contraste maximal */
+}
+
+/* Fractions - Espacement amélioré */
+mjx-mfrac {
+  margin: 0 0.2em !important;
+  vertical-align: middle !important;
+}
+
+/* Indices et exposants - Alignement précis */
+mjx-script {
+  line-height: 1 !important;
+  vertical-align: baseline !important;
+}
+
+/* Racines carrées - Positionnement optimal */
+mjx-msqrt, mjx-mroot {
+  vertical-align: middle !important;
+  margin: 0 0.15em !important;
+}
+
+/* Parenthèses et délimiteurs - Scaling harmonieux */
+mjx-mo[stretchy="true"] {
+  vertical-align: middle !important;
+}
+
+/* Mode display (centré) - Taille augmentée */
+mjx-container[display="true"] {
+  display: block !important;
+  text-align: center !important;
+  margin: 1.75em auto !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+}
+
+mjx-container[display="true"] svg {
+  transform: scale(1.3) !important;
+  transform-origin: center !important;
+}
+
+/* ===========================
+   TYPOGRAPHIE QUESTIONS/RÉPONSES
+   =========================== */
+
+/* En-tête de question - Hiérarchie claire */
+.question-header {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  line-height: var(--leading-normal);
+  letter-spacing: var(--tracking-tight);
+  color: #ffffff;
+}
+
+/* Options de réponse - Lisibilité optimale */
+.answer-option {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--text-xl);
+  font-weight: 500;
+  line-height: var(--leading-relaxed);
+  letter-spacing: var(--tracking-normal);
+}
+
+/* Texte d'explication - Italique élégant */
+.explanation-text {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--text-base);
+  font-weight: 400;
+  line-height: var(--leading-relaxed);
+  font-style: italic;
+  opacity: 0.9;
+}
+
+/* ===========================
+   LISSAGE DES POLICES
+   =========================== */
+
+body, .formatted-text, .answer-option, .question-header {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+}
+
+/* ===========================
+   ANIMATIONS SUBTILES
+   =========================== */
+
+/* Apparition douce des formules */
+mjx-container {
+  animation: mathFadeIn 0.3s ease-out;
+}
+
+@keyframes mathFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* État de chargement */
+mjx-container[loading] {
+  opacity: 0.4;
+  filter: blur(1px);
+  transition: opacity 0.2s ease, filter 0.2s ease;
+}
+
+/* ===========================
+   RESPONSIVE TYPOGRAPHY
+   =========================== */
+
+@media (max-width: 640px) {
+  .question-header {
+    font-size: var(--text-xl);
+  }
+
+  .answer-option {
+    font-size: var(--text-lg);
+  }
+
+  /* Réduction du scale en mode display sur mobile */
+  mjx-container[display="true"] svg {
+    transform: scale(1.1) !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .question-header {
+    font-size: var(--text-3xl);
+  }
+
+  .answer-option {
+    font-size: var(--text-2xl);
+  }
+}
+
+/* ===========================
+   ACCESSIBILITÉ
+   =========================== */
+
+/* Contraste minimum WCAG AAA */
+.high-contrast mjx-container[jax="SVG"] svg g[fill] {
+  fill: #000000 !important;
+}
+
+/* Mode réduit des animations */
+@media (prefers-reduced-motion: reduce) {
+  mjx-container {
+    animation: none;
+  }
+
+  mjx-container[jax="SVG"] svg {
+    transition: none;
+  }
+}
+
+/* ===========================
+   OPTIMISATIONS PERFORMANCE
+   =========================== */
+
+/* GPU acceleration pour les transformations */
+mjx-container[display="true"] svg,
+mjx-container[jax="SVG"] svg {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Optimisation du rendu */
+mjx-container {
+  contain: layout style paint;
+  content-visibility: auto;
+}

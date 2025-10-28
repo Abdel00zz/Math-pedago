@@ -113,8 +113,8 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({
         return (
             <div className="bg-surface p-6 sm:p-8 rounded-2xl border border-border shadow-claude animate-fadeIn">
                 <div className="bg-black text-white px-6 py-4 rounded-xl mb-6 shadow-lg">
-                    <h3 className="text-[23px] md:text-[25px] font-title leading-relaxed font-semibold">
-                        <FormattedText text={question.question} />
+                    <h3>
+                        <FormattedText text={question.question} variant="question" />
                     </h3>
                 </div>
 
@@ -135,8 +135,8 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({
                                 return (
                                     <li key={index} className={stepClass}>
                                         <span className="font-bold text-lg text-[#1a1a1a] min-w-[24px]">{index + 1}.</span>
-                                        <div className="flex-1 text-[#1a1a1a] text-[18px] leading-relaxed">
-                                            <FormattedText text={item} />
+                                        <div className="flex-1 text-[#1a1a1a]">
+                                            <FormattedText text={item} variant="answer" />
                                         </div>
                                         <span className={`material-symbols-outlined !text-2xl ${iconClass}`}>
                                             {icon}
@@ -157,8 +157,8 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({
                             {correctOrder.map((item, index) => (
                                 <li key={index} className="flex items-start gap-4 p-4 rounded-xl bg-surface border-2 border-primary/30">
                                     <span className="font-bold text-primary text-lg min-w-[24px]">{index + 1}.</span>
-                                    <div className="flex-1 text-text text-[18px] leading-relaxed">
-                                        <FormattedText text={item} />
+                                    <div className="flex-1 text-text">
+                                        <FormattedText text={item} variant="answer" />
                                     </div>
                                 </li>
                             ))}
@@ -185,8 +185,8 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({
 
             <div className="bg-surface p-6 sm:p-8 rounded-2xl border border-border shadow-claude animate-fadeIn">
                 <div className="bg-black text-white px-6 py-4 rounded-xl mb-6 shadow-lg">
-                    <h3 className="text-[23px] md:text-[25px] font-title text-center leading-relaxed font-semibold">
-                        <FormattedText text={question.question} />
+                    <h3 className="text-center">
+                        <FormattedText text={question.question} variant="question" />
                     </h3>
                 </div>
 
@@ -216,8 +216,8 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({
                                         </div>
 
                                         {/* Texte */}
-                                        <div className="flex-1 text-text text-[17px] sm:text-[18px] leading-relaxed">
-                                            <FormattedText text={item} />
+                                        <div className="flex-1 text-text">
+                                            <FormattedText text={item} variant="answer" />
                                         </div>
                                     </div>
 
