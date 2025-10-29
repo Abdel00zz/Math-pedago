@@ -89,6 +89,39 @@
     
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     
+    <!-- MathJax Configuration -->
+    <script>
+      window.MathJax = {
+        loader: { load: ['[tex]/html'] },
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']],
+          packages: {'[+]': ['html']},
+        },
+        svg: {
+          fontCache: 'global',
+          scale: 1,
+          minScale: 0.5,
+          mtextInheritFont: true,
+          displayAlign: 'center',
+          displayIndent: '0',
+        },
+        options: {
+          enableMenu: false,
+          skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+          ignoreHtmlClass: 'tex2jax_ignore',
+          processHtmlClass: 'tex2jax_process',
+        },
+        startup: {
+          ready: () => {
+            console.log('MathJax est chargé et prêt');
+            window.MathJax.startup.defaultReady();
+          }
+        }
+      };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
     <style>
         body {
           font-family: 'Inter', system-ui, -apple-system, sans-serif;
@@ -167,80 +200,153 @@
             font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
         }
         
-        /* ===== MATHJAX STYLING - Modern & Elegant Math Fonts ===== */
-
-        /* Harmonize MathJax with surrounding text */
-        mjx-container[jax="SVG"] {
-            display: inline-flex !important;
-            align-items: center !important;
-            vertical-align: middle !important;
-            margin: 0 0.2em !important;
-            line-height: 0 !important;
+        /* ===== MATHJAX STYLING - Responsive Math Fonts ===== */
+        :root {
+            --math-text-color: #E2E8F0;
+            --math-bg-color: transparent;
+            
+            /* Math formula scaling - Taille normale et lisible */
+            --math-scale-mobile: 1.0;
+            --math-scale-tablet: 1.0;
+            --math-scale-desktop: 1.0;
+            
+            /* Component-specific font sizes */
+            --quiz-question-size: 16px;
+            --quiz-question-size-md: 18px;
+            --quiz-choice-size: 15px;
+            --quiz-choice-size-md: 16px;
+            --hint-modal-size: 13px;
+            --hint-modal-size-md: 14px;
+            --exercise-text-size: 15px;
+            --exercise-text-size-md: 16px;
+            --chapter-title-size: 18px;
+            --chapter-title-size-md: 20px;
         }
 
-        /* Increase math font size for better readability */
-        mjx-container[jax="SVG"] svg {
-            vertical-align: middle !important;
+        /* Base responsive math container - Alignement parfait */
+        mjx-container {
+            display: inline !important;
+            vertical-align: baseline !important;
+            line-height: inherit !important;
+            margin: 0 0.1em !important;
+            transform: none !important;
         }
 
-        /* Use elegant colors for math symbols */
-        mjx-container[jax="SVG"] svg g[fill] {
-            fill: #1e293b !important; /* Darker for better contrast */
+        mjx-container[jax="CHTML"] {
+            display: inline !important;
+            vertical-align: baseline !important;
         }
 
-        /* In quiz questions (white background), use even darker color */
-        .bg-white mjx-container[jax="SVG"] svg g[fill],
-        .text-white mjx-container[jax="SVG"] svg g[fill] {
-            fill: #ffffff !important; /* White for dark backgrounds */
+        mjx-container svg {
+            display: inline-block !important;
+            vertical-align: baseline !important;
         }
 
-        /* In quiz options (various backgrounds), adapt color */
-        .bg-blue-50 mjx-container[jax="SVG"] svg g[fill],
-        .bg-green-50 mjx-container[jax="SVG"] svg g[fill],
-        .bg-red-50 mjx-container[jax="SVG"] svg g[fill] {
-            fill: #0f172a !important; /* Very dark for light backgrounds */
-        }
-
-        /* Ensure math formulas don't cause layout shifts */
-        mjx-math {
-            display: inline-flex !important;
-            align-items: center !important;
-        }
-
-        /* Better spacing for fractions and complex expressions */
-        mjx-mfrac {
-            margin: 0 0.15em !important;
-        }
-
-        /* Improve superscripts and subscripts alignment */
-        mjx-script {
-            line-height: 1 !important;
-        }
-
-        /* Display mode math (centered, larger) */
+        /* Display math (centered equations) */
         mjx-container[display="true"] {
             display: block !important;
             text-align: center !important;
-            margin: 1.5em 0 !important;
+            margin: 1em 0 !important;
         }
 
-        mjx-container[display="true"] svg {
-            transform: scale(1.25) !important;
+
+        /* Coloration du texte mathématique */
+        mjx-container svg g[fill] {
+            fill: var(--math-text-color) !important;
         }
 
-        /* Remove MathJax menu (already disabled in config) */
-        #MJX-Menu-Settings {
-            display: none !important;
+        .bg-white, .bg-gray-100, .bg-blue-50, .bg-green-50, .bg-red-50 {
+            --math-text-color: #0F172A;
+        }
+        
+        .text-white {
+            --math-text-color: #FFFFFF;
         }
 
-        /* Smooth rendering for math content */
-        mjx-container {
-            transition: opacity 0.2s ease-in-out;
+        /* Quiz specific math rendering */
+        .bg-black mjx-container svg g[fill] {
+            fill: #FFFFFF !important;
         }
 
-        /* Loading state for math */
-        mjx-container[loading] {
-            opacity: 0.5;
+        /* ===== ALIGNEMENT PARFAIT - TOUS LES CONTEXTES ===== */
+        
+        /* Alignement baseline universel pour tous les éléments mathématiques */
+        mjx-math {
+            display: inline !important;
+            vertical-align: baseline !important;
+        }
+
+        mjx-mfrac {
+            vertical-align: baseline !important;
+            margin: 0 0.05em !important;
+        }
+
+        mjx-msup, mjx-msub, mjx-msubsup {
+            vertical-align: baseline !important;
+        }
+
+        mjx-mrow {
+            display: inline !important;
+            vertical-align: baseline !important;
+        }
+
+        /* Améliorer l'alignement dans les quiz et exercices */
+        .quiz-content mjx-container,
+        .exercise-content mjx-container,
+        .formatted-text mjx-container {
+            vertical-align: baseline !important;
+            display: inline !important;
+            line-height: inherit !important;
+        }
+
+        /* ===== COMPONENT-SPECIFIC FONT CLASSES ===== */
+        
+        /* Quiz Components */
+        .quiz-question-text {
+            font-size: var(--quiz-question-size) !important;
+        }
+
+        .quiz-choice-text {
+            font-size: var(--quiz-choice-size) !important;
+        }
+
+        /* Hint Modal */
+        .hint-modal-text {
+            font-size: var(--hint-modal-size) !important;
+            line-height: 1.6;
+        }
+        
+        /* Exercise Content */
+        .exercise-text {
+            font-size: var(--exercise-text-size) !important;
+        }
+
+        /* Chapter Titles */
+        .chapter-title-text {
+            font-size: var(--chapter-title-size) !important;
+        }
+
+        /* Responsive font sizes */
+        @media (min-width: 640px) {
+            .quiz-question-text {
+                font-size: var(--quiz-question-size-md) !important;
+            }
+
+            .quiz-choice-text {
+                font-size: var(--quiz-choice-size-md) !important;
+            }
+
+            .hint-modal-text {
+                font-size: var(--hint-modal-size-md) !important;
+            }
+
+            .exercise-text {
+                font-size: var(--exercise-text-size-md) !important;
+            }
+
+            .chapter-title-text {
+                font-size: var(--chapter-title-size-md) !important;
+            }
         }
     </style>
 <link rel="stylesheet" href="/index.css">

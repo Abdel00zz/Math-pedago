@@ -1,8 +1,8 @@
 import React, { useMemo, useState, useEffect, useCallback, useRef } from 'react';
 import { useAppState, useAppDispatch } from '../../context/AppContext';
-import { MathJax } from 'better-react-mathjax';
 import { Option } from '../../types';
 import OrderingQuestion from './OrderingQuestion';
+import FormattedText from '../FormattedText';
 import { useMathJax } from '../../hooks/useMathJax';
 
 const Quiz: React.FC = () => {
@@ -335,20 +335,6 @@ const Quiz: React.FC = () => {
                         opacity: 1;
                     }
                 }
-
-                /* Harmonisation MathJax avec texte normal */
-                .MathJax, .MathJax_Display {
-                    font-size: 1em !important;
-                    line-height: 1.6 !important;
-                }
-
-                mjx-container[jax="CHTML"][display="true"] {
-                    margin: 0.5em 0 !important;
-                }
-
-                mjx-container {
-                    color: inherit !important;
-                }
             `}</style>
             <div id="quiz-container" className="font-sans max-w-3xl mx-auto px-2">
 
@@ -413,7 +399,7 @@ const Quiz: React.FC = () => {
             )}
 
             {(!question.type || question.type === 'mcq') && (
-                <div className="rounded-3xl border border-border/60 bg-surface/70 backdrop-blur-sm shadow-[0_28px_68px_rgba(15,23,42,0.45)] p-6 sm:p-8 animate-fadeIn">
+                <div className="rounded-3xl border border-border/60 bg-surface/70 backdrop-blur-sm shadow-[0_28px_68px_rgba(15,23,42,0.45)] p-6 sm:p-8 animate-fadeIn quiz-content">
                     <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
                         <p className="text-sm text-text-secondary">
                             Question {currentQuestionIndex + 1} sur {chapter.quiz.length}
@@ -424,8 +410,8 @@ const Quiz: React.FC = () => {
                         </span>
                     </div>
                     <div className="bg-black text-white px-6 py-4 rounded-xl mb-6 shadow-lg">
-                        <h3 className="text-[22px] font-display leading-relaxed font-semibold">
-                            <MathJax dynamic>{question.question}</MathJax>
+                        <h3 className="quiz-question-text font-display leading-relaxed font-semibold">
+                            <FormattedText text={question.question} />
                         </h3>
                     </div>
                     <div className="space-y-4">
@@ -474,8 +460,8 @@ const Quiz: React.FC = () => {
                                             </div>
                                         )}
                                     </div>
-                                    <span className="flex-1 text-left text-[19px] leading-relaxed font-medium">
-                                        <MathJax dynamic>{option.text}</MathJax>
+                                    <span className="flex-1 text-left quiz-choice-text leading-relaxed font-medium">
+                                        <FormattedText text={option.text} />
                                     </span>
                                 </button>
                             );
@@ -505,10 +491,8 @@ const Quiz: React.FC = () => {
             ) && (
                 <div className="mt-6 p-4 bg-background rounded-lg border border-border animate-fadeIn">
                     <h4 className="font-bold text-text mb-2 text-lg font-serif">Explication :</h4>
-                    <p className="text-secondary serif-text">
-                        <MathJax dynamic>
-                            {question.explanation || question.options?.find(o => o.isCorrect)?.explanation}
-                        </MathJax>
+                    <p className="text-secondary serif-text exercise-text">
+                        <FormattedText text={question.explanation || question.options?.find(o => o.isCorrect)?.explanation || ''} />
                     </p>
                 </div>
             )}

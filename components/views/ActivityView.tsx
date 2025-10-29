@@ -29,7 +29,14 @@ const ActivityView: React.FC = () => {
     };
 
     if (!currentChapterId || !activities[currentChapterId]) {
-        return <div>Erreur: Chapitre non chargé.</div>;
+        return (
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
+                <div className="flex flex-col items-center justify-center space-y-4">
+                    <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+                    <p className="text-text-secondary text-lg">Chargement du chapitre...</p>
+                </div>
+            </div>
+        );
     }
 
     const chapter = activities[currentChapterId];

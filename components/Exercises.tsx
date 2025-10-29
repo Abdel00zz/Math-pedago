@@ -1,9 +1,8 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { useAppState, useAppDispatch } from '../context/AppContext';
 import { Feedback, SubQuestion, Exercise, ExerciseImage } from '../types';
-import { MathJax } from 'better-react-mathjax';
 import HintModal from './HintModal';
-import { useMathJax } from '../hooks/useMathJax';
+import MathContent from './MathContent';
 
 const feedbackConfig: { [key in Feedback]: { base: string; selected: string } } = {
     'Facile':    { base: 'bg-white border-[#d7ccc8] text-[#a1887f] hover:bg-gray-100', selected: 'bg-success text-white border-success' },
@@ -97,17 +96,6 @@ const Exercises: React.FC<ExercisesProps> = ({ onAllCompleted }) => {
         dispatch({ type: 'UPDATE_EXERCISE_FEEDBACK', payload: { exId, feedback } });
     };
 
-    // Hook MathJax optimisé pour le rendu des formules
-    useMathJax(
-        [chapter, exercisesFeedback], 
-        { 
-            delay: 150,
-            containerId: 'exercises-container',
-            onSuccess: () => console.log('✅ Formules mathématiques rendues'),
-            onError: (error) => console.error('❌ Erreur rendu MathJax:', error)
-        }
-    );
-
     // Fonction pour formater le texte HTML (gras, italique, etc.)
     const formatText = (text: string) => {
         // Remplacer les balises <br> par des sauts de ligne
@@ -136,9 +124,7 @@ const Exercises: React.FC<ExercisesProps> = ({ onAllCompleted }) => {
                     {subQuestions.map((sq, index) => (
                         <li key={index} className="pl-2 text-sm sm:text-base leading-relaxed">
                             <div className="font-medium text-black">
-                                <MathJax dynamic>
-                                    <span className="text-sm sm:text-base" dangerouslySetInnerHTML={{ __html: formatText(sq.text) }} />
-                                </MathJax>
+                                <MathContent content={formatText(sq.text)} className="text-sm sm:text-base" inline={true} />
                             </div>
 
                             {sq.sub_sub_questions && sq.sub_sub_questions.length > 0 && (
@@ -166,9 +152,7 @@ const Exercises: React.FC<ExercisesProps> = ({ onAllCompleted }) => {
                                             >
                                                 {String.fromCharCode(97 + ssqIndex)}.
                                             </span>
-                                            <MathJax dynamic>
-                                                <span className="text-sm sm:text-base" dangerouslySetInnerHTML={{ __html: formatText(ssq.text) }} />
-                                            </MathJax>
+                                            <MathContent content={formatText(ssq.text)} className="text-sm sm:text-base" inline={true} />
                                         </li>
                                     ))}
                                 </ol>
@@ -326,9 +310,9 @@ const Exercises: React.FC<ExercisesProps> = ({ onAllCompleted }) => {
                         )}
                         
                         {/* Énoncé avec images de contenu (center, float-left, float-right, inline) */}
-                        <div className="text-base sm:text-lg font-sans text-black leading-relaxed">
-                            <div className="math-render text-sm sm:text-base font-sans leading-relaxed">
-                                <MathJax dynamic>{exercise.statement}</MathJax>
+                        <div className="text-base sm:text-lg font-sans text-black leading-relaxed exercise-content">
+                            <div className="math-render exercise-text font-sans leading-relaxed">
+                                <MathContent content={formatText(exercise.statement)} inline={false} />
                             </div>
                             
                             {/* Images dans le contenu (center/float-left/float-right/inline) */}

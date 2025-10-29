@@ -31,6 +31,8 @@ export interface Video {
 
 export interface Hint {
     text: string;
+    // Nouveau champ optionnel pour lier explicitement un indice à une question spécifique
+    questionNumber?: string; // Ex: "2b", "1a", "3", etc.
     // Fix: Added optional 'sub_questions' to allow hints to contain sub-questions.
     sub_questions?: SubQuestion[];
 }

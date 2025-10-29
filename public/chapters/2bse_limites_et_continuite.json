@@ -337,7 +337,7 @@
     {
       "id": "exo_etude_fonction_auxiliaire_01",
       "title": "Étude d'une fonction via une fonction auxiliaire",
-      "statement": "Soit la fonction $f$ définie sur $\\mathbb{R}$ par : $f(x) = \\frac{x^3 - 4}{x^2 + 1}$.",
+      "statement": "Soit la fonction $f$ définie sur $\\mathbb{R}$ par : $f(x) = \\displaystyle \\frac{x^3 - 4}{x^2 + 1}$.",
       "sub_questions": [
         {
           "text": "<strong>Étude de la fonction $g$</strong> <br> On pose $g(x) = x^3 + 3x + 8$.",
@@ -360,32 +360,60 @@
               "text": "Déterminer les limites de $f$ en $+\\infty$ et $-\\infty$."
             },
             {
-              "text": "Calculer $f'(x)$ et montrer que : $f'(x) = \\frac{x(x^3 + 3x + 8)}{(x^2 + 1)^2}$."
+              "text": "Calculer $f'(x)$ et montrer que : $f'(x) = \\displaystyle \\frac{x(x^3 + 3x + 8)}{(x^2 + 1)^2}$."
             },
             {
               "text": "À l'aide d'un tableau de signe, donner le signe de $f'(x)$ puis dresser le tableau de variation de la fonction $f$."
             },
             {
-              "text": "En utilisant la relation $g(\\alpha) = 0$, montrer que $f(\\alpha) = \\frac{3}{2}\\alpha$."
+              "text": "En utilisant la relation $g(\\alpha) = 0$, montrer que $f(\\alpha) = \\displaystyle \\frac{3}{2}\\alpha$."
             },
             {
               "text": "En déduire un encadrement de $f(\\alpha)$."
             }
           ]
         }
-      ]
-      ,
+      ],
       "hint": [
-        { "text": "Étudiez d'abord la fonction auxiliaire g puis reliez ses racines aux propriétés de f; faites un tableau de signes pour f'." }
+        {
+          "text": "**Variations de g** : Calculez $g'(x)$. Le signe de $g'(x)$ donne la monotonie de $g$.",
+          "questionNumber": "1a"
+        },
+        {
+          "text": "**Existence de $\\alpha$** : Appliquez le **TVI** sur $\\mathbb{R}$. La stricte monotonie garantit l'unicité. Vérifiez l'intervalle avec $g(-2)$ et $g(0)$.",
+          "questionNumber": "1b"
+        },
+        {
+          "text": "**Limites de f** : Utilisez le terme de plus haut degré au numérateur et au dénominateur pour les limites à l'infini.",
+          "questionNumber": "2a"
+        },
+        {
+          "text": "**Calcul de $f'(x)$** : Formule du quotient $\\displaystyle \\left(\\frac{u}{v}\\right)' = \\frac{u'v - uv'}{v^2}$ avec $u=x^3-4$ et $v=x^2+1$. Simplifiez pour obtenir la forme souhaitée.",
+          "questionNumber": "2b"
+        },
+        {
+          "text": "**Signe de $f'(x)$** : Le signe dépend de $\\displaystyle x$ et de $\\displaystyle g(x)$ (dont le signe a été établi en 1c), car le dénominateur $\\displaystyle (x^2+1)^2$ est positif. Déduisez les variations.",
+          "questionNumber": "2c"
+        },
+        {
+          "text": "**Substitution avec $\\alpha$** : De $\\displaystyle g(\\alpha)=0$, on tire $\\displaystyle \\alpha^3 = -3\\alpha - 8$. Substituez $\\displaystyle \\alpha^3$ dans l'expression de $\\displaystyle f(\\alpha) = \\frac{\\alpha^3 - 4}{\\alpha^2 + 1}$ pour simplifier.",
+          "questionNumber": "2d"
+        },
+        {
+          "text": "**Encadrement de $f(\\alpha)$** : Utilisez l'encadrement connu de $\\alpha$ (de 1b) et la formule $\\displaystyle f(\\alpha) = \\frac{3}{2}\\alpha$ pour encadrer $f(\\alpha)$.",
+          "questionNumber": "2e"
+        }
       ]
     },
     {
       "id": "exo_continuite_parametres_02",
       "title": "Continuité d'une fonction définie par morceaux",
-      "statement": "Soit $a$ et $b$ deux réels et $f$ la fonction définie sur $\\mathbb{R}$ par : \n$$f(x) = \\begin{cases} \\frac{a - x}{x + 1} & \\text{si } x \\in ]-\\infty; -2[ \\cup ]1; +\\infty[ \\\\ \\frac{1}{2}x^2 + x + b & \\text{si } x \\in [-2; 1] \\end{cases}$$\nDéterminer les réels $a$ et $b$ pour que $f$ soit continue sur $\\mathbb{R}$."
-      ,
+      "statement": "Soit $a$ et $b$ deux réels et $f$ la fonction définie sur $\\mathbb{R}$ par : \n$$f(x) = \\begin{cases} \\frac{a - x}{x + 1} & \\text{si } x \\in ]-\\infty; -2[ \\cup ]1; +\\infty[ \\\\ \\frac{1}{2}x^2 + x + b & \\text{si } x \\in [-2; 1] \\end{cases}$$ \n Déterminer les valeurs de $a$ et $b$ pour que $f$ soit continue sur $\\mathbb{R}$.",
+      
       "hint": [
-        { "text": "Calculez les limites aux points de jonction et imposez l'égalité des valeurs pour déterminer a et b." }
+        {
+          "text": "**Stratégie globale** : La continuité doit être assurée aux points de jonction $x = -2$ et $x = 1$. <br><br>**Condition en -2** : Écrivez l'égalité $\\displaystyle \\lim_{x \\to -2^-} f(x) = f(-2)$. <br><br>**Condition en 1** : Écrivez l'égalité $\\displaystyle f(1) = \\lim_{x \\to 1^+} f(x)$. <br><br>**Résolution** : Les deux conditions forment un système linéaire de deux équations à deux inconnues ($a$ et $b$)."
+        }
       ]
     },
     {
@@ -428,23 +456,57 @@
           "text": "Soit $f$ la fonction numérique définie sur $\\mathbb{R}$ par $f(x) = x^5 + 3x^3 + 4x - 5$. Montrer que la courbe représentative $(C_f)$ de $f$ coupe l'axe des abscisses en un point unique dont l'abscisse $\\alpha$ vérifie $0 < \\alpha < 1$."
         },
         {
-          "text": "Soit $f$ la fonction définie par $f(x) = \\frac{1}{x} - 2\\sqrt{x+1}$.",
+          "text": "Soit $f$ la fonction définie par $f(x) = \\displaystyle \\frac{1}{x} - 2\\sqrt{x+1}$.",
           "sub_sub_questions": [
             {
-              "text": "Déterminer  l'ensemble de définition de $f$, et calculer $\\displaystyle \\lim_{x \\to +\\infty} f(x)$."
+              "text": "Déterminer  l'ensemble de définition de $f$, et calculer $\\displaystyle \\lim_{x \\to +\\infty} f(x)$."
             },
             {
-              "text": "Montrer que l'équation $f(x) = 0$ admet une solution unique $\\alpha$ puis que $\\frac{1}{2} < \\alpha < 1$."
+              "text": "Montrer que l'équation $f(x) = 0$ admet une solution unique $\\alpha$ puis que $\\displaystyle \\frac{1}{2} < \\alpha < 1$."
             },
             {
               "text": "Montrer que le réel $\\alpha$ vérifie la relation $4\\alpha^3 + 4\\alpha^2 - 1 = 0$."
             }
           ]
         }
-      ]
-      ,
+      ],
       "hint": [
-        { "text": "Pour la dichotomie, vérifiez d'abord f(a)f(b)<0 et suivez la méthode en calculant des milieux successifs." }
+        {
+          "text": "**Image d'un intervalle** : Déterminez d'abord le sens de variation de $f$ sur chaque intervalle $I, J, K$ en utilisant $f'(x)$.",
+          "questionNumber": "1a"
+        },
+        {
+          "text": "**Unicité (TVI)** : Justifiez la continuité et la stricte monotonie de $f$ sur $]-1; 1[$ et vérifiez si 0 est dans l'intervalle image.",
+          "questionNumber": "1b"
+        },
+        {
+          "text": "**Dichotomie** : Appliquez l'algorithme : calculez $f(\\text{milieu})$ et réduisez l'intervalle de moitié tant que l'amplitude est supérieure à 0,25.",
+          "questionNumber": "1c"
+        },
+        {
+          "text": "**Continuité de $\\varphi$** : Le seul point critique est $x=2$. Vérifiez si $\\displaystyle \\lim_{x \\to 2^-} \\varphi(x) = \\varphi(2)$.",
+          "questionNumber": "2a"
+        },
+        {
+          "text": "**Image de $\\varphi$** : Étudiez les variations de $\\varphi$ sur $[-2; 2[$ et $[2; 4]$ séparément pour trouver les images.",
+          "questionNumber": "2b"
+        },
+        {
+          "text": "**Point fixe** : Appliquez le **TVI** à la fonction auxiliaire $h(x) = \\psi(x) - x$ sur $[0, 1]$. Calculez $h(0)$ et $h(1)$ en utilisant $\\psi(x) \\in [0, 1]$.",
+          "questionNumber": "3"
+        },
+        {
+          "text": "**Intersection unique** : Prouvez que $f$ est continue et strictement croissante sur $\\mathbb{R}$ (en utilisant $f'(x)$). Montrez que $0 \\in f(]0, 1[)$.",
+          "questionNumber": "4"
+        },
+        {
+          "text": "**Domaine et limites** : L'existence de $\\sqrt{x+1}$ impose $x+1 \\ge 0$. L'existence de $\\displaystyle \\frac{1}{x}$ impose $x \\neq 0$.",
+          "questionNumber": "5a"
+        },
+        {
+          "text": "**Relation algébrique** : De $f(\\alpha)=0$, on a $\\displaystyle \\frac{1}{\\alpha} = 2\\sqrt{\\alpha+1}$. Élevez au carré les deux membres pour éliminer la racine et isolez le polynôme.",
+          "questionNumber": "5c"
+        }
       ]
     },
     {
@@ -470,16 +532,34 @@
         {
           "text": "Vérifier que $f^{-1}$ est continue sur son domaine de définition."
         }
-      ]
-      ,
+      ],
       "hint": [
-        { "text": "Montrez la continuité et la stricte monotonie de f pour assurer l'existence de la réciproque; calculez f' pour le signe." }
+        {
+          "text": "**Continuité** : $f$ est une somme et composition de fonctions usuelles continues sur $D_f$.",
+          "questionNumber": "1"
+        },
+        {
+          "text": "**Monotonie** : La dérivée de $\\sqrt{u}$ est $\\displaystyle \\frac{u'}{2\\sqrt{u}}$. Déduisez le sens de variation (stricte monotonie).",
+          "questionNumber": "2"
+        },
+        {
+          "text": "**Image** : L'image de $D_f$ est $[\\displaystyle f(1), \\lim_{x \\to +\\infty} f(x)[$ car $f$ est strictement croissante.",
+          "questionNumber": "3"
+        },
+        {
+          "text": "**Réciproque** : L'existence de $f^{-1}$ est garantie par la **continuité** et la **stricte monotonie** de $f$. Son domaine est l'intervalle image $f(D_f)$.",
+          "questionNumber": "4"
+        },
+        {
+          "text": "**Expression** : Posez $y = \\sqrt{x-1} + 2$. Isolez $x$ en fonction de $y$. N'oubliez pas que $x = f^{-1}(y)$.",
+          "questionNumber": "5"
+        }
       ]
     },
     {
       "id": "exo_tvi_point_fixe_04",
       "title": "Application du TVI à une fonction sur un intervalle borné",
-      "statement": "Soit $k$ la fonction définie sur $[1, 3]$ par : $k(x) = \\frac{2x + 3}{x + 1}$.",
+      "statement": "Soit $k$ la fonction définie sur $[1, 3]$ par : $k(x) = \\displaystyle \\frac{2x + 3}{x + 1}$.",
       "sub_questions": [
         {
           "text": "Justifier que $k$ est continue sur $[1, 3]$. Pourquoi le dénominateur ne pose-t-il pas de problème ?"
@@ -502,12 +582,30 @@
         {
           "text": "Résoudre algébriquement l'équation $k(x) = x$ et vérifier que la solution appartient bien à $[1, 3]$."
         }
-      ]
-      ,
+      ],
       "hint": [
-        { "text": "Utilisez le TVI et l'encadrement des valeurs aux bornes; calculez k(1) et k(3) pour l'utiliser." }
+        {
+          "text": "**Continuité** : $k$ est rationnelle. Elle est continue sur son domaine de définition, ici $\\mathbb{R} \\setminus \\{-1\\}$.",
+          "questionNumber": "1"
+        },
+        {
+          "text": "**Stabilité** : Calculez $k'(x)$ (question 5) pour trouver les variations. L'image de l'intervalle $[1, 3]$ doit être dans $[k(3), k(1)]$.",
+          "questionNumber": "2"
+        },
+        {
+          "text": "**TVI (Existence)** : Appliquez le TVI à $\\varphi(x) = k(x) - x$ sur $[1, 3]$. Les signes opposés de $\\varphi(1)$ et $\\varphi(3)$ garantissent l'existence d'une racine.",
+          "questionNumber": "4"
+        },
+        {
+          "text": "**Unicité (Corollaire du TVI)** : Calculez $\\varphi'(x)$. Son signe garantit la stricte monotonie de $\\varphi$ sur $[1, 3]$, d'où l'unicité de la solution $\\alpha$.",
+          "questionNumber": "6"
+        },
+        {
+          "text": "**Résolution algébrique** : L'équation $\\displaystyle \\frac{2x+3}{x+1} = x$ se ramène à une équation du second degré après avoir multiplié par $(x+1)$.",
+          "questionNumber": "7"
+        }
       ]
     }
   ],
-  "version": "v1.1.0-2e195f"
+  "version": "v1.2.1-precise-hints"
 }

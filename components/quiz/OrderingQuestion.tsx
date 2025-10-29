@@ -111,14 +111,12 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({
     // --- REVIEW/SUBMITTED MODE ---
     if (isReviewMode || isSubmitted) {
         return (
-            <div className="bg-surface p-6 sm:p-8 rounded-2xl border border-border shadow-claude animate-fadeIn">
+            <div className="bg-surface p-6 sm:p-8 rounded-2xl border border-border shadow-claude animate-fadeIn quiz-content">
                 <div className="bg-black text-white px-6 py-4 rounded-xl mb-6 shadow-lg">
-                    <h3 className="text-[23px] md:text-[25px] font-title leading-relaxed font-semibold">
+                    <h3 className="quiz-question-text font-title leading-relaxed font-semibold">
                         <FormattedText text={question.question} />
                     </h3>
-                </div>
-
-                <div className="space-y-8">
+                </div>                <div className="space-y-8">
                     <div>
                         <h4 className="text-lg font-semibold text-text mb-3">Votre réponse :</h4>
                         <ul className="space-y-3">
@@ -135,7 +133,7 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({
                                 return (
                                     <li key={index} className={stepClass}>
                                         <span className="font-bold text-lg text-[#1a1a1a] min-w-[24px]">{index + 1}.</span>
-                                        <div className="flex-1 text-[#1a1a1a] text-[18px] leading-relaxed">
+                                        <div className="flex-1 text-[#1a1a1a] text-[13px] leading-relaxed flex items-center">
                                             <FormattedText text={item} />
                                         </div>
                                         <span className={`material-symbols-outlined !text-2xl ${iconClass}`}>
@@ -157,7 +155,7 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({
                             {correctOrder.map((item, index) => (
                                 <li key={index} className="flex items-start gap-4 p-4 rounded-xl bg-surface border-2 border-primary/30">
                                     <span className="font-bold text-primary text-lg min-w-[24px]">{index + 1}.</span>
-                                    <div className="flex-1 text-text text-[18px] leading-relaxed">
+                                    <div className="flex-1 text-text text-[13px] leading-relaxed flex items-center">
                                         <FormattedText text={item} />
                                     </div>
                                 </li>
@@ -183,14 +181,12 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({
                 }
             `}</style>
 
-            <div className="bg-surface p-6 sm:p-8 rounded-2xl border border-border shadow-claude animate-fadeIn">
-                <div className="bg-black text-white px-6 py-4 rounded-xl mb-6 shadow-lg">
-                    <h3 className="text-[23px] md:text-[25px] font-title text-center leading-relaxed font-semibold">
-                        <FormattedText text={question.question} />
-                    </h3>
-                </div>
-
-                <div className="text-center mb-6">
+        <div className="bg-surface p-6 sm:p-8 rounded-2xl border border-border shadow-claude animate-fadeIn quiz-content">
+            <div className="bg-black text-white px-6 py-4 rounded-xl mb-6 shadow-lg">
+                <h3 className="quiz-question-text font-title leading-relaxed font-semibold">
+                    <FormattedText text={question.question} />
+                </h3>
+            </div>                <div className="text-center mb-6">
                     <p className="text-[15px] text-text-secondary leading-relaxed">
                         Cliquez sur les flèches pour réorganiser
                     </p>
@@ -216,7 +212,7 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({
                                         </div>
 
                                         {/* Texte */}
-                                        <div className="flex-1 text-text text-[17px] sm:text-[18px] leading-relaxed">
+                                        <div className="flex-1 text-text text-[12px] sm:text-[13px] leading-relaxed flex items-center">
                                             <FormattedText text={item} />
                                         </div>
                                     </div>

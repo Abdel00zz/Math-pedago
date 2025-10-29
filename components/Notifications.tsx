@@ -15,7 +15,7 @@ export const Notifications: React.FC = () => {
     // Synchroniser les états avec les notifications
     useEffect(() => {
         setNotificationStates(prev => {
-            const newMap = new Map(prev);
+            const newMap = new Map<string, NotificationWithState>(prev);
 
             // Ajouter les nouvelles notifications
             notifications.forEach(notif => {
@@ -27,12 +27,13 @@ export const Notifications: React.FC = () => {
             // Marquer comme "leaving" les notifications qui ont disparu
             const currentIds = new Set(notifications.map(n => n.id));
             newMap.forEach((state, id) => {
-                if (!currentIds.has(id) && !state.isLeaving) {
-                    newMap.set(id, { ...state, isLeaving: true });
+                const s = state as NotificationWithState;
+                if (!currentIds.has(id) && !s.isLeaving) {
+                    newMap.set(id, { ...s, isLeaving: true });
                     // Supprimer complètement après l'animation
                     setTimeout(() => {
                         setNotificationStates(m => {
-                            const updated = new Map(m);
+                            const updated = new Map<string, NotificationWithState>(m);
                             updated.delete(id);
                             return updated;
                         });

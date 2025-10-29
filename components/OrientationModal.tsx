@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Modal from './Modal';
-import { MathJax } from 'better-react-mathjax';
+import MathContent from './MathContent';
 
 interface OrientationModalProps {
     isOpen: boolean;
@@ -349,7 +349,7 @@ const OrientationModal: React.FC<OrientationModalProps> = ({ isOpen, onClose, cl
                                     aria-expanded={openChapterId === chapter.id}
                                 >
                                     <span className="font-medium text-text pr-4 text-sm sm:text-base leading-relaxed">
-                                        <span className="app-math"><MathJax dynamic>{`${chapter.title}`}</MathJax></span>
+                                        <MathContent content={chapter.title} inline={true} />
                                     </span>
                                     <span className={`material-symbols-outlined text-orange-500 transition-transform duration-200 text-[20px] ${openChapterId === chapter.id ? 'rotate-180' : ''}`}>
                                         expand_more
@@ -369,7 +369,7 @@ const OrientationModal: React.FC<OrientationModalProps> = ({ isOpen, onClose, cl
                                                 {chapter.contents.map((content, index) => (
                                                     <li key={index} className="flex gap-2.5">
                                                         <span className="text-orange-400 mt-1 flex-shrink-0 text-[10px]">●</span>
-                                                        <span className="app-math"><MathJax dynamic>{content}</MathJax></span>
+                                                        <MathContent content={content} inline={true} />
                                                     </li>
                                                 ))}
                                             </ul>
@@ -382,7 +382,7 @@ const OrientationModal: React.FC<OrientationModalProps> = ({ isOpen, onClose, cl
                                                 {chapter.capacities.map((capacity, index) => (
                                                     <li key={index} className="flex gap-2.5">
                                                         <span className="text-orange-400 mt-1 flex-shrink-0 text-[10px]">●</span>
-                                                        <span className="app-math"><MathJax dynamic>{capacity}</MathJax></span>
+                                                        <MathContent content={capacity} inline={true} />
                                                     </li>
                                                 ))}
                                             </ul>

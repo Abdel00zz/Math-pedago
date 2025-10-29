@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
-import { MathJax } from 'better-react-mathjax';
 import { Chapter, QuizProgress } from '../../types';
 import MCQQuestion from './MCQQuestion';
 import OrderingQuestion from './OrderingQuestion';
+import MathContent from '../MathContent';
 
 interface ActiveQuizProps {
     chapter: Chapter;
@@ -82,7 +82,7 @@ const ActiveQuiz: React.FC<ActiveQuizProps> = ({
                 <div className="mt-10 p-6 bg-surface rounded-lg border-2 shadow-lg animate-fadeIn animate-gentleGlow">
                     <h4 className="font-brand text-2xl text-primary mb-4 animate-textGlow">Explication Clé</h4>
                     <div className="text-text font-sans text-lg leading-relaxed space-y-2">
-                        <MathJax dynamic>{explanationText}</MathJax>
+                        <MathContent content={explanationText} inline={false} />
                     </div>
                 </div>
             )}

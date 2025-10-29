@@ -333,14 +333,6 @@ const ChapterHubView: React.FC = () => {
                                 onClick: () => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'dashboard' } })
                             }
                         });
-                    } else if (response.status === 404) {
-                        // API route not found - non-retriable in this environment
-                        clearTimeout(timeoutId);
-                        const msg = `API endpoint not found (HTTP 404). Please ensure the backend /api/submit-work is available.`;
-                        console.error(msg);
-                        lastError = new Error(msg);
-                        // Stop retry loop - this is likely a local/dev setup issue
-                        break;
                     } else {
                         const errorData = await response.json().catch(() => ({}));
                         throw new Error(`Server responded with status ${response.status}: ${errorData.error || response.statusText}`);

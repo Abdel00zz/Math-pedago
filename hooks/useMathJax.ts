@@ -427,7 +427,7 @@ export const useMathJaxAdvanced = (
 };
 
 /**
- * Déclaration TypeScript pour window.MathJax
+ * Déclaration TypeScript pour window.MathJax v4
  */
 declare global {
   interface Window {
@@ -437,6 +437,10 @@ declare global {
       startup?: {
         promise?: Promise<void>;
       };
+      tex2chtmlPromise?: (math: string, options?: any) => Promise<HTMLElement>;
+      tex2svgPromise?: (math: string, options?: any) => Promise<HTMLElement>;
+      tex2chtml?: (math: string, options?: any) => HTMLElement;
+      tex2svg?: (math: string, options?: any) => HTMLElement;
     };
   }
 }

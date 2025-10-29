@@ -668,16 +668,16 @@
       "images": [],
       "hint": [
         {
-          "text": "**Question 1 :** Calculez $f(-1-x)$ en remplaçant $x$ par $-1-x$ dans la formule, puis développez et simplifiez."
+          "text": "**** Calculez $f(-1-x)$ en remplaçant $x$ par $-1-x$ dans la formule, puis développez et simplifiez."
         },
         {
-          "text": "**Question 2 :** Utilisez la relation $f(-1-x) = f(x)$ pour montrer que deux valeurs différentes peuvent avoir la même image. Que signifie cela pour l'injectivité ?"
+          "text": "**** Utilisez la relation $f(-1-x) = f(x)$ pour montrer que deux valeurs différentes peuvent avoir la même image. Que signifie cela pour l'injectivité ?"
         },
         {
-          "text": "**Question 3 :** Résolvez l'équation du second degré $x^2 + x + 2 = \\frac{7}{4}$ en utilisant la forme canonique ou le discriminant."
+          "text": "**** Résolvez l'équation du second degré $x^2 + x + 2 = \\frac{7}{4}$ en utilisant la forme canonique ou le discriminant."
         },
         {
-          "text": "**Question 5 :** Écrivez $f(x)$ sous forme canonique : $f(x) = (x + \\frac{1}{2})^2 + k$. Quelle est la valeur minimale de $f$ ?"
+          "text": "**** Écrivez $f(x)$ sous forme canonique : $f(x) = (x + \\frac{1}{2})^2 + k$. Quelle est la valeur minimale de $f$ ?"
         }
       ]
     },
