@@ -1,0 +1,40 @@
+{
+  "class": "2bse",
+  "chapter": "Calcul de probabilités",
+  "sessionDates": [],
+  "videos": [],
+  "quiz": [
+    {
+      "id": "q_2bse_proba_1",
+      "question": "On lance un dé équilibré à 6 faces. Quelle est la probabilité d'obtenir un nombre pair ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\frac{1}{6}$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$\\frac{1}{3}$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$\\frac{1}{2}$",
+          "is_correct": true,
+          "explanation": "Il y a 3 issues paires (2, 4, 6) sur 6 issues possibles. La probabilité est donc $\\frac{3}{6} = \\frac{1}{2}$."
+        }
+      ],
+      "steps": []
+    }
+  ],
+  "exercises": [
+    {
+      "id": "exo_2bse_proba_1",
+      "title": "Probabilité conditionnelle",
+      "statement": "Une urne contient 5 boules rouges et 3 boules noires. On tire successivement et sans remise deux boules. Quelle est la probabilité que la deuxième boule soit noire sachant que la première était rouge ?",
+      "sub_questions": []
+    }
+  ],
+  "version": "v1.1.0-6e3c64"
+}

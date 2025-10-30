@@ -1,0 +1,35 @@
+{
+  "class": "1bse",
+  "chapter": "Généralités sur les fonctions",
+  "sessionDates": [],
+  "videos": [],
+  "quiz": [
+    {
+      "id": "q1",
+      "question": "Une fonction est dite paire si...",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$f(-x) = -f(x)$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$f(-x) = f(x)$",
+          "is_correct": true,
+          "explanation": "Une fonction f est paire si son domaine de définition est symétrique par rapport à 0 et si pour tout x de ce domaine, $f(-x) = f(x)$."
+        }
+      ],
+      "steps": []
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "title": "Domaine de définition",
+      "statement": "Déterminer le domaine de définition de la fonction $f(x) = \\frac{\\sqrt{x}}{x-1}$.",
+      "sub_questions": []
+    }
+  ],
+  "version": "v1.1.0-cc0abd"
+}

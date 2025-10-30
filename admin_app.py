@@ -3954,7 +3954,12 @@ class SmartChapterManager(QMainWindow):
                 try:
                     chapter = ChapterData()
                     chapter.load_from_manifest(chapter_info, class_id)
-                    chapter_file = self.chapters_dir / chapter.file_name
+                    
+                    # Support pour les chemins avec sous-dossiers (ex: "tcs/tcs_arithmetique.json")
+                    if '/' in chapter.file_name:
+                        chapter_file = self.chapters_dir / Path(chapter.file_name)
+                    else:
+                        chapter_file = self.chapters_dir / chapter.file_name
                     
                     if not chapter_file.exists():
                         error_details.append(f"Fichier manquant: {chapter.file_name}")

@@ -1,0 +1,65 @@
+{
+  "class": "tcs",
+  "chapter": "Généralités sur les fonctions",
+  "sessionDates": [],
+  "videos": [
+    {
+      "id": "video_test_1",
+      "title": "Introduction au chapitre",
+      "youtubeId": "dQw4w9WgXcQ",
+      "duration": "8:30",
+      "description": "Découvrez les concepts fondamentaux de ce chapitre.",
+      "thumbnail": ""
+    },
+    {
+      "id": "video_test_2",
+      "title": "Exemples et applications",
+      "youtubeId": "9bZkp7q19f0",
+      "duration": "12:15",
+      "description": "Voyons quelques exemples concrets d'application.",
+      "thumbnail": ""
+    },
+    {
+      "id": "video_test_3",
+      "title": "Exercices corrigés",
+      "youtubeId": "kJQP7kiw5Fk",
+      "duration": "15:45",
+      "description": "Résolution détaillée d'exercices types.",
+      "thumbnail": ""
+    }
+  ],
+  "quiz": [
+    {
+      "id": "q_tcs_fonctions_1",
+      "question": "L'ensemble de définition de la fonction $f(x) = \\frac{1}{x-1}$ est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\mathbb{R}$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$\\mathbb{R} \\setminus \\{1\\}$",
+          "is_correct": true,
+          "explanation": "Le dénominateur d'une fraction ne peut pas être nul. On doit donc avoir $x-1 \\neq 0$, soit $x \\neq 1$. L'ensemble de définition est donc $\\mathbb{R}$ privé de 1."
+        },
+        {
+          "text": "$[1, +\\infty[$",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    }
+  ],
+  "exercises": [
+    {
+      "id": "exo_tcs_fonctions_1",
+      "title": "Parité d'une fonction",
+      "statement": "Étudier la parité de la fonction $g(x) = x^2 + \\cos(x)$.",
+      "sub_questions": []
+    }
+  ],
+  "version": "v1.1.0-fc790b"
+}

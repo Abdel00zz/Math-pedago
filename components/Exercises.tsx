@@ -96,24 +96,14 @@ const Exercises: React.FC<ExercisesProps> = ({ onAllCompleted }) => {
         dispatch({ type: 'UPDATE_EXERCISE_FEEDBACK', payload: { exId, feedback } });
     };
 
-    // Fonction pour formater le texte HTML (gras, italique, etc.)
+    // 🔍 SUPPRESSION DU TRAITEMENT MARKDOWN ICI
+    // Le formatage est maintenant géré uniquement par MathContent.tsx
+    // Cela évite les conflits avec les délimiteurs LaTeX $ $
     const formatText = (text: string) => {
-        // Remplacer les balises <br> par des sauts de ligne
-        let formatted = text.replace(/<br\s*\/?>/gi, '\n');
-        
-        // Convertir le Markdown **texte** en <strong>
-        formatted = formatted.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-        
-        // Convertir le Markdown *texte* en <em>
-        formatted = formatted.replace(/\*(.+?)\*/g, '<em>$1</em>');
-        
-        // Convertir le Markdown __texte__ en <strong>
-        formatted = formatted.replace(/__(.+?)__/g, '<strong>$1</strong>');
-        
-        // Convertir le Markdown _texte_ en <em>
-        formatted = formatted.replace(/_(.+?)_/g, '<em>$1</em>');
-        
-        return formatted;
+        // On retourne le texte brut sans transformation
+        // MathContent s'occupera du Markdown ET du LaTeX
+        console.log('[Exercises] Text passed to MathContent:', text);
+        return text;
     };
 
     const renderSubQuestions = (subQuestions: SubQuestion[] | undefined) => {
@@ -121,44 +111,69 @@ const Exercises: React.FC<ExercisesProps> = ({ onAllCompleted }) => {
 
             return (
                 <ol className="list-decimal pl-6 mt-4 space-y-4 text-base sm:text-lg text-black">
-                    {subQuestions.map((sq, index) => (
-                        <li key={index} className="pl-2 text-sm sm:text-base leading-relaxed">
-                            <div className="font-medium text-black">
-                                <MathContent content={formatText(sq.text)} className="text-sm sm:text-base" inline={true} />
-                            </div>
+                    {subQuestions.map((sq, index) => {
+                        const sqImages = organizeImages(sq.images);
+                        
+                        return (
+                            <li key={index} className="pl-2 text-sm sm:text-base leading-relaxed">
+                                {/* Images en position top pour la sous-question */}
+                                {sqImages.top.length > 0 && (
+                                    <div className="mb-4 space-y-4">
+                                        {sqImages.top.map((img, imgIndex) => renderImage(img, imgIndex))}
+                                    </div>
+                                )}
+                                
+                                <div className="font-medium text-black">
+                                    <MathContent content={formatText(sq.text)} className="text-sm sm:text-base" inline={true} />
+                                </div>
 
-                            {sq.sub_sub_questions && sq.sub_sub_questions.length > 0 && (
-                                <ol 
-                                    className="list-none pl-0 mt-2 space-y-2"
-                                    style={{ 
-                                        counterReset: 'subsub-counter',
-                                        marginLeft: '1.5rem'
-                                    }}
-                                >
-                                    {sq.sub_sub_questions.map((ssq, ssqIndex) => (
-                                        <li 
-                                            key={ssqIndex} 
-                                            className="relative pl-8 text-sm sm:text-base leading-relaxed text-black"
-                                            style={{
-                                                counterIncrement: 'subsub-counter',
-                                                textAlign: 'left'
-                                            }}
-                                        >
-                                            <span 
-                                                className="absolute left-0 top-0 font-medium text-black"
+                                {/* Images de contenu (center/float) pour la sous-question */}
+                                {sqImages.content.length > 0 && (
+                                    <div className="my-4 space-y-4 clear-both">
+                                        {sqImages.content.map((img, imgIndex) => renderImage(img, imgIndex))}
+                                    </div>
+                                )}
+
+                                {sq.sub_sub_questions && sq.sub_sub_questions.length > 0 && (
+                                    <ol 
+                                        className="list-none pl-0 mt-2 space-y-2"
+                                        style={{ 
+                                            counterReset: 'subsub-counter',
+                                            marginLeft: '1.5rem'
+                                        }}
+                                    >
+                                        {sq.sub_sub_questions.map((ssq, ssqIndex) => (
+                                            <li 
+                                                key={ssqIndex} 
+                                                className="relative pl-8 text-sm sm:text-base leading-relaxed text-black"
                                                 style={{
-                                                    content: 'counter(subsub-counter, lower-alpha) ". "',
+                                                    counterIncrement: 'subsub-counter',
+                                                    textAlign: 'left'
                                                 }}
                                             >
-                                                {String.fromCharCode(97 + ssqIndex)}.
-                                            </span>
-                                            <MathContent content={formatText(ssq.text)} className="text-sm sm:text-base" inline={true} />
-                                        </li>
-                                    ))}
-                                </ol>
-                            )}
-                        </li>
-                    ))}
+                                                <span 
+                                                    className="absolute left-0 top-0 font-medium text-black"
+                                                    style={{
+                                                        content: 'counter(subsub-counter, lower-alpha) ". "',
+                                                    }}
+                                                >
+                                                    {String.fromCharCode(97 + ssqIndex)}.
+                                                </span>
+                                                <MathContent content={formatText(ssq.text)} className="text-sm sm:text-base" inline={true} />
+                                            </li>
+                                        ))}
+                                    </ol>
+                                )}
+                                
+                                {/* Images en position bottom pour la sous-question */}
+                                {sqImages.bottom.length > 0 && (
+                                    <div className="mt-4 space-y-4 clear-both">
+                                        {sqImages.bottom.map((img, imgIndex) => renderImage(img, imgIndex))}
+                                    </div>
+                                )}
+                            </li>
+                        );
+                    })}
                 </ol>
             );
         };

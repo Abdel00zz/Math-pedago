@@ -1,0 +1,40 @@
+{
+  "class": "1bsm",
+  "chapter": "La rotation dans le plan",
+  "sessionDates": [],
+  "videos": [],
+  "quiz": [
+    {
+      "id": "q_rotation_1",
+      "question": "L'image d'un cercle par une rotation est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Un cercle de même centre et de même rayon",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Un cercle de même rayon mais de centre différent",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Une ellipse",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    }
+  ],
+  "exercises": [
+    {
+      "id": "exo_rotation_1",
+      "title": "Image d'un point",
+      "statement": "Dans le plan muni d'un repère orthonormé, on considère le point $A(2,0)$. Déterminer les coordonnées du point $A'$ image de A par la rotation de centre O et d'angle $\\frac{\\pi}{2}$.",
+      "sub_questions": []
+    }
+  ],
+  "version": "v1.1.0-f60e07"
+}

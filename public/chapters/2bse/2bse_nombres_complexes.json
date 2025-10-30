@@ -1,0 +1,40 @@
+{
+  "class": "2bse",
+  "chapter": "Nombres complexes",
+  "sessionDates": [],
+  "videos": [],
+  "quiz": [
+    {
+      "id": "q_2bse_complexes_1",
+      "question": "Quel est le module du nombre complexe $z = 3 + 4i$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "7",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "25",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "5",
+          "is_correct": true,
+          "explanation": "Le module est $|z| = \\sqrt{3^2 + 4^2} = \\sqrt{9+16} = \\sqrt{25} = 5$."
+        }
+      ],
+      "steps": []
+    }
+  ],
+  "exercises": [
+    {
+      "id": "exo_2bse_complexes_1",
+      "title": "Forme trigonométrique",
+      "statement": "Mettre le nombre complexe $z = 1 - i\\sqrt{3}$ sous forme trigonométrique.",
+      "sub_questions": []
+    }
+  ],
+  "version": "v1.1.0-bacc47"
+}

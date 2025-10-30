@@ -1,0 +1,40 @@
+{
+  "class": "1bsm",
+  "chapter": "Les suites numériques",
+  "sessionDates": [],
+  "videos": [],
+  "quiz": [
+    {
+      "id": "q_suites_1",
+      "question": "Soit $(u_n)$ une suite arithmétique de premier terme $u_0 = 3$ et de raison $r=4$. Que vaut $u_5$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "20",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "23",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "15",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    }
+  ],
+  "exercises": [
+    {
+      "id": "exo_suites_1",
+      "title": "Suite géométrique",
+      "statement": "Soit $(v_n)$ une suite géométrique de premier terme $v_0=2$ et de raison $q=3$. Calculer la somme des 4 premiers termes $S = v_0+v_1+v_2+v_3$.",
+      "sub_questions": []
+    }
+  ],
+  "version": "v1.1.0-997c89"
+}

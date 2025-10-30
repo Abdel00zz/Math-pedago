@@ -1,0 +1,844 @@
+{
+  "class": "1bsm",
+  "chapter": "Ensembles et Applications",
+  "sessionDates": [
+    "2025-10-08T18:00:00Z",
+    "2025-10-10T18:45:00Z",
+    "2025-10-15T18:00:52Z"
+  ],
+  "videos": [],
+  "quiz": [
+    {
+      "id": "q_definition_ensemble_1",
+      "question": "Quelle est la différence fondamentale entre la notation en extension et en compréhension d'un ensemble ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "L'extension liste les éléments, la compréhension donne une propriété caractéristique",
+          "is_correct": false,
+          "explanation": "L'extension énumère explicitement tous les éléments entre accolades, tandis que la compréhension décrit les éléments par une propriété qu'ils doivent satisfaire."
+        },
+        {
+          "text": "L'extension utilise des accolades, la compréhension utilise des parenthèses",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "L'extension est pour les ensembles finis, la compréhension pour les infinis",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Il n'y a aucune différence, ce sont deux notations équivalentes",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_inclusion_egalite",
+      "question": "Pour démontrer que deux ensembles A et B sont égaux, la méthode de double inclusion consiste à :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Montrer que $A \\subset B$ et $B \\subset A$",
+          "is_correct": false,
+          "explanation": "La double inclusion est la méthode standard : $A = B \\Leftrightarrow (A \\subset B \\text{ et } B \\subset A)$."
+        },
+        {
+          "text": "Montrer que $A \\cap B \\neq \\emptyset$ et $A \\cup B = E$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Montrer que $|A| = |B|$ (même cardinal)",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Vérifier que $A$ et $B$ ont la même définition en compréhension",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_ensemble_vide",
+      "question": "Quelle affirmation concernant l'ensemble vide $\\emptyset$ est FAUSSE ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\emptyset \\subset A$ pour tout ensemble $A$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$\\emptyset \\in \\mathcal{P}(A)$ pour tout ensemble $A$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$\\emptyset \\cap A = \\emptyset$ pour tout ensemble $A$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$\\emptyset = \\{\\emptyset\\}$",
+          "is_correct": false,
+          "explanation": "L'ensemble vide $\\emptyset$ ne contient aucun élément, tandis que $\\{\\emptyset\\}$ est un singleton contenant l'ensemble vide comme unique élément."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_parties_ensemble",
+      "question": "Si $A \\in \\mathcal{P}(E)$, alors quelle relation est toujours vraie ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$A \\subset E$",
+          "is_correct": false,
+          "explanation": "Par définition, $\\mathcal{P}(E) = \\{X / X \\subset E\\}$, donc $A \\in \\mathcal{P}(E) \\Leftrightarrow A \\subset E$."
+        },
+        {
+          "text": "$A \\in E$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$E \\subset A$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$A = E$",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_loi_morgan_conceptuel",
+      "question": "Les lois de Morgan permettent de transformer :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Le complémentaire d'une union en intersection de complémentaires",
+          "is_correct": false,
+          "explanation": "Les lois de Morgan : $\\overline{A \\cup B} = \\overline{A} \\cap \\overline{B}$ et $\\overline{A \\cap B} = \\overline{A} \\cup \\overline{B}$."
+        },
+        {
+          "text": "Une intersection en union",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Un ensemble fini en ensemble infini",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Une inclusion en égalité",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_distributivite_conceptuel",
+      "question": "La distributivité en théorie des ensembles signifie que :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "L'intersection distribue sur l'union et vice versa",
+          "is_correct": false,
+          "explanation": "Distributivité : $A \\cap (B \\cup C) = (A \\cap B) \\cup (A \\cap C)$ et $A \\cup (B \\cap C) = (A \\cup B) \\cap (A \\cup C)$."
+        },
+        {
+          "text": "L'union et l'intersection sont commutatives",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Le complémentaire distribue sur toutes les opérations",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "On peut changer l'ordre des opérations sans restriction",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_difference_symetrique",
+      "question": "La différence symétrique $A \\triangle B$ représente :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Les éléments qui appartiennent à $A$ ou à $B$ mais pas aux deux",
+          "is_correct": false,
+          "explanation": "La différence symétrique : $A \\triangle B = (A \\setminus B) \\cup (B \\setminus A) = (A \\cup B) \\setminus (A \\cap B)$."
+        },
+        {
+          "text": "Les éléments communs à $A$ et $B$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Les éléments qui n'appartiennent ni à $A$ ni à $B$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Tous les éléments de $A$ et $B$ réunis",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_produit_cartesien_conceptuel",
+      "question": "Dans le produit cartésien $A \\times B$, l'ordre des éléments dans les couples :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Est important : $(a,b) \\neq (b,a)$ en général",
+          "is_correct": false,
+          "explanation": "Le produit cartésien forme des couples ordonnés où l'ordre est significatif, contrairement aux ensembles."
+        },
+        {
+          "text": "N'est pas important : $(a,b) = (b,a)$ toujours",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Dépend de la nature des ensembles $A$ et $B$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Est défini par convention selon le contexte",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_application_definition_precise",
+      "question": "Pour qu'une relation $f: E \\to F$ soit une application, il faut que :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Tout élément de $E$ ait exactement une image dans $F$",
+          "is_correct": false,
+          "explanation": "Une application exige que chaque élément du domaine ait une et une seule image."
+        },
+        {
+          "text": "Tout élément de $F$ ait au moins un antécédent dans $E$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Tout élément de $F$ ait exactement un antécédent dans $E$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Il existe au moins une correspondance entre $E$ et $F$",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_egalite_applications",
+      "question": "Deux applications $f: E \\to F$ et $g: E' \\to F'$ sont égales si et seulement si :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$E = E'$, $F = F'$ et $\\forall x \\in E, f(x) = g(x)$",
+          "is_correct": false,
+          "explanation": "L'égalité d'applications exige l'égalité des domaines, codomaines et de toutes les valeurs."
+        },
+        {
+          "text": "Elles ont la même expression analytique",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$\\forall x \\in E \\cap E', f(x) = g(x)$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Elles ont la même image",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_injection_caracterisation",
+      "question": "Une application $f: E \\to F$ est injective si et seulement si :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Chaque élément de $F$ a au plus un antécédent dans $E$",
+          "is_correct": false,
+          "explanation": "L'injectivité signifie qu'aucun élément de l'ensemble d'arrivée n'a plus d'un antécédent."
+        },
+        {
+          "text": "Chaque élément de $F$ a exactement un antécédent dans $E$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "L'image de $f$ est égale à $F$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Des éléments égaux de $E$ ont des images égales",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_surjection_caracterisation",
+      "question": "Pour montrer qu'une application $f: E \\to F$ est surjective, il suffit de démontrer que :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$f(E) = F$",
+          "is_correct": false,
+          "explanation": "La surjectivité équivaut à dire que l'image de $f$ coïncide avec l'ensemble d'arrivée."
+        },
+        {
+          "text": "$f$ est injective",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Pour tout $x \\in E$, $f(x) \\in F$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$|E| = |F|$ (même cardinal)",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_bijection_reciproque",
+      "question": "Si $f: E \\to F$ est bijective, alors $f^{-1}: F \\to E$ vérifie :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$f \\circ f^{-1} = \\text{Id}_F$ et $f^{-1} \\circ f = \\text{Id}_E$",
+          "is_correct": false,
+          "explanation": "La fonction réciproque vérifie les deux relations de composition avec les identités respectives."
+        },
+        {
+          "text": "$f^{-1} \\circ f = \\text{Id}_F$ et $f \\circ f^{-1} = \\text{Id}_E$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Seulement $f \\circ f^{-1} = \\text{Id}_F$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Seulement $f^{-1} \\circ f = \\text{Id}_E$",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_image_directe_propriete",
+      "question": "Pour toute application $f: E \\to F$ et toutes parties $A, B \\subset E$, on a toujours :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$f(A \\cup B) = f(A) \\cup f(B)$",
+          "is_correct": false,
+          "explanation": "L'image directe conserve toujours l'union, mais pas nécessairement les autres opérations."
+        },
+        {
+          "text": "$f(A \\cap B) = f(A) \\cap f(B)$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$f(A \\setminus B) = f(A) \\setminus f(B)$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$f(\\overline{A}) = \\overline{f(A)}$",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_image_reciproque_propriete",
+      "question": "Pour toute application $f: E \\to F$ et toutes parties $C, D \\subset F$, l'image réciproque conserve :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Toutes les opérations ensemblistes",
+          "is_correct": false,
+          "explanation": "L'image réciproque préserve union, intersection, différence et complémentaire."
+        },
+        {
+          "text": "Seulement l'union et l'intersection",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Seulement l'union",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Aucune opération en général",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_composition_definition",
+      "question": "Pour que la composée $g \\circ f$ soit définie, il faut que :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "L'ensemble d'arrivée de $f$ contienne le domaine de $g$",
+          "is_correct": false,
+          "explanation": "Pour $(g \\circ f)(x) = g(f(x))$, il faut que $f(x)$ soit dans le domaine de $g$."
+        },
+        {
+          "text": "Le domaine de $f$ soit égal au domaine de $g$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "L'ensemble d'arrivée de $f$ soit égal à l'ensemble d'arrivée de $g$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$f$ et $g$ soient toutes deux bijectives",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_composition_proprietes",
+      "question": "La composition d'applications est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Associative mais pas commutative",
+          "is_correct": false,
+          "explanation": "$(h \\circ g) \\circ f = h \\circ (g \\circ f)$ toujours, mais $g \\circ f \\neq f \\circ g$ en général."
+        },
+        {
+          "text": "Commutative mais pas associative",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Associative et commutative",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Ni associative ni commutative",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_vrai_faux_1",
+      "question": "Si $A \\subset B$, alors $\\mathcal{P}(A) \\subset \\mathcal{P}(B)$.",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Vrai",
+          "is_correct": false,
+          "explanation": "Si $A \\subset B$ et $X \\subset A$, alors $X \\subset B$, donc $X \\in \\mathcal{P}(B)$."
+        },
+        {
+          "text": "Faux",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_vrai_faux_2",
+      "question": "Pour toute application $f$, on a $f(A \\cap B) \\subset f(A) \\cap f(B)$.",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Vrai",
+          "is_correct": false,
+          "explanation": "L'inclusion est toujours vraie. L'égalité n'a lieu que si $f$ est injective."
+        },
+        {
+          "text": "Faux",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_vrai_faux_3",
+      "question": "La composition de deux applications injectives est injective.",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Vrai",
+          "is_correct": false,
+          "explanation": "Si $f$ et $g$ sont injectives, alors $g \\circ f$ est injective."
+        },
+        {
+          "text": "Faux",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_vrai_faux_4",
+      "question": "Si $f: E \\to F$ est bijective, alors $f^{-1}$ est unique.",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Vrai",
+          "is_correct": false,
+          "explanation": "La bijectivité garantit l'existence et l'unicité de la fonction réciproque."
+        },
+        {
+          "text": "Faux",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_vrai_faux_5",
+      "question": "$\\{a\\} \\in \\{a, b, c\\}$.",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Vrai",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Faux",
+          "is_correct": false,
+          "explanation": "Faux. On a $a \\in \\{a, b, c\\}$ et $\\{a\\} \\subset \\{a, b, c\\}$, mais $\\{a\\} \\notin \\{a, b, c\\}$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_vrai_faux_6",
+      "question": "Une application peut être à la fois injective et non surjective.",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Vrai",
+          "is_correct": false,
+          "explanation": "Vrai. Par exemple, l'inclusion d'un sous-ensemble propre dans un ensemble."
+        },
+        {
+          "text": "Faux",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_ordering_demonstration",
+      "question": "Pour démontrer qu'une application $f: E \\to F$ est bijective, ordonnez les étapes :",
+      "type": "ordering",
+      "options": [],
+      "steps": [
+        "Démontrer que $f$ est injective",
+        "Démontrer que $f$ est surjective",
+        "Conclure que $f$ est bijective",
+        "Déterminer $f^{-1}$ si nécessaire"
+      ]
+    },
+    {
+      "id": "q_ordering_inclusion",
+      "question": "Pour prouver $A = B$ par double inclusion, ordonnez les étapes :",
+      "type": "ordering",
+      "options": [],
+      "steps": [
+        "Montrer $A \\subset B$",
+        "Montrer $B \\subset A$",
+        "Conclure $A = B$"
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "title": "Ensemble défini par une inéquation",
+      "statement": "Écrire en extension l'ensemble $E = \\{x \\in \\mathbb{N} \\mid |2x - 3| \\le 2\\}$.",
+      "images": [
+        {
+          "id": "img_1761815520181",
+          "path": "pictures/1bsm/1bsm-ensembles-et-applications/img_20251030T091200116Z_image_pro_export__19_.png",
+          "caption": "image-pro-export (19).png",
+          "size": "medium",
+          "position": "center",
+          "alignment": "center",
+          "alt": ""
+        }
+      ],
+      "sub_questions": []
+    },
+    {
+      "id": "ex2",
+      "title": "Opérations sur les ensembles d'entiers",
+      "statement": "On considère les ensembles : $B = \\{x \\in \\mathbb{Z} \\mid |x| < 3\\}$, $E = \\{x \\in \\mathbb{Z} \\mid -5 < x \\le 5\\}$, et $A = E \\cap \\mathbb{N}^*$. Déterminer en extension les ensembles suivants : $A \\cap B$, $\\mathcal{C}_E^{(A \\cup B)}$, $A \\setminus B$ et $(A \\cap B) \\cap \\mathcal{C}_E^{(A \\cup B)}$.",
+      "sub_questions": []
+    },
+    {
+      "id": "ex3",
+      "title": "Étude d'une fonction polynomiale",
+      "statement": "On considère l'application $f: \\mathbb{R} \\to \\mathbb{R}$ définie par $f(x) = x^2 + x + 2$.",
+      "sub_questions": [
+        {
+          "text": "Montrer que $(\\forall x \\in \\mathbb{R}): f(-1-x) = f(x)$.",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "L'application $f$ est-elle injective ?",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Résoudre dans $\\mathbb{R}$ l'équation $f(x) = \\frac{7}{4}$.",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "L'application $f$ est-elle surjective ?",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Montrer que l'image de $f$ est $f(\\mathbb{R}) = [\\frac{7}{4}, +\\infty[$.",
+          "questionNumber": "5",
+          "sub_sub_questions": [],
+          "images": []
+        }
+      ]
+    },
+    {
+      "id": "ex4",
+      "title": "Étude d'une fonction rationnelle",
+      "statement": "On considère l'application $f: \\mathbb{R} \\to \\mathbb{R}$ définie par $f(x) = \\frac{2x}{x^2 + 1}$.",
+      "sub_questions": [
+        {
+          "text": "Vérifier que : $(\\forall x \\in \\mathbb{R}^*), f(\\frac{1}{x}) = f(x)$.",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "L'application $f$ est-elle injective ? Justifier votre réponse.",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Montrer que $(\\forall x \\in \\mathbb{R}), |f(x)| \\le 1$. L'application $f$ est-elle surjective ?",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
+        }
+      ]
+    },
+    {
+      "id": "ex5",
+      "title": "Ensembles définis en compréhension",
+      "statement": "Déterminer en extension les ensembles : $F = \\{x \\in \\mathbb{Z} \\mid \\frac{2x+1}{x+1} \\in \\mathbb{Z}\\}$ et $C = \\{(x,y) \\in (\\mathbb{Z}^*)^2 \\mid \\frac{1}{x} + \\frac{1}{y} = \\frac{1}{5}\\}$.",
+      "sub_questions": []
+    },
+    {
+      "id": "ex6",
+      "title": "Comparaison d'ensembles de fractions",
+      "statement": "On considère les ensembles $A = \\{\\frac{n}{n+1} \\mid n \\in \\mathbb{N}\\}$ et $B = \\{\\frac{n+1}{n+2} \\mid n \\in \\mathbb{N}\\}$.",
+      "sub_questions": [
+        {
+          "text": "Vérifier que $\\frac{2}{3} \\in A \\cap B$.",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Montrer que $A \\subset B$ ($A$ inclus dans $B$ et $B$ inclus dans $A$).",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
+        }
+      ]
+    },
+    {
+      "id": "ex7",
+      "title": "Preuve d'égalité d'ensembles",
+      "statement": "Soient A, B, C trois ensembles. Montrer que si $(B \\setminus A) = (C \\setminus A)$ et $A \\cap B = A \\cap C$, alors $B = C$.",
+      "sub_questions": []
+    },
+    {
+      "id": "ex8",
+      "title": "Ensembles avec racines",
+      "statement": "Soit l'ensemble $A = \\{\\frac{4x}{x+1} \\mid x \\in \\mathbb{R}\\}$.",
+      "sub_questions": [
+        {
+          "text": "Montrer que $\\frac{\\sqrt{3}}{2} \\in A$, en déduire que $A \\ne \\emptyset$.",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Montrer que $A \\subset [-1, 1]$.",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
+        }
+      ]
+    },
+    {
+      "id": "ex9",
+      "title": "Ensembles disjoints",
+      "statement": "On considère les ensembles $A = \\{\\frac{5 + 8k}{20} \\mid k \\in \\mathbb{N}\\}$ et $B = \\{\\frac{5 + 4k}{10} \\mid k \\in \\mathbb{N}\\}$. Montrer que $A \\cap B = \\emptyset$.",
+      "sub_questions": []
+    },
+    {
+      "id": "ex10",
+      "title": "Ensembles trigonométriques",
+      "statement": "On considère les ensembles $E = \\{\\frac{\\pi}{6} + \\frac{k\\pi}{3} \\mid k \\in \\mathbb{Z}\\}$ et $F = \\{\\frac{\\pi}{3} + \\frac{k\\pi}{6} \\mid k \\in \\mathbb{Z}\\}$.",
+      "sub_questions": [
+        {
+          "text": "Déterminer $E \\cap [\\frac{\\pi}{2}, \\pi]$.",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Montrer que $E \\subset F$.",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Montrer que $\\frac{\\pi}{3} \\notin E$.",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "L'inclusion $F \\subset E$ est-elle satisfaite ? Justifier.",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
+        }
+      ]
+    },
+    {
+      "id": "ex11",
+      "title": "Étude d'une bijection",
+      "statement": "On considère l'application $f: [-1, 0] \\to [1, 2]$ définie par $f(x) = 2\\sqrt{x+1} - x$.",
+      "sub_questions": [
+        {
+          "text": "Montrer que : $(\\forall x \\in [-1, 0]), 1 \\le 2\\sqrt{x+1} - x \\le 2$.",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Vérifier que : $(\\forall x \\in [-1, 0]), f(x) = 2 - (\\sqrt{x+1} - 1)^2$.",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Montrer que l'application f est bijective et donner sa bijection réciproque $f^{-1}$.",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
+        }
+      ]
+    },
+    {
+      "id": "ex12",
+      "title": "Application entre ensembles de parties",
+      "statement": "Soit E un ensemble non vide et A, B deux parties de E formant une partition de E (c'est-à-dire $A \\cup B = E$ et $A \\cap B = \\emptyset$). On considère l'application $f: \\mathcal{P}(E) \\to \\mathcal{P}(A) \\times \\mathcal{P}(B)$ définie par $f(X) = (A \\cap X, B \\cap X)$.",
+      "sub_questions": [
+        {
+          "text": "Montrer que f est injective.",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Montrer que f est surjective.",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Déterminer sa bijection réciproque $f^{-1}$.",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
+        }
+      ]
+    }
+  ],
+  "version": "v1.1.0-d313bf"
+}

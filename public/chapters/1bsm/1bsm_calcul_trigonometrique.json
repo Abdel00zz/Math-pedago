@@ -1,0 +1,40 @@
+{
+  "class": "1bsm",
+  "chapter": "Calcul trigonométrique",
+  "sessionDates": [],
+  "videos": [],
+  "quiz": [
+    {
+      "id": "q_trigo_1",
+      "question": "Quelle est la valeur exacte de $\\cos(\\frac{\\pi}{3}) + \\sin(\\frac{\\pi}{6})$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\frac{1+\\sqrt{3}}{2}$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "1",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$\\sqrt{3}$",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    }
+  ],
+  "exercises": [
+    {
+      "id": "exo_trigo_1",
+      "title": "Équation trigonométrique",
+      "statement": "Résoudre dans $\\mathbb{R}$ l'équation suivante : $2\\cos(x) - 1 = 0$.",
+      "sub_questions": []
+    }
+  ],
+  "version": "v1.1.0-1a39ea"
+}

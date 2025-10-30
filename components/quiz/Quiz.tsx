@@ -485,17 +485,45 @@ const Quiz: React.FC = () => {
             )}
 
             {/* Explanation Section */}
-            {isReviewMode && (
-                question.explanation || 
-                (question.type === 'mcq' && question.options?.find(o => o.isCorrect)?.explanation)
-            ) && (
-                <div className="mt-6 p-4 bg-background rounded-lg border border-border animate-fadeIn">
-                    <h4 className="font-bold text-text mb-2 text-lg font-serif">Explication :</h4>
-                    <p className="text-secondary serif-text exercise-text">
-                        <FormattedText text={question.explanation || question.options?.find(o => o.isCorrect)?.explanation || ''} />
-                    </p>
-                </div>
-            )}
+            {(() => {
+                const correctOption = question.options?.find(o => o.isCorrect);
+                const explanationText = question.explanation || correctOption?.explanation;
+                const userAnswer = answers[question.id];
+                const selectedOption = question.options?.find(o => o.text === userAnswer);
+                
+                // 🔍 DEBUG LOG
+                console.log('[Quiz Explanation Debug]', {
+                    questionId: question.id,
+                    isReviewMode,
+                    isSubmitted,
+                    hasExplanation: !!explanationText,
+                    explanationText,
+                    correctOption: correctOption?.text,
+                    userAnswer,
+                    selectedOption: selectedOption?.text,
+                    isCorrect: selectedOption?.isCorrect
+                });
+                
+                // Afficher l'explication si en mode révision OU si le quiz est soumis
+                if ((isReviewMode || isSubmitted) && explanationText) {
+                    return (
+                        <div className="mt-6 p-6 bg-blue-50/50 rounded-xl border-2 border-blue-200 animate-fadeIn shadow-sm">
+                            <div className="flex items-start gap-3">
+                                <span className="material-symbols-outlined text-blue-600 mt-1">info</span>
+                                <div className="flex-1">
+                                    <h4 className="font-bold text-gray-900 mb-3 text-lg font-serif">
+                                        Explication
+                                    </h4>
+                                    <div className="text-gray-700 serif-text exercise-text leading-relaxed">
+                                        <FormattedText text={explanationText} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    );
+                }
+                return null;
+            })()}
 
             {/* Navigation Buttons */}
             <div className="mt-8 flex justify-between items-center">

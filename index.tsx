@@ -4,6 +4,13 @@ import App from './App';
 import { AppProvider } from './context/AppContext';
 import { NotificationProvider } from './context/NotificationContext';
 import ErrorBoundary from './components/ErrorBoundary';
+import { diagnoseMathJax } from './utils/mathJaxDiagnostic';
+
+// Exposer le diagnostic MathJax globalement
+if (typeof window !== 'undefined') {
+    (window as any).diagnoseMathJax = diagnoseMathJax;
+    console.log('🔍 Diagnostic MathJax chargé! Tapez: window.diagnoseMathJax()');
+}
 
 // Wait for the DOM to be fully loaded before mounting the app
 document.addEventListener('DOMContentLoaded', () => {

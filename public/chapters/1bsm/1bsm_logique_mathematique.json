@@ -1,0 +1,897 @@
+{
+  "class": "1bsm",
+  "chapter": "Logique mathématique",
+  "sessionDates": [
+    "2025-09-24T18:00:00Z",
+    "2025-10-01T18:00:00Z",
+    "2025-10-03T18:00:00Z"
+  ],
+  "videos": [],
+  "quiz": [
+    {
+      "id": "q_proposition_1",
+      "question": "Une proposition est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Une question mathématique",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Un énoncé mathématique qui peut être vrai ou faux",
+          "is_correct": false,
+          "explanation": "Une proposition est un énoncé qui a une **valeur de vérité** unique et bien définie : soit **Vrai (V)**, soit **Faux (F)**, mais jamais les deux à la fois. C'est le fondement de la logique mathématique."
+        },
+        {
+          "text": "Une formule contenant des variables",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Un théorème démontré",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_connecteur_et_2",
+      "question": "La proposition $P \\land Q$ est vraie quand :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Au moins une des deux propositions est vraie",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Exactement une des deux propositions est vraie",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$P$ et $Q$ sont toutes les deux vraies",
+          "is_correct": false,
+          "explanation": "Le connecteur logique **ET** ($\\land$) ou **conjonction** ne donne une proposition vraie **seulement** quand $P$ est Vrai *et* $Q$ est Vrai. Dans tous les autres cas, $P \\land Q$ est Faux."
+        },
+        {
+          "text": "Les deux propositions ont la même valeur de vérité",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_connecteur_ou_3",
+      "question": "La proposition $P \\lor Q$ est fausse quand :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Au moins une des deux propositions est fausse",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$P$ et $Q$ sont toutes les deux fausses",
+          "is_correct": false,
+          "explanation": "Le connecteur logique **OU** ($\\lor$) ou **disjonction** ne donne une proposition fausse **seulement** quand $P$ est Faux *et* $Q$ est Faux. Si au moins l'une est Vraie, $P \\lor Q$ est Vrai."
+        },
+        {
+          "text": "Exactement une des deux propositions est fausse",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$P$ est vraie et $Q$ est fausse",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_negation_4",
+      "question": "Si une proposition $P$ est vraie, alors $\\neg P$ est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Vraie",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Indéterminée",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Équivalente à $P$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Fausse",
+          "is_correct": false,
+          "explanation": "La **négation** ($\\neg P$) d'une proposition $P$ a la valeur de vérité **opposée** à celle de $P$. Si $P$ est Vrai ($V$), alors $\\neg P$ est Faux ($F$). Réciproquement, si $P$ est Faux, alors $\\neg P$ est Vrai."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_implication_5",
+      "question": "L'implication $P \\Rightarrow Q$ est fausse uniquement quand :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$P$ est vraie et $Q$ est fausse",
+          "is_correct": false,
+          "explanation": "Une **implication** $P \\Rightarrow Q$ n'est fausse que dans le seul cas où la **prémisse** ($P$) est **vraie** et la **conclusion** ($Q$) est **fausse**. Si $P$ est Fausse, $P \\Rightarrow Q$ est toujours Vraie (y compris Faux $\\Rightarrow$ Faux)."
+        },
+        {
+          "text": "$P$ est fausse et $Q$ est vraie",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$P$ et $Q$ sont toutes les deux fausses",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$P$ et $Q$ sont toutes les deux vraies",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_equivalence_6",
+      "question": "La proposition $P \\Leftrightarrow Q$ signifie :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$(P \\Rightarrow Q) \\lor (Q \\Rightarrow P)$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$P \\land Q$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$(P \\Rightarrow Q) \\land (Q \\Rightarrow P)$",
+          "is_correct": false,
+          "explanation": "L'**équivalence** $P \\Leftrightarrow Q$ est vraie si et seulement si $P$ et $Q$ ont la **même valeur de vérité** ($V \\iff V$ ou $F \\iff F$). Cela est logiquement équivalent à dire que $P$ implique $Q$ *et* $Q$ implique $P$ : $(P \\Rightarrow Q) \\land (Q \\Rightarrow P)$."
+        },
+        {
+          "text": "$P \\lor Q$",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_quantificateur_universel_7",
+      "question": "Le quantificateur universel $\\forall$ se lit :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Il existe",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Pour tout",
+          "is_correct": false,
+          "explanation": "Le **quantificateur universel** $\\forall$ signifie **'pour tout'** ou **'quel que soit'**. Il indique qu'une propriété est vraie pour *chaque* élément d'un ensemble."
+        },
+        {
+          "text": "Il existe un unique",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Pour certains",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_quantificateur_existentiel_8",
+      "question": "Le quantificateur existentiel $\\exists$ se lit :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Pour tout",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Quel que soit",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Il existe",
+          "is_correct": false,
+          "explanation": "Le **quantificateur existentiel** $\\exists$ signifie **'il existe'** ou **'il existe au moins un'**. Il indique qu'il y a *au moins un* élément dans l'ensemble pour lequel la propriété est vraie."
+        },
+        {
+          "text": "Pour aucun",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_negation_quantificateur_9",
+      "question": "La négation de $(\\forall x \\in E, P(x))$ est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\forall x \\in E, \\neg P(x)$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$\\exists x \\in E, P(x)$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$\\neg \\forall x \\in E, P(x)$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$\\exists x \\in E, \\neg P(x)$",
+          "is_correct": false,
+          "explanation": "La **négation** d'une proposition quantifiée universellement $(\\forall x, P(x))$ devient une proposition quantifiée existentiellement **avec négation du prédicat** : $\\exists x, \\neg P(x)$. S'il n'est pas vrai pour *tout* $x$, c'est qu'il existe *au moins un* $x$ pour lequel il est Faux."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_negation_existentiel_10",
+      "question": "La négation de $(\\exists x \\in E, P(x))$ est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\forall x \\in E, \\neg P(x)$",
+          "is_correct": false,
+          "explanation": "La **négation** d'une proposition quantifiée existentiellement $(\\exists x, P(x))$ devient une proposition quantifiée universellement **avec négation du prédicat** : $\\forall x, \\neg P(x)$. S'il n'existe *aucun* $x$ tel que $P(x)$ est Vrai, alors pour *tout* $x$, $P(x)$ est Faux."
+        },
+        {
+          "text": "$\\exists x \\in E, \\neg P(x)$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$\\forall x \\in E, P(x)$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$\\neg \\exists x \\in E, P(x)$",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_contraposee_11",
+      "question": "La contraposée de $P \\Rightarrow Q$ est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$Q \\Rightarrow P$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$\\neg Q \\Rightarrow \\neg P$",
+          "is_correct": false,
+          "explanation": "La **contraposée** d'une implication $P \\Rightarrow Q$ est $\\neg Q \\Rightarrow \\neg P$. Elles sont **logiquement équivalentes** : démontrer l'une revient à démontrer l'autre."
+        },
+        {
+          "text": "$\\neg P \\Rightarrow \\neg Q$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$P \\Rightarrow \\neg Q$",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_reciproque_12",
+      "question": "La réciproque de $P \\Rightarrow Q$ est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\neg Q \\Rightarrow \\neg P$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$\\neg P \\Rightarrow \\neg Q$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$Q \\Rightarrow P$",
+          "is_correct": false,
+          "explanation": "La **réciproque** d'une implication $P \\Rightarrow Q$ est $Q \\Rightarrow P$. Attention : la réciproque **n'est pas toujours** logiquement équivalente à l'implication originale."
+        },
+        {
+          "text": "$P \\Leftrightarrow Q$",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_raisonnement_direct_13",
+      "question": "Le raisonnement direct consiste à :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Supposer le contraire de ce qu'on veut démontrer",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Partir des hypothèses et déduire logiquement la conclusion",
+          "is_correct": false,
+          "explanation": "Le **raisonnement direct** part des **hypothèses** ($P$) et utilise une suite de **déductions logiques** et de propriétés connues pour arriver directement à la **conclusion** ($Q$). C'est la méthode de démonstration la plus simple et la plus intuitive."
+        },
+        {
+          "text": "Démontrer la contraposée",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Diviser en plusieurs cas",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_raisonnement_absurde_14",
+      "question": "Le raisonnement par l'absurde consiste à :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Partir directement des hypothèses",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Démontrer la contraposée",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Supposer le contraire de ce qu'on veut démontrer et arriver à une contradiction",
+          "is_correct": false,
+          "explanation": "Le **raisonnement par l'absurde** (ou par contradiction) suppose la **négation** de ce que l'on veut démontrer ($\\neg Q$), puis établit une **contradiction** (une proposition de la forme $R \\land \\neg R$) pour conclure que l'hypothèse de départ ($\\neg Q$) est fausse et donc que $Q$ est Vrai."
+        },
+        {
+          "text": "Énumérer tous les cas possibles",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_raisonnement_contraposee_15",
+      "question": "Le raisonnement par contraposée pour démontrer $P \\Rightarrow Q$ consiste à :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Démontrer $Q \\Rightarrow P$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Supposer $\\neg P$ et déduire $\\neg Q$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Supposer $P \\land \\neg Q$ et arriver à une contradiction",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Démontrer $\\neg Q \\Rightarrow \\neg P$",
+          "is_correct": false,
+          "explanation": "Pour démontrer l'implication $P \\Rightarrow Q$, on peut démontrer sa **contraposée** $\\neg Q \\Rightarrow \\neg P$, car elles sont **logiquement équivalentes**. C'est une forme de raisonnement indirect très utile quand l'hypothèse $\\neg Q$ est plus simple à exploiter que l'hypothèse $P$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_disjonction_cas_16",
+      "question": "Le raisonnement par disjonction de cas consiste à :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Diviser l'ensemble des possibilités en cas exhaustifs et traiter chaque cas séparément",
+          "is_correct": false,
+          "explanation": "Le **raisonnement par disjonction de cas** divise toutes les possibilités concernant l'hypothèse de départ en cas $C_1, C_2, \\dots, C_k$ qui doivent couvrir **exhaustivement** toutes les situations. On démontre ensuite la propriété souhaitée dans chacun des cas $C_i$ pour conclure qu'elle est toujours vraie."
+        },
+        {
+          "text": "Supposer le contraire de ce qu'on veut démontrer",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Utiliser la contraposée",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Appliquer le principe de récurrence",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_recurrence_principe_17",
+      "question": "Le principe de récurrence s'applique pour démontrer une propriété :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Sur tous les nombres réels",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Sur un ensemble fini",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Sur tous les entiers naturels à partir d'un certain rang",
+          "is_correct": false,
+          "explanation": "Le **raisonnement par récurrence** permet de démontrer qu'une propriété $P(n)$ est vraie pour **tout entier naturel** $n \\geq n_0$ en assurant l'**initialisation** ($P(n_0)$ Vrai) et l'**hérédité** ($P(n) \\Rightarrow P(n+1)$)."
+        },
+        {
+          "text": "Sur les nombres rationnels",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_recurrence_etapes_18",
+      "question": "Les étapes du raisonnement par récurrence sont :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Hypothèse, contradiction, conclusion",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Initialisation, hypothèse de récurrence, hérédité",
+          "is_correct": false,
+          "explanation": "Le raisonnement par **récurrence** comporte trois étapes : 1) **Initialisation** (vérifier $P(n_0)$), 2) **Hypothèse de récurrence** (supposer $P(n)$ vraie pour un $n$ fixé $\\geq n_0$), 3) **Hérédité** (démontrer que $P(n+1)$ est vraie à partir de $P(n)$)."
+        },
+        {
+          "text": "Cas de base, cas général",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Prémisse, déduction, conclusion",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_equivalence_logique_19",
+      "question": "Deux propositions sont logiquement équivalentes si :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Elles contiennent les mêmes variables",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Elles ont la même table de vérité",
+          "is_correct": false,
+          "explanation": "Deux propositions $A$ et $B$ sont **logiquement équivalentes** ($A \\equiv B$) si elles ont **exactement la même valeur de vérité** dans tous les cas possibles (pour toutes les combinaisons de valeurs de vérité des propositions de base qui les composent)."
+        },
+        {
+          "text": "Elles sont écrites de la même façon",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "L'une implique l'autre",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_lois_morgan_20",
+      "question": "La loi de De Morgan indique que $\\neg(P \\land Q)$ est équivalent à :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\neg P \\land \\neg Q$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$P \\lor Q$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$\\neg P \\lor \\neg Q$",
+          "is_correct": false,
+          "explanation": "Les **lois de De Morgan** sont fondamentales : 1) La négation d'un ET est le OU des négations : $\\neg(P \\land Q) \\equiv \\neg P \\lor \\neg Q$. 2) La négation d'un OU est le ET des négations : $\\neg(P \\lor Q) \\equiv \\neg P \\land \\neg Q$."
+        },
+        {
+          "text": "$P \\land Q$",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_ordering_recurrence_21",
+      "question": "Remettez dans l'ordre les étapes d'un raisonnement par récurrence pour prouver une propriété $P(n)$ pour tout $n \\ge n_0$.",
+      "type": "ordering",
+      "options": [],
+      "steps": [
+        "Énoncer la propriété $P(n)$ à démontrer.",
+        "Initialisation : Vérifier que la propriété $P(n_0)$ est vraie pour le premier rang $n_0$.",
+        "Hérédité : Supposer que $P(n)$ est vraie pour un entier $n \\ge n_0$ fixé (Hypothèse de récurrence).",
+        "Hérédité : Démontrer que sous cette hypothèse, la propriété $P(n+1)$ est également vraie.",
+        "Conclusion : Conclure que la propriété $P(n)$ est vraie pour tout entier $n \\ge n_0$."
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "id": "exo_propositions_quantificateurs",
+      "title": "Propositions et Quantificateurs",
+      "statement": "Exprimer les propositions suivantes à l'aide des quantificateurs et connecteurs logiques, puis indiquer la valeur de vérité de chacune d'elles :",
+      "images": [
+        {
+          "id": "img_1761813820252",
+          "path": "pictures/1bsm/logique-mathematique/img_20251030T084340179Z_Screenshot_2025_10_27_183319.png",
+          "caption": "",
+          "size": "medium",
+          "custom_width": null,
+          "custom_height": null,
+          "position": "top",
+          "alignment": "center",
+          "alt": ""
+        }
+      ],
+      "sub_questions": [
+        {
+          "text": "Il existe au moins une solution de l'équation $x^2 - 2 = 0$.",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": [
+            {
+              "id": "img_1761813367475",
+              "path": "pictures/1bsm/logique-mathematique/img_20251030T083607411Z_Screenshot_2025_10_27_180409.png",
+              "caption": "Screenshot 2025-10-27 180409.png",
+              "size": "medium",
+              "custom_width": null,
+              "custom_height": null,
+              "position": "center",
+              "alignment": "center",
+              "alt": ""
+            }
+          ]
+        },
+        {
+          "text": "Tout entier naturel est pair ou impair.",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Il existe un réel plus petit que tous les réels.",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Le carré d'un réel quelconque est supérieur ou égal à -1.",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Aucun entier naturel n'est supérieur à tous les autres.",
+          "questionNumber": "5",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Tout réel inférieur ou égal à -2 est négatif.",
+          "questionNumber": "6",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Tout entier naturel divisible par 4 est un nombre pair.",
+          "questionNumber": "7",
+          "sub_sub_questions": [],
+          "images": []
+        }
+      ],
+      "hint": [
+        {
+          "text": "**Identification :** L'univers est $\\mathbb{R}$. L'expression est existentielle $\\exists$. La valeur de vérité dépend de l'existence de $\\sqrt{2}$ et $-\\sqrt{2}$.",
+          "questionNumber": "1"
+        },
+        {
+          "text": "**Connecteurs :** L'univers est $\\mathbb{N}$. L'expression est universelle $\\forall$ et utilise le connecteur OU ($\\lor$).",
+          "questionNumber": "2"
+        },
+        {
+          "text": "**Double quantification :** L'énoncé implique un $\\exists$ puis un $\\forall$ : $\\exists x \\in \\mathbb{R}, \\forall y \\in \\mathbb{R}, x \\le y$. Réfléchissez au concept de minimum absolu.",
+          "questionNumber": "3"
+        },
+        {
+          "text": "**Universel et Propriété :** L'univers est $\\mathbb{R}$. $\\forall x \\in \\mathbb{R}$. Rappel : un carré est toujours $\\ge 0$.",
+          "questionNumber": "4"
+        },
+        {
+          "text": "**Négation et Quantification :** L'énoncé est la négation d'une propriété existentielle $\\exists$. Réécrivez-le comme $\\forall n \\in \\mathbb{N}, \\exists m \\in \\mathbb{N}, n \\le m$.",
+          "questionNumber": "5"
+        },
+        {
+          "text": "**Implication :** $\\forall x \\in \\mathbb{R}, (x \\le -2) \\Rightarrow (x \\le 0)$. Vérifiez si l'hypothèse (prémisse) mène toujours à la conclusion.",
+          "questionNumber": "6"
+        },
+        {
+          "text": "**Implication arithmétique :** $\\forall n \\in \\mathbb{N}, (4 \\mid n) \\Rightarrow (2 \\mid n)$. Pensez à la définition de la divisibilité ($n=4k$) et à la parité ($n=2k'$).",
+          "questionNumber": "7"
+        }
+      ]
+    },
+    {
+      "id": "exo_negation_propositions",
+      "title": "Négation de Propositions Quantifiées",
+      "statement": "Écrire avec des quantificateurs les propositions suivantes, puis donner leur négation :",
+      "sub_questions": [
+        {
+          "text": "Il existe un nombre rationnel dont le carré vaut deux.",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "La somme de deux nombres positifs quelconques est un nombre positif.",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Le carré de n'importe quel nombre réel est un nombre positif.",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "L'équation $x^2 - 3x + 1 = 0$ admet une solution réelle.",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Tout entier naturel est pair ou impair.",
+          "questionNumber": "5",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Pour chaque entier, on peut trouver un entier strictement plus grand.",
+          "questionNumber": "6",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Il y a un entier plus grand que tous les entiers.",
+          "questionNumber": "7",
+          "sub_sub_questions": [],
+          "images": []
+        }
+      ],
+      "hint": [
+        {
+          "text": "La proposition est $\\exists x \\in \\mathbb{Q}, x^2 = 2$. Niez le quantificateur et le prédicat : $\\forall x \\in \\mathbb{Q}, x^2 \\neq 2$.",
+          "questionNumber": "1"
+        },
+        {
+          "text": "La proposition est $\\forall x \\in \\mathbb{R}_+, \\forall y \\in \\mathbb{R}_+, x+y > 0$. La négation est $\\exists x \\in \\mathbb{R}_+, \\exists y \\in \\mathbb{R}_+, x+y \\le 0$.",
+          "questionNumber": "2"
+        },
+        {
+          "text": "La proposition est $\\forall x \\in \\mathbb{R}, x^2 \\ge 0$. La négation est $\\exists x \\in \\mathbb{R}, x^2 < 0$.",
+          "questionNumber": "3"
+        },
+        {
+          "text": "La proposition est $\\exists x \\in \\mathbb{R}, x^2 - 3x + 1 = 0$. La négation est $\\forall x \\in \\mathbb{R}, x^2 - 3x + 1 \\neq 0$.",
+          "questionNumber": "4"
+        },
+        {
+          "text": "La proposition est $\\forall n \\in \\mathbb{N}, (n \\text{ est pair } \\lor n \\text{ est impair})$. Négation avec De Morgan : $\\exists n \\in \\mathbb{N}, (n \\text{ n'est pas pair } \\land n \\text{ n'est pas impair})$.",
+          "questionNumber": "5"
+        },
+        {
+          "text": "La proposition est $\\forall n \\in \\mathbb{Z}, \\exists m \\in \\mathbb{Z}, m > n$. La négation est $\\exists n \\in \\mathbb{Z}, \\forall m \\in \\mathbb{Z}, m \\le n$. (Nier $\\forall \\exists$ donne $\\exists \\forall$).",
+          "questionNumber": "6"
+        },
+        {
+          "text": "La proposition est $\\exists M \\in \\mathbb{Z}, \\forall n \\in \\mathbb{Z}, M \\ge n$. La négation est $\\forall M \\in \\mathbb{Z}, \\exists n \\in \\mathbb{Z}, M < n$. (Nier $\\exists \\forall$ donne $\\forall \\exists$).",
+          "questionNumber": "7"
+        }
+      ]
+    },
+    {
+      "id": "exo_irrationnel_racine2",
+      "title": "Propriétés d'Irrationalité et de Combinaison Linéaire",
+      "statement": "On rappelle que $\\sqrt{2}$ est un nombre irrationnel. $a, b, m, n, p, q$ sont des entiers relatifs.",
+      "sub_questions": [
+        {
+          "text": "Démontrer que si $a$ et $b$ sont deux entiers relatifs tels que $a + b\\sqrt{2} = 0$, alors $a = b = 0$.",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "En déduire que si $m, n, p$ et $q$ sont des entiers relatifs, alors $m + n\\sqrt{2} = p + q\\sqrt{2} \\iff (m = p \\text{ et } n = q)$.",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
+        }
+      ],
+      "hint": [
+        {
+          "text": "Si $b \\neq 0$, isolez $\\sqrt{2}$ pour l'exprimer comme un nombre rationnel, ce qui contredit l'hypothèse de l'irrationalité de $\\sqrt{2}$. Concluez donc que $b=0$, puis $a=0$.",
+          "questionNumber": "1"
+        },
+        {
+          "text": "Ramenez l'égalité $m + n\\sqrt{2} = p + q\\sqrt{2}$ à la forme de la première question : $(m-p) + (n-q)\\sqrt{2} = 0$. Appliquez ensuite le résultat démontré en Question 1.",
+          "questionNumber": "2"
+        }
+      ]
+    },
+    {
+      "id": "exo_solution_entiere_polynome",
+      "title": "Racines Entières d'un Polynôme",
+      "statement": "Démontrer que l'équation $9x^5 - 12x^4 + 6x - 5 = 0$ n'admet pas de solution entière.",
+      "sub_questions": [
+        {
+          "text": "Démontrer la propriété.",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
+        }
+      ],
+      "hint": [
+        {
+          "text": "**Raisonnement par l'absurde et Arithmétique modulaire :** Supposons qu'il existe une solution entière $x \\in \\mathbb{Z}$. Étudiez l'équation **modulo 3** (car la plupart des coefficients sont multiples de 3) : $9x^5 - 12x^4 + 6x - 5 = 0 \\pmod{3}$. Cela devrait vous mener à une contradiction simple du type $0 \\equiv 1 \\pmod{3}$.",
+          "questionNumber": "1"
+        }
+      ]
+    },
+    {
+      "id": "exo_contraposee_divisibilite8",
+      "title": "Démonstration par Contraposition",
+      "statement": "Le but de cet exercice est de démontrer par contraposition la propriété suivante, pour $n \\in \\mathbb{N}^*$ : Si l'entier $(n^2-1)$ n'est pas divisible par 8, alors l'entier $n$ est pair.",
+      "sub_questions": [
+        {
+          "text": "Écrire la contraposée de la proposition précédente.",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "En remarquant qu'un entier impair $n$ s'écrit sous la forme $n = 4k + r$ avec $k \\in \\mathbb{N}$ et $r \\in \\{1, 3\\}$ (à justifier), prouver la contraposée.",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "A-t-on démontré la propriété de l'énoncé ?",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
+        }
+      ],
+      "hint": [
+        {
+          "text": "La propriété est $P \\Rightarrow Q$. La contraposée est $\\neg Q \\Rightarrow \\neg P$. Formulez la proposition : 'Si $n$ est impair, alors $(n^2-1)$ est divisible par 8.'",
+          "questionNumber": "1"
+        },
+        {
+          "text": "Écrivez $n=2k+1$, développez $n^2-1 = (n-1)(n+1) = 4k(k+1) + \\dots$. Utilisez la disjonction de cas (sur $k$ pair ou $k$ impair) pour montrer que $n^2-1$ est toujours multiple de 8.",
+          "questionNumber": "2"
+        },
+        {
+          "text": "Rappel : la contraposée est logiquement équivalente à l'implication initiale. La preuve de la contraposée prouve directement l'implication.",
+          "questionNumber": "3"
+        }
+      ]
+    },
+    {
+      "id": "exo_raisonnement_absurde",
+      "title": "Raisonnement par l'Absurde",
+      "statement": "Utiliser le raisonnement par l'absurde pour démontrer les propositions suivantes :",
+      "sub_questions": [
+        {
+          "text": "Montrer que $\\sqrt{2} \\notin \\mathbb{Q}$.",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Soit $n \\in \\mathbb{N}$, on pose : $A = \\frac{n+3}{n+5}$. Montrer que $A \\neq 1$.",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Soit un triangle $ABC$ et un réel $a > 0$ tel que $BC = 3a$, $CA = 2a$ et $AB = 4a$. Montrer que $ABC$ n'est pas un triangle rectangle.",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
+        }
+      ],
+      "hint": [
+        {
+          "text": "Supposez $\\sqrt{2} = p/q$ avec $p, q$ premiers entre eux. Élevez au carré et déduisez que $p$ et $q$ sont tous deux pairs, ce qui contredit l'hypothèse de la fraction irréductible.",
+          "questionNumber": "1"
+        },
+        {
+          "text": "Supposez $A = 1$, ce qui implique $\\frac{n+3}{n+5} = 1$. Déduisez que $n+3 = n+5$, menant à une contradiction ($3=5$).",
+          "questionNumber": "2"
+        },
+        {
+          "text": "Supposons que le triangle soit rectangle. Appliquez le théorème de Pythagore au carré du plus grand côté : $(4a)^2$. Montrez que $16a^2 \\neq (3a)^2 + (2a)^2$, ce qui est une contradiction.",
+          "questionNumber": "3"
+        }
+      ]
+    }
+  ],
+  "version": "v1.1.0-5c03f2"
+}

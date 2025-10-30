@@ -44,6 +44,7 @@ export interface SubSubQuestion {
 export interface SubQuestion {
     text: string;
     sub_sub_questions?: SubSubQuestion[];
+    images?: ExerciseImage[]; // Images pour les sous-questions
 }
 
 // Nouveau type pour les images dans les exercices

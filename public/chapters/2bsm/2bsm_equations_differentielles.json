@@ -1,0 +1,35 @@
+{
+  "class": "2bsm",
+  "chapter": "Équations différentielles",
+  "sessionDates": [],
+  "videos": [],
+  "quiz": [
+    {
+      "id": "q1",
+      "question": "Quelle est la solution générale de $y' + y = 0$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$y(x) = C e^x$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$y(x) = C e^{-x}$",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "title": "Équation du second ordre",
+      "statement": "Résoudre l'équation différentielle $y'' + 4y = 0$.",
+      "sub_questions": []
+    }
+  ],
+  "version": "v1.1.0-6c477c"
+}
