@@ -1,7 +1,9 @@
 {
   "class": "2bse",
   "chapter": "Dérivation et étude des fonctions",
-  "sessionDates": [],
+  "sessionDates": [
+    "2025-11-02T01:30:00Z"
+  ],
   "quiz": [
   {
     "id": "q_mcq_1",
