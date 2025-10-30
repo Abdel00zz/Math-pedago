@@ -621,19 +621,6 @@
       "id": "ex1",
       "title": "Ensemble défini par une inéquation",
       "statement": "Écrire en extension l'ensemble $E = \\{x \\in \\mathbb{N} \\mid |2x - 3| \\le 2\\}$.",
-      "images": [
-        {
-          "id": "img_1761815520181",
-          "path": "pictures/1bsm/1bsm-ensembles-et-applications/img_20251030T091200116Z_image_pro_export__19_.png",
-          "caption": "image-pro-export (19).png",
-          "size": "medium",
-          "custom_width": null,
-          "custom_height": null,
-          "position": "center",
-          "alignment": "center",
-          "alt": "image-pro-export (19).png"
-        }
-      ],
       "sub_questions": []
     },
     {
@@ -842,5 +829,5 @@
       ]
     }
   ],
-  "version": "v1.1.0-0d7911"
+  "version": "v1.1.0-a76c4e"
 }

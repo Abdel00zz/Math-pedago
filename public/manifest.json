@@ -146,7 +146,7 @@
       "id": "1bsm-ensembles-et-applications",
       "file": "1bsm/1bsm_ensembles_et_applications.json",
       "isActive": true,
-      "version": "v1.1.0-0d7911"
+      "version": "v1.1.0-a76c4e"
     },
     {
       "id": "1bsm-generalites-sur-les-fonctions",
@@ -244,7 +244,7 @@
       "id": "2bse-derivation-et-applications",
       "file": "2bse/2bse_derivation_et_etude_des_fonctions.json",
       "isActive": true,
-      "version": "v1.1.0-fa2e1e"
+      "version": "v1.1.0-f163eb"
     },
     {
       "id": "2bse-fonctions-logarithmes",
