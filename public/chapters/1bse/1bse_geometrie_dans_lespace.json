@@ -11,7 +11,7 @@
       "options": [
         {
           "text": "Leurs vecteurs normaux sont colinéaires",
-          "is_correct": true,
+          "is_correct": false,
           "explanation": null
         },
         {
@@ -31,5 +31,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-2fae41"
+  "version": "v1.1.0-b2ddde"
 }

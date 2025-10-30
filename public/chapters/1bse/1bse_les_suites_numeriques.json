@@ -11,7 +11,7 @@
       "options": [
         {
           "text": "$u_0 \\frac{1-q^{k+1}}{1-q}$",
-          "is_correct": true,
+          "is_correct": false,
           "explanation": "La somme des termes de $u_0$ à $u_k$ (soit k+1 termes) est $u_0 \\frac{1-q^{k+1}}{1-q}$."
         },
         {
@@ -31,5 +31,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-27cc3b"
+  "version": "v1.1.0-864316"
 }

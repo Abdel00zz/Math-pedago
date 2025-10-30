@@ -16,7 +16,7 @@
         },
         {
           "text": "$f(-x) = f(x)$",
-          "is_correct": true,
+          "is_correct": false,
           "explanation": "Une fonction f est paire si son domaine de définition est symétrique par rapport à 0 et si pour tout x de ce domaine, $f(-x) = f(x)$."
         }
       ],
@@ -31,5 +31,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-cc0abd"
+  "version": "v1.1.0-bdb6a7"
 }

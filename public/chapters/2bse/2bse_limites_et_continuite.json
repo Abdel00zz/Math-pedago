@@ -19,7 +19,7 @@
         },
         {
           "text": "sans jamais lever le crayon.",
-          "is_correct": true,
+          "is_correct": false,
           "explanation": "L'idée fondamentale de la continuité est celle d'un tracé ininterrompu, sans 'saut' ni 'rupture'."
         },
         {
@@ -42,7 +42,7 @@
         },
         {
           "text": "$\\displaystyle \\lim_{x \\to a} f(x) = f(a)$",
-          "is_correct": true,
+          "is_correct": false,
           "explanation": null
         },
         {
@@ -72,7 +72,7 @@
       "options": [
         {
           "text": "Cette affirmation est Vraie.",
-          "is_correct": true,
+          "is_correct": false,
           "explanation": "Les fonctions polynômes sont des fonctions de référence ne présentant aucune rupture sur leur domaine de définition, qui est $\\mathbb{R}$."
         },
         {
@@ -100,7 +100,7 @@
         },
         {
           "text": "sur chaque intervalle de son ensemble de définition.",
-          "is_correct": true,
+          "is_correct": false,
           "explanation": null
         }
       ],
@@ -123,7 +123,7 @@
         },
         {
           "text": "Le quotient $\\displaystyle f/g$",
-          "is_correct": true,
+          "is_correct": false,
           "explanation": "Le quotient n'est pas défini là où le dénominateur s'annule ($g(x)=0$), créant des points de discontinuité."
         }
       ],
@@ -136,7 +136,7 @@
       "options": [
         {
           "text": "$\\displaystyle \\lim_{x \\to a} f(x) = \\pm\\infty$",
-          "is_correct": true,
+          "is_correct": false,
           "explanation": null
         },
         {
@@ -169,7 +169,7 @@
         },
         {
           "text": "admet au moins une solution dans $\\displaystyle [0,1]$.",
-          "is_correct": true,
+          "is_correct": false,
           "explanation": "Correct. 2 est une valeur intermédiaire entre $\\displaystyle f(0)=-5$ et $\\displaystyle f(1)=5$."
         }
       ],
@@ -194,7 +194,7 @@
       "options": [
         {
           "text": "Continue et strictement monotone.",
-          "is_correct": true,
+          "is_correct": false,
           "explanation": null
         },
         {
@@ -217,7 +217,7 @@
       "options": [
         {
           "text": "Cette affirmation est Vraie.",
-          "is_correct": true,
+          "is_correct": false,
           "explanation": "C'est une conséquence majeure du TVI : une fonction continue ne peut pas 'sauter' de valeurs, donc elle prend toutes les valeurs intermédiaires."
         },
         {
@@ -240,7 +240,7 @@
         },
         {
           "text": "est continue de $\\displaystyle J$ sur $\\displaystyle I$.",
-          "is_correct": true,
+          "is_correct": false,
           "explanation": null
         },
         {
@@ -268,7 +268,7 @@
         },
         {
           "text": "La première bissectrice (droite $\\displaystyle y=x$).",
-          "is_correct": true,
+          "is_correct": false,
           "explanation": "La symétrie entre une fonction et sa réciproque se fait toujours par rapport à la droite d'équation $\\displaystyle y=x$, car l'action d'inverser les rôles de $\\displaystyle x$ et $\\displaystyle y$ équivaut à cette symétrie."
         }
       ],
@@ -286,7 +286,7 @@
         },
         {
           "text": "Strictement croissante sur $\\displaystyle [0, +\\infty[$.",
-          "is_correct": true,
+          "is_correct": false,
           "explanation": "La fonction $\\displaystyle x \\mapsto x^n$ est strictement croissante sur $\\displaystyle [0, +\\infty[$, donc sa réciproque (la fonction racine $\\displaystyle n$-ième) hérite de la même stricte monotonie."
         },
         {
@@ -321,7 +321,7 @@
         },
         {
           "text": "Sa limite en $\\displaystyle a$ est un nombre fini.",
-          "is_correct": true,
+          "is_correct": false,
           "explanation": null
         },
         {
@@ -339,7 +339,7 @@
       "options": [
         {
           "text": "Cette affirmation est Vraie.",
-          "is_correct": true,
+          "is_correct": false,
           "explanation": "La dérivabilité est une condition plus forte que la continuité. Si l'on peut calculer le nombre dérivé $\\displaystyle f'(a)$, la fonction doit être continue en $\\displaystyle a$."
         },
         {
@@ -362,7 +362,7 @@
         },
         {
           "text": "Cette affirmation est Fausse.",
-          "is_correct": true,
+          "is_correct": false,
           "explanation": "Contre-exemple classique : la fonction $\\displaystyle f(x)=|x|$ est continue en 0 mais n'est pas dérivable en ce point (point anguleux)."
         }
       ],
@@ -647,5 +647,5 @@
       ]
     }
   ],
-  "version": "v1.1.0-b8e937"
+  "version": "v1.1.0-b8fa7a"
 }

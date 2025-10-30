@@ -21,7 +21,7 @@
         },
         {
           "text": "5",
-          "is_correct": true,
+          "is_correct": false,
           "explanation": "Le module est $|z| = \\sqrt{3^2 + 4^2} = \\sqrt{9+16} = \\sqrt{25} = 5$."
         }
       ],
@@ -36,5 +36,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-bacc47"
+  "version": "v1.1.0-ca6bb5"
 }

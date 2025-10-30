@@ -64,13 +64,13 @@
       "id": "tcs-generalites-sur-les-fonctions",
       "file": "tcs/tcs_generalites_sur_les_fonctions.json",
       "isActive": false,
-      "version": "v1.1.0-fc790b"
+      "version": "v1.1.0-288559"
     },
     {
       "id": "tcs-geometrie-dans-lespace",
       "file": "tcs/tcs_geometrie_dans_lespace.json",
       "isActive": false,
-      "version": "v1.1.0-1468b2"
+      "version": "v1.1.0-569ed8"
     }
   ],
   "1bse": [
@@ -78,55 +78,55 @@
       "id": "1bse-generalites-sur-les-fonctions",
       "file": "1bse/1bse_generalites_sur_les_fonctions.json",
       "isActive": false,
-      "version": "v1.1.0-cc0abd"
+      "version": "v1.1.0-bdb6a7"
     },
     {
       "id": "1bse-le-barycentre-dans-le-plan",
       "file": "1bse/1bse_le_barycentre_dans_le_plan.json",
       "isActive": false,
-      "version": "v1.1.0-a527a6"
+      "version": "v1.1.0-8e303d"
     },
     {
       "id": "1bse-le-produit-scalaire-dans-le-plan",
       "file": "1bse/1bse_le_produit_scalaire_dans_le_plan.json",
       "isActive": false,
-      "version": "v1.1.0-1b2608"
+      "version": "v1.1.0-3211ff"
     },
     {
       "id": "1bse-calcul-trigonometrique",
       "file": "1bse/1bse_calcul_trigonometrique.json",
       "isActive": false,
-      "version": "v1.1.0-5cc33b"
+      "version": "v1.1.0-ea2c68"
     },
     {
       "id": "1bse-les-suites-numeriques",
       "file": "1bse/1bse_les_suites_numeriques.json",
       "isActive": false,
-      "version": "v1.1.0-27cc3b"
+      "version": "v1.1.0-864316"
     },
     {
       "id": "1bse-limites-dune-fonction",
       "file": "1bse/1bse_limites_dune_fonction.json",
       "isActive": false,
-      "version": "v1.1.0-bbd249"
+      "version": "v1.1.0-16f67e"
     },
     {
       "id": "1bse-la-derivation",
       "file": "1bse/1bse_la_derivation.json",
       "isActive": false,
-      "version": "v1.1.0-ea5d62"
+      "version": "v1.1.0-79872c"
     },
     {
       "id": "1bse-etude-des-fonctions",
       "file": "1bse/1bse_etude_des_fonctions.json",
       "isActive": false,
-      "version": "v1.1.0-d78b3c"
+      "version": "v1.1.0-c255ee"
     },
     {
       "id": "1bse-geometrie-dans-lespace",
       "file": "1bse/1bse_geometrie_dans_lespace.json",
       "isActive": false,
-      "version": "v1.1.0-2fae41"
+      "version": "v1.1.0-b2ddde"
     },
     {
       "id": "1bse-statistiques",
@@ -146,7 +146,7 @@
       "id": "1bsm-ensembles-et-applications",
       "file": "1bsm/1bsm_ensembles_et_applications.json",
       "isActive": true,
-      "version": "v1.1.0-d313bf"
+      "version": "v1.1.0-0d7911"
     },
     {
       "id": "1bsm-generalites-sur-les-fonctions",
@@ -230,7 +230,7 @@
       "id": "1bsm-arithmetique-dans-z",
       "file": "1bsm/1bsm_arithmetique_dans_z.json",
       "isActive": false,
-      "version": "v1.1.0-3d3706"
+      "version": "v1.1.0-c11a85"
     }
   ],
   "2bse": [
@@ -238,13 +238,13 @@
       "id": "2bse-limites-et-continuite",
       "file": "2bse/2bse_limites_et_continuite.json",
       "isActive": true,
-      "version": "v1.1.0-b8e937"
+      "version": "v1.1.0-b8fa7a"
     },
     {
       "id": "2bse-derivation-et-applications",
       "file": "2bse/2bse_derivation_et_etude_des_fonctions.json",
       "isActive": true,
-      "version": "v1.1.0-7bbeb6"
+      "version": "v1.1.0-fa2e1e"
     },
     {
       "id": "2bse-fonctions-logarithmes",
@@ -256,31 +256,31 @@
       "id": "2bse-fonctions-exponentielles",
       "file": "2bse/2bse_fonctions_exponentielles.json",
       "isActive": false,
-      "version": "v1.1.0-b52dbe"
+      "version": "v1.1.0-85a0fc"
     },
     {
       "id": "2bse-calcul-integral",
       "file": "2bse/2bse_calcul_integral.json",
       "isActive": false,
-      "version": "v1.1.0-b10fd5"
+      "version": "v1.1.0-387558"
     },
     {
       "id": "2bse-equations-differentielles",
       "file": "2bse/2bse_equations_differentielles.json",
       "isActive": false,
-      "version": "v1.1.0-e7c38e"
+      "version": "v1.1.0-501097"
     },
     {
       "id": "2bse-nombres-complexes",
       "file": "2bse/2bse_nombres_complexes.json",
       "isActive": false,
-      "version": "v1.1.0-bacc47"
+      "version": "v1.1.0-ca6bb5"
     },
     {
       "id": "2bse-calcul-de-probabilites",
       "file": "2bse/2bse_calcul_de_probabilites.json",
       "isActive": false,
-      "version": "v1.1.0-6e3c64"
+      "version": "v1.1.0-4a50cf"
     }
   ],
   "2bsm": [

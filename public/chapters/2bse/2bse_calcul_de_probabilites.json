@@ -21,7 +21,7 @@
         },
         {
           "text": "$\\frac{1}{2}$",
-          "is_correct": true,
+          "is_correct": false,
           "explanation": "Il y a 3 issues paires (2, 4, 6) sur 6 issues possibles. La probabilité est donc $\\frac{3}{6} = \\frac{1}{2}$."
         }
       ],
@@ -36,5 +36,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-6e3c64"
+  "version": "v1.1.0-4a50cf"
 }

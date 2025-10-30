@@ -16,7 +16,7 @@
         },
         {
           "text": "$3e^{3x+1}$",
-          "is_correct": true,
+          "is_correct": false,
           "explanation": "La dérivée de $e^{u(x)}$ est $u'(x)e^{u(x)}$. Ici $u(x)=3x+1$, donc $u'(x)=3$. La dérivée est $3e^{3x+1}$."
         },
         {
@@ -36,5 +36,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-b52dbe"
+  "version": "v1.1.0-85a0fc"
 }

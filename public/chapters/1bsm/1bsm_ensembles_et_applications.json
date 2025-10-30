@@ -627,9 +627,11 @@
           "path": "pictures/1bsm/1bsm-ensembles-et-applications/img_20251030T091200116Z_image_pro_export__19_.png",
           "caption": "image-pro-export (19).png",
           "size": "medium",
+          "custom_width": null,
+          "custom_height": null,
           "position": "center",
           "alignment": "center",
-          "alt": ""
+          "alt": "image-pro-export (19).png"
         }
       ],
       "sub_questions": []
@@ -840,5 +842,5 @@
       ]
     }
   ],
-  "version": "v1.1.0-d313bf"
+  "version": "v1.1.0-0d7911"
 }

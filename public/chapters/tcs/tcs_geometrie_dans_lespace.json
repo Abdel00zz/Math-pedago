@@ -16,7 +16,7 @@
         },
         {
           "text": "Non coplanaires",
-          "is_correct": true,
+          "is_correct": false,
           "explanation": "Si deux droites de l'espace ne sont pas dans le même plan, elles sont non coplanaires. Elles ne peuvent alors être ni sécantes, ni parallèles."
         },
         {
@@ -36,5 +36,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-1468b2"
+  "version": "v1.1.0-569ed8"
 }

@@ -16,7 +16,7 @@
         },
         {
           "text": "Leur produit scalaire est 0",
-          "is_correct": true,
+          "is_correct": false,
           "explanation": "La nullité du produit scalaire est la condition d'orthogonalité de deux vecteurs."
         }
       ],
@@ -31,5 +31,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-1b2608"
+  "version": "v1.1.0-3211ff"
 }

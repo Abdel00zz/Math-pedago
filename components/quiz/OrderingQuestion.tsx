@@ -133,7 +133,7 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({
                                 return (
                                     <li key={index} className={stepClass}>
                                         <span className="font-bold text-lg text-[#1a1a1a] min-w-[24px]">{index + 1}.</span>
-                                        <div className="flex-1 text-[#1a1a1a] text-[13px] leading-relaxed flex items-center">
+                                        <div className="flex-1 text-[#1a1a1a] text-[20px] sm:text-[21px] leading-relaxed flex items-center">
                                             <FormattedText text={item} />
                                         </div>
                                         <span className={`material-symbols-outlined !text-2xl ${iconClass}`}>
@@ -155,7 +155,7 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({
                             {correctOrder.map((item, index) => (
                                 <li key={index} className="flex items-start gap-4 p-4 rounded-xl bg-surface border-2 border-primary/30">
                                     <span className="font-bold text-primary text-lg min-w-[24px]">{index + 1}.</span>
-                                    <div className="flex-1 text-text text-[13px] leading-relaxed flex items-center">
+                                    <div className="flex-1 text-text text-[20px] sm:text-[21px] leading-relaxed flex items-center">
                                         <FormattedText text={item} />
                                     </div>
                                 </li>
@@ -212,7 +212,7 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({
                                         </div>
 
                                         {/* Texte */}
-                                        <div className="flex-1 text-text text-[12px] sm:text-[13px] leading-relaxed flex items-center">
+                                        <div className="flex-1 text-text text-[20px] sm:text-[21px] leading-relaxed flex items-center">
                                             <FormattedText text={item} />
                                         </div>
                                     </div>

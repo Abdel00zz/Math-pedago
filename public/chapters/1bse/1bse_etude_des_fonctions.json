@@ -16,7 +16,7 @@
         },
         {
           "text": "En cherchant où la dérivée s'annule en changeant de signe",
-          "is_correct": true,
+          "is_correct": false,
           "explanation": "Les extrema locaux se trouvent aux points critiques où la dérivée s'annule et change de signe."
         }
       ],
@@ -31,5 +31,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-d78b3c"
+  "version": "v1.1.0-c255ee"
 }

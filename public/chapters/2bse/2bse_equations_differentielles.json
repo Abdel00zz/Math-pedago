@@ -11,7 +11,7 @@
       "options": [
         {
           "text": "$y(x) = Ce^{ax}$",
-          "is_correct": true,
+          "is_correct": false,
           "explanation": "Les solutions de l'équation différentielle linéaire du premier ordre $y' = ay$ sont les fonctions $x \\mapsto Ce^{ax}$ où C est une constante réelle."
         },
         {
@@ -36,5 +36,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-e7c38e"
+  "version": "v1.1.0-501097"
 }

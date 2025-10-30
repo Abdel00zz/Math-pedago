@@ -16,7 +16,7 @@
         },
         {
           "text": "$\\frac{1}{2\\sqrt{x}}$",
-          "is_correct": true,
+          "is_correct": false,
           "explanation": "La dérivée de la fonction racine carrée est $\\frac{1}{2\\sqrt{x}}$ pour $x>0$."
         }
       ],
@@ -31,5 +31,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-ea5d62"
+  "version": "v1.1.0-79872c"
 }

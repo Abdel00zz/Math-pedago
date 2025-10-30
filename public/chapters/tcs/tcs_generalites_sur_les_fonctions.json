@@ -41,7 +41,7 @@
         },
         {
           "text": "$\\mathbb{R} \\setminus \\{1\\}$",
-          "is_correct": true,
+          "is_correct": false,
           "explanation": "Le dénominateur d'une fraction ne peut pas être nul. On doit donc avoir $x-1 \\neq 0$, soit $x \\neq 1$. L'ensemble de définition est donc $\\mathbb{R}$ privé de 1."
         },
         {
@@ -61,5 +61,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-fc790b"
+  "version": "v1.1.0-288559"
 }

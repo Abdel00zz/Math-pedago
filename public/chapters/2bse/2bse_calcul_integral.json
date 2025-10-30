@@ -16,7 +16,7 @@
         },
         {
           "text": "$\\frac{x^4}{4}$",
-          "is_correct": true,
+          "is_correct": false,
           "explanation": "Une primitive de $x^n$ est $\\frac{x^{n+1}}{n+1}$. Pour $n=3$, on obtient $\\frac{x^4}{4}$."
         },
         {
@@ -36,5 +36,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-b10fd5"
+  "version": "v1.1.0-387558"
 }

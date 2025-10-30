@@ -16,7 +16,7 @@
         },
         {
           "text": "1",
-          "is_correct": true,
+          "is_correct": false,
           "explanation": "C'est une limite de référence en trigonométrie."
         }
       ],
@@ -31,5 +31,5 @@
       "sub_questions": []
     }
   ],
-  "version": "v1.1.0-bbd249"
+  "version": "v1.1.0-16f67e"
 }
