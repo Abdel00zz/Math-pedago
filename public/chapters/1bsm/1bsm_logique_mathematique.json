@@ -6,6 +6,7 @@
     "2025-10-01T18:00:00Z",
     "2025-10-03T18:00:00Z"
   ],
+  "lessonFile": "lessons/logique_mathematique.json",
   "videos": [],
   "quiz": [
     {
@@ -20,7 +21,7 @@
         },
         {
           "text": "Un énoncé mathématique qui peut être vrai ou faux",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "Une proposition est un énoncé qui a une **valeur de vérité** unique et bien définie : soit **Vrai (V)**, soit **Faux (F)**, mais jamais les deux à la fois. C'est le fondement de la logique mathématique."
         },
         {
@@ -53,7 +54,7 @@
         },
         {
           "text": "$P$ et $Q$ sont toutes les deux vraies",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "Le connecteur logique **ET** ($\\land$) ou **conjonction** ne donne une proposition vraie **seulement** quand $P$ est Vrai *et* $Q$ est Vrai. Dans tous les autres cas, $P \\land Q$ est Faux."
         },
         {
@@ -76,7 +77,7 @@
         },
         {
           "text": "$P$ et $Q$ sont toutes les deux fausses",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "Le connecteur logique **OU** ($\\lor$) ou **disjonction** ne donne une proposition fausse **seulement** quand $P$ est Faux *et* $Q$ est Faux. Si au moins l'une est Vraie, $P \\lor Q$ est Vrai."
         },
         {
@@ -114,7 +115,7 @@
         },
         {
           "text": "Fausse",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "La **négation** ($\\neg P$) d'une proposition $P$ a la valeur de vérité **opposée** à celle de $P$. Si $P$ est Vrai ($V$), alors $\\neg P$ est Faux ($F$). Réciproquement, si $P$ est Faux, alors $\\neg P$ est Vrai."
         }
       ],
@@ -127,7 +128,7 @@
       "options": [
         {
           "text": "$P$ est vraie et $Q$ est fausse",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "Une **implication** $P \\Rightarrow Q$ n'est fausse que dans le seul cas où la **prémisse** ($P$) est **vraie** et la **conclusion** ($Q$) est **fausse**. Si $P$ est Fausse, $P \\Rightarrow Q$ est toujours Vraie (y compris Faux $\\Rightarrow$ Faux)."
         },
         {
@@ -165,7 +166,7 @@
         },
         {
           "text": "$(P \\Rightarrow Q) \\land (Q \\Rightarrow P)$",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "L'**équivalence** $P \\Leftrightarrow Q$ est vraie si et seulement si $P$ et $Q$ ont la **même valeur de vérité** ($V \\iff V$ ou $F \\iff F$). Cela est logiquement équivalent à dire que $P$ implique $Q$ *et* $Q$ implique $P$ : $(P \\Rightarrow Q) \\land (Q \\Rightarrow P)$."
         },
         {
@@ -188,7 +189,7 @@
         },
         {
           "text": "Pour tout",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "Le **quantificateur universel** $\\forall$ signifie **'pour tout'** ou **'quel que soit'**. Il indique qu'une propriété est vraie pour *chaque* élément d'un ensemble."
         },
         {
@@ -221,7 +222,7 @@
         },
         {
           "text": "Il existe",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "Le **quantificateur existentiel** $\\exists$ signifie **'il existe'** ou **'il existe au moins un'**. Il indique qu'il y a *au moins un* élément dans l'ensemble pour lequel la propriété est vraie."
         },
         {
@@ -254,7 +255,7 @@
         },
         {
           "text": "$\\exists x \\in E, \\neg P(x)$",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "La **négation** d'une proposition quantifiée universellement $(\\forall x, P(x))$ devient une proposition quantifiée existentiellement **avec négation du prédicat** : $\\exists x, \\neg P(x)$. S'il n'est pas vrai pour *tout* $x$, c'est qu'il existe *au moins un* $x$ pour lequel il est Faux."
         }
       ],
@@ -267,7 +268,7 @@
       "options": [
         {
           "text": "$\\forall x \\in E, \\neg P(x)$",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "La **négation** d'une proposition quantifiée existentiellement $(\\exists x, P(x))$ devient une proposition quantifiée universellement **avec négation du prédicat** : $\\forall x, \\neg P(x)$. S'il n'existe *aucun* $x$ tel que $P(x)$ est Vrai, alors pour *tout* $x$, $P(x)$ est Faux."
         },
         {
@@ -300,7 +301,7 @@
         },
         {
           "text": "$\\neg Q \\Rightarrow \\neg P$",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "La **contraposée** d'une implication $P \\Rightarrow Q$ est $\\neg Q \\Rightarrow \\neg P$. Elles sont **logiquement équivalentes** : démontrer l'une revient à démontrer l'autre."
         },
         {
@@ -333,7 +334,7 @@
         },
         {
           "text": "$Q \\Rightarrow P$",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "La **réciproque** d'une implication $P \\Rightarrow Q$ est $Q \\Rightarrow P$. Attention : la réciproque **n'est pas toujours** logiquement équivalente à l'implication originale."
         },
         {
@@ -356,7 +357,7 @@
         },
         {
           "text": "Partir des hypothèses et déduire logiquement la conclusion",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "Le **raisonnement direct** part des **hypothèses** ($P$) et utilise une suite de **déductions logiques** et de propriétés connues pour arriver directement à la **conclusion** ($Q$). C'est la méthode de démonstration la plus simple et la plus intuitive."
         },
         {
@@ -389,7 +390,7 @@
         },
         {
           "text": "Supposer le contraire de ce qu'on veut démontrer et arriver à une contradiction",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "Le **raisonnement par l'absurde** (ou par contradiction) suppose la **négation** de ce que l'on veut démontrer ($\\neg Q$), puis établit une **contradiction** (une proposition de la forme $R \\land \\neg R$) pour conclure que l'hypothèse de départ ($\\neg Q$) est fausse et donc que $Q$ est Vrai."
         },
         {
@@ -422,7 +423,7 @@
         },
         {
           "text": "Démontrer $\\neg Q \\Rightarrow \\neg P$",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "Pour démontrer l'implication $P \\Rightarrow Q$, on peut démontrer sa **contraposée** $\\neg Q \\Rightarrow \\neg P$, car elles sont **logiquement équivalentes**. C'est une forme de raisonnement indirect très utile quand l'hypothèse $\\neg Q$ est plus simple à exploiter que l'hypothèse $P$."
         }
       ],
@@ -435,7 +436,7 @@
       "options": [
         {
           "text": "Diviser l'ensemble des possibilités en cas exhaustifs et traiter chaque cas séparément",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "Le **raisonnement par disjonction de cas** divise toutes les possibilités concernant l'hypothèse de départ en cas $C_1, C_2, \\dots, C_k$ qui doivent couvrir **exhaustivement** toutes les situations. On démontre ensuite la propriété souhaitée dans chacun des cas $C_i$ pour conclure qu'elle est toujours vraie."
         },
         {
@@ -473,7 +474,7 @@
         },
         {
           "text": "Sur tous les entiers naturels à partir d'un certain rang",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "Le **raisonnement par récurrence** permet de démontrer qu'une propriété $P(n)$ est vraie pour **tout entier naturel** $n \\geq n_0$ en assurant l'**initialisation** ($P(n_0)$ Vrai) et l'**hérédité** ($P(n) \\Rightarrow P(n+1)$)."
         },
         {
@@ -496,7 +497,7 @@
         },
         {
           "text": "Initialisation, hypothèse de récurrence, hérédité",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "Le raisonnement par **récurrence** comporte trois étapes : 1) **Initialisation** (vérifier $P(n_0)$), 2) **Hypothèse de récurrence** (supposer $P(n)$ vraie pour un $n$ fixé $\\geq n_0$), 3) **Hérédité** (démontrer que $P(n+1)$ est vraie à partir de $P(n)$)."
         },
         {
@@ -524,7 +525,7 @@
         },
         {
           "text": "Elles ont la même table de vérité",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "Deux propositions $A$ et $B$ sont **logiquement équivalentes** ($A \\equiv B$) si elles ont **exactement la même valeur de vérité** dans tous les cas possibles (pour toutes les combinaisons de valeurs de vérité des propositions de base qui les composent)."
         },
         {
@@ -557,7 +558,7 @@
         },
         {
           "text": "$\\neg P \\lor \\neg Q$",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "Les **lois de De Morgan** sont fondamentales : 1) La négation d'un ET est le OU des négations : $\\neg(P \\land Q) \\equiv \\neg P \\lor \\neg Q$. 2) La négation d'un OU est le ET des négations : $\\neg(P \\lor Q) \\equiv \\neg P \\land \\neg Q$."
         },
         {

@@ -1,0 +1,112 @@
+{
+  "header": {
+    "chapter": "1ère BSE - Mathématiques", 
+    "title": "Les Suites Numériques",
+    "subtitle": "Définitions, limites et comportement asymptotique"
+  },
+  "sections": [
+    {
+      "title": "Généralités sur les suites",
+      "subsections": [
+        {
+          "title": "Définition d'une suite",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Suite numérique",
+              "content": "Une suite numérique est une fonction de ℕ (ou d'une partie de ℕ) vers ℝ. On note (uₙ) la suite qui à n associe uₙ"
+            },
+            {
+              "type": "example",
+              "content": "uₙ = 2n + 1 définit la suite (3, 5, 7, 9, 11, ...)"
+            },
+            {
+              "type": "definition",
+              "title": "Modes de définition",
+              "content": "Une suite peut être définie :\n• Par une formule explicite : uₙ = f(n)\n• Par récurrence : u₀ donné et uₙ₊₁ = f(uₙ)"
+            }
+          ]
+        },
+        {
+          "title": "Suites arithmétiques",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Suite arithmétique",
+              "content": "Une suite (uₙ) est arithmétique s'il existe un nombre r tel que uₙ₊₁ = uₙ + r pour tout n. r est la raison"
+            },
+            {
+              "type": "formula",
+              "title": "Terme général",
+              "content": "Si (uₙ) est arithmétique de premier terme u₀ et de raison r : uₙ = u₀ + nr"
+            },
+            {
+              "type": "formula",
+              "title": "Somme des termes",
+              "content": "S = u₀ + u₁ + ... + uₙ = (n+1)(u₀ + uₙ)/2"
+            }
+          ]
+        },
+        {
+          "title": "Suites géométriques",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Suite géométrique",
+              "content": "Une suite (uₙ) est géométrique s'il existe un nombre q ≠ 0 tel que uₙ₊₁ = quₙ pour tout n. q est la raison"
+            },
+            {
+              "type": "formula",
+              "title": "Terme général", 
+              "content": "Si (uₙ) est géométrique de premier terme u₀ et de raison q : uₙ = u₀ × qⁿ"
+            },
+            {
+              "type": "formula",
+              "title": "Somme des termes",
+              "content": "Si q ≠ 1 : S = u₀ + u₁ + ... + uₙ = u₀(1 - qⁿ⁺¹)/(1 - q)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Limites de suites",
+      "subsections": [
+        {
+          "title": "Notion de limite",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Limite finie",
+              "content": "Une suite (uₙ) tend vers L ∈ ℝ si pour tout ε > 0, il existe un rang N tel que pour n ≥ N : |uₙ - L| < ε"
+            },
+            {
+              "type": "definition",
+              "title": "Limite infinie",
+              "content": "Une suite (uₙ) tend vers +∞ si pour tout A > 0, il existe un rang N tel que pour n ≥ N : uₙ > A"
+            },
+            {
+              "type": "example",
+              "content": "La suite uₙ = 1/n tend vers 0 quand n → +∞"
+            }
+          ]
+        },
+        {
+          "title": "Théorèmes sur les limites",
+          "elements": [
+            {
+              "type": "theorem",
+              "title": "Unicité de la limite",
+              "content": "Si une suite converge, sa limite est unique"
+            },
+            {
+              "type": "theorem",
+              "title": "Théorème des gendarmes",
+              "content": "Si uₙ ≤ vₙ ≤ wₙ pour n assez grand et lim uₙ = lim wₙ = L, alors lim vₙ = L"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

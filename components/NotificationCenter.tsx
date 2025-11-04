@@ -1,5 +1,4 @@
-import React from 'react';
-// Fix: The UINotification type is defined in '../types' and should be imported from there directly.
+import React, { useMemo } from 'react';
 import { UINotification } from '../types';
 import Modal from './Modal';
 
@@ -9,86 +8,200 @@ interface NotificationCenterProps {
     notifications: UINotification[];
 }
 
-const getIconForNotification = (title: string): string => {
-    const lowerCaseTitle = title.toLowerCase();
-    if (lowerCaseTitle.includes('mis à jour')) return 'update';
-    if (lowerCaseTitle.includes('nouveau') || lowerCaseTitle.includes('disponible')) return 'new_releases';
-    if (lowerCaseTitle.includes('imminente')) return 'podcasts';
-    if (lowerCaseTitle.includes('score') || lowerCaseTitle.includes('travail') || lowerCaseTitle.includes('bravo') || lowerCaseTitle.includes('terminé')) return 'emoji_events';
-    if (lowerCaseTitle.includes('bienvenue')) return 'waving_hand';
-    return 'notifications';
+type NotificationCategory = 'update' | 'launch' | 'deadline' | 'achievement' | 'welcome' | 'general';
+
+interface CategorisedNotifications {
+    byCategory: Record<NotificationCategory, UINotification[]>;
+    ordered: Array<{ notification: UINotification; category: NotificationCategory }>;
+    total: number;
+}
+
+interface SummaryChip {
+    category: NotificationCategory;
+    label: string;
+    count: number;
+}
+
+interface SummaryInfo {
+    message: string;
+    chips: SummaryChip[];
+    total: number;
+}
+
+const CATEGORY_META: Record<NotificationCategory, { label: string; keywords: string[] }> = {
+    update: {
+        label: 'Mises à jour',
+        keywords: ['mis à jour', 'version', 'actualisation', 'nouveau contenu'],
+    },
+    launch: {
+        label: 'Nouveautés',
+        keywords: ['nouveau', 'disponible', 'lancement', 'commence', 'arrive'],
+    },
+    deadline: {
+        label: 'Rappels',
+        keywords: ['imminente', 'deadline', 'date limite', 'rappel', 'bientôt'],
+    },
+    achievement: {
+        label: 'Réussites',
+        keywords: ['score', 'travail', 'bravo', 'terminé', 'félicitations', 'succès'],
+    },
+    welcome: {
+        label: 'Bienvenues',
+        keywords: ['bienvenue', 'bonjour', 'démarrer', 'introduction'],
+    },
+    general: {
+        label: 'Infos clés',
+        keywords: [],
+    },
+};
+
+const detectCategory = (notif: UINotification): NotificationCategory => {
+    const title = notif.title.toLowerCase();
+
+    for (const [category, meta] of Object.entries(CATEGORY_META) as [NotificationCategory, (typeof CATEGORY_META)[NotificationCategory]][]) {
+        if (category === 'general') {
+            continue;
+        }
+
+        if (meta.keywords.some(keyword => title.includes(keyword))) {
+            return category;
+        }
+    }
+
+    return 'general';
+};
+
+const categoriseNotifications = (notifications: UINotification[]): CategorisedNotifications => {
+    const byCategory: Record<NotificationCategory, UINotification[]> = {
+        update: [],
+        launch: [],
+        deadline: [],
+        achievement: [],
+        welcome: [],
+        general: [],
+    };
+
+    const orderedEntries: Array<{ notification: UINotification; category: NotificationCategory }> = [];
+
+    [...notifications]
+        .sort((a, b) => b.timestamp - a.timestamp)
+        .forEach(notif => {
+        const category = detectCategory(notif);
+        byCategory[category].push(notif);
+        orderedEntries.push({ notification: notif, category });
+    });
+
+    return {
+        byCategory,
+        ordered: orderedEntries,
+        total: orderedEntries.length,
+    };
+};
+
+const buildSummary = (categorised: CategorisedNotifications): SummaryInfo => {
+    if (categorised.total === 0) {
+        return {
+            message: 'Aucune notification en attente pour le moment.',
+            chips: [],
+            total: 0,
+        };
+    }
+
+    const chips: SummaryChip[] = Object.entries(categorised.byCategory)
+        .filter(([, list]) => list.length > 0)
+        .map(([category, list]) => ({
+            category: category as NotificationCategory,
+            label: CATEGORY_META[category as NotificationCategory].label,
+            count: list.length,
+        }))
+        .sort((a, b) => b.count - a.count);
+
+    const [primaryChip] = chips;
+
+    const focusEntry = categorised.ordered[0];
+    const focusNotification = focusEntry?.notification;
+
+    const messageParts: string[] = [];
+
+    if (primaryChip) {
+        messageParts.push(`${primaryChip.count} ${primaryChip.label.toLowerCase()} à consulter`);
+    }
+
+    if (focusNotification) {
+        messageParts.push(`Commencez par « ${focusNotification.title} »`);
+    }
+
+    const message = messageParts.length
+        ? messageParts.join(' · ')
+        : 'Parcourez vos notifications pour rester à jour.';
+
+    return {
+        message,
+        chips,
+        total: categorised.total,
+    };
 };
 
 const timeAgo = (timestamp: number): string => {
-    const now = new Date();
-    const seconds = Math.floor((now.getTime() - timestamp) / 1000);
-    
-    let interval = seconds / 31536000;
-    if (interval > 1) {
-        const years = Math.floor(interval);
-        return `il y a ${years} an${years > 1 ? 's' : ''}`;
+    const diffInSeconds = Math.floor((Date.now() - timestamp) / 1000);
+
+    if (diffInSeconds < 60) {
+        return "à l'instant";
     }
-    interval = seconds / 2592000;
-    if (interval > 1) {
-        return `il y a ${Math.floor(interval)} mois`;
+
+    const diffInMinutes = Math.floor(diffInSeconds / 60);
+    if (diffInMinutes < 60) {
+        return `il y a ${diffInMinutes} min`;
     }
-    interval = seconds / 86400;
-    if (interval > 1) {
-        const days = Math.floor(interval);
-        return `il y a ${days} jour${days > 1 ? 's' : ''}`;
+
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    if (diffInHours < 24) {
+        return `il y a ${diffInHours} h`;
     }
-    interval = seconds / 3600;
-    if (interval > 1) {
-        const hours = Math.floor(interval);
-        return `il y a ${hours} heure${hours > 1 ? 's' : ''}`;
+
+    const diffInDays = Math.floor(diffInHours / 24);
+    if (diffInDays < 7) {
+        return `il y a ${diffInDays} j`;
     }
-    interval = seconds / 60;
-    if (interval > 1) {
-        const minutes = Math.floor(interval);
-        return `il y a ${minutes} min`;
-    }
-    return "à l'instant";
+
+    const date = new Date(timestamp);
+    return date.toLocaleDateString('fr-FR', {
+        day: 'numeric',
+        month: 'short',
+    });
 };
 
-
 const NotificationCenter: React.FC<NotificationCenterProps> = ({ isOpen, onClose, notifications }) => {
+    const categorised = useMemo(() => categoriseNotifications(notifications), [notifications]);
+    const summary = useMemo(() => buildSummary(categorised), [categorised]);
+
     return (
-        <Modal 
-            isOpen={isOpen} 
-            onClose={onClose} 
+        <Modal
+            isOpen={isOpen}
+            onClose={onClose}
             title="Notifications"
-            titleClassName="text-red-600 text-2xl sm:text-3xl font-bold text-center mx-auto"
-            hideHeaderBorder={true}
-            className="sm:max-w-xl"
+            className="notification-modal"
         >
-            <div className="p-2">
-                
-                <div className="max-h-[60vh] overflow-y-auto -mr-4 pr-4">
-                    {notifications.length > 0 ? (
-                        <ul className="space-y-4">
-                            {notifications.map((notif) => (
-                                <li key={notif.id} className="p-4 bg-background/50 rounded-lg flex items-start gap-4 border border-border transition-all hover:border-border-hover hover:bg-surface/50">
-                                     <span className="material-symbols-outlined text-primary mt-1">
-                                        {getIconForNotification(notif.title)}
-                                    </span>
-                                    <div className="font-garamond flex-1">
-                                        <div className="flex justify-between items-center">
-                                            <h4 className="font-semibold text-text text-lg">{notif.title}</h4>
-                                            <span className="text-xs text-text-secondary whitespace-nowrap">{timeAgo(notif.timestamp)}</span>
-                                        </div>
-                                        <p className="text-text-secondary text-base mt-1" dangerouslySetInnerHTML={{ __html: notif.message }}></p>
-                                    </div>
-                                </li>
-                            ))}
-                        </ul>
-                    ) : (
-                        <div className="text-center py-12 text-secondary">
-                            <span className="material-symbols-outlined text-5xl">notifications_off</span>
-                            <p className="text-lg font-garamond mt-4">Vous n'avez aucune nouvelle notification.</p>
-                            <p className="text-base font-garamond italic mt-1">Tout est à jour !</p>
+            <div className="notification-list">
+                {categorised.total > 0 ? (
+                    categorised.ordered.map(({ notification, category }) => (
+                        <div key={notification.id} className="notification-item">
+                            <div className="notification-item__header">
+                                <span className="notification-item__category">
+                                    {CATEGORY_META[category].label}
+                                </span>
+                                <span className="notification-item__time">{timeAgo(notification.timestamp)}</span>
+                            </div>
+                            <h4 className="notification-item__title">{notification.title}</h4>
+                            <p className="notification-item__message" dangerouslySetInnerHTML={{ __html: notification.message }} />
                         </div>
-                    )}
-                </div>
+                    ))
+                ) : (
+                    <div className="notification-empty">
+                        <span className="material-symbols-outlined">notifications_off</span>
+                        <p>Aucune notification</p>
+                    </div>
+                )}
             </div>
         </Modal>
     );

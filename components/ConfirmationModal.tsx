@@ -27,14 +27,14 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({ isOpen, onClose, 
                 <button
                     onClick={onClose}
                     disabled={isSubmitting}
-                    className="font-button w-full sm:w-auto mt-2 sm:mt-0 px-6 py-2 font-semibold text-secondary bg-background border border-border rounded-lg hover:bg-border-hover active:scale-95 disabled:opacity-50"
+                    className="font-button w-full sm:w-auto mt-2 sm:mt-0 px-6 py-2 font-semibold text-text-secondary bg-surface border border-border rounded-lg hover:bg-background active:scale-95 disabled:opacity-50"
                 >
                     Annuler
                 </button>
                 <button
                     onClick={onSubmit}
                     disabled={isSubmitting}
-                    className="font-button w-full sm:w-auto flex items-center justify-center px-6 py-3 font-semibold text-white bg-primary rounded-lg transition-transform transform hover:-translate-y-px active:scale-95 disabled:bg-primary/70 disabled:cursor-wait"
+                    className="font-button w-full sm:w-auto flex items-center justify-center px-6 py-3 font-semibold text-white bg-primary hover:bg-primary-dark rounded-lg transition-transform transform hover:-translate-y-px active:scale-95 disabled:bg-primary/70 disabled:cursor-wait"
                 >
                     {isSubmitting ? (
                         <>

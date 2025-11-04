@@ -275,7 +275,7 @@ const Quiz: React.FC = () => {
 
         return (
             <div className="text-center p-6 animate-fadeIn">
-                <div className="bg-surface border border-border rounded-2xl shadow-claude max-w-2xl mx-auto p-8">
+                <div className="bg-surface border border-border rounded-2xl coursera-shadow-card max-w-2xl mx-auto p-8">
                     <h2 className="text-4xl font-playfair text-text mb-2">{message}</h2>
                     <p className="text-secondary serif-text text-lg">Votre score au quiz est de :</p>
                     <p className={`text-7xl font-bold my-4 ${color}`}>{percentage}%</p>
@@ -355,19 +355,19 @@ const Quiz: React.FC = () => {
                         const isCurrent = globalIndex === currentQuestionIndex;
                         const isUnanswered = !isAnswered;
 
-                        const baseClasses = 'flex h-10 w-10 items-center justify-center rounded-full border font-semibold text-sm transition-all duration-300 shadow-[0_12px_22px_rgba(15,23,42,0.18)]';
+                        const baseClasses = 'quiz-nav-dot';
 
                         const stateClasses = isCurrent
-                            ? 'bg-primary text-[#F8FAFC] border-primary shadow-[0_14px_32px_rgba(59,130,246,0.28)] scale-105'
+                            ? ' quiz-nav-dot--current'
                             : isAnswered
-                            ? 'bg-surface/70 text-[#E2E8F0] border-primary/35 hover:border-primary/60'
-                            : 'border-warning/70 bg-warning/30 text-[#F9FAFF] animate-alertBeacon';
+                            ? ' quiz-nav-dot--answered'
+                            : ' quiz-nav-dot--pending';
 
                         return (
                             <button
                                 key={id}
                                 onClick={() => handleNavigate(globalIndex)}
-                                className={`${baseClasses} ${stateClasses}`}
+                                className={`${baseClasses}${stateClasses}`}
                                 title={isUnanswered ? `Question ${globalIndex + 1} non répondue` : `Question ${globalIndex + 1}`}
                                 aria-label={`Aller à la question ${globalIndex + 1}${isUnanswered ? ' (non répondue)' : ''}`}
                                 disabled={isCurrent}
@@ -409,7 +409,7 @@ const Quiz: React.FC = () => {
                             <span className="font-mono text-sm leading-none">{formattedTime}</span>
                         </span>
                     </div>
-                    <div className="bg-black text-white px-6 py-4 rounded-xl mb-6 shadow-lg">
+                    <div className="quiz-question-panel">
                         <h3 className="quiz-question-text font-display leading-relaxed font-semibold">
                             <FormattedText text={question.question} />
                         </h3>

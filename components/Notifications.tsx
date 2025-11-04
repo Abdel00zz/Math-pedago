@@ -48,13 +48,12 @@ export const Notifications: React.FC = () => {
     const portalRoot = document.body;
     if (!portalRoot) return null;
 
-    // Use subtle, theme-coherent toast styles (soft background + colored accent)
-    const typeInfo: { [key in ToastNotificationType]: { bg: string; borderColor: string; icon: string; iconColor: string } } = {
-        // success uses the app primary as a gentle accent; other types use subtle accent colors
-        success: { bg: 'bg-surface/90', borderColor: 'border-primary/40', icon: 'check_circle', iconColor: 'text-primary' },
-        warning: { bg: 'bg-surface/90', borderColor: 'border-amber-400/25', icon: 'warning', iconColor: 'text-amber-400' },
-        error: { bg: 'bg-surface/90', borderColor: 'border-red-400/25', icon: 'error', iconColor: 'text-red-400' },
-        info: { bg: 'bg-surface/90', borderColor: 'border-blue-400/25', icon: 'info', iconColor: 'text-blue-400' },
+    // Minimalist shadcn-inspired styles - subtle, clean, monochromatic
+    const typeInfo: { [key in ToastNotificationType]: { icon: string; iconColor: string } } = {
+        success: { icon: 'check_circle', iconColor: 'text-green-600' },
+        warning: { icon: 'warning', iconColor: 'text-amber-600' },
+        error: { icon: 'error', iconColor: 'text-red-600' },
+        info: { icon: 'info', iconColor: 'text-blue-600' },
     };
 
     // Filtrer les notifications à afficher (y compris celles qui partent)
@@ -100,12 +99,12 @@ export const Notifications: React.FC = () => {
                         aria-atomic="true"
                         onClick={isClickable ? handleActionClick : undefined}
                         className={`
-                            relative w-full p-3 rounded-lg
-                            flex items-start gap-3 text-text overflow-hidden
-                            border backdrop-blur-sm pointer-events-auto
+                            relative w-full p-4 rounded-lg
+                            flex items-start gap-3 overflow-hidden
+                            bg-white border border-slate-200
+                            shadow-sm pointer-events-auto
                             transition-all duration-250 ease-out
-                            ${info.bg} ${info.borderColor}
-                            ${isClickable ? 'cursor-pointer hover:scale-[1.02]' : ''}
+                            ${isClickable ? 'cursor-pointer hover:border-slate-300' : ''}
                             ${isLeaving
                                 ? 'opacity-0 translate-x-full scale-95'
                                 : 'opacity-100 translate-x-0 scale-100 animate-slideInRight'
@@ -115,30 +114,29 @@ export const Notifications: React.FC = () => {
                             transitionProperty: 'opacity, transform',
                         }}
                     >
-                        {/* Background subtle icon */}
-                        <div className="flex-shrink-0 mt-0.5 z-10">
-                            <span className={`material-symbols-outlined !text-2xl ${info.iconColor}`}>{info.icon}</span>
+                        <div className="flex-shrink-0 mt-0.5">
+                            <span className={`material-symbols-outlined !text-xl ${info.iconColor}`}>{info.icon}</span>
                         </div>
 
-                        <div className="flex-grow z-10 min-w-0">
+                        <div className="flex-grow min-w-0">
                             {notif.title && (
-                                <h4 className="font-semibold text-text font-title text-base leading-tight break-words">
+                                <h4 className="font-semibold text-slate-900 text-sm leading-tight break-words">
                                     {notif.title}
                                 </h4>
                             )}
                             {notif.message && (
                                 <p
-                                    className="text-sm text-text-secondary font-sans mt-1 leading-relaxed break-words"
+                                    className="text-sm text-slate-600 mt-1 leading-relaxed break-words"
                                     dangerouslySetInnerHTML={{ __html: notif.message }}
                                 />
                             )}
                         </div>
 
-                        <div className="flex-shrink-0 flex items-start gap-2 z-10">
+                        <div className="flex-shrink-0 flex items-start gap-2">
                             {notif.action && (
                                 <button
                                     onClick={handleActionClick}
-                                    className="px-3 py-1.5 text-xs font-bold bg-white/25 hover:bg-white/35 active:bg-white/40 rounded-md transition-all flex-shrink-0 font-button shadow-lg"
+                                    className="px-3 py-1.5 text-xs font-medium bg-slate-900 hover:bg-slate-800 text-white rounded-md transition-colors flex-shrink-0"
                                     aria-label={notif.action.label}
                                 >
                                     {notif.action.label}
@@ -147,10 +145,10 @@ export const Notifications: React.FC = () => {
 
                             <button
                                 onClick={handleDismiss}
-                                className="p-1.5 -mr-1 -mt-1 rounded-full hover:bg-white/25 active:bg-white/35 transition-all flex-shrink-0"
+                                className="p-1 -mr-1 -mt-1 rounded-md hover:bg-slate-100 transition-colors flex-shrink-0 text-slate-400 hover:text-slate-600"
                                 aria-label="Fermer la notification"
                             >
-                                <span className="material-symbols-outlined !text-xl">close</span>
+                                <span className="material-symbols-outlined !text-lg">close</span>
                             </button>
                         </div>
                     </div>

@@ -16,25 +16,24 @@ const ChapterSection: React.FC<ChapterSectionProps> = ({ title, chapters, progre
     }
 
     return (
-        <section>
-            <div className="flex items-baseline gap-4 mb-6">
-                {icon && <span className="text-3xl text-primary/70 font-sans not-italic">{icon}</span>}
-                <h2 className="text-3xl sm:text-4xl font-playfair text-text tracking-tight">
-                    {title}
-                </h2>
-                <span className="text-xl font-garamond text-text-secondary -translate-y-px">
-                    ({chapters.length})
-                </span>
+        <section className="dashboard-section">
+            <div className="dashboard-section__header">
+                {icon && (
+                    <span className="dashboard-section__icon" aria-hidden="true">
+                        {icon}
+                    </span>
+                )}
+                <h2 className="dashboard-section__title">{title}</h2>
+                <span className="dashboard-section__count">({chapters.length})</span>
             </div>
-            <div className="space-y-4">
+            <div className="dashboard-section__items">
                 {chapters.map((chapter) => (
-                    <div key={chapter.id}>
-                        <ChapterCard 
-                            chapter={chapter} 
-                            progress={progress[chapter.id]} 
-                            onSelect={onSelect} 
-                        />
-                    </div>
+                    <ChapterCard
+                        key={chapter.id}
+                        chapter={chapter}
+                        progress={progress[chapter.id]}
+                        onSelect={onSelect}
+                    />
                 ))}
             </div>
         </section>

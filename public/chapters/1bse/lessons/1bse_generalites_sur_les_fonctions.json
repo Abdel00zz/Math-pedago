@@ -1,0 +1,101 @@
+{
+  "header": {
+    "chapter": "1ère BSE - Mathématiques",
+    "title": "Généralités sur les fonctions",
+    "subtitle": "Définitions, propriétés et représentations graphiques"
+  },
+  "sections": [
+    {
+      "title": "Définition d'une fonction",
+      "subsections": [
+        {
+          "title": "Notion de fonction",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Fonction",
+              "content": "Une fonction f est une relation qui associe à chaque élément x d'un ensemble de départ D un unique élément y d'un ensemble d'arrivée E. On note : f : D → E, x ↦ f(x)"
+            },
+            {
+              "type": "example",
+              "content": "f(x) = 2x + 1 est une fonction qui associe à chaque nombre réel x le nombre 2x + 1."
+            }
+          ]
+        },
+        {
+          "title": "Domaine de définition",
+          "elements": [
+            {
+              "type": "definition", 
+              "title": "Domaine de définition",
+              "content": "Le domaine de définition Df d'une fonction f est l'ensemble de toutes les valeurs x pour lesquelles f(x) existe."
+            },
+            {
+              "type": "method",
+              "title": "Comment déterminer le domaine de définition",
+              "content": "Pour déterminer Df, on identifie les valeurs de x qui rendent l'expression de f(x) impossible (division par zéro, racine d'un nombre négatif, etc.)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Propriétés des fonctions",
+      "subsections": [
+        {
+          "title": "Parité des fonctions",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Fonction paire",
+              "content": "Une fonction f est paire si son domaine est symétrique par rapport à 0 et si pour tout x ∈ Df : f(-x) = f(x)"
+            },
+            {
+              "type": "definition", 
+              "title": "Fonction impaire",
+              "content": "Une fonction f est impaire si son domaine est symétrique par rapport à 0 et si pour tout x ∈ Df : f(-x) = -f(x)"
+            },
+            {
+              "type": "example",
+              "content": "f(x) = x² est paire car f(-x) = (-x)² = x² = f(x)"
+            }
+          ]
+        },
+        {
+          "title": "Monotonie",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Fonction croissante",
+              "content": "Une fonction f est croissante sur un intervalle I si pour tous x₁, x₂ ∈ I avec x₁ < x₂, on a f(x₁) ≤ f(x₂)"
+            },
+            {
+              "type": "definition",
+              "title": "Fonction décroissante", 
+              "content": "Une fonction f est décroissante sur un intervalle I si pour tous x₁, x₂ ∈ I avec x₁ < x₂, on a f(x₁) ≥ f(x₂)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Représentation graphique",
+      "subsections": [
+        {
+          "title": "Courbe représentative",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Graphique d'une fonction",
+              "content": "La courbe représentative de f est l'ensemble des points M(x, f(x)) dans un repère orthogonal"
+            },
+            {
+              "type": "property",
+              "content": "Chaque droite verticale coupe la courbe d'une fonction en au plus un point"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

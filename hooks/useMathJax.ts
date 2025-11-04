@@ -426,23 +426,4 @@ export const useMathJaxAdvanced = (
   };
 };
 
-/**
- * Déclaration TypeScript pour window.MathJax v4
- */
-declare global {
-  interface Window {
-    MathJax?: {
-      typesetPromise?: (elements?: HTMLElement[]) => Promise<void>;
-      typesetClear?: (elements: HTMLElement[]) => void;
-      startup?: {
-        promise?: Promise<void>;
-      };
-      tex2chtmlPromise?: (math: string, options?: any) => Promise<HTMLElement>;
-      tex2svgPromise?: (math: string, options?: any) => Promise<HTMLElement>;
-      tex2chtml?: (math: string, options?: any) => HTMLElement;
-      tex2svg?: (math: string, options?: any) => HTMLElement;
-    };
-  }
-}
-
 export default useMathJax;

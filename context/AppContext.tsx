@@ -191,6 +191,57 @@ const appReducer = (state: AppState, action: Action): AppState => {
             };
         }
 
+        case 'UPDATE_LESSON_PROGRESS': {
+            if (!state.currentChapterId) return state;
+            const {
+                chapterId,
+                scrollProgress,
+                isRead,
+                duration,
+                completedParagraphs,
+                totalParagraphs,
+                completedSections,
+                totalSections,
+                checklistPercentage,
+            } = action.payload;
+            const progress = state.progress[chapterId || state.currentChapterId];
+
+            // Initialiser lessonProgress si nécessaire
+            const lessonProgress = progress.lesson || {
+                isRead: false,
+                duration: 0,
+                scrollProgress: 0,
+                completedParagraphs: 0,
+                totalParagraphs: 0,
+                completedSections: 0,
+                totalSections: 0,
+                checklistPercentage: 0,
+            };
+
+            const nextLessonProgress = {
+                ...lessonProgress,
+                scrollProgress: scrollProgress !== undefined ? scrollProgress : lessonProgress.scrollProgress,
+                isRead: isRead !== undefined ? isRead : lessonProgress.isRead,
+                duration: duration !== undefined ? duration : lessonProgress.duration,
+                completedParagraphs: completedParagraphs !== undefined ? completedParagraphs : lessonProgress.completedParagraphs,
+                totalParagraphs: totalParagraphs !== undefined ? totalParagraphs : lessonProgress.totalParagraphs,
+                completedSections: completedSections !== undefined ? completedSections : lessonProgress.completedSections,
+                totalSections: totalSections !== undefined ? totalSections : lessonProgress.totalSections,
+                checklistPercentage: checklistPercentage !== undefined ? checklistPercentage : lessonProgress.checklistPercentage,
+            };
+
+            return {
+                ...state,
+                progress: {
+                    ...state.progress,
+                    [chapterId || state.currentChapterId]: {
+                        ...progress,
+                        lesson: nextLessonProgress,
+                    },
+                },
+            };
+        }
+
         case 'SUBMIT_QUIZ': {
             if (!state.currentChapterId) return state;
             const progress = state.progress[state.currentChapterId];

@@ -77,7 +77,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
                     <td><strong>${chapterTitle}</strong></td>
                   </tr>
                   <tr>
-                    <td>📊 Score Quiz</td>
+                    <td>� Progression Leçon</td>
+                    <td><strong>${parsedData.results?.[0]?.lesson?.completed || 0} / ${parsedData.results?.[0]?.lesson?.total || 0}</strong> paragraphes (${parsedData.results?.[0]?.lesson?.percentage?.toFixed(1) || 0}%)</td>
+                  </tr>
+                  <tr>
+                    <td>�📊 Score Quiz</td>
                     <td><strong>${parsedData.results?.[0]?.quiz?.scoreRaw || 'N/A'}</strong> (${parsedData.results?.[0]?.quiz?.score?.toFixed(1) || 0}%)</td>
                   </tr>
                   <tr>
@@ -120,7 +124,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // Return success response
     return res.status(200).json({
       success: true,
-      messageId: data.id,
+      messageId: data?.data?.id || 'unknown',
       message: 'Work submitted successfully'
     });
 

@@ -111,9 +111,9 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({
     // --- REVIEW/SUBMITTED MODE ---
     if (isReviewMode || isSubmitted) {
         return (
-            <div className="bg-surface p-6 sm:p-8 rounded-2xl border border-border shadow-claude animate-fadeIn quiz-content">
-                <div className="bg-black text-white px-6 py-4 rounded-xl mb-6 shadow-lg">
-                    <h3 className="quiz-question-text font-title leading-relaxed font-semibold">
+            <div className="bg-surface p-6 sm:p-8 rounded-2xl border border-border coursera-shadow-card animate-fadeIn quiz-content">
+                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 px-6 py-4 rounded-xl mb-6 coursera-shadow-soft">
+                    <h3 className="quiz-question-text font-title leading-relaxed font-semibold text-coursera-black">
                         <FormattedText text={question.question} />
                     </h3>
                 </div>                <div className="space-y-8">
@@ -181,9 +181,9 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({
                 }
             `}</style>
 
-        <div className="bg-surface p-6 sm:p-8 rounded-2xl border border-border shadow-claude animate-fadeIn quiz-content">
-            <div className="bg-black text-white px-6 py-4 rounded-xl mb-6 shadow-lg">
-                <h3 className="quiz-question-text font-title leading-relaxed font-semibold">
+        <div className="bg-surface p-6 sm:p-8 rounded-2xl border border-border coursera-shadow-card animate-fadeIn quiz-content">
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 px-6 py-4 rounded-xl mb-6 coursera-shadow-soft">
+                <h3 className="quiz-question-text font-title leading-relaxed font-semibold text-coursera-black">
                     <FormattedText text={question.question} />
                 </h3>
             </div>                <div className="text-center mb-6">

@@ -1,0 +1,113 @@
+{
+  "header": {
+    "chapter": "1ère BSE - Mathématiques",
+    "title": "La Dérivation",
+    "subtitle": "Nombre dérivé et fonction dérivée"
+  },
+  "sections": [
+    {
+      "title": "Nombre dérivé en un point",
+      "subsections": [
+        {
+          "title": "Définition du nombre dérivé",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Taux de variation",
+              "content": "Soit f une fonction définie sur un intervalle I et a un point de I. Le taux de variation de f entre a et a+h est : T(h) = [f(a+h) - f(a)]/h"
+            },
+            {
+              "type": "definition",
+              "title": "Nombre dérivé",
+              "content": "Le nombre dérivé de f en a, noté f'(a), est la limite du taux de variation quand h tend vers 0 : f'(a) = lim(h→0) [f(a+h) - f(a)]/h"
+            },
+            {
+              "type": "example",
+              "content": "Pour f(x) = x², calculons f'(2) : f'(2) = lim(h→0) [(2+h)² - 4]/h = lim(h→0) [4+4h+h² - 4]/h = lim(h→0) (4+h) = 4"
+            }
+          ]
+        },
+        {
+          "title": "Interprétation géométrique",
+          "elements": [
+            {
+              "type": "property",
+              "title": "Tangente à la courbe",
+              "content": "Géométriquement, f'(a) est le coefficient directeur de la tangente à la courbe de f au point d'abscisse a"
+            },
+            {
+              "type": "definition",
+              "title": "Équation de la tangente",
+              "content": "L'équation de la tangente à Cf au point A(a, f(a)) est : y = f'(a)(x - a) + f(a)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Fonction dérivée",
+      "subsections": [
+        {
+          "title": "Définition",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Fonction dérivée",
+              "content": "Si f est dérivable sur un intervalle I, la fonction qui à x associe f'(x) s'appelle la fonction dérivée de f, notée f'"
+            }
+          ]
+        },
+        {
+          "title": "Dérivées usuelles",
+          "elements": [
+            {
+              "type": "formula",
+              "title": "Dérivées des fonctions de référence",
+              "content": "• (k)' = 0 (k constante)\n• (x)' = 1\n• (xⁿ)' = nxⁿ⁻¹\n• (√x)' = 1/(2√x)\n• (1/x)' = -1/x²"
+            }
+          ]
+        },
+        {
+          "title": "Règles de dérivation",
+          "elements": [
+            {
+              "type": "rule",
+              "title": "Linéarité",
+              "content": "(au + bv)' = au' + bv' où a et b sont des constantes"
+            },
+            {
+              "type": "rule",
+              "title": "Produit",
+              "content": "(uv)' = u'v + uv'"
+            },
+            {
+              "type": "rule",
+              "title": "Quotient",
+              "content": "(u/v)' = (u'v - uv')/v² pour v ≠ 0"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Applications de la dérivation",
+      "subsections": [
+        {
+          "title": "Étude des variations",
+          "elements": [
+            {
+              "type": "theorem",
+              "title": "Lien dérivée-monotonie",
+              "content": "Soit f dérivable sur I :\n• f' > 0 sur I ⟹ f croissante sur I\n• f' < 0 sur I ⟹ f décroissante sur I\n• f' = 0 sur I ⟹ f constante sur I"
+            },
+            {
+              "type": "definition",
+              "title": "Extremums locaux",
+              "content": "Si f admet un extremum local en a et si f est dérivable en a, alors f'(a) = 0"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

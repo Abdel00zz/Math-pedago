@@ -5,6 +5,7 @@
     "2025-11-02T01:30:00Z"
   ],
   "videos": [],
+  "lessonFile": "lessons/derivation_fonctions_usuelles.json",
   "quiz": [
     {
       "id": "q_mcq_1",
@@ -18,7 +19,7 @@
         },
         {
           "text": "La fonction n'est pas dérivable en $a$.",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "Un point anguleux indique que la dérivée à gauche et la dérivée à droite en $a$ sont différentes. La fonction n'est donc pas dérivable en ce point."
         },
         {
@@ -41,7 +42,7 @@
         },
         {
           "text": "Si une fonction est dérivable en un point, alors elle est continue en ce point.",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "C'est une propriété fondamentale du cours. La dérivabilité est une condition plus forte que la continuité."
         },
         {
@@ -64,7 +65,7 @@
         },
         {
           "text": "Ses dérivées à droite et à gauche en $a$ existent et sont égales.",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "C'est la définition même de la dérivabilité en un point : $f'_d(a) = f'_g(a) = l$, où $l$ est un nombre réel fini."
         },
         {
@@ -87,7 +88,7 @@
         },
         {
           "text": "La courbe de $f$ admet une tangente horizontale au point d'abscisse $a$.",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "Le nombre dérivé est le coefficient directeur de la tangente. Une pente de 0 signifie que la tangente est horizontale."
         },
         {
@@ -110,7 +111,7 @@
         },
         {
           "text": "La tangente à la courbe de $f$ au point $a$.",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "L'équation $y = f'(a)(x-a) + f(a)$ est celle de la tangente, qui constitue la meilleure approximation affine de $f$ localement autour de $a$."
         },
         {
@@ -138,7 +139,7 @@
         },
         {
           "text": "Une demi-tangente verticale dirigée vers le haut à droite en $a$.",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "Une limite infinie du taux d'accroissement se traduit graphiquement par une tangente verticale."
         }
       ],
@@ -156,7 +157,7 @@
         },
         {
           "text": "$f'(a)$ doit être non nul.",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "La formule $(f^{-1})'(f(a)) = 1/f'(a)$ montre que $f'(a)$ ne peut pas être nul, sinon on diviserait par zéro. Géométriquement, cela évite une tangente horizontale sur $f$ qui deviendrait une tangente verticale sur $f^{-1}$."
         },
         {
@@ -179,7 +180,7 @@
         },
         {
           "text": "La monotonie (sens de variation) de la fonction $f$.",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "Si $f' > 0$, $f$ est croissante. Si $f' < 0$, $f$ est décroissante. C'est l'application principale de la dérivation."
         },
         {
@@ -202,7 +203,7 @@
         },
         {
           "text": "$f'(a) = 0$.",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "C'est une condition nécessaire pour un extremum local dans un intervalle ouvert. La tangente à la courbe y est horizontale."
         },
         {
@@ -225,7 +226,7 @@
         },
         {
           "text": "Non, il faut aussi que la dérivée $f'$ change de signe en $c$.",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "C'est la condition suffisante. Si $f'$ s'annule SANS changer de signe, il s'agit d'un point d'inflexion à tangente horizontale."
         },
         {
@@ -248,7 +249,7 @@
         },
         {
           "text": "La concavité de la courbe de $f$.",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "Si $f'' > 0$, la fonction est convexe (courbe 'au-dessus' de ses tangentes). Si $f'' < 0$, la fonction est concave (courbe 'en-dessous' de ses tangentes)."
         },
         {
@@ -271,7 +272,7 @@
         },
         {
           "text": "La courbe traverse sa tangente.",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "C'est la définition géométrique d'un point d'inflexion. La concavité de la courbe change en ce point."
         },
         {
@@ -294,7 +295,7 @@
         },
         {
           "text": "Elle admet une asymptote horizontale d'équation $y=b$.",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "C'est la définition d'une asymptote horizontale au voisinage de $+\\infty$."
         },
         {
@@ -322,7 +323,7 @@
         },
         {
           "text": "$\\displaystyle \\lim_{x \\to \\infty} \\frac{f(x)}{x}$",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "C'est la première étape cruciale. Si cette limite est un réel fini non nul $a$, on peut alors chercher $b = \\displaystyle \\lim_{x \\to \\infty} (f(x) - ax)$."
         }
       ],
@@ -340,7 +341,7 @@
         },
         {
           "text": "$g'(f(x)) \\times f'(x)$",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "C'est la formule de la dérivation en chaîne (chain rule). On dérive la fonction 'extérieure' $g$ et on l'évalue en $f(x)$, puis on multiplie par la dérivée de la fonction 'intérieure' $f$."
         },
         {
@@ -363,7 +364,7 @@
         },
         {
           "text": "$f'$ est une fonction impaire.",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "Si $f(x)=f(-x)$, en dérivant on obtient $f'(x) = -f'(-x)$ en utilisant la dérivation en chaîne, ce qui est la définition d'une fonction impaire."
         },
         {
@@ -386,7 +387,7 @@
         },
         {
           "text": "nécessaire pour avoir un point d'inflexion en $a$ (si $f''$ existe).",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "Si $f$ est deux fois dérivable et a un point d'inflexion en $a$, alors il est nécessaire que $f''(a)=0$."
         },
         {
@@ -409,7 +410,7 @@
         },
         {
           "text": "Les valeurs de $f(a)$ et $f'(a)$.",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "L'équation est $y=f'(a)(x-a)+f(a)$. Il nous faut le point de passage $(a, f(a))$ et la pente $f'(a)$."
         },
         {
@@ -432,7 +433,7 @@
         },
         {
           "text": "$u(x)$ est dérivable et $u(x) > 0$.",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "Il faut que $u$ soit dérivable et surtout strictement positive pour que la fonction racine carrée soit elle-même dérivable (sa dérivée étant $\\displaystyle \\frac{1}{2\\sqrt{X}})$."
         },
         {
@@ -450,7 +451,7 @@
       "options": [
         {
           "text": "La fonction nulle.",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "Une fonction constante a un taux de variation nul en tout point. Sa pente est toujours 0."
         },
         {
@@ -473,7 +474,7 @@
       "options": [
         {
           "text": "1/4",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "On utilise la formule $(f^{-1})'(y_0) = 1/f'(x_0)$ avec $y_0=f(x_0)$. Ici $y_0=3$ et $x_0=2$. Donc, $(f^{-1})'(3) = 1/f'(2) = 1/4$."
         },
         {
@@ -501,7 +502,7 @@
         },
         {
           "text": "Si $f$ est croissante sur $\\mathbb{R}$, alors $f'(x) \\ge 0$ sur $\\mathbb{R}$.",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "C'est une propriété directe du cours. La pente d'une fonction croissante est toujours positive ou nulle."
         },
         {
@@ -524,7 +525,7 @@
         },
         {
           "text": "$\\mathbb{R} \\setminus \\{-1, 2\\}$",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "Une tangente verticale et un point anguleux sont des points de non-dérivabilité. La fonction dérivée $f'$ existe donc en dehors de ces points (si la fonction est 'lisse' ailleurs)."
         },
         {

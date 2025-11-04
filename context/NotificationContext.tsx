@@ -8,6 +8,9 @@ interface NotificationContextType {
         type?: ToastNotificationType,
         options?: Partial<Omit<ToastNotification, 'id' | 'title' | 'type'>>
     ) => void;
+    // Add higher-level helpers
+    addMotivationalNotification: (studentName: string, message?: string) => void;
+    addTargetedNotification: (targetId: string, title: string, options?: Partial<Omit<ToastNotification, 'id' | 'title'>>) => void;
     notifications: ToastNotification[];
     removeNotification: (id: string) => void;
     clearAll: () => void;
@@ -118,19 +121,17 @@ export const NotificationProvider: React.FC<{ children: ReactNode }> = ({ childr
         recentHashesRef.current.clear();
     }, []);
 
-    const addNotification = useCallback(
-        (
-            title: string,
-            type: ToastNotificationType = 'success',
-            options: Partial<Omit<ToastNotification, 'id' | 'title' | 'type'>> = {}
-        ) => {
+    // Core function used internally by wrappers
+    const coreAddNotification = useCallback(
+        (notification: Omit<ToastNotification, 'id'>) => {
+            const title = notification.title || '';
             // Validation
             if (!title || title.trim() === '') {
                 console.warn('Notification ignorée : titre vide');
                 return;
             }
 
-            const message = options.message || '';
+            const message = notification.message || '';
             const hash = generateNotificationHash(title, message);
 
             // Détection de doublons
@@ -145,13 +146,13 @@ export const NotificationProvider: React.FC<{ children: ReactNode }> = ({ childr
             recentHashesRef.current.set(hash, now);
 
             const id = uuidv4();
-            const duration = options.duration || 5000;
+            const duration = notification.duration || 5000;
             const newNotification: ToastNotification = {
                 id,
-                title,
-                message,
-                type,
-                action: options.action,
+                title: notification.title,
+                message: notification.message || '',
+                type: notification.type || 'info',
+                action: notification.action,
                 duration,
             };
 
@@ -170,7 +171,7 @@ export const NotificationProvider: React.FC<{ children: ReactNode }> = ({ childr
                     setQueue(currentQueue => {
                         // Limite de la file d'attente
                         if (currentQueue.length >= MAX_QUEUE_SIZE) {
-                            console.warn('File d\'attente de notifications pleine');
+                            console.warn("File d'attente de notifications pleine");
                             return currentQueue;
                         }
                         return [...currentQueue, newNotification];
@@ -181,6 +182,29 @@ export const NotificationProvider: React.FC<{ children: ReactNode }> = ({ childr
         },
         [removeNotification]
     );
+
+    // Backwards-compatible wrapper keeping original signature
+    const addNotification = useCallback(
+        (
+            title: string,
+            type: ToastNotificationType = 'success',
+            options: Partial<Omit<ToastNotification, 'id' | 'title' | 'type'>> = {}
+        ) => coreAddNotification({ title, message: options.message || '', type, action: options.action, duration: options.duration }),
+        [coreAddNotification]
+    );
+
+    // Higher-level helpers
+    const addMotivationalNotification = useCallback((studentName: string, message?: string) => {
+        const title = `Bravo ${studentName} !`;
+        const msg = message || "Continue comme ça — petit objectif atteint 🎯";
+        coreAddNotification({ title, message: msg, type: 'success', duration: 6000 });
+    }, [coreAddNotification]);
+
+    const addTargetedNotification = useCallback((targetId: string, title: string, options: Partial<Omit<ToastNotification, 'id' | 'title'>> = {}) => {
+        // targetId can be stored in message metadata or used by consumers; keep simple for now
+        const prefixedMessage = options.message ? `${options.message} (Cible: ${targetId})` : `(Cible: ${targetId})`;
+        coreAddNotification({ title, message: prefixedMessage, type: options.type || 'info', action: options.action, duration: options.duration });
+    }, [coreAddNotification]);
 
     return (
         <NotificationContext.Provider value={{ addNotification, notifications, removeNotification, clearAll }}>

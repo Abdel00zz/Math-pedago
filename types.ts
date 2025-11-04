@@ -64,6 +64,89 @@ export interface ExerciseImage {
     alt?: string; // Texte alternatif pour l'accessibilité
 }
 
+// ============================================================================
+// TYPES POUR LES LEÇONS (LESSON SYSTEM)
+// ============================================================================
+
+export interface LessonImageConfig {
+    src: string; // Chemin relatif depuis /public/
+    alt?: string;
+    position?: 'top' | 'bottom' | 'left' | 'right' | 'center';
+    align?: 'center' | 'left' | 'right';
+    width?: string; // ex: "70%", "500px"
+    caption?: string;
+}
+
+export interface LessonHeaderData {
+    title: string;
+    subtitle?: string;
+    classe?: string;
+    chapter?: string;
+}
+
+interface BaseLessonElement {
+    type: string;
+}
+
+export interface LessonTextElement extends BaseLessonElement {
+    type: 'p';
+    content: string;
+    image?: LessonImageConfig;
+}
+
+export interface LessonTableElement {
+    type: 'table';
+    content: string; // Markdown table
+    image?: LessonImageConfig;
+}
+
+export interface LessonInfoBoxElement extends BaseLessonElement {
+    type: 'definition-box' | 'theorem-box' | 'proposition-box' | 'property-box' | 'remark-box' | 'example-box';
+    content?: string | string[];
+    preamble?: string;
+    listType?: 'bullet' | 'number' | 'numbered';
+    image?: LessonImageConfig;
+}
+
+export interface LessonInteractiveBoxElement {
+    type: 'practice-box' | 'explain-box';
+    content?: string | string[];
+    statement?: string;
+    placeholder?: string;
+    solution?: string | string[];  // Solution détaillée pour la modale
+    image?: LessonImageConfig;
+}
+
+export type LessonElement = LessonTextElement | LessonInfoBoxElement | LessonInteractiveBoxElement | LessonTableElement;
+
+export interface LessonSubsubsection {
+    title: string;
+    elements: LessonElement[];
+}
+
+export interface LessonSubsection {
+    title: string;
+    subsubsections?: LessonSubsubsection[];
+    elements?: LessonElement[];
+}
+
+export interface LessonSection {
+    title: string;
+    intro?: string;
+    subsections: LessonSubsection[];
+}
+
+export interface LessonContent {
+    header: LessonHeaderData;
+    sections: LessonSection[];
+}
+
+export type LessonElementPath = (string | number)[];
+
+// ============================================================================
+// FIN TYPES LEÇONS
+// ============================================================================
+
 export interface Exercise {
     id: string;
     title: string;
@@ -76,6 +159,7 @@ export interface Exercise {
 export interface Chapter {
     id: string;
     file: string;
+    lessonFile?: string; // Nouveau : fichier JSON de la leçon séparée
     isActive: boolean;
     class: string;
     chapter: string;
@@ -83,6 +167,7 @@ export interface Chapter {
     videos?: Video[]; // Nouveau champ pour les capsules vidéo
     quiz: Question[];
     exercises: Exercise[];
+    lesson?: LessonContent; // Nouveau : contenu de la leçon
     version: string;
 }
 
@@ -105,8 +190,17 @@ export interface VideosProgress {
     duration: number; // temps passé total en secondes
 }
 
+// Nouveau type pour le progrès des leçons
+export interface LessonProgress {
+    isRead: boolean; // La leçon a été lue
+    duration: number; // Temps passé sur la leçon en secondes
+    scrollProgress: number; // Progression du scroll (0-100)
+    lastReadSection?: string; // Dernière section lue
+}
+
 export interface ChapterProgress {
     videos?: VideosProgress; // Nouveau champ pour le tracking des vidéos
+    lesson?: LessonProgress; // Nouveau champ pour le tracking des leçons
     quiz: QuizProgress;
     exercisesFeedback: { [exId: string]: Feedback };
     isWorkSubmitted: boolean;
@@ -122,7 +216,7 @@ export interface AppState {
     activityVersions: { [chapterId: string]: string }; // To track versions for update notifications
     progress: { [chapterId: string]: ChapterProgress };
     currentChapterId: string | null;
-    activitySubView: 'videos' | 'quiz' | 'exercises' | null; // Ajout de 'videos'
+    activitySubView: 'videos' | 'quiz' | 'exercises' | 'lesson' | null; // Ajout de 'lesson'
     isReviewMode: boolean;
     chapterOrder: string[];
 }
@@ -147,6 +241,11 @@ export interface ExportedChapterResult {
     chapter: string;
     version: string;
     videos?: ExportedVideosResult; // Nouveau champ pour l'export
+    lesson?: {
+        completed: number;
+        total: number;
+        percentage: number;
+    };
     quiz: ExportedQuizResult;
     exercisesFeedback: { [exId: string]: Feedback };
     exercisesDurationSeconds: number;
@@ -196,6 +295,7 @@ export type Action =
     | { type: 'SET_QUIZ_DURATION'; payload: { chapterId: string; duration: number } }
     | { type: 'MARK_VIDEO_WATCHED'; payload: { videoId: string } } // Nouvelle action
     | { type: 'SET_VIDEOS_DURATION'; payload: { duration: number } } // Nouvelle action
+    | { type: 'UPDATE_LESSON_PROGRESS'; payload: { chapterId?: string; scrollProgress?: number; isRead?: boolean; duration?: number } } // Nouvelle action
     | { type: 'UPDATE_EXERCISE_FEEDBACK'; payload: { exId: string; feedback: Feedback } }
     | { type: 'UPDATE_EXERCISES_DURATION'; payload: { duration: number } }
     | { type: 'SUBMIT_WORK'; payload: { chapterId: string } }

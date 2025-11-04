@@ -166,8 +166,8 @@ const SessionStatus: React.FC<SessionStatusProps> = React.memo(({ dates }) => {
         case 'none':
             return (
                 <div className="flex items-center gap-2 text-text-secondary italic">
-                    <span className="material-symbols-outlined !text-base">{sessionInfo.icon}</span>
-                    <p className="text-base serif-text">{sessionInfo.text}</p>
+                    <span className="material-symbols-outlined !text-sm">{sessionInfo.icon}</span>
+                    <p className="text-sm serif-text">{sessionInfo.text}</p>
                 </div>
             );
         default:

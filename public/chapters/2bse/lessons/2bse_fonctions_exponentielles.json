@@ -1,0 +1,146 @@
+{
+  "header": {
+    "chapter": "2ème BSE - Mathématiques",
+    "title": "Fonctions Exponentielles",
+    "subtitle": "Définition, propriétés et applications"
+  },
+  "sections": [
+    {
+      "title": "La fonction exponentielle",
+      "subsections": [
+        {
+          "title": "Définition",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Fonction exponentielle",
+              "content": "La fonction exponentielle est l'unique fonction f définie sur ℝ telle que :\n• f'(x) = f(x) pour tout x ∈ ℝ\n• f(0) = 1"
+            },
+            {
+              "type": "notation",
+              "content": "On note cette fonction exp(x) ou eˣ où e ≈ 2,718281828..."
+            },
+            {
+              "type": "property",
+              "title": "Propriété fondamentale",
+              "content": "Pour tout x ∈ ℝ : (eˣ)' = eˣ"
+            }
+          ]
+        },
+        {
+          "title": "Propriétés algébriques",
+          "elements": [
+            {
+              "type": "property",
+              "title": "Relation fonctionnelle",
+              "content": "Pour tous a, b ∈ ℝ : eᵃ⁺ᵇ = eᵃ × eᵇ"
+            },
+            {
+              "type": "property",
+              "content": "• e⁰ = 1\n• e⁻ˣ = 1/eˣ\n• eˣ⁻ʸ = eˣ/eʸ\n• (eˣ)ⁿ = eⁿˣ pour n ∈ ℤ"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Étude de la fonction exponentielle",
+      "subsections": [
+        {
+          "title": "Variations et limites",
+          "elements": [
+            {
+              "type": "property",
+              "title": "Monotonie",
+              "content": "La fonction exponentielle est strictement croissante sur ℝ"
+            },
+            {
+              "type": "property",
+              "title": "Limites",
+              "content": "• lim(x→-∞) eˣ = 0\n• lim(x→+∞) eˣ = +∞"
+            },
+            {
+              "type": "property",
+              "title": "Signe",
+              "content": "Pour tout x ∈ ℝ : eˣ > 0"
+            }
+          ]
+        },
+        {
+          "title": "Croissances comparées",
+          "elements": [
+            {
+              "type": "theorem",
+              "title": "Croissance exponentielle",
+              "content": "L'exponentielle croît plus vite que toute fonction polynomiale :\nlim(x→+∞) eˣ/xⁿ = +∞ pour tout n ∈ ℕ"
+            },
+            {
+              "type": "limit",
+              "content": "• lim(x→0) (eˣ - 1)/x = 1\n• lim(x→+∞) x/eˣ = 0"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Équations et inéquations",
+      "subsections": [
+        {
+          "title": "Résolution d'équations",
+          "elements": [
+            {
+              "type": "method",
+              "title": "Équation eˣ = a",
+              "content": "• Si a ≤ 0 : pas de solution\n• Si a > 0 : x = ln(a)"
+            },
+            {
+              "type": "method",
+              "title": "Équation eᶠ⁽ˣ⁾ = eᵍ⁽ˣ⁾",
+              "content": "Équivaut à f(x) = g(x) (car exp est injective)"
+            }
+          ]
+        },
+        {
+          "title": "Inéquations",
+          "elements": [
+            {
+              "type": "method",
+              "title": "Inéquation eˣ > a",
+              "content": "• Si a ≤ 0 : solution x ∈ ℝ\n• Si a > 0 : solution x > ln(a)"
+            },
+            {
+              "type": "method",
+              "title": "Inéquation eᶠ⁽ˣ⁾ > eᵍ⁽ˣ⁾",
+              "content": "Équivaut à f(x) > g(x) (car exp est strictement croissante)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Applications",
+      "subsections": [
+        {
+          "title": "Modélisation de phénomènes",
+          "elements": [
+            {
+              "type": "application",
+              "title": "Croissance exponentielle",
+              "content": "Population : P(t) = P₀eᵏᵗ (k > 0 pour la croissance, k < 0 pour la décroissance)"
+            },
+            {
+              "type": "application",
+              "title": "Désintégration radioactive",
+              "content": "N(t) = N₀e⁻λᵗ où λ est la constante de désintégration"
+            },
+            {
+              "type": "application",
+              "title": "Circuit RC",
+              "content": "Charge d'un condensateur : q(t) = q₀(1 - e⁻ᵗ/ᴿᶜ)"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

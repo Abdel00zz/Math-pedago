@@ -15,7 +15,7 @@
       "options": [
         {
           "text": "L'extension liste les éléments, la compréhension donne une propriété caractéristique",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "L'extension énumère explicitement tous les éléments entre accolades, tandis que la compréhension décrit les éléments par une propriété qu'ils doivent satisfaire."
         },
         {
@@ -43,7 +43,7 @@
       "options": [
         {
           "text": "Montrer que $A \\subset B$ et $B \\subset A$",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "La double inclusion est la méthode standard : $A = B \\Leftrightarrow (A \\subset B \\text{ et } B \\subset A)$."
         },
         {
@@ -86,7 +86,7 @@
         },
         {
           "text": "$\\emptyset = \\{\\emptyset\\}$",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "L'ensemble vide $\\emptyset$ ne contient aucun élément, tandis que $\\{\\emptyset\\}$ est un singleton contenant l'ensemble vide comme unique élément."
         }
       ],
@@ -99,7 +99,7 @@
       "options": [
         {
           "text": "$A \\subset E$",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "Par définition, $\\mathcal{P}(E) = \\{X / X \\subset E\\}$, donc $A \\in \\mathcal{P}(E) \\Leftrightarrow A \\subset E$."
         },
         {
@@ -127,7 +127,7 @@
       "options": [
         {
           "text": "Le complémentaire d'une union en intersection de complémentaires",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "Les lois de Morgan : $\\overline{A \\cup B} = \\overline{A} \\cap \\overline{B}$ et $\\overline{A \\cap B} = \\overline{A} \\cup \\overline{B}$."
         },
         {
@@ -155,7 +155,7 @@
       "options": [
         {
           "text": "L'intersection distribue sur l'union et vice versa",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "Distributivité : $A \\cap (B \\cup C) = (A \\cap B) \\cup (A \\cap C)$ et $A \\cup (B \\cap C) = (A \\cup B) \\cap (A \\cup C)$."
         },
         {
@@ -183,7 +183,7 @@
       "options": [
         {
           "text": "Les éléments qui appartiennent à $A$ ou à $B$ mais pas aux deux",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "La différence symétrique : $A \\triangle B = (A \\setminus B) \\cup (B \\setminus A) = (A \\cup B) \\setminus (A \\cap B)$."
         },
         {
@@ -211,7 +211,7 @@
       "options": [
         {
           "text": "Est important : $(a,b) \\neq (b,a)$ en général",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "Le produit cartésien forme des couples ordonnés où l'ordre est significatif, contrairement aux ensembles."
         },
         {
@@ -239,7 +239,7 @@
       "options": [
         {
           "text": "Tout élément de $E$ ait exactement une image dans $F$",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "Une application exige que chaque élément du domaine ait une et une seule image."
         },
         {
@@ -267,7 +267,7 @@
       "options": [
         {
           "text": "$E = E'$, $F = F'$ et $\\forall x \\in E, f(x) = g(x)$",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "L'égalité d'applications exige l'égalité des domaines, codomaines et de toutes les valeurs."
         },
         {
@@ -295,7 +295,7 @@
       "options": [
         {
           "text": "Chaque élément de $F$ a au plus un antécédent dans $E$",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "L'injectivité signifie qu'aucun élément de l'ensemble d'arrivée n'a plus d'un antécédent."
         },
         {
@@ -323,7 +323,7 @@
       "options": [
         {
           "text": "$f(E) = F$",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "La surjectivité équivaut à dire que l'image de $f$ coïncide avec l'ensemble d'arrivée."
         },
         {
@@ -351,7 +351,7 @@
       "options": [
         {
           "text": "$f \\circ f^{-1} = \\text{Id}_F$ et $f^{-1} \\circ f = \\text{Id}_E$",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "La fonction réciproque vérifie les deux relations de composition avec les identités respectives."
         },
         {
@@ -379,7 +379,7 @@
       "options": [
         {
           "text": "$f(A \\cup B) = f(A) \\cup f(B)$",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "L'image directe conserve toujours l'union, mais pas nécessairement les autres opérations."
         },
         {
@@ -407,7 +407,7 @@
       "options": [
         {
           "text": "Toutes les opérations ensemblistes",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "L'image réciproque préserve union, intersection, différence et complémentaire."
         },
         {
@@ -435,7 +435,7 @@
       "options": [
         {
           "text": "L'ensemble d'arrivée de $f$ contienne le domaine de $g$",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "Pour $(g \\circ f)(x) = g(f(x))$, il faut que $f(x)$ soit dans le domaine de $g$."
         },
         {
@@ -463,7 +463,7 @@
       "options": [
         {
           "text": "Associative mais pas commutative",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "$(h \\circ g) \\circ f = h \\circ (g \\circ f)$ toujours, mais $g \\circ f \\neq f \\circ g$ en général."
         },
         {
@@ -491,7 +491,7 @@
       "options": [
         {
           "text": "Vrai",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "Si $A \\subset B$ et $X \\subset A$, alors $X \\subset B$, donc $X \\in \\mathcal{P}(B)$."
         },
         {
@@ -509,7 +509,7 @@
       "options": [
         {
           "text": "Vrai",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "L'inclusion est toujours vraie. L'égalité n'a lieu que si $f$ est injective."
         },
         {
@@ -527,7 +527,7 @@
       "options": [
         {
           "text": "Vrai",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "Si $f$ et $g$ sont injectives, alors $g \\circ f$ est injective."
         },
         {
@@ -545,7 +545,7 @@
       "options": [
         {
           "text": "Vrai",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "La bijectivité garantit l'existence et l'unicité de la fonction réciproque."
         },
         {
@@ -568,7 +568,7 @@
         },
         {
           "text": "Faux",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "Faux. On a $a \\in \\{a, b, c\\}$ et $\\{a\\} \\subset \\{a, b, c\\}$, mais $\\{a\\} \\notin \\{a, b, c\\}$."
         }
       ],
@@ -581,7 +581,7 @@
       "options": [
         {
           "text": "Vrai",
-          "is_correct": false,
+          "is_correct": true,
           "explanation": "Vrai. Par exemple, l'inclusion d'un sous-ensemble propre dans un ensemble."
         },
         {

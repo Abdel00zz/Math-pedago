@@ -1,0 +1,432 @@
+/* ========================================
+   LESSON CONTENT STYLES
+   PERFORMANCE OPTIMIZED - NO TRANSITIONS
+   ======================================== */
+
+/* Canvas & Stack */
+.lesson-canvas {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.1rem, 2.4vw, 1.9rem);
+  padding: clamp(0.85rem, 1.8vw, 1.6rem) clamp(5.5rem, 6vw, 7rem) clamp(0.85rem, 1.8vw, 1.6rem) clamp(0.75rem, 1.8vw, 1.5rem);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .lesson-canvas {
+    padding-left: clamp(4rem, 4.5vw, 5rem);
+    padding-right: clamp(0.75rem, 1.5vw, 1.25rem);
+  }
+}
+
+@media (max-width: 640px) {
+  .lesson-canvas {
+    padding-left: clamp(3.75rem, 4vw, 4.5rem);
+    padding-right: 0.85rem;
+    gap: clamp(1rem, 2vw, 1.5rem);
+  }
+  
+  .lesson-stack {
+    gap: clamp(1.35rem, 2.8vw, 2rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .lesson-canvas {
+    padding-left: 3.5rem;
+    padding-right: 0.75rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
+  
+  .lesson-section__title {
+    font-size: clamp(1.15rem, 2.4vw, 1.5rem);
+  }
+  
+  .lesson-section__index {
+    min-width: clamp(1.75rem, 3vw, 2rem);
+    height: clamp(1.75rem, 3vw, 2rem);
+    font-size: clamp(0.8rem, 1.3vw, 0.95rem);
+  }
+}
+
+.lesson-stack {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.6rem, 3.4vw, 2.6rem);
+}
+
+.lesson-section,
+.lesson-subsection,
+.lesson-subitem,
+.lesson-box,
+.lesson-inline {
+  scroll-margin-top: 6.25rem;
+}
+
+.lesson-shell {
+  scroll-padding-top: 6.25rem;
+}
+
+/* ========================================
+   SECTIONS
+   ======================================== */
+.lesson-section {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.9rem, 2vw, 1.5rem);
+}
+
+.lesson-section__header {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.8rem, 1.5vw, 1.2rem);
+  margin-bottom: clamp(0.6rem, 1.2vw, 1rem);
+}
+
+.lesson-section__index {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: clamp(2rem, 3.5vw, 2.5rem);
+  height: clamp(2rem, 3.5vw, 2.5rem);
+  background: linear-gradient(135deg, rgba(66, 85, 255, 0.16), rgba(95, 125, 255, 0.1));
+  border-radius: clamp(8px, 1.5vw, 12px);
+  font-weight: 700;
+  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+  color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.lesson-section__title {
+  font-size: clamp(1.35rem, 2.8vw, 1.85rem);
+  font-weight: 700;
+  color: var(--coursera-black, #1f2937);
+  margin: 0;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+}
+
+.lesson-section__intro {
+  font-size: clamp(0.95rem, 1.7vw, 1.05rem);
+  line-height: 1.7;
+  color: #64748b;
+  font-style: italic;
+  padding: clamp(0.8rem, 1.5vw, 1.2rem) 0;
+  margin-bottom: clamp(0.5rem, 1vw, 1rem);
+}
+
+.lesson-section__body {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.1rem, 2.5vw, 1.9rem);
+}
+
+/* ========================================
+   SUBSECTIONS
+   ======================================== */
+.lesson-subsection {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.75rem, 1.3vw, 1.15rem);
+}
+
+.lesson-subsection__header {
+  display: flex;
+  align-items: baseline;
+  gap: clamp(0.6rem, 1.2vw, 0.9rem);
+  margin-bottom: clamp(0.4rem, 0.8vw, 0.7rem);
+}
+
+.lesson-subsection__index {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: clamp(1.6rem, 2.8vw, 2rem);
+  height: clamp(1.6rem, 2.8vw, 2rem);
+  background: rgba(66, 85, 255, 0.12);
+  border-radius: clamp(6px, 1.2vw, 8px);
+  font-weight: 600;
+  font-size: clamp(0.75rem, 1.3vw, 0.9rem);
+  color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.lesson-subsection__title {
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  font-weight: 600;
+  color: var(--coursera-black, #1f2937);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.lesson-subsection__body {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.7rem, 1.2vw, 1.1rem);
+}
+
+.lesson-subsection__elements {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.7rem, 1.2vw, 1.1rem);
+}
+
+/* ========================================
+   SUBSUBSECTIONS
+   ======================================== */
+.lesson-subitem {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.6rem, 1.1vw, 0.9rem);
+  padding-left: 0;
+  position: relative;
+}
+
+.lesson-subitem::before {
+  display: none;
+}
+
+.lesson-subitem__title {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(71, 85, 105, 0.8);
+}
+
+.lesson-subitem__marker {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: rgba(66, 85, 255, 0.75);
+}
+
+.lesson-subitem__body {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.7rem, 1.2vw, 1rem);
+}
+
+/* ========================================
+   PARAGRAPHS - PERFORMANCE OPTIMIZED
+   ======================================== */
+.lesson-paragraph {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  color: var(--text-color);
+  font-size: clamp(0.93rem, 1.6vw, 1.03rem);
+  line-height: 1.75;
+  letter-spacing: 0.01em;
+  padding: clamp(0.65rem, 1.2vw, 0.9rem) clamp(0.85rem, 1.6vw, 1.15rem);
+  border-radius: clamp(9px, 1.6vw, 12px);
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  box-shadow: none;
+  margin: clamp(0.35rem, 0.9vw, 0.6rem) 0;
+}
+
+.lesson-paragraph:hover {
+  border-color: rgba(66, 85, 255, 0.24);
+  background: #ffffff;
+}
+
+.lesson-paragraph--callout {
+  padding: 0;
+  border: none;
+  background: transparent;
+  margin: clamp(0.45rem, 1vw, 0.75rem) 0;
+}
+
+/* Paragraphs inside boxes - lighter style */
+.lesson-box__body .lesson-paragraph,
+.lesson-box__preamble .lesson-paragraph,
+.lesson-inline__body .lesson-paragraph {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* ========================================
+   CALLOUTS (Attention / Astuce)
+   ======================================== */
+.lesson-callout {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: clamp(0.85rem, 1.6vw, 1.35rem);
+  border-radius: clamp(12px, 2vw, 16px);
+  border: 1.5px solid rgba(15, 23, 42, 0.08);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: none;
+}
+
+.lesson-callout__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.85rem;
+  background: rgba(66, 85, 255, 0.12);
+  color: var(--primary-color);
+}
+
+.lesson-callout__icon .material-symbols-outlined {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.lesson-callout__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: rgba(30, 41, 59, 0.9);
+}
+
+.lesson-callout--warning {
+  border-color: rgba(251, 191, 36, 0.28);
+  background: rgba(255, 251, 235, 0.5);
+}
+
+.lesson-callout--warning .lesson-callout__icon {
+  background: rgba(251, 191, 36, 0.2);
+  color: #b45309;
+}
+
+.lesson-callout--tip {
+  border-color: rgba(34, 197, 94, 0.28);
+  background: rgba(240, 253, 244, 0.6);
+}
+
+.lesson-callout--tip .lesson-callout__icon {
+  background: rgba(34, 197, 94, 0.16);
+  color: #15803d;
+}
+
+.exercise-hint-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 999px;
+  border: 1.5px solid rgba(66, 85, 255, 0.28);
+  background: linear-gradient(135deg, rgba(66, 85, 255, 0.16), rgba(95, 125, 255, 0.08));
+  color: var(--primary-color);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.exercise-hint-button:hover {
+  background: linear-gradient(135deg, rgba(66, 85, 255, 0.26), rgba(95, 125, 255, 0.12));
+  box-shadow: 0 10px 20px rgba(66, 85, 255, 0.18);
+  transform: translateY(-2px);
+}
+
+.exercise-hint-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 10px rgba(253, 224, 71, 0.18);
+}
+
+.exercise-hint-button .material-symbols-outlined {
+  font-size: 1.35rem;
+}
+
+@media (max-width: 768px) {
+  .lesson-callout {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .lesson-callout__icon {
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 0.75rem;
+  }
+}
+
+/* Hide paragraph markers (numbered circles) */
+.lesson-paragraph__marker {
+  display: none !important;
+}
+
+.lesson-paragraph__checkbox {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.lesson-paragraph__checkbox-visual {
+  display: none !important;
+}
+
+.lesson-paragraph__content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+/* Completed paragraph state */
+.lesson-paragraph--completed {
+  background: rgba(34, 197, 94, 0.12);
+  border-color: rgba(34, 197, 94, 0.24);
+  box-shadow: none;
+}
+
+.lesson-paragraph--completed .lesson-paragraph__content {
+  opacity: 0.7;
+}
+
+/* ========================================
+   MOBILE OPTIMIZATIONS
+   ======================================== */
+@media (max-width: 768px) {
+  .lesson-canvas {
+    padding: 1rem 0.75rem;
+  }
+
+  .lesson-paragraph {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    padding: 0.75rem 0.9rem;
+    margin: 0.5rem 0;
+  }
+  
+  .lesson-section__title {
+    font-size: 1.35rem;
+  }
+  
+  .lesson-subsection__title {
+    font-size: 1.1rem;
+  }
+
+  .lesson-section__index {
+    min-width: 2rem;
+    height: 2rem;
+  }
+
+  .lesson-subsection__index {
+    min-width: 1.6rem;
+    height: 1.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .lesson-paragraph {
+    font-size: 0.92rem;
+    padding: 0.7rem 0.85rem;
+  }
+}

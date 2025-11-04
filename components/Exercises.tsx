@@ -309,7 +309,7 @@ const Exercises: React.FC<ExercisesProps> = ({ onAllCompleted }) => {
                             {exercise.hint && exercise.hint.length > 0 && (
                                 <button 
                                     onClick={() => handleOpenHintModal(exercise.id)}
-                                    className="font-button flex-shrink-0 w-10 h-10 text-info bg-info/10 rounded-full flex items-center justify-center hover:bg-info/20 transition-colors active:scale-95"
+                                    className="exercise-hint-button"
                                     aria-label={`Voir l'indice pour l'exercice ${index + 1}`}
                                 >
                                     <span className="material-symbols-outlined text-base">lightbulb</span>

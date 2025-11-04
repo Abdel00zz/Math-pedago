@@ -1,11 +1,19 @@
-import React, { useState, useMemo, useCallback, useRef } from 'react';
+import React, { useState, useMemo, useCallback, useRef, useEffect } from 'react';
 import { useAppState, useAppDispatch } from '../../context/AppContext';
+import { useLessonProgressSafe } from '../../context/LessonProgressContext';
 import { CLASS_OPTIONS } from '../../constants';
 import ConfirmationModal from '../ConfirmationModal';
 import { useNotification } from '../../context/NotificationContext';
 import GlobalActionButtons from '../GlobalActionButtons';
 import { ExportedProgressFile } from '../../types';
-import BackButton from '../BackButton';
+import StandardHeader from '../StandardHeader';
+import {
+    LESSON_PROGRESS_EVENT,
+    readLessonCompletion,
+    summarizeLessonRecord,
+    type LessonCompletionSummary,
+    type LessonProgressEventDetail,
+} from '../../utils/lessonProgressHelpers';
 
 
 // --- TYPES ---
@@ -43,17 +51,9 @@ const LearningStep: React.FC<LearningStepProps> = ({
     const currentStatus = statusConfig[status];
     const isStepDisabled = status === 'locked' || disabled;
 
-    const buttonStyles: { [key in ButtonVariant]: string } = {
-        primary: 'bg-gradient-to-r from-primary to-primary hover:from-primary/90 hover:to-primary/80 text-white shadow-md shadow-primary/30 hover:shadow-lg hover:shadow-primary/40',
-        secondary: 'bg-surface/50 text-text hover:bg-surface border-2 border-border/50 hover:border-border',
-        disabled: 'bg-border/30 text-text-disabled cursor-not-allowed border-2 border-transparent'
-    };
-
     return (
-        <div className={`group p-6 md:p-8 rounded-2xl border transition-all duration-300 ${
-            isStepDisabled
-                ? 'opacity-60 border-border/50 bg-surface/50'
-                : 'border-border/70 bg-surface/80 backdrop-blur-sm hover:border-border shadow-soft hover:shadow-medium hover:bg-surface'
+        <div className={`learning-step group transition-all duration-300 ${
+            isStepDisabled ? 'learning-step--disabled' : ''
         }`}>
             <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 lg:gap-8">
                 {/* Left Side: Icon, Title, Description */}
@@ -81,15 +81,32 @@ const LearningStep: React.FC<LearningStepProps> = ({
                                     </span>
                                 }
                             </div>
-                            <div className="h-2 w-full bg-border/30 rounded-full overflow-hidden">
-                                <div className="h-full transition-all duration-700 ease-out rounded-full" style={{ width: `${progressPercent}%`, backgroundColor: currentStatus.barColor }}></div>
+                            <div className="h-2.5 w-full bg-gray-100 rounded-full overflow-hidden border border-gray-200/50">
+                                <div 
+                                    className="h-full transition-all duration-700 ease-out rounded-full relative"
+                                    style={{ 
+                                        width: `${progressPercent}%`, 
+                                        background: `linear-gradient(90deg, ${currentStatus.barColor}, ${currentStatus.barColor}dd)`,
+                                        boxShadow: progressPercent > 0 ? `0 0 8px ${currentStatus.barColor}40` : 'none'
+                                    }}
+                                >
+                                    {progressPercent > 10 && (
+                                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-50"></div>
+                                    )}
+                                </div>
                             </div>
                         </div>
                     )}
                      <button
                         onClick={onClick}
                         disabled={isStepDisabled}
-                        className={`font-sans font-bold px-8 py-3.5 rounded-xl text-xs md:text-sm tracking-wider transition-all duration-300 whitespace-nowrap w-full text-center active:scale-95 shadow-sm ${buttonStyles[buttonVariant]}`}
+                        className={`learning-step__button w-full text-center ${
+                            isStepDisabled 
+                                ? 'learning-step__button--disabled'
+                                : buttonVariant === 'primary' 
+                                    ? 'learning-step__button--primary' 
+                                    : 'learning-step__button--secondary'
+                        }`}
                     >
                         {buttonText}
                     </button>
@@ -104,6 +121,7 @@ const ChapterHubView: React.FC = () => {
     const state = useAppState();
     const dispatch = useAppDispatch();
     const { addNotification } = useNotification();
+    const lessonProgressContext = useLessonProgressSafe();
     const { currentChapterId, activities, progress, profile } = state;
 
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -116,6 +134,41 @@ const ChapterHubView: React.FC = () => {
 
     const chapter = useMemo(() => currentChapterId ? activities[currentChapterId] : null, [currentChapterId, activities]);
     const chapterProgress = useMemo(() => currentChapterId ? progress[currentChapterId] : null, [currentChapterId, progress]);
+    const lessonId = chapter ? `${chapter.class}-${chapter.chapter}` : null;
+
+    const [lessonCompletion, setLessonCompletion] = useState<LessonCompletionSummary>({
+        completed: 0,
+        total: 0,
+        percentage: 0,
+    });
+
+    useEffect(() => {
+        if (!lessonId) {
+            setLessonCompletion({ completed: 0, total: 0, percentage: 0 });
+            return;
+        }
+
+        setLessonCompletion(readLessonCompletion(lessonId));
+
+        const handleProgressUpdate = (event: Event) => {
+            const customEvent = event as CustomEvent<LessonProgressEventDetail>;
+            if (customEvent.detail?.lessonId !== lessonId) {
+                return;
+            }
+
+            setLessonCompletion(summarizeLessonRecord(customEvent.detail.progress));
+        };
+
+        if (typeof window !== 'undefined') {
+            window.addEventListener(LESSON_PROGRESS_EVENT, handleProgressUpdate as EventListener);
+        }
+
+        return () => {
+            if (typeof window !== 'undefined') {
+                window.removeEventListener(LESSON_PROGRESS_EVENT, handleProgressUpdate as EventListener);
+            }
+        };
+    }, [lessonId]);
     
     const {
         quiz,
@@ -173,6 +226,7 @@ const ChapterHubView: React.FC = () => {
     }, [currentChapterId, activities, progress]);
 
     const handleStartVideos = useCallback(() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'activity', chapterId: chapter?.id, subView: 'videos' } }), [dispatch, chapter?.id]);
+    const handleStartLesson = useCallback(() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'activity', chapterId: chapter?.id, subView: 'lesson' } }), [dispatch, chapter?.id]);
     const handleStartQuiz = useCallback(() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'activity', chapterId: chapter?.id, subView: 'quiz' } }), [dispatch, chapter?.id]);
     const handleReviewQuiz = useCallback(() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'activity', chapterId: chapter?.id, subView: 'quiz', review: true } }), [dispatch, chapter?.id]);
     const handleStartExercises = useCallback(() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'activity', chapterId: chapter?.id, subView: 'exercises' } }), [dispatch, chapter?.id]);
@@ -260,6 +314,9 @@ const ChapterHubView: React.FC = () => {
 
             const videosDuration = chapterProgress.videos?.duration || 0;
 
+            // Récupérer la progression de la leçon depuis le contexte (si disponible)
+            const lessonProgressData = lessonProgressContext?.lessonProgress ?? lessonCompletion;
+
             const submissionData: ExportedProgressFile = {
                 studentName: profile.name,
                 studentLevel: className,
@@ -270,6 +327,13 @@ const ChapterHubView: React.FC = () => {
                         chapter: chapter.chapter,
                         version: chapter.version,
                         ...(videosExport && { videos: videosExport }),
+                        ...(lessonProgressData.total > 0 && {
+                            lesson: {
+                                completed: lessonProgressData.completed,
+                                total: lessonProgressData.total,
+                                percentage: lessonProgressData.percentage,
+                            },
+                        }),
                         quiz: {
                             score: parseFloat(quizScorePercentage.toFixed(2)),
                             scoreRaw: `${quiz.score} / ${totalQuestions}`,
@@ -451,7 +515,38 @@ const ChapterHubView: React.FC = () => {
     const areAllVideosWatched = videosProgress?.allWatched || false;
     const videosProgressPercent = totalVideos > 0 ? (watchedVideosCount / totalVideos) * 100 : 0;
 
+    // Calcul de la progression de la leçon
+    const hasLesson = !!(chapter.lesson || chapter.lessonFile);
+    const lessonMetaProgress = chapterProgress.lesson;
+    const isLessonRead = lessonMetaProgress?.isRead || false;
+    const lessonScrollProgress = lessonMetaProgress?.scrollProgress || 0;
+
+    const lessonReadPercentage = lessonCompletion.percentage;
+    const lessonTotalNodes = lessonCompletion.total;
+    const lessonCompletedNodes = lessonCompletion.completed;
+
     const steps: LearningStepProps[] = [
+        // NOUVELLE ÉTAPE : Leçon (en premier)
+        {
+            icon: 'menu_book',
+            title: 'Étape 0 : La Leçon',
+            description: hasLesson
+                ? 'Consultez le cours complet avec définitions, théorèmes et exemples détaillés.'
+                : 'La leçon pour ce chapitre sera bientôt disponible.',
+            status: hasLesson
+                ? (lessonReadPercentage === 100 ? 'completed' : lessonReadPercentage > 0 ? 'in-progress' : 'todo') as StepStatus
+                : 'locked' as StepStatus,
+            progressPercent: hasLesson ? lessonReadPercentage : undefined,
+            progressInfo: hasLesson && lessonTotalNodes > 0 ? `${lessonCompletedNodes} / ${lessonTotalNodes}` : undefined,
+            onClick: hasLesson ? handleStartLesson : () => {},
+            disabled: !hasLesson,
+            buttonText: hasLesson
+                ? (isChapterLocked ? 'Consulter' : lessonReadPercentage === 100 ? 'Relire' : lessonReadPercentage > 0 ? 'Continuer' : 'Commencer')
+                : 'À venir',
+            buttonVariant: hasLesson
+                ? ((isChapterLocked || lessonReadPercentage === 100 ? 'secondary' : 'primary') as ButtonVariant)
+                : 'disabled' as ButtonVariant,
+        },
         {
             icon: 'play_circle',
             title: 'Étape 1 : Les Vidéos',
@@ -475,13 +570,24 @@ const ChapterHubView: React.FC = () => {
         {
             icon: 'history_edu',
             title: 'Étape 2 : Le Quiz',
-            description: 'Évaluez votre compréhension des concepts fondamentaux du chapitre.',
-            status: isQuizCompleted ? 'completed' : answeredQuestionsCount > 0 ? 'in-progress' : 'todo',
+            description: lessonReadPercentage < 100 
+                ? 'Terminez la leçon à 100% pour débloquer le quiz.'
+                : 'Évaluez votre compréhension des concepts fondamentaux du chapitre.',
+            status: lessonReadPercentage < 100 
+                ? 'locked' 
+                : (isQuizCompleted ? 'completed' : answeredQuestionsCount > 0 ? 'in-progress' : 'todo'),
             progressPercent: quizProgressPercent,
-            progressInfo: isQuizCompleted ? `Score : ${quiz.score}/${totalQuestions}` : `${answeredQuestionsCount} / ${totalQuestions}`,
-            onClick: isQuizCompleted ? handleReviewQuiz : handleStartQuiz,
-            buttonText: isChapterLocked ? 'Consulter' : isQuizCompleted ? 'Revoir' : answeredQuestionsCount > 0 ? 'Continuer' : 'Commencer',
-            buttonVariant: isChapterLocked || isQuizCompleted ? 'secondary' : 'primary',
+            progressInfo: lessonReadPercentage < 100 
+                ? `Leçon : ${lessonReadPercentage}%`
+                : (isQuizCompleted ? `Score : ${quiz.score}/${totalQuestions}` : `${answeredQuestionsCount} / ${totalQuestions}`),
+            onClick: lessonReadPercentage < 100 ? () => {} : (isQuizCompleted ? handleReviewQuiz : handleStartQuiz),
+            disabled: lessonReadPercentage < 100,
+            buttonText: lessonReadPercentage < 100 
+                ? 'Verrouillé'
+                : (isChapterLocked ? 'Consulter' : isQuizCompleted ? 'Revoir' : answeredQuestionsCount > 0 ? 'Continuer' : 'Commencer'),
+            buttonVariant: lessonReadPercentage < 100 
+                ? 'disabled'
+                : (isChapterLocked || isQuizCompleted ? 'secondary' : 'primary'),
         },
         {
             icon: 'architecture',
@@ -494,54 +600,74 @@ const ChapterHubView: React.FC = () => {
             disabled: !isQuizCompleted,
             buttonText: isChapterLocked ? 'Consulter' : areAllExercisesDone ? 'Revoir' : evaluatedExercisesCount > 0 ? 'Continuer' : 'Commencer',
             buttonVariant: !isQuizCompleted ? 'disabled' : (areAllExercisesDone || isChapterLocked) ? 'secondary' : 'primary',
-        },
-        ...(!isChapterLocked ? [{
-            icon: 'workspace_premium',
-            title: 'Étape 4 : Finalisation',
-            description: isOutdatedSubmission 
-                ? 'Le contenu a été mis à jour. Veuillez revoir les étapes avant de renvoyer.' 
-                : 'Une fois les étapes terminées, envoyez votre travail pour validation.',
-            status: (canSubmitWork ? 'todo' : 'locked') as StepStatus,
-            onClick: () => setConfirmationModalOpen(true), disabled: !canSubmitWork || isSubmitting,
-            buttonText: isSubmitting ? 'Envoi...' : isOutdatedSubmission ? 'Renvoyer' : 'Finaliser',
-            buttonVariant: (canSubmitWork ? 'primary' : 'disabled') as ButtonVariant,
-        }] : [])
+        }
     ];
     
     return (
         <>
             <GlobalActionButtons />
-            <div className="max-w-5xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 animate-slideInUp pb-20 sm:pb-16 md:pb-12">
+            
+            {/* Bouton retour flottant similaire aux leçons */}
+            <div className="chapter-hub-back-floating">
+                <button
+                    onClick={() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'dashboard' } })}
+                    className="standard-header__back-btn standard-header__back-btn--lesson"
+                    aria-label="Retour au tableau de bord"
+                    title="Retour au tableau de bord"
+                >
+                    <span className="material-symbols-outlined">arrow_back</span>
+                </button>
+            </div>
+            
+            <div className="chapter-hub-container max-w-5xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 animate-slideInUp pb-20 sm:pb-16 md:pb-12 pt-4 sm:pt-6 md:pt-8">
                 {showConfetti && (
                     <div className="absolute inset-0 pointer-events-none z-50">{[...Array(100)].map((_, i) => <div key={i} className="confetti" style={{left: `${Math.random()*100}%`, animationDuration: `${Math.random()*3+2}s`, animationDelay: `${Math.random()*2}s`, backgroundColor: ['#FF6B35','#10B981','#3B82F6','#F59E0B'][i%4]}} />)}</div>
                 )}
 
-                {/* En-tête avec bouton retour et titre */}
-                <header className="mb-8 sm:mb-12">
-                    {/* Bouton retour à l'extrême gauche */}
-                    <div className="fixed left-4 top-4 z-50 sm:absolute sm:left-0 sm:top-0">
-                        <BackButton
-                            onClick={() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'dashboard' } })}
-                            label="Retour au tableau de bord"
-                            showLabel={false}
-                        />
-                    </div>
+                <StandardHeader
+                    title={chapter.chapter}
+                    badgeText="Plan de travail"
+                    className="chapter-hub-header"
+                />
 
-                    {/* Titre centré */}
-                    <div className="text-center pt-2 sm:pt-0">
-                        <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-3">
-                            <span className="material-symbols-outlined !text-sm text-primary">assignment</span>
-                            <p className="font-display text-primary tracking-wider uppercase text-xs font-bold">Plan de travail</p>
-                        </div>
-                        <h1 className="text-2xl sm:text-3xl md:text-4xl text-text font-display font-bold tracking-tight px-4">{chapter.chapter}</h1>
-                    </div>
-                    
-                    <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent mt-6"></div>
-                </header>
-
-                <div className="space-y-4 md:space-y-5">
+                <div className="space-y-3 sm:space-y-4 md:space-y-5">
                     {steps.map((step) => <LearningStep key={step.title} {...step} />)}
                 </div>
+
+                {/* Bouton de Finalisation (seulement si le chapitre n'est pas verrouillé) */}
+                {!isChapterLocked && (
+                    <div className="mt-6 sm:mt-8 px-2 sm:px-0">
+                        <button
+                            onClick={() => setConfirmationModalOpen(true)}
+                            disabled={!canSubmitWork || isSubmitting}
+                            className={`finalization-button w-full group relative overflow-hidden ${
+                                !canSubmitWork || isSubmitting ? '' : ''
+                            }`}
+                        >
+                            <span className="relative z-10 flex items-center justify-center gap-2 sm:gap-3">
+                                <span className="material-symbols-outlined !text-xl sm:!text-2xl">
+                                    {isSubmitting ? 'hourglass_empty' : 'workspace_premium'}
+                                </span>
+                                <span className="text-sm sm:text-base font-semibold">
+                                    {isSubmitting ? 'Envoi en cours...' : isOutdatedSubmission ? 'Renvoyer mon travail' : 'Finaliser et envoyer'}
+                                </span>
+                            </span>
+                            {canSubmitWork && !isSubmitting && (
+                                <div className="finalization-button__shimmer" />
+                            )}
+                        </button>
+                        {isOutdatedSubmission && (
+                            <p className="mt-3 text-sm text-orange-600 text-center font-medium">
+                                ⚠️ Le contenu a été mis à jour. Veuillez revoir les étapes avant de renvoyer.
+                            </p>
+                        )}
+                        {!canSubmitWork && !isSubmitting && (
+                            <p className="mt-3 text-sm text-gray-500 text-center">
+                                Terminez le quiz et évaluez tous les exercices pour finaliser votre travail.
+                            </p>
+                        )}
+                    </div>
+                )}
 
                 {isChapterLocked && (
                     <div className="mt-8 md:mt-12 text-center border-2 border-dashed border-success/40 bg-gradient-to-br from-success/10 to-success/5 p-6 md:p-10 rounded-2xl md:rounded-3xl animate-fadeIn shadow-glow-success">

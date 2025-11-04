@@ -25,8 +25,8 @@ const App: React.FC = () => {
     };
     
     return (
-        <div className="bg-background text-text min-h-screen font-sans">
-            <main className="p-4 sm:p-6 lg:p-8">
+        <div className="app-shell font-sans">
+            <main className="app-shell__main">
                 {renderView()}
             </main>
             <Notifications />

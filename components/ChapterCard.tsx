@@ -11,9 +11,8 @@ interface ChapterCardProps {
 interface StatusInfo {
     text: string;
     icon: string;
-    iconClasses: string;
-    textClasses: string;
     disabled: boolean;
+    variant: 'todo' | 'progress' | 'completed' | 'update' | 'locked';
 }
 
 const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress, onSelect }) => {
@@ -22,48 +21,43 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
             return {
                 text: 'Contenu mis à jour',
                 icon: 'update',
-                iconClasses: 'text-primary animate-pulse',
-                textClasses: 'text-primary font-semibold',
                 disabled: false,
+                variant: 'update',
             };
         }
         if (progress?.isWorkSubmitted) {
             return {
                 text: 'Terminé',
                 icon: 'check_circle',
-                iconClasses: 'text-success',
-                textClasses: 'text-success font-semibold',
                 disabled: false,
+                variant: 'completed',
             };
         }
         if (!chapter.isActive) {
             return {
                 text: 'Bientôt disponible',
                 icon: 'lock',
-                iconClasses: 'text-text-secondary',
-                textClasses: 'text-text-secondary',
                 disabled: true,
+                variant: 'locked',
             };
         }
         if (progress?.quiz?.isSubmitted || Object.keys(progress?.exercisesFeedback || {}).length > 0) {
             return {
                 text: 'En cours',
                 icon: 'autorenew',
-                iconClasses: 'text-info',
-                textClasses: 'text-info font-semibold',
                 disabled: false,
+                variant: 'progress',
             };
         }
         return {
             text: 'À faire',
             icon: 'edit_note',
-            iconClasses: 'text-warning',
-            textClasses: 'text-warning font-semibold',
             disabled: false,
+            variant: 'todo',
         };
     }, [chapter.isActive, progress]);
 
-    const { text, icon, iconClasses, textClasses, disabled } = getStatusInfo();
+    const { text, icon, variant, disabled } = getStatusInfo();
 
     const handleClick = useCallback(() => {
         if (!disabled) {
@@ -71,31 +65,46 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
         }
     }, [disabled, onSelect, chapter.id]);
 
+    const quizCount = chapter.quiz?.length || 0;
+    const exerciseCount = chapter.exercises?.length || 0;
+
     return (
         <button
             onClick={handleClick}
             disabled={disabled}
-            className={`claude-card group w-full flex flex-col sm:flex-row justify-between items-start gap-4 p-6 rounded-xl ${
-                disabled ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'
-            }`}
+            className={`dashboard-card group w-full ${disabled ? 'is-disabled' : ''}`}
             aria-label={`Accéder au ${chapter.chapter}`}
             aria-disabled={disabled}
+            data-status={variant}
         >
-            <div className="flex-1 text-left">
-                <h3 className="text-2xl font-fira-sans font-semibold tracking-tight text-primary mb-1">
+            <div className="dashboard-card__content">
+                <h3 className="dashboard-card__title">
                     {chapter.chapter}
                 </h3>
-                <div className="mt-3">
-                    <SessionStatus dates={chapter.sessionDates} />
+                <SessionStatus dates={chapter.sessionDates} />
+            </div>
+
+            <div className="dashboard-card__footer">
+                <div className={`dashboard-card__status dashboard-card__status--${variant}`}>
+                    <span className="material-symbols-outlined dashboard-card__status-icon" aria-hidden="true">{icon}</span>
+                    <span className="dashboard-card__status-text">{text}</span>
                 </div>
             </div>
-            <div className="flex items-center gap-4 self-start sm:self-center mt-3 sm:mt-0">
-                <div className="flex items-center gap-1.5 font-medium serif-text text-base">
-                    <span className={`material-symbols-outlined !text-xl ${iconClasses}`}>{icon}</span>
-                    <span className={textClasses}>{text}</span>
-                </div>
-                {!disabled && (
-                    <span className="material-symbols-outlined text-border-hover text-2xl">arrow_forward</span>
+
+            <div className="dashboard-card__stats">
+                {quizCount > 0 && (
+                    <div className="dashboard-card__stat">
+                        <span className="material-symbols-outlined">quiz</span>
+                        <span>{quizCount} Quiz</span>
+                    </div>
+                )}
+                {exerciseCount > 0 && (
+                    <div className="dashboard-card__stat">
+                        <span className="material-symbols-outlined">assignment</span>
+                        <span>
+                            {exerciseCount} Exercice{exerciseCount > 1 ? 's' : ''}
+                        </span>
+                    </div>
                 )}
             </div>
         </button>

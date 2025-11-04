@@ -7,7 +7,7 @@ interface MathContentProps {
 }
 
 // 🔍 DIAGNOSTIC MATHJAX - Active les logs détaillés
-const MATHJAX_DEBUG = true;
+const MATHJAX_DEBUG = false; // Désactivé pour production
 
 const logDebug = (...args: any[]) => {
     if (MATHJAX_DEBUG) {

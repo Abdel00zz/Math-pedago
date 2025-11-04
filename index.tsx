@@ -5,6 +5,7 @@ import { AppProvider } from './context/AppContext';
 import { NotificationProvider } from './context/NotificationContext';
 import ErrorBoundary from './components/ErrorBoundary';
 import { diagnoseMathJax } from './utils/mathJaxDiagnostic';
+import './src/styles/main-theme.css';
 
 // Exposer le diagnostic MathJax globalement
 if (typeof window !== 'undefined') {

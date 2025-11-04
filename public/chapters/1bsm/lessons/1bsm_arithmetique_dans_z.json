@@ -1,0 +1,110 @@
+{
+  "header": {
+    "chapter": "1ère BSM - Mathématiques",
+    "title": "Arithmétique dans Z",
+    "subtitle": "Divisibilité, PGCD, PPCM et congruences"
+  },
+  "sections": [
+    {
+      "title": "Divisibilité dans Z",
+      "subsections": [
+        {
+          "title": "Relation de divisibilité",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Divisibilité",
+              "content": "Soient a et b deux entiers relatifs avec a ≠ 0. On dit que a divise b (noté a|b) s'il existe un entier k tel que b = ka."
+            },
+            {
+              "type": "example",
+              "content": "3 divise 12 car 12 = 3 × 4. On écrit 3|12."
+            },
+            {
+              "type": "property",
+              "title": "Propriétés de la divisibilité",
+              "content": "Si a|b et b|c alors a|c (transitivité). Si a|b et a|c alors a|(bx + cy) pour tous entiers x et y."
+            }
+          ]
+        },
+        {
+          "title": "Division euclidienne",
+          "elements": [
+            {
+              "type": "theorem",
+              "title": "Division euclidienne",
+              "content": "Soient a et b deux entiers avec b > 0. Il existe un unique couple (q, r) d'entiers tel que : a = bq + r avec 0 ≤ r < b"
+            },
+            {
+              "type": "example",
+              "content": "Division de 17 par 5 : 17 = 5 × 3 + 2. Ici q = 3 (quotient) et r = 2 (reste)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "PGCD et PPCM",
+      "subsections": [
+        {
+          "title": "Plus grand commun diviseur",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "PGCD",
+              "content": "Le PGCD de deux entiers a et b (non tous deux nuls) est le plus grand entier qui divise à la fois a et b. On le note pgcd(a,b)."
+            },
+            {
+              "type": "method",
+              "title": "Algorithme d'Euclide",
+              "content": "Pour calculer pgcd(a,b) avec a ≥ b > 0 : on applique la division euclidienne successivement jusqu'à obtenir un reste nul."
+            },
+            {
+              "type": "example",
+              "content": "pgcd(84, 36) : 84 = 36×2 + 12, puis 36 = 12×3 + 0. Donc pgcd(84,36) = 12."
+            }
+          ]
+        },
+        {
+          "title": "Plus petit commun multiple",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "PPCM",
+              "content": "Le PPCM de deux entiers a et b est le plus petit entier positif qui est multiple de a et de b. On le note ppcm(a,b)."
+            },
+            {
+              "type": "property",
+              "title": "Relation PGCD-PPCM",
+              "content": "Pour deux entiers positifs a et b : pgcd(a,b) × ppcm(a,b) = a × b"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Congruences",
+      "subsections": [
+        {
+          "title": "Relation de congruence",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Congruence modulo n",
+              "content": "Soient a, b deux entiers et n un entier positif. On dit que a est congru à b modulo n si n divise (a-b). On note a ≡ b (mod n)."
+            },
+            {
+              "type": "example",
+              "content": "17 ≡ 5 (mod 3) car 17 - 5 = 12 et 3|12."
+            },
+            {
+              "type": "property",
+              "title": "Propriétés des congruences",
+              "content": "La congruence modulo n est compatible avec l'addition et la multiplication : si a ≡ b (mod n) et c ≡ d (mod n), alors a+c ≡ b+d (mod n) et ac ≡ bd (mod n)."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

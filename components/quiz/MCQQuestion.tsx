@@ -13,7 +13,7 @@ interface MCQQuestionProps {
 const MCQQuestion: React.FC<MCQQuestionProps> = ({ question, userAnswer, isReviewMode, isSubmitted, onOptionChange }) => {
 
     const getOptionClass = useCallback((option: Option, isSelected: boolean) => {
-        const base = 'group relative w-full text-left px-6 py-5 rounded-2xl border-2 transition-all duration-200 ease-in-out flex items-start gap-4 font-sans backdrop-blur-sm active:scale-[0.99]';
+        const base = 'group relative w-full text-left px-6 py-5 rounded-2xl border-2 transition-all duration-200 ease-in-out flex items-center gap-4 font-sans backdrop-blur-sm active:scale-[0.99]';
 
         if (isReviewMode || isSubmitted) {
             const isCorrect = option.isCorrect;
@@ -49,9 +49,9 @@ const MCQQuestion: React.FC<MCQQuestionProps> = ({ question, userAnswer, isRevie
                     }
                 }
             `}</style>
-            <div className="bg-surface p-6 sm:p-8 rounded-2xl border border-border shadow-claude animate-fadeIn quiz-content">
-                <div className="bg-black text-white px-6 py-4 rounded-xl mb-6 shadow-lg">
-                    <h3 className="quiz-question-text font-title leading-relaxed font-semibold">
+            <div className="bg-surface p-6 sm:p-8 rounded-2xl border border-border coursera-shadow-card animate-fadeIn quiz-content">
+                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 px-6 py-4 rounded-xl mb-6 coursera-shadow-soft">
+                    <h3 className="quiz-question-text font-title leading-relaxed font-semibold text-coursera-black">
                         <FormattedText text={question.question} />
                     </h3>
                 </div>
@@ -63,7 +63,7 @@ const MCQQuestion: React.FC<MCQQuestionProps> = ({ question, userAnswer, isRevie
                         return (
                             <Fragment key={index}>
                                 <button onClick={() => onOptionChange(option.text)} className={optionClass} disabled={isSubmitted || isReviewMode}>
-                                    <div className="flex-shrink-0 mt-1">
+                                    <div className="flex-shrink-0 flex items-center justify-center">
                                         {(isReviewMode || isSubmitted) ? (
                                             option.isCorrect ? (
                                                 <div className="relative w-7 h-7 flex items-center justify-center">
@@ -97,7 +97,7 @@ const MCQQuestion: React.FC<MCQQuestionProps> = ({ question, userAnswer, isRevie
                                             </div>
                                         )}
                                     </div>
-                                    <span className="flex-1 text-left text-[14px] md:text-[15px] leading-relaxed font-medium flex items-center"><FormattedText text={option.text} /></span>
+                                    <span className="flex-1 text-left text-[15px] md:text-[16px] leading-relaxed font-medium flex items-center"><FormattedText text={option.text} /></span>
                                 </button>
                                 {(isReviewMode || isSubmitted) && isSelected && !option.isCorrect && option.explanation && (
                                     <div className="pl-14 -mt-3 mb-2 text-sm text-red-600/90 animate-fadeIn serif-text italic">

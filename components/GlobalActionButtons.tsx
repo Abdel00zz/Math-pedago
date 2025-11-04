@@ -174,11 +174,11 @@ const GlobalActionButtons: React.FC = () => {
         <>
             {/* Desktop Action Buttons - Aligné avec les cartes et couleurs douces */}
             <div className="fixed top-4 right-4 z-40 hidden sm:flex items-center gap-3 p-1.5">
-                {/* Bouton Notifications - Couleur vert doux */}
+                {/* Bouton Notifications */}
                 <div className="group relative flex items-center">
                     <button
                         onClick={handleOpenNotifications}
-                        className="w-12 h-12 rounded-xl flex items-center justify-center bg-primary/10 hover:bg-primary/20 text-primary hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all duration-200"
+                        className="w-12 h-12 rounded-full flex items-center justify-center bg-primary-light hover:bg-primary/20 text-primary hover:text-primary-dark focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all duration-200"
                         aria-label="Notifications"
                     >
                         <span className="material-symbols-outlined !text-xl">notifications</span>
@@ -189,11 +189,11 @@ const GlobalActionButtons: React.FC = () => {
                     </span>
                 </div>
 
-                {/* Bouton Orientation - Couleur orange doux */}
+                {/* Bouton Orientation */}
                 <div className="group relative flex items-center">
                     <button
                         onClick={() => setOrientationModalOpen(true)}
-                        className="w-12 h-12 rounded-xl flex items-center justify-center bg-primary/10 hover:bg-primary/20 text-primary focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all duration-200"
+                        className="w-12 h-12 rounded-full flex items-center justify-center bg-primary-light hover:bg-primary/20 text-primary focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all duration-200"
                         aria-label="Programme d'orientation"
                     >
                         <span className="material-symbols-outlined !text-xl">explore</span>
@@ -203,11 +203,11 @@ const GlobalActionButtons: React.FC = () => {
                     </span>
                 </div>
 
-                {/* Bouton Aide - Couleur bleu doux */}
+                {/* Bouton Aide */}
                 <div className="group relative flex items-center">
                     <button
                         onClick={handleHelpClick}
-                        className="w-12 h-12 rounded-xl flex items-center justify-center bg-primary/10 hover:bg-primary/20 text-primary focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all duration-200"
+                        className="w-12 h-12 rounded-full flex items-center justify-center bg-primary-light hover:bg-primary/20 text-primary focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all duration-200"
                         aria-label="Aide et support"
                     >
                         <span className="material-symbols-outlined !text-xl">help_outline</span>
@@ -218,13 +218,13 @@ const GlobalActionButtons: React.FC = () => {
                 </div>
             </div>
             
-            {/* Mobile Bottom Navigation - Couleurs douces appliquées */}
+            {/* Mobile Bottom Navigation */}
             <div className="sm:hidden fixed bottom-4 inset-x-3 z-40">
                 <nav className="max-w-md mx-auto bg-surface/95 backdrop-blur-2xl border-t border-border/40 rounded-xl flex justify-around items-center py-2 pb-[calc(0.5rem+env(safe-area-inset-bottom))] px-2 shadow-[0_8px_30px_rgba(2,6,23,0.6)]">
-                    {/* Notifications - Vert doux */}
+                    {/* Notifications */}
                     <button
                         onClick={handleOpenNotifications}
-                        className="relative flex-1 flex flex-col items-center justify-center p-2 rounded-lg hover:bg-primary/10 text-primary/80 hover:text-primary focus:outline-none transition-all duration-200 active:scale-95 touch-manipulation min-h-[52px]"
+                        className="relative flex-1 flex flex-col items-center justify-center p-2 rounded-lg hover:bg-primary-light text-primary/80 hover:text-primary focus:outline-none transition-all duration-200 active:scale-95 touch-manipulation min-h-[52px]"
                         aria-label="Notifications"
                     >
                         {unreadNotificationsCount > 0 && (
@@ -236,20 +236,20 @@ const GlobalActionButtons: React.FC = () => {
                         <span className="text-[9px] font-semibold mt-1 tracking-wide uppercase">Notifs</span>
                     </button>
 
-                    {/* Orientation - Orange doux */}
+                    {/* Orientation */}
                     <button
                         onClick={() => setOrientationModalOpen(true)}
-                        className="flex-1 flex flex-col items-center justify-center p-2 rounded-lg hover:bg-primary/10 text-primary/80 hover:text-primary focus:outline-none transition-all duration-200 active:scale-95 touch-manipulation min-h-[52px]"
+                        className="flex-1 flex flex-col items-center justify-center p-2 rounded-lg hover:bg-primary-light text-primary/80 hover:text-primary focus:outline-none transition-all duration-200 active:scale-95 touch-manipulation min-h-[52px]"
                         aria-label="Programme d'orientation"
                     >
                         <span className="material-symbols-outlined !text-[22px]">explore</span>
                         <span className="text-[9px] font-semibold mt-1 tracking-wide uppercase">Programme</span>
                     </button>
 
-                    {/* Aide - Bleu doux */}
+                    {/* Aide */}
                     <button
                         onClick={handleHelpClick}
-                        className="flex-1 flex flex-col items-center justify-center p-2 rounded-lg hover:bg-primary/10 text-primary/80 hover:text-primary focus:outline-none transition-all duration-200 active:scale-95 touch-manipulation min-h-[52px]"
+                        className="flex-1 flex flex-col items-center justify-center p-2 rounded-lg hover:bg-primary-light text-primary/80 hover:text-primary focus:outline-none transition-all duration-200 active:scale-95 touch-manipulation min-h-[52px]"
                         aria-label="Aide et support"
                     >
                         <span className="material-symbols-outlined !text-[22px]">help_outline</span>
