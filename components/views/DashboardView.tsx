@@ -68,7 +68,8 @@ const DashboardView: React.FC = () => {
     }, [profile?.name]);
 
     const formatClassNameHTML = useCallback((name: string): string => {
-        return name.replace(/(\d+)(ère|ème|er|re|e)/gi, '$1<sup>$2</sup>');
+        const withSup = name.replace(/(\d+)\s*(ère|ème|er|re|e)/gi, (_, number, suffix) => `${number}<sup>${suffix}</sup>`);
+        return withSup.replace(/<\/sup>\s*(?=\S)/gi, '</sup>&nbsp;');
     }, []);
 
     // ✅ OPTIMISATION 4: Catégorisation optimisée avec reduce
