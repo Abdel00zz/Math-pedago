@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Modal from './Modal';
 import MathContent from './MathContent';
+import { CLASS_OPTIONS } from '../constants';
 
 interface OrientationModalProps {
     isOpen: boolean;
@@ -15,6 +16,44 @@ interface Chapter {
     contents: string[];
     capacities: string[];
 }
+
+const SECTION_DESCRIPTIONS: Record<Chapter['section'], string> = {
+    Algèbre: 'Structures et langage mathématique pour poser des fondations solides et raisonner avec rigueur.',
+    Analyse: 'Fonctions, limites et dérivation pour modéliser des phénomènes et anticiper leurs variations.',
+    Géométrie: 'Visualisation dans le plan et l’espace pour manipuler vecteurs, transformations et repères.'
+};
+
+const GUIDANCE_CARDS: Array<{ icon: string; title: string; description: string; tips: string[] }> = [
+    {
+        icon: 'explore',
+        title: 'Tracer ton parcours',
+        description: 'Repère les chapitres clés et organise ton étude en séquences digestes et ciblées.',
+        tips: [
+            'Commence par un chapitre court pour te mettre en confiance.',
+            'Sélectionne ensuite un thème plus dense à consolider sur la semaine.'
+        ]
+    },
+    {
+        icon: 'lightbulb',
+        title: 'Activer la compréhension',
+        description: 'Construis un carnet de notions et relie chaque nouveau concept à un exercice concret.',
+        tips: [
+            'Résume chaque partie en deux lignes dans tes mots.',
+            'Associe au moins un exemple ou schéma par notion.'
+        ]
+    },
+    {
+        icon: 'verified',
+        title: 'Valider tes acquis',
+        description: 'Alterner quiz, exercices et capsules pour faire émerger les automatismes attendus.',
+        tips: [
+            'Planifie un quiz court dès qu’un chapitre est terminé.',
+            'Retiens deux capacités clés à maîtriser avant de passer au suivant.'
+        ]
+    }
+];
+
+const SECTION_ORDER: Chapter['section'][] = ['Algèbre', 'Analyse', 'Géométrie'];
 
 const getChaptersForClass = (classId: string): Chapter[] => {
     switch (classId) {
@@ -313,91 +352,341 @@ const getChaptersForClass = (classId: string): Chapter[] => {
 
 const OrientationModal: React.FC<OrientationModalProps> = ({ isOpen, onClose, classId }) => {
     const [openChapterId, setOpenChapterId] = useState<number | null>(null);
-    const chapters = getChaptersForClass(classId);
+    const [activeSection, setActiveSection] = useState<'all' | Chapter['section']>('all');
+
+    const chapters = useMemo(() => getChaptersForClass(classId), [classId]);
+
+    const classLabel = useMemo(() => {
+        const match = CLASS_OPTIONS.find(option => option.value === classId);
+        return match ? match.label : `Classe ${classId.toUpperCase()}`;
+    }, [classId]);
+
+    const sections = useMemo(() => {
+        const grouped: Record<Chapter['section'], Chapter[]> = {
+            Algèbre: [],
+            Analyse: [],
+            Géométrie: []
+        };
+
+        chapters.forEach(chapter => {
+            grouped[chapter.section].push(chapter);
+        });
+
+        return grouped;
+    }, [chapters]);
+
+    const totals = useMemo(() => {
+        let totalContents = 0;
+        let totalCapacities = 0;
+        const counts: Record<Chapter['section'], number> = {
+            Algèbre: 0,
+            Analyse: 0,
+            Géométrie: 0
+        };
+
+        chapters.forEach(chapter => {
+            totalContents += chapter.contents.length;
+            totalCapacities += chapter.capacities.length;
+            counts[chapter.section] += 1;
+        });
+
+        return {
+            totalChapters: chapters.length,
+            totalContents,
+            totalCapacities,
+            perSection: SECTION_ORDER.map(section => ({
+                section,
+                count: counts[section]
+            }))
+        };
+    }, [chapters]);
+
+    const availableSections = useMemo(
+        () => SECTION_ORDER.filter(section => sections[section].length > 0),
+        [sections]
+    );
+
+    useEffect(() => {
+        if (activeSection === 'all') {
+            return;
+        }
+
+        const current = sections[activeSection];
+        if (!current.length) {
+            setOpenChapterId(null);
+            return;
+        }
+
+        const existsInSection = current.some(chapter => chapter.id === openChapterId);
+        if (!existsInSection) {
+            setOpenChapterId(current[0].id);
+        }
+    }, [activeSection, sections, openChapterId]);
 
     const toggleChapter = (id: number) => {
-        setOpenChapterId(openChapterId === id ? null : id);
+        setOpenChapterId(prev => (prev === id ? null : id));
     };
-    
-    const sections = chapters.reduce((acc, chapter) => {
-        acc[chapter.section] = [...(acc[chapter.section] || []), chapter];
-        return acc;
-    }, {} as Record<string, Chapter[]>);
 
-    const sectionOrder: (keyof typeof sections)[] = ['Algèbre', 'Analyse', 'Géométrie'];
+    const handleSectionChange = (section: 'all' | Chapter['section']) => {
+        setActiveSection(section);
+    };
 
+    const sectionsToDisplay = activeSection === 'all'
+        ? availableSections
+        : availableSections.includes(activeSection)
+            ? [activeSection]
+            : [];
 
     return (
-        <Modal 
-            isOpen={isOpen} 
-            onClose={onClose} 
-            title="Programme d'Orientation" 
-            titleClassName="text-red-600 text-2xl sm:text-3xl font-bold text-center mx-auto"
+        <Modal
+            isOpen={isOpen}
+            onClose={onClose}
+            title="Programme d'Orientation"
+            titleClassName="text-slate-800 text-xl sm:text-2xl font-semibold text-left tracking-tight"
             hideHeaderBorder={true}
             className="sm:max-w-6xl lg:max-w-7xl"
         >
-            <div className="mt-4 max-h-[78vh] overflow-y-auto -mr-2 pr-2 space-y-5">
-                {chapters.length > 0 ? sectionOrder.map(sectionName => sections[sectionName] && (
-                    <div key={sectionName}>
-                        <h3 className="text-xl sm:text-2xl font-semibold text-text mb-3 sticky top-0 bg-surface/90 backdrop-blur-md py-2.5 px-4 border-l-3 border-primary shadow-sm">{sectionName}</h3>
+            <div className="mt-4 max-h-[78vh] overflow-y-auto -mr-2 pr-2 space-y-8">
+                <section className="relative overflow-hidden rounded-3xl border border-orange-200/60 bg-gradient-to-br from-amber-50 via-white to-orange-100 px-5 py-6 shadow-sm sm:px-8 sm:py-8">
+                    <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_top_right,_rgba(255,176,72,0.28),_transparent_55%)]" />
+                    <div className="relative space-y-6">
                         <div className="space-y-2">
-                        {sections[sectionName].map((chapter) => (
-                            <div key={chapter.id} className="border border-border/70 rounded-lg overflow-hidden transition-all duration-200 hover:border-border-hover bg-surface">
-                                    <button
-                                    onClick={() => toggleChapter(chapter.id)}
-                                    className="w-full flex justify-between items-center px-4 py-3.5 text-left hover:bg-surface/80 transition-colors duration-200"
-                                    aria-expanded={openChapterId === chapter.id}
-                                >
-                                    <span className="font-medium text-text pr-4 text-sm sm:text-base leading-relaxed">
-                                        <MathContent content={chapter.title} inline={true} />
-                                    </span>
-                                    <span className={`material-symbols-outlined text-orange-500 transition-transform duration-200 text-[20px] ${openChapterId === chapter.id ? 'rotate-180' : ''}`}>
-                                        expand_more
-                                    </span>
-                                </button>
-                                <div 
-                                    className={`transition-all duration-300 ease-in-out overflow-hidden ${
-                                        openChapterId === chapter.id ? 'max-h-[2000px]' : 'max-h-0'
-                                    }`}
-                                >
-                                    <div className="px-4 pb-4 pt-1 border-t border-border bg-surface/90">
-                                        <div>
-                                            <h4 className="font-bold text-primary text-sm sm:text-base mb-2.5 mt-3 underline decoration-2 underline-offset-4">
-                                                Contenus
-                                            </h4>
-                                            <ul className="list-none pl-0 space-y-2 text-text-secondary text-xs sm:text-sm leading-relaxed">
-                                                {chapter.contents.map((content, index) => (
-                                                    <li key={index} className="flex gap-2.5">
-                                                        <span className="text-orange-400 mt-1 flex-shrink-0 text-[10px]">●</span>
-                                                        <MathContent content={content} inline={true} />
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </div>
-                                         <div className="mt-5">
-                                            <h4 className="font-bold text-primary text-sm sm:text-base mb-2.5 underline decoration-2 underline-offset-4">
-                                                Capacités attendues
-                                            </h4>
-                                            <ul className="list-none pl-0 space-y-2 text-text-secondary text-xs sm:text-sm leading-relaxed">
-                                                {chapter.capacities.map((capacity, index) => (
-                                                    <li key={index} className="flex gap-2.5">
-                                                        <span className="text-orange-400 mt-1 flex-shrink-0 text-[10px]">●</span>
-                                                        <MathContent content={capacity} inline={true} />
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </div>
-                                    </div>
+                            <span className="inline-flex items-center gap-2 rounded-full border border-orange-300/70 bg-white/80 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-orange-600 shadow-sm">
+                                <span className="material-symbols-outlined text-sm">flag</span>
+                                Parcours accompagné
+                            </span>
+                            <h3 className="text-2xl font-semibold text-text sm:text-3xl">
+                                Orientation pour {classLabel}
+                            </h3>
+                            <p className="max-w-3xl text-sm leading-relaxed text-text-secondary sm:text-base">
+                                Visualise l’ensemble du programme, identifie les blocs prioritaires et prépare un plan de révision qui articule découverte des notions, appropriation progressive et validation par la pratique.
+                            </p>
+                        </div>
+                        <dl className="grid gap-3 sm:grid-cols-3">
+                            {[{
+                                label: 'Chapitres',
+                                value: totals.totalChapters,
+                                description: 'thématiques structurantes'
+                            }, {
+                                label: 'Contenus clés',
+                                value: totals.totalContents,
+                                description: 'notions à explorer'
+                            }, {
+                                label: 'Capacités',
+                                value: totals.totalCapacities,
+                                description: 'compétences à valider'
+                            }].map(stat => (
+                                <div key={stat.label} className="rounded-2xl border border-white/70 bg-white/80 px-4 py-4 shadow-sm backdrop-blur">
+                                    <dt className="text-xs font-semibold uppercase tracking-wide text-orange-500">
+                                        {stat.label}
+                                    </dt>
+                                    <dd className="mt-2 text-2xl font-semibold text-text">
+                                        {stat.value}
+                                    </dd>
+                                    <p className="mt-1 text-xs text-text-secondary sm:text-sm">
+                                        {stat.description}
+                                    </p>
                                 </div>
-                            </div>
-                        ))}
+                            ))}
+                        </dl>
+                        <div className="flex flex-wrap gap-2">
+                            {totals.perSection.filter(section => section.count > 0).map(section => (
+                                <span
+                                    key={section.section}
+                                    className="inline-flex items-center gap-2 rounded-full border border-orange-200 bg-white/70 px-3 py-1 text-xs font-medium text-orange-700 shadow-sm"
+                                >
+                                    <span className="material-symbols-outlined text-sm text-orange-500">auto_awesome</span>
+                                    {section.section} · {section.count} chapitres
+                                </span>
+                            ))}
                         </div>
                     </div>
-                )) : (
-                    <div className="text-center p-8 text-slate-500 dark:text-slate-400">
+                </section>
+
+                {chapters.length === 0 ? (
+                    <div className="relative flex flex-col items-center gap-3 rounded-3xl border border-border/60 bg-surface px-6 py-10 text-center text-text-secondary shadow-sm">
                         <span className="material-symbols-outlined text-4xl text-orange-500">upcoming</span>
-                        <p className="mt-2">Le programme pour cette classe sera bientôt disponible.</p>
+                        <p className="text-sm sm:text-base">
+                            Le programme pour cette classe sera bientôt disponible.
+                        </p>
                     </div>
+                ) : (
+                    <>
+                        <section className="grid gap-4 sm:grid-cols-3">
+                            {GUIDANCE_CARDS.map(card => (
+                                <article
+                                    key={card.title}
+                                    className="flex h-full flex-col gap-4 rounded-3xl border border-border/60 bg-surface px-5 py-6 shadow-sm"
+                                >
+                                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-orange-100 text-orange-600">
+                                        <span className="material-symbols-outlined text-xl">{card.icon}</span>
+                                    </span>
+                                    <div className="space-y-2">
+                                        <h4 className="text-base font-semibold text-text sm:text-lg">{card.title}</h4>
+                                        <p className="text-sm leading-relaxed text-text-secondary">{card.description}</p>
+                                    </div>
+                                    <ul className="space-y-2 text-xs text-text-secondary sm:text-sm">
+                                        {card.tips.map(tip => (
+                                            <li key={tip} className="flex items-start gap-2">
+                                                <span className="mt-[0.3em] h-1.5 w-1.5 flex-shrink-0 rounded-full bg-orange-400" />
+                                                <span className="flex-1">{tip}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </article>
+                            ))}
+                        </section>
+
+                        <section className="rounded-3xl border border-border/60 bg-surface shadow-sm">
+                            <header className="flex flex-col gap-4 border-b border-border/60 px-5 py-5 sm:flex-row sm:items-center sm:justify-between">
+                                <div>
+                                    <h3 className="text-lg font-semibold text-text sm:text-xl">Explorer le programme</h3>
+                                    <p className="text-sm text-text-secondary">
+                                        Filtre selon tes priorités ou parcours le programme complet pour planifier tes révisions.
+                                    </p>
+                                </div>
+                                <div className="flex flex-wrap gap-2">
+                                    <button
+                                        type="button"
+                                        onClick={() => handleSectionChange('all')}
+                                        className={`rounded-full border px-4 py-1.5 text-sm font-medium transition-colors duration-200 ${
+                                            activeSection === 'all'
+                                                ? 'border-orange-400 bg-orange-100/80 text-orange-700'
+                                                : 'border-border/70 bg-white/70 text-text hover:border-border-hover'
+                                        }`}
+                                    >
+                                        Tout le programme
+                                    </button>
+                                    {availableSections.map(section => (
+                                        <button
+                                            key={section}
+                                            type="button"
+                                            onClick={() => handleSectionChange(section)}
+                                            className={`rounded-full border px-4 py-1.5 text-sm font-medium transition-colors duration-200 ${
+                                                activeSection === section
+                                                    ? 'border-orange-400 bg-orange-100/80 text-orange-700'
+                                                    : 'border-border/70 bg-white/70 text-text hover:border-border-hover'
+                                            }`}
+                                        >
+                                            {section}
+                                        </button>
+                                    ))}
+                                </div>
+                            </header>
+
+                            <div className="space-y-7 px-5 py-6">
+                                {sectionsToDisplay.map(section => {
+                                    const sectionChapters = sections[section];
+                                    const chapterCount = sectionChapters.length;
+
+                                    if (!chapterCount) {
+                                        return null;
+                                    }
+
+                                    return (
+                                        <div key={section} className="space-y-4">
+                                            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                                                <div className="space-y-1">
+                                                    <h4 className="text-base font-semibold text-text sm:text-lg">{section}</h4>
+                                                    <p className="text-sm text-text-secondary">
+                                                        {SECTION_DESCRIPTIONS[section]}
+                                                    </p>
+                                                </div>
+                                                <div className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-white/80 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-text-secondary">
+                                                    <span className="text-orange-500">{chapterCount}</span>
+                                                    chapitres
+                                                </div>
+                                            </div>
+
+                                            <div className="space-y-4">
+                                                {sectionChapters.map((chapter, index) => (
+                                                    <article
+                                                        key={chapter.id}
+                                                        className={`overflow-hidden rounded-2xl border border-border/60 bg-white/80 shadow-sm transition-all duration-300 ${
+                                                            openChapterId === chapter.id
+                                                                ? 'ring-1 ring-orange-300/70'
+                                                                : 'hover:border-border-hover hover:-translate-y-0.5'
+                                                        }`}
+                                                    >
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => toggleChapter(chapter.id)}
+                                                            className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left"
+                                                            aria-expanded={openChapterId === chapter.id}
+                                                        >
+                                                            <div className="flex-1 space-y-1">
+                                                                <span className="text-xs font-semibold uppercase tracking-wide text-orange-500">
+                                                                    Chapitre {index + 1}
+                                                                </span>
+                                                                <h5 className="text-base font-semibold text-text sm:text-lg">
+                                                                    <MathContent content={chapter.title} inline={true} />
+                                                                </h5>
+                                                            </div>
+                                                            <div className="flex flex-col gap-1 text-xs text-text-secondary sm:flex-row sm:items-center sm:gap-4">
+                                                                <span className="inline-flex items-center gap-1">
+                                                                    <span className="material-symbols-outlined text-sm text-orange-400">list_alt</span>
+                                                                    {chapter.contents.length} contenus
+                                                                </span>
+                                                                <span className="inline-flex items-center gap-1">
+                                                                    <span className="material-symbols-outlined text-sm text-orange-400">task_alt</span>
+                                                                    {chapter.capacities.length} capacités
+                                                                </span>
+                                                                <span
+                                                                    className={`material-symbols-outlined text-[20px] text-orange-500 transition-transform duration-200 ${
+                                                                        openChapterId === chapter.id ? 'rotate-180' : ''
+                                                                    }`}
+                                                                >
+                                                                    expand_more
+                                                                </span>
+                                                            </div>
+                                                        </button>
+                                                        <div
+                                                            className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                                                                openChapterId === chapter.id ? 'max-h-[1200px]' : 'max-h-0'
+                                                            }`}
+                                                        >
+                                                            <div className="grid gap-6 border-t border-border/60 bg-surface px-5 pb-6 pt-4 md:grid-cols-2">
+                                                                <div className="space-y-3">
+                                                                    <h6 className="text-sm font-semibold uppercase tracking-wide text-primary">
+                                                                        Concepts clés
+                                                                    </h6>
+                                                                    <ul className="space-y-2 text-sm leading-relaxed text-text-secondary">
+                                                                        {chapter.contents.map(content => (
+                                                                            <li key={content} className="flex items-start gap-3">
+                                                                                <span className="mt-[0.35em] flex h-1.5 w-1.5 flex-shrink-0 rounded-full bg-orange-400" />
+                                                                                <span className="flex-1 leading-relaxed">
+                                                                                    <MathContent content={content} inline={true} />
+                                                                                </span>
+                                                                            </li>
+                                                                        ))}
+                                                                    </ul>
+                                                                </div>
+                                                                <div className="space-y-3">
+                                                                    <h6 className="text-sm font-semibold uppercase tracking-wide text-primary">
+                                                                        Capacités attendues
+                                                                    </h6>
+                                                                    <ul className="space-y-2 text-sm leading-relaxed text-text-secondary">
+                                                                        {chapter.capacities.map(capacity => (
+                                                                            <li key={capacity} className="flex items-start gap-3">
+                                                                                <span className="mt-[0.35em] flex h-1.5 w-1.5 flex-shrink-0 rounded-full bg-orange-400" />
+                                                                                <span className="flex-1 leading-relaxed">
+                                                                                    <MathContent content={capacity} inline={true} />
+                                                                                </span>
+                                                                            </li>
+                                                                        ))}
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </article>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </section>
+                    </>
                 )}
             </div>
         </Modal>

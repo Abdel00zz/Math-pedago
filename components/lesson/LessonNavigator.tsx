@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useRef } from 'react';
+import React, { useEffect, useCallback, useRef, useState } from 'react';
 import { useLessonProgress } from '../../context/LessonProgressContext';
 import { useNotification } from '../../context/NotificationContext';
 import { MathTitle } from './MathTitle';
@@ -17,6 +17,7 @@ export const LessonNavigator: React.FC = () => {
     const {
         outline,
         getProgress,
+        lessonProgress,
         activeSectionId,
         activeSubsectionId,
         setActiveSectionId,
@@ -35,6 +36,11 @@ export const LessonNavigator: React.FC = () => {
     const doubleClickTimerRef = useRef<NodeJS.Timeout | null>(null);
     const lastClickTimeRef = useRef<number>(0);
     const lastClickTargetRef = useRef<string | null>(null);
+    const [isCollapsed, setIsCollapsed] = useState(false);
+
+    const toggleNavigator = useCallback(() => {
+        setIsCollapsed((previous) => !previous);
+    }, []);
 
     const registerSectionRef = useCallback(
         (sectionId: string) => (element: HTMLButtonElement | null) => {
@@ -99,55 +105,46 @@ export const LessonNavigator: React.FC = () => {
 
 
     const ensureTargetVisible = useCallback((target: HTMLElement | null | undefined) => {
-        const panel = panelRef.current;
-        if (!panel || !target) {
+        const container = scrollContainerRef.current ?? panelRef.current;
+
+        if (!container || !target) {
             return;
         }
 
         // Utiliser requestAnimationFrame pour s'assurer que le DOM est à jour
         requestAnimationFrame(() => {
-            const panelRect = panel.getBoundingClientRect();
+            const containerRect = container.getBoundingClientRect();
             const targetRect = target.getBoundingClientRect();
-            
-            const panelScrollTop = panel.scrollTop;
-            const panelHeight = panelRect.height;
-            const panelScrollHeight = panel.scrollHeight;
-            
-            // Position de l'élément relative au scroll du panneau
-            const targetOffsetTop = target.offsetTop;
-            const targetHeight = targetRect.height;
-            
-            // Position actuelle visible
-            const visibleTop = panelScrollTop;
-            const visibleBottom = panelScrollTop + panelHeight;
-            
-            // Marges de sécurité
-            const topMargin = 60; // Espace en haut
-            const bottomMargin = 60; // Espace en bas
-            
-            // Déterminer si l'élément est visible
-            const isAboveView = targetOffsetTop < visibleTop + topMargin;
-            const isBelowView = (targetOffsetTop + targetHeight) > visibleBottom - bottomMargin;
-            
-            if (isAboveView) {
-                // L'élément est au-dessus, scroller vers le haut pour le centrer
-                const newScrollTop = Math.max(0, targetOffsetTop - topMargin);
-                panel.scrollTo({ 
-                    top: newScrollTop, 
-                    behavior: 'smooth' 
+
+            const currentScrollTop = container.scrollTop;
+            const containerHeight = containerRect.height;
+            const maxScrollTop = container.scrollHeight - containerHeight;
+
+            const targetTop = currentScrollTop + (targetRect.top - containerRect.top);
+            const targetBottom = targetTop + targetRect.height;
+
+            const topMargin = 60;
+            const bottomMargin = 60;
+
+            const visibleTop = currentScrollTop;
+            const visibleBottom = currentScrollTop + containerHeight;
+
+            if (targetTop < visibleTop + topMargin) {
+                const newScrollTop = Math.max(0, targetTop - topMargin);
+                container.scrollTo({
+                    top: newScrollTop,
+                    behavior: 'smooth',
                 });
-            } else if (isBelowView) {
-                // L'élément est en dessous, scroller vers le bas pour le centrer
+            } else if (targetBottom > visibleBottom - bottomMargin) {
                 const newScrollTop = Math.min(
-                    panelScrollHeight - panelHeight,
-                    targetOffsetTop - panelHeight + targetHeight + bottomMargin
+                    maxScrollTop,
+                    targetBottom - containerHeight + bottomMargin,
                 );
-                panel.scrollTo({ 
-                    top: newScrollTop, 
-                    behavior: 'smooth' 
+                container.scrollTo({
+                    top: Math.max(0, newScrollTop),
+                    behavior: 'smooth',
                 });
             }
-            // Sinon, l'élément est déjà visible, pas besoin de scroller
         });
     }, []);
 
@@ -181,18 +178,54 @@ export const LessonNavigator: React.FC = () => {
         }
     }, [activeSubsectionId, ensureTargetVisible]);
 
+    useEffect(() => {
+        if (isCollapsed) {
+            return;
+        }
+
+        if (activeSubsectionId) {
+            const subsection = subsectionRefs.current.get(activeSubsectionId);
+            if (subsection) {
+                ensureTargetVisible(subsection);
+                return;
+            }
+        }
+
+        if (activeSectionId) {
+            const section = sectionRefs.current.get(activeSectionId);
+            if (section) {
+                ensureTargetVisible(section);
+            }
+        }
+    }, [isCollapsed, activeSectionId, activeSubsectionId, ensureTargetVisible]);
+
     if (!outline.length) {
         return null;
     }
 
+    const navigatorClassName = `lesson-navigator${isCollapsed ? ' lesson-navigator--collapsed' : ''}`;
+    const progressPercentage = Math.max(0, Math.min(100, Math.round(lessonProgress.percentage)));
+
     return (
-        <aside className="lesson-navigator">
+        <aside className={navigatorClassName}>
+            <button
+                type="button"
+                className="lesson-navigator__toggle"
+                onClick={toggleNavigator}
+                aria-expanded={!isCollapsed}
+                aria-controls="lesson-navigator-panel"
+            >
+                <div className="lesson-navigator__toggle-header">
+                    <span className="lesson-navigator__toggle-title">Sommaire</span>
+                </div>
+            </button>
+
             <div
                 id="lesson-navigator-panel"
                 className="lesson-navigator__panel"
                 ref={panelRef}
             >
-                <div 
+                <div
                     className="lesson-navigator__scroll-container"
                     ref={scrollContainerRef}
                 >

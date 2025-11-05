@@ -1,6 +1,6 @@
 import React, { useMemo, useCallback, useEffect, useState } from 'react';
 import { useAppState, useAppDispatch } from '../../context/AppContext';
-import { Chapter } from '../../types';
+import { Chapter, ChapterProgress } from '../../types';
 import { CLASS_OPTIONS } from '../../constants';
 import { useNotification } from '../../context/NotificationContext';
 import ChapterSection from '../ChapterSection';
@@ -133,13 +133,64 @@ const DashboardView: React.FC = () => {
     }
 
     const { inProgress, completed, upcoming } = categorizedActivities;
+
+    const summaryMetrics = useMemo(() => {
+    const progressValues = Object.values(progress || {}) as ChapterProgress[];
+        const quizSubmitted = progressValues.filter(item => item?.quiz?.isSubmitted).length;
+        const workSubmitted = progressValues.filter(item => item?.isWorkSubmitted).length;
+        const updatesCount = progressValues.filter(item => item?.hasUpdate).length;
+
+        const workCaption = workSubmitted > 0
+            ? `${workSubmitted} ${workSubmitted > 1 ? 'travaux remis' : 'travail remis'}`
+            : 'Remise à venir';
+
+        const updatesCaption = updatesCount > 0
+            ? `${updatesCount} ${updatesCount > 1 ? 'mises à jour' : 'mise à jour'}`
+            : 'Séances programmées';
+
+        return [
+            {
+                id: 'in-progress',
+                label: 'En cours',
+                icon: 'auto_stories',
+                value: inProgress.length,
+                caption: inProgress.length > 0 ? 'Apprentissages actifs' : 'Prêt à démarrer',
+                tone: 'progress' as const,
+            },
+            {
+                id: 'completed',
+                label: 'Acquis',
+                icon: 'workspace_premium',
+                value: completed.length,
+                caption: completed.length > 0 ? workCaption : 'Objectifs à atteindre',
+                tone: 'completed' as const,
+            },
+            {
+                id: 'quiz',
+                label: 'Quiz soumis',
+                icon: 'fact_check',
+                value: quizSubmitted,
+                caption: quizSubmitted > 0 ? 'Résultats enregistrés' : 'Scores à venir',
+                tone: 'quiz' as const,
+            },
+            {
+                id: 'upcoming',
+                label: 'À venir',
+                icon: 'calendar_month',
+                value: upcoming.length,
+                caption: updatesCaption,
+                tone: 'upcoming' as const,
+            },
+        ];
+    }, [inProgress.length, completed.length, upcoming.length, progress]);
+
     const hasAnyActivity = inProgress.length > 0 || completed.length > 0 || upcoming.length > 0;
     
     return (
         <>
             <GlobalActionButtons />
 
-                        <div className="dashboard-shell">
+            <div className="dashboard-shell">
                 <div className="dashboard-header-minimal">
                     <div className="dashboard-hero">
                         <div className="dashboard-hero__greeting">
@@ -162,6 +213,19 @@ const DashboardView: React.FC = () => {
                     </div>
                 </div>
 
+                <section className="dashboard-summary" aria-label="Sommaire de progression">
+                    {summaryMetrics.map((metric) => (
+                        <article key={metric.id} className="dashboard-summary__item" data-tone={metric.tone}>
+                            <header className="dashboard-summary__header">
+                                <span className="material-symbols-outlined" aria-hidden="true">{metric.icon}</span>
+                                <span>{metric.label}</span>
+                            </header>
+                            <p className="dashboard-summary__value">{metric.value}</p>
+                            <p className="dashboard-summary__caption">{metric.caption}</p>
+                        </article>
+                    ))}
+                </section>
+
                 {hasAnyActivity ? (
                     <div className="dashboard-section-stack">
                         <ChapterSection
@@ -182,6 +246,7 @@ const DashboardView: React.FC = () => {
                             chapters={upcoming}
                             progress={progress}
                             onSelect={handleChapterSelect}
+                            variant="upcoming"
                         />
                     </div>
                 ) : (
