@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useRef, useState } from 'react';
+import React, { useEffect, useCallback, useRef, useState, useMemo } from 'react';
 import { useLessonProgress } from '../../context/LessonProgressContext';
 import { useNotification } from '../../context/NotificationContext';
 import { MathTitle } from './MathTitle';
@@ -13,7 +13,39 @@ const toAlphabetic = (index: number) => {
     return `${base[quotient - 1]}${base[remainder]}`;
 };
 
-export const LessonNavigator: React.FC = () => {
+// Optimized scroll utility with debouncing
+const useOptimizedScroll = (container: HTMLElement | null) => {
+    const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+    
+    const scrollToElement = useCallback((target: HTMLElement | null, options?: { offset?: number }) => {
+        if (!container || !target) return;
+        
+        if (scrollTimeoutRef.current) {
+            clearTimeout(scrollTimeoutRef.current);
+        }
+        
+        scrollTimeoutRef.current = setTimeout(() => {
+            const containerRect = container.getBoundingClientRect();
+            const targetRect = target.getBoundingClientRect();
+            
+            const currentScrollTop = container.scrollTop;
+            const targetTop = currentScrollTop + (targetRect.top - containerRect.top);
+            const offset = options?.offset || 40;
+            
+            const newScrollTop = Math.max(0, targetTop - offset);
+            
+            container.scrollTo({
+                top: newScrollTop,
+                behavior: 'smooth',
+            });
+        }, 50); // Debounce scroll requests
+        
+    }, [container]);
+    
+    return scrollToElement;
+};
+
+export const LessonNavigatorOptimized: React.FC = () => {
     const {
         outline,
         getProgress,
@@ -31,17 +63,23 @@ export const LessonNavigator: React.FC = () => {
     const scrollContainerRef = useRef<HTMLDivElement | null>(null);
     const sectionRefs = useRef<Map<string, HTMLButtonElement>>(new Map());
     const subsectionRefs = useRef<Map<string, HTMLButtonElement>>(new Map());
-    const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-    // États pour le double-clic
-    const doubleClickTimerRef = useRef<NodeJS.Timeout | null>(null);
-    const lastClickTimeRef = useRef<number>(0);
-    const lastClickTargetRef = useRef<string | null>(null);
+    
+    // Optimized scroll management
+    const scrollToElement = useOptimizedScroll(scrollContainerRef.current);
+    
+    // Double click handling with improved state management
+    const [doubleClickState, setDoubleClickState] = useState<{
+        lastClickTime: number;
+        lastClickTarget: string | null;
+    }>({ lastClickTime: 0, lastClickTarget: null });
+    
     const [isCollapsed, setIsCollapsed] = useState(false);
 
     const toggleNavigator = useCallback(() => {
         setIsCollapsed((previous) => !previous);
     }, []);
 
+    // Memoized ref registration functions
     const registerSectionRef = useCallback(
         (sectionId: string) => (element: HTMLButtonElement | null) => {
             if (!element) {
@@ -64,26 +102,25 @@ export const LessonNavigator: React.FC = () => {
         []
     );
 
-    const handleSectionClick = (sectionAnchor: string, sectionId: string) => {
+    const handleSectionClick = useCallback((sectionAnchor: string, sectionId: string) => {
         setActiveSectionId(sectionId);
         scrollToAnchor(sectionAnchor, { offset: 96 });
-    };
+    }, [setActiveSectionId, scrollToAnchor]);
 
-    const handleSubsectionClick = (_sectionId: string, subsectionAnchor: string, subsectionId: string) => {
+    const handleSubsectionClick = useCallback((_sectionId: string, subsectionAnchor: string, subsectionId: string) => {
         setActiveSubsectionId(subsectionId);
         scrollToAnchor(subsectionAnchor, { offset: 96 });
-    };
+    }, [setActiveSubsectionId, scrollToAnchor]);
 
     const handleSubsectionDoubleClick = useCallback((subsectionId: string, subsectionTitle: string, paragraphNodeIds: string[]) => {
         const now = Date.now();
-        const timeDiff = now - lastClickTimeRef.current;
+        const timeDiff = now - doubleClickState.lastClickTime;
         
-        if (timeDiff < 500 && lastClickTargetRef.current === subsectionId) {
-            // Double-clic détecté
+        if (timeDiff < 500 && doubleClickState.lastClickTarget === subsectionId) {
+            // Double-click detected
             const lastParagraphOfSubsection = paragraphNodeIds[paragraphNodeIds.length - 1];
             
             if (lastParagraphOfSubsection) {
-                // Valider tous les paragraphes jusqu'à celui-ci (inclus)
                 markAllNodesUpTo(lastParagraphOfSubsection);
                 
                 addNotification('Progression sauvegardée', 'info', {
@@ -92,112 +129,45 @@ export const LessonNavigator: React.FC = () => {
                 });
             }
             
-            // Reset pour éviter les clics multiples
-            lastClickTimeRef.current = 0;
-            lastClickTargetRef.current = null;
+            // Reset to avoid multiple clicks
+            setDoubleClickState({ lastClickTime: 0, lastClickTarget: null });
         } else {
-            // Premier clic ou clic sur un autre élément
-            lastClickTimeRef.current = now;
-            lastClickTargetRef.current = subsectionId;
+            // First click or click on different element
+            setDoubleClickState({ lastClickTime: now, lastClickTarget: subsectionId });
         }
-    }, [markAllNodesUpTo, addNotification]);
+    }, [doubleClickState, markAllNodesUpTo, addNotification]);
 
-
-
-    const ensureTargetVisible = useCallback((target: HTMLElement | null | undefined) => {
-        const container = scrollContainerRef.current ?? panelRef.current;
-
-        if (!container || !target) {
-            return;
-        }
-
-        // Utiliser requestAnimationFrame pour s'assurer que le DOM est à jour
-        requestAnimationFrame(() => {
-            const containerRect = container.getBoundingClientRect();
-            const targetRect = target.getBoundingClientRect();
-
-            const currentScrollTop = container.scrollTop;
-            const containerHeight = containerRect.height;
-            const maxScrollTop = container.scrollHeight - containerHeight;
-
-            const targetTop = currentScrollTop + (targetRect.top - containerRect.top);
-            const targetBottom = targetTop + targetRect.height;
-
-            const topMargin = 60;
-            const bottomMargin = 60;
-
-            const visibleTop = currentScrollTop;
-            const visibleBottom = currentScrollTop + containerHeight;
-
-            if (targetTop < visibleTop + topMargin) {
-                const newScrollTop = Math.max(0, targetTop - topMargin);
-                container.scrollTo({
-                    top: newScrollTop,
-                    behavior: 'smooth',
-                });
-            } else if (targetBottom > visibleBottom - bottomMargin) {
-                const newScrollTop = Math.min(
-                    maxScrollTop,
-                    targetBottom - containerHeight + bottomMargin,
-                );
-                container.scrollTo({
-                    top: Math.max(0, newScrollTop),
-                    behavior: 'smooth',
-                });
-            }
-        });
-    }, []);
-
+    // Optimized scroll-to-active logic with reduced complexity
     useEffect(() => {
-        if (!activeSectionId) return;
+        if (isCollapsed) return;
         
-        // Nettoyer le timeout précédent
-        if (scrollTimeoutRef.current) {
-            clearTimeout(scrollTimeoutRef.current);
-        }
+        let targetElement: HTMLButtonElement | null = null;
         
-        // Scroller immédiatement vers la section active
-        const target = sectionRefs.current.get(activeSectionId);
-        if (target) {
-            ensureTargetVisible(target);
-        }
-    }, [activeSectionId, ensureTargetVisible]);
-
-    useEffect(() => {
-        if (!activeSubsectionId) return;
-        
-        // Nettoyer le timeout précédent
-        if (scrollTimeoutRef.current) {
-            clearTimeout(scrollTimeoutRef.current);
-        }
-        
-        // Scroller immédiatement vers la sous-section active
-        const target = subsectionRefs.current.get(activeSubsectionId);
-        if (target) {
-            ensureTargetVisible(target);
-        }
-    }, [activeSubsectionId, ensureTargetVisible]);
-
-    useEffect(() => {
-        if (isCollapsed) {
-            return;
-        }
-
         if (activeSubsectionId) {
-            const subsection = subsectionRefs.current.get(activeSubsectionId);
-            if (subsection) {
-                ensureTargetVisible(subsection);
-                return;
-            }
+            targetElement = subsectionRefs.current.get(activeSubsectionId) || null;
+        } else if (activeSectionId) {
+            targetElement = sectionRefs.current.get(activeSectionId) || null;
         }
+        
+        if (targetElement) {
+            scrollToElement(targetElement);
+        }
+    }, [activeSectionId, activeSubsectionId, isCollapsed, scrollToElement]);
 
-        if (activeSectionId) {
-            const section = sectionRefs.current.get(activeSectionId);
-            if (section) {
-                ensureTargetVisible(section);
-            }
-        }
-    }, [isCollapsed, activeSectionId, activeSubsectionId, ensureTargetVisible]);
+    // Memoized progress calculations for performance
+    const sectionProgressData = useMemo(() => {
+        const data = new Map();
+        outline.forEach((section) => {
+            const sectionProgress = getProgress(section.paragraphNodeIds);
+            data.set(section.id, sectionProgress);
+            
+            section.subsections.forEach((subsection) => {
+                const subsectionProgress = getProgress(subsection.paragraphNodeIds);
+                data.set(subsection.id, subsectionProgress);
+            });
+        });
+        return data;
+    }, [outline, getProgress]);
 
     if (!outline.length) {
         return null;
@@ -216,6 +186,9 @@ export const LessonNavigator: React.FC = () => {
             >
                 <div className="lesson-navigator__toggle-header">
                     <span className="lesson-navigator__toggle-title">Sommaire</span>
+                    <span className="lesson-navigator__progress-badge">
+                        {lessonProgress.completed}/{lessonProgress.total}
+                    </span>
                 </div>
             </button>
 
@@ -230,10 +203,8 @@ export const LessonNavigator: React.FC = () => {
                 >
                     <div className="lesson-navigator__sections" role="navigation" aria-label="Sommaire des sections">
                     {outline.map((section) => {
-                        const sectionComplete = section.subsections.every(
-                            (subsection) =>
-                                getProgress(subsection.paragraphNodeIds).completed === getProgress(subsection.paragraphNodeIds).total
-                        );
+                        const sectionProgress = sectionProgressData.get(section.id) || { total: 0, completed: 0, percentage: 0 };
+                        const sectionComplete = sectionProgress.total > 0 && sectionProgress.completed === sectionProgress.total;
                         const sectionActive = activeSectionId === section.id;
 
                         return (
@@ -248,16 +219,20 @@ export const LessonNavigator: React.FC = () => {
                                     ref={registerSectionRef(section.id)}
                                 >
                                     <span className="lesson-navigator__section-index">{toAlphabetic(section.index)}</span>
-                                    <MathTitle className="lesson-navigator__section-title">
-                                        {section.title}
-                                    </MathTitle>
+                                    <div className="lesson-navigator__section-content">
+                                        <MathTitle className="lesson-navigator__section-title">
+                                            {section.title}
+                                        </MathTitle>
+                                        <span className="lesson-navigator__section-progress">
+                                            {sectionProgress.completed}/{sectionProgress.total}
+                                        </span>
+                                    </div>
                                 </button>
 
                                 <ul className="lesson-navigator__subsections">
                                     {section.subsections.map((subsection, subsectionIndex) => {
-                                        const subsectionProgress = getProgress(subsection.paragraphNodeIds);
-                                        const subsectionComplete =
-                                            subsectionProgress.total > 0 && subsectionProgress.completed === subsectionProgress.total;
+                                        const subsectionProgress = sectionProgressData.get(subsection.id) || { total: 0, completed: 0, percentage: 0 };
+                                        const subsectionComplete = subsectionProgress.total > 0 && subsectionProgress.completed === subsectionProgress.total;
                                         const subsectionActive = activeSubsectionId === subsection.id;
 
                                         return (
@@ -278,9 +253,14 @@ export const LessonNavigator: React.FC = () => {
                                                     title="Double-cliquer pour valider tous les paragraphes jusqu'ici"
                                                 >
                                                     <span className="lesson-navigator__subsection-index">{subsectionIndex + 1}</span>
-                                                    <MathTitle className="lesson-navigator__subsection-title">
-                                                        {subsection.title}
-                                                    </MathTitle>
+                                                    <div className="lesson-navigator__subsection-content">
+                                                        <MathTitle className="lesson-navigator__subsection-title">
+                                                            {subsection.title}
+                                                        </MathTitle>
+                                                        <span className="lesson-navigator__subsection-progress">
+                                                            {subsectionProgress.completed}/{subsectionProgress.total}
+                                                        </span>
+                                                    </div>
                                                 </button>
                                             </li>
                                         );

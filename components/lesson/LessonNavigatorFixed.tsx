@@ -32,8 +32,8 @@ export const LessonNavigator: React.FC = () => {
     const sectionRefs = useRef<Map<string, HTMLButtonElement>>(new Map());
     const subsectionRefs = useRef<Map<string, HTMLButtonElement>>(new Map());
     const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+    
     // États pour le double-clic
-    const doubleClickTimerRef = useRef<NodeJS.Timeout | null>(null);
     const lastClickTimeRef = useRef<number>(0);
     const lastClickTargetRef = useRef<string | null>(null);
     const [isCollapsed, setIsCollapsed] = useState(false);
@@ -101,8 +101,6 @@ export const LessonNavigator: React.FC = () => {
             lastClickTargetRef.current = subsectionId;
         }
     }, [markAllNodesUpTo, addNotification]);
-
-
 
     const ensureTargetVisible = useCallback((target: HTMLElement | null | undefined) => {
         const container = scrollContainerRef.current ?? panelRef.current;
@@ -216,6 +214,9 @@ export const LessonNavigator: React.FC = () => {
             >
                 <div className="lesson-navigator__toggle-header">
                     <span className="lesson-navigator__toggle-title">Sommaire</span>
+                    <span className="lesson-navigator__progress-badge">
+                        {lessonProgress.completed}/{lessonProgress.total}
+                    </span>
                 </div>
             </button>
 
@@ -230,10 +231,8 @@ export const LessonNavigator: React.FC = () => {
                 >
                     <div className="lesson-navigator__sections" role="navigation" aria-label="Sommaire des sections">
                     {outline.map((section) => {
-                        const sectionComplete = section.subsections.every(
-                            (subsection) =>
-                                getProgress(subsection.paragraphNodeIds).completed === getProgress(subsection.paragraphNodeIds).total
-                        );
+                        const sectionProgress = getProgress(section.paragraphNodeIds);
+                        const sectionComplete = sectionProgress.total > 0 && sectionProgress.completed === sectionProgress.total;
                         const sectionActive = activeSectionId === section.id;
 
                         return (
@@ -248,9 +247,14 @@ export const LessonNavigator: React.FC = () => {
                                     ref={registerSectionRef(section.id)}
                                 >
                                     <span className="lesson-navigator__section-index">{toAlphabetic(section.index)}</span>
-                                    <MathTitle className="lesson-navigator__section-title">
-                                        {section.title}
-                                    </MathTitle>
+                                    <div className="lesson-navigator__section-content">
+                                        <MathTitle className="lesson-navigator__section-title">
+                                            {section.title}
+                                        </MathTitle>
+                                        <span className="lesson-navigator__section-progress">
+                                            {sectionProgress.completed}/{sectionProgress.total}
+                                        </span>
+                                    </div>
                                 </button>
 
                                 <ul className="lesson-navigator__subsections">
@@ -278,9 +282,14 @@ export const LessonNavigator: React.FC = () => {
                                                     title="Double-cliquer pour valider tous les paragraphes jusqu'ici"
                                                 >
                                                     <span className="lesson-navigator__subsection-index">{subsectionIndex + 1}</span>
-                                                    <MathTitle className="lesson-navigator__subsection-title">
-                                                        {subsection.title}
-                                                    </MathTitle>
+                                                    <div className="lesson-navigator__subsection-content">
+                                                        <MathTitle className="lesson-navigator__subsection-title">
+                                                            {subsection.title}
+                                                        </MathTitle>
+                                                        <span className="lesson-navigator__subsection-progress">
+                                                            {subsectionProgress.completed}/{subsectionProgress.total}
+                                                        </span>
+                                                    </div>
                                                 </button>
                                             </li>
                                         );

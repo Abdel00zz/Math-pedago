@@ -378,29 +378,45 @@
 
 /* Chapter cards */
 .dashboard-card {
-  --card-surface: linear-gradient(to right, #f8fafc 0%, #e2e8f0 100%);
-  --card-foreground: #0b1120;
-  --card-foreground-soft: rgba(11, 17, 32, 0.72);
+  --card-surface: #ffffff;
+  --card-foreground: #0f172a;
+  --card-foreground-soft: #475569;
   --card-accent: #2563eb;
-  --card-chip-bg: rgba(255, 255, 255, 0.4);
-  --card-stat-bg: rgba(255, 255, 255, 0.4);
-  --card-stat-border: rgba(255, 255, 255, 0.65);
+  --card-border-color: #e2e8f0;
+
   position: relative;
   width: 100%;
   min-height: clamp(220px, 32vw, 280px);
   padding: clamp(1.25rem, 2.1vw, 1.8rem);
-  border-radius: 8px;
-  border: 0;
+  border-radius: 16px; /* Increased for a softer look */
+  border: 1px solid var(--card-border-color);
   background: var(--card-surface);
   color: var(--card-foreground);
+  font-family: 'Manrope', 'Inter', 'Segoe UI', sans-serif;
+  font-weight: 500;
   display: flex;
   flex-direction: column;
   gap: clamp(1rem, 1.8vw, 1.4rem);
   overflow: hidden;
-  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.1);
-  transition: transform 0.28s ease, box-shadow 0.28s ease;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06), 0 1px 4px rgba(15, 23, 42, 0.04); /* Softer shadow */
+  transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
   cursor: pointer;
   isolation: isolate;
+}
+
+.dashboard-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 5px;
+  background-color: var(--card-accent);
+  transition: background-color 0.3s ease, width 0.3s ease;
+}
+
+.dashboard-card:hover::before {
+    width: 8px;
 }
 
 .dashboard-card__background {
@@ -423,7 +439,8 @@
 
 .dashboard-card:hover:not(:disabled) {
   transform: translateY(-4px);
-  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.15);
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08), 0 4px 10px rgba(15, 23, 42, 0.06);
+  border-color: var(--card-accent);
 }
 
 .dashboard-card:hover:not(:disabled) .dashboard-card__gradient {
@@ -503,7 +520,7 @@
   justify-content: center;
   overflow: hidden;
   margin: 0;
-  border-radius: 8px;
+  border-radius: 12px; /* Match card radius */
   align-self: stretch;
   padding: clamp(0.75rem, 1.8vw, 1rem) clamp(0.4rem, 0.9vw, 0.6rem);
   background: transparent;
@@ -546,29 +563,21 @@
 
 .dashboard-card__badge-text {
   font-size: clamp(0.68rem, 1.4vw, 0.82rem);
-  font-weight: 800;
-  letter-spacing: 0.2em;
+  font-weight: 700;
+  font-family: 'Manrope', 'Inter', 'Segoe UI', sans-serif;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
   color: var(--card-stat-text, var(--card-foreground));
-  text-shadow:
-    0 2px 4px rgba(0, 0, 0, 0.12),
-    0 1px 2px rgba(255, 255, 255, 0.45);
-  opacity: 0.96;
-  transition: opacity 0.3s ease, text-shadow 0.3s ease;
+  text-shadow: none;
+  opacity: 0.92;
+  transition: opacity 0.3s ease;
 }
 
 .dashboard-card:hover .dashboard-card__badge-text {
   opacity: 1;
-  text-shadow:
-    0 3px 6px rgba(0, 0, 0, 0.16),
-    0 1px 2px rgba(255, 255, 255, 0.55);
 }
 
-/* Variants pour le badge panel avec des dégradés subtils et naturels */
-/* Backgrounds removed for a transparent, artistic effect */
-.dashboard-card__badge-panel[data-variant="todo"] {
-  border-left-color: transparent;
-}
+/* Separator line for badge panel - REMOVED, moved to .dashboard-card::before */
 
 .dashboard-card__badge-panel[data-variant="todo"] {
   --badge-panel-bg: transparent;
@@ -617,29 +626,30 @@
 }
 
 .dashboard-card__eyebrow {
-  font-size: 0.75rem;
-  letter-spacing: 0.12em;
+  font-family: 'Manrope', 'Inter', 'Segoe UI', sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   font-weight: 600;
   color: var(--card-eyebrow, var(--card-foreground-soft));
-  opacity: 0.85;
-  transition: opacity 0.3s ease;
+  opacity: 0.78;
+  transition: opacity 0.3s ease, color 0.3s ease;
 }
 
 .dashboard-card:hover .dashboard-card__eyebrow {
   opacity: 1;
+  color: var(--card-foreground);
 }
 
 .dashboard-card__title {
-  font-family: 'Fira Sans', 'Roboto', system-ui, sans-serif;
-  font-size: clamp(1.25rem, 2.8vw, 1.85rem);
-  font-weight: 700;
-  line-height: 1.25;
+  font-family: 'Space Grotesk', 'Manrope', 'Segoe UI', sans-serif;
+  font-size: clamp(1.3rem, 3vw, 1.82rem);
+  font-weight: 600;
+  line-height: 1.18;
   margin: 0;
-  color: #0f172a;
-  letter-spacing: -0.02em;
-  text-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
-  text-transform: capitalize;
+  color: var(--card-foreground);
+  letter-spacing: -0.01em;
+  text-transform: none;
 }
 
 /* Old status badge styles - Now replaced by badge panel */
@@ -660,7 +670,9 @@
   flex-direction: column;
   gap: 0.45rem;
   color: var(--card-session, var(--card-foreground-soft));
-  font-size: 0.95rem;
+  font-size: 0.94rem;
+  font-family: 'Manrope', 'Inter', 'Segoe UI', sans-serif;
+  line-height: 1.5;
 }
 
 .dashboard-card__session :where(p, span) {
@@ -688,12 +700,14 @@
   gap: 0.4rem;
   padding: 0.38rem 0.85rem;
   border-radius: 14px;
-  background: var(--card-stat-bg);
-  border: 1px solid var(--card-stat-border);
+  background: transparent;
+  border: 1px solid var(--card-border-color);
   font-size: 0.82rem;
   font-weight: 600;
-  color: var(--card-stat-text, var(--card-foreground));
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  font-family: 'Manrope', 'Inter', 'Segoe UI', sans-serif;
+  letter-spacing: 0.04em;
+  color: var(--card-foreground-soft);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease;
 }
 
 .dashboard-card__stat .material-symbols-outlined {
@@ -701,94 +715,55 @@
   color: var(--card-stat-icon, var(--card-accent));
 }
 
-.dashboard-card__stat.is-highlighted {
-  background: var(--card-accent);
-  border-color: transparent;
-  color: #ffffff;
-  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.15);
-}
-
-.dashboard-card__stat.is-highlighted .material-symbols-outlined {
-  color: #ffffff;
-}
-
 .dashboard-card__stat:hover {
   transform: translateY(-2px);
+  background-color: var(--card-accent);
+  color: #ffffff;
+  border-color: var(--card-accent);
+}
+
+.dashboard-card__stat:hover .material-symbols-outlined {
+  color: #ffffff;
 }
 
 .dashboard-card[data-status="todo"] {
-  --card-surface: linear-gradient(to right, #fffbf5 0%, #fff4e6 50%, #ffe8cc 100%);
+  --card-surface: #fff7ed;
   --card-foreground: #7c2d12;
-  --card-foreground-soft: rgba(124, 45, 18, 0.68);
-  --card-accent: #ea580c;
-  --card-chip-bg: rgba(255, 255, 255, 0.65);
-  --card-stat-bg: rgba(255, 251, 245, 0.7);
-  --card-stat-border: rgba(234, 88, 12, 0.15);
-  --card-eyebrow: #c2410c;
-  --card-title: #7c2d12;
-  --card-session: rgba(124, 45, 18, 0.65);
-  --card-stat-text: #9a3412;
-  --card-stat-icon: #ea580c;
+  --card-foreground-soft: #b45309;
+  --card-accent: #f97316;
+  --card-border-color: #fed7aa;
 }
 
 .dashboard-card[data-status="progress"] {
-  --card-surface: linear-gradient(to right, #fffef0 0%, #fefce8 50%, #fef9c3 100%);
+  --card-surface: #fefce8;
   --card-foreground: #713f12;
-  --card-foreground-soft: rgba(113, 63, 18, 0.68);
-  --card-accent: #ca8a04;
-  --card-chip-bg: rgba(255, 255, 255, 0.65);
-  --card-stat-bg: rgba(255, 254, 240, 0.7);
-  --card-stat-border: rgba(202, 138, 4, 0.15);
-  --card-eyebrow: #a16207;
-  --card-title: #713f12;
-  --card-session: rgba(113, 63, 18, 0.65);
-  --card-stat-text: #854d0e;
-  --card-stat-icon: #ca8a04;
+  --card-foreground-soft: #a16207;
+  --card-accent: #eab308;
+  --card-border-color: #fde047;
 }
 
 .dashboard-card[data-status="completed"] {
-  --card-surface: linear-gradient(to right, #f0fdf9 0%, #d1fae5 50%, #a7f3d0 100%);
-  --card-foreground: #065f46;
-  --card-foreground-soft: rgba(6, 95, 70, 0.68);
-  --card-accent: #10b981;
-  --card-chip-bg: rgba(255, 255, 255, 0.65);
-  --card-stat-bg: rgba(240, 253, 249, 0.7);
-  --card-stat-border: rgba(16, 185, 129, 0.15);
-  --card-eyebrow: #047857;
-  --card-title: #065f46;
-  --card-session: rgba(6, 95, 70, 0.65);
-  --card-stat-text: #047857;
-  --card-stat-icon: #10b981;
+  --card-surface: #f0fdf4;
+  --card-foreground: #14532d;
+  --card-foreground-soft: #15803d;
+  --card-accent: #22c55e;
+  --card-border-color: #bbf7d0;
 }
 
 .dashboard-card[data-status="update"] {
-  --card-surface: linear-gradient(to right, #faf5ff 0%, #f3e8ff 50%, #e9d5ff 100%);
+  --card-surface: #faf5ff;
   --card-foreground: #581c87;
-  --card-foreground-soft: rgba(88, 28, 135, 0.68);
-  --card-accent: #9333ea;
-  --card-chip-bg: rgba(255, 255, 255, 0.65);
-  --card-stat-bg: rgba(250, 245, 255, 0.7);
-  --card-stat-border: rgba(147, 51, 234, 0.15);
-  --card-eyebrow: #7e22ce;
-  --card-title: #581c87;
-  --card-session: rgba(88, 28, 135, 0.65);
-  --card-stat-text: #6b21a8;
-  --card-stat-icon: #9333ea;
+  --card-foreground-soft: #7e22ce;
+  --card-accent: #a855f7;
+  --card-border-color: #e9d5ff;
 }
 
 .dashboard-card[data-status="locked"] {
-  --card-surface: linear-gradient(to right, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);
+  --card-surface: #f8fafc;
   --card-foreground: #334155;
-  --card-foreground-soft: rgba(51, 65, 85, 0.68);
-  --card-accent: #64748b;
-  --card-chip-bg: rgba(255, 255, 255, 0.65);
-  --card-stat-bg: rgba(248, 250, 252, 0.7);
-  --card-stat-border: rgba(100, 116, 139, 0.15);
-  --card-eyebrow: #475569;
-  --card-title: #334155;
-  --card-session: rgba(51, 65, 85, 0.65);
-  --card-stat-text: #475569;
-  --card-stat-icon: #64748b;
+  --card-foreground-soft: #64748b;
+  --card-accent: #94a3b8;
+  --card-border-color: #e2e8f0;
 }
 
 /* Empty state */

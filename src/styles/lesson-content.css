@@ -266,6 +266,8 @@
   border: 1.5px solid rgba(15, 23, 42, 0.08);
   background: rgba(255, 255, 255, 0.92);
   box-shadow: none;
+  cursor: default;
+  user-select: text;
 }
 
 .lesson-callout__icon {

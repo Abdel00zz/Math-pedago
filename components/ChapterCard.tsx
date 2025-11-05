@@ -69,52 +69,38 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
     const exerciseCount = chapter.exercises?.length ?? 0;
     const videosCount = chapter.videos?.length ?? 0;
 
-    const completedExercises = progress ? Object.keys(progress.exercisesFeedback ?? {}).length : 0;
-    const videosWatched = progress?.videos?.watched
-        ? Object.values(progress.videos.watched).filter(Boolean).length
-        : 0;
-
-    const lessonProgressValue = (() => {
-        if (!progress?.lesson) {
-            return null;
-        }
-        const { scrollProgress, isRead } = progress.lesson;
-        if (typeof scrollProgress === 'number' && scrollProgress > 0) {
-            return Math.min(100, Math.round(scrollProgress));
-        }
-        if (isRead) {
-            return 100;
-        }
-        return 0;
-    })();
+    const lessonParagraphsCount = chapter.lesson?.paragraphs?.length ?? 0;
 
     const quizProgress = progress?.quiz;
-    const quizScore = typeof quizProgress?.score === 'number' ? Math.round(quizProgress.score) : null;
     const isQuizSubmitted = Boolean(quizProgress?.isSubmitted);
     const isWorkSubmitted = Boolean(progress?.isWorkSubmitted);
 
     const cardStats = useMemo(() => {
+        const formatCount = (count: number, singular: string, plural?: string) => {
+            const noun = count === 1 ? singular : plural ?? `${singular}s`;
+            return `${count} ${noun}`;
+        };
+
         const stats: Array<{ icon: string; label: string; highlight?: boolean }> = [];
 
-        if (lessonProgressValue !== null) {
+        if (lessonParagraphsCount > 0) {
             stats.push({
-                icon: lessonProgressValue === 100 ? 'menu_book' : 'menu_book',
-                label: `Leçon ${lessonProgressValue}%`,
-                highlight: lessonProgressValue === 100,
+                icon: 'article',
+                label: formatCount(lessonParagraphsCount, 'paragraphe'),
             });
         }
 
         if (videosCount > 0) {
             stats.push({
                 icon: 'play_circle',
-                label: `${videosWatched}/${videosCount} vidéo${videosCount > 1 ? 's' : ''}`,
+                label: formatCount(videosCount, 'vidéo', 'vidéos'),
             });
         }
 
         if (quizCount > 0) {
             stats.push({
                 icon: isQuizSubmitted ? 'workspace_premium' : 'quiz',
-                label: isQuizSubmitted && quizScore !== null ? `Quiz ${quizScore}%` : `${quizCount} quiz`,
+                label: formatCount(quizCount, 'quiz', 'quiz'),
                 highlight: isQuizSubmitted,
             });
         }
@@ -122,24 +108,13 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
         if (exerciseCount > 0) {
             stats.push({
                 icon: isWorkSubmitted ? 'task_alt' : 'draw',
-                label: isWorkSubmitted
-                    ? 'Travail remis'
-                    : `${completedExercises}/${exerciseCount} exercice${exerciseCount > 1 ? 's' : ''}`,
+                label: formatCount(exerciseCount, 'exercice'),
                 highlight: isWorkSubmitted,
             });
         }
 
         return stats;
-    }, [
-        videosCount,
-        videosWatched,
-        quizCount,
-        isQuizSubmitted,
-        quizScore,
-        exerciseCount,
-        completedExercises,
-        isWorkSubmitted,
-    ]);
+    }, [videosCount, quizCount, isQuizSubmitted, exerciseCount, isWorkSubmitted, lessonParagraphsCount]);
 
     const cardEyebrow = progress?.isWorkSubmitted
         ? 'Travail remis'

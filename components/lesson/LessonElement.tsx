@@ -106,7 +106,9 @@ const Paragraph: React.FC<{ element: ElementType; path: LessonElementPath; showA
         <>
             {textElement.image && <LessonImage config={textElement.image} />}
             <div className={paragraphClasses} data-lesson-node-id={nodeId}>
-                {contentNode}
+                <div className="lesson-paragraph__content">
+                    {contentNode}
+                </div>
             </div>
         </>
     );
