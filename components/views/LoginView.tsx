@@ -6,42 +6,49 @@ import { Profile } from '../../types';
 // --- Sous-composants pour la clarté ---
 
 const LoginHeader: React.FC = () => (
-    <div className="text-center mb-10 flex flex-col items-center">
-        {/* Ornate Divider */}
-        <div className="flex items-center gap-4 text-[#a1887f]/60 w-full max-w-xs">
-            <div className="flex-1 h-px bg-gradient-to-l from-[#a1887f]/80 to-transparent"></div>
-            <span className="material-symbols-outlined !text-4xl">psychology_alt</span>
-            <div className="flex-1 h-px bg-gradient-to-r from-[#a1887f]/80 to-transparent"></div>
+    <div className="mb-12 flex flex-col items-center gap-6 text-center">
+        <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-900 text-white shadow-[0_18px_40px_rgba(15,23,42,0.18)]">
+            <span className="material-symbols-outlined !text-3xl leading-none">psychology_alt</span>
         </div>
-        <h1 className="font-playfair text-4xl text-[#4e342e] font-bold mt-5 tracking-tight">
-            Center Scientific
-        </h1>
-        <p className="font-garamond text-lg text-primary tracking-[0.25em] mt-1 uppercase">
-            of{' '}
-            <span className="inline-block animate-textGlow">
-                Mathematics
-            </span>
-        </p>
-        <div className="w-24 h-px bg-[#d7ccc8] mt-5"></div>
+        <div className="flex flex-col items-center gap-2">
+            <p className="text-[0.72rem] font-semibold uppercase tracking-[0.42em] text-slate-500">Centre scientifique</p>
+            <h1
+                className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl"
+                style={{ fontFamily: "'Space Grotesk', 'Manrope', 'Segoe UI', sans-serif" }}
+            >
+                Mathématiques
+            </h1>
+            <p className="max-w-sm text-sm text-slate-500">
+                Connectez-vous pour reprendre votre progression personnalisée et accéder à vos ressources.
+            </p>
+        </div>
     </div>
 );
 
 const WelcomeMessage: React.FC<{ hasPreloadedName: boolean; name: string }> = ({ hasPreloadedName, name }) => (
-    <div className="text-center mb-10">
+    <div className="mb-10 text-center">
         {hasPreloadedName ? (
             <>
-                <h2 className="text-3xl font-playfair text-[#4e342e] leading-tight">
-                    Bon retour, <span className="text-[#8d6e63] font-medium">{name}</span> !
+                <h2
+                    className="text-2xl font-semibold text-slate-900 sm:text-[1.7rem]"
+                    style={{ fontFamily: "'Space Grotesk', 'Manrope', 'Segoe UI', sans-serif" }}
+                >
+                    Bon retour, <span className="text-slate-600 font-medium">{name}</span> !
                 </h2>
-                <p className="mt-2 text-[#a1887f] font-garamond italic text-base">
-                    Confirmez votre classe pour continuer.
+                <p className="mt-3 text-sm text-slate-500">
+                    Vérifiez votre classe pour poursuivre sans perdre votre progression.
                 </p>
             </>
         ) : (
             <>
-                <h2 className="text-3xl font-playfair text-[#4e342e] font-medium">Bienvenue</h2>
-                <p className="mt-2 text-[#a1887f] font-garamond italic text-base">
-                    Commencez votre parcours d'apprentissage.
+                <h2
+                    className="text-2xl font-semibold text-slate-900 sm:text-[1.7rem]"
+                    style={{ fontFamily: "'Space Grotesk', 'Manrope', 'Segoe UI', sans-serif" }}
+                >
+                    Bienvenue
+                </h2>
+                <p className="mt-3 text-sm text-slate-500">
+                    Complétez les informations ci-dessous pour démarrer votre parcours d'apprentissage.
                 </p>
             </>
         )}
@@ -59,13 +66,16 @@ interface LoginFormProps {
 }
 
 const LoginForm: React.FC<LoginFormProps> = ({ name, setName, classId, setClassId, error, handleSubmit, hasPreloadedName }) => (
-    <form onSubmit={handleSubmit} className="space-y-8">
-        <div>
-            <label htmlFor="name" className="block text-sm font-medium text-[#a1887f] font-garamond mb-2">
+    <form onSubmit={handleSubmit} className="space-y-7">
+        <div className="space-y-2">
+            <label
+                htmlFor="name"
+                className="block text-[0.7rem] font-semibold uppercase tracking-[0.28em] text-slate-500"
+            >
                 Nom complet
             </label>
-            <div className="relative group">
-                <span className="material-symbols-outlined absolute left-0 top-1/2 -translate-y-1/2 text-[#a1887f]/80 pointer-events-none group-focus-within:text-[#5d4037] transition-colors">
+            <div className="relative">
+                <span className="material-symbols-outlined pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
                     drive_file_rename_outline
                 </span>
                 <input
@@ -73,30 +83,35 @@ const LoginForm: React.FC<LoginFormProps> = ({ name, setName, classId, setClassI
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className={`w-full pl-8 pr-4 py-2 bg-transparent border-0 border-b-2 border-[#d7ccc8] focus:outline-none focus:border-[#8d6e63] focus:ring-0 transition-colors duration-300 font-garamond text-lg text-[#4e342e] placeholder:text-[#a1887f]/60 ${
-                        hasPreloadedName ? 'bg-[#d7ccc8]/20 text-[#a1887f] cursor-not-allowed' : ''
+                    className={`w-full rounded-2xl border border-slate-200 bg-white px-12 py-3 text-base text-slate-900 shadow-sm transition-all duration-200 focus:border-slate-900/30 focus:outline-none focus:ring-2 focus:ring-slate-900/10 placeholder:text-slate-400 ${
+                        hasPreloadedName ? 'cursor-not-allowed bg-slate-50 text-slate-500' : ''
                     }`}
                     placeholder="Votre nom et prénom"
                     required
                     readOnly={hasPreloadedName}
+                    style={{ fontFamily: "'Manrope', 'Segoe UI', sans-serif" }}
                 />
             </div>
         </div>
 
-        <div>
-            <label htmlFor="classId" className="block text-sm font-medium text-[#a1887f] font-garamond mb-2">
+        <div className="space-y-2">
+            <label
+                htmlFor="classId"
+                className="block text-[0.7rem] font-semibold uppercase tracking-[0.28em] text-slate-500"
+            >
                 Votre classe
             </label>
-            <div className="relative group">
-                 <span className="material-symbols-outlined absolute left-0 top-1/2 -translate-y-1/2 text-[#a1887f]/80 pointer-events-none group-focus-within:text-[#5d4037] transition-colors">
+            <div className="relative">
+                <span className="material-symbols-outlined pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
                     account_balance
                 </span>
                 <select
                     id="classId"
                     value={classId}
                     onChange={(e) => setClassId(e.target.value)}
-                    className="w-full pl-8 pr-10 py-2 bg-transparent border-0 border-b-2 border-[#d7ccc8] focus:outline-none focus:border-[#8d6e63] focus:ring-0 transition-colors duration-300 cursor-pointer font-garamond text-lg text-[#4e342e] appearance-none"
+                    className="w-full appearance-none rounded-2xl border border-slate-200 bg-white px-12 py-3 text-base text-slate-900 shadow-sm transition-all duration-200 focus:border-slate-900/30 focus:outline-none focus:ring-2 focus:ring-slate-900/10"
                     required
+                    style={{ fontFamily: "'Manrope', 'Segoe UI', sans-serif" }}
                 >
                     {CLASS_OPTIONS.map(option => (
                         <option key={option.value} value={option.value}>
@@ -104,19 +119,20 @@ const LoginForm: React.FC<LoginFormProps> = ({ name, setName, classId, setClassI
                         </option>
                     ))}
                 </select>
-                <div className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none transition-colors group-focus-within:text-[#5d4037]">
-                    <span className="material-symbols-outlined text-[#a1887f]/80">unfold_more</span>
+                <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-slate-400">
+                    <span className="material-symbols-outlined">unfold_more</span>
                 </div>
             </div>
         </div>
 
         {error && (
-            <p className="text-sm text-error text-center font-garamond font-medium">{error}</p>
+            <p className="text-center text-sm font-medium text-rose-500">{error}</p>
         )}
 
         <button
             type="submit"
-            className="w-full px-4 py-3 font-garamond font-semibold text-lg tracking-wider text-[#fbf9f1] bg-[#5d4037] rounded-md shadow-lg shadow-[#5d4037]/20 hover:bg-[#4e342e] hover:-translate-y-px transition-all duration-300 active:scale-[0.98] mt-4"
+            className="mt-6 w-full rounded-2xl bg-slate-900 px-4 py-3 text-base font-semibold tracking-[0.12em] text-white shadow-[0_18px_40px_rgba(15,23,42,0.18)] transition-transform duration-200 hover:-translate-y-[1px] hover:shadow-[0_20px_44px_rgba(15,23,42,0.22)] focus:outline-none focus:ring-2 focus:ring-slate-900/15 active:scale-[0.99]"
+            style={{ fontFamily: "'Space Grotesk', 'Manrope', 'Segoe UI', sans-serif" }}
         >
             {hasPreloadedName ? 'Accéder à mon espace' : 'Commencer'}
         </button>
@@ -157,8 +173,8 @@ const LoginView: React.FC = () => {
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen animate-fadeIn p-4 bg-[#fbf9f1]">
-            <div className="w-full max-w-md bg-[#fffcf5] border border-[#d7ccc8] rounded-lg shadow-xl shadow-[#5d4037]/10 p-8 sm:p-12">
+        <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-[#eef2ff] via-[#f7f9ff] to-white px-4 py-10 sm:px-6">
+            <div className="w-full max-w-lg rounded-3xl border border-slate-200/70 bg-white/90 p-8 shadow-[0_28px_70px_rgba(15,23,42,0.12)] backdrop-blur-xl sm:p-12">
                 <LoginHeader />
                 <WelcomeMessage hasPreloadedName={hasPreloadedName} name={name} />
                 <LoginForm
