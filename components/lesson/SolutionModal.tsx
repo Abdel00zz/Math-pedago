@@ -128,7 +128,7 @@ export const SolutionModal: React.FC<SolutionModalProps> = ({
     );
 };
 
-// Styles pour les animations (à ajouter dans le CSS global)
+// Styles pour les animations (à ajouter dans le CSS global ou Tailwind config)
 const styles = `
 @keyframes fadeIn {
     from { opacity: 0; }
