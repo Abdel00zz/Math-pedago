@@ -480,27 +480,20 @@
   background-color: rgba(79, 70, 229, 0.04);
 }
 
-.lesson-navigator__paragraph-number {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 1.8rem;
-  height: 1.4rem;
-  font-size: 0.65rem;
-  font-weight: 600;
+.lesson-navigator__paragraph-label {
+  flex: 1;
+  font-size: 0.7rem;
+  font-weight: 500;
   color: var(--text-secondary);
-  background: rgba(148, 163, 184, 0.1);
-  border-radius: 4px;
-  flex-shrink: 0;
   font-family: 'Fira Sans', 'Roboto', system-ui, sans-serif;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
   transition: all 0.2s ease;
+  line-height: 1.4;
 }
 
-.lesson-navigator__paragraph.is-complete .lesson-navigator__paragraph-number {
-  background: rgba(16, 185, 129, 0.15);
+.lesson-navigator__paragraph.is-complete .lesson-navigator__paragraph-label {
   color: var(--accent-secondary);
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .lesson-navigator__paragraph-checkbox {
@@ -734,10 +727,8 @@
     padding: 0.25rem 0.35rem;
   }
 
-  .lesson-navigator__paragraph-number {
-    min-width: 1.6rem;
-    height: 1.2rem;
-    font-size: 0.6rem;
+  .lesson-navigator__paragraph-label {
+    font-size: 0.65rem;
   }
 
   .lesson-navigator__paragraph-checkbox {

@@ -316,8 +316,8 @@ export const LessonNavigator: React.FC = () => {
                                                                     className={`lesson-navigator__paragraph${isParagraphComplete ? ' is-complete' : ''}`}
                                                                 >
                                                                     <div className="lesson-navigator__paragraph-wrapper">
-                                                                        <span className="lesson-navigator__paragraph-number">
-                                                                            P{paragraphIndex + 1}
+                                                                        <span className="lesson-navigator__paragraph-label">
+                                                                            Paragraphe {paragraphIndex + 1}
                                                                         </span>
 
                                                                         <button
