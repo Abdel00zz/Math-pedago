@@ -52,27 +52,3 @@
     color: hsl(var(--foreground));
   }
 }
-
-@keyframes slideInFromTop {
-  from {
-    opacity: 0;
-    transform: translateY(-100%);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes shrink {
-  from {
-    width: 100%;
-  }
-  to {
-    width: 0%;
-  }
-}
-
-.animate-slideInFromTop {
-  animation: slideInFromTop 0.3s ease-out;
-}

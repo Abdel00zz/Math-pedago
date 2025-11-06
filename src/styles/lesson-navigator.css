@@ -359,7 +359,8 @@
 .lesson-navigator__subsection-wrapper {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.5rem;
+  width: 100%;
 }
 
 .lesson-navigator__subsection-trigger {
@@ -379,34 +380,6 @@
   transition: background-color 0.2s ease, color 0.2s ease;
   flex: 1;
   min-width: 0;
-}
-
-.lesson-navigator__subsection-checkbox {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 0.25rem;
-  border-radius: 4px;
-  color: var(--text-secondary);
-  transition: all 0.2s ease;
-  flex-shrink: 0;
-}
-
-.lesson-navigator__subsection-checkbox:hover {
-  background-color: rgba(79, 70, 229, 0.08);
-  color: var(--accent-primary);
-}
-
-.lesson-navigator__subsection-checkbox.is-checked {
-  color: var(--accent-secondary);
-}
-
-.lesson-navigator__subsection-checkbox.is-checked:hover {
-  color: var(--accent-secondary);
-  opacity: 0.8;
 }
 
 .lesson-navigator__subsection-trigger:hover {
@@ -475,6 +448,158 @@
 
 .lesson-navigator__subsection-score {
   display: none;
+}
+
+/* Liste des paragraphes */
+.lesson-navigator__paragraphs {
+  list-style: none;
+  padding: 0;
+  margin: 0.3rem 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding-left: 1.2rem;
+}
+
+.lesson-navigator__paragraph {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.lesson-navigator__paragraph-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.3rem 0.4rem;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.lesson-navigator__paragraph-wrapper:hover {
+  background-color: rgba(79, 70, 229, 0.04);
+}
+
+.lesson-navigator__paragraph-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.8rem;
+  height: 1.4rem;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: rgba(148, 163, 184, 0.1);
+  border-radius: 4px;
+  flex-shrink: 0;
+  font-family: 'Fira Sans', 'Roboto', system-ui, sans-serif;
+  letter-spacing: 0.02em;
+  transition: all 0.2s ease;
+}
+
+.lesson-navigator__paragraph.is-complete .lesson-navigator__paragraph-number {
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--accent-secondary);
+  font-weight: 700;
+}
+
+.lesson-navigator__paragraph-checkbox {
+  flex-shrink: 0;
+  width: 1.15rem;
+  height: 1.15rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid rgba(148, 163, 184, 0.35);
+  border-radius: 3px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  margin-left: auto;
+}
+
+.lesson-navigator__paragraph-checkbox:hover {
+  border-color: var(--accent-secondary);
+  background: rgba(16, 185, 129, 0.05);
+  transform: scale(1.1);
+}
+
+.lesson-navigator__paragraph-checkbox:active {
+  transform: scale(0.92);
+}
+
+.lesson-navigator__paragraph-checkbox.is-checked {
+  background: var(--accent-secondary);
+  border-color: var(--accent-secondary);
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25);
+}
+
+.lesson-navigator__paragraph-checkbox.is-checked:hover {
+  background: #059669;
+  border-color: #059669;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
+}
+
+.lesson-navigator__paragraph-checkbox .lesson-navigator__checkbox-icon {
+  width: 0.7rem;
+  height: 0.7rem;
+}
+
+/* Checkbox élégante pour validation des subsections */
+.lesson-navigator__subsection-checkbox {
+  flex-shrink: 0;
+  width: 1.35rem;
+  height: 1.35rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(148, 163, 184, 0.4);
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.lesson-navigator__subsection-checkbox:hover {
+  border-color: var(--accent-primary);
+  background: rgba(79, 70, 229, 0.05);
+  transform: scale(1.08);
+}
+
+.lesson-navigator__subsection-checkbox:active {
+  transform: scale(0.95);
+}
+
+.lesson-navigator__subsection-checkbox.is-checked {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+}
+
+.lesson-navigator__subsection-checkbox.is-checked:hover {
+  background: var(--accent-secondary);
+  border-color: var(--accent-secondary);
+  box-shadow: 0 6px 16px rgba(79, 70, 229, 0.35);
+}
+
+.lesson-navigator__checkbox-icon {
+  width: 0.85rem;
+  height: 0.85rem;
+  color: white;
+  animation: checkboxAppear 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes checkboxAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.3) rotate(-15deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
 }
 
 /* Lesson Paragraph Long Press */
@@ -572,6 +697,17 @@
     font-size: 0.6rem;
   }
 
+  .lesson-navigator__subsection-checkbox {
+    width: 1.25rem;
+    height: 1.25rem;
+    border-width: 1.5px;
+  }
+
+  .lesson-navigator__checkbox-icon {
+    width: 0.75rem;
+    height: 0.75rem;
+  }
+
   .lesson-navigator__section-title {
     font-size: 0.7rem;
     line-height: 1.35;
@@ -588,5 +724,30 @@
 
   .lesson-navigator__subsections {
     gap: 0.2rem;
+  }
+
+  .lesson-navigator__paragraphs {
+    padding-left: 0.9rem;
+  }
+
+  .lesson-navigator__paragraph-wrapper {
+    padding: 0.25rem 0.35rem;
+  }
+
+  .lesson-navigator__paragraph-number {
+    min-width: 1.6rem;
+    height: 1.2rem;
+    font-size: 0.6rem;
+  }
+
+  .lesson-navigator__paragraph-checkbox {
+    width: 1rem;
+    height: 1rem;
+    border-width: 1.5px;
+  }
+
+  .lesson-navigator__paragraph-checkbox .lesson-navigator__checkbox-icon {
+    width: 0.65rem;
+    height: 0.65rem;
   }
 }

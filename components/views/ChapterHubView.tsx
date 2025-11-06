@@ -156,18 +156,7 @@ const ChapterHubView: React.FC = () => {
                 return;
             }
 
-            // Forcer une mise à jour immédiate de la progression
-            const newCompletion = summarizeLessonRecord(customEvent.detail.progress);
-            setLessonCompletion(newCompletion);
-            
-            // Debug en mode développement uniquement
-            if (process.env.NODE_ENV === 'development') {
-                console.log('Progression mise à jour:', {
-                    completed: newCompletion.completed,
-                    total: newCompletion.total,
-                    percentage: newCompletion.percentage
-                });
-            }
+            setLessonCompletion(summarizeLessonRecord(customEvent.detail.progress));
         };
 
         if (typeof window !== 'undefined') {
@@ -257,8 +246,8 @@ const ChapterHubView: React.FC = () => {
             setVerifiedClickCount(0);
             console.log('Easter egg activated! Resending work...');
 
-            addNotification("Renvoi en cours", 'info', {
-                message: "Triple-clic détecté · Votre travail sera renvoyé",
+            addNotification("Renvoi du travail", 'info', {
+                message: "Fonctionnalité cachée activée ! Le travail sera renvoyé.",
                 duration: 3000
             });
 
@@ -402,7 +391,7 @@ const ChapterHubView: React.FC = () => {
                         console.log('Submission successful! Message ID:', result.messageId);
 
                         addNotification("Travail envoyé", 'success', {
-                            message: "Votre progression a été transmise avec succès · Score: $\\frac{100}{100}$",
+                            message: "Votre progression a été enregistrée et envoyée avec succès.",
                             action: {
                                 label: 'Tableau de bord',
                                 onClick: () => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'dashboard' } })
@@ -438,8 +427,8 @@ const ChapterHubView: React.FC = () => {
                 console.error('All submission attempts failed. Data stored locally:', submissionKey);
                 console.error('Last error details:', lastError);
 
-                addNotification("Envoi échoué", 'error', {
-                    message: `${errorMessage} Vos données restent sauvegardées localement`,
+                addNotification("Échec d'envoi", 'error', {
+                    message: errorMessage,
                     action: {
                         label: 'Réessayer',
                         onClick: () => handleSubmitWork()
@@ -454,8 +443,8 @@ const ChapterHubView: React.FC = () => {
 
         } catch (error) {
             console.error("Erreur lors de la préparation de l'envoi:", error);
-            addNotification("Erreur technique", 'error', {
-                message: "Vos données sont sauvegardées · Veuillez réessayer",
+            addNotification("Erreur d'envoi", 'error', {
+                message: "Une erreur est survenue lors de la préparation. Veuillez réessayer.",
                 action: {
                     label: 'Réessayer',
                     onClick: () => {
@@ -536,29 +525,6 @@ const ChapterHubView: React.FC = () => {
     const lessonTotalNodes = lessonCompletion.total;
     const lessonCompletedNodes = lessonCompletion.completed;
 
-    // Texte de progression pédagogique pour la leçon
-    const getLessonProgressText = () => {
-        if (!hasLesson || lessonTotalNodes === 0) return undefined;
-        
-        if (lessonReadPercentage === 100) {
-            return 'Cours maîtrisé';
-        } else if (lessonCompletedNodes === 0) {
-            return `${lessonTotalNodes} paragraphes`;
-        } else if (lessonCompletedNodes === 1) {
-            const remaining = lessonTotalNodes - 1;
-            return `1 lu · ${remaining} restant${remaining > 1 ? 's' : ''}`;
-        } else {
-            const remaining = lessonTotalNodes - lessonCompletedNodes;
-            if (remaining === 1) {
-                return `${lessonCompletedNodes} lus · Dernier !`;
-            } else if (remaining <= 3) {
-                return `${lessonCompletedNodes} lus · Presque fini`;
-            } else {
-                return `${lessonCompletedNodes} lus · ${remaining} restants`;
-            }
-        }
-    };
-
     const steps: LearningStepProps[] = [
         // NOUVELLE ÉTAPE : Leçon (en premier)
         {
@@ -571,7 +537,9 @@ const ChapterHubView: React.FC = () => {
                 ? (lessonReadPercentage === 100 ? 'completed' : lessonReadPercentage > 0 ? 'in-progress' : 'todo') as StepStatus
                 : 'locked' as StepStatus,
             progressPercent: hasLesson ? lessonReadPercentage : undefined,
-            progressInfo: getLessonProgressText(),
+            progressInfo: hasLesson && lessonTotalNodes > 0
+                ? `${lessonCompletedNodes} ${lessonCompletedNodes === 1 ? 'paragraphe lu' : 'paragraphes lus'} sur ${lessonTotalNodes}`
+                : undefined,
             onClick: hasLesson ? handleStartLesson : () => {},
             disabled: !hasLesson,
             buttonText: hasLesson

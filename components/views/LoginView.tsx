@@ -111,10 +111,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ name, setName, classId, setClassI
                     onChange={(e) => setClassId(e.target.value)}
                     className="w-full appearance-none rounded-2xl border border-slate-200 bg-white px-12 py-3 text-base text-slate-900 shadow-sm transition-all duration-200 focus:border-slate-900/30 focus:outline-none focus:ring-2 focus:ring-slate-900/10"
                     required
-                    style={{ fontFamily: "'Roboto Slab', 'Roboto', serif" }}
+                    style={{ fontFamily: "'Manrope', 'Segoe UI', sans-serif" }}
                 >
                     {CLASS_OPTIONS.map(option => (
-                        <option key={option.value} value={option.value} style={{ fontFamily: "'Roboto Slab', 'Roboto', serif" }}>
+                        <option key={option.value} value={option.value}>
                             {option.label}
                         </option>
                     ))}

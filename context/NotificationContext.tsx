@@ -23,109 +23,10 @@ const MAX_VISIBLE_NOTIFICATIONS = 3; // Limite de notifications visibles
 const MAX_QUEUE_SIZE = 10; // Limite de la file d'attente
 const DUPLICATE_WINDOW_MS = 3000; // Fenêtre de détection de doublons
 const AUTO_CLEANUP_INTERVAL = 60000; // Nettoyage toutes les minutes
-const DURATION_REDUCTION_FACTOR = 0.7; // Réduction de 30 %
-const MIN_DURATION_MS = 1200; // Garder une durée minimale lisible
 
 // Fonction pour générer un hash de notification (pour détecter les doublons)
 const generateNotificationHash = (title: string, message: string): string => {
     return `${title}:${message}`.toLowerCase().trim();
-};
-
-const containsMathExpressions = (text: string): boolean => /\$\$([\s\S]+?)\$\$|\$([^$]+?)\$/.test(text);
-
-const mathCompilationCache = new Map<string, string>();
-
-const compileMathMessage = async (message: string): Promise<string> => {
-    if (typeof window === 'undefined') {
-        return message;
-    }
-
-    if (!containsMathExpressions(message)) {
-        return message;
-    }
-
-    const cached = mathCompilationCache.get(message);
-    if (cached) {
-        return cached;
-    }
-
-    let mathJax = window.MathJax;
-    if (!mathJax) {
-        await new Promise<void>((resolve) => {
-            const start = performance.now();
-            const attempt = () => {
-                mathJax = window.MathJax;
-                if (mathJax || performance.now() - start > 1200) {
-                    resolve();
-                } else {
-                    setTimeout(attempt, 25);
-                }
-            };
-            attempt();
-        });
-    }
-
-    if (!mathJax) {
-        return message;
-    }
-
-    try {
-        if (mathJax.startup?.promise) {
-            await mathJax.startup.promise;
-        }
-
-        const adaptor = mathJax.startup?.adaptor;
-        const tex2chtmlPromise = mathJax.tex2chtmlPromise;
-        const tex2chtml = mathJax.tex2chtml;
-
-        if (!adaptor || (!tex2chtmlPromise && !tex2chtml)) {
-            return message;
-        }
-
-        const mathRegex = /\$\$([\s\S]+?)\$\$|\$([^$]+?)\$/g;
-        let result = '';
-        let lastIndex = 0;
-        const matches = [...message.matchAll(mathRegex)];
-
-        if (matches.length === 0) {
-            mathCompilationCache.set(message, message);
-            return message;
-        }
-
-        for (const match of matches) {
-            const index = match.index ?? 0;
-            result += message.slice(lastIndex, index);
-
-            const rawMath = (match[1] ?? match[2] ?? '').trim();
-            const display = Boolean(match[1]);
-
-            if (!rawMath) {
-                result += match[0];
-                lastIndex = index + match[0].length;
-                continue;
-            }
-
-            try {
-                mathJax.texReset?.();
-                const node = tex2chtml
-                    ? tex2chtml(rawMath, { display })
-                    : await tex2chtmlPromise!(rawMath, { display });
-                result += adaptor.outerHTML(node);
-            } catch (compileError) {
-                console.warn('[NotificationContext] MathJax compile error:', compileError);
-                result += match[0];
-            }
-
-            lastIndex = index + match[0].length;
-        }
-
-        result += message.slice(lastIndex);
-        mathCompilationCache.set(message, result);
-        return result;
-    } catch (error) {
-        console.warn('[NotificationContext] Unable to prepare math message:', error);
-        return message;
-    }
 };
 
 export const NotificationProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
@@ -220,40 +121,6 @@ export const NotificationProvider: React.FC<{ children: ReactNode }> = ({ childr
         recentHashesRef.current.clear();
     }, []);
 
-    const scheduleNotificationDisplay = useCallback((notification: ToastNotification, hasMath: boolean) => {
-            const baseDuration = notification.duration ?? 5000;
-            const targetDuration = hasMath ? Math.max(baseDuration, 6000) : baseDuration;
-            const effectiveDuration = Math.max(
-                MIN_DURATION_MS,
-                Math.round(targetDuration * DURATION_REDUCTION_FACTOR)
-            );
-        const notificationWithDuration: ToastNotification = {
-            ...notification,
-            duration: effectiveDuration,
-        };
-
-        setNotifications(prev => {
-            if (prev.length < MAX_VISIBLE_NOTIFICATIONS) {
-                const timer = setTimeout(() => {
-                    removeNotification(notificationWithDuration.id);
-                }, effectiveDuration);
-
-                timersRef.current.set(notificationWithDuration.id, timer);
-                return [notificationWithDuration, ...prev];
-            }
-
-            setQueue(currentQueue => {
-                if (currentQueue.length >= MAX_QUEUE_SIZE) {
-                    console.warn("File d'attente de notifications pleine");
-                    return currentQueue;
-                }
-                return [...currentQueue, notificationWithDuration];
-            });
-
-            return prev;
-        });
-    }, [removeNotification]);
-
     // Core function used internally by wrappers
     const coreAddNotification = useCallback(
         (notification: Omit<ToastNotification, 'id'>) => {
@@ -275,40 +142,45 @@ export const NotificationProvider: React.FC<{ children: ReactNode }> = ({ childr
                 return;
             }
 
-            // Enregistrer le hash dès maintenant pour éviter les doublons pendant la compilation
+            // Enregistrer le hash
             recentHashesRef.current.set(hash, now);
 
             const id = uuidv4();
-            const hasMath = containsMathExpressions(message);
-
-            const baseNotification: ToastNotification = {
+            const duration = notification.duration || 5000;
+            const newNotification: ToastNotification = {
                 id,
                 title: notification.title,
-                message,
+                message: notification.message || '',
                 type: notification.type || 'info',
                 action: notification.action,
-                duration: notification.duration,
+                duration,
             };
 
-            const finalize = (preparedMessage: string) => {
-                scheduleNotificationDisplay(
-                    { ...baseNotification, message: preparedMessage },
-                    hasMath
-                );
-            };
+            // Ajouter à la file d'attente ou afficher directement
+            setNotifications(prev => {
+                if (prev.length < MAX_VISIBLE_NOTIFICATIONS) {
+                    // Afficher directement
+                    const timer = setTimeout(() => {
+                        removeNotification(id);
+                    }, duration);
 
-            if (hasMath) {
-                compileMathMessage(message)
-                    .then(finalize)
-                    .catch(error => {
-                        console.warn('[NotificationContext] Fallback vers message brut (MathJax indisponible):', error);
-                        finalize(message);
+                    timersRef.current.set(id, timer);
+                    return [newNotification, ...prev];
+                } else {
+                    // Ajouter à la file d'attente
+                    setQueue(currentQueue => {
+                        // Limite de la file d'attente
+                        if (currentQueue.length >= MAX_QUEUE_SIZE) {
+                            console.warn("File d'attente de notifications pleine");
+                            return currentQueue;
+                        }
+                        return [...currentQueue, newNotification];
                     });
-            } else {
-                finalize(message);
-            }
+                    return prev;
+                }
+            });
         },
-        [scheduleNotificationDisplay]
+        [removeNotification]
     );
 
     // Backwards-compatible wrapper keeping original signature
@@ -325,12 +197,7 @@ export const NotificationProvider: React.FC<{ children: ReactNode }> = ({ childr
     const addMotivationalNotification = useCallback((studentName: string, message?: string) => {
         const title = `Bravo ${studentName} !`;
         const msg = message || "Continue comme ça — petit objectif atteint 🎯";
-        
-        // Durée adaptative : plus longue si la notification contient des formules mathématiques
-        const containsMath = /\$[^$]+\$/.test(msg);
-        const duration = containsMath ? 7000 : 6000;
-        
-        coreAddNotification({ title, message: msg, type: 'success', duration });
+        coreAddNotification({ title, message: msg, type: 'success', duration: 6000 });
     }, [coreAddNotification]);
 
     const addTargetedNotification = useCallback((targetId: string, title: string, options: Partial<Omit<ToastNotification, 'id' | 'title'>> = {}) => {

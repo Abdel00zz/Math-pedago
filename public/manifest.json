@@ -151,7 +151,7 @@
     {
       "id": "1bsm-generalites-sur-les-fonctions",
       "file": "1bsm/1bsm_generalites_sur_les_fonctions.json",
-      "isActive": false,
+      "isActive": true,
       "version": "v1.1.0-501665"
     },
     {
