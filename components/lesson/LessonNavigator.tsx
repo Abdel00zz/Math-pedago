@@ -24,6 +24,7 @@ export const LessonNavigator: React.FC = () => {
         setActiveSubsectionId,
         scrollToAnchor,
         markAllNodesUpTo,
+        markNode,
     } = useLessonProgress();
     const { addNotification } = useNotification();
 
@@ -32,10 +33,6 @@ export const LessonNavigator: React.FC = () => {
     const sectionRefs = useRef<Map<string, HTMLButtonElement>>(new Map());
     const subsectionRefs = useRef<Map<string, HTMLButtonElement>>(new Map());
     const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-    // États pour le double-clic
-    const doubleClickTimerRef = useRef<NodeJS.Timeout | null>(null);
-    const lastClickTimeRef = useRef<number>(0);
-    const lastClickTargetRef = useRef<string | null>(null);
     const [isCollapsed, setIsCollapsed] = useState(false);
 
     const toggleNavigator = useCallback(() => {
@@ -73,36 +70,6 @@ export const LessonNavigator: React.FC = () => {
         setActiveSubsectionId(subsectionId);
         scrollToAnchor(subsectionAnchor, { offset: 96 });
     };
-
-    const handleSubsectionDoubleClick = useCallback((subsectionId: string, subsectionTitle: string, paragraphNodeIds: string[]) => {
-        const now = Date.now();
-        const timeDiff = now - lastClickTimeRef.current;
-        
-        if (timeDiff < 500 && lastClickTargetRef.current === subsectionId) {
-            // Double-clic détecté
-            const lastParagraphOfSubsection = paragraphNodeIds[paragraphNodeIds.length - 1];
-            
-            if (lastParagraphOfSubsection) {
-                // Valider tous les paragraphes jusqu'à celui-ci (inclus)
-                markAllNodesUpTo(lastParagraphOfSubsection);
-                
-                addNotification('Progression sauvegardée', 'info', {
-                    message: `Paragraphes marqués jusqu'à "${subsectionTitle}".`,
-                    duration: 2000,
-                });
-            }
-            
-            // Reset pour éviter les clics multiples
-            lastClickTimeRef.current = 0;
-            lastClickTargetRef.current = null;
-        } else {
-            // Premier clic ou clic sur un autre élément
-            lastClickTimeRef.current = now;
-            lastClickTargetRef.current = subsectionId;
-        }
-    }, [markAllNodesUpTo, addNotification]);
-
-
 
     const ensureTargetVisible = useCallback((target: HTMLElement | null | undefined) => {
         const container = scrollContainerRef.current ?? panelRef.current;
@@ -260,6 +227,30 @@ export const LessonNavigator: React.FC = () => {
                                             subsectionProgress.total > 0 && subsectionProgress.completed === subsectionProgress.total;
                                         const subsectionActive = activeSubsectionId === subsection.id;
 
+                                        const handleCheckboxToggle = (e: React.MouseEvent) => {
+                                            e.stopPropagation();
+
+                                            // Si déjà complète, on décoche tout
+                                            if (subsectionComplete) {
+                                                subsection.paragraphNodeIds.forEach((nodeId) => {
+                                                    markNode(nodeId, false);
+                                                });
+                                                addNotification('Progression mise à jour', 'info', {
+                                                    message: `Section "${subsection.title}" décochée.`,
+                                                    duration: 2000,
+                                                });
+                                            } else {
+                                                // Sinon, on coche tout
+                                                subsection.paragraphNodeIds.forEach((nodeId) => {
+                                                    markNode(nodeId, true);
+                                                });
+                                                addNotification('Progression sauvegardée', 'success', {
+                                                    message: `Section "${subsection.title}" validée !`,
+                                                    duration: 2000,
+                                                });
+                                            }
+                                        };
+
                                         return (
                                             <li
                                                 key={subsection.id}
@@ -267,21 +258,44 @@ export const LessonNavigator: React.FC = () => {
                                                     subsectionComplete ? ' is-complete' : ''
                                                 }`}
                                             >
-                                                <button
-                                                    type="button"
-                                                    onClick={() => {
-                                                        handleSubsectionClick(section.id, subsection.anchor, subsection.id);
-                                                        handleSubsectionDoubleClick(subsection.id, subsection.title, subsection.paragraphNodeIds);
-                                                    }}
-                                                    className="lesson-navigator__subsection-trigger"
-                                                    ref={registerSubsectionRef(subsection.id)}
-                                                    title="Double-cliquer pour valider tous les paragraphes jusqu'ici"
-                                                >
-                                                    <span className="lesson-navigator__subsection-index">{subsectionIndex + 1}</span>
-                                                    <MathTitle className="lesson-navigator__subsection-title">
-                                                        {subsection.title}
-                                                    </MathTitle>
-                                                </button>
+                                                <div className="lesson-navigator__subsection-wrapper">
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => handleSubsectionClick(section.id, subsection.anchor, subsection.id)}
+                                                        className="lesson-navigator__subsection-trigger"
+                                                        ref={registerSubsectionRef(subsection.id)}
+                                                        title="Cliquer pour naviguer vers cette section"
+                                                    >
+                                                        <span className="lesson-navigator__subsection-index">{subsectionIndex + 1}</span>
+                                                        <MathTitle className="lesson-navigator__subsection-title">
+                                                            {subsection.title}
+                                                        </MathTitle>
+                                                    </button>
+
+                                                    <button
+                                                        type="button"
+                                                        onClick={handleCheckboxToggle}
+                                                        className={`lesson-navigator__subsection-checkbox${subsectionComplete ? ' is-checked' : ''}`}
+                                                        title={subsectionComplete ? 'Marquer comme non lu' : 'Marquer comme lu'}
+                                                        aria-label={subsectionComplete ? 'Marquer comme non lu' : 'Marquer comme lu'}
+                                                        aria-checked={subsectionComplete}
+                                                        role="checkbox"
+                                                    >
+                                                        {subsectionComplete && (
+                                                            <svg
+                                                                viewBox="0 0 24 24"
+                                                                fill="none"
+                                                                stroke="currentColor"
+                                                                strokeWidth="3"
+                                                                strokeLinecap="round"
+                                                                strokeLinejoin="round"
+                                                                className="lesson-navigator__checkbox-icon"
+                                                            >
+                                                                <path d="M18 6L6 18M6 6l12 12" />
+                                                            </svg>
+                                                        )}
+                                                    </button>
+                                                </div>
                                             </li>
                                         );
                                     })}

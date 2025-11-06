@@ -356,6 +356,13 @@
   gap: 0;
 }
 
+.lesson-navigator__subsection-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
 .lesson-navigator__subsection-trigger {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -371,6 +378,8 @@
   font-weight: 400;
   border-radius: 6px;
   transition: background-color 0.2s ease, color 0.2s ease;
+  flex: 1;
+  min-width: 0;
 }
 
 .lesson-navigator__subsection-trigger:hover {
@@ -439,6 +448,63 @@
 
 .lesson-navigator__subsection-score {
   display: none;
+}
+
+/* Checkbox élégante pour validation des subsections */
+.lesson-navigator__subsection-checkbox {
+  flex-shrink: 0;
+  width: 1.35rem;
+  height: 1.35rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(148, 163, 184, 0.4);
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.lesson-navigator__subsection-checkbox:hover {
+  border-color: var(--accent-primary);
+  background: rgba(79, 70, 229, 0.05);
+  transform: scale(1.08);
+}
+
+.lesson-navigator__subsection-checkbox:active {
+  transform: scale(0.95);
+}
+
+.lesson-navigator__subsection-checkbox.is-checked {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+}
+
+.lesson-navigator__subsection-checkbox.is-checked:hover {
+  background: var(--accent-secondary);
+  border-color: var(--accent-secondary);
+  box-shadow: 0 6px 16px rgba(79, 70, 229, 0.35);
+}
+
+.lesson-navigator__checkbox-icon {
+  width: 0.85rem;
+  height: 0.85rem;
+  color: white;
+  animation: checkboxAppear 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes checkboxAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.3) rotate(-15deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
 }
 
 /* Lesson Paragraph Long Press */
@@ -534,6 +600,17 @@
     min-width: 1.2rem;
     height: 1.2rem;
     font-size: 0.6rem;
+  }
+
+  .lesson-navigator__subsection-checkbox {
+    width: 1.25rem;
+    height: 1.25rem;
+    border-width: 1.5px;
+  }
+
+  .lesson-navigator__checkbox-icon {
+    width: 0.75rem;
+    height: 0.75rem;
   }
 
   .lesson-navigator__section-title {
