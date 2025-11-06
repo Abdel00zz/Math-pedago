@@ -39,7 +39,6 @@ const MathContentWrapper: React.FC<{ children: React.ReactNode; inline?: boolean
         const el = containerRef.current;
         if (!el) return;
 
-        // Attendre que MathJax soit disponible et traiter les formules
         const typeset = async () => {
             if (!window.MathJax || !containerRef.current) return;
 
@@ -48,12 +47,19 @@ const MathContentWrapper: React.FC<{ children: React.ReactNode; inline?: boolean
                     await window.MathJax.startup.promise;
                 }
 
+                const container = containerRef.current;
+                if (!container) return;
+
                 if (window.MathJax.typesetClear) {
-                    window.MathJax.typesetClear([containerRef.current]);
+                    try {
+                        window.MathJax.typesetClear([container]);
+                    } catch (e) {
+                        // Silently ignore if node doesn't exist
+                    }
                 }
 
                 if (window.MathJax.typesetPromise) {
-                    await window.MathJax.typesetPromise([containerRef.current]);
+                    await window.MathJax.typesetPromise([container]);
                 }
             } catch (error) {
                 console.error('MathJax rendering error:', error);
@@ -85,24 +91,26 @@ const MathContentWrapper: React.FC<{ children: React.ReactNode; inline?: boolean
 const Blank: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const { showAnswers } = useLessonContext();
     const [isRevealed, setIsRevealed] = React.useState(false);
+    const [renderKey, setRenderKey] = React.useState(0);
 
     const shouldShow = showAnswers || isRevealed;
 
     const handleClick = () => {
-        setIsRevealed(!isRevealed);
+        if (isRevealed) {
+            setIsRevealed(false);
+            setRenderKey(prev => prev + 1);
+        } else {
+            setIsRevealed(true);
+        }
     };
 
     if (shouldShow) {
         return (
-            <span 
-                className="inline-flex items-center px-2 py-0.5 rounded bg-primary-light border border-primary-dark/20 text-primary-dark font-medium transition-all duration-300 cursor-pointer hover:shadow-sm hover:scale-105"
-                onClick={handleClick}
-                title="Cliquez pour masquer"
-                role="button"
-                tabIndex={0}
-            >
-                {children}
-            </span>
+            <MathContent
+                key={`revealed-${renderKey}`}
+                content={typeof children === 'string' ? children : String(children)}
+                inline={true}
+            />
         );
     }
 
@@ -123,7 +131,6 @@ const Blank: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         >
             <span className="sr-only">Cliquer pour révéler la réponse suggérée</span>
 
-            {/* Etiquette pédagogique - très proche des pointillés */}
             <span
                 aria-hidden="true"
                 className="pointer-events-none absolute -top-1 left-1/2 -translate-x-1/2 whitespace-nowrap text-center text-[0.6rem] font-semibold uppercase tracking-[0.22em] text-primary-dark/60 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
@@ -131,10 +138,8 @@ const Blank: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 À TON TOUR
             </span>
 
-            {/* Contenu invisible pour dimensionner */}
             <span className="opacity-0 select-none pointer-events-none">{children}</span>
 
-            {/* Trait pointillé élégant - plus petit et compact */}
             <span
                 aria-hidden="true"
                 className="absolute inset-x-2 bottom-0.5 h-[3px] rounded-full transition-transform duration-300 ease-out group-hover:scale-x-110"
@@ -174,7 +179,7 @@ const parseLine = (line: string): React.ReactNode => {
         if (boldContent !== undefined) {
             result.push(<strong key={matchIndex}>{parseLine(boldContent)}</strong>);
         } else if (blankContent !== undefined) {
-            result.push(<Blank key={matchIndex}>{parseLine(blankContent)}</Blank>);
+            result.push(<Blank key={matchIndex}>{blankContent}</Blank>);
         }
 
         lastIndex = matchIndex + fullMatch.length;

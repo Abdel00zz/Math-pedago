@@ -28,7 +28,15 @@ const MathContentWrapper: React.FC<{ children: React.ReactNode; inline?: boolean
                 }
 
                 if (window.MathJax.typesetClear) {
-                    window.MathJax.typesetClear([containerRef.current]);
+                    try {
+                        if (containerRef.current?.querySelector('mjx-container')) {
+                            window.MathJax.typesetClear([containerRef.current]);
+                        }
+                    } catch (error) {
+                        if ((error as DOMException)?.name !== 'NotFoundError') {
+                            console.error('MathJax typesetClear error:', error);
+                        }
+                    }
                 }
 
                 if (window.MathJax.typesetPromise) {
@@ -168,16 +176,15 @@ export const ContentWithImage: React.FC<{
 // COMPOSANT BLANK (Texte à trous avec révélation individuelle)
 // ============================================================================
 
-const Blank: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const Blank: React.FC<{ content: string }> = ({ content }) => {
     const { showAnswers } = useLessonContext();
     const [isRevealed, setIsRevealed] = React.useState(false);
 
-    // Si le contexte global indique d'afficher toutes les réponses, ou si cette réponse a été révélée
     const shouldShow = showAnswers || isRevealed;
 
     const handleClick = () => {
         if (!showAnswers) {
-            setIsRevealed(!isRevealed);
+            setIsRevealed(prev => !prev);
         }
     };
 
@@ -185,15 +192,20 @@ const Blank: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         ? 'blank relative inline-flex min-w-[32px] select-none items-center justify-center rounded-md bg-indigo-50 px-2 pb-1 font-semibold text-indigo-700 transition-all duration-300 cursor-pointer hover:bg-indigo-100'
         : 'blank relative inline-flex min-w-[32px] select-none items-center justify-center px-2 pb-1 text-slate-600 transition-all duration-300 cursor-pointer hover:bg-blue-50 active:scale-95';
 
-    const answerClasses = shouldShow 
-        ? 'relative z-10 opacity-100 transition-opacity duration-300' 
-        : 'relative z-10 opacity-0 transition-opacity duration-300';
+    const renderAnswer = (hidden: boolean = false) => (
+        <span
+            className={`relative z-10 inline-flex items-center whitespace-nowrap transition-opacity duration-300 ${hidden ? 'pointer-events-none select-none opacity-0' : 'opacity-100'}`}
+            aria-hidden={hidden || undefined}
+        >
+            <MathContent content={content} inline className="blank__answer inline-flex items-center text-[0.95em]" />
+        </span>
+    );
 
     return (
         <span 
             className={containerClasses}
             onClick={handleClick}
-            title={shouldShow ? (showAnswers ? "Réponse affichée" : "Cliquez pour masquer") : "👁️ Cliquez pour révéler la réponse"}
+            title={shouldShow ? (showAnswers ? 'Réponse affichée' : 'Cliquez pour masquer') : '👁️ Cliquez pour révéler la réponse'}
             role="button"
             tabIndex={0}
             onKeyPress={(e) => {
@@ -202,7 +214,7 @@ const Blank: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 }
             }}
         >
-            <span className={answerClasses}>{children}</span>
+            {renderAnswer()}
             {!shouldShow && (
                 <>
                     {/* Ligne pointillée */}
@@ -255,7 +267,7 @@ const parseLine = (line: string): React.ReactNode => {
         if (boldContent !== undefined) {
             result.push(<strong key={matchIndex}>{parseLine(boldContent)}</strong>);
         } else if (blankContent !== undefined) {
-            result.push(<Blank key={matchIndex}>{parseLine(blankContent)}</Blank>);
+            result.push(<Blank key={matchIndex} content={blankContent} />);
         }
 
         lastIndex = matchIndex + fullMatch.length;

@@ -8,9 +8,10 @@ interface ModalProps {
     children: ReactNode;
     className?: string;
     hideHeaderBorder?: boolean;
+    titleClassName?: string;
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, className, hideHeaderBorder = false }) => {
+const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, className, hideHeaderBorder = false, titleClassName }) => {
     useEffect(() => {
         const handleEsc = (event: KeyboardEvent) => {
             if (event.key === 'Escape') {
@@ -44,7 +45,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, classNa
                 onClick={e => e.stopPropagation()}
             >
                 <div className={`modal-header ${hideHeaderBorder ? '' : 'modal-header--border'}`}>
-                    <h2 id="modal-title" className="modal-title">{title}</h2>
+                    <h2 id="modal-title" className={titleClassName || 'modal-title'}>{title}</h2>
                     <button
                         onClick={onClose}
                         className="modal-close"

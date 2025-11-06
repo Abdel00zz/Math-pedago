@@ -29,42 +29,54 @@ interface LessonElementProps {
 // ============================================================================
 
 const BOX_CONFIG = {
-    'definition-box': {
-        label: 'Définition',
-        accent: '#0056D2',
-        accentSoft: 'rgba(0, 86, 210, 0.08)',
-        accentStrong: 'rgba(0, 86, 210, 0.18)',
-    },
-    'theorem-box': {
-        label: 'Théorème',
-        accent: '#1B873F',
-        accentSoft: 'rgba(27, 135, 63, 0.08)',
-        accentStrong: 'rgba(27, 135, 63, 0.18)',
-    },
-    'proposition-box': {
-        label: 'Proposition',
-        accent: '#0E8688',
-        accentSoft: 'rgba(14, 134, 136, 0.08)',
-        accentStrong: 'rgba(14, 134, 136, 0.18)',
-    },
-    'property-box': {
-        label: 'Propriété',
-        accent: '#5C3BFF',
-        accentSoft: 'rgba(92, 59, 255, 0.10)',
-        accentStrong: 'rgba(92, 59, 255, 0.22)',
-    },
-    'remark-box': {
-        label: 'Remarque',
-        accent: '#8B5CF6',
-        accentSoft: 'rgba(139, 92, 246, 0.10)',
-        accentStrong: 'rgba(139, 92, 246, 0.22)',
-    },
-    'example-box': {
-        label: 'Exemple',
-        accent: '#E96D2F',
-        accentSoft: 'rgba(233, 109, 47, 0.10)',
-        accentStrong: 'rgba(233, 109, 47, 0.22)',
-    },
+        'definition-box': {
+            label: 'Définition',
+            accent: '#0056D2',
+            accentSoft: 'rgba(0, 86, 210, 0.08)',
+            accentStrong: 'rgba(0, 86, 210, 0.18)',
+        },
+        'theorem-box': {
+            label: 'Théorème',
+            accent: '#1B873F',
+            accentSoft: 'rgba(27, 135, 63, 0.08)',
+            accentStrong: 'rgba(27, 135, 63, 0.18)',
+        },
+        'proposition-box': {
+            label: 'Proposition',
+            accent: '#0E8688',
+            accentSoft: 'rgba(14, 134, 136, 0.08)',
+            accentStrong: 'rgba(14, 134, 136, 0.18)',
+        },
+        'property-box': {
+            label: 'Propriété',
+            accent: '#5C3BFF',
+            accentSoft: 'rgba(92, 59, 255, 0.10)',
+            accentStrong: 'rgba(92, 59, 255, 0.22)',
+        },
+        'remark-box': {
+            label: 'Remarque',
+            accent: '#8B5CF6',
+            accentSoft: 'rgba(139, 92, 246, 0.10)',
+            accentStrong: 'rgba(139, 92, 246, 0.22)',
+        },
+        'example-box': {
+            label: 'Exemple',
+            accent: '#E96D2F',
+            accentSoft: 'rgba(233, 109, 47, 0.10)',
+            accentStrong: 'rgba(233, 109, 47, 0.22)',
+        },
+        'explain-box': {
+            label: 'Analyse',
+            accent: '#0891B2',
+            accentSoft: 'rgba(8, 145, 178, 0.08)',
+            accentStrong: 'rgba(8, 145, 178, 0.18)',
+        },
+        'practice-box': {
+            label: 'Exercice',
+            accent: '#2563EB',
+            accentSoft: 'rgba(37, 99, 235, 0.08)',
+            accentStrong: 'rgba(37, 99, 235, 0.18)',
+        },
 } as const;
 
 const INTERACTIVE_CONFIG = {
@@ -360,3 +372,4 @@ export const LessonElement: React.FC<LessonElementProps> = ({ element, path, sho
             return null;
     }
 };
+

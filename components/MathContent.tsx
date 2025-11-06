@@ -138,8 +138,16 @@ const MathContent: React.FC<MathContentProps> = ({ content, className = '', inli
 
                 // Nettoyer les rendus précédents si disponible
                 if (window.MathJax.typesetClear) {
-                    window.MathJax.typesetClear([containerRef.current]);
-                    logDebug('Previous MathJax render cleared');
+                    try {
+                        if (containerRef.current?.querySelector('mjx-container')) {
+                            window.MathJax.typesetClear([containerRef.current]);
+                            logDebug('Previous MathJax render cleared');
+                        }
+                    } catch (clearError) {
+                        if ((clearError as DOMException)?.name !== 'NotFoundError') {
+                            console.error('MathJax typesetClear error:', clearError);
+                        }
+                    }
                 }
 
                 // Rendre les nouvelles formules
