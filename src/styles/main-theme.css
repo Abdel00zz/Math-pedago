@@ -1,9 +1,6 @@
 /* Main Theme File - Imports all modular CSS files */
 /* PERFORMANCE OPTIMIZED - NO TRANSITIONS ON CRITICAL ELEMENTS */
 
-/* Core Styles */
-@import './typography.css';
-
 /* Component Styles */
 @import './dashboard.css';
 @import './chapter-hub.css';
