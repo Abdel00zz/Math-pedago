@@ -25,6 +25,8 @@ export const LessonNavigator: React.FC = () => {
         scrollToAnchor,
         markAllNodesUpTo,
         markNode,
+        isNodeCompleted,
+        toggleNode,
     } = useLessonProgress();
     const { addNotification } = useNotification();
 
@@ -296,6 +298,57 @@ export const LessonNavigator: React.FC = () => {
                                                         )}
                                                     </button>
                                                 </div>
+
+                                                {/* Liste des paragraphes individuels */}
+                                                {subsection.paragraphNodeIds.length > 0 && (
+                                                    <ul className="lesson-navigator__paragraphs">
+                                                        {subsection.paragraphNodeIds.map((nodeId, paragraphIndex) => {
+                                                            const isParagraphComplete = isNodeCompleted(nodeId);
+
+                                                            const handleParagraphCheckbox = (e: React.MouseEvent) => {
+                                                                e.stopPropagation();
+                                                                toggleNode(nodeId);
+                                                            };
+
+                                                            return (
+                                                                <li
+                                                                    key={nodeId}
+                                                                    className={`lesson-navigator__paragraph${isParagraphComplete ? ' is-complete' : ''}`}
+                                                                >
+                                                                    <div className="lesson-navigator__paragraph-wrapper">
+                                                                        <span className="lesson-navigator__paragraph-number">
+                                                                            P{paragraphIndex + 1}
+                                                                        </span>
+
+                                                                        <button
+                                                                            type="button"
+                                                                            onClick={handleParagraphCheckbox}
+                                                                            className={`lesson-navigator__paragraph-checkbox${isParagraphComplete ? ' is-checked' : ''}`}
+                                                                            title={isParagraphComplete ? 'Marquer comme non lu' : 'Marquer comme lu'}
+                                                                            aria-label={`Paragraphe ${paragraphIndex + 1}: ${isParagraphComplete ? 'Lu' : 'Non lu'}`}
+                                                                            aria-checked={isParagraphComplete}
+                                                                            role="checkbox"
+                                                                        >
+                                                                            {isParagraphComplete && (
+                                                                                <svg
+                                                                                    viewBox="0 0 24 24"
+                                                                                    fill="none"
+                                                                                    stroke="currentColor"
+                                                                                    strokeWidth="3"
+                                                                                    strokeLinecap="round"
+                                                                                    strokeLinejoin="round"
+                                                                                    className="lesson-navigator__checkbox-icon"
+                                                                                >
+                                                                                    <path d="M5 12l5 5L20 7" />
+                                                                                </svg>
+                                                                            )}
+                                                                        </button>
+                                                                    </div>
+                                                                </li>
+                                                            );
+                                                        })}
+                                                    </ul>
+                                                )}
                                             </li>
                                         );
                                     })}
