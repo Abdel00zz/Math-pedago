@@ -356,6 +356,12 @@
   gap: 0;
 }
 
+.lesson-navigator__subsection-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
 .lesson-navigator__subsection-trigger {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -371,6 +377,36 @@
   font-weight: 400;
   border-radius: 6px;
   transition: background-color 0.2s ease, color 0.2s ease;
+  flex: 1;
+  min-width: 0;
+}
+
+.lesson-navigator__subsection-checkbox {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 4px;
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.lesson-navigator__subsection-checkbox:hover {
+  background-color: rgba(79, 70, 229, 0.08);
+  color: var(--accent-primary);
+}
+
+.lesson-navigator__subsection-checkbox.is-checked {
+  color: var(--accent-secondary);
+}
+
+.lesson-navigator__subsection-checkbox.is-checked:hover {
+  color: var(--accent-secondary);
+  opacity: 0.8;
 }
 
 .lesson-navigator__subsection-trigger:hover {

@@ -37,7 +37,7 @@ export const Notifications: React.FC = () => {
                             updated.delete(id);
                             return updated;
                         });
-                    }, 300);
+                    }, 400);
                 }
             });
 
@@ -48,12 +48,42 @@ export const Notifications: React.FC = () => {
     const portalRoot = document.body;
     if (!portalRoot) return null;
 
-    // Minimalist shadcn-inspired styles - subtle, clean, monochromatic
-    const typeInfo: { [key in ToastNotificationType]: { icon: string; iconColor: string } } = {
-        success: { icon: 'check_circle', iconColor: 'text-green-600' },
-        warning: { icon: 'warning', iconColor: 'text-amber-600' },
-        error: { icon: 'error', iconColor: 'text-red-600' },
-        info: { icon: 'info', iconColor: 'text-blue-600' },
+    // Style minimaliste et épuré
+    const typeInfo: { [key in ToastNotificationType]: { 
+        icon: string; 
+        bgColor: string;
+        borderColor: string;
+        textColor: string;
+        iconBg: string;
+    } } = {
+        success: { 
+            icon: 'check_circle', 
+            bgColor: 'bg-white',
+            borderColor: 'border-emerald-200',
+            textColor: 'text-emerald-700',
+            iconBg: 'bg-emerald-50'
+        },
+        warning: { 
+            icon: 'info', 
+            bgColor: 'bg-white',
+            borderColor: 'border-amber-200',
+            textColor: 'text-amber-700',
+            iconBg: 'bg-amber-50'
+        },
+        error: { 
+            icon: 'error_outline', 
+            bgColor: 'bg-white',
+            borderColor: 'border-rose-200',
+            textColor: 'text-rose-700',
+            iconBg: 'bg-rose-50'
+        },
+        info: { 
+            icon: 'info', 
+            bgColor: 'bg-white',
+            borderColor: 'border-blue-200',
+            textColor: 'text-blue-700',
+            iconBg: 'bg-blue-50'
+        },
     };
 
     // Filtrer les notifications à afficher (y compris celles qui partent)
@@ -67,7 +97,7 @@ export const Notifications: React.FC = () => {
 
     return ReactDOM.createPortal(
         <div
-            className="fixed bottom-5 right-5 sm:bottom-8 sm:right-8 z-[1000] flex flex-col-reverse gap-3 w-full max-w-sm pointer-events-none"
+            className="fixed top-6 left-1/2 -translate-x-1/2 z-[1000] flex flex-col gap-2 w-full max-w-lg px-4 pointer-events-none"
             role="region"
             aria-label="Notifications"
         >
@@ -99,57 +129,79 @@ export const Notifications: React.FC = () => {
                         aria-atomic="true"
                         onClick={isClickable ? handleActionClick : undefined}
                         className={`
-                            relative w-full p-4 rounded-lg
-                            flex items-start gap-3 overflow-hidden
-                            bg-white border border-slate-200
-                            shadow-sm pointer-events-auto
-                            transition-all duration-250 ease-out
-                            ${isClickable ? 'cursor-pointer hover:border-slate-300' : ''}
+                            relative w-full rounded-xl
+                            ${info.bgColor}
+                            border ${info.borderColor}
+                            shadow-md
+                            pointer-events-auto
+                            transition-all duration-300 ease-out
+                            ${isClickable ? 'cursor-pointer hover:shadow-lg' : ''}
                             ${isLeaving
-                                ? 'opacity-0 translate-x-full scale-95'
-                                : 'opacity-100 translate-x-0 scale-100 animate-slideInRight'
+                                ? 'opacity-0 -translate-y-4 scale-95'
+                                : 'opacity-100 translate-y-0 scale-100 animate-slideInFromTop'
                             }
                         `}
                         style={{
                             transitionProperty: 'opacity, transform',
                         }}
                     >
-                        <div className="flex-shrink-0 mt-0.5">
-                            <span className={`material-symbols-outlined !text-xl ${info.iconColor}`}>{info.icon}</span>
-                        </div>
+                        <div className="flex items-start gap-3 p-3.5">
+                            {/* Icône minimaliste */}
+                            <div className="flex-shrink-0">
+                                <div className={`w-9 h-9 rounded-lg ${info.iconBg} flex items-center justify-center`}>
+                                    <span className={`material-symbols-outlined !text-lg ${info.textColor}`}>
+                                        {info.icon}
+                                    </span>
+                                </div>
+                            </div>
 
-                        <div className="flex-grow min-w-0">
-                            {notif.title && (
-                                <h4 className="font-semibold text-slate-900 text-sm leading-tight break-words">
-                                    {notif.title}
-                                </h4>
-                            )}
-                            {notif.message && (
-                                <p
-                                    className="text-sm text-slate-600 mt-1 leading-relaxed break-words"
-                                    dangerouslySetInnerHTML={{ __html: notif.message }}
-                                />
-                            )}
-                        </div>
+                            <div className="flex-grow min-w-0 pt-0.5">
+                                {notif.title && (
+                                    <h4 className={`font-semibold text-sm leading-snug mb-0.5 ${info.textColor}`}>
+                                        {notif.title}
+                                    </h4>
+                                )}
+                                {notif.message && (
+                                    <div
+                                        id={notif.id}
+                                        className="text-xs text-gray-600 leading-relaxed"
+                                        dangerouslySetInnerHTML={{ __html: notif.message }}
+                                    />
+                                )}
+                                
+                                {notif.action && (
+                                    <button
+                                        onClick={handleActionClick}
+                                        className={`mt-2 px-3 py-1.5 text-xs font-medium rounded-md
+                                            ${info.textColor} ${info.iconBg}
+                                            hover:opacity-80
+                                            transition-opacity duration-200`}
+                                        aria-label={notif.action.label}
+                                    >
+                                        {notif.action.label}
+                                    </button>
+                                )}
+                            </div>
 
-                        <div className="flex-shrink-0 flex items-start gap-2">
-                            {notif.action && (
-                                <button
-                                    onClick={handleActionClick}
-                                    className="px-3 py-1.5 text-xs font-medium bg-slate-900 hover:bg-slate-800 text-white rounded-md transition-colors flex-shrink-0"
-                                    aria-label={notif.action.label}
-                                >
-                                    {notif.action.label}
-                                </button>
-                            )}
-
+                            {/* Bouton de fermeture minimaliste */}
                             <button
                                 onClick={handleDismiss}
-                                className="p-1 -mr-1 -mt-1 rounded-md hover:bg-slate-100 transition-colors flex-shrink-0 text-slate-400 hover:text-slate-600"
-                                aria-label="Fermer la notification"
+                                className="flex-shrink-0 w-7 h-7 rounded-md hover:bg-gray-100 transition-colors duration-200 flex items-center justify-center text-gray-400 hover:text-gray-600"
+                                aria-label="Fermer"
                             >
-                                <span className="material-symbols-outlined !text-lg">close</span>
+                                <span className="material-symbols-outlined !text-base">close</span>
                             </button>
+                        </div>
+
+                        {/* Barre de progression fine en bas */}
+                        <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gray-100 rounded-b-xl overflow-hidden">
+                            <div 
+                                className={`h-full ${info.iconBg}`}
+                                style={{
+                                    width: '100%',
+                                    animation: `shrink ${notif.duration || 3000}ms linear forwards`
+                                }}
+                            ></div>
                         </div>
                     </div>
                 );

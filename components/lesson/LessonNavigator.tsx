@@ -24,6 +24,9 @@ export const LessonNavigator: React.FC = () => {
         setActiveSubsectionId,
         scrollToAnchor,
         markAllNodesUpTo,
+        isNodeCompleted,
+        markNode,
+        allParagraphNodeIds,
     } = useLessonProgress();
     const { addNotification } = useNotification();
 
@@ -32,10 +35,6 @@ export const LessonNavigator: React.FC = () => {
     const sectionRefs = useRef<Map<string, HTMLButtonElement>>(new Map());
     const subsectionRefs = useRef<Map<string, HTMLButtonElement>>(new Map());
     const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-    // États pour le double-clic
-    const doubleClickTimerRef = useRef<NodeJS.Timeout | null>(null);
-    const lastClickTimeRef = useRef<number>(0);
-    const lastClickTargetRef = useRef<string | null>(null);
     const [isCollapsed, setIsCollapsed] = useState(false);
 
     const toggleNavigator = useCallback(() => {
@@ -74,33 +73,104 @@ export const LessonNavigator: React.FC = () => {
         scrollToAnchor(subsectionAnchor, { offset: 96 });
     };
 
-    const handleSubsectionDoubleClick = useCallback((subsectionId: string, subsectionTitle: string, paragraphNodeIds: string[]) => {
-        const now = Date.now();
-        const timeDiff = now - lastClickTimeRef.current;
+    const handleSubsectionCheckbox = useCallback((e: React.MouseEvent, subsectionId: string, subsectionTitle: string, paragraphNodeIds: string[]) => {
+        e.stopPropagation(); // Empêcher le clic de déclencher la navigation
         
-        if (timeDiff < 500 && lastClickTargetRef.current === subsectionId) {
-            // Double-clic détecté
-            const lastParagraphOfSubsection = paragraphNodeIds[paragraphNodeIds.length - 1];
-            
-            if (lastParagraphOfSubsection) {
-                // Valider tous les paragraphes jusqu'à celui-ci (inclus)
-                markAllNodesUpTo(lastParagraphOfSubsection);
+        if (paragraphNodeIds.length === 0) return;
+        
+        // Vérifier l'état actuel des paragraphes de cette sous-section
+        const completedCount = paragraphNodeIds.filter(nodeId => isNodeCompleted(nodeId)).length;
+        const totalParagraphs = paragraphNodeIds.length;
+        const allCompleted = completedCount === totalParagraphs;
+        
+        const subsectionTitleClean = subsectionTitle.replace(/<[^>]*>/g, '');
+        
+        // Debug temporaire - à supprimer en production
+        if (process.env.NODE_ENV === 'development') {
+            console.log('Debug handleSubsectionCheckbox:', {
+                subsectionTitle: subsectionTitleClean,
+                totalParagraphs,
+                completedCount,
+                allCompleted,
+                paragraphNodeIds: paragraphNodeIds.length
+            });
+        }
+        
+        // Utiliser setTimeout pour attendre que les changements soient appliqués avant d'afficher la notification
+        const showNotificationAfterUpdate = (modifiedCount: number, action: 'coché' | 'décoché') => {
+            setTimeout(() => {
+                // Recalculer la progression globale après les modifications
+                const globalProgress = getProgress(allParagraphNodeIds);
+                const progressText = globalProgress.total > 0 
+                    ? ` · Progression totale: ${globalProgress.percentage}%`
+                    : '';
                 
-                addNotification('Progression sauvegardée', 'info', {
-                    message: `Paragraphes marqués jusqu'à "${subsectionTitle}".`,
+                const actionText = action === 'coché' ? 'validé' : 'décoché';
+                
+                // Logique correcte : on coche/décoche UNE sous-section (= 1 paragraphe dans l'interface)
+                // Mais cette sous-section peut contenir plusieurs éléments HTML <p> (paragraphNodeIds)
+                const title = action === 'coché' ? 'Paragraphe validé' : 'Paragraphe décoché';
+                const type = action === 'coché' ? 'success' : 'info';
+                
+                // Message plus précis : on parle du paragraphe (sous-section) validé, pas des éléments HTML internes
+                // Exemple de test avec formules mathématiques pour certaines sections
+                let mathExample = '';
+                if (subsectionTitleClean.toLowerCase().includes('équation') || 
+                    subsectionTitleClean.toLowerCase().includes('calcul') ||
+                    subsectionTitleClean.toLowerCase().includes('formule')) {
+                    mathExample = ` · Ex: $E = mc^2$`;
+                } else if (subsectionTitleClean.toLowerCase().includes('géométrie') ||
+                          subsectionTitleClean.toLowerCase().includes('triangle')) {
+                    mathExample = ` · Ex: $a^2 + b^2 = c^2$`;
+                } else if (Math.random() < 0.3) { // 30% de chance pour tester
+                    mathExample = ` · Score: $\\frac{${globalProgress.completed}}{${globalProgress.total}}$`;
+                }
+                
+                // Durée plus longue pour les notifications avec formules mathématiques
+                const notificationDuration = mathExample ? 4500 : 2500;
+                
+                addNotification(title, type, {
+                    message: `<strong>${subsectionTitleClean}</strong> ${actionText}${progressText}${mathExample}`,
+                    duration: notificationDuration,
+                });
+            }, 100); // Délai plus long pour s'assurer de la synchronisation
+        };
+        
+        if (allCompleted) {
+            // Si tous sont complétés, les décocher tous (seulement ceux de cette sous-section)
+            paragraphNodeIds.forEach(nodeId => {
+                markNode(nodeId, false);
+            });
+            
+            // On décoche 1 paragraphe (= cette sous-section), peu importe le nombre d'éléments HTML qu'elle contient
+            showNotificationAfterUpdate(1, 'décoché');
+        } else {
+            // Cocher seulement les paragraphes de cette sous-section qui ne sont pas encore cochés
+            const uncompleted = paragraphNodeIds.filter(nodeId => !isNodeCompleted(nodeId));
+            
+            if (process.env.NODE_ENV === 'development') {
+                console.log('Éléments HTML non complétés à cocher:', uncompleted.length, 'sur', totalParagraphs, 'dans le paragraphe:', subsectionTitleClean);
+            }
+            
+            uncompleted.forEach(nodeId => {
+                markNode(nodeId, true);
+            });
+            
+            if (uncompleted.length > 0) {
+                // On coche 1 paragraphe (= cette sous-section), peu importe le nombre d'éléments HTML qu'elle contient
+                showNotificationAfterUpdate(1, 'coché');
+            } else {
+                // Tous étaient déjà cochés (cas rare mais possible)
+                // Test avec formule mathématique pour les sections déjà validées
+                const mathTest = Math.random() < 0.5 ? ` · Status: $\\checkmark$` : '';
+                
+                addNotification('Déjà validé', 'info', {
+                    message: `<strong>${subsectionTitleClean}</strong> · Paragraphe déjà validé${mathTest}`,
                     duration: 2000,
                 });
             }
-            
-            // Reset pour éviter les clics multiples
-            lastClickTimeRef.current = 0;
-            lastClickTargetRef.current = null;
-        } else {
-            // Premier clic ou clic sur un autre élément
-            lastClickTimeRef.current = now;
-            lastClickTargetRef.current = subsectionId;
         }
-    }, [markAllNodesUpTo, addNotification]);
+    }, [isNodeCompleted, markNode, addNotification, getProgress, allParagraphNodeIds]);
 
 
 
@@ -267,21 +337,38 @@ export const LessonNavigator: React.FC = () => {
                                                     subsectionComplete ? ' is-complete' : ''
                                                 }`}
                                             >
-                                                <button
-                                                    type="button"
-                                                    onClick={() => {
-                                                        handleSubsectionClick(section.id, subsection.anchor, subsection.id);
-                                                        handleSubsectionDoubleClick(subsection.id, subsection.title, subsection.paragraphNodeIds);
-                                                    }}
-                                                    className="lesson-navigator__subsection-trigger"
-                                                    ref={registerSubsectionRef(subsection.id)}
-                                                    title="Double-cliquer pour valider tous les paragraphes jusqu'ici"
-                                                >
-                                                    <span className="lesson-navigator__subsection-index">{subsectionIndex + 1}</span>
-                                                    <MathTitle className="lesson-navigator__subsection-title">
-                                                        {subsection.title}
-                                                    </MathTitle>
-                                                </button>
+                                                <div className="lesson-navigator__subsection-wrapper">
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => {
+                                                            handleSubsectionClick(section.id, subsection.anchor, subsection.id);
+                                                        }}
+                                                        className="lesson-navigator__subsection-trigger"
+                                                        ref={registerSubsectionRef(subsection.id)}
+                                                    >
+                                                        <span className="lesson-navigator__subsection-index">{subsectionIndex + 1}</span>
+                                                        <MathTitle className="lesson-navigator__subsection-title">
+                                                            {subsection.title}
+                                                        </MathTitle>
+                                                    </button>
+                                                    <button
+                                                        type="button"
+                                                        onClick={(e) => handleSubsectionCheckbox(e, subsection.id, subsection.title, subsection.paragraphNodeIds)}
+                                                        className={`lesson-navigator__subsection-checkbox${subsectionComplete ? ' is-checked' : ''}`}
+                                                        title={subsectionComplete 
+                                                            ? `Décocher ce paragraphe`
+                                                            : `Marquer ce paragraphe comme lu`
+                                                        }
+                                                        aria-label={subsectionComplete 
+                                                            ? `Décocher le paragraphe "${subsection.title.replace(/<[^>]*>/g, '')}"`
+                                                            : `Marquer le paragraphe "${subsection.title.replace(/<[^>]*>/g, '')}" comme lu`
+                                                        }
+                                                    >
+                                                        <span className="material-symbols-outlined !text-base">
+                                                            {subsectionComplete ? 'check_box' : 'check_box_outline_blank'}
+                                                        </span>
+                                                    </button>
+                                                </div>
                                             </li>
                                         );
                                     })}

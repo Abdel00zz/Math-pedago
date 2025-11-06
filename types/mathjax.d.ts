@@ -9,11 +9,15 @@ declare global {
       typesetClear?: (elements?: HTMLElement[]) => void;
       startup?: {
         promise?: Promise<void>;
+        adaptor?: {
+          outerHTML: (node: HTMLElement) => string;
+        };
       };
       tex2chtmlPromise?: (math: string, options?: any) => Promise<HTMLElement>;
       tex2svgPromise?: (math: string, options?: any) => Promise<HTMLElement>;
       tex2chtml?: (math: string, options?: any) => HTMLElement;
       tex2svg?: (math: string, options?: any) => HTMLElement;
+      texReset?: () => void;
     };
   }
 }
