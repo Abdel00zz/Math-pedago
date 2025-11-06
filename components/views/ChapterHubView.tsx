@@ -537,7 +537,9 @@ const ChapterHubView: React.FC = () => {
                 ? (lessonReadPercentage === 100 ? 'completed' : lessonReadPercentage > 0 ? 'in-progress' : 'todo') as StepStatus
                 : 'locked' as StepStatus,
             progressPercent: hasLesson ? lessonReadPercentage : undefined,
-            progressInfo: hasLesson && lessonTotalNodes > 0 ? `${lessonCompletedNodes} / ${lessonTotalNodes}` : undefined,
+            progressInfo: hasLesson && lessonTotalNodes > 0
+                ? `${lessonCompletedNodes} ${lessonCompletedNodes === 1 ? 'paragraphe lu' : 'paragraphes lus'} sur ${lessonTotalNodes}`
+                : undefined,
             onClick: hasLesson ? handleStartLesson : () => {},
             disabled: !hasLesson,
             buttonText: hasLesson

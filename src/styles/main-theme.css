@@ -539,6 +539,30 @@ a {
   }
 }
 
+/* Animations pour notifications pédagogiques */
+@keyframes gentleFloat {
+  0% {
+    opacity: 0;
+    transform: translateY(-30px) scale(0.9);
+  }
+  50% {
+    transform: translateY(5px) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes progressBar {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+
 .standard-header__back-btn--lesson {
   position: relative;
   overflow: hidden;
