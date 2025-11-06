@@ -5,6 +5,7 @@ import DashboardView from './components/views/DashboardView';
 import ChapterHubView from './components/views/ChapterHubView';
 import ActivityView from './components/views/ActivityView';
 import { Notifications } from './components/Notifications';
+import MobileOrientationPrompt from './components/MobileOrientationPrompt';
 
 const App: React.FC = () => {
     const state = useAppState();
@@ -30,6 +31,7 @@ const App: React.FC = () => {
                 {renderView()}
             </main>
             <Notifications />
+            <MobileOrientationPrompt />
         </div>
     );
 };
