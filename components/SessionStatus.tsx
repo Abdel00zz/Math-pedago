@@ -144,22 +144,34 @@ const SessionStatus: React.FC<SessionStatusProps> = React.memo(({ dates }) => {
     switch (sessionInfo.status) {
         case 'live':
             return (
-                <div className="flex items-center gap-2 text-text font-semibold">
-                    <span className="relative flex h-3 w-3">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                        <span className="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
+                <div className="flex items-center gap-2.5 text-text font-semibold">
+                    <span className="relative flex h-2.5 w-2.5">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 shadow-lg shadow-emerald-500/50"></span>
                     </span>
-                    <p className="text-base serif-text">{sessionInfo.text}</p>
+                    <span className="inline-flex items-center gap-1.5">
+                        <span className="text-emerald-600 font-bold tracking-wide">LIVE</span>
+                        <span className="text-gray-900 text-sm font-medium">{sessionInfo.text}</span>
+                    </span>
                 </div>
             );
         case 'upcoming':
             return (
-                <div className="flex items-center gap-2 font-medium">
-                    <span className="w-2 h-2 rounded-full bg-success animate-blink"></span>
-                    <p className="text-base serif-text">
-                        <span className="text-success">{sessionInfo.prefix}</span>
-                        <span className="text-text-secondary">{sessionInfo.text}</span>
-                    </p>
+                <div className="flex flex-col items-start gap-1.5 font-medium">
+                    <div className="flex items-center gap-1.5">
+                        <span className="text-gray-800 font-semibold tracking-wide text-xs">
+                            Prochaine séance:
+                        </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <p className="text-base font-bold text-red-600 serif-text tracking-tight">
+                            {sessionInfo.text}
+                        </p>
+                        <span className="inline-flex items-center gap-1.5 bg-emerald-100/60 text-emerald-700 px-2 py-0.5 rounded-full">
+                            <span className="flex-shrink-0 w-2 h-2 rounded-full bg-emerald-500 shadow-md shadow-emerald-500/40 animate-pulse"></span>
+                            <span className="font-bold text-xs tracking-wider">LIVE</span>
+                        </span>
+                    </div>
                 </div>
             );
         case 'past':

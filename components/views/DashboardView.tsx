@@ -103,14 +103,17 @@ const DashboardView: React.FC = () => {
             // If the chapter had an update flag, mark it as seen and remove related UI notifications
             if (progress[chapterId]?.hasUpdate) {
                 dispatch({ type: 'MARK_UPDATE_SEEN', payload: { chapterId } });
-                addNotification('Contenu consulté', 'info', { message: `Vous avez ouvert le chapitre "${chapter.chapter}".`, duration: 3000 });
+                addNotification('Nouveau contenu', 'info', { 
+                    message: `<strong>${chapter.chapter}</strong> a été mis à jour`, 
+                    duration: 3000 
+                });
             }
 
             dispatch({ type: 'CHANGE_VIEW', payload: { view: 'work-plan', chapterId } });
         } else {
             // Gérer le cas où le chapitre est verrouillé
             addNotification('Chapitre verrouillé', 'warning', {
-                message: `Le chapitre "${chapter?.chapter || 'sélectionné'}" n'est pas encore disponible.`,
+                message: `Complétez d'abord les chapitres précédents`,
                 duration: 3000
             });
         }

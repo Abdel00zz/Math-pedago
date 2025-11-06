@@ -55,7 +55,9 @@ const LessonView: React.FC = () => {
                     }
                     
                     const lessonData = await response.json();
-                    setLesson(lessonData);
+                    // Extraire la propriété 'lesson' du JSON si elle existe
+                    const lesson = lessonData.lesson || lessonData;
+                    setLesson(lesson);
                     setIsLoading(false);
                     return;
                 }

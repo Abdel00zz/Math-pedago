@@ -13,8 +13,13 @@ Ce document décrit la structure JSON pour créer des leçons interactives avec 
     "sections": [
       {
         "title": "Définition et interprétation",
-        "intro": "Texte introductif optionnel sans cadre",
-        "paragraphs": []
+        "subsections": [
+          {
+            "title": "Nombre dérivé",
+            "intro": "Texte introductif optionnel sans cadre",
+            "elements": []
+          }
+        ]
       }
     ]
   }
@@ -31,7 +36,7 @@ Texte qui apparaît après le titre de section, **sans cadre**.
 {
   "title": "Les nombres dérivés",
   "intro": "La notion de dérivée est fondamentale en analyse. Elle permet de mesurer la variation instantanée d'une fonction.",
-  "paragraphs": [...]
+  "elements": [...]
 }
 ```
 
@@ -41,7 +46,7 @@ Texte qui apparaît après le titre de section, **sans cadre**.
 
 ```json
 {
-  "type": "text",
+  "type": "p",
   "content": "Texte avec **gras** et formules $f'(x)$"
 }
 ```
@@ -51,7 +56,7 @@ Texte qui apparaît après le titre de section, **sans cadre**.
 #### Syntaxe Standard (avec puces)
 ```json
 {
-  "type": "text",
+  "type": "p",
   "content": [
     "Premier point avec puce",
     "Deuxième point avec puce",
@@ -65,7 +70,7 @@ Pour désactiver les puces sur certaines lignes, utilisez le préfixe `>>` :
 
 ```json
 {
-  "type": "text",
+  "type": "p",
   "content": [
     ">> Titre de section (sans puce)",
     "Premier point avec puce",

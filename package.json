@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "katex": "^0.16.11",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "resend": "^6.2.2",
@@ -16,6 +17,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.16",
+    "@types/katex": "^0.16.7",
     "@types/node": "^22.14.0",
     "@vercel/node": "^5.5.0",
     "@vitejs/plugin-react": "^5.0.0",

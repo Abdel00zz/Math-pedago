@@ -1,6 +1,9 @@
 /* Main Theme File - Imports all modular CSS files */
 /* PERFORMANCE OPTIMIZED - NO TRANSITIONS ON CRITICAL ELEMENTS */
 
+/* Core Styles */
+@import './typography.css';
+
 /* Component Styles */
 @import './dashboard.css';
 @import './chapter-hub.css';
@@ -525,41 +528,6 @@ a {
   to {
     opacity: 1;
     transform: translateX(0);
-  }
-}
-
-@keyframes slideInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Animations pour notifications pédagogiques */
-@keyframes gentleFloat {
-  0% {
-    opacity: 0;
-    transform: translateY(-30px) scale(0.9);
-  }
-  50% {
-    transform: translateY(5px) scale(1.02);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-@keyframes progressBar {
-  from {
-    transform: scaleX(1);
-  }
-  to {
-    transform: scaleX(0);
   }
 }
 

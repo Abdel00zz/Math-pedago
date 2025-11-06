@@ -24,9 +24,9 @@ export const LessonNavigator: React.FC = () => {
         setActiveSubsectionId,
         scrollToAnchor,
         markAllNodesUpTo,
-        markNode,
         isNodeCompleted,
-        toggleNode,
+        markNode,
+        allParagraphNodeIds,
     } = useLessonProgress();
     const { addNotification } = useNotification();
 
@@ -72,6 +72,107 @@ export const LessonNavigator: React.FC = () => {
         setActiveSubsectionId(subsectionId);
         scrollToAnchor(subsectionAnchor, { offset: 96 });
     };
+
+    const handleSubsectionCheckbox = useCallback((e: React.MouseEvent, subsectionId: string, subsectionTitle: string, paragraphNodeIds: string[]) => {
+        e.stopPropagation(); // Empêcher le clic de déclencher la navigation
+        
+        if (paragraphNodeIds.length === 0) return;
+        
+        // Vérifier l'état actuel des paragraphes de cette sous-section
+        const completedCount = paragraphNodeIds.filter(nodeId => isNodeCompleted(nodeId)).length;
+        const totalParagraphs = paragraphNodeIds.length;
+        const allCompleted = completedCount === totalParagraphs;
+        
+        const subsectionTitleClean = subsectionTitle.replace(/<[^>]*>/g, '');
+        
+        // Debug temporaire - à supprimer en production
+        if (process.env.NODE_ENV === 'development') {
+            console.log('Debug handleSubsectionCheckbox:', {
+                subsectionTitle: subsectionTitleClean,
+                totalParagraphs,
+                completedCount,
+                allCompleted,
+                paragraphNodeIds: paragraphNodeIds.length
+            });
+        }
+        
+        // Utiliser setTimeout pour attendre que les changements soient appliqués avant d'afficher la notification
+        const showNotificationAfterUpdate = (modifiedCount: number, action: 'coché' | 'décoché') => {
+            setTimeout(() => {
+                // Recalculer la progression globale après les modifications
+                const globalProgress = getProgress(allParagraphNodeIds);
+                const progressText = globalProgress.total > 0 
+                    ? ` · Progression totale: ${globalProgress.percentage}%`
+                    : '';
+                
+                const actionText = action === 'coché' ? 'validé' : 'décoché';
+                
+                // Logique correcte : on coche/décoche UNE sous-section (= 1 paragraphe dans l'interface)
+                // Mais cette sous-section peut contenir plusieurs éléments HTML <p> (paragraphNodeIds)
+                const title = action === 'coché' ? 'Paragraphe validé' : 'Paragraphe décoché';
+                const type = action === 'coché' ? 'success' : 'info';
+                
+                // Message plus précis : on parle du paragraphe (sous-section) validé, pas des éléments HTML internes
+                // Exemple de test avec formules mathématiques pour certaines sections
+                let mathExample = '';
+                if (subsectionTitleClean.toLowerCase().includes('équation') || 
+                    subsectionTitleClean.toLowerCase().includes('calcul') ||
+                    subsectionTitleClean.toLowerCase().includes('formule')) {
+                    mathExample = ` · Ex: $E = mc^2$`;
+                } else if (subsectionTitleClean.toLowerCase().includes('géométrie') ||
+                          subsectionTitleClean.toLowerCase().includes('triangle')) {
+                    mathExample = ` · Ex: $a^2 + b^2 = c^2$`;
+                } else if (Math.random() < 0.3) { // 30% de chance pour tester
+                    mathExample = ` · Score: $\\frac{${globalProgress.completed}}{${globalProgress.total}}$`;
+                }
+                
+                // Durée plus longue pour les notifications avec formules mathématiques
+                const notificationDuration = mathExample ? 4500 : 2500;
+                
+                addNotification(title, type, {
+                    message: `<strong>${subsectionTitleClean}</strong> ${actionText}${progressText}${mathExample}`,
+                    duration: notificationDuration,
+                });
+            }, 100); // Délai plus long pour s'assurer de la synchronisation
+        };
+        
+        if (allCompleted) {
+            // Si tous sont complétés, les décocher tous (seulement ceux de cette sous-section)
+            paragraphNodeIds.forEach(nodeId => {
+                markNode(nodeId, false);
+            });
+            
+            // On décoche 1 paragraphe (= cette sous-section), peu importe le nombre d'éléments HTML qu'elle contient
+            showNotificationAfterUpdate(1, 'décoché');
+        } else {
+            // Cocher seulement les paragraphes de cette sous-section qui ne sont pas encore cochés
+            const uncompleted = paragraphNodeIds.filter(nodeId => !isNodeCompleted(nodeId));
+            
+            if (process.env.NODE_ENV === 'development') {
+                console.log('Éléments HTML non complétés à cocher:', uncompleted.length, 'sur', totalParagraphs, 'dans le paragraphe:', subsectionTitleClean);
+            }
+            
+            uncompleted.forEach(nodeId => {
+                markNode(nodeId, true);
+            });
+            
+            if (uncompleted.length > 0) {
+                // On coche 1 paragraphe (= cette sous-section), peu importe le nombre d'éléments HTML qu'elle contient
+                showNotificationAfterUpdate(1, 'coché');
+            } else {
+                // Tous étaient déjà cochés (cas rare mais possible)
+                // Test avec formule mathématique pour les sections déjà validées
+                const mathTest = Math.random() < 0.5 ? ` · Status: $\\checkmark$` : '';
+                
+                addNotification('Déjà validé', 'info', {
+                    message: `<strong>${subsectionTitleClean}</strong> · Paragraphe déjà validé${mathTest}`,
+                    duration: 2000,
+                });
+            }
+        }
+    }, [isNodeCompleted, markNode, addNotification, getProgress, allParagraphNodeIds]);
+
+
 
     const ensureTargetVisible = useCallback((target: HTMLElement | null | undefined) => {
         const container = scrollContainerRef.current ?? panelRef.current;
@@ -229,30 +330,6 @@ export const LessonNavigator: React.FC = () => {
                                             subsectionProgress.total > 0 && subsectionProgress.completed === subsectionProgress.total;
                                         const subsectionActive = activeSubsectionId === subsection.id;
 
-                                        const handleCheckboxToggle = (e: React.MouseEvent) => {
-                                            e.stopPropagation();
-
-                                            // Si déjà complète, on décoche tout
-                                            if (subsectionComplete) {
-                                                subsection.paragraphNodeIds.forEach((nodeId) => {
-                                                    markNode(nodeId, false);
-                                                });
-                                                addNotification('Progression mise à jour', 'info', {
-                                                    message: `Section "${subsection.title}" décochée.`,
-                                                    duration: 2000,
-                                                });
-                                            } else {
-                                                // Sinon, on coche tout
-                                                subsection.paragraphNodeIds.forEach((nodeId) => {
-                                                    markNode(nodeId, true);
-                                                });
-                                                addNotification('Progression sauvegardée', 'success', {
-                                                    message: `Section "${subsection.title}" validée !`,
-                                                    duration: 2000,
-                                                });
-                                            }
-                                        };
-
                                         return (
                                             <li
                                                 key={subsection.id}
@@ -263,92 +340,35 @@ export const LessonNavigator: React.FC = () => {
                                                 <div className="lesson-navigator__subsection-wrapper">
                                                     <button
                                                         type="button"
-                                                        onClick={() => handleSubsectionClick(section.id, subsection.anchor, subsection.id)}
+                                                        onClick={() => {
+                                                            handleSubsectionClick(section.id, subsection.anchor, subsection.id);
+                                                        }}
                                                         className="lesson-navigator__subsection-trigger"
                                                         ref={registerSubsectionRef(subsection.id)}
-                                                        title="Cliquer pour naviguer vers cette section"
                                                     >
                                                         <span className="lesson-navigator__subsection-index">{subsectionIndex + 1}</span>
                                                         <MathTitle className="lesson-navigator__subsection-title">
                                                             {subsection.title}
                                                         </MathTitle>
                                                     </button>
-
                                                     <button
                                                         type="button"
-                                                        onClick={handleCheckboxToggle}
+                                                        onClick={(e) => handleSubsectionCheckbox(e, subsection.id, subsection.title, subsection.paragraphNodeIds)}
                                                         className={`lesson-navigator__subsection-checkbox${subsectionComplete ? ' is-checked' : ''}`}
-                                                        title={subsectionComplete ? 'Marquer comme non lu' : 'Marquer comme lu'}
-                                                        aria-label={subsectionComplete ? 'Marquer comme non lu' : 'Marquer comme lu'}
-                                                        aria-checked={subsectionComplete}
-                                                        role="checkbox"
+                                                        title={subsectionComplete 
+                                                            ? `Décocher ce paragraphe`
+                                                            : `Marquer ce paragraphe comme lu`
+                                                        }
+                                                        aria-label={subsectionComplete 
+                                                            ? `Décocher le paragraphe "${subsection.title.replace(/<[^>]*>/g, '')}"`
+                                                            : `Marquer le paragraphe "${subsection.title.replace(/<[^>]*>/g, '')}" comme lu`
+                                                        }
                                                     >
-                                                        {subsectionComplete && (
-                                                            <svg
-                                                                viewBox="0 0 24 24"
-                                                                fill="none"
-                                                                stroke="currentColor"
-                                                                strokeWidth="3"
-                                                                strokeLinecap="round"
-                                                                strokeLinejoin="round"
-                                                                className="lesson-navigator__checkbox-icon"
-                                                            >
-                                                                <path d="M18 6L6 18M6 6l12 12" />
-                                                            </svg>
-                                                        )}
+                                                        <span className="material-symbols-outlined !text-base">
+                                                            {subsectionComplete ? 'check_box' : 'check_box_outline_blank'}
+                                                        </span>
                                                     </button>
                                                 </div>
-
-                                                {/* Liste des paragraphes individuels */}
-                                                {subsection.paragraphNodeIds.length > 0 && (
-                                                    <ul className="lesson-navigator__paragraphs">
-                                                        {subsection.paragraphNodeIds.map((nodeId, paragraphIndex) => {
-                                                            const isParagraphComplete = isNodeCompleted(nodeId);
-
-                                                            const handleParagraphCheckbox = (e: React.MouseEvent) => {
-                                                                e.stopPropagation();
-                                                                toggleNode(nodeId);
-                                                            };
-
-                                                            return (
-                                                                <li
-                                                                    key={nodeId}
-                                                                    className={`lesson-navigator__paragraph${isParagraphComplete ? ' is-complete' : ''}`}
-                                                                >
-                                                                    <div className="lesson-navigator__paragraph-wrapper">
-                                                                        <span className="lesson-navigator__paragraph-number">
-                                                                            P{paragraphIndex + 1}
-                                                                        </span>
-
-                                                                        <button
-                                                                            type="button"
-                                                                            onClick={handleParagraphCheckbox}
-                                                                            className={`lesson-navigator__paragraph-checkbox${isParagraphComplete ? ' is-checked' : ''}`}
-                                                                            title={isParagraphComplete ? 'Marquer comme non lu' : 'Marquer comme lu'}
-                                                                            aria-label={`Paragraphe ${paragraphIndex + 1}: ${isParagraphComplete ? 'Lu' : 'Non lu'}`}
-                                                                            aria-checked={isParagraphComplete}
-                                                                            role="checkbox"
-                                                                        >
-                                                                            {isParagraphComplete && (
-                                                                                <svg
-                                                                                    viewBox="0 0 24 24"
-                                                                                    fill="none"
-                                                                                    stroke="currentColor"
-                                                                                    strokeWidth="3"
-                                                                                    strokeLinecap="round"
-                                                                                    strokeLinejoin="round"
-                                                                                    className="lesson-navigator__checkbox-icon"
-                                                                                >
-                                                                                    <path d="M5 12l5 5L20 7" />
-                                                                                </svg>
-                                                                            )}
-                                                                        </button>
-                                                                    </div>
-                                                                </li>
-                                                            );
-                                                        })}
-                                                    </ul>
-                                                )}
                                             </li>
                                         );
                                     })}

@@ -4,8 +4,8 @@
   "sessionDates": [
     "2025-11-02T01:30:00Z"
   ],
-  "videos": [],
   "lessonFile": "lessons/derivation_fonctions_usuelles.json",
+  "videos": [],
   "quiz": [
     {
       "id": "q_mcq_1",
@@ -996,5 +996,5 @@
       ]
     }
   ],
-  "version": "v1.1.0-f163eb"
+  "version": "v1.1.0-b2669e"
 }

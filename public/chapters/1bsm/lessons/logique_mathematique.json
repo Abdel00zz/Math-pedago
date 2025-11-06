@@ -26,15 +26,7 @@
                 "\"$2 + 3 = 5$\" est une proposition ___vraie___",
                 "\"$\\pi$ est un nombre rationnel\" est une proposition ___fausse___",
                 "\"Pour tout nombre réel $x$, on a $x^2 \\geq 0$\" est une proposition ___vraie___"
-              ],
-              "image": {
-                "src": "/chapters/1bsm/lessons/pictures/Screenshot 2025-10-28 110540.png",
-                "alt": "Screenshot 2025 10 28 110540",
-                "caption": "ccc",
-                "position": "right",
-                "align": "center",
-                "width": "50%"
-              }
+              ]
             },
             {
               "type": "remark-box",
