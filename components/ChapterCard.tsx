@@ -48,7 +48,7 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
         if (progress?.quiz?.isSubmitted || Object.keys(progress?.exercisesFeedback || {}).length > 0) {
             return {
                 text: 'En cours',
-                icon: 'pending',
+                icon: 'autorenew',
                 disabled: false,
                 variant: 'progress',
                 color: '#eab308',
@@ -56,7 +56,7 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
         }
         return {
             text: 'À faire',
-            icon: 'play_circle',
+            icon: 'radio_button_unchecked',
             disabled: false,
             variant: 'todo',
             color: '#f97316',
@@ -71,39 +71,47 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
         }
     }, [disabled, onSelect, chapter.id]);
 
-    // Calculate progress percentage
+    // Calculate progress percentage - with specific dependencies for reactivity
     const progressPercentage = useMemo(() => {
         if (!progress) return 0;
 
-        const weights = {
-            lesson: 0.3,
-            quiz: 0.3,
-            exercises: 0.4
-        };
-
         let totalProgress = 0;
+        let totalWeight = 0;
 
-        // Lesson progress (0-1)
+        // Lesson progress
         if (chapter.lesson) {
             const lessonProgress = progress.lesson?.isRead ? 1 : 0;
-            totalProgress += lessonProgress * weights.lesson;
+            totalProgress += lessonProgress * 0.3;
+            totalWeight += 0.3;
         }
 
-        // Quiz progress (0-1)
+        // Quiz progress
         if (chapter.quiz?.length > 0) {
             const quizProgress = progress.quiz?.isSubmitted ? 1 : 0;
-            totalProgress += quizProgress * weights.quiz;
+            totalProgress += quizProgress * 0.3;
+            totalWeight += 0.3;
         }
 
-        // Exercises progress (0-1)
+        // Exercises progress
         if (chapter.exercises?.length > 0) {
             const completedExercises = Object.keys(progress.exercisesFeedback || {}).length;
             const exerciseProgress = completedExercises / chapter.exercises.length;
-            totalProgress += exerciseProgress * weights.exercises;
+            totalProgress += exerciseProgress * 0.4;
+            totalWeight += 0.4;
         }
 
-        return Math.round(totalProgress * 100);
-    }, [progress, chapter]);
+        // Normalize if not all activities exist
+        const normalizedProgress = totalWeight > 0 ? (totalProgress / totalWeight) * 100 : 0;
+
+        return Math.round(normalizedProgress);
+    }, [
+        chapter.lesson,
+        chapter.quiz?.length,
+        chapter.exercises?.length,
+        progress?.lesson?.isRead,
+        progress?.quiz?.isSubmitted,
+        progress?.exercisesFeedback
+    ]);
 
     // Stats computation
     const stats = useMemo(() => {
@@ -240,11 +248,6 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
                         </span>
                         <span className="chapter-card-v2__status-text">{text}</span>
                     </div>
-                    {!disabled && (
-                        <div className="chapter-card-v2__arrow">
-                            <span className="material-symbols-outlined">arrow_forward</span>
-                        </div>
-                    )}
                 </div>
             </div>
         </button>
