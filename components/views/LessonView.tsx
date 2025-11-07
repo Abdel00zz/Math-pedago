@@ -209,7 +209,7 @@ const LessonView: React.FC = () => {
 
     return (
         <div ref={scrollContainerRef} className="lesson-shell">
-            <div className="lesson-shell__body">
+            <div className="lesson-shell__body pl-16 sm:pl-20">
                 <LessonProgressProvider
                     lessonId={`${chapter.class}-${chapter.chapter}`}
                     lesson={lesson}
