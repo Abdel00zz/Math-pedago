@@ -108,8 +108,23 @@ const FrenchContent: React.FC = () => (
                         <span className="material-symbols-outlined text-xl">chat</span>
                         <span>WhatsApp</span>
                     </a>
+                    <a
+                        href="https://mail.google.com/mail/?view=cm&fs=1&to=bdh.malek@gmail.com&su=Assistance%20Pedago&body=Bonjour%20Abdelmalek,%0A%0A"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 rounded-md bg-[#EA4335] text-white font-semibold hover:bg-[#c53727] transition-colors"
+                    >
+                        <span className="material-symbols-outlined text-xl">mail</span>
+                        <span>Gmail</span>
+                    </a>
                 </div>
             </div>
+        </div>
+
+        <div className="mt-8 text-center">
+            <p className="text-sm text-muted-foreground">
+                Plateforme créée avec <span className="text-red-500">passion</span> par Boudouh Abdelmalek au Maroc
+            </p>
         </div>
     </div>
 );
@@ -187,8 +202,23 @@ const ArabicContent: React.FC = () => (
                         <span className="material-symbols-outlined text-xl">chat</span>
                         <span>واتساب</span>
                     </a>
+                    <a
+                        href="https://mail.google.com/mail/?view=cm&fs=1&to=bdh.malek@gmail.com&su=Assistance%20Pedago&body=Bonjour%20Abdelmalek,%0A%0A"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 rounded-md bg-[#EA4335] text-white font-semibold hover:bg-[#c53727] transition-colors"
+                    >
+                        <span className="material-symbols-outlined text-xl">mail</span>
+                        <span>Gmail</span>
+                    </a>
                 </div>
             </div>
+        </div>
+
+        <div className="mt-8 text-center" dir="ltr">
+            <p className="text-sm text-muted-foreground">
+                Plateforme créée avec <span className="text-red-500">passion</span> par Boudouh Abdelmalek au Maroc
+            </p>
         </div>
     </div>
 );
