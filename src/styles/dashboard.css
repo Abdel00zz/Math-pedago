@@ -263,7 +263,7 @@
   padding: 0;
   display: grid;
   gap: clamp(1rem, 1.8vw, 1.6rem);
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr;
   align-items: stretch;
 }
 
@@ -276,7 +276,7 @@
 }
 
 .dashboard-section[data-variant="upcoming"] .dashboard-section__item {
-  grid-column: span 2;
+  grid-column: span 1;
 }
 
 /* Summary strip */
@@ -1027,11 +1027,11 @@
   }
 
   .dashboard-section__items {
-    flex-wrap: nowrap;
+    grid-template-columns: 1fr;
   }
 
   .dashboard-section__item {
-    min-width: 55vw;
+    width: 100%;
   }
 }
 
@@ -1049,7 +1049,7 @@
 .chapter-card-v2 {
   position: relative;
   width: 100%;
-  min-height: clamp(160px, 20vw, 200px);
+  min-height: clamp(200px, 24vw, 240px);
   padding: 0;
   border: none;
   background: transparent;
