@@ -13,16 +13,18 @@ interface StatusInfo {
     icon: string;
     disabled: boolean;
     variant: 'todo' | 'progress' | 'completed' | 'update' | 'locked';
+    color: string;
 }
 
 const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress, onSelect }) => {
     const getStatusInfo = useCallback((): StatusInfo => {
         if (progress?.hasUpdate) {
             return {
-                text: 'Contenu mis à jour',
+                text: 'Mis à jour',
                 icon: 'update',
                 disabled: false,
                 variant: 'update',
+                color: '#a855f7',
             };
         }
         if (progress?.isWorkSubmitted) {
@@ -31,33 +33,37 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
                 icon: 'check_circle',
                 disabled: false,
                 variant: 'completed',
+                color: '#22c55e',
             };
         }
         if (!chapter.isActive) {
             return {
-                text: 'Bientôt disponible',
+                text: 'Verrouillé',
                 icon: 'lock',
                 disabled: true,
                 variant: 'locked',
+                color: '#94a3b8',
             };
         }
         if (progress?.quiz?.isSubmitted || Object.keys(progress?.exercisesFeedback || {}).length > 0) {
             return {
                 text: 'En cours',
-                icon: 'autorenew',
+                icon: 'pending',
                 disabled: false,
                 variant: 'progress',
+                color: '#eab308',
             };
         }
         return {
             text: 'À faire',
-            icon: 'edit_note',
+            icon: 'play_circle',
             disabled: false,
             variant: 'todo',
+            color: '#f97316',
         };
     }, [chapter.isActive, progress]);
 
-    const { text, icon, variant, disabled } = getStatusInfo();
+    const { text, icon, variant, disabled, color } = getStatusInfo();
 
     const handleClick = useCallback(() => {
         if (!disabled) {
@@ -65,112 +71,180 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
         }
     }, [disabled, onSelect, chapter.id]);
 
-    const quizCount = chapter.quiz?.length ?? 0;
-    const exerciseCount = chapter.exercises?.length ?? 0;
-    const videosCount = chapter.videos?.length ?? 0;
+    // Calculate progress percentage
+    const progressPercentage = useMemo(() => {
+        if (!progress) return 0;
 
-    const lessonParagraphsCount = chapter.lesson?.paragraphs?.length ?? 0;
-
-    const quizProgress = progress?.quiz;
-    const isQuizSubmitted = Boolean(quizProgress?.isSubmitted);
-    const isWorkSubmitted = Boolean(progress?.isWorkSubmitted);
-
-    const cardStats = useMemo(() => {
-        const formatCount = (count: number, singular: string, plural?: string) => {
-            const noun = count === 1 ? singular : plural ?? `${singular}s`;
-            return `${count} ${noun}`;
+        const weights = {
+            lesson: 0.3,
+            quiz: 0.3,
+            exercises: 0.4
         };
 
-        const stats: Array<{ icon: string; label: string; highlight?: boolean }> = [];
+        let totalProgress = 0;
 
-        if (lessonParagraphsCount > 0) {
-            stats.push({
+        // Lesson progress (0-1)
+        if (chapter.lesson) {
+            const lessonProgress = progress.lesson?.isRead ? 1 : 0;
+            totalProgress += lessonProgress * weights.lesson;
+        }
+
+        // Quiz progress (0-1)
+        if (chapter.quiz?.length > 0) {
+            const quizProgress = progress.quiz?.isSubmitted ? 1 : 0;
+            totalProgress += quizProgress * weights.quiz;
+        }
+
+        // Exercises progress (0-1)
+        if (chapter.exercises?.length > 0) {
+            const completedExercises = Object.keys(progress.exercisesFeedback || {}).length;
+            const exerciseProgress = completedExercises / chapter.exercises.length;
+            totalProgress += exerciseProgress * weights.exercises;
+        }
+
+        return Math.round(totalProgress * 100);
+    }, [progress, chapter]);
+
+    // Stats computation
+    const stats = useMemo(() => {
+        const items = [];
+
+        if (chapter.lesson) {
+            items.push({
                 icon: 'article',
-                label: formatCount(lessonParagraphsCount, 'paragraphe'),
+                label: 'Leçon',
+                completed: progress?.lesson?.isRead || false,
+                color: '#3b82f6'
             });
         }
 
-        if (videosCount > 0) {
-            stats.push({
+        if (chapter.videos && chapter.videos.length > 0) {
+            items.push({
                 icon: 'play_circle',
-                label: formatCount(videosCount, 'vidéo', 'vidéos'),
+                label: `${chapter.videos.length} vidéo${chapter.videos.length > 1 ? 's' : ''}`,
+                completed: progress?.videos?.allWatched || false,
+                color: '#ef4444'
             });
         }
 
-        if (quizCount > 0) {
-            stats.push({
-                icon: isQuizSubmitted ? 'workspace_premium' : 'quiz',
-                label: formatCount(quizCount, 'quiz', 'quiz'),
-                highlight: isQuizSubmitted,
+        if (chapter.quiz && chapter.quiz.length > 0) {
+            items.push({
+                icon: 'quiz',
+                label: `${chapter.quiz.length} quiz`,
+                completed: progress?.quiz?.isSubmitted || false,
+                color: '#8b5cf6'
             });
         }
 
-        if (exerciseCount > 0) {
-            stats.push({
-                icon: isWorkSubmitted ? 'task_alt' : 'draw',
-                label: formatCount(exerciseCount, 'exercice'),
-                highlight: isWorkSubmitted,
+        if (chapter.exercises && chapter.exercises.length > 0) {
+            const completedCount = Object.keys(progress?.exercisesFeedback || {}).length;
+            items.push({
+                icon: 'draw',
+                label: `${completedCount}/${chapter.exercises.length} exo`,
+                completed: completedCount === chapter.exercises.length && completedCount > 0,
+                color: '#10b981'
             });
         }
 
-        return stats;
-    }, [videosCount, quizCount, isQuizSubmitted, exerciseCount, isWorkSubmitted, lessonParagraphsCount]);
-
-    const cardEyebrow = progress?.isWorkSubmitted
-        ? 'Travail remis'
-        : chapter.isActive
-            ? 'Chapitre actif'
-            : 'Prochainement';
+        return items;
+    }, [chapter, progress]);
 
     return (
         <button
             onClick={handleClick}
             disabled={disabled}
-            className={`dashboard-card group w-full ${disabled ? 'is-disabled' : ''}`}
+            className={`chapter-card-v2 ${disabled ? 'is-disabled' : ''}`}
             aria-label={`Accéder au ${chapter.chapter}`}
             aria-disabled={disabled}
             data-status={variant}
         >
-            <span className="dashboard-card__background" aria-hidden="true">
-                <span className="dashboard-card__gradient" />
-                <span className="dashboard-card__pattern" />
-            </span>
+            {/* Background effects */}
+            <div className="chapter-card-v2__bg" aria-hidden="true" />
 
-            <div className="dashboard-card__content-wrapper">
-                <div className="dashboard-card__inner">
-                    <div className="dashboard-card__overview">
-                        <span className="dashboard-card__eyebrow">{cardEyebrow}</span>
-                        <h3 className="dashboard-card__title">{chapter.chapter}</h3>
-                    </div>
-
-                    <div className="dashboard-card__body">
-                        <div className="dashboard-card__session">
-                            <SessionStatus dates={chapter.sessionDates} />
+            {/* Main content */}
+            <div className="chapter-card-v2__container">
+                {/* Left section: Visual indicator */}
+                <div className="chapter-card-v2__visual">
+                    <div className="chapter-card-v2__progress-ring">
+                        <svg className="chapter-card-v2__progress-svg" viewBox="0 0 100 100">
+                            <circle
+                                className="chapter-card-v2__progress-bg"
+                                cx="50"
+                                cy="50"
+                                r="42"
+                            />
+                            <circle
+                                className="chapter-card-v2__progress-bar"
+                                cx="50"
+                                cy="50"
+                                r="42"
+                                style={{
+                                    strokeDashoffset: 264 - (264 * progressPercentage) / 100,
+                                    stroke: color
+                                }}
+                            />
+                        </svg>
+                        <div className="chapter-card-v2__progress-text">
+                            <span className="chapter-card-v2__progress-number">{progressPercentage}</span>
+                            <span className="chapter-card-v2__progress-unit">%</span>
                         </div>
                     </div>
-
-                    {cardStats.length > 0 && (
-                        <div className="dashboard-card__footer">
-                            <div className="dashboard-card__stats" aria-label="Indicateurs du chapitre">
-                                {cardStats.map((stat) => (
-                                    <div
-                                        key={`${stat.icon}-${stat.label}`}
-                                        className={`dashboard-card__stat${stat.highlight ? ' is-highlighted' : ''}`}
-                                    >
-                                        <span className="material-symbols-outlined" aria-hidden="true">{stat.icon}</span>
-                                        <span>{stat.label}</span>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    )}
                 </div>
 
-                <div className="dashboard-card__badge-panel" data-variant={variant}>
-                    <div className="dashboard-card__badge-content">
-                        <span className="material-symbols-outlined dashboard-card__badge-icon">{icon}</span>
-                        <span className="dashboard-card__badge-text">{text}</span>
+                {/* Center section: Content */}
+                <div className="chapter-card-v2__content">
+                    <div className="chapter-card-v2__header">
+                        <span className="chapter-card-v2__eyebrow">
+                            {progress?.isWorkSubmitted ? 'Chapitre complété' : chapter.isActive ? 'Chapitre actif' : 'Chapitre verrouillé'}
+                        </span>
+                        <h3 className="chapter-card-v2__title">{chapter.chapter}</h3>
                     </div>
+
+                    {/* Session dates */}
+                    <div className="chapter-card-v2__sessions">
+                        <SessionStatus dates={chapter.sessionDates} />
+                    </div>
+
+                    {/* Stats grid */}
+                    <div className="chapter-card-v2__stats">
+                        {stats.map((stat, index) => (
+                            <div
+                                key={index}
+                                className={`chapter-card-v2__stat ${stat.completed ? 'is-completed' : ''}`}
+                            >
+                                <span
+                                    className="material-symbols-outlined chapter-card-v2__stat-icon"
+                                    style={{ color: stat.color }}
+                                >
+                                    {stat.icon}
+                                </span>
+                                <span className="chapter-card-v2__stat-label">{stat.label}</span>
+                                {stat.completed && (
+                                    <span className="material-symbols-outlined chapter-card-v2__stat-check">
+                                        check_circle
+                                    </span>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Right section: Status badge */}
+                <div className="chapter-card-v2__status" data-variant={variant}>
+                    <div className="chapter-card-v2__status-content">
+                        <span
+                            className="material-symbols-outlined chapter-card-v2__status-icon"
+                            style={{ color }}
+                        >
+                            {icon}
+                        </span>
+                        <span className="chapter-card-v2__status-text">{text}</span>
+                    </div>
+                    {!disabled && (
+                        <div className="chapter-card-v2__arrow">
+                            <span className="material-symbols-outlined">arrow_forward</span>
+                        </div>
+                    )}
                 </div>
             </div>
         </button>
