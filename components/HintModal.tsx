@@ -203,9 +203,9 @@ const findQuestionByKeywords = (exercise: Exercise, keywords: string[]): number 
 };
 
 const renderSubQuestions = (subQuestions: SubQuestion[] | undefined) => (
-    <ol className="list-decimal pl-4 sm:pl-5 mt-3 sm:mt-4 space-y-2 sm:space-y-3 text-gray-100 text-sm sm:text-base">
+    <ol className="list-decimal pl-6 mt-4 space-y-3 text-gray-900 text-base marker:text-gray-400 marker:font-medium">
         {subQuestions?.map((sq, index) => (
-            <li key={index} className="leading-relaxed">
+            <li key={index} className="leading-relaxed pl-2">
                 <MathContent content={cleanAndWrapTeX(sq.text)} inline={false} />
             </li>
         ))}
@@ -317,53 +317,29 @@ const HintModal: React.FC<HintModalProps> = ({ isOpen, onClose, exercise }) => {
             isOpen={isOpen}
             onClose={onClose}
             title="Indices"
-            className="sm:max-w-3xl bg-surface text-white max-h-[85vh] overflow-y-auto"
+            className="sm:max-w-3xl bg-white text-gray-900 max-h-[85vh] overflow-y-auto"
             hideHeaderBorder={true}
         >
-            <div className="space-y-4 sm:space-y-6">
+            <div className="px-4 sm:px-8 py-6 space-y-8">
                 {exercise.hint.map((hint, index) => {
                     const questionNumber = questionNumbers[index];
                     const hasQuestionNumber = questionNumber !== null && questionNumber !== undefined;
                     
                     return (
-                        <div key={index} className={`flex ${hasQuestionNumber ? 'flex-col sm:flex-row gap-3 sm:gap-4' : 'flex-col gap-0'} p-3 sm:p-5 bg-surface/90 rounded-xl border border-amber-200/30 hover:border-amber-300/50 transition-all duration-200 shadow-sm hover:shadow-md`}>
-                            {/* Numéro intelligent correspondant aux questions - uniquement si présent */}
+                        <div key={index} className="relative pl-12">
+                            {/* Numéro de question - position absolue à gauche */}
                             {hasQuestionNumber && (
-                                <div className="flex-shrink-0 self-start sm:self-auto">
-                                    <div className="relative group">
-                                        <div className="min-w-[2rem] h-8 bg-gradient-to-br from-amber-400 to-amber-500 rounded-full flex items-center justify-center text-black font-bold text-xs sm:text-sm shadow-lg px-2 transition-all duration-200 group-hover:shadow-xl group-hover:scale-105">
-                                            {questionNumber}
-                                        </div>
-                                        
-                                        {/* Indicateurs visuels intelligents - cachés sur mobile pour simplifier */}
-                                        {questionNumber.includes('-') && (
-                                            <div className="hidden sm:block absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center shadow-md">
-                                                <svg className="w-2 h-2 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                                    <path fillRule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clipRule="evenodd"/>
-                                                </svg>
-                                            </div>
-                                        )}
-                                        
-                                        {questionNumber.includes('c') && (
-                                            <div className="hidden sm:block absolute -bottom-1 -right-1 w-3 h-3 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center">
-                                                <div className="w-1 h-1 bg-white rounded-full"></div>
-                                            </div>
-                                        )}
-                                        
-                                        {/* Tooltip informatif - désactivé sur mobile (pas de hover) */}
-                                        <div className="hidden sm:block absolute left-1/2 -translate-x-1/2 -top-8 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap z-10">
-                                            Question {questionNumber}
-                                        </div>
+                                <div className="absolute left-0 top-0">
+                                    <div className="w-8 h-8 bg-gray-900 rounded-md flex items-center justify-center text-white font-semibold text-sm">
+                                        {questionNumber}
                                     </div>
                                 </div>
                             )}
                             
                             {/* Contenu de l'indice */}
-                            <div className="flex-1 min-w-0">
-                                <div className="text-gray-100 text-sm sm:text-base leading-relaxed prose prose-sm prose-invert max-w-none hint-modal-text">
-                                    <MathContent content={cleanAndWrapTeX(hint.text)} inline={false} />
-                                    {hint.sub_questions && renderSubQuestions(hint.sub_questions)}
-                                </div>
+                            <div className="text-gray-900 text-base leading-relaxed border-l-2 border-gray-200 pl-6">
+                                <MathContent content={cleanAndWrapTeX(hint.text)} inline={false} />
+                                {hint.sub_questions && renderSubQuestions(hint.sub_questions)}
                             </div>
                         </div>
                     );

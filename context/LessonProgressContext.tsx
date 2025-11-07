@@ -119,8 +119,21 @@ const collectParagraphIdsFromElements = (elements: LessonElement[] | undefined, 
 
     const ids: string[] = [];
 
+    // Types d'éléments à tracker pour la progression
+    const trackableTypes = [
+        'p',
+        'definition-box',
+        'theorem-box',
+        'proposition-box',
+        'property-box',
+        'remark-box',
+        'example-box',
+        'practice-box',
+        'explain-box'
+    ];
+
     elements.forEach((element, index) => {
-        if (element.type === 'p') {
+        if (trackableTypes.includes(element.type)) {
             ids.push(encodeLessonPath([...basePath, 'elements', index]));
         }
     });

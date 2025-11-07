@@ -53,10 +53,10 @@ export const SolutionModal: React.FC<SolutionModalProps> = ({
                 <ol className="space-y-4">
                     {solution.map((step, i) => (
                         <li key={i} className="flex items-start gap-3">
-                            <span className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-100 text-blue-700 font-semibold text-sm flex items-center justify-center">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 text-white font-semibold text-sm flex items-center justify-center shadow-md">
                                 {i + 1}
                             </span>
-                            <div className="flex-1 text-gray-700 leading-relaxed">
+                            <div className="flex-1 text-gray-800 leading-relaxed">
                                 <MathContent content={step} inline={false} />
                             </div>
                         </li>
@@ -66,7 +66,7 @@ export const SolutionModal: React.FC<SolutionModalProps> = ({
         }
 
         return (
-            <div className="text-gray-700 leading-relaxed">
+            <div className="text-gray-800 leading-relaxed">
                 <MathContent content={solution} inline={false} />
             </div>
         );
@@ -82,7 +82,7 @@ export const SolutionModal: React.FC<SolutionModalProps> = ({
                 className="relative bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[85vh] overflow-hidden animate-slideUp"
             >
                 {/* Header */}
-                <div className="sticky top-0 z-10 bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-blue-100 px-6 py-4">
+                <div className="sticky top-0 z-10 bg-gradient-to-r from-blue-50 to-indigo-50 border-b-2 border-blue-100 px-6 py-4">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
                             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg">
@@ -94,7 +94,7 @@ export const SolutionModal: React.FC<SolutionModalProps> = ({
                         </div>
                         <button
                             onClick={onClose}
-                            className="w-8 h-8 rounded-lg hover:bg-gray-200 transition-colors flex items-center justify-center group"
+                            className="w-9 h-9 rounded-lg hover:bg-blue-100 transition-colors flex items-center justify-center group"
                             aria-label="Fermer"
                         >
                             <svg 
