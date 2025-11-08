@@ -79,9 +79,9 @@ export const LessonNavigator: React.FC = () => {
         if (paragraphNodeIds.length === 0) return;
         
         // Vérifier l'état actuel des paragraphes de cette sous-section
-        const completedCount = paragraphNodeIds.filter(nodeId => isNodeCompleted(nodeId)).length;
-        const totalParagraphs = paragraphNodeIds.length;
-        const allCompleted = completedCount === totalParagraphs;
+    const completedCount = paragraphNodeIds.filter(nodeId => isNodeCompleted(nodeId)).length;
+    const totalNodes = paragraphNodeIds.length;
+    const allCompleted = completedCount === totalNodes;
         
         const subsectionTitleClean = subsectionTitle.replace(/<[^>]*>/g, '');
         
@@ -89,7 +89,7 @@ export const LessonNavigator: React.FC = () => {
         if (process.env.NODE_ENV === 'development') {
             console.log('Debug handleSubsectionCheckbox:', {
                 subsectionTitle: subsectionTitleClean,
-                totalParagraphs,
+                totalNodes,
                 completedCount,
                 allCompleted,
                 paragraphNodeIds: paragraphNodeIds.length
@@ -107,8 +107,8 @@ export const LessonNavigator: React.FC = () => {
                 
                 const actionText = action === 'coché' ? 'validé' : 'décoché';
                 
-                // Logique correcte : on coche/décoche UNE sous-section (= 1 paragraphe dans l'interface)
-                // Mais cette sous-section peut contenir plusieurs éléments HTML <p> (paragraphNodeIds)
+            // Logique correcte : on coche/décoche UNE sous-section (= 1 paragraphe dans le sommaire)
+            // Les paragraphNodeIds représentant désormais ce paragraphe unique
                 const title = action === 'coché' ? 'Paragraphe validé' : 'Paragraphe décoché';
                 const type = action === 'coché' ? 'success' : 'info';
                 
@@ -147,9 +147,9 @@ export const LessonNavigator: React.FC = () => {
         } else {
             // Cocher seulement les paragraphes de cette sous-section qui ne sont pas encore cochés
             const uncompleted = paragraphNodeIds.filter(nodeId => !isNodeCompleted(nodeId));
-            
+
             if (process.env.NODE_ENV === 'development') {
-                console.log('Éléments HTML non complétés à cocher:', uncompleted.length, 'sur', totalParagraphs, 'dans le paragraphe:', subsectionTitleClean);
+                console.log('Nœuds de paragraphe non complétés à cocher:', uncompleted.length, 'sur', totalNodes, 'dans le paragraphe:', subsectionTitleClean);
             }
             
             uncompleted.forEach(nodeId => {

@@ -131,10 +131,27 @@ export class LessonProgressService {
         const storage = this.readStorage();
         const existing = storage[lessonId] ?? {};
 
+        // Créer un Set des nodeIds valides pour recherche rapide
+        const validNodeIds = new Set(nodeIds);
+        
+        // Nettoyer les anciens nodes qui n'existent plus dans le JSON
+        const cleaned: LessonProgressRecord = {};
         let mutated = false;
+        
+        // Conserver seulement les nodes qui existent encore dans le JSON
+        Object.keys(existing).forEach((nodeId) => {
+            if (validNodeIds.has(nodeId)) {
+                cleaned[nodeId] = existing[nodeId];
+            } else {
+                // Node obsolète détecté
+                mutated = true;
+            }
+        });
+
+        // Ajouter les nouveaux nodes
         nodeIds.forEach((nodeId) => {
-            if (!existing[nodeId]) {
-                existing[nodeId] = {
+            if (!cleaned[nodeId]) {
+                cleaned[nodeId] = {
                     completed: false,
                     timestamp: Date.now(),
                 };
@@ -143,11 +160,11 @@ export class LessonProgressService {
         });
 
         if (mutated) {
-            storage[lessonId] = existing;
+            storage[lessonId] = cleaned;
             this.writeStorage(storage);
         }
 
-        return existing;
+        return cleaned;
     }
 
     saveLessonProgress(lessonId: string, progress: LessonProgressRecord) {

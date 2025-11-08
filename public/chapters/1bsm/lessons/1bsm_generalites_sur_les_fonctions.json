@@ -1,495 +1,402 @@
 {
   "header": {
-    "title": "Généralités sur les Fonctions",
-    "subtitle": "Niveau 1 SM - Mathématiques"
+    "title": "Généralités sur les Fonctions Numériques",
+    "subtitle": "Concepts fondamentaux et représentation graphique",
+    "classe": "1ère Bac Sciences Mathématiques",
+    "chapter": "Chapitre 4",
+    "academicYear": "2025-2026"
   },
   "sections": [
     {
-      "title": "Rappels fondamentaux",
+      "title": "Premiers Concepts",
       "subsections": [
         {
-          "title": "Fonction numérique",
+          "title": "Notion de Fonction Numérique",
           "elements": [
             {
+              "type": "p",
+              "content": "Une fonction est une relation qui associe à chaque élément d'un ensemble de départ **au plus** un élément unique dans un ensemble d'arrivée. Les fonctions numériques sont fondamentales en mathématiques et permettent de modéliser de nombreux phénomènes réels."
+            },
+            {
               "type": "definition-box",
-              "content": "Une **relation $f$** qui associe à chaque élément $x$ de $\\mathbb{R}$ au plus un élément $y$ de $\\mathbb{R}$ est appelée **fonction numérique**. On note:\n$$f : \\mathbb{R} \\to \\mathbb{R}$$\n$$x \\mapsto f(x)$$\n\nL'ensemble de tous les éléments $x$ qui ont une image par $f$ s'appelle l'**ensemble de définition**, noté $D_f$ ou $D$."
+              "preamble": "**Fonction Numérique** :",
+              "content": "Soit $E$ une partie de $\\mathbb{R}$. Définir une fonction numérique d'une variable réelle, c'est associer à chaque nombre réel $x$ de $E$, au plus un nombre réel $y$ de $\\mathbb{R}$.\n\nOn note :\n$$f : E \\to \\mathbb{R}$$\n$$x \\mapsto y = f(x)$$\n\nOù $x$ est appelé **antécédent** et $y = f(x)$ est appelé **image** de $x$ par la fonction $f$."
+            },
+            {
+              "type": "remark-box",
+              "content": "Une fonction peut être définie de plusieurs façons : par un tableau de valeurs, par une formule ou expression algébrique, ou par une représentation graphique."
             },
             {
               "type": "example-box",
-              "preamble": "Exemples de domaines de définition:",
-              "listType": "bullet",
-              "content": [
-                "Pour $f(x) = 2x^2 - 3x + 1$ (polynôme): $D_f = \\mathbb{R}$",
-                "Pour $g(x) = \\displaystyle\\frac{1}{x-2}$ (rationnelle): $D_g = \\mathbb{R} \\setminus \\{2\\}$",
-                "Pour $h(x) = \\sqrt{x-1}$ (racine): $D_h = [1, +\\infty[$"
-              ]
-            },
-            {
-              "type": "practice-box",
-              "statement": "Déterminer le domaine de définition de chaque fonction:",
-              "content": [
-                "$$f(x) = \\frac{2x+1}{x^2-4}$$",
-                "$$g(x) = \\sqrt{x^2-1}$$",
-                "$$h(x) = \\frac{\\sqrt{x}}{x-3}$$"
-              ],
-              "placeholder": "Pour une fraction, le dénominateur ne doit pas être zéro. Pour une racine, le radicande doit être positif...",
-              "solution": [
-                "**a) $f(x) = \\frac{2x+1}{x^2-4}$**\n\nCondition: $x^2 - 4 \\neq 0 \\Rightarrow x^2 \\neq 4 \\Rightarrow x \\neq \\pm 2$\n\n**Donc:** $D_f = \\mathbb{R} \\setminus \\{-2, 2\\}$",
-                "**b) $g(x) = \\sqrt{x^2-1}$**\n\nCondition: $x^2 - 1 \\geq 0 \\Rightarrow x^2 \\geq 1 \\Rightarrow |x| \\geq 1$\n\nCela signifie: $x \\leq -1$ ou $x \\geq 1$\n\n**Donc:** $D_g = ]-\\infty, -1] \\cup [1, +\\infty[$",
-                "**c) $h(x) = \\frac{\\sqrt{x}}{x-3}$**\n\nCondition 1: $x \\geq 0$ (pour la racine)\n\nCondition 2: $x - 3 \\neq 0 \\Rightarrow x \\neq 3$ (pour la fraction)\n\n**Donc:** $D_h = [0, 3[ \\cup ]3, +\\infty[ = [0, +\\infty[ \\setminus \\{3\\}$"
-              ]
-            },
-            {
-              "type": "explain-box",
-              "statement": "**Validation:**\n\nLe domaine de définition est l'ensemble des $x$ pour lesquels $f(x)$ a un sens mathématique. Identifiez les restrictions: dénominateurs non nuls, radicandes positifs, etc.",
-              "placeholder": "Pensez à exclure les valeurs qui rendent la fonction indéfinie..."
+              "preamble": "**Applications** :",
+              "content": "1. **Par tableau** : Soit $f$ définie par le tableau suivant :\n\n| $x$ | -5 | -3 | 0.19 | 2 | 8 |\n|-----|:---:|:---:|:---:|:---:|:---:|\n| $f(x)$ | 7 | 0.1 | $\\sqrt{2}$ | -6 | 7 |\n\nOn a : $f(-5) = 7$, $f(-3) = 0.1$, $f(0.19) = \\sqrt{2}$\n\n2. **Par formule** : Soit $f(x) = 1 - \\frac{2}{x}$ définie pour $x \\neq 0$\n\nAlors : $f(1) = 1 - 2 = ___-1___$, $f\\left(\\frac{1}{3}\\right) = 1 - 6 = ___-5___$"
             }
           ]
         },
         {
-          "title": "Parité d'une fonction",
+          "title": "Domaine de Définition",
           "elements": [
             {
+              "type": "p",
+              "content": "Le domaine de définition est l'ensemble de tous les nombres réels pour lesquels la fonction peut être évaluée. Il est déterminé par les conditions d'existence de l'expression."
+            },
+            {
               "type": "definition-box",
-              "preamble": "Soit $f$ une fonction définie sur $D_f$:",
-              "listType": "bullet",
-              "content": [
-                "$f$ est **paire** si et seulement si:\n  - $\\forall x \\in D_f: -x \\in D_f$\n  - $\\forall x \\in D_f: f(-x) = f(x)$",
-                "$f$ est **impaire** si et seulement si:\n  - $\\forall x \\in D_f: -x \\in D_f$\n  - $\\forall x \\in D_f: f(-x) = -f(x)$"
-              ]
+              "preamble": "**Domaine de Définition** :",
+              "content": "Soit $f : E \\to \\mathbb{R}$ une fonction numérique de la variable réelle $x$.\n\nLes nombres réels $x$ de $E$ admettant une image par $f$ forment un ensemble appelé **domaine de définition** de $f$, noté $D_f$ :\n\n$$D_f = \\{x \\in \\mathbb{R} / f(x) \\in \\mathbb{R}\\} = \\{x \\in \\mathbb{R} / f(x) \\text{ existe}\\}$$"
             },
             {
               "type": "p",
-              "content": "!> **Attention:** Une fonction n'est paire ou impaire que si son domaine $D_f$ est **symétrique par rapport à zéro**. Par exemple, $D_f = [-3, 3]$ est symétrique, mais $D_f = [0, 3]$ ne l'est pas."
-            },
-            {
-              "type": "example-box",
-              "preamble": "Étudions la parité de $f(x) = x^2 - 1$ et $g(x) = x^3 + x$:",
-              "listType": "bullet",
-              "content": [
-                "**Pour $f(x) = x^2 - 1$:** $f(-x) = (-x)^2 - 1 = x^2 - 1 = f(x)$, donc $f$ est **paire**. La courbe est symétrique par rapport à l'axe $y$.",
-                "**Pour $g(x) = x^3 + x$:** $g(-x) = (-x)^3 + (-x) = -x^3 - x = -(x^3 + x) = -g(x)$, donc $g$ est **impaire**. La courbe est symétrique par rapport à l'origine."
-              ]
+              "content": "!> **Important** : Pour déterminer le domaine de définition d'une fonction, il faut vérifier que : (1) Une expression au dénominateur ne peut pas être nulle, (2) Une expression sous une racine carrée doit être positive ou nulle, (3) Le domaine de définition d'une fonction polynôme est $\\mathbb{R}$."
             },
             {
               "type": "practice-box",
-              "statement": "Déterminer la parité de chaque fonction:",
+              "statement": "Déterminer le domaine de définition de chaque fonction :",
               "content": [
-                "$$f(x) = 4x^4 - 2x^2 + 1$$",
-                "$$g(x) = \\frac{x}{x^2-1}$$",
-                "$$h(x) = x^3 - 3x$$"
+                "$f(x) = x^2 - 5x + 1$",
+                "$f(x) = \\dfrac{x + 3}{x - 7}$",
+                "$f(x) = \\sqrt{2x + 3}$",
+                "$f(x) = \\dfrac{x}{\\sqrt{x - 1}}$"
               ],
-              "placeholder": "Calculez $f(-x)$ et comparez avec $f(x)$ ou $-f(x)$...",
               "solution": [
-                "**a) $f(x) = 4x^4 - 2x^2 + 1$**\n\nDomaine: $D_f = \\mathbb{R}$ (symétrique par rapport à 0) ✓\n\nCalcul: $f(-x) = 4(-x)^4 - 2(-x)^2 + 1 = 4x^4 - 2x^2 + 1 = f(x)$\n\n**Conclusion:** $f$ est **paire**",
-                "**b) $g(x) = \\frac{x}{x^2-1}$**\n\nDomaine: $D_g = \\mathbb{R} \\setminus \\{-1, 1\\}$ (symétrique par rapport à 0) ✓\n\nCalcul: $g(-x) = \\frac{-x}{(-x)^2-1} = \\frac{-x}{x^2-1} = -\\frac{x}{x^2-1} = -g(x)$\n\n**Conclusion:** $g$ est **impaire**",
-                "**c) $h(x) = x^3 - 3x$**\n\nDomaine: $D_h = \\mathbb{R}$ (symétrique par rapport à 0) ✓\n\nCalcul: $h(-x) = (-x)^3 - 3(-x) = -x^3 + 3x = -(x^3 - 3x) = -h(x)$\n\n**Conclusion:** $h$ est **impaire**"
+                "$f(x)$ est un polynôme, donc $D_f = \\mathbb{R}$",
+                "Le dénominateur s'annule pour $x = 7$, donc $D_f = \\mathbb{R} \\setminus \\{7\\}$ ou $D_f = ]-\\infty; 7[ \\cup ]7; +\\infty[$",
+                "On doit avoir $2x + 3 \\geq 0$, soit $x \\geq -\\dfrac{3}{2}$, donc $D_f = \\left[-\\dfrac{3}{2}; +\\infty\\right[$",
+                "On doit avoir $x - 1 > 0$ (strictement, car au dénominateur), soit $x > 1$, donc $D_f = ___$]1; +\\infty[$___$"
               ]
-            },
-            {
-              "type": "explain-box",
-              "statement": "**Intérêt pédagogique:**\n\nSi une fonction est paire ou impaire, l'étude de ses variations sur $[0, +\\infty[$ suffit pour déduire son comportement sur $\\mathbb{R}$.",
-              "placeholder": "Les variations sont opposées pour une fonction paire, identiques pour une fonction impaire..."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "title": "Monotonie et variations",
-      "subsections": [
-        {
-          "title": "Étude de la monotonie",
-          "elements": [
-            {
-              "type": "definition-box",
-              "preamble": "Soit $f$ une fonction définie sur un intervalle $I$:",
-              "listType": "bullet",
-              "content": [
-                "$f$ est **croissante** (resp. **strictement croissante**) sur $I$ si:\n$$\\forall x, x' \\in I: x < x' \\Rightarrow f(x) \\leq f(x')$$\n(resp. $f(x) < f(x')$)",
-                "$f$ est **décroissante** (resp. **strictement décroissante**) sur $I$ si:\n$$\\forall x, x' \\in I: x < x' \\Rightarrow f(x) \\geq f(x')$$\n(resp. $f(x) > f(x')$)",
-                "$f$ est **constante** sur $I$ si:\n$$\\forall x, x' \\in I: f(x) = f(x')$$"
-              ]
-            },
-            {
-              "type": "p",
-              "content": "?> **Astuce:** Pour étudier la monotonie sans calcul, observez comment la courbe monte ($\\nearrow$), descend ($\\searrow$) ou reste plate ($\\rightarrow$)."
-            },
-            {
-              "type": "example-box",
-              "preamble": "Analysons $f(x) = x^2 - 2x$ sur plusieurs intervalles:",
-              "listType": "bullet",
-              "content": [
-                "Sur $]-\\infty, 1]$: $f$ est **strictement décroissante** (la courbe descend)",
-                "Sur $[1, +\\infty[$: $f$ est **strictement croissante** (la courbe monte)",
-                "Le point $x = 1$ correspond au **minimum** de la fonction"
-              ]
-            },
-            {
-              "type": "practice-box",
-              "statement": "À partir du tableau de variation ci-dessous, répondez:",
-              "content": [
-                "Sur quel intervalle $f$ est-elle croissante?",
-                "Sur quel intervalle $f$ est-elle décroissante?",
-                "Quels sont les extremums locaux?"
-              ],
-              "placeholder": "Lisez le tableau: $\\nearrow$ = croissante, $\\searrow$ = décroissante...",
-              "solution": [
-                "**Lecture d'un tableau de variation:**\n\n• **Intervalles de croissance:** Là où les flèches montent ($\\nearrow$)\n\n• **Intervalles de décroissance:** Là où les flèches descendent ($\\searrow$)\n\n• **Extremums locaux:** Points où la direction change\n  - Maximum local: passage de $\\nearrow$ à $\\searrow$\n  - Minimum local: passage de $\\searrow$ à $\\nearrow$",
-                "**Exemple:** Si le tableau montre:\n```\n$x$ │ -∞    2    5    +∞\n────┼─────────────────────\n$f$ │ ↗  3  ↘  1  ↗\n```\n• Croissante sur $]-\\infty, 2]$ et $[5, +\\infty[$\n\n• Décroissante sur $[2, 5]$\n\n• Maximum local en $x = 2$ (valeur: 3)\n\n• Minimum local en $x = 5$ (valeur: 1)"
-              ]
-            },
-            {
-              "type": "explain-box",
-              "statement": "**Interprétation géométrique:**\n\nLa monotonie décrit comment les valeurs de la fonction évoluent lorsque $x$ augmente. Un tableau de variation résume cette information.",
-              "placeholder": "Tracez une courbe hypothétique basée sur le tableau..."
             }
           ]
         },
         {
-          "title": "Taux d'accroissement",
+          "title": "Courbe Représentative",
           "elements": [
-            {
-              "type": "definition-box",
-              "content": "Soit $f$ une fonction numérique définie sur l'intervalle $I$. Pour $x$ et $x'$ de $I$ avec $x \\neq x'$, le nombre:\n$$T_f = \\frac{f(x) - f(x')}{x - x'}$$\n\ns'appelle le **taux d'accroissement** de $f$ entre $x$ et $x'$."
-            },
-            {
-              "type": "theorem-box",
-              "preamble": "Propriétés du taux d'accroissement:",
-              "listType": "bullet",
-              "content": [
-                "Si $T_f > 0$, alors $f$ est **strictement croissante** sur $I$",
-                "Si $T_f < 0$, alors $f$ est **strictement décroissante** sur $I$",
-                "Si $T_f = 0$, alors $f$ est **constante** sur $I$"
-              ]
-            },
-            {
-              "type": "example-box",
-              "preamble": "Calculons le taux d'accroissement de $f(x) = 2x^2$ entre $x_1 = 1$ et $x_2 = 3$:",
-              "listType": "bullet",
-              "content": [
-                "$$T_f = \\frac{f(3) - f(1)}{3 - 1} = \\frac{2(3)^2 - 2(1)^2}{2} = \\frac{18-2}{2} = \\frac{16}{2} = 8$$",
-                "Puisque $T_f = 8 > 0$, la fonction est croissante entre $x = 1$ et $x = 3$"
-              ]
-            },
-            {
-              "type": "practice-box",
-              "statement": "Calculer le taux d'accroissement pour:",
-              "content": [
-                "$$f(x) = -x^2 + 4x \\text{ entre } x = 1 \\text{ et } x = 4$$",
-                "$$g(x) = \\frac{1}{x} \\text{ entre } x = 1 \\text{ et } x = 3$$",
-                "$$h(x) = x^3 - 2x \\text{ entre } x = 0 \\text{ et } x = 2$$"
-              ],
-              "placeholder": "Appliquez la formule $T_f = \\displaystyle\\frac{f(x_2) - f(x_1)}{x_2 - x_1}$...",
-              "solution": [
-                "**a) $f(x) = -x^2 + 4x$ entre $x_1 = 1$ et $x_2 = 4$**\n\nCalcul des images:\n• $f(1) = -(1)^2 + 4(1) = -1 + 4 = 3$\n• $f(4) = -(4)^2 + 4(4) = -16 + 16 = 0$\n\nTaux d'accroissement:\n$$T_f = \\frac{f(4) - f(1)}{4 - 1} = \\frac{0 - 3}{3} = \\frac{-3}{3} = -1$$\n\n**Interprétation:** $T_f = -1 < 0$, donc $f$ est décroissante sur $[1, 4]$",
-                "**b) $g(x) = \\frac{1}{x}$ entre $x_1 = 1$ et $x_2 = 3$**\n\nCalcul des images:\n• $g(1) = \\frac{1}{1} = 1$\n• $g(3) = \\frac{1}{3}$\n\nTaux d'accroissement:\n$$T_g = \\frac{g(3) - g(1)}{3 - 1} = \\frac{\\frac{1}{3} - 1}{2} = \\frac{-\\frac{2}{3}}{2} = -\\frac{1}{3}$$\n\n**Interprétation:** $T_g = -\\frac{1}{3} < 0$, donc $g$ est décroissante sur $[1, 3]$",
-                "**c) $h(x) = x^3 - 2x$ entre $x_1 = 0$ et $x_2 = 2$**\n\nCalcul des images:\n• $h(0) = (0)^3 - 2(0) = 0$\n• $h(2) = (2)^3 - 2(2) = 8 - 4 = 4$\n\nTaux d'accroissement:\n$$T_h = \\frac{h(2) - h(0)}{2 - 0} = \\frac{4 - 0}{2} = \\frac{4}{2} = 2$$\n\n**Interprétation:** $T_h = 2 > 0$, donc $h$ est croissante sur $[0, 2]$"
-              ]
-            },
-            {
-              "type": "explain-box",
-              "statement": "**Sens géométrique:**\n\nLe taux d'accroissement mesure la \"pente moyenne\" de la courbe entre deux points. Un taux positif signifie une montée moyenne, un taux négatif une descente moyenne.",
-              "placeholder": "Dessinez deux points sur une courbe et visualisez la pente de la droite qui les relie..."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "title": "Extremums d'une fonction",
-      "subsections": [
-        {
-          "title": "Extremums absolus et relatifs",
-          "elements": [
-            {
-              "type": "definition-box",
-              "preamble": "Soit $f$ une fonction définie sur $D_f$ avec $x_0 \\in D_f$:",
-              "listType": "bullet",
-              "content": [
-                "$f(x_0)$ est une **valeur maximale absolue** si:\n$$\\forall x \\in D_f: f(x) \\leq f(x_0)$$",
-                "$f(x_0)$ est une **valeur minimale absolue** si:\n$$\\forall x \\in D_f: f(x) \\geq f(x_0)$$",
-                "$f(x_0)$ est une **valeur maximale relative** s'il existe un intervalle ouvert $I_{x_0}$ de centre $x_0$ tel que:\n$$\\forall x \\in I_{x_0} \\cap D_f: f(x) \\leq f(x_0)$$",
-                "$f(x_0)$ est une **valeur minimale relative** s'il existe un intervalle ouvert $I_{x_0}$ de centre $x_0$ tel que:\n$$\\forall x \\in I_{x_0} \\cap D_f: f(x) \\geq f(x_0)$$"
-              ]
-            },
             {
               "type": "p",
-              "content": "!> **Distinction importante:** Un extremum absolu est valable **sur tout le domaine**, tandis qu'un extremum relatif n'existe que dans un **voisinage local** du point."
+              "content": "La représentation graphique d'une fonction est un outil puissant pour visualiser son comportement et identifier ses propriétés principales. La courbe représentative permet une étude qualitative et quantitative de la fonction."
             },
-            {
-              "type": "example-box",
-              "preamble": "Analysons $f(x) = x^2 - 4x + 3$ sur $\\mathbb{R}$:",
-              "listType": "bullet",
-              "content": [
-                "Le sommet de la parabole est au point $(2, -1)$",
-                "$f(2) = -1$ est une **valeur minimale absolue** car $f(x) \\geq -1$ pour tout $x \\in \\mathbb{R}$",
-                "Il n'existe pas de maximale absolue puisque la parabole s'étend vers l'infini"
-              ]
-            },
-            {
-              "type": "practice-box",
-              "statement": "Pour la fonction définie par le tableau de variation suivant, déterminez:",
-              "content": [
-                "Les extremums relatifs (s'ils existent)",
-                "Les extremums absolus sur le domaine $[-3, +\\infty[$",
-                "Les intervalles où la fonction est croissante/décroissante"
-              ],
-              "placeholder": "Consultez le tableau: cherchez les points où les flèches changent de direction...",
-              "solution": [
-                "**Méthode générale pour identifier les extremums:**\n\n**Extremums relatifs (locaux):**\n• Maximum relatif: point où $f$ passe de croissante à décroissante\n• Minimum relatif: point où $f$ passe de décroissante à croissante\n\n**Extremums absolus:**\n• Maximum absolu: plus grande valeur de $f$ sur tout le domaine\n• Minimum absolu: plus petite valeur de $f$ sur tout le domaine\n• Ne pas oublier de vérifier les valeurs aux bornes du domaine!",
-                "**Exemple d'application:** Si le tableau montre sur $[-3, +\\infty[$ :\n```\n$x$ │ -3    -1    2    +∞\n────┼──────────────────────\n$f$ │ 1  ↗  5  ↘  0  ↗\n```\n\n• **Extremums relatifs:**\n  - Maximum relatif en $x = -1$ (valeur: 5)\n  - Minimum relatif en $x = 2$ (valeur: 0)\n\n• **Extremums absolus sur $[-3, +\\infty[$:**\n  - Maximum absolu: 5 (en $x = -1$)\n  - Pas de minimum absolu (car $f$ tend vers $+\\infty$ quand $x \\to +\\infty$)\n\n• **Monotonie:**\n  - Croissante sur $[-3, -1]$ et $[2, +\\infty[$\n  - Décroissante sur $[-1, 2]$"
-              ]
-            },
-            {
-              "type": "explain-box",
-              "statement": "**Lien avec le tableau de variation:**\n\nUn extremum relatif apparaît toujours à un point où le tableau montre un changement de direction (flèche qui monte puis descend, ou vice-versa).",
-              "placeholder": "Tracez un tableau et identifiez les extremums graphiquement..."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "title": "Majorants, minorants et bornes",
-      "subsections": [
-        {
-          "title": "Fonctions majorées, minorées, bornées",
-          "elements": [
             {
               "type": "definition-box",
-              "preamble": "Soit $f$ une fonction définie sur un intervalle $I \\subseteq D_f$ et $M, m \\in \\mathbb{R}$:",
-              "listType": "bullet",
-              "content": [
-                "$f$ est **majorée par $M$** sur $I$ si:\n$$\\forall x \\in I: f(x) \\leq M$$",
-                "$f$ est **minorée par $m$** sur $I$ si:\n$$\\forall x \\in I: f(x) \\geq m$$",
-                "$f$ est **bornée** sur $I$ si elle est à la fois majorée et minorée, c'est-à-dire:\n$$\\exists M, m \\in \\mathbb{R}, \\forall x \\in I: m \\leq f(x) \\leq M$$"
-              ]
+              "preamble": "**Courbe Représentative** :",
+              "content": "Dans un repère du plan, la courbe représentative, notée $(C_f)$, d'une fonction numérique $f$ est l'ensemble des points $M(x, y)$ tels que :\n\n$$x \\in D_f \\text{ et } y = f(x)$$\n\nOn la note aussi :\n$$(C_f) = \\{M(x; y) / x \\in D_f \\text{ et } y = f(x)\\} = \\{M(x; f(x)) / x \\in D_f\\}$$"
             },
             {
-              "type": "p",
-              "content": "?> **Astuce:** Dire qu'une fonction est bornée équivaut à dire $\\exists A > 0$ tel que $\\forall x \\in I: |f(x)| \\leq A$."
-            },
-            {
-              "type": "example-box",
-              "preamble": "Analysons les bornes de $f(x) = \\sin x$ sur $\\mathbb{R}$:",
-              "listType": "bullet",
-              "content": [
-                "Pour tout $x \\in \\mathbb{R}$: $-1 \\leq \\sin x \\leq 1$",
-                "Donc $f$ est **minorée par $-1$** et **majorée par $1$**",
-                "Par conséquent, $f$ est **bornée** sur $\\mathbb{R}$, avec $A = 1$"
-              ]
-            },
-            {
-              "type": "practice-box",
-              "statement": "Étudier si les fonctions suivantes sont majorées, minorées ou bornées:",
-              "content": [
-                "$$f(x) = x^2 \\text{ sur } [0, 3]$$",
-                "$$g(x) = \\frac{1}{x-1} \\text{ sur } ]1, +\\infty[$$",
-                "$$h(x) = \\cos x \\text{ sur } \\mathbb{R}$$"
-              ],
-              "placeholder": "Pour chaque fonction, trouvez les valeurs minimales et maximales possibles...",
-              "solution": "**Pour $f(x) = x^2$ sur $[0, 3]$:**\n\nLa fonction carré est croissante sur $[0, +\\infty[$, donc sur $[0, 3]$:\n- Minimum atteint en $x = 0$: $f(0) = 0$\n- Maximum atteint en $x = 3$: $f(3) = 9$\n- Donc $f$ est **minorée par $0$** et **majorée par $9$**\n- Par conséquent, $f$ est **bornée** sur $[0, 3]$\n\n**Pour $g(x) = \\frac{1}{x-1}$ sur $]1, +\\infty[$:**\n\nAnalysons le comportement de cette fonction:\n- Quand $x \\to 1^+$: $g(x) \\to +\\infty$ (pas de majorant)\n- Quand $x \\to +\\infty$: $g(x) \\to 0^+$\n- Pour tout $x > 1$: $g(x) > 0$ (fonction strictement positive)\n- Donc $g$ est **minorée par $0$** mais **non majorée**\n- Par conséquent, $g$ **n'est pas bornée** sur $]1, +\\infty[$\n\n**Pour $h(x) = \\cos x$ sur $\\mathbb{R}$:**\n\nPropriété de la fonction cosinus:\n- Pour tout $x \\in \\mathbb{R}$: $-1 \\leq \\cos x \\leq 1$\n- Minimum: $\\cos x = -1$ (atteint en $x = \\pi + 2k\\pi$, $k \\in \\mathbb{Z}$)\n- Maximum: $\\cos x = 1$ (atteint en $x = 2k\\pi$, $k \\in \\mathbb{Z}$)\n- Donc $h$ est **minorée par $-1$** et **majorée par $1$**\n- Par conséquent, $h$ est **bornée** sur $\\mathbb{R}$"
-            },
-            {
-              "type": "explain-box",
-              "statement": "**Application pratique:**\n\nDetérminer si une fonction est bornée est essentiel pour comprendre son comportement global. Une fonction non bornée n'a pas de limite finie à l'infini.",
-              "placeholder": "Pensez: une parabole est-elle bornée? Une hyperbole? Un sinus?"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "title": "Composition de fonctions",
-      "subsections": [
-        {
-          "title": "Définition et notation",
-          "elements": [
-            {
-              "type": "definition-box",
-              "content": "Soient $f$ et $g$ deux fonctions définies respectivement sur $D_f$ et $D_g$ avec $f(D_f) \\subseteq D_g$.\n\nLa **fonction composée** $g \\circ f$ est définie sur:\n$$D_{g \\circ f} = \\{x \\in D_f : f(x) \\in D_g\\}$$\n\npar la relation:\n$$(g \\circ f)(x) = g(f(x))$$"
-            },
-            {
-              "type": "p",
-              "content": "!> **Attention:** L'ordre compte! En général, $g \\circ f \\neq f \\circ g$. Par exemple, avec $f(x) = 2x$ et $g(x) = x^2$, on a $(g \\circ f)(x) = 4x^2$ mais $(f \\circ g)(x) = 2x^2$."
-            },
-            {
-              "type": "example-box",
-              "preamble": "Soient $f(x) = x^2 + 1$ et $g(x) = \\sqrt{x}$:",
-              "listType": "bullet",
-              "content": [
-                "$D_f = \\mathbb{R}$ et $D_g = [0, +\\infty[$",
-                "$(g \\circ f)(x) = g(f(x)) = g(x^2 + 1) = \\sqrt{x^2 + 1}$",
-                "On a $D_{g \\circ f} = \\mathbb{R}$ car $x^2 + 1 \\geq 1 > 0$ pour tout $x$",
-                "$(f \\circ g)(x) = f(g(x)) = f(\\sqrt{x}) = (\\sqrt{x})^2 + 1 = x + 1$ avec $D_{f \\circ g} = [0, +\\infty[$"
-              ]
-            },
-            {
-              "type": "practice-box",
-              "statement": "Soient $f(x) = x + 2$ et $g(x) = \\displaystyle\\frac{1}{x}$. Calculer:",
-              "content": [
-                "$(g \\circ f)(x)$ et son domaine",
-                "$(f \\circ g)(x)$ et son domaine",
-                "$(g \\circ f)(3)$ et $(f \\circ g)(3)$"
-              ],
-              "placeholder": "Substituez progressivement: d'abord calculez $f(x)$, puis appliquez $g$ au résultat...",
-              "solution": "**Pour $(g \\circ f)(x)$ et son domaine:**\n\n$$(g \\circ f)(x) = g(f(x)) = g(x + 2) = \\frac{1}{x + 2}$$\n\nPour le domaine:\n- $D_f = \\mathbb{R}$\n- $D_g = \\mathbb{R}^* = \\mathbb{R} \\backslash \\{0\\}$\n- Il faut que $x \\in D_f$ et que $f(x) \\in D_g$\n- Donc $x \\in \\mathbb{R}$ et $x + 2 \\neq 0$\n- D'où: $D_{g \\circ f} = \\mathbb{R} \\backslash \\{-2\\}$\n\n**Pour $(f \\circ g)(x)$ et son domaine:**\n\n$$(f \\circ g)(x) = f(g(x)) = f\\left(\\frac{1}{x}\\right) = \\frac{1}{x} + 2 = \\frac{1 + 2x}{x}$$\n\nPour le domaine:\n- $D_g = \\mathbb{R}^*$\n- $D_f = \\mathbb{R}$\n- Il faut que $x \\in D_g$ et que $g(x) \\in D_f$\n- Comme $g(x) = \\frac{1}{x} \\in \\mathbb{R}$ pour tout $x \\neq 0$\n- D'où: $D_{f \\circ g} = \\mathbb{R}^* = \\mathbb{R} \\backslash \\{0\\}$\n\n**Calculs numériques:**\n\n$$(g \\circ f)(3) = \\frac{1}{3 + 2} = \\frac{1}{5}$$\n\n$$(f \\circ g)(3) = \\frac{1}{3} + 2 = \\frac{1 + 6}{3} = \\frac{7}{3}$$\n\nOn remarque bien que $(g \\circ f)(3) \\neq (f \\circ g)(3)$, donc $g \\circ f \\neq f \\circ g$."
-            },
-            {
-              "type": "explain-box",
-              "statement": "**Diagramme de composition:**\n\n$$x \\xrightarrow{f} f(x) \\xrightarrow{g} g(f(x)) = (g \\circ f)(x)$$",
-              "placeholder": "Visualisez le flux: $x$ entre dans $f$, sort transformé, puis entre dans $g$..."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "title": "Étude graphique de fonctions particulières",
-      "subsections": [
-        {
-          "title": "Parabole: $f(x) = ax^2 + bx + c$ avec $a \\neq 0$",
-          "elements": [
-            {
-              "type": "definition-box",
-              "content": "La fonction $f(x) = ax^2 + bx + c$ (avec $a \\neq 0$) est appelée **fonction du second degré** ou **polynôme de degré 2**.\n\nSa courbe représentative est une **parabole**.\n\nOn peut l'écrire sous forme canonique:\n$$f(x) = a\\left(x + \\frac{b}{2a}\\right)^2 - \\frac{\\Delta}{4a}$$\n\noù $\\Delta = b^2 - 4ac$ est le discriminant."
-            },
-            {
-              "type": "theorem-box",
-              "preamble": "Caractéristiques de la parabole $f(x) = ax^2 + bx + c$:",
-              "listType": "bullet",
-              "content": [
-                "**Sommet (extremum):** $S\\left(-\\frac{b}{2a}, f\\left(-\\frac{b}{2a}\\right)\\right)$",
-                "**Axe de symétrie:** droite d'équation $x = -\\frac{b}{2a}$",
-                "**Orientation:**\n  - Si $a > 0$: parabole ouverte vers le haut, minimum en $S$\n  - Si $a < 0$: parabole ouverte vers le bas, maximum en $S$"
-              ]
-            },
-            {
-              "type": "example-box",
-              "preamble": "Étudions $f(x) = 2x^2 - 4x + 3$:",
-              "listType": "bullet",
-              "content": [
-                "On a $a = 2 > 0$, donc la parabole s'ouvre vers le haut",
-                "Sommet: $x_s = -\\frac{-4}{2(2)} = 1$ et $f(1) = 2(1)^2 - 4(1) + 3 = 1$",
-                "Donc le sommet est $S(1, 1)$ et c'est un **minimum**",
-                "Axe de symétrie: $x = 1$",
-                "La fonction est décroissante sur $]-\\infty, 1]$ et croissante sur $[1, +\\infty[$"
-              ]
-            },
-            {
-              "type": "practice-box",
-              "statement": "Pour chaque fonction, déterminer:",
-              "content": [
-                "$$f(x) = -x^2 + 4x - 3$$",
-                "L'orientation (vers haut ou bas)",
-                "Les coordonnées du sommet",
-                "L'équation de l'axe de symétrie",
-                "Le tableau de variation"
-              ],
-              "placeholder": "Commencez par identifier $a$, puis calculez $x_s = -\\displaystyle\\frac{b}{2a}$...",
-              "solution": "**Pour $f(x) = -x^2 + 4x - 3$:**\n\nIdentifions les coefficients: $a = -1$, $b = 4$, $c = -3$\n\n**Orientation:**\n- Comme $a = -1 < 0$, la parabole est orientée **vers le bas** (concave)\n\n**Coordonnées du sommet:**\n\nAbscisse du sommet:\n$$x_s = -\\frac{b}{2a} = -\\frac{4}{2 \\times (-1)} = -\\frac{4}{-2} = 2$$\n\nOrdonnée du sommet:\n$$y_s = f(2) = -(2)^2 + 4(2) - 3 = -4 + 8 - 3 = 1$$\n\nDonc le sommet est: $S(2, 1)$\n\nComme $a < 0$, ce sommet est un **maximum**.\n\n**Axe de symétrie:**\n\nL'équation de l'axe de symétrie est: $x = 2$ (droite verticale passant par le sommet)\n\n**Tableau de variation:**\n\n$$\\begin{array}{c|ccc}\nx & -\\infty & & 2 & & +\\infty \\\\\n\\hline\n& & \\searrow & & \\searrow & \\\\\nf(x) & & & 1 & & \\\\\n& -\\infty & & \\text{(max)} & & -\\infty\n\\end{array}$$\n\n- La fonction est **croissante** sur $]-\\infty, 2]$\n- La fonction est **décroissante** sur $[2, +\\infty[$\n- Maximum global: $f(2) = 1$"
-            },
-            {
-              "type": "explain-box",
-              "statement": "**Construction de la courbe:**\n\n1. Localisez le sommet\n2. Tracez l'axe de symétrie (droite verticale passant par le sommet)\n3. Calculez quelques points (intersections avec les axes, points symétriques)\n4. Dessinez la parabole lisse en respectant l'orientation",
-              "placeholder": "Utilisez la symétrie: si vous connaissez $f(x)$, alors $f(2x_s - x) = f(x)$..."
+              "type": "remark-box",
+              "content": "**Lecture graphique** : On peut lire facilement l'image d'un élément $a$ ou d'un intervalle $I$ par une fonction $f$ à partir de la représentation graphique ou du tableau de variations de $f$."
             }
           ]
         },
         {
-          "title": "Cubique: $f(x) = ax^3$ avec $a \\neq 0$",
+          "title": "Sens de Variations",
           "elements": [
             {
+              "type": "p",
+              "content": "L'étude du sens de variation d'une fonction permet de comprendre comment elle évolue. On distingue trois cas : croissance, décroissance et constance."
+            },
+            {
               "type": "definition-box",
-              "content": "La fonction $f(x) = ax^3$ (avec $a \\neq 0$) est une **fonction cubique de base**.\n\nSa courbe représentative s'appelle une **cubique**."
+              "preamble": "**Sens de Variations** :",
+              "content": "Soit $f$ une fonction numérique définie sur un intervalle $I$ inclus dans $D_f$.\n\n1. On dit que $f$ est **strictement croissante** sur $I$ si pour tous $x_1$ et $x_2$ de $I$ tels que $x_1 \\leq x_2$, on a $f(x_1) \\leq f(x_2)$.\n   $$\\forall(x_1; x_2) \\in I^2 \\quad x_1 \\leq x_2 \\Rightarrow f(x_1) \\leq f(x_2)$$\n\n2. On dit que $f$ est **strictement décroissante** sur $I$ si pour tous $x_1$ et $x_2$ de $I$ tels que $x_1 \\leq x_2$, on a $f(x_1) \\geq f(x_2)$.\n   $$\\forall(x_1; x_2) \\in I^2 \\quad x_1 \\leq x_2 \\Rightarrow f(x_1) \\geq f(x_2)$$\n\n3. On dit que $f$ est **constante** sur $I$ si pour tous $x_1$ et $x_2$ de $I$, on a $f(x_1) = f(x_2)$.\n   $$\\forall(x_1; x_2) \\in I^2 \\quad f(x_1) = f(x_2)$$"
+            },
+            {
+              "type": "remark-box",
+              "content": "**Notation** : On dit que $f$ est strictement croissante sur $I$ si : $\\forall(x_1; x_2) \\in I^2$, $x_1 < x_2 \\Rightarrow f(x_1) < f(x_2)$"
+            },
+            {
+              "type": "practice-box",
+              "statement": "Soit $f$ la fonction définie sur $\\mathbb{R}$ par $f(x) = -2x^2$",
+              "content": [
+                "Montrer que $f$ est décroissante sur l'intervalle $I = ]0; +\\infty[$",
+                "Montrer que $f$ est croissante sur l'intervalle $J = ]-\\infty; 0[$"
+              ],
+              "solution": [
+                "Soit $x_1, x_2 \\in ]0; +\\infty[$ avec $x_1 < x_2$. Alors $x_1^2 < x_2^2$, donc $-2x_1^2 > -2x_2^2$, c'est-à-dire $f(x_1) > f(x_2)$. Donc $f$ est strictement décroissante sur $]0; +\\infty[$",
+                "Soit $x_1, x_2 \\in ]-\\infty; 0[$ avec $x_1 < x_2 < 0$. Alors $x_1^2 > x_2^2$ (car les deux sont négatifs), donc $-2x_1^2 < -2x_2^2$, c'est-à-dire $f(x_1) < f(x_2)$. Donc $f$ est strictement croissante sur $]-\\infty; 0[$"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Extremums d'une Fonction",
+          "elements": [
+            {
+              "type": "p",
+              "content": "Les extremums (maxima et minima) d'une fonction sont des points importants qui permettent de caractériser le comportement global de la fonction sur un intervalle donné."
+            },
+            {
+              "type": "definition-box",
+              "preamble": "**Extremums** :",
+              "content": "Soit $f$ une fonction numérique, $I$ un intervalle inclus dans $D_f$ et $\\alpha$ un élément de $I$.\n\n1. On dit que $f$ **atteint son minimum** sur $I$ en $\\alpha$, si pour tout $x$ de $I$ :\n   $$f(\\alpha) \\leq f(x)$$\n   Dans ce cas, le minimum de $f$ sur $I$ vaut $f(\\alpha)$, et on écrit : $f(\\alpha) = \\min_{x \\in I} f(x)$\n\n2. On dit que $f$ **atteint son maximum** sur $I$ en $\\alpha$, si pour tout $x$ de $I$ :\n   $$f(x) \\leq f(\\alpha)$$\n   Dans ce cas, le maximum de $f$ sur $I$ vaut $f(\\alpha)$, et on écrit : $f(\\alpha) = \\max_{x \\in I} f(x)$"
+            },
+            {
+              "type": "p",
+              "content": "!> **Important** : Le terme **extremum** recouvre à la fois les notions de minimum et de maximum. Lorsque l'intervalle $I$ est égal au domaine de définition $D_f$, on parle de **minimum global** ou de **maximum global**. Lorsque l'intervalle $I$ est strictement inclus dans $D_f$, on parle de **minimum local** ou de **maximum local**."
+            }
+          ]
+        },
+        {
+          "title": "Fonctions Minorées, Majorées et Bornées",
+          "elements": [
+            {
+              "type": "p",
+              "content": "Ces concepts permettent de caractériser les limites que ne dépasse pas une fonction sur un intervalle donné."
+            },
+            {
+              "type": "definition-box",
+              "preamble": "**Minoration et Majoration** :",
+              "content": "Soit $f$ une fonction numérique et $I$ un intervalle inclus dans $D_f$.\n\n1. On dit que $f$ est **majorée** sur $I$ si :\n   $$(\\exists M \\in \\mathbb{R}) \\quad (\\forall x \\in I) \\quad f(x) \\leq M$$\n\n2. On dit que $f$ est **minorée** sur $I$ si :\n   $$(\\exists m \\in \\mathbb{R}) \\quad (\\forall x \\in I) \\quad m \\leq f(x)$$\n\n3. On dit que $f$ est **bornée** sur $I$ si elle est majorée et minorée."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Applications** :",
+              "content": "Soit la fonction $f$ définie sur $\\mathbb{R}$ par $f(x) = \\dfrac{2x^2 + 3}{x^2 + 1}$\n\n1. **Minoration** : Pour tout $x \\in \\mathbb{R}$, on a $x^2 \\geq 0$, donc $x^2 + 1 \\geq 1 > 0$ et $2x^2 + 3 \\geq 3$\n   \n   Ainsi : $f(x) = \\dfrac{2x^2 + 3}{x^2 + 1} \\geq ___2___$ (en minorant)\n\n2. **Majoration** : On peut écrire $f(x) = \\dfrac{2(x^2 + 1) + 1}{x^2 + 1} = 2 + \\dfrac{1}{x^2 + 1} \\leq 2 + 1 = 3$\n\n3. **Conclusion** : $f$ est bornée sur $\\mathbb{R}$, avec $2 \\leq f(x) \\leq 3$ pour tout $x \\in \\mathbb{R}$"
+            },
+            {
+              "type": "practice-box",
+              "statement": "Soit la fonction définie sur $\\mathbb{R}$ par $f(x) = \\cos(x) - \\sin(x)$",
+              "content": [
+                "Montrer que $f$ est bornée sur $\\mathbb{R}$"
+              ],
+              "solution": [
+                "On utilise la propriété : $|\\cos(x) - \\sin(x)| \\leq |\\cos(x)| + |\\sin(x)| \\leq 1 + 1 = 2$\n\nDonc $-2 \\leq \\cos(x) - \\sin(x) \\leq 2$, soit $-2 \\leq f(x) \\leq 2$\n\nPar conséquent, $f$ est majorée par 2 et minorée par -2, donc elle est bornée sur $\\mathbb{R}$"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Parité et Périodicité",
+          "elements": [
+            {
+              "type": "p",
+              "content": "La parité et la périodicité sont des propriétés de symétrie qui caractérisent l'allure de la courbe représentative et simplifient l'étude d'une fonction."
+            },
+            {
+              "type": "definition-box",
+              "preamble": "**Fonctions Paires et Impaires** :",
+              "content": "Soit $f$ une fonction numérique d'une variable réelle dont l'ensemble de définition $D_f$ est symétrique par rapport à 0.\n\n1. On dit que $f$ est **paire** si :\n   $$(\\forall x \\in D_f) \\quad f(-x) = f(x)$$\n   **Graphiquement** : La courbe représentative d'une fonction paire est symétrique par rapport à l'axe des ordonnées.\n\n2. On dit que $f$ est **impaire** si :\n   $$(\\forall x \\in D_f) \\quad f(-x) = -f(x)$$\n   **Graphiquement** : La courbe représentative d'une fonction impaire est symétrique par rapport à l'origine du repère."
+            },
+            {
+              "type": "definition-box",
+              "preamble": "**Fonctions Périodiques** :",
+              "content": "Une fonction numérique $f$ est dite **périodique** s'il existe un réel $T$ strictement positif tel que :\n\n1. $$\\forall x \\in D_f \\quad x + T \\in D_f \\text{ (ou } x - T \\in D_f)$$\n\n2. $$\\forall x \\in D_f \\quad f(x + T) = f(x) \\text{ (ou } f(x - T) = f(x))$$\n\nLe réel $T$ est appelé **période** de la fonction $f$.\n\n**Remarque** : Pour tracer la courbe représentative d'une fonction $T$-périodique, il suffit de connaître sa représentation sur un intervalle de longueur $T$."
+            },
+            {
+              "type": "practice-box",
+              "statement": "Étudier la parité des fonctions suivantes :",
+              "content": [
+                "$f(x) = 3x^2 - x - 1$",
+                "$f(x) = \\dfrac{x}{1 - x^2}$",
+                "$f(x) = \\dfrac{1 - \\sqrt{x}}{x}$"
+              ],
+              "solution": [
+                "$f(-x) = 3(-x)^2 - (-x) - 1 = 3x^2 + x - 1 \\neq f(x)$ et $f(-x) \\neq -f(x)$. Donc $f$ n'est ni paire ni impaire.",
+                "$D_f = \\mathbb{R} \\setminus \\{-1; 1\\}$ est symétrique par rapport à 0.\n$f(-x) = \\dfrac{-x}{1 - (-x)^2} = \\dfrac{-x}{1 - x^2} = -f(x)$. Donc $f$ est impaire.",
+                "$f(-x) = \\dfrac{1 - \\sqrt{-x}}{-x}$ n'existe pas pour $x > 0$ car $\\sqrt{-x}$ n'est pas définie. Le domaine $D_f$ n'est pas symétrique par rapport à 0. Donc $f$ n'est ni paire ni impaire."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Comparaison de Deux Fonctions",
+          "elements": [
+            {
+              "type": "p",
+              "content": "Comparer deux fonctions signifie déterminer leur position relative : quelle est la fonction qui est au-dessus de l'autre sur un intervalle donné."
+            },
+            {
+              "type": "definition-box",
+              "preamble": "**Position Relative de Courbes** :",
+              "content": "Soit $f$ et $g$ deux fonctions numériques définies sur le même ensemble $D$, et $(C_f)$ et $(C_g)$ leurs courbes représentatives.\n\n1. On dit que $f$ est **supérieure à** $g$ sur $D$, notée $f \\geq g$, si pour tout $x$ de $D$ :\n   $$f(x) \\geq g(x)$$\n   **Graphiquement** : la courbe $(C_f)$ est située au-dessus de la courbe $(C_g)$.\n\n2. On dit que $f$ est **inférieure à** $g$ sur $D$, notée $f \\leq g$, si pour tout $x$ de $D$ :\n   $$f(x) \\leq g(x)$$\n   **Graphiquement** : la courbe $(C_f)$ est située au-dessous de la courbe $(C_g)$."
+            },
+            {
+              "type": "remark-box",
+              "content": "**Important** : Si il existe un réel $c$ de $D$ tel que $f(c) = g(c)$, alors les courbes $(C_f)$ et $(C_g)$ se croisent au point d'abscisse $c$."
+            }
+          ]
+        },
+        {
+          "title": "Image Directe d'un Intervalle",
+          "elements": [
+            {
+              "type": "p",
+              "content": "L'image directe d'un intervalle par une fonction permet de déterminer l'ensemble de toutes les valeurs que la fonction prend sur cet intervalle."
+            },
+            {
+              "type": "definition-box",
+              "preamble": "**Image Directe** :",
+              "content": "Soit $f$ une fonction numérique et $I$ un intervalle inclus dans $D_f$.\n\nOn appelle **image de $I$ par la fonction** $f$, notée $f(I)$, l'ensemble des images $f(x)$ des éléments $x$ de $I$ :\n\n$$f(I) = \\{y \\in \\mathbb{R} / y = f(x), x \\in I\\}$$"
+            },
+            {
+              "type": "remark-box",
+              "content": "**Lecture graphique** : On peut lire facilement l'image d'un élément $a$ ou d'un intervalle $I$ par une fonction $f$ à partir de la représentation graphique ou du tableau de variations de $f$."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Composition de Fonctions",
+      "subsections": [
+        {
+          "title": "Composée de Deux Fonctions",
+          "elements": [
+            {
+              "type": "p",
+              "content": "La composition de fonctions est une opération qui permet de créer une nouvelle fonction en appliquant successivement deux fonctions. C'est un concept clé qui intervient dans de nombreux domaines des mathématiques."
+            },
+            {
+              "type": "definition-box",
+              "preamble": "**Composée de Deux Fonctions** :",
+              "content": "Soit $u$ une fonction définie sur un intervalle $I$ et $v$ une fonction définie sur un intervalle $J$ tel que $u(I) \\subseteq J$.\n\nOn appelle **composée de $u$ par $v$**, notée $v \\circ u$ (lire « $v$ rond $u$ »), la fonction définie par :\n\n$$(\\forall x \\in I) \\quad (v \\circ u)(x) = v(u(x))$$\n\nLe nombre $v(u(x))$ est l'image de $u(x)$ par la fonction $v$."
+            },
+            {
+              "type": "remark-box",
+              "content": "**Important** : La notation $v \\circ u$ se lit « $v$ rond $u$ ». Le nombre $(v \\circ u)(x)$ est l'image de $u(x)$ par la fonction $v$."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Application** :",
+              "content": "Soit $f$ et $g$ les deux fonctions définies sur $\\mathbb{R}$ par : $f(x) = x + 1$ et $g(x) = x^2 - 1$\n\n1. Calculer $(f \\circ g)(3)$ et $(g \\circ f)(3)$\n\n   $(f \\circ g)(3) = f(g(3)) = f(9 - 1) = f(___8___) = ___9___$\n   \n   $(g \\circ f)(3) = g(f(3)) = g(___4___) = 16 - 1 = ___15___$\n\n2. Donner l'expression de chacune des fonctions $(f \\circ g)$ et $(g \\circ f)$\n\n   $(f \\circ g)(x) = f(g(x)) = f(x^2 - 1) = (x^2 - 1) + 1 = x^2$\n   \n   $(g \\circ f)(x) = g(f(x)) = g(x + 1) = (x + 1)^2 - 1 = x^2 + 2x$$"
+            },
+            {
+              "type": "practice-box",
+              "statement": "Soit $f$ et $g$ les deux fonctions définies sur $\\mathbb{R}$ par : $f(x) = x + 1$ et $g(x) = x^2 - 1$",
+              "content": [
+                "Calculer $(f \\circ g)(3)$ et $(g \\circ f)(3)$",
+                "Donner l'expression de chacune des fonctions $(f \\circ g)(x)$ et $(g \\circ f)(x)$"
+              ],
+              "solution": [
+                "$(f \\circ g)(3) = f(g(3)) = f(9 - 1) = f(8) = 8 + 1 = 9$\n\n$(g \\circ f)(3) = g(f(3)) = g(4) = 16 - 1 = 15$",
+                "$(f \\circ g)(x) = f(g(x)) = f(x^2 - 1) = (x^2 - 1) + 1 = x^2$\n\n$(g \\circ f)(x) = g(f(x)) = g(x + 1) = (x + 1)^2 - 1 = x^2 + 2x + 1 - 1 = x^2 + 2x$"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Composition et Monotonie",
+          "elements": [
+            {
+              "type": "p",
+              "content": "La composition de fonctions préserve les propriétés de monotonie selon certaines règles déterminées par le signe des coefficients directeurs ou les sens de variation."
             },
             {
               "type": "property-box",
-              "preamble": "Propriétés de $f(x) = ax^3$:",
-              "listType": "bullet",
+              "preamble": "**Monotonie de la Composée** :",
               "content": [
-                "**Domaine:** $D_f = \\mathbb{R}$",
-                "**Parité:** $f(-x) = a(-x)^3 = -ax^3 = -f(x)$, donc $f$ est **impaire**",
-                "**Ensemble d'étude:** $[0, +\\infty[$ (la partie négative se déduit par symétrie)",
-                "**Monotonie:**\n  - Si $a > 0$: $f$ est **strictement croissante** sur $\\mathbb{R}$\n  - Si $a < 0$: $f$ est **strictement décroissante** sur $\\mathbb{R}$",
-                "**Point de passage:** $(0, 0)$ (la courbe passe par l'origine)"
-              ]
+                "Soit $u$ une fonction définie sur un intervalle $I$ et $v$ une fonction définie sur un intervalle $J$ tel que $u(I) \\subseteq J$.",
+                ">> **Cas 1 : $v$ est croissante sur $J$**",
+                "Si $u$ est croissante sur $I$, alors $v \\circ u$ est croissante sur $I$",
+                "Si $u$ est décroissante sur $I$, alors $v \\circ u$ est décroissante sur $I$",
+                ">> **Cas 2 : $v$ est décroissante sur $J$**",
+                "Si $u$ est croissante sur $I$, alors $v \\circ u$ est décroissante sur $I$",
+                "Si $u$ est décroissante sur $I$, alors $v \\circ u$ est croissante sur $I$"
+              ],
+              "listType": "bullet"
             },
             {
               "type": "example-box",
-              "preamble": "Analysons $f(x) = x^3$ et $g(x) = -x^3$:",
-              "listType": "bullet",
-              "content": [
-                "Pour $f(x) = x^3$ avec $a = 1 > 0$: la courbe monte de gauche à droite, symétrie par rapport à l'origine",
-                "Pour $g(x) = -x^3$ avec $a = -1 < 0$: la courbe descend de gauche à droite, même symétrie"
-              ]
+              "preamble": "**Application** :",
+              "content": "Soit $f$ la fonction définie sur $I = [-1; +\\infty[$ par : $f(x) = \\sqrt{x^2 + 1}$\n\n1. Déterminer deux fonctions $u$ et $v$ telles que pour tout $x$ de $I$ : $f(x) = (v \\circ u)(x)$\n\n   On peut prendre $u(x) = x^2 + 1$ et $v(x) = \\sqrt{x}$\n\n2. Déduire le sens de variations de $f$ sur $I$\n\n   - $u$ est décroissante sur $[-1, 0]$ et croissante sur $[0, +\\infty[$\n   - $v$ est croissante sur $[0, +\\infty[$\n   - Par composition : $f$ est décroissante sur $[-1, 0]$ et croissante sur $[0, +\\infty[$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Représentation Graphique de Fonctions de Référence",
+      "subsections": [
+        {
+          "title": "Fonction Racine Carrée",
+          "elements": [
+            {
+              "type": "p",
+              "content": "La fonction racine carrée est une fonction de référence fondamentale. Nous l'étudierons d'abord dans son cas simple $f(x) = \\sqrt{x}$, puis nous verrons comment la transformer."
             },
             {
-              "type": "practice-box",
-              "statement": "Dresser le tableau de variation et tracer la courbe de:",
-              "content": [
-                "$$f(x) = \\frac{1}{2}x^3$$",
-                "$$g(x) = -2x^3$$"
-              ],
-              "placeholder": "N'oubliez pas que $f$ et $g$ sont des fonctions impaires, utilisez cette propriété...",
-              "solution": "**Pour $f(x) = \\frac{1}{2}x^3$:**\n\nIdentification: $a = \\frac{1}{2} > 0$\n\n**Propriétés:**\n- Domaine: $D_f = \\mathbb{R}$\n- Fonction impaire: $f(-x) = \\frac{1}{2}(-x)^3 = -\\frac{1}{2}x^3 = -f(x)$\n- Courbe symétrique par rapport à l'origine\n\n**Tableau de variation:**\n\nComme $a > 0$, la fonction est strictement croissante sur $\\mathbb{R}$:\n\n$$\\begin{array}{c|ccc}\nx & -\\infty & & 0 & & +\\infty \\\\\n\\hline\n& & & & \\nearrow & \\\\\nf(x) & -\\infty & & 0 & & +\\infty\n\\end{array}$$\n\n**Quelques points pour tracer:**\n- $f(-2) = \\frac{1}{2}(-8) = -4$\n- $f(-1) = -\\frac{1}{2}$\n- $f(0) = 0$\n- $f(1) = \\frac{1}{2}$\n- $f(2) = 4$\n\n---\n\n**Pour $g(x) = -2x^3$:**\n\nIdentification: $a = -2 < 0$\n\n**Propriétés:**\n- Domaine: $D_g = \\mathbb{R}$\n- Fonction impaire: $g(-x) = -2(-x)^3 = -2(-x^3) = 2x^3 = -g(x)$\n- Courbe symétrique par rapport à l'origine\n\n**Tableau de variation:**\n\nComme $a < 0$, la fonction est strictement décroissante sur $\\mathbb{R}$:\n\n$$\\begin{array}{c|ccc}\nx & -\\infty & & 0 & & +\\infty \\\\\n\\hline\n& & & & \\searrow & \\\\\ng(x) & +\\infty & & 0 & & -\\infty\n\\end{array}$$\n\n**Quelques points pour tracer:**\n- $g(-2) = -2(-8) = 16$\n- $g(-1) = 2$\n- $g(0) = 0$\n- $g(1) = -2$\n- $g(2) = -16$"
-            },
-            {
-              "type": "explain-box",
-              "statement": "**Symétrie centrale:**\n\nLa courbe d'une fonction impaire est symétrique par rapport à l'origine. Si vous retournez la courbe de $180°$ autour de l'origine, vous obtenez la même courbe.",
-              "placeholder": "Tracez quelques points et vérifiez que chaque point $(x, y)$ a un symétrique $(-x, -y)$ sur la courbe..."
+              "type": "definition-box",
+              "preamble": "**Fonction Racine Carrée** :",
+              "content": "On considère la fonction $f$ définie sur $[-a; +\\infty[$ par $f(x) = \\sqrt{x + a}$, où $a$ est un réel.\n\nCette fonction possède les propriétés suivantes :\n1. Elle est **strictement croissante** sur l'intervalle $[-a; +\\infty[$\n2. Le tableau de variations est :\n\n| $x$ | $-a$ | | $+\\infty$ |\n|:---:|:---:|:---:|:---:|\n| $f(x)$ | 0 | $\\nearrow$ | $+\\infty$ |\n\n3. La courbe $(C_f)$ est représentée dans un repère orthonormé avec une allure caractéristique de racine carrée"
             }
           ]
         },
         {
-          "title": "Hyperbole: $f(x) = \\displaystyle\\frac{ax + b}{cx + d}$ avec $c \\neq 0$ et $\\Delta = ad - bc \\neq 0$",
+          "title": "Fonction Cubique",
           "elements": [
             {
+              "type": "p",
+              "content": "La fonction cubique $f(x) = ax^3$ où $a$ est un réel non nul, est une autre fonction de référence importante pour comprendre les fonctions polynômes de degré 3."
+            },
+            {
               "type": "definition-box",
-              "content": "La fonction $f(x) = \\displaystyle\\frac{ax + b}{cx + d}$ (avec $c \\neq 0$ et $ad - bc \\neq 0$) s'appelle une **fonction homographique**.\n\nSa courbe représentative est une **hyperbole**."
+              "preamble": "**Fonction Cubique** :",
+              "content": "On considère la fonction $f$ définie sur $\\mathbb{R}$ par $f(x) = ax^3$, où $a$ est un réel non nul.\n\n**Cas 1 : $a < 0$**\n- La fonction $f$ est strictement décroissante sur $\\mathbb{R}$\n- La courbe $(C_f)$ possède un point d'inflexion à l'origine\n\n**Cas 2 : $a > 0$**\n- La fonction $f$ est strictement croissante sur $\\mathbb{R}$\n- La courbe $(C_f)$ possède un point d'inflexion à l'origine\n- Exemple particulier : $f(1) = a$"
+            }
+          ]
+        },
+        {
+          "title": "Fonction Partie Entière",
+          "elements": [
+            {
+              "type": "p",
+              "content": "La fonction partie entière associe à chaque réel le plus grand entier qui lui est inférieur ou égal. C'est une fonction discontinue qui possède des propriétés particulières."
             },
             {
-              "type": "theorem-box",
-              "preamble": "Caractéristiques de l'hyperbole $f(x) = \\displaystyle\\frac{ax + b}{cx + d}$:",
-              "listType": "bullet",
-              "content": [
-                "**Domaine:** $D_f = \\mathbb{R} \\setminus \\left\\{-\\frac{d}{c}\\right\\}$",
-                "**Asymptote verticale:** droite $x = -\\displaystyle\\frac{d}{c}$",
-                "**Asymptote horizontale:** droite $y = \\displaystyle\\frac{a}{c}$",
-                "**Centre de symétrie:** $\\Omega\\left(-\\displaystyle\\frac{d}{c}, \\displaystyle\\frac{a}{c}\\right)$",
-                "**Monotonie** (dépend du signe de $\\Delta = ad - bc$):\n  - Si $\\Delta > 0$: $f$ est strictement croissante sur chaque intervalle du domaine\n  - Si $\\Delta < 0$: $f$ est strictement décroissante sur chaque intervalle du domaine"
-              ]
-            },
-            {
-              "type": "example-box",
-              "preamble": "Étudions $f(x) = \\displaystyle\\frac{2x + 1}{x - 1}$:",
-              "listType": "bullet",
-              "content": [
-                "On a $a = 2, b = 1, c = 1, d = -1$, donc $\\Delta = 2(-1) - 1(1) = -3 \\neq 0$ ✓",
-                "**Domaine:** $D_f = \\mathbb{R} \\setminus \\{1\\}$",
-                "**Asymptote verticale:** $x = 1$",
-                "**Asymptote horizontale:** $y = \\displaystyle\\frac{2}{1} = 2$",
-                "**Centre de symétrie:** $\\Omega(1, 2)$",
-                "**Monotonie:** $\\Delta = -3 < 0$, donc $f$ est strictement **décroissante** sur $]-\\infty, 1[$ et sur $]1, +\\infty[$"
-              ]
+              "type": "definition-box",
+              "preamble": "**Fonction Partie Entière** :",
+              "content": "Soit $x$ un nombre réel.\n\nOn appelle **partie entière** de $x$, notée $E(x)$ ou $[x]$, le plus grand nombre entier $n$ tel que $n \\leq x$.\n\n**Propriétés** :\n1. Si $n \\leq x < n + 1$ avec $n$ entier, alors $E(x) = n$\n2. $E(n) = n$ pour tout entier $n$\n3. $E(x) \\leq x < E(x) + 1$ pour tout $x \\in \\mathbb{R}$\n4. $E(x + n) = E(x) + n$ pour tout entier $n$"
             },
             {
               "type": "practice-box",
-              "statement": "Pour $f(x) = \\displaystyle\\frac{x + 2}{2x - 1}$, déterminer:",
+              "statement": "Déterminer la partie entière de chacun des nombres suivants :",
               "content": [
-                "Le domaine de définition",
-                "Les asymptotes (verticale et horizontale)",
-                "Le centre de symétrie",
-                "La monotonie",
-                "Construire la courbe dans un repère"
+                "$E(1), E(-1), E(2.3), E(-0.1), E(\\sqrt{2}), E\\left(\\dfrac{1}{3}\\right)$"
               ],
-              "placeholder": "Appliquez systématiquement les formules et vérifiez la valeur de $\\Delta$..."
+              "solution": [
+                "$E(1) = 1$ (car $1 \\leq 1 < 2$)\n\n$E(-1) = -1$ (car $-1 \\leq -1 < 0$)\n\n$E(2.3) = 2$ (car $2 \\leq 2.3 < 3$)\n\n$E(-0.1) = -1$ (car $-1 \\leq -0.1 < 0$)\n\n$E(\\sqrt{2}) = 1$ (car $1 \\leq 1.414... < 2$)\n\n$E\\left(\\dfrac{1}{3}\\right) = 0$ (car $0 \\leq 0.333... < 1$)"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Fonction Associée f + k",
+          "elements": [
+            {
+              "type": "p",
+              "content": "Ajouter une constante à une fonction produit une translation verticale de sa courbe représentative. C'est une transformation importante à maîtriser."
             },
             {
-              "type": "explain-box",
-              "statement": "**Interprétation des asymptotes:**\n\nLes asymptotes montrent le comportement de la courbe \"à l'infini\". L'asymptote verticale marque une interruption du domaine, tandis que l'asymptote horizontale indique vers quelle valeur $f(x)$ tend quand $|x|$ augmente.",
-              "placeholder": "Vérifiez: quand $x \\to +\\infty$ ou $x \\to -\\infty$, vers quelle ordonnée se dirige la courbe?"
+              "type": "property-box",
+              "preamble": "**Fonction Associée $f + k$** :",
+              "content": [
+                "$k$ étant un réel non nul. Soit $f$ une fonction définie sur un intervalle $I$ et $(C_f)$ sa courbe représentative dans un repère orthonormé $(O, i, j)$.",
+                "1. Les fonctions $f$ et $f + k$ ont le **même sens de variations** sur l'intervalle $I$",
+                "2. La courbe représentative de $f + k$ est l'image de la courbe $(C_f)$ par la translation de vecteur $kj$ (translation suivant l'axe des ordonnées)"
+              ],
+              "listType": "bullet"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Application** :",
+              "content": "Soit la fonction définie sur $[-2; 2]$ par $f(x) = -\\dfrac{1}{2}x^3$\n\n1. Tracer, dans un repère orthonormé, la courbe représentative de la fonction $f$\n\n2. Établir le tableau de variation de la fonction $x \\mapsto f(x) + 2$, puis tracer sa courbe\n\n3. Établir le tableau de variation de la fonction $x \\mapsto f(x) - 5$, puis tracer sa courbe"
+            }
+          ]
+        },
+        {
+          "title": "Fonction Associée kf",
+          "elements": [
+            {
+              "type": "p",
+              "content": "Multiplier une fonction par une constante produit une homothétie (dilatation ou contraction) verticale de sa courbe représentative."
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Fonction Associée $kf$** :",
+              "content": [
+                "$k$ étant un réel non nul. Soit $f$ une fonction définie sur un intervalle $I$ et $(C_f)$ sa courbe représentative dans un repère orthonormé $(O, i, j)$.",
+                "1. Si $k > 0$, alors les fonctions $kf$ et $f$ ont le **même sens de variations** sur l'intervalle $I$",
+                "2. Si $k < 0$, alors les fonctions $kf$ et $f$ ont des **sens de variations contraires** sur l'intervalle $I$",
+                "3. La courbe représentative de $kf$ s'obtient en **multipliant par $k$ les ordonnées des points de la courbe** $(C_f)$ (contraction ou étirement)"
+              ],
+              "listType": "bullet"
             }
           ]
         }

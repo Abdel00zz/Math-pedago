@@ -6,6 +6,7 @@ import { useNotification } from '../../context/NotificationContext';
 import ChapterSection from '../ChapterSection';
 import GlobalActionButtons from '../GlobalActionButtons';
 import StandardHeader from '../StandardHeader';
+import { LESSON_PROGRESS_REFRESH_EVENT } from '../../utils/lessonProgressHelpers';
 
 // ✅ OPTIMISATION 1: Suppression du code mort (CacheService, useThemePreference, useIdleDetection)
 // Ces hooks/services étaient créés mais jamais utilisés
@@ -21,6 +22,15 @@ const DashboardView: React.FC = () => {
     const dispatch = useAppDispatch();
     const { addNotification } = useNotification();
     const { profile, activities, progress, chapterOrder } = state;
+
+    // 🔥 SOLUTION RADICALE: Forcer un refresh global quand le Dashboard est monté
+    useEffect(() => {
+        console.log('🔥 DashboardView mounted - broadcasting global refresh');
+        // Dispatch un événement global pour forcer tous les ChapterCard à se rafraîchir
+        window.dispatchEvent(new CustomEvent(LESSON_PROGRESS_REFRESH_EVENT, { 
+            detail: { lessonId: 'GLOBAL_REFRESH' } 
+        }));
+    }, []); // Au montage seulement
 
     // ✅ OPTIMISATION 3: Calcul du greeting mémorisé (ne change qu'une fois par session)
     const greeting = useMemo(() => {

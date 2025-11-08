@@ -204,10 +204,19 @@ const appReducer = (state: AppState, action: Action): AppState => {
                 totalSections,
                 checklistPercentage,
             } = action.payload;
-            const progress = state.progress[chapterId || state.currentChapterId];
+            
+            const targetChapterId = chapterId || state.currentChapterId;
+            const progress = state.progress[targetChapterId];
+            
+            console.log('🎯 AppReducer UPDATE_LESSON_PROGRESS:', {
+                currentChapterId: state.currentChapterId,
+                targetChapterId,
+                payload: action.payload,
+                hasProgress: !!progress
+            });
 
             // Initialiser lessonProgress si nécessaire
-            const lessonProgress = progress.lesson || {
+            const lessonProgress = progress?.lesson || {
                 isRead: false,
                 duration: 0,
                 scrollProgress: 0,
@@ -230,16 +239,24 @@ const appReducer = (state: AppState, action: Action): AppState => {
                 checklistPercentage: checklistPercentage !== undefined ? checklistPercentage : lessonProgress.checklistPercentage,
             };
 
-            return {
+            const result = {
                 ...state,
                 progress: {
                     ...state.progress,
-                    [chapterId || state.currentChapterId]: {
+                    [targetChapterId]: {
                         ...progress,
                         lesson: nextLessonProgress,
                     },
                 },
             };
+            
+            console.log('✅ AppReducer - Résultat UPDATE_LESSON_PROGRESS:', {
+                targetChapterId,
+                nextLessonProgress,
+                updatedProgress: result.progress[targetChapterId]
+            });
+            
+            return result;
         }
 
         case 'SUBMIT_QUIZ': {

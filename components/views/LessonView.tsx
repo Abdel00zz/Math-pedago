@@ -4,6 +4,7 @@ import { LessonDisplay } from '../lesson/LessonDisplay';
 import { HighlightableContent } from '../lesson/HighlightableContent';
 import { LessonNavigator } from '../lesson/LessonNavigator';
 import { LessonProgressProvider } from '../../context/LessonProgressContext';
+import { LESSON_PROGRESS_REFRESH_EVENT } from '../../utils/lessonProgressHelpers';
 import type { LessonContent } from '../../types';
 
 const LessonView: React.FC = () => {
@@ -21,6 +22,16 @@ const LessonView: React.FC = () => {
 
     const chapter = currentChapterId ? activities[currentChapterId] : null;
     const chapterProgress = currentChapterId ? progress[currentChapterId] : null;
+
+    // 🔥 SOLUTION RADICALE: Quand on quitte la vue Lesson, dispatcher un événement global
+    useEffect(() => {
+        return () => {
+            console.log('🔥 LessonView unmounting - broadcasting global refresh');
+            window.dispatchEvent(new CustomEvent(LESSON_PROGRESS_REFRESH_EVENT, { 
+                detail: { lessonId: 'GLOBAL_REFRESH_ON_LESSON_EXIT' } 
+            }));
+        };
+    }, []);
 
     const handleBack = useCallback(() => {
         dispatch({ type: 'CHANGE_VIEW', payload: { view: 'work-plan' } });

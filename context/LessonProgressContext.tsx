@@ -14,16 +14,16 @@ import type {
     LessonSection,
     LessonSubsection,
     LessonSubsubsection,
-    LessonElement,
     LessonElementPath,
 } from '../types';
 import {
-    lessonProgressService,
-    encodeLessonPath,
-    type LessonProgressRecord,
+	lessonProgressService,
+	encodeLessonPath,
+	type LessonProgressRecord,
 } from '../services/lessonProgressService';
-import { dispatchLessonProgressUpdate } from '../utils/lessonProgressHelpers';
+import { dispatchLessonProgressUpdate, LESSON_PROGRESS_REFRESH_EVENT } from '../utils/lessonProgressHelpers';
 import { useSectionObserver, useSubsectionObserver } from '../hooks/useSectionObserver';
+import { useAppDispatch } from './AppContext'; // 🔥 RÉACTIVER le dispatch vers AppContext
 
 interface ProgressSummary {
     total: number;
@@ -37,6 +37,7 @@ export interface LessonOutlineSubsubsection {
     title: string;
     path: LessonElementPath;
     paragraphNodeIds: string[];
+    progressNodeId: string;
 }
 
 export interface LessonOutlineSubsection {
@@ -46,6 +47,7 @@ export interface LessonOutlineSubsection {
     path: LessonElementPath;
     paragraphNodeIds: string[];
     subsubsections: LessonOutlineSubsubsection[];
+    progressNodeId: string;
 }
 
 export interface LessonOutlineSection {
@@ -112,33 +114,19 @@ const createSubsubsectionAnchor = (
     return `section-${sectionIndex + 1}-sub-${subsectionIndex + 1}-item-${subsubIndex + 1}-${slug || subsubIndex + 1}`;
 };
 
-const collectParagraphIdsFromElements = (elements: LessonElement[] | undefined, basePath: LessonElementPath): string[] => {
-    if (!elements || elements.length === 0) {
-        return [];
+const normalizeProgressNodeId = (nodeId: string): string => {
+    const segments = nodeId.split('.');
+    const subsectionIndex = segments.indexOf('subsections');
+    if (subsectionIndex !== -1 && subsectionIndex + 1 < segments.length) {
+        return segments.slice(0, subsectionIndex + 2).join('.');
     }
 
-    const ids: string[] = [];
+    const sectionIndex = segments.indexOf('sections');
+    if (sectionIndex !== -1 && sectionIndex + 1 < segments.length) {
+        return segments.slice(0, sectionIndex + 2).join('.');
+    }
 
-    // Types d'éléments à tracker pour la progression
-    const trackableTypes = [
-        'p',
-        'definition-box',
-        'theorem-box',
-        'proposition-box',
-        'property-box',
-        'remark-box',
-        'example-box',
-        'practice-box',
-        'explain-box'
-    ];
-
-    elements.forEach((element, index) => {
-        if (trackableTypes.includes(element.type)) {
-            ids.push(encodeLessonPath([...basePath, 'elements', index]));
-        }
-    });
-
-    return ids;
+    return nodeId;
 };
 
 const buildOutline = (lesson: LessonContent): LessonOutlineSection[] => {
@@ -146,36 +134,33 @@ const buildOutline = (lesson: LessonContent): LessonOutlineSection[] => {
         const sectionPath: LessonElementPath = ['sections', sectionIndex];
         const subsections = section.subsections.map((subsection, subsectionIndex) => {
             const subsectionPath: LessonElementPath = [...sectionPath, 'subsections', subsectionIndex];
+            const subsectionNodeId = encodeLessonPath(subsectionPath);
 
             const subsubsections = (subsection.subsubsections ?? []).map((subsubsection, subsubIndex) => {
                 const subsubPath: LessonElementPath = [...subsectionPath, 'subsubsections', subsubIndex];
-                const paragraphNodeIds = collectParagraphIdsFromElements(subsubsection.elements, subsubPath);
 
                 return {
                     id: createSubsubsectionAnchor(sectionIndex, subsectionIndex, subsubsection, subsubIndex),
                     anchor: createSubsubsectionAnchor(sectionIndex, subsectionIndex, subsubsection, subsubIndex),
                     title: subsubsection.title,
                     path: subsubPath,
-                    paragraphNodeIds,
+                    paragraphNodeIds: [],
+                    progressNodeId: subsectionNodeId,
                 };
             });
-
-            const subsectionParagraphs = [
-                ...collectParagraphIdsFromElements(subsection.elements, subsectionPath),
-                ...subsubsections.flatMap((s) => s.paragraphNodeIds),
-            ];
 
             return {
                 id: createSubsectionAnchor(sectionIndex, subsection, subsectionIndex),
                 anchor: createSubsectionAnchor(sectionIndex, subsection, subsectionIndex),
                 title: subsection.title,
                 path: subsectionPath,
-                paragraphNodeIds: subsectionParagraphs,
+                paragraphNodeIds: [subsectionNodeId],
+                progressNodeId: subsectionNodeId,
                 subsubsections,
             };
         });
 
-        const sectionParagraphs = subsections.flatMap((subsection) => subsection.paragraphNodeIds);
+        const sectionParagraphs = subsections.map((subsection) => subsection.progressNodeId);
 
         return {
             id: createSectionAnchor(section, sectionIndex),
@@ -199,372 +184,444 @@ export const LessonProgressProvider: React.FC<{
     scrollContainerRef?: RefObject<HTMLElement>;
     children: ReactNode;
 }> = ({ lessonId, lesson, scrollContainerRef, children }) => {
-    const outline = useMemo(() => buildOutline(lesson), [lesson]);
-    const allParagraphNodeIds = useMemo(() => flattenParagraphIds(outline), [outline]);
+	const outline = useMemo(() => buildOutline(lesson), [lesson]);
+	const allParagraphNodeIds = useMemo(() => flattenParagraphIds(outline), [outline]);
+	const appDispatch = useAppDispatch(); // 🔥 RÉACTIVER AppContext dispatch
 
-    const lastInitialisedLessonRef = useRef<string | null>(null);
-    const metaInitialisedRef = useRef(false);
-    const pendingAnchorRef = useRef<string | null>(null);
-    const [progress, setProgress] = useState<LessonProgressRecord>(() => lessonProgressService.getLessonProgress(lessonId));
-    const [activeSectionId, setActiveSectionIdState] = useState<string | null>(null);
-    const [activeSubsectionId, setActiveSubsectionIdState] = useState<string | null>(null);
+	const lastInitialisedLessonRef = useRef<string | null>(null);
+	const metaInitialisedRef = useRef(false);
+	const pendingAnchorRef = useRef<string | null>(null);
+	const [progress, setProgress] = useState<LessonProgressRecord>(() => lessonProgressService.getLessonProgress(lessonId));
+	const [activeSectionId, setActiveSectionIdState] = useState<string | null>(null);
+	const [activeSubsectionId, setActiveSubsectionIdState] = useState<string | null>(null);
 
-    const findParentSectionId = useCallback(
-        (subsectionId: string | null) => {
-            if (!subsectionId) {
-                return null;
-            }
+	const lessonProgress = useMemo(() => {
+		const completed = allParagraphNodeIds.filter((nodeId) => progress[nodeId]?.completed).length;
+		const total = allParagraphNodeIds.length;
+		const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
+		return { completed, total, percentage };
+	}, [allParagraphNodeIds, progress]);
 
-            const parentSection = outline.find((section) =>
-                section.subsections.some((subsection) => subsection.id === subsectionId)
-            );
+	// 🔥 SOLUTION RADICALE FINALE: Dispatcher vers AppContext pour synchroniser progress.lesson
+	useEffect(() => {
+		console.log('🔥 LessonProgressContext dispatching to AppContext:', {
+			lessonId,
+			lessonProgress
+		});
+		
+		appDispatch({
+			type: 'UPDATE_LESSON_PROGRESS',
+			payload: {
+				chapterId: lessonId, // Le chapterId doit correspondre au format attendu
+				completedParagraphs: lessonProgress.completed,
+				totalParagraphs: lessonProgress.total,
+				checklistPercentage: lessonProgress.percentage,
+			},
+		});
+	}, [lessonProgress, lessonId, appDispatch]);
 
-            return parentSection?.id ?? null;
-        },
-        [outline]
-    );
+	const findParentSectionId = useCallback(
+		(subsectionId: string | null) => {
+			if (!subsectionId) {
+				return null;
+			}
 
-    const ensureValidActiveIds = useCallback(
-        (sectionId: string | null, subsectionId: string | null) => {
-            if (outline.length === 0) {
-                return { sectionId: null, subsectionId: null };
-            }
+			const parentSection = outline.find((section) =>
+				section.subsections.some((subsection) => subsection.id === subsectionId)
+			);
 
-            let nextSectionId = sectionId && outline.some((section) => section.id === sectionId)
-                ? sectionId
-                : outline[0].id;
+			return parentSection?.id ?? null;
+		},
+		[outline]
+	);
 
-            const parentFromSubsection = findParentSectionId(subsectionId);
-            if (parentFromSubsection) {
-                nextSectionId = parentFromSubsection;
-            }
+	const ensureValidActiveIds = useCallback(
+		(sectionId: string | null, subsectionId: string | null) => {
+			if (outline.length === 0) {
+				return { sectionId: null, subsectionId: null };
+			}
 
-            const section = outline.find((item) => item.id === nextSectionId);
+			let nextSectionId = sectionId && outline.some((section) => section.id === sectionId)
+				? sectionId
+				: outline[0].id;
 
-            let nextSubsectionId: string | null = null;
-            if (subsectionId && section?.subsections.some((sub) => sub.id === subsectionId)) {
-                nextSubsectionId = subsectionId;
-            } else {
-                nextSubsectionId = section?.subsections?.[0]?.id ?? null;
-            }
+			const parentFromSubsection = findParentSectionId(subsectionId);
+			if (parentFromSubsection) {
+				nextSectionId = parentFromSubsection;
+			}
 
-            return {
-                sectionId: nextSectionId ?? null,
-                subsectionId: nextSubsectionId,
-            };
-        },
-        [outline, findParentSectionId]
-    );
+			const section = outline.find((item) => item.id === nextSectionId);
 
-    useEffect(() => {
-        if (lastInitialisedLessonRef.current !== lessonId) {
-            lastInitialisedLessonRef.current = lessonId;
-            metaInitialisedRef.current = false;
-        }
-    }, [lessonId]);
+			let nextSubsectionId: string | null = null;
+			if (subsectionId && section?.subsections.some((sub) => sub.id === subsectionId)) {
+				nextSubsectionId = subsectionId;
+			} else {
+				nextSubsectionId = section?.subsections?.[0]?.id ?? null;
+			}
 
-    useEffect(() => {
-        if (!outline.length) {
-            setActiveSectionIdState(null);
-            setActiveSubsectionIdState(null);
-            pendingAnchorRef.current = null;
-            return;
-        }
+			return {
+				sectionId: nextSectionId ?? null,
+				subsectionId: nextSubsectionId,
+			};
+		},
+		[outline, findParentSectionId]
+	);
 
-        if (!metaInitialisedRef.current) {
-            const meta = lessonProgressService.getLastVisited(lessonId);
-            const initialIds = ensureValidActiveIds(meta?.lastSectionId ?? null, meta?.lastSubsectionId ?? null);
-            setActiveSectionIdState(initialIds.sectionId);
-            setActiveSubsectionIdState(initialIds.subsectionId);
-            pendingAnchorRef.current = initialIds.subsectionId ?? initialIds.sectionId ?? null;
-            metaInitialisedRef.current = true;
-            return;
-        }
+	useEffect(() => {
+		if (lastInitialisedLessonRef.current !== lessonId) {
+			lastInitialisedLessonRef.current = lessonId;
+			metaInitialisedRef.current = false;
+		}
+	}, [lessonId]);
 
-        const validatedIds = ensureValidActiveIds(activeSectionId, activeSubsectionId);
-        if (validatedIds.sectionId !== activeSectionId) {
-            setActiveSectionIdState(validatedIds.sectionId);
-        }
-        if (validatedIds.subsectionId !== activeSubsectionId) {
-            setActiveSubsectionIdState(validatedIds.subsectionId);
-        }
-    }, [outline, lessonId, ensureValidActiveIds, activeSectionId, activeSubsectionId]);
+	useEffect(() => {
+		if (!outline.length) {
+			setActiveSectionIdState(null);
+			setActiveSubsectionIdState(null);
+			pendingAnchorRef.current = null;
+			return;
+		}
 
-    // Synchroniser l'état lorsque le lessonId change
-    useEffect(() => {
-        const initialized = lessonProgressService.ensureLessonNodes(lessonId, allParagraphNodeIds);
-        setProgress(initialized);
-    }, [lessonId, allParagraphNodeIds]);
+		if (!metaInitialisedRef.current) {
+			const meta = lessonProgressService.getLastVisited(lessonId);
+			const initialIds = ensureValidActiveIds(meta?.lastSectionId ?? null, meta?.lastSubsectionId ?? null);
+			setActiveSectionIdState(initialIds.sectionId);
+			setActiveSubsectionIdState(initialIds.subsectionId);
+			pendingAnchorRef.current = initialIds.subsectionId ?? initialIds.sectionId ?? null;
+			metaInitialisedRef.current = true;
+			return;
+		}
 
-    useEffect(() => {
-        if (!metaInitialisedRef.current) {
-            return;
-        }
+		const validatedIds = ensureValidActiveIds(activeSectionId, activeSubsectionId);
+		if (validatedIds.sectionId !== activeSectionId) {
+			setActiveSectionIdState(validatedIds.sectionId);
+		}
+		if (validatedIds.subsectionId !== activeSubsectionId) {
+			setActiveSubsectionIdState(validatedIds.subsectionId);
+		}
+	}, [outline, lessonId, ensureValidActiveIds, activeSectionId, activeSubsectionId]);
 
-        lessonProgressService.setLastVisited(lessonId, {
-            lastSectionId: activeSectionId ?? undefined,
-            lastSubsectionId: activeSubsectionId ?? undefined,
-        });
-    }, [lessonId, activeSectionId, activeSubsectionId]);
+	// Synchroniser l'état lorsque le lessonId change
+	useEffect(() => {
+		const storedRecord = lessonProgressService.getLessonProgress(lessonId);
+		const allowedIds = new Set(allParagraphNodeIds);
 
-    const setActiveSectionId = useCallback<React.Dispatch<React.SetStateAction<string | null>>>(
-        (value) => {
-            setActiveSectionIdState((current) => {
-                const nextValue = typeof value === 'function'
-                    ? (value as (prev: string | null) => string | null)(current)
-                    : value;
+		const aggregatedRecord = Object.entries(storedRecord).reduce<LessonProgressRecord>((acc, [nodeId, state]) => {
+			const normalizedId = normalizeProgressNodeId(nodeId);
+			if (!allowedIds.has(normalizedId)) {
+				return acc;
+			}
 
-                return current === nextValue ? current : nextValue;
-            });
-        },
-        []
-    );
+			const previous = acc[normalizedId];
+			const completed = Boolean(state.completed);
+			const timestamp = state.timestamp ?? Date.now();
 
-    const setActiveSubsectionId = useCallback(
-        (subsectionId: string | null) => {
-            setActiveSubsectionIdState((current) => {
-                if (current === subsectionId) {
-                    return current;
-                }
-                return subsectionId;
-            });
+			if (!previous) {
+				acc[normalizedId] = {
+					completed,
+					timestamp,
+				};
+			} else {
+				acc[normalizedId] = {
+					completed: previous.completed || completed,
+					timestamp: Math.max(previous.timestamp, timestamp),
+				};
+			}
 
-            if (!subsectionId) {
-                return;
-            }
+			return acc;
+		}, {});
 
-            const parentSectionId = findParentSectionId(subsectionId);
-            if (parentSectionId) {
-                setActiveSectionId(parentSectionId);
-            }
-        },
-        [findParentSectionId, setActiveSectionId]
-    );
+		const now = Date.now();
+		allParagraphNodeIds.forEach((nodeId) => {
+			if (!aggregatedRecord[nodeId]) {
+				aggregatedRecord[nodeId] = {
+					completed: false,
+					timestamp: now,
+				};
+			}
+		});
 
-    const isNodeCompleted = useCallback(
-        (nodeId: string) => Boolean(progress[nodeId]?.completed),
-        [progress]
-    );
+		lessonProgressService.saveLessonProgress(lessonId, aggregatedRecord);
+		dispatchLessonProgressUpdate(lessonId, aggregatedRecord);
+		setProgress(aggregatedRecord);
+	}, [lessonId, allParagraphNodeIds]);
 
-    const updateProgress = useCallback(
-        (mutate: (draft: LessonProgressRecord, timestamp: number) => boolean) => {
-            setProgress((prev) => {
-                const next: LessonProgressRecord = { ...prev };
-                const timestamp = Date.now();
-                const changed = mutate(next, timestamp);
+	useEffect(() => {
+		if (!metaInitialisedRef.current) {
+			return;
+		}
 
-                if (!changed) {
-                    return prev;
-                }
+		lessonProgressService.setLastVisited(lessonId, {
+			lastSectionId: activeSectionId ?? undefined,
+			lastSubsectionId: activeSubsectionId ?? undefined,
+		});
+	}, [lessonId, activeSectionId, activeSubsectionId]);
 
-                lessonProgressService.saveLessonProgress(lessonId, next);
-                dispatchLessonProgressUpdate(lessonId, next);
-                return next;
-            });
-        },
-        [lessonId]
-    );
+	const setActiveSectionId = useCallback<React.Dispatch<React.SetStateAction<string | null>>>(
+		(value) => {
+			setActiveSectionIdState((current) => {
+				const nextValue = typeof value === 'function'
+					? (value as (prev: string | null) => string | null)(current)
+					: value;
 
-    const markNode = useCallback(
-        (nodeId: string, completed: boolean) => {
-            updateProgress((draft, timestamp) => {
-                const previous = draft[nodeId];
-                if (previous?.completed === completed) {
-                    return false;
-                }
+				return current === nextValue ? current : nextValue;
+			});
+		},
+		[]
+	);
 
-                draft[nodeId] = {
-                    completed,
-                    timestamp,
-                };
-                return true;
-            });
-        },
-        [updateProgress]
-    );
+	const setActiveSubsectionId = useCallback(
+		(subsectionId: string | null) => {
+			setActiveSubsectionIdState((current) => {
+				if (current === subsectionId) {
+					return current;
+				}
+				return subsectionId;
+			});
 
-    const toggleNode = useCallback(
-        (nodeId: string) => {
-            updateProgress((draft, timestamp) => {
-                const previousCompleted = draft[nodeId]?.completed ?? false;
-                draft[nodeId] = {
-                    completed: !previousCompleted,
-                    timestamp,
-                };
-                return true;
-            });
-        },
-        [updateProgress]
-    );
+			if (!subsectionId) {
+				return;
+			}
 
-    const markAllNodesUpTo = useCallback(
-        (targetNodeId: string) => {
-            const targetIndex = allParagraphNodeIds.indexOf(targetNodeId);
-            if (targetIndex === -1) {
-                return;
-            }
+			const parentSectionId = findParentSectionId(subsectionId);
+			if (parentSectionId) {
+				setActiveSectionId(parentSectionId);
+			}
+		},
+		[findParentSectionId, setActiveSectionId]
+	);
 
-            updateProgress((draft, timestamp) => {
-                let mutated = false;
+	const isNodeCompleted = useCallback(
+		(nodeId: string) => Boolean(progress[nodeId]?.completed),
+		[progress]
+	);
 
-                for (let i = 0; i <= targetIndex; i++) {
-                    const nodeId = allParagraphNodeIds[i];
-                    if (!draft[nodeId]?.completed) {
-                        draft[nodeId] = {
-                            completed: true,
-                            timestamp,
-                        };
-                        mutated = true;
-                    }
-                }
+	const updateProgress = useCallback(
+		(mutate: (draft: LessonProgressRecord, timestamp: number) => boolean) => {
+			setProgress((prev) => {
+				const next: LessonProgressRecord = { ...prev };
+				const timestamp = Date.now();
+				const changed = mutate(next, timestamp);
 
-                return mutated;
-            });
-        },
-        [allParagraphNodeIds, updateProgress]
-    );
+				if (!changed) {
+					return prev;
+				}
 
-    const getProgress = useCallback(
-        (nodeIds: string[]): ProgressSummary => {
-            if (!nodeIds || nodeIds.length === 0) {
-                return { total: 0, completed: 0, percentage: 0 };
-            }
+				lessonProgressService.saveLessonProgress(lessonId, next);
+				dispatchLessonProgressUpdate(lessonId, next);
+				
+				// SOLUTION RADICALE : Notifier TOUS les composants via un événement global
+				if (typeof window !== 'undefined') {
+					window.dispatchEvent(new CustomEvent(LESSON_PROGRESS_REFRESH_EVENT, {
+						detail: { lessonId }
+					}));
+				}
+				
+				return next;
+			});
+		},
+		[lessonId]
+	);
 
-            const completedCount = nodeIds.reduce((acc, id) => (isNodeCompleted(id) ? acc + 1 : acc), 0);
-            const total = nodeIds.length;
-            const percentage = total === 0 ? 0 : Math.round((completedCount / total) * 100);
+	const markNode = useCallback(
+		(nodeId: string, completed: boolean) => {
+			updateProgress((draft, timestamp) => {
+				const previous = draft[nodeId];
+				if (previous?.completed === completed) {
+					return false;
+				}
 
-            return { total, completed: completedCount, percentage };
-        },
-        [isNodeCompleted]
-    );
+				draft[nodeId] = {
+					completed,
+					timestamp,
+				};
+				return true;
+			});
+		},
+		[updateProgress]
+	);
 
-    const lessonProgress = useMemo(() => getProgress(allParagraphNodeIds), [allParagraphNodeIds, getProgress]);
+	const toggleNode = useCallback(
+		(nodeId: string) => {
+			updateProgress((draft, timestamp) => {
+				const previousCompleted = draft[nodeId]?.completed ?? false;
+				draft[nodeId] = {
+					completed: !previousCompleted,
+					timestamp,
+				};
+				return true;
+			});
+		},
+		[updateProgress]
+	);
 
-    // Utiliser l'observateur pour suivre automatiquement les sections actives
-    const handleObserverSectionChange = useCallback((sectionId: string | null) => {
-        setActiveSectionId(sectionId);
-    }, [setActiveSectionId]);
+	const markAllNodesUpTo = useCallback(
+		(targetNodeId: string) => {
+			const targetIndex = allParagraphNodeIds.indexOf(targetNodeId);
+			if (targetIndex === -1) {
+				return;
+			}
 
-    const handleObserverSubsectionChange = useCallback((subsectionId: string | null) => {
-        setActiveSubsectionId(subsectionId);
-    }, [setActiveSubsectionId]);
+			updateProgress((draft, timestamp) => {
+				let mutated = false;
 
-    useSectionObserver(scrollContainerRef ?? { current: null }, {
-        onActiveChange: handleObserverSectionChange,
-    });
+				for (let i = 0; i <= targetIndex; i++) {
+					const nodeId = allParagraphNodeIds[i];
+					if (!draft[nodeId]?.completed) {
+						draft[nodeId] = {
+							completed: true,
+							timestamp,
+						};
+						mutated = true;
+					}
+				}
 
-    useSubsectionObserver(scrollContainerRef ?? { current: null }, {
-        onActiveChange: handleObserverSubsectionChange,
-    });
+				return mutated;
+			});
+		},
+		[allParagraphNodeIds, updateProgress]
+	);
 
-    const scrollToAnchor = useCallback(
-        (anchorId: string, options?: { offset?: number }) => {
-            const target = document.getElementById(anchorId);
-            if (!target) return;
+	const getProgress = useCallback(
+		(nodeIds: string[]): ProgressSummary => {
+			if (!nodeIds || nodeIds.length === 0) {
+				return { total: 0, completed: 0, percentage: 0 };
+			}
 
-            const behavior: ScrollIntoViewOptions = { behavior: 'smooth', block: 'start', inline: 'nearest' };
-            target.scrollIntoView(behavior);
+			const completedCount = nodeIds.reduce((acc, id) => (isNodeCompleted(id) ? acc + 1 : acc), 0);
+			const total = nodeIds.length;
+			const percentage = total === 0 ? 0 : Math.round((completedCount / total) * 100);
 
-            const offset = options?.offset ?? 72;
-            const container = scrollContainerRef?.current;
+			return { total, completed: completedCount, percentage };
+		},
+		[isNodeCompleted],
+	);
 
-            if (container) {
-                container.scrollBy({ top: -offset, behavior: 'smooth' });
-            } else if (typeof window !== 'undefined') {
-                window.scrollBy({ top: -offset, behavior: 'smooth' });
-            }
-        },
-        [scrollContainerRef]
-    );
+	// const lessonProgress = useMemo(() => getProgress(allParagraphNodeIds), [allParagraphNodeIds, getProgress]);
 
-    useEffect(() => {
-        if (typeof window === 'undefined') {
-            return;
-        }
+	// Utiliser l'observateur pour suivre automatiquement les sections actives
+	const handleObserverSectionChange = useCallback((sectionId: string | null) => {
+		setActiveSectionId(sectionId);
+	}, [setActiveSectionId]);
 
-        if (!metaInitialisedRef.current) {
-            return;
-        }
+	const handleObserverSubsectionChange = useCallback((subsectionId: string | null) => {
+		setActiveSubsectionId(subsectionId);
+	}, [setActiveSubsectionId]);
 
-        if (!pendingAnchorRef.current) {
-            return;
-        }
+	useSectionObserver(scrollContainerRef ?? { current: null }, {
+		onActiveChange: handleObserverSectionChange,
+	});
 
-        let attempts = 0;
-        let timeoutId: number | null = null;
-        let frameId: number | null = null;
+	useSubsectionObserver(scrollContainerRef ?? { current: null }, {
+		onActiveChange: handleObserverSubsectionChange,
+	});
 
-        const attemptScroll = () => {
-            const anchorId = pendingAnchorRef.current;
-            if (!anchorId) {
-                return;
-            }
+	const scrollToAnchor = useCallback(
+		(anchorId: string, options?: { offset?: number }) => {
+			const target = document.getElementById(anchorId);
+			if (!target) return;
 
-            const target = document.getElementById(anchorId);
-            if (target) {
-                frameId = window.requestAnimationFrame(() => {
-                    pendingAnchorRef.current = null;
-                    scrollToAnchor(anchorId, { offset: 96 });
-                });
-                return;
-            }
+			const behavior: ScrollIntoViewOptions = { behavior: 'smooth', block: 'start', inline: 'nearest' };
+			target.scrollIntoView(behavior);
 
-            attempts += 1;
-            if (attempts < 5) {
-                timeoutId = window.setTimeout(attemptScroll, 200);
-            }
-        };
+			const offset = options?.offset ?? 72;
+			const container = scrollContainerRef?.current;
 
-        attemptScroll();
+			if (container) {
+				container.scrollBy({ top: -offset, behavior: 'smooth' });
+			} else if (typeof window !== 'undefined') {
+				window.scrollBy({ top: -offset, behavior: 'smooth' });
+			}
+		},
+		[scrollContainerRef]
+	);
 
-        return () => {
-            if (frameId !== null) {
-                cancelAnimationFrame(frameId);
-            }
-            if (timeoutId !== null) {
-                clearTimeout(timeoutId);
-            }
-        };
-    }, [outline, lessonId, scrollToAnchor]);
+	useEffect(() => {
+		if (typeof window === 'undefined') {
+			return;
+		}
 
-    const value = useMemo<LessonProgressContextValue>(() => ({
-        lessonId,
-        outline,
-        lessonProgress,
-        allParagraphNodeIds,
-        isNodeCompleted,
-        markNode,
-        toggleNode,
-        markAllNodesUpTo,
-        getProgress,
-        activeSectionId,
-        activeSubsectionId,
-        setActiveSectionId,
-        setActiveSubsectionId,
-        scrollToAnchor,
-    }), [
-        lessonId,
-        outline,
-        lessonProgress,
-    allParagraphNodeIds,
-        isNodeCompleted,
-        markNode,
-        toggleNode,
-        markAllNodesUpTo,
-        getProgress,
-        activeSectionId,
-        activeSubsectionId,
-        setActiveSectionId,
-        setActiveSubsectionId,
-        scrollToAnchor,
-    ]);
+		if (!metaInitialisedRef.current) {
+			return;
+		}
 
-    return (
-        <LessonProgressContext.Provider value={value}>
-            {children}
-        </LessonProgressContext.Provider>
-    );
+		if (!pendingAnchorRef.current) {
+			return;
+		}
+
+		let attempts = 0;
+		let timeoutId: number | null = null;
+		let frameId: number | null = null;
+
+		const attemptScroll = () => {
+			const anchorId = pendingAnchorRef.current;
+			if (!anchorId) {
+				return;
+			}
+
+			const target = document.getElementById(anchorId);
+			if (target) {
+				frameId = window.requestAnimationFrame(() => {
+					pendingAnchorRef.current = null;
+					scrollToAnchor(anchorId, { offset: 96 });
+				});
+				return;
+			}
+
+			attempts += 1;
+			if (attempts < 5) {
+				timeoutId = window.setTimeout(attemptScroll, 200);
+			}
+		};
+
+		attemptScroll();
+
+		return () => {
+			if (frameId !== null) {
+				cancelAnimationFrame(frameId);
+			}
+			if (timeoutId !== null) {
+				clearTimeout(timeoutId);
+			}
+		};
+	}, [outline, lessonId, scrollToAnchor]);
+
+	const value = useMemo<LessonProgressContextValue>(
+		() => ({
+			lessonId,
+			outline,
+			lessonProgress,
+			allParagraphNodeIds,
+			isNodeCompleted,
+			markNode,
+			toggleNode,
+			markAllNodesUpTo,
+			getProgress,
+			activeSectionId,
+			activeSubsectionId,
+			setActiveSectionId,
+			setActiveSubsectionId,
+			scrollToAnchor,
+		}),
+		[
+			lessonId,
+			outline,
+			lessonProgress,
+			allParagraphNodeIds,
+			isNodeCompleted,
+			markNode,
+			toggleNode,
+			markAllNodesUpTo,
+			getProgress,
+			activeSectionId,
+			activeSubsectionId,
+			setActiveSectionId,
+			setActiveSubsectionId,
+			scrollToAnchor,
+		],
+	);
+
+	return <LessonProgressContext.Provider value={value}>{children}</LessonProgressContext.Provider>;
 };
 
 export const useLessonProgress = () => {
@@ -580,7 +637,19 @@ export const useLessonProgressSafe = () => {
     return context;
 };
 
-export const getParagraphNodeIdFromPath = (path: LessonElementPath) => encodeLessonPath(path);
+export const getParagraphNodeIdFromPath = (path: LessonElementPath) => {
+    const subsectionIndex = path.lastIndexOf('subsections');
+    if (subsectionIndex !== -1 && subsectionIndex + 1 < path.length) {
+        return encodeLessonPath(path.slice(0, subsectionIndex + 2));
+    }
+
+    const sectionIndex = path.lastIndexOf('sections');
+    if (sectionIndex !== -1 && sectionIndex + 1 < path.length) {
+        return encodeLessonPath(path.slice(0, sectionIndex + 2));
+    }
+
+    return encodeLessonPath(path);
+};
 
 export const getSectionAnchor = (section: LessonSection, index: number) => createSectionAnchor(section, index);
 export const getSubsectionAnchor = (sectionIndex: number, subsection: LessonSubsection, subsectionIndex: number) =>

@@ -196,6 +196,11 @@ export interface LessonProgress {
     duration: number; // Temps passé sur la leçon en secondes
     scrollProgress: number; // Progression du scroll (0-100)
     lastReadSection?: string; // Dernière section lue
+    completedParagraphs: number; // Nombre de paragraphes cochés
+    totalParagraphs: number; // Nombre total de paragraphes
+    completedSections: number; // Nombre de sections complètes
+    totalSections: number; // Nombre total de sections
+    checklistPercentage: number; // Pourcentage de la checklist (0-100)
 }
 
 export interface ChapterProgress {
@@ -295,7 +300,7 @@ export type Action =
     | { type: 'SET_QUIZ_DURATION'; payload: { chapterId: string; duration: number } }
     | { type: 'MARK_VIDEO_WATCHED'; payload: { videoId: string } } // Nouvelle action
     | { type: 'SET_VIDEOS_DURATION'; payload: { duration: number } } // Nouvelle action
-    | { type: 'UPDATE_LESSON_PROGRESS'; payload: { chapterId?: string; scrollProgress?: number; isRead?: boolean; duration?: number } } // Nouvelle action
+    | { type: 'UPDATE_LESSON_PROGRESS'; payload: { chapterId?: string; scrollProgress?: number; isRead?: boolean; duration?: number; completedParagraphs?: number; totalParagraphs?: number; completedSections?: number; totalSections?: number; checklistPercentage?: number } } // Nouvelle action
     | { type: 'UPDATE_EXERCISE_FEEDBACK'; payload: { exId: string; feedback: Feedback } }
     | { type: 'UPDATE_EXERCISES_DURATION'; payload: { duration: number } }
     | { type: 'SUBMIT_WORK'; payload: { chapterId: string } }

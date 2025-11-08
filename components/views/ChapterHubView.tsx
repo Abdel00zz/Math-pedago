@@ -1,6 +1,5 @@
 import React, { useState, useMemo, useCallback, useRef, useEffect } from 'react';
 import { useAppState, useAppDispatch } from '../../context/AppContext';
-import { useLessonProgressSafe } from '../../context/LessonProgressContext';
 import { CLASS_OPTIONS } from '../../constants';
 import ConfirmationModal from '../ConfirmationModal';
 import { useNotification } from '../../context/NotificationContext';
@@ -8,11 +7,9 @@ import GlobalActionButtons from '../GlobalActionButtons';
 import { ExportedProgressFile } from '../../types';
 import StandardHeader from '../StandardHeader';
 import {
-    LESSON_PROGRESS_EVENT,
     readLessonCompletion,
-    summarizeLessonRecord,
     type LessonCompletionSummary,
-    type LessonProgressEventDetail,
+    LESSON_PROGRESS_REFRESH_EVENT,
 } from '../../utils/lessonProgressHelpers';
 
 
@@ -121,7 +118,6 @@ const ChapterHubView: React.FC = () => {
     const state = useAppState();
     const dispatch = useAppDispatch();
     const { addNotification } = useNotification();
-    const lessonProgressContext = useLessonProgressSafe();
     const { currentChapterId, activities, progress, profile } = state;
 
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -132,71 +128,72 @@ const ChapterHubView: React.FC = () => {
     const [verifiedClickCount, setVerifiedClickCount] = useState(0);
     const verifiedClickTimerRef = useRef<NodeJS.Timeout | null>(null);
 
-    const chapter = useMemo(() => currentChapterId ? activities[currentChapterId] : null, [currentChapterId, activities]);
-    const chapterProgress = useMemo(() => currentChapterId ? progress[currentChapterId] : null, [currentChapterId, progress]);
-    const lessonId = chapter ? `${chapter.class}-${chapter.chapter}` : null;
+    const chapter = useMemo(() => (currentChapterId ? activities[currentChapterId] : null), [
+		currentChapterId,
+		activities,
+	]);
+	const chapterProgress = useMemo(
+		() => (currentChapterId ? progress[currentChapterId] : null),
+		[currentChapterId, progress],
+	);
+	const lessonId = chapter ? `${chapter.class}-${chapter.chapter}` : null;
 
-    const [lessonCompletion, setLessonCompletion] = useState<LessonCompletionSummary>({
-        completed: 0,
-        total: 0,
-        percentage: 0,
-    });
+	// SOLUTION RADICALE : Lecture directe + rafraîchissement forcé
+	const [refreshKey, setRefreshKey] = useState(0);
+	
+	// Force le rafraîchissement quand on arrive sur cette vue
+	useEffect(() => {
+		setRefreshKey(prev => prev + 1);
+	}, [currentChapterId]);
 
-    useEffect(() => {
-        if (!lessonId) {
-            setLessonCompletion({ completed: 0, total: 0, percentage: 0 });
-            return;
-        }
+	// SOLUTION RADICALE : Écouter les changements de progression globaux
+	useEffect(() => {
+		const handleProgressChange = (event: CustomEvent) => {
+			console.log('🔄 ChapterHubView - Événement de changement de progression reçu pour leçon:', event.detail.lessonId);
+			setRefreshKey(prev => prev + 1);
+		};
 
-        setLessonCompletion(readLessonCompletion(lessonId));
+        window.addEventListener(LESSON_PROGRESS_REFRESH_EVENT, handleProgressChange as EventListener);
+		
+		return () => {
+            window.removeEventListener(LESSON_PROGRESS_REFRESH_EVENT, handleProgressChange as EventListener);
+		};
+	}, []);
+	
+	const lessonCompletion = useMemo<LessonCompletionSummary>(() => {
+		if (!lessonId) {
+			return { completed: 0, total: 0, percentage: 0 };
+		}
+		
+		// Lecture directe depuis le service, sans passer par les événements
+		const completion = readLessonCompletion(lessonId);
+		
+		console.log('🔄 LECTURE DIRECTE progression leçon:', {
+			lessonId,
+			currentChapterId,
+			refreshKey,
+			completion
+		});
+		
+		return completion;
+	}, [lessonId, currentChapterId, refreshKey]);
 
-        const handleProgressUpdate = (event: Event) => {
-            const customEvent = event as CustomEvent<LessonProgressEventDetail>;
-            if (customEvent.detail?.lessonId !== lessonId) {
-                return;
-            }
-
-            // Forcer une mise à jour immédiate de la progression
-            const newCompletion = summarizeLessonRecord(customEvent.detail.progress);
-            setLessonCompletion(newCompletion);
-            
-            // Debug en mode développement uniquement
-            if (process.env.NODE_ENV === 'development') {
-                console.log('Progression mise à jour:', {
-                    completed: newCompletion.completed,
-                    total: newCompletion.total,
-                    percentage: newCompletion.percentage
-                });
-            }
-        };
-
-        if (typeof window !== 'undefined') {
-            window.addEventListener(LESSON_PROGRESS_EVENT, handleProgressUpdate as EventListener);
-        }
-
-        return () => {
-            if (typeof window !== 'undefined') {
-                window.removeEventListener(LESSON_PROGRESS_EVENT, handleProgressUpdate as EventListener);
-            }
-        };
-    }, [lessonId]);
-    
-    const {
-        quiz,
-        totalQuestions,
-        answeredQuestionsCount,
-        totalExercises,
-        evaluatedExercisesCount,
-        isQuizCompleted,
-        areAllExercisesDone,
-        canSubmitWork,
-        quizProgressPercent,
-        exercisesProgressPercent,
-        isOutdatedSubmission,
-        isChapterLocked
-    } = useMemo(() => {
-        const prog = currentChapterId ? progress[currentChapterId] : null;
-        const chap = currentChapterId ? activities[currentChapterId] : null;
+	const {
+		quiz,
+		totalQuestions,
+		answeredQuestionsCount,
+		totalExercises,
+		evaluatedExercisesCount,
+		isQuizCompleted,
+		areAllExercisesDone,
+		canSubmitWork,
+		quizProgressPercent,
+		exercisesProgressPercent,
+		isOutdatedSubmission,
+		isChapterLocked
+	} = useMemo(() => {
+		const prog = currentChapterId ? progress[currentChapterId] : null;
+		const chap = currentChapterId ? activities[currentChapterId] : null;
 
     const q = prog?.quiz || { answers: {}, isSubmitted: false, score: 0, allAnswered: false, currentQuestionIndex: 0, duration: 0, hintsUsed: 0, isTimerPaused: true };
         const tq = chap?.quiz?.length || 0;
@@ -325,8 +322,8 @@ const ChapterHubView: React.FC = () => {
 
             const videosDuration = chapterProgress.videos?.duration || 0;
 
-            // Récupérer la progression de la leçon depuis le contexte (si disponible)
-            const lessonProgressData = lessonProgressContext?.lessonProgress ?? lessonCompletion;
+            // Utiliser directement les données de progression depuis AppContext
+            const lessonProgressData = lessonCompletion;
 
             const submissionData: ExportedProgressFile = {
                 studentName: profile.name,
