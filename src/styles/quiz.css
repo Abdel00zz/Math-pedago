@@ -301,7 +301,7 @@
 }
 
 /* ========================================
-   BOUTONS
+   BOUTONS - STYLES AMÉLIORÉS
    ======================================== */
 .quiz-actions {
   display: flex;
@@ -363,6 +363,110 @@
   background: rgba(66, 85, 255, 0.08);
   border-color: rgba(66, 85, 255, 0.28);
   color: var(--primary-color);
+}
+
+/* ========================================
+   AMÉLIORATION UX DES BOUTONS TAILWIND
+   Styles pour les boutons utilisant les classes Tailwind
+   ======================================== */
+.font-button {
+  font-family: 'Manrope', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  transition: all 0.25s cubic-bezier(0.25, 0.9, 0.35, 1);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* Effet de focus visible pour l'accessibilité */
+.font-button:focus-visible {
+  outline: 3px solid rgba(66, 85, 255, 0.3);
+  outline-offset: 2px;
+}
+
+/* Amélioration des boutons primaires */
+.bg-primary {
+  background: linear-gradient(135deg, #4255ff 0%, #5f7dff 100%) !important;
+  box-shadow: 0 10px 30px rgba(66, 85, 255, 0.25),
+              0 4px 12px rgba(66, 85, 255, 0.15);
+}
+
+.bg-primary:hover {
+  background: linear-gradient(135deg, #2f3ab2 0%, #4255ff 100%) !important;
+  box-shadow: 0 14px 40px rgba(66, 85, 255, 0.35),
+              0 6px 16px rgba(66, 85, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.bg-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 20px rgba(66, 85, 255, 0.2);
+}
+
+/* Amélioration des boutons secondaires (texte coloré avec bordure) */
+.text-primary.border-primary {
+  color: #4255ff !important;
+  border-color: #4255ff !important;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 6px 20px rgba(66, 85, 255, 0.12);
+}
+
+.text-primary.border-primary:hover {
+  background: rgba(66, 85, 255, 0.08) !important;
+  border-color: #2f3ab2 !important;
+  box-shadow: 0 8px 26px rgba(66, 85, 255, 0.18);
+  transform: translateY(-1px);
+}
+
+/* Amélioration des boutons texte simple */
+.text-primary:not(.border-primary) {
+  color: #4255ff !important;
+  background: rgba(66, 85, 255, 0.05);
+}
+
+.text-primary:not(.border-primary):hover {
+  background: rgba(66, 85, 255, 0.12) !important;
+  box-shadow: 0 4px 16px rgba(66, 85, 255, 0.12);
+}
+
+/* Support pour primary-light (classe manquante) */
+.hover\:bg-primary-light:hover {
+  background: rgba(66, 85, 255, 0.08) !important;
+}
+
+/* Amélioration des boutons désactivés */
+.font-button:disabled {
+  cursor: not-allowed !important;
+  opacity: 0.5 !important;
+  transform: none !important;
+  box-shadow: none !important;
+  filter: grayscale(0.3);
+}
+
+/* État de chargement pour les boutons */
+.font-button[aria-busy="true"] {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.font-button[aria-busy="true"]::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  top: 50%;
+  left: 50%;
+  margin-left: -8px;
+  margin-top: -8px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
 /* ========================================
