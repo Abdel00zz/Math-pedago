@@ -32,19 +32,23 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
     const lessonCompletion = useMemo<LessonCompletionSummary>(() => {
         // Priorité 1: Utiliser progress.lesson depuis AppContext (source unique de vérité)
         if (progress?.lesson?.totalParagraphs !== undefined && progress.lesson.totalParagraphs > 0) {
-            return {
+            const result = {
                 completed: progress.lesson.completedParagraphs || 0,
                 total: progress.lesson.totalParagraphs,
                 percentage: progress.lesson.checklistPercentage || 0,
             };
+            console.log(`📊 [${chapter.chapter}] Leçon depuis AppContext:`, result);
+            return result;
         }
 
         // Fallback: Lire depuis lessonProgressService (pour compatibilité)
         if (!lessonId) {
             return { completed: 0, total: 0, percentage: 0 };
         }
-        return readLessonCompletion(lessonId);
-    }, [progress?.lesson, lessonId, refreshKey]);
+        const fallbackResult = readLessonCompletion(lessonId);
+        console.log(`📊 [${chapter.chapter}] Leçon depuis lessonProgressService (lessonId: ${lessonId}):`, fallbackResult);
+        return fallbackResult;
+    }, [progress?.lesson, lessonId, refreshKey, chapter.chapter]);
 
     // 🔄 Détection des changements de progression pour rafraîchir automatiquement
     useEffect(() => {
@@ -131,14 +135,19 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
 
     // 🎯 Calcul de progression avec coefficients égaux pour leçons, quiz et exercices
     const progressPercentage = useMemo(() => {
-        return calculateChapterProgress({
-            lessonProgress: chapter.lesson && lessonCompletion.total > 0 ? lessonCompletion : undefined,
+        const params = {
+            // ✅ FIX: Ne vérifier que lessonCompletion.total, pas chapter.lesson
+            // car l'utilisateur peut avoir une progression même si chapter.lesson n'existe pas
+            lessonProgress: lessonCompletion.total > 0 ? lessonCompletion : undefined,
             quizTotal: chapter.quiz?.length ?? 0,
             quizAnswered: progress?.quiz?.answers ? Object.keys(progress.quiz.answers).length : 0,
             quizSubmitted: progress?.quiz?.isSubmitted ?? false,
             exercisesTotal: chapter.exercises?.length ?? 0,
             exercisesCompleted: Object.keys(progress?.exercisesFeedback || {}).length,
-        });
+        };
+        const result = calculateChapterProgress(params);
+        console.log(`🎯 [${chapter.chapter}] Progression calculée:`, { params, result });
+        return result;
     }, [chapter, progress, lessonCompletion]);
 
     // Stats computation
