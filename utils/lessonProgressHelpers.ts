@@ -79,3 +79,68 @@ export const dispatchLessonProgressUpdate = (
         }),
     );
 };
+
+/**
+ * Interface pour les paramètres de calcul de progression de chapitre
+ */
+export interface ChapterProgressParams {
+    lessonProgress?: LessonCompletionSummary;
+    quizTotal?: number;
+    quizAnswered?: number;
+    quizSubmitted?: boolean;
+    exercisesTotal?: number;
+    exercisesCompleted?: number;
+}
+
+/**
+ * Calcule la progression globale d'un chapitre avec coefficients égaux
+ * pour les leçons, quiz et exercices.
+ *
+ * @param params - Paramètres de progression pour chaque composant
+ * @returns Pourcentage de progression global (0-100)
+ */
+export const calculateChapterProgress = (params: ChapterProgressParams): number => {
+    const {
+        lessonProgress,
+        quizTotal = 0,
+        quizAnswered = 0,
+        quizSubmitted = false,
+        exercisesTotal = 0,
+        exercisesCompleted = 0,
+    } = params;
+
+    const components: number[] = [];
+
+    // Leçon : Ajouter le pourcentage si disponible
+    if (lessonProgress && lessonProgress.total > 0) {
+        const lessonPercent = Math.max(0, Math.min(lessonProgress.percentage, 100));
+        components.push(lessonPercent);
+    }
+
+    // Quiz : Ajouter le pourcentage si disponible
+    if (quizTotal > 0) {
+        const quizPercent = quizSubmitted
+            ? 100
+            : Math.round((Math.min(quizAnswered, quizTotal) / quizTotal) * 100);
+        components.push(quizPercent);
+    }
+
+    // Exercices : Ajouter le pourcentage si disponible
+    if (exercisesTotal > 0) {
+        const exercisePercent = Math.round(
+            (Math.min(exercisesCompleted, exercisesTotal) / exercisesTotal) * 100
+        );
+        components.push(exercisePercent);
+    }
+
+    // Si aucun composant, retourner 0%
+    if (components.length === 0) {
+        return 0;
+    }
+
+    // Calcul avec coefficients égaux : moyenne simple
+    const totalPercent = components.reduce((sum, percent) => sum + percent, 0);
+    const averagePercent = Math.round(totalPercent / components.length);
+
+    return Math.max(0, Math.min(averagePercent, 100));
+};

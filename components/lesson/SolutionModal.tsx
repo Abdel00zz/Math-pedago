@@ -53,7 +53,7 @@ export const SolutionModal: React.FC<SolutionModalProps> = ({
                 <ol className="space-y-4">
                     {solution.map((step, i) => (
                         <li key={i} className="flex items-start gap-3">
-                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 text-white font-semibold text-sm flex items-center justify-center shadow-md">
+                            <span className="flex-shrink-0 w-5 h-5 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 text-white font-semibold text-[0.6rem] flex items-center justify-center shadow-sm">
                                 {i + 1}
                             </span>
                             <div className="flex-1 text-gray-800 leading-relaxed">

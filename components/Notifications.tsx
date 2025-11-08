@@ -97,7 +97,7 @@ export const Notifications: React.FC = () => {
 
     return ReactDOM.createPortal(
         <div
-            className="fixed top-6 left-1/2 -translate-x-1/2 z-[1000] flex flex-col gap-2 w-full max-w-lg px-4 pointer-events-none"
+            className="fixed bottom-4 right-4 z-[1000] flex flex-col gap-1.5 w-full max-w-xs pointer-events-none"
             role="region"
             aria-label="Notifications"
         >
@@ -129,42 +129,42 @@ export const Notifications: React.FC = () => {
                         aria-atomic="true"
                         onClick={isClickable ? handleActionClick : undefined}
                         className={`
-                            relative w-full rounded-xl
+                            relative w-full rounded-lg
                             ${info.bgColor}
                             border ${info.borderColor}
-                            shadow-md
+                            shadow-sm
                             pointer-events-auto
                             transition-all duration-300 ease-out
-                            ${isClickable ? 'cursor-pointer hover:shadow-lg' : ''}
+                            ${isClickable ? 'cursor-pointer hover:shadow-md' : ''}
                             ${isLeaving
-                                ? 'opacity-0 -translate-y-4 scale-95'
-                                : 'opacity-100 translate-y-0 scale-100 animate-slideInFromTop'
+                                ? 'opacity-0 translate-x-8 scale-95'
+                                : 'opacity-100 translate-x-0 scale-100 animate-slideInFromRight'
                             }
                         `}
                         style={{
                             transitionProperty: 'opacity, transform',
                         }}
                     >
-                        <div className="flex items-start gap-3 p-3.5">
-                            {/* Icône minimaliste */}
+                        <div className="flex items-center gap-2 p-2">
+                            {/* Icône minimaliste centrée verticalement */}
                             <div className="flex-shrink-0">
-                                <div className={`w-9 h-9 rounded-lg ${info.iconBg} flex items-center justify-center`}>
-                                    <span className={`material-symbols-outlined !text-lg ${info.textColor}`}>
+                                <div className={`w-6 h-6 rounded-md ${info.iconBg} flex items-center justify-center`}>
+                                    <span className={`material-symbols-outlined !text-sm ${info.textColor}`}>
                                         {info.icon}
                                     </span>
                                 </div>
                             </div>
 
-                            <div className="flex-grow min-w-0 pt-0.5">
+                            <div className="flex-grow min-w-0">
                                 {notif.title && (
-                                    <h4 className={`font-semibold text-sm leading-snug mb-0.5 ${info.textColor}`}>
+                                    <h4 className={`font-semibold text-xs leading-tight ${info.textColor}`}>
                                         {notif.title}
                                     </h4>
                                 )}
                                 {notif.message && (
                                     <div
                                         id={notif.id}
-                                        className="text-xs text-gray-600 leading-relaxed"
+                                        className="text-[0.7rem] text-gray-600 leading-snug"
                                         dangerouslySetInnerHTML={{ __html: notif.message }}
                                     />
                                 )}
@@ -172,7 +172,7 @@ export const Notifications: React.FC = () => {
                                 {notif.action && (
                                     <button
                                         onClick={handleActionClick}
-                                        className={`mt-2 px-3 py-1.5 text-xs font-medium rounded-md
+                                        className={`mt-1 px-2 py-1 text-[0.65rem] font-medium rounded
                                             ${info.textColor} ${info.iconBg}
                                             hover:opacity-80
                                             transition-opacity duration-200`}
@@ -186,10 +186,10 @@ export const Notifications: React.FC = () => {
                             {/* Bouton de fermeture minimaliste */}
                             <button
                                 onClick={handleDismiss}
-                                className="flex-shrink-0 w-7 h-7 rounded-md hover:bg-gray-100 transition-colors duration-200 flex items-center justify-center text-gray-400 hover:text-gray-600"
+                                className="flex-shrink-0 w-5 h-5 rounded hover:bg-gray-100 transition-colors duration-200 flex items-center justify-center text-gray-400 hover:text-gray-600"
                                 aria-label="Fermer"
                             >
-                                <span className="material-symbols-outlined !text-base">close</span>
+                                <span className="material-symbols-outlined !text-sm">close</span>
                             </button>
                         </div>
 

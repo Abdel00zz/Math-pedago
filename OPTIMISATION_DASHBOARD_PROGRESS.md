@@ -2,67 +2,68 @@
 
 ## 📊 Problème Initial
 
-La barre de progression circulaire dans le Dashboard (`ChapterCard`) était **trop simpliste** :
-- ✗ Utilisait seulement `progress.lesson?.isRead` (booléen simple)
-- ✗ Ne tenait pas compte de la progression détaillée des sous-sections
-- ✗ Pas de synchronisation temps réel avec les changements
-- ✗ Poids fixes non adaptés aux chapitres sans certains composants
+La barre de progression circulaire dans le Dashboard (`ChapterCard`) avait plusieurs problèmes :
+- ✗ Utilisait des poids variables basés sur le nombre d'éléments (non équitable)
+- ✗ Code complexe et difficile à maintenir
+- ✗ Logs console excessifs
+- ✗ Manque de réactivité aux changements de progression
 
-**Résultat** : Progression imprécise et non synchronisée
+**Résultat** : Progression déséquilibrée et code non optimisé
 
 ---
 
-## ✅ Solution Radicale Implémentée
+## ✅ Solution Optimisée Implémentée
 
-### 1️⃣ Calcul Intelligent Multi-Source
+### 1️⃣ Calcul avec Coefficients Égaux
 
 **Fichier** : `utils/lessonProgressHelpers.ts`
 
 ```typescript
-export const calculateSmartChapterProgress = (params: SmartChapterProgressParams): number
+export const calculateChapterProgress = (params: ChapterProgressParams): number
 ```
 
 **Fonctionnalités** :
-- ✅ Lit la progression **détaillée** de la leçon via `lessonProgressService`
-- ✅ Compte les sous-sections complétées (pas juste un booléen)
-- ✅ Intègre la progression du quiz (questions répondues)
-- ✅ Intègre la progression des exercices (exercices complétés)
-- ✅ **Poids dynamiques** adaptés aux chapitres :
-  - Si pas de leçon → poids redistribué sur quiz/exercices
-  - Si pas de quiz → poids redistribué sur leçon/exercices
-  - Etc.
+- ✅ **Coefficients égaux** : Chaque composant (leçon, quiz, exercices) a le même poids
+- ✅ Calcul par moyenne simple : Total des pourcentages / Nombre de composants présents
+- ✅ Adaptatif : Si un composant est absent, il n'affecte pas le calcul
+- ✅ Code propre et réutilisable
+- ✅ Documentation complète avec JSDoc
 
-**Poids par défaut** :
-- Leçon : 40%
-- Quiz : 30%
-- Exercices : 30%
+**Formule** :
+- Progression = (% Leçon + % Quiz + % Exercices) / Nombre de composants présents
+- Chaque composant contribue de manière égale au total
 
 ---
 
-### 2️⃣ Synchronisation Temps Réel
+### 2️⃣ Détection Automatique des Changements
 
 **Fichier** : `components/ChapterCard.tsx`
 
-#### A) Événement Global
-Quand la progression change dans une leçon :
+#### A) État de Rafraîchissement
 ```typescript
-// Dans LessonProgressContext.tsx
-window.dispatchEvent(new CustomEvent('lesson-progress-changed', {
-    detail: { lessonId }
-}));
+const [refreshKey, setRefreshKey] = useState(0);
 ```
 
-#### B) Écoute et Rafraîchissement
-Les cartes du dashboard écoutent et se rafraîchissent automatiquement :
+#### B) Écoute des Événements
+Les cartes écoutent deux types d'événements :
+- `LESSON_PROGRESS_EVENT` : Mise à jour de progression de leçon
+- `LESSON_PROGRESS_REFRESH_EVENT` : Rafraîchissement global
+
 ```typescript
 useEffect(() => {
-    const handleProgressChange = (event: CustomEvent) => {
-        if (event.detail.lessonId === lessonId) {
+    const handleProgressUpdate = (event: Event) => {
+        if (lessonId matches || GLOBAL_REFRESH) {
             setRefreshKey(prev => prev + 1); // Force recalcul
         }
     };
-    window.addEventListener('lesson-progress-changed', handleProgressChange);
-}, []);
+
+    window.addEventListener(LESSON_PROGRESS_EVENT, handleProgressUpdate);
+    window.addEventListener(LESSON_PROGRESS_REFRESH_EVENT, handleRefreshEvent);
+
+    return () => {
+        // Cleanup
+    };
+}, [lessonId]);
 ```
 
 ---
@@ -113,42 +114,39 @@ useEffect(() => {
 ## 📂 Fichiers Modifiés
 
 ### 1. `utils/lessonProgressHelpers.ts`
-- ✅ Ajout de `calculateSmartChapterProgress()`
-- ✅ Interface `SmartChapterProgressParams`
-- ✅ Logging détaillé pour debugging
+- ✅ Ajout de `calculateChapterProgress()` - Fonction optimisée avec coefficients égaux
+- ✅ Interface `ChapterProgressParams` - Paramètres typés pour le calcul
+- ✅ Documentation JSDoc complète
+- ✅ Code propre sans logs console
 
 ### 2. `components/ChapterCard.tsx`
-- ✅ Import de `calculateSmartChapterProgress`
-- ✅ Ajout `useState` pour `refreshKey`
-- ✅ Ajout `useEffect` pour écouter événements
-- ✅ Remplacement du calcul simpliste par calcul intelligent
-- ✅ Ajout `refreshKey` dans dépendances `useMemo`
-
-### 3. `context/LessonProgressContext.tsx`
-- ✅ Dispatch événement `lesson-progress-changed` lors des changements
-- ✅ Garantit que tous les composants sont notifiés
-
-### 4. `components/views/ChapterHubView.tsx`
-- ✅ Écoute événements pour rafraîchir progression leçon
-- ✅ Lecture directe via `lessonProgressService`
+- ✅ Import de `calculateChapterProgress`
+- ✅ Ajout `useState` pour `refreshKey` - Détection des changements
+- ✅ Ajout `useEffect` pour écouter deux types d'événements
+- ✅ Utilisation de la fonction utilitaire pour calcul de progression
+- ✅ Code simplifié et optimisé
+- ✅ Suppression des logs console excessifs
 
 ---
 
 ## 🎨 Résultat Visuel
 
-### Avant
+### Avant (Poids Variables)
 ```
-Barre circulaire : 0% ou 100%
-(Soit rien fait, soit tout fait - pas de nuance)
+Barre circulaire : Progression déséquilibrée
+• Leçon : 45% (poids: 11 paragraphes)
+• Quiz : 60% (poids: 5 questions)
+• Exercices : 50% (poids: 4 exercices)
+→ Total pondéré variable selon le nombre d'éléments
 ```
 
-### Après
+### Après (Coefficients Égaux)
 ```
-Barre circulaire : Progression précise en temps réel
-• Leçon : 45% (5 sous-sections sur 11)
-• Quiz : 60% (3 questions sur 5)
-• Exercices : 50% (2 exercices sur 4)
-→ Total intelligent : 50%
+Barre circulaire : Progression équilibrée
+• Leçon : 45% (coefficient: 1/3)
+• Quiz : 60% (coefficient: 1/3)
+• Exercices : 50% (coefficient: 1/3)
+→ Total équitable : (45 + 60 + 50) / 3 = 52%
 ```
 
 ---
@@ -185,12 +183,13 @@ Barre circulaire : Progression précise en temps réel
 
 ## 🚀 Avantages
 
-✅ **Précision** : Progression réelle au niveau sous-section  
-✅ **Synchronisation** : Mise à jour instantanée cross-composants  
-✅ **Intelligence** : Poids dynamiques selon contenu du chapitre  
-✅ **Performance** : Pas de polling, événements directs  
-✅ **Maintenabilité** : Code centralisé, réutilisable  
-✅ **UX** : Feedback immédiat à l'utilisateur  
+✅ **Équité** : Coefficients égaux pour tous les composants (leçon, quiz, exercices)
+✅ **Simplicité** : Code clair et facile à comprendre
+✅ **Réactivité** : Détection automatique des changements avec événements
+✅ **Performance** : Calcul optimisé avec `useMemo` et pas de polling
+✅ **Maintenabilité** : Fonction utilitaire réutilisable et bien documentée
+✅ **Propreté** : Suppression des logs console excessifs
+✅ **UX** : Progression équilibrée et intuitive pour l'utilisateur
 
 ---
 
@@ -214,5 +213,5 @@ Barre circulaire : Progression précise en temps réel
 
 ---
 
-**Date d'implémentation** : 8 novembre 2025  
-**Version** : 2.0 - Solution Radicale
+**Date d'implémentation** : 8 novembre 2025
+**Version** : 3.0 - Solution Optimisée avec Coefficients Égaux

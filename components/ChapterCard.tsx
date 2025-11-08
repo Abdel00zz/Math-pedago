@@ -5,6 +5,7 @@ import {
     LESSON_PROGRESS_EVENT,
     LESSON_PROGRESS_REFRESH_EVENT,
     readLessonCompletion,
+    calculateChapterProgress,
     type LessonCompletionSummary,
     type LessonProgressEventDetail,
 } from '../utils/lessonProgressHelpers';
@@ -25,29 +26,54 @@ interface StatusInfo {
 
 const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress, onSelect }) => {
     const lessonId = useMemo(() => `${chapter.class}-${chapter.chapter}`, [chapter.class, chapter.chapter]);
-    
-    // 🔥 SOLUTION RADICALE FINALE: Utiliser progress.lesson depuis AppContext (source unique de vérité)
-    // au lieu de recalculer depuis lessonProgressService qui peut être désynchronisé
+    const [refreshKey, setRefreshKey] = useState(0);
+
+    // 📊 Calcul de la progression de la leçon depuis AppContext ou lessonProgressService
     const lessonCompletion = useMemo<LessonCompletionSummary>(() => {
-        // Priorité 1: Utiliser progress.lesson depuis AppContext
+        // Priorité 1: Utiliser progress.lesson depuis AppContext (source unique de vérité)
         if (progress?.lesson?.totalParagraphs !== undefined && progress.lesson.totalParagraphs > 0) {
             const result = {
                 completed: progress.lesson.completedParagraphs || 0,
                 total: progress.lesson.totalParagraphs,
                 percentage: progress.lesson.checklistPercentage || 0,
             };
-            console.log(`📊 ChapterCard using progress.lesson for ${chapter.chapter}:`, result);
+            console.log(`📊 [${chapter.chapter}] Leçon depuis AppContext:`, result);
             return result;
         }
-        
+
         // Fallback: Lire depuis lessonProgressService (pour compatibilité)
         if (!lessonId) {
             return { completed: 0, total: 0, percentage: 0 };
         }
-        const fallback = readLessonCompletion(lessonId);
-        console.log(`📊 ChapterCard fallback for ${chapter.chapter}:`, fallback);
-        return fallback;
-    }, [progress?.lesson, lessonId, chapter.chapter]);
+        const fallbackResult = readLessonCompletion(lessonId);
+        console.log(`📊 [${chapter.chapter}] Leçon depuis lessonProgressService (lessonId: ${lessonId}):`, fallbackResult);
+        return fallbackResult;
+    }, [progress?.lesson, lessonId, refreshKey, chapter.chapter]);
+
+    // 🔄 Détection des changements de progression pour rafraîchir automatiquement
+    useEffect(() => {
+        const handleProgressUpdate = (event: Event) => {
+            const customEvent = event as CustomEvent<LessonProgressEventDetail>;
+            if (customEvent.detail?.lessonId === lessonId || customEvent.detail?.lessonId === 'GLOBAL_REFRESH') {
+                setRefreshKey(prev => prev + 1);
+            }
+        };
+
+        const handleRefreshEvent = (event: Event) => {
+            const customEvent = event as CustomEvent<{ lessonId: string }>;
+            if (customEvent.detail?.lessonId === lessonId || customEvent.detail?.lessonId === 'GLOBAL_REFRESH') {
+                setRefreshKey(prev => prev + 1);
+            }
+        };
+
+        window.addEventListener(LESSON_PROGRESS_EVENT, handleProgressUpdate);
+        window.addEventListener(LESSON_PROGRESS_REFRESH_EVENT, handleRefreshEvent);
+
+        return () => {
+            window.removeEventListener(LESSON_PROGRESS_EVENT, handleProgressUpdate);
+            window.removeEventListener(LESSON_PROGRESS_REFRESH_EVENT, handleRefreshEvent);
+        };
+    }, [lessonId]);
 
     const getStatusInfo = useCallback((): StatusInfo => {
         if (progress?.hasUpdate) {
@@ -107,56 +133,21 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
         }
     }, [disabled, onSelect, chapter.id]);
 
-    // Calcul intelligent basé sur les trois piliers (leçon, quiz, exercices)
+    // 🎯 Calcul de progression avec coefficients égaux pour leçons, quiz et exercices
     const progressPercentage = useMemo(() => {
-        const contributions: Array<{ weight: number; value: number }> = [];
-
-        // ✅ FIX: N'inclure la leçon que si elle a été structurée (total > 0)
-        // Sinon, la progression circulaire reste à 0% même si quiz/exercices sont faits
-        if (chapter.lesson && lessonCompletion.total > 0) {
-            const weight = lessonCompletion.total;
-            const value = Math.max(0, Math.min(lessonCompletion.percentage / 100, 1));
-            contributions.push({ weight, value });
-            console.log(`📊 Lesson contribution for ${chapter.chapter}: weight=${weight}, value=${value}, percentage=${lessonCompletion.percentage}`);
-        }
-
-        const totalQuestions = chapter.quiz?.length ?? 0;
-        if (totalQuestions > 0) {
-            const quizAnswers = progress?.quiz?.answers ? Object.keys(progress.quiz.answers).length : 0;
-            const quizValue = progress?.quiz?.isSubmitted
-                ? 1
-                : totalQuestions > 0
-                    ? Math.min(quizAnswers, totalQuestions) / totalQuestions
-                    : 0;
-            contributions.push({ weight: totalQuestions, value: quizValue });
-            console.log(`📊 Quiz contribution for ${chapter.chapter}: weight=${totalQuestions}, value=${quizValue}`);
-        }
-
-        const totalExercises = chapter.exercises?.length ?? 0;
-        if (totalExercises > 0) {
-            const completedExercises = Object.keys(progress?.exercisesFeedback || {}).length;
-            const exerciseValue = totalExercises > 0
-                ? Math.min(completedExercises, totalExercises) / totalExercises
-                : 0;
-            contributions.push({ weight: totalExercises, value: exerciseValue });
-            console.log(`📊 Exercise contribution for ${chapter.chapter}: weight=${totalExercises}, value=${exerciseValue}`);
-        }
-
-        if (contributions.length === 0) {
-            console.log(`📊 No contributions for ${chapter.chapter}, returning 0%`);
-            return 0;
-        }
-
-        const totalWeight = contributions.reduce((acc, item) => acc + item.weight, 0);
-        if (!totalWeight) {
-            console.log(`📊 Total weight is 0 for ${chapter.chapter}, returning 0%`);
-            return 0;
-        }
-
-        const weightedValue = contributions.reduce((acc, item) => acc + item.value * item.weight, 0) / totalWeight;
-        const finalPercentage = Math.round(Math.max(0, Math.min(weightedValue, 1)) * 100);
-        console.log(`📊 Final progress for ${chapter.chapter}: ${finalPercentage}% (contributions:`, contributions, `)`)
-        return finalPercentage;
+        const params = {
+            // ✅ FIX: Ne vérifier que lessonCompletion.total, pas chapter.lesson
+            // car l'utilisateur peut avoir une progression même si chapter.lesson n'existe pas
+            lessonProgress: lessonCompletion.total > 0 ? lessonCompletion : undefined,
+            quizTotal: chapter.quiz?.length ?? 0,
+            quizAnswered: progress?.quiz?.answers ? Object.keys(progress.quiz.answers).length : 0,
+            quizSubmitted: progress?.quiz?.isSubmitted ?? false,
+            exercisesTotal: chapter.exercises?.length ?? 0,
+            exercisesCompleted: Object.keys(progress?.exercisesFeedback || {}).length,
+        };
+        const result = calculateChapterProgress(params);
+        console.log(`🎯 [${chapter.chapter}] Progression calculée:`, { params, result });
+        return result;
     }, [chapter, progress, lessonCompletion]);
 
     // Stats computation
