@@ -549,44 +549,44 @@ export const LessonEditor: React.FC<LessonEditorProps> = ({
     return (
         <div className="h-screen flex flex-col bg-gray-50">
             {/* Toolbar */}
-            <div className="bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between shadow-sm">
-                <div className="flex items-center gap-3">
-                    <h1 className="text-xl font-bold text-gray-900">Éditeur de Leçon</h1>
-                    <div className="flex items-center gap-2 ml-4">
+            <div className="bg-white border-b border-gray-200 px-3 py-2 flex items-center justify-between shadow-sm">
+                <div className="flex items-center gap-2">
+                    <h1 className="text-sm font-bold text-gray-900">Éditeur de Leçon</h1>
+                    <div className="flex items-center gap-1 ml-3">
                         <button
                             onClick={undo}
                             disabled={historyIndex <= 0}
-                            className="p-2 rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100 hover:shadow-md transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-400"
+                            className="p-1.5 rounded-md bg-blue-50 text-blue-700 hover:bg-blue-100 hover:shadow-sm transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-400"
                             title="Annuler (Ctrl+Z)"
                         >
-                            <UndoIcon className="w-5 h-5" />
+                            <UndoIcon className="w-4 h-4" />
                         </button>
                         <button
                             onClick={redo}
                             disabled={historyIndex >= history.length - 1}
-                            className="p-2 rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100 hover:shadow-md transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-400"
+                            className="p-1.5 rounded-md bg-blue-50 text-blue-700 hover:bg-blue-100 hover:shadow-sm transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-400"
                             title="Refaire (Ctrl+Y)"
                         >
-                            <RedoIcon className="w-5 h-5" />
+                            <RedoIcon className="w-4 h-4" />
                         </button>
                     </div>
                 </div>
 
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2">
                     <button
                         onClick={() => setPreviewMode(!previewMode)}
-                        className="px-4 py-2 bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100 hover:shadow-md flex items-center gap-2 font-medium transition-all"
+                        className="px-3 py-1.5 bg-blue-50 text-blue-700 rounded-md hover:bg-blue-100 hover:shadow-sm flex items-center gap-1.5 text-xs font-semibold transition-all"
                         disabled={!lesson}
                     >
-                        <EyeIcon className="w-5 h-5" />
+                        <EyeIcon className="w-4 h-4" />
                         {previewMode ? 'Éditer' : 'Aperçu'}
                     </button>
                     <button
                         onClick={saveLesson}
-                        className="px-4 py-2 bg-gradient-to-r from-green-600 to-green-700 text-white rounded-lg hover:from-green-700 hover:to-green-800 hover:shadow-lg flex items-center gap-2 font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="px-3 py-1.5 bg-gradient-to-r from-green-600 to-green-700 text-white rounded-md hover:from-green-700 hover:to-green-800 hover:shadow-md flex items-center gap-1.5 text-xs font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                         disabled={isSaving || !lesson}
                     >
-                        <SaveIcon className="w-5 h-5" />
+                        <SaveIcon className="w-4 h-4" />
                         {isSaving ? 'Sauvegarde...' : 'Sauvegarder'}
                     </button>
                 </div>
@@ -624,43 +624,43 @@ export const LessonEditor: React.FC<LessonEditorProps> = ({
             {!isLoading && lesson && (
             <div className="flex-1 overflow-hidden flex">
                 {/* Left Panel - Structure */}
-                <div className="w-80 bg-gray-50 border-r border-gray-200 flex flex-col">
-                    <div className="p-4 border-b border-gray-200 bg-white">
-                        <h2 className="font-bold text-gray-900 mb-3 text-base">En-tête de la Leçon</h2>
-                        <div className="space-y-2.5">
+                <div className="w-64 bg-gray-50 border-r border-gray-200 flex flex-col">
+                    <div className="p-3 border-b border-gray-200 bg-white">
+                        <h2 className="text-xs font-bold text-gray-900 mb-2 uppercase tracking-wide">En-tête de la Leçon</h2>
+                        <div className="space-y-2">
                             <input
                                 type="text"
                                 value={lesson.header.title}
                                 onChange={(e) => updateHeader('title', e.target.value)}
                                 placeholder="Titre de la leçon"
-                                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900 bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm font-medium"
+                                className="w-full px-2 py-1.5 border border-gray-300 rounded-md text-gray-900 bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent text-xs font-medium"
                             />
                             <input
                                 type="text"
                                 value={lesson.header.subtitle || ''}
                                 onChange={(e) => updateHeader('subtitle', e.target.value)}
                                 placeholder="Sous-titre"
-                                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900 bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                                className="w-full px-2 py-1.5 border border-gray-300 rounded-md text-gray-900 bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent text-xs"
                             />
                             <input
                                 type="text"
                                 value={lesson.header.chapter || ''}
                                 onChange={(e) => updateHeader('chapter', e.target.value)}
                                 placeholder="Chapitre"
-                                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900 bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                                className="w-full px-2 py-1.5 border border-gray-300 rounded-md text-gray-900 bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent text-xs"
                             />
                         </div>
                     </div>
 
-                    <div className="flex-1 overflow-y-auto p-4">
-                        <div className="flex items-center justify-between mb-3">
-                            <h2 className="font-bold text-gray-900 text-base">Structure du Contenu</h2>
+                    <div className="flex-1 overflow-y-auto p-3">
+                        <div className="flex items-center justify-between mb-2">
+                            <h2 className="text-xs font-bold text-gray-900 uppercase tracking-wide">Structure</h2>
                             <button
                                 onClick={addSection}
-                                className="p-1.5 rounded-lg hover:bg-blue-50 text-blue-600 transition-colors"
+                                className="p-1 rounded-md hover:bg-blue-50 text-blue-600 transition-colors"
                                 title="Ajouter une section"
                             >
-                                <PlusIcon className="w-5 h-5" />
+                                <PlusIcon className="w-4 h-4" />
                             </button>
                         </div>
 
