@@ -2,6 +2,7 @@
   "class": "1bsm",
   "chapter": "Dénombrement",
   "sessionDates": [],
+  "lessonFile": "lessons/1bsm_denombrement.json",
   "videos": [],
   "quiz": [
     {
@@ -12,17 +13,454 @@
         {
           "text": "Arrangement",
           "is_correct": false,
-          "explanation": null
+          "explanation": "Non. Les arrangements sont utilisés quand l'ordre compte."
         },
         {
           "text": "Permutation",
           "is_correct": false,
-          "explanation": null
+          "explanation": "Non. Les permutations concernent l'ordonnancement de tous les éléments d'un ensemble."
         },
         {
           "text": "Combinaison",
+          "is_correct": true,
+          "explanation": "Exact ! On utilise les combinaisons car l'ordre n'a pas d'importance dans un tirage simultané. Le nombre de façons est $C_{10}^3 = \\binom{10}{3}$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_denombrement_2",
+      "question": "Que vaut $5!$ (factorielle de 5) ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "25",
           "is_correct": false,
-          "explanation": null
+          "explanation": "Non. Ce serait $5^2$."
+        },
+        {
+          "text": "120",
+          "is_correct": true,
+          "explanation": "Correct ! $5! = 5 \\times 4 \\times 3 \\times 2 \\times 1 = 120$."
+        },
+        {
+          "text": "15",
+          "is_correct": false,
+          "explanation": "Non. $5! = 5 \\times 4 \\times 3 \\times 2 \\times 1 = 120$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_denombrement_3",
+      "question": "Combien de façons différentes peut-on ranger 4 livres différents sur une étagère ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$4! = 24$ façons",
+          "is_correct": true,
+          "explanation": "Exact ! C'est le nombre de permutations de 4 objets : $4! = 4 \\times 3 \\times 2 \\times 1 = 24$."
+        },
+        {
+          "text": "$4^2 = 16$ façons",
+          "is_correct": false,
+          "explanation": "Non. Il faut calculer $4!$ (permutations)."
+        },
+        {
+          "text": "$2^4 = 16$ façons",
+          "is_correct": false,
+          "explanation": "Non. Il s'agit de permutations, donc $4!$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_denombrement_4",
+      "question": "La formule du coefficient binomial $C_n^p$ (ou $\\binom{n}{p}$) est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\frac{n!}{p!(n-p)!}$",
+          "is_correct": true,
+          "explanation": "Correct ! C'est la formule des combinaisons : $C_n^p = \\frac{n!}{p!(n-p)!}$ pour $0 \\leq p \\leq n$."
+        },
+        {
+          "text": "$\\frac{n!}{p!}$",
+          "is_correct": false,
+          "explanation": "Non. C'est la formule des arrangements : $A_n^p = \\frac{n!}{(n-p)!}$."
+        },
+        {
+          "text": "$n^p$",
+          "is_correct": false,
+          "explanation": "Non. C'est le nombre de p-uplets d'éléments pris dans un ensemble de n éléments avec répétition."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_denombrement_5",
+      "question": "Que vaut $C_n^0$ pour tout entier naturel $n$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "0",
+          "is_correct": false,
+          "explanation": "Non. Il y a une seule façon de choisir 0 élément parmi n."
+        },
+        {
+          "text": "1",
+          "is_correct": true,
+          "explanation": "Exact ! $C_n^0 = \\frac{n!}{0!(n-0)!} = \\frac{n!}{n!} = 1$. Il y a exactement une façon de ne rien choisir."
+        },
+        {
+          "text": "n",
+          "is_correct": false,
+          "explanation": "Non. $C_n^0 = 1$ pour tout $n$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_denombrement_6",
+      "question": "La propriété de symétrie des coefficients binomiaux est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$C_n^p = C_n^{n-p}$",
+          "is_correct": true,
+          "explanation": "Correct ! Choisir $p$ éléments parmi $n$ revient à choisir lesquels ne pas prendre parmi les $n-p$ restants."
+        },
+        {
+          "text": "$C_n^p = C_p^n$",
+          "is_correct": false,
+          "explanation": "Non. Cette égalité n'est généralement pas vraie."
+        },
+        {
+          "text": "$C_n^p = C_{n+1}^p$",
+          "is_correct": false,
+          "explanation": "Non. C'est faux en général."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_denombrement_7",
+      "question": "La formule de Pascal pour les coefficients binomiaux est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$C_{n+1}^{p+1} = C_n^p + C_n^{p+1}$",
+          "is_correct": true,
+          "explanation": "Exact ! Cette formule permet de construire le triangle de Pascal : chaque coefficient est la somme des deux coefficients juste au-dessus."
+        },
+        {
+          "text": "$C_n^p = C_{n-1}^p + C_{n-1}^{p-1}$",
+          "is_correct": false,
+          "explanation": "Non. Bien que cette forme soit aussi vraie, ce n'est pas la formulation standard de la formule de Pascal donnée ici."
+        },
+        {
+          "text": "$C_n^p = C_n^{p-1} + C_{n-1}^p$",
+          "is_correct": false,
+          "explanation": "Non. Ce n'est pas la formule de Pascal."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_denombrement_8",
+      "question": "Combien y a-t-il d'anagrammes du mot \"MATH\" (4 lettres distinctes) ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$4! = 24$",
+          "is_correct": true,
+          "explanation": "Correct ! C'est le nombre de permutations de 4 lettres distinctes."
+        },
+        {
+          "text": "$C_4^2 = 6$",
+          "is_correct": false,
+          "explanation": "Non. Il s'agit de permutations, pas de combinaisons."
+        },
+        {
+          "text": "$2^4 = 16$",
+          "is_correct": false,
+          "explanation": "Non. Le nombre d'anagrammes est $4!$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_denombrement_9",
+      "question": "Un arrangement de $p$ éléments parmi $n$ (noté $A_n^p$) compte :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Le nombre de façons de choisir et ordonner $p$ éléments parmi $n$",
+          "is_correct": true,
+          "explanation": "Exact ! Un arrangement tient compte de l'ordre : $A_n^p = \\frac{n!}{(n-p)!}$. Par exemple, choisir et ordonner 2 éléments parmi 3."
+        },
+        {
+          "text": "Le nombre de façons de choisir $p$ éléments parmi $n$ sans tenir compte de l'ordre",
+          "is_correct": false,
+          "explanation": "Non. Cela définit une combinaison, pas un arrangement."
+        },
+        {
+          "text": "Le nombre de permutations de $n$ éléments",
+          "is_correct": false,
+          "explanation": "Non. Les permutations concernent tous les $n$ éléments."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_denombrement_10",
+      "question": "La formule du binôme de Newton est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$(a+b)^n = \\sum_{k=0}^{n} C_n^k a^{n-k} b^k$",
+          "is_correct": true,
+          "explanation": "Exact ! C'est la formule du binôme de Newton qui permet de développer $(a+b)^n$ en utilisant les coefficients binomiaux."
+        },
+        {
+          "text": "$(a+b)^n = a^n + b^n$",
+          "is_correct": false,
+          "explanation": "Non. Cette égalité est fausse en général. Il faut utiliser la formule du binôme."
+        },
+        {
+          "text": "$(a+b)^n = \\sum_{k=0}^{n} k! a^k b^{n-k}$",
+          "is_correct": false,
+          "explanation": "Non. Les coefficients sont $C_n^k$, pas $k!$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_denombrement_11",
+      "question": "Que vaut $A_5^2$ (arrangement de 2 éléments parmi 5) ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "20",
+          "is_correct": true,
+          "explanation": "Exact ! $A_5^2 = \\frac{5!}{(5-2)!} = \\frac{5!}{3!} = 5 \\times 4 = 20$."
+        },
+        {
+          "text": "10",
+          "is_correct": false,
+          "explanation": "Non. C'est $C_5^2$ (combinaison). Pour les arrangements, $A_5^2 = 5 \\times 4 = 20$."
+        },
+        {
+          "text": "25",
+          "is_correct": false,
+          "explanation": "Non. $A_5^2 = 5 \\times 4 = 20$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_denombrement_12",
+      "question": "Dans un groupe de 7 personnes, combien peut-on former d'équipes de 3 personnes ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$C_7^3 = 35$",
+          "is_correct": true,
+          "explanation": "Exact ! $C_7^3 = \\frac{7!}{3!4!} = \\frac{7 \\times 6 \\times 5}{3 \\times 2 \\times 1} = 35$. L'ordre n'a pas d'importance."
+        },
+        {
+          "text": "$A_7^3 = 210$",
+          "is_correct": false,
+          "explanation": "Non. Les arrangements comptent l'ordre, mais pour former une équipe, l'ordre n'a pas d'importance."
+        },
+        {
+          "text": "$7^3 = 343$",
+          "is_correct": false,
+          "explanation": "Non. Il faut utiliser les combinaisons : $C_7^3$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_denombrement_13",
+      "question": "Le principe multiplicatif indique que si une tâche peut être décomposée en $k$ étapes avec $n_1, n_2, \\ldots, n_k$ choix possibles à chaque étape, le nombre total de façons est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$n_1 \\times n_2 \\times \\cdots \\times n_k$",
+          "is_correct": true,
+          "explanation": "Exact ! C'est le principe multiplicatif : on multiplie le nombre de choix à chaque étape."
+        },
+        {
+          "text": "$n_1 + n_2 + \\cdots + n_k$",
+          "is_correct": false,
+          "explanation": "Non. C'est le principe additif qui s'applique quand les choix sont exclusifs."
+        },
+        {
+          "text": "$n_1^k$",
+          "is_correct": false,
+          "explanation": "Non. Il faut multiplier tous les $n_i$ entre eux."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_denombrement_14",
+      "question": "Combien y a-t-il d'anagrammes du mot \"PAPA\" (avec répétitions) ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\frac{4!}{2!2!} = 6$",
+          "is_correct": true,
+          "explanation": "Exact ! Il y a 4 lettres avec 2 P et 2 A. La formule des permutations avec répétition donne $\\frac{4!}{2!2!} = \\frac{24}{4} = 6$."
+        },
+        {
+          "text": "$4! = 24$",
+          "is_correct": false,
+          "explanation": "Non. Il faut diviser par $2!2!$ car il y a des répétitions (2 P et 2 A)."
+        },
+        {
+          "text": "$C_4^2 = 6$",
+          "is_correct": false,
+          "explanation": "Non. Bien que le résultat soit correct, ce n'est pas la bonne méthode. Il faut utiliser la formule des permutations avec répétition."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_denombrement_15",
+      "question": "Que vaut la somme $\\sum_{k=0}^{n} C_n^k$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$2^n$",
+          "is_correct": true,
+          "explanation": "Exact ! C'est une conséquence de la formule du binôme avec $a = b = 1$ : $(1+1)^n = \\sum_{k=0}^{n} C_n^k = 2^n$. C'est aussi le nombre de parties d'un ensemble à $n$ éléments."
+        },
+        {
+          "text": "$n^2$",
+          "is_correct": false,
+          "explanation": "Non. La somme de tous les coefficients binomiaux de rang $n$ vaut $2^n$."
+        },
+        {
+          "text": "$n!$",
+          "is_correct": false,
+          "explanation": "Non. La somme vaut $2^n$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_denombrement_16",
+      "question": "Un code secret comporte 4 chiffres de 0 à 9. Combien de codes différents peut-on former (avec répétition possible) ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$10^4 = 10000$",
+          "is_correct": true,
+          "explanation": "Exact ! Pour chaque position, on a 10 choix (0 à 9), et les choix sont indépendants avec répétition possible : $10 \\times 10 \\times 10 \\times 10 = 10^4$."
+        },
+        {
+          "text": "$A_{10}^4 = 5040$",
+          "is_correct": false,
+          "explanation": "Non. Les arrangements s'appliquent sans répétition. Ici, la répétition est autorisée."
+        },
+        {
+          "text": "$C_{10}^4 = 210$",
+          "is_correct": false,
+          "explanation": "Non. L'ordre compte et la répétition est autorisée, donc c'est $10^4$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_denombrement_17",
+      "question": "Que vaut $C_n^1$ pour tout entier naturel $n \\geq 1$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$n$",
+          "is_correct": true,
+          "explanation": "Exact ! $C_n^1 = \\frac{n!}{1!(n-1)!} = n$. Il y a $n$ façons de choisir 1 élément parmi $n$."
+        },
+        {
+          "text": "1",
+          "is_correct": false,
+          "explanation": "Non. $C_n^1 = n$ (il y a $n$ façons de choisir 1 élément)."
+        },
+        {
+          "text": "$n!$",
+          "is_correct": false,
+          "explanation": "Non. $C_n^1 = n$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_denombrement_18",
+      "question": "Dans une course de 8 chevaux, de combien de façons peut-on prévoir les 3 premiers (en tenant compte de l'ordre) ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$A_8^3 = 336$",
+          "is_correct": true,
+          "explanation": "Exact ! L'ordre compte (1er, 2e, 3e sont différents), donc c'est un arrangement : $A_8^3 = 8 \\times 7 \\times 6 = 336$."
+        },
+        {
+          "text": "$C_8^3 = 56$",
+          "is_correct": false,
+          "explanation": "Non. L'ordre compte dans ce problème, il faut donc utiliser les arrangements."
+        },
+        {
+          "text": "$8^3 = 512$",
+          "is_correct": false,
+          "explanation": "Non. Un cheval ne peut pas être à plusieurs positions simultanément, donc pas de répétition. La réponse est $A_8^3$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_denombrement_19",
+      "question": "Le nombre de parties d'un ensemble à $n$ éléments est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$2^n$",
+          "is_correct": true,
+          "explanation": "Exact ! Pour chaque élément, on a 2 choix (le prendre ou non), donc $2^n$ parties au total (incluant l'ensemble vide et l'ensemble complet)."
+        },
+        {
+          "text": "$n!$",
+          "is_correct": false,
+          "explanation": "Non. $n!$ donne le nombre de permutations."
+        },
+        {
+          "text": "$n^2$",
+          "is_correct": false,
+          "explanation": "Non. Le nombre de parties est $2^n$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_denombrement_20",
+      "question": "Quelle relation existe entre arrangements et combinaisons ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$A_n^p = p! \\times C_n^p$",
+          "is_correct": true,
+          "explanation": "Exact ! Les arrangements comptent l'ordre en plus des combinaisons. Pour chaque combinaison de $p$ éléments, il y a $p!$ façons de les ordonner : $A_n^p = \\frac{n!}{(n-p)!} = p! \\times \\frac{n!}{p!(n-p)!} = p! \\times C_n^p$."
+        },
+        {
+          "text": "$A_n^p = C_n^p + p!$",
+          "is_correct": false,
+          "explanation": "Non. La relation est multiplicative : $A_n^p = p! \\times C_n^p$."
+        },
+        {
+          "text": "$A_n^p = C_n^p$",
+          "is_correct": false,
+          "explanation": "Non. Les arrangements et combinaisons sont différents sauf cas particuliers."
         }
       ],
       "steps": []
@@ -33,7 +471,108 @@
       "id": "exo_denombrement_1",
       "title": "Calcul de combinaisons",
       "statement": "Calculer le nombre de façons de choisir un comité de 3 personnes parmi un groupe de 8 personnes. Autrement dit, calculer $C_8^3$.",
-      "sub_questions": []
+      "sub_questions": [
+        {
+          "question": "Rappeler la formule de $C_n^p$.",
+          "hint": "$C_n^p = \\frac{n!}{p!(n-p)!}$"
+        },
+        {
+          "question": "Appliquer la formule pour calculer $C_8^3$.",
+          "hint": "$C_8^3 = \\frac{8!}{3!5!} = \\frac{8 \\times 7 \\times 6}{3 \\times 2 \\times 1}$"
+        },
+        {
+          "question": "Simplifier et donner le résultat final.",
+          "hint": "Le résultat est 56."
+        }
+      ]
+    },
+    {
+      "id": "exo_denombrement_2",
+      "title": "Anagrammes avec répétitions",
+      "statement": "Combien peut-on former d'anagrammes avec les lettres du mot \"MISSISSIPPI\" ?",
+      "sub_questions": [
+        {
+          "question": "Compter le nombre total de lettres et identifier les répétitions.",
+          "hint": "11 lettres : M(1), I(4), S(4), P(2)"
+        },
+        {
+          "question": "Rappeler la formule des permutations avec répétitions.",
+          "hint": "Si on a $n$ objets avec $n_1, n_2, \\ldots, n_k$ objets identiques, le nombre de permutations est $\\frac{n!}{n_1! n_2! \\cdots n_k!}$"
+        },
+        {
+          "question": "Appliquer la formule.",
+          "hint": "$\\frac{11!}{1! \\times 4! \\times 4! \\times 2!}$"
+        },
+        {
+          "question": "Calculer le résultat.",
+          "hint": "Le résultat est $\\frac{39916800}{1152} = 34650$"
+        }
+      ]
+    },
+    {
+      "id": "exo_denombrement_3",
+      "title": "Arrangements et tirage ordonné",
+      "statement": "Dans une urne contenant 10 boules numérotées de 1 à 10, on tire successivement 4 boules sans remise. Combien y a-t-il de résultats possibles si l'ordre de tirage compte ?",
+      "sub_questions": [
+        {
+          "question": "Identifier l'outil de dénombrement approprié.",
+          "hint": "C'est un arrangement car l'ordre compte et il n'y a pas de remise."
+        },
+        {
+          "question": "Rappeler la formule de $A_n^p$.",
+          "hint": "$A_n^p = \\frac{n!}{(n-p)!}$"
+        },
+        {
+          "question": "Calculer $A_{10}^4$.",
+          "hint": "$A_{10}^4 = \\frac{10!}{6!} = 10 \\times 9 \\times 8 \\times 7 = 5040$"
+        }
+      ]
+    },
+    {
+      "id": "exo_denombrement_4",
+      "title": "Application du binôme de Newton",
+      "statement": "Développer $(x+2)^4$ en utilisant la formule du binôme de Newton.",
+      "sub_questions": [
+        {
+          "question": "Rappeler la formule du binôme de Newton.",
+          "hint": "$(a+b)^n = \\sum_{k=0}^{n} C_n^k a^{n-k} b^k$"
+        },
+        {
+          "question": "Identifier $a$, $b$ et $n$ dans $(x+2)^4$.",
+          "hint": "$a = x$, $b = 2$, $n = 4$"
+        },
+        {
+          "question": "Calculer les coefficients binomiaux $C_4^0, C_4^1, C_4^2, C_4^3, C_4^4$.",
+          "hint": "$1, 4, 6, 4, 1$ (ligne 4 du triangle de Pascal)"
+        },
+        {
+          "question": "Écrire le développement complet.",
+          "hint": "$(x+2)^4 = C_4^0 x^4 + C_4^1 x^3 \\cdot 2 + C_4^2 x^2 \\cdot 4 + C_4^3 x \\cdot 8 + C_4^4 \\cdot 16 = x^4 + 8x^3 + 24x^2 + 32x + 16$"
+        }
+      ]
+    },
+    {
+      "id": "exo_denombrement_5",
+      "title": "Problème de répartition",
+      "statement": "On dispose de 5 boules rouges identiques et 3 boules bleues identiques. De combien de façons peut-on les ranger en ligne ?",
+      "sub_questions": [
+        {
+          "question": "Compter le nombre total de boules.",
+          "hint": "$5 + 3 = 8$ boules"
+        },
+        {
+          "question": "Identifier le problème comme une permutation avec répétitions.",
+          "hint": "5 boules rouges identiques et 3 boules bleues identiques"
+        },
+        {
+          "question": "Appliquer la formule des permutations avec répétitions.",
+          "hint": "$\\frac{8!}{5!3!}$"
+        },
+        {
+          "question": "Simplifier et reconnaître qu'il s'agit aussi d'une combinaison.",
+          "hint": "$\\frac{8!}{5!3!} = C_8^3 = C_8^5 = 56$. Choisir les 3 positions pour les bleues équivaut à arranger toutes les boules."
+        }
+      ]
     }
   ],
   "version": "v1.1.0-46b101"

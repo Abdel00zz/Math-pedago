@@ -157,31 +157,31 @@
     {
       "id": "1bsm-le-barycentre-dans-le-plan",
       "file": "1bsm/1bsm_le_barycentre_dans_le_plan.json",
-      "isActive": false,
+      "isActive": true,
       "version": "v1.1.0-1da49c"
     },
     {
       "id": "1bsm-le-produit-scalaire-dans-le-plan",
       "file": "1bsm/1bsm_le_produit_scalaire_dans_le_plan.json",
-      "isActive": false,
+      "isActive": true,
       "version": "v1.1.0-6a8023"
     },
     {
       "id": "1bsm-calcul-trigonometrique",
       "file": "1bsm/1bsm_calcul_trigonometrique.json",
-      "isActive": false,
+      "isActive": true,
       "version": "v1.1.0-1a39ea"
     },
     {
       "id": "1bsm-les-suites-numeriques",
       "file": "1bsm/1bsm_les_suites_numeriques.json",
-      "isActive": false,
+      "isActive": true,
       "version": "v1.1.0-997c89"
     },
     {
       "id": "1bsm-limites-dune-fonction",
       "file": "1bsm/1bsm_limites_dune_fonction.json",
-      "isActive": false,
+      "isActive": true,
       "version": "v1.1.0-78f85d"
     },
     {

@@ -542,6 +542,122 @@
       "steps": []
     }
   ],
-  "exercises": [],
+  "exercises": [
+    {
+      "id": "exo_fonction_domaine_1",
+      "title": "Détermination de l'ensemble de définition",
+      "statement": "Déterminer l'ensemble de définition de la fonction $f(x) = \\frac{\\sqrt{x+3}}{x^2-9}$.",
+      "sub_questions": [
+        {
+          "question": "Identifier les contraintes liées à la racine carrée.",
+          "hint": "La radicande $x+3$ doit être positif ou nul : $x+3 \\geq 0 \\Rightarrow x \\geq -3$."
+        },
+        {
+          "question": "Identifier les contraintes liées au dénominateur.",
+          "hint": "Le dénominateur ne doit pas s'annuler : $x^2-9 \\neq 0 \\Rightarrow x \\neq -3$ et $x \\neq 3$."
+        },
+        {
+          "question": "Combiner les deux contraintes pour déterminer $D_f$.",
+          "hint": "Il faut $x \\geq -3$ ET $x \\neq -3$ ET $x \\neq 3$, donc $D_f = ]-3, 3[ \\cup ]3, +\\infty[$."
+        }
+      ]
+    },
+    {
+      "id": "exo_fonction_parite_1",
+      "title": "Étude de la parité",
+      "statement": "Étudier la parité de la fonction $f(x) = \\frac{x^3}{x^2+1}$.",
+      "sub_questions": [
+        {
+          "question": "Vérifier que le domaine de définition est symétrique par rapport à 0.",
+          "hint": "$D_f = \\mathbb{R}$ qui est bien symétrique par rapport à 0."
+        },
+        {
+          "question": "Calculer $f(-x)$.",
+          "hint": "$f(-x) = \\frac{(-x)^3}{(-x)^2+1} = \\frac{-x^3}{x^2+1}$"
+        },
+        {
+          "question": "Comparer $f(-x)$ avec $f(x)$ et $-f(x)$.",
+          "hint": "$f(-x) = \\frac{-x^3}{x^2+1} = -\\frac{x^3}{x^2+1} = -f(x)$"
+        },
+        {
+          "question": "Conclure sur la parité de $f$.",
+          "hint": "Comme $f(-x) = -f(x)$, la fonction $f$ est impaire."
+        }
+      ]
+    },
+    {
+      "id": "exo_fonction_monotonie_1",
+      "title": "Sens de variation d'une fonction homographique",
+      "statement": "Soit $f(x) = \\frac{3x-5}{2x+1}$. Déterminer le sens de variation de $f$ sur chacun de ses intervalles de définition.",
+      "sub_questions": [
+        {
+          "question": "Déterminer l'ensemble de définition $D_f$.",
+          "hint": "$D_f = \\mathbb{R} \\setminus \\{-\\frac{1}{2}\\}$"
+        },
+        {
+          "question": "Calculer le déterminant $\\Delta = ad - bc$ avec $f(x) = \\frac{ax+b}{cx+d}$.",
+          "hint": "$a=3, b=-5, c=2, d=1$. Donc $\\Delta = (3)(1) - (-5)(2) = 3 + 10 = 13 > 0$."
+        },
+        {
+          "question": "En déduire le sens de variation de $f$.",
+          "hint": "Comme $\\Delta > 0$, la fonction $f$ est strictement croissante sur $]-\\infty, -\\frac{1}{2}[$ et sur $]-\\frac{1}{2}, +\\infty[$."
+        },
+        {
+          "question": "Déterminer les asymptotes de $f$.",
+          "hint": "Asymptote verticale : $x = -\\frac{1}{2}$. Asymptote horizontale : $y = \\frac{a}{c} = \\frac{3}{2}$."
+        }
+      ]
+    },
+    {
+      "id": "exo_fonction_parabole_1",
+      "title": "Étude complète d'une fonction du second degré",
+      "statement": "Soit $f(x) = -x^2 + 4x - 1$. Étudier cette fonction : domaine, variations, extremum, graphe.",
+      "sub_questions": [
+        {
+          "question": "Déterminer l'ensemble de définition.",
+          "hint": "$D_f = \\mathbb{R}$ (polynôme)"
+        },
+        {
+          "question": "Déterminer les coordonnées du sommet $S$.",
+          "hint": "$x_S = -\\frac{b}{2a} = -\\frac{4}{2(-1)} = 2$. $y_S = f(2) = -(2)^2 + 4(2) - 1 = -4 + 8 - 1 = 3$. Donc $S(2, 3)$."
+        },
+        {
+          "question": "Dresser le tableau de variations de $f$.",
+          "hint": "Comme $a = -1 < 0$, $f$ est croissante sur $]-\\infty, 2]$ et décroissante sur $[2, +\\infty[$. Maximum en $x=2$ : $f(2) = 3$."
+        },
+        {
+          "question": "Résoudre l'équation $f(x) = 0$ en calculant le discriminant.",
+          "hint": "$\\Delta = b^2 - 4ac = 16 - 4(-1)(-1) = 16 - 4 = 12 > 0$. Deux solutions : $x = \\frac{-4 \\pm \\sqrt{12}}{-2} = \\frac{-4 \\pm 2\\sqrt{3}}{-2} = 2 \\mp \\sqrt{3}$."
+        }
+      ]
+    },
+    {
+      "id": "exo_fonction_composition_1",
+      "title": "Composition de fonctions",
+      "statement": "Soient $f(x) = \\frac{1}{x+1}$ et $g(x) = 2x-3$. Déterminer $(f \\circ g)(x)$ et $(g \\circ f)(x)$ avec leurs ensembles de définition respectifs.",
+      "sub_questions": [
+        {
+          "question": "Calculer $(f \\circ g)(x) = f(g(x))$.",
+          "hint": "$(f \\circ g)(x) = f(2x-3) = \\frac{1}{(2x-3)+1} = \\frac{1}{2x-2} = \\frac{1}{2(x-1)}$"
+        },
+        {
+          "question": "Déterminer l'ensemble de définition de $f \\circ g$.",
+          "hint": "Il faut que $g(x) \\in D_f$, c'est-à-dire $2x-3 \\neq -1 \\Rightarrow 2x \\neq 2 \\Rightarrow x \\neq 1$. Donc $D_{f \\circ g} = \\mathbb{R} \\setminus \\{1\\}$."
+        },
+        {
+          "question": "Calculer $(g \\circ f)(x) = g(f(x))$.",
+          "hint": "$(g \\circ f)(x) = g\\left(\\frac{1}{x+1}\\right) = 2 \\cdot \\frac{1}{x+1} - 3 = \\frac{2}{x+1} - 3 = \\frac{2 - 3(x+1)}{x+1} = \\frac{-3x-1}{x+1}$"
+        },
+        {
+          "question": "Déterminer l'ensemble de définition de $g \\circ f$.",
+          "hint": "$D_{g \\circ f} = D_f = \\mathbb{R} \\setminus \\{-1\\}$ (car $g$ est définie sur $\\mathbb{R}$)."
+        },
+        {
+          "question": "Comparer $f \\circ g$ et $g \\circ f$. Sont-elles égales ?",
+          "hint": "Non, $f \\circ g \\neq g \\circ f$. La composition n'est pas commutative."
+        }
+      ]
+    }
+  ],
   "version": "v1.1.0-817cc1"
 }

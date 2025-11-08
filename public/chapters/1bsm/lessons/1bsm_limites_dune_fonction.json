@@ -1,0 +1,205 @@
+{
+  "header": {
+    "title": "Limites d'une Fonction",
+    "subtitle": "Comportement asymptotique et continuité",
+    "classe": "1ère Bac Sciences Mathématiques",
+    "chapter": "Chapitre 9",
+    "academicYear": "2025-2026"
+  },
+  "sections": [
+    {
+      "title": "Notion de Limite",
+      "subsections": [
+        {
+          "title": "Limite Finie en un Point",
+          "elements": [
+            {
+              "type": "p",
+              "content": "La notion de limite permet d'étudier le comportement d'une fonction au voisinage d'un point, même si elle n'est pas définie en ce point."
+            },
+            {
+              "type": "definition-box",
+              "preamble": "**Limite finie en un point** :",
+              "content": "Soit $f$ une fonction définie au voisinage de $a$ (sauf peut-être en $a$).\n\nOn dit que $f$ admet pour **limite $L$** lorsque $x$ tend vers $a$ si :\n\nPour tout intervalle ouvert contenant $L$, il existe un intervalle ouvert contenant $a$ tel que pour tout $x$ de cet intervalle (distinct de $a$), $f(x)$ appartient au premier intervalle.\n\nOn note : $\\lim\\limits_{x \\to a} f(x) = L$ ou $f(x) \\xrightarrow[x \\to a]{} L$"
+            },
+            {
+              "type": "p",
+              "content": "?> **Interprétation graphique** : Quand $x$ se rapproche de $a$, $f(x)$ se rapproche de $L$. La courbe de $f$ se rapproche de la droite horizontale $y = L$."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Limite simple** :",
+              "content": "Calculer $\\lim\\limits_{x \\to 2} (3x + 1)$.\n\nPar continuité des fonctions polynomiales :\n$$\\lim\\limits_{x \\to 2} (3x + 1) = 3 \\times 2 + 1 = ___7___$$"
+            }
+          ]
+        },
+        {
+          "title": "Limite Infinie",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Limite infinie en un point** :",
+              "content": "On dit que $f(x)$ tend vers $+\\infty$ lorsque $x$ tend vers $a$ si :\n\nPour tout réel $A$, aussi grand soit-il, il existe un intervalle ouvert contenant $a$ tel que pour tout $x$ de cet intervalle (distinct de $a$), on a $f(x) > A$.\n\nOn note : $\\lim\\limits_{x \\to a} f(x) = +\\infty$\n\nDe même pour $-\\infty$."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Fonction rationnelle** :",
+              "content": "Calculer $\\lim\\limits_{x \\to 0} \\dfrac{1}{x^2}$.\n\nLorsque $x$ se rapproche de $0$, $x^2$ devient très petit (positif), donc $\\dfrac{1}{x^2}$ devient très grand.\n\n$$\\lim\\limits_{x \\to 0} \\dfrac{1}{x^2} = ___+\\infty___$$"
+            }
+          ]
+        },
+        {
+          "title": "Limite à l'Infini",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Limite à l'infini** :",
+              "content": "On dit que $f(x)$ tend vers $L$ lorsque $x$ tend vers $+\\infty$ si :\n\nPour tout intervalle ouvert contenant $L$, il existe un réel $A$ tel que pour tout $x > A$, on a $f(x)$ appartenant à cet intervalle.\n\nOn note : $\\lim\\limits_{x \\to +\\infty} f(x) = L$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Limite à l'infini** :",
+              "content": "Calculer $\\lim\\limits_{x \\to +\\infty} \\dfrac{2x + 1}{x + 3}$.\n\nOn factorise par $x$ au numérateur et au dénominateur :\n\n$$\\dfrac{2x + 1}{x + 3} = \\dfrac{x(2 + \\frac{1}{x})}{x(1 + \\frac{3}{x})} = \\dfrac{2 + \\frac{1}{x}}{1 + \\frac{3}{x}}$$\n\nQuand $x \\to +\\infty$ : $\\frac{1}{x} \\to 0$ et $\\frac{3}{x} \\to 0$\n\nDonc : $\\lim\\limits_{x \\to +\\infty} \\dfrac{2x + 1}{x + 3} = \\dfrac{2 + 0}{1 + 0} = ___2___$$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Opérations sur les Limites",
+      "subsections": [
+        {
+          "title": "Limites et Opérations",
+          "elements": [
+            {
+              "type": "property-box",
+              "preamble": "**Somme, produit, quotient** :",
+              "content": "Si $\\lim\\limits_{x \\to a} f(x) = L$ et $\\lim\\limits_{x \\to a} g(x) = L'$, alors :\n\n**Somme** : $\\lim\\limits_{x \\to a} [f(x) + g(x)] = L + L'$\n\n**Produit** : $\\lim\\limits_{x \\to a} [f(x) \\times g(x)] = L \\times L'$\n\n**Quotient** : $\\lim\\limits_{x \\to a} \\dfrac{f(x)}{g(x)} = \\dfrac{L}{L'}$ (si $L' \\neq 0$)"
+            },
+            {
+              "type": "p",
+              "content": "!> **Formes indéterminées** : Dans certains cas, les opérations ci-dessus ne permettent pas de conclure directement. Ce sont les formes indéterminées : $\\dfrac{0}{0}$, $\\dfrac{\\infty}{\\infty}$, $0 \\times \\infty$, $\\infty - \\infty$, etc."
+            }
+          ]
+        },
+        {
+          "title": "Levée d'Indétermination",
+          "elements": [
+            {
+              "type": "p",
+              "content": "Pour lever une forme indéterminée, on utilise diverses techniques : factorisation, mise au même dénominateur, multiplication par la quantité conjuguée, etc."
+            },
+            {
+              "type": "practice-box",
+              "statement": "Calculer les limites suivantes :",
+              "content": [
+                "$\\lim\\limits_{x \\to 1} \\dfrac{x^2 - 1}{x - 1}$ (forme $\\frac{0}{0}$)",
+                "$\\lim\\limits_{x \\to +\\infty} \\dfrac{3x^2 + 2x - 1}{x^2 - 5}$ (forme $\\frac{\\infty}{\\infty}$)",
+                "$\\lim\\limits_{x \\to 0} \\dfrac{\\sqrt{x + 1} - 1}{x}$ (forme $\\frac{0}{0}$)"
+              ],
+              "solution": [
+                "On factorise le numérateur :\n$$\\dfrac{x^2 - 1}{x - 1} = \\dfrac{(x-1)(x+1)}{x - 1} = x + 1$$ (pour $x \\neq 1$)\n\nDonc : $\\lim\\limits_{x \\to 1} \\dfrac{x^2 - 1}{x - 1} = 1 + 1 = 2$",
+                "On divise numérateur et dénominateur par $x^2$ :\n$$\\dfrac{3x^2 + 2x - 1}{x^2 - 5} = \\dfrac{3 + \\frac{2}{x} - \\frac{1}{x^2}}{1 - \\frac{5}{x^2}}$$\n\nQuand $x \\to +\\infty$ : $\\dfrac{2}{x} \\to 0$, $\\dfrac{1}{x^2} \\to 0$, $\\dfrac{5}{x^2} \\to 0$\n\nDonc : $\\lim\\limits_{x \\to +\\infty} \\dfrac{3x^2 + 2x - 1}{x^2 - 5} = \\dfrac{3}{1} = 3$",
+                "On multiplie par la quantité conjuguée :\n$$\\dfrac{\\sqrt{x + 1} - 1}{x} \\times \\dfrac{\\sqrt{x + 1} + 1}{\\sqrt{x + 1} + 1} = \\dfrac{(x + 1) - 1}{x(\\sqrt{x + 1} + 1)} = \\dfrac{x}{x(\\sqrt{x + 1} + 1)} = \\dfrac{1}{\\sqrt{x + 1} + 1}$$\n\nDonc : $\\lim\\limits_{x \\to 0} \\dfrac{\\sqrt{x + 1} - 1}{x} = \\dfrac{1}{\\sqrt{1} + 1} = \\dfrac{1}{2}$"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Asymptotes",
+      "subsections": [
+        {
+          "title": "Asymptotes Verticales",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Asymptote verticale** :",
+              "content": "La droite d'équation $x = a$ est une **asymptote verticale** à la courbe de $f$ si :\n$$\\lim\\limits_{x \\to a^+} f(x) = \\pm \\infty \\quad \\text{ou} \\quad \\lim\\limits_{x \\to a^-} f(x) = \\pm \\infty$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Recherche d'asymptote verticale** :",
+              "content": "Soit $f(x) = \\dfrac{1}{x - 2}$. Étudier l'existence d'asymptotes verticales.\n\nOn cherche les valeurs où $f$ n'est pas définie : $x = ___2___$\n\n$\\lim\\limits_{x \\to 2^+} \\dfrac{1}{x - 2} = +\\infty$ et $\\lim\\limits_{x \\to 2^-} \\dfrac{1}{x - 2} = -\\infty$\n\nLa droite $x = 2$ est une asymptote verticale."
+            }
+          ]
+        },
+        {
+          "title": "Asymptotes Horizontales",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Asymptote horizontale** :",
+              "content": "La droite d'équation $y = L$ est une **asymptote horizontale** à la courbe de $f$ en $+\\infty$ (ou $-\\infty$) si :\n$$\\lim\\limits_{x \\to +\\infty} f(x) = L \\quad \\text{(ou } \\lim\\limits_{x \\to -\\infty} f(x) = L\\text{)}$$"
+            }
+          ]
+        },
+        {
+          "title": "Asymptotes Obliques",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Asymptote oblique** :",
+              "content": "La droite d'équation $y = ax + b$ est une **asymptote oblique** à la courbe de $f$ en $+\\infty$ si :\n$$\\lim\\limits_{x \\to +\\infty} [f(x) - (ax + b)] = 0$$\n\nPour déterminer $a$ et $b$ :\n$$a = \\lim\\limits_{x \\to +\\infty} \\dfrac{f(x)}{x} \\quad \\text{et} \\quad b = \\lim\\limits_{x \\to +\\infty} [f(x) - ax]$$"
+            },
+            {
+              "type": "practice-box",
+              "statement": "Déterminer l'asymptote oblique de $f(x) = \\dfrac{x^2 + x + 1}{x + 1}$ en $+\\infty$.",
+              "content": [
+                "Calculer $a = \\lim\\limits_{x \\to +\\infty} \\dfrac{f(x)}{x}$",
+                "Calculer $b = \\lim\\limits_{x \\to +\\infty} [f(x) - ax]$",
+                "Donner l'équation de l'asymptote"
+              ],
+              "solution": [
+                "$$a = \\lim\\limits_{x \\to +\\infty} \\dfrac{f(x)}{x} = \\lim\\limits_{x \\to +\\infty} \\dfrac{x^2 + x + 1}{x(x + 1)} = \\lim\\limits_{x \\to +\\infty} \\dfrac{x^2 + x + 1}{x^2 + x}$$\n\nEn divisant par $x^2$ : $a = \\lim\\limits_{x \\to +\\infty} \\dfrac{1 + \\frac{1}{x} + \\frac{1}{x^2}}{1 + \\frac{1}{x}} = 1$",
+                "On effectue la division euclidienne :\n$$\\dfrac{x^2 + x + 1}{x + 1} = x + \\dfrac{1}{x + 1}$$\n\nDonc $f(x) - x = \\dfrac{1}{x + 1}$\n\n$$b = \\lim\\limits_{x \\to +\\infty} \\dfrac{1}{x + 1} = 0$$",
+                "L'asymptote oblique est la droite d'équation $y = x$"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Continuité",
+      "subsections": [
+        {
+          "title": "Fonction Continue",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Continuité en un point** :",
+              "content": "Une fonction $f$ est **continue en $a$** si :\n\n1. $f$ est définie en $a$\n2. $\\lim\\limits_{x \\to a} f(x)$ existe\n3. $\\lim\\limits_{x \\to a} f(x) = f(a)$"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Fonctions continues usuelles** :",
+              "content": [
+                "Les fonctions **polynômes** sont continues sur $\\mathbb{R}$",
+                "Les fonctions **rationnelles** sont continues sur leur domaine de définition",
+                "Les fonctions **trigonométriques** $\\sin$, $\\cos$, $\\tan$ sont continues sur leur domaine",
+                "La fonction **racine carrée** est continue sur $\\mathbb{R}^+$"
+              ],
+              "listType": "bullet"
+            }
+          ]
+        },
+        {
+          "title": "Théorème des Valeurs Intermédiaires",
+          "elements": [
+            {
+              "type": "theorem-box",
+              "preamble": "**Théorème des valeurs intermédiaires (TVI)** :",
+              "content": "Soit $f$ une fonction continue sur un intervalle $[a; b]$.\n\nPour tout réel $k$ compris entre $f(a)$ et $f(b)$, il existe au moins un réel $c \\in [a; b]$ tel que :\n$$f(c) = k$$\n\n**Corollaire** : Si $f$ est continue sur $[a; b]$ et si $f(a)$ et $f(b)$ sont de signes contraires, alors l'équation $f(x) = 0$ admet au moins une solution dans $]a; b[$."
+            },
+            {
+              "type": "p",
+              "content": "?> **Application** : Le TVI permet de prouver l'existence de solutions d'équations sans les calculer explicitement."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,191 @@
+{
+  "header": {
+    "title": "Le Produit Scalaire dans le Plan",
+    "subtitle": "Définitions et applications",
+    "classe": "1ère Bac Sciences Mathématiques",
+    "chapter": "Chapitre 6",
+    "academicYear": "2025-2026"
+  },
+  "sections": [
+    {
+      "title": "Définitions du Produit Scalaire",
+      "subsections": [
+        {
+          "title": "Définition Analytique",
+          "elements": [
+            {
+              "type": "p",
+              "content": "Le produit scalaire est une opération fondamentale qui associe à deux vecteurs un nombre réel. Il permet de mesurer l'angle entre deux vecteurs et d'étudier l'orthogonalité."
+            },
+            {
+              "type": "definition-box",
+              "preamble": "**Produit scalaire (définition analytique)** :",
+              "content": "Dans un repère orthonormé $(O; \\vec{i}, \\vec{j})$, soient $\\vec{u}\\begin{pmatrix} x \\\\ y \\end{pmatrix}$ et $\\vec{v}\\begin{pmatrix} x' \\\\ y' \\end{pmatrix}$ deux vecteurs.\n\nLe **produit scalaire** de $\\vec{u}$ et $\\vec{v}$, noté $\\vec{u} \\cdot \\vec{v}$, est le nombre réel défini par :\n\n$$\\vec{u} \\cdot \\vec{v} = xx' + yy'$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Calcul direct** :",
+              "content": "Soient $\\vec{u}\\begin{pmatrix} 3 \\\\ -2 \\end{pmatrix}$ et $\\vec{v}\\begin{pmatrix} 1 \\\\ 4 \\end{pmatrix}$.\n\n$$\\vec{u} \\cdot \\vec{v} = 3 \\times 1 + (-2) \\times 4 = 3 - 8 = ___-5___$$"
+            }
+          ]
+        },
+        {
+          "title": "Définition Géométrique",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Produit scalaire (définition géométrique)** :",
+              "content": "Soient $\\vec{u}$ et $\\vec{v}$ deux vecteurs non nuls et $\\theta$ l'angle orienté entre ces vecteurs.\n\nLe produit scalaire de $\\vec{u}$ et $\\vec{v}$ est :\n\n$$\\vec{u} \\cdot \\vec{v} = \\|\\vec{u}\\| \\times \\|\\vec{v}\\| \\times \\cos(\\theta)$$\n\nOù $\\|\\vec{u}\\|$ et $\\|\\vec{v}\\|$ sont les normes (longueurs) des vecteurs."
+            },
+            {
+              "type": "remark-box",
+              "content": "**Cas particuliers** :\n\nSi $\\vec{u} = \\vec{0}$ ou $\\vec{v} = \\vec{0}$, alors $\\vec{u} \\cdot \\vec{v} = 0$"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Norme d'un vecteur** :",
+              "content": "Le produit scalaire d'un vecteur $\\vec{u}$ par lui-même donne le carré de sa norme :\n\n$$\\vec{u} \\cdot \\vec{u} = \\|\\vec{u}\\|^2$$\n\nDonc : $\\|\\vec{u}\\| = \\sqrt{\\vec{u} \\cdot \\vec{u}}$"
+            }
+          ]
+        },
+        {
+          "title": "Définition par Projection",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Produit scalaire et projection** :",
+              "content": "Soient $A$, $B$ et $C$ trois points du plan, et $H$ le projeté orthogonal de $C$ sur la droite $(AB)$.\n\nLe produit scalaire $\\overrightarrow{AB} \\cdot \\overrightarrow{AC}$ est donné par :\n\n$$\\overrightarrow{AB} \\cdot \\overrightarrow{AC} = \\overrightarrow{AB} \\cdot \\overrightarrow{AH} = AB \\times AH$$\n\noù $AH$ est la mesure algébrique de $\\overrightarrow{AH}$ sur la droite $(AB)$."
+            },
+            {
+              "type": "p",
+              "content": "?> **Astuce** : La projection orthogonale est très utile pour calculer des produits scalaires dans des figures géométriques où les angles ne sont pas évidents."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Propriétés du Produit Scalaire",
+      "subsections": [
+        {
+          "title": "Propriétés Algébriques",
+          "elements": [
+            {
+              "type": "property-box",
+              "preamble": "**Propriétés fondamentales** :",
+              "content": [
+                ">> **Commutativité** : $\\vec{u} \\cdot \\vec{v} = \\vec{v} \\cdot \\vec{u}$",
+                ">> **Linéarité** :",
+                "$\\vec{u} \\cdot (\\vec{v} + \\vec{w}) = \\vec{u} \\cdot \\vec{v} + \\vec{u} \\cdot \\vec{w}$",
+                "$(\\lambda \\vec{u}) \\cdot \\vec{v} = \\lambda (\\vec{u} \\cdot \\vec{v}) = \\vec{u} \\cdot (\\lambda \\vec{v})$ pour tout réel $\\lambda$",
+                ">> **Positivité** :",
+                "$\\vec{u} \\cdot \\vec{u} \\geq 0$ et $\\vec{u} \\cdot \\vec{u} = 0 \\Leftrightarrow \\vec{u} = \\vec{0}$"
+              ],
+              "listType": "bullet"
+            }
+          ]
+        },
+        {
+          "title": "Formules Importantes",
+          "elements": [
+            {
+              "type": "property-box",
+              "preamble": "**Formules de développement** :",
+              "content": [
+                ">> **Carré d'une somme** :",
+                "$(\\vec{u} + \\vec{v})^2 = \\|\\vec{u}\\|^2 + 2\\vec{u} \\cdot \\vec{v} + \\|\\vec{v}\\|^2$",
+                ">> **Carré d'une différence** :",
+                "$(\\vec{u} - \\vec{v})^2 = \\|\\vec{u}\\|^2 - 2\\vec{u} \\cdot \\vec{v} + \\|\\vec{v}\\|^2$",
+                ">> **Identité de polarisation** :",
+                "$\\vec{u} \\cdot \\vec{v} = \\dfrac{1}{2}\\left(\\|\\vec{u} + \\vec{v}\\|^2 - \\|\\vec{u}\\|^2 - \\|\\vec{v}\\|^2\\right)$",
+                ">> **Identité remarquable** :",
+                "$(\\vec{u} + \\vec{v}) \\cdot (\\vec{u} - \\vec{v}) = \\|\\vec{u}\\|^2 - \\|\\vec{v}\\|^2$"
+              ],
+              "listType": "bullet"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Application des formules** :",
+              "content": "Soient $\\vec{u}$ et $\\vec{v}$ deux vecteurs tels que $\\|\\vec{u}\\| = 3$, $\\|\\vec{v}\\| = 2$ et $\\vec{u} \\cdot \\vec{v} = 4$.\n\nCalculons $\\|\\vec{u} + \\vec{v}\\|$ :\n\n$$\\|\\vec{u} + \\vec{v}\\|^2 = \\|\\vec{u}\\|^2 + 2\\vec{u} \\cdot \\vec{v} + \\|\\vec{v}\\|^2$$\n\n$$= 3^2 + 2 \\times 4 + 2^2 = 9 + 8 + 4 = ___21___$$\n\nDonc $\\|\\vec{u} + \\vec{v}\\| = \\sqrt{21}$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Orthogonalité",
+      "subsections": [
+        {
+          "title": "Vecteurs Orthogonaux",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Vecteurs orthogonaux** :",
+              "content": "Deux vecteurs $\\vec{u}$ et $\\vec{v}$ sont **orthogonaux** si et seulement si leur produit scalaire est nul :\n\n$$\\vec{u} \\perp \\vec{v} \\Leftrightarrow \\vec{u} \\cdot \\vec{v} = 0$$\n\nPar convention, le vecteur nul $\\vec{0}$ est orthogonal à tout vecteur."
+            },
+            {
+              "type": "p",
+              "content": "!> **Attention** : Deux vecteurs orthogonaux ne sont pas nécessairement perpendiculaires au sens géométrique si l'un d'eux est le vecteur nul."
+            },
+            {
+              "type": "practice-box",
+              "statement": "Dans un repère orthonormé, on donne $\\vec{u}\\begin{pmatrix} 2 \\\\ 3 \\end{pmatrix}$ et $\\vec{v}\\begin{pmatrix} x \\\\ -2 \\end{pmatrix}$.",
+              "content": [
+                "Déterminer $x$ pour que $\\vec{u}$ et $\\vec{v}$ soient orthogonaux",
+                "Vérifier le résultat graphiquement"
+              ],
+              "solution": [
+                "$\\vec{u}$ et $\\vec{v}$ sont orthogonaux si et seulement si $\\vec{u} \\cdot \\vec{v} = 0$\n\n$$2x + 3 \\times (-2) = 0$$\n$$2x - 6 = 0$$\n$$x = 3$$\n\nDonc $\\vec{v}\\begin{pmatrix} 3 \\\\ -2 \\end{pmatrix}$",
+                "On peut vérifier que les vecteurs $\\vec{u}\\begin{pmatrix} 2 \\\\ 3 \\end{pmatrix}$ et $\\vec{v}\\begin{pmatrix} 3 \\\\ -2 \\end{pmatrix}$ forment un angle de 90° dans le repère orthonormé."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Droites Perpendiculaires",
+          "elements": [
+            {
+              "type": "property-box",
+              "preamble": "**Condition de perpendicularité** :",
+              "content": "Deux droites de vecteurs directeurs respectifs $\\vec{u}$ et $\\vec{v}$ sont perpendiculaires si et seulement si :\n\n$$\\vec{u} \\cdot \\vec{v} = 0$$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Applications Géométriques",
+      "subsections": [
+        {
+          "title": "Théorème d'Al-Kashi",
+          "elements": [
+            {
+              "type": "theorem-box",
+              "preamble": "**Théorème d'Al-Kashi (généralisation de Pythagore)** :",
+              "content": "Dans un triangle $ABC$, on a :\n\n$$BC^2 = AB^2 + AC^2 - 2 \\cdot AB \\cdot AC \\cdot \\cos(\\widehat{BAC})$$\n\nCe théorème généralise le théorème de Pythagore (qui est le cas particulier où $\\widehat{BAC} = 90°$)."
+            },
+            {
+              "type": "p",
+              "content": "?> **Démonstration** : On utilise la relation $\\overrightarrow{BC} = \\overrightarrow{AC} - \\overrightarrow{AB}$ et on calcule $\\|\\overrightarrow{BC}\\|^2 = \\overrightarrow{BC} \\cdot \\overrightarrow{BC}$."
+            }
+          ]
+        },
+        {
+          "title": "Médiane et Théorème de la Médiane",
+          "elements": [
+            {
+              "type": "theorem-box",
+              "preamble": "**Théorème de la médiane** :",
+              "content": "Dans un triangle $ABC$, si $I$ est le milieu de $[BC]$, alors :\n\n$$AB^2 + AC^2 = 2\\left(AI^2 + BI^2\\right)$$\n\nOu de manière équivalente :\n$$AB^2 + AC^2 = 2AI^2 + \\dfrac{BC^2}{2}$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Application du théorème de la médiane** :",
+              "content": "Soit $ABC$ un triangle tel que $AB = 5$, $AC = 7$ et $BC = 6$. Si $I$ est le milieu de $[BC]$, calculons $AI$.\n\nD'après le théorème de la médiane :\n$$AB^2 + AC^2 = 2AI^2 + \\dfrac{BC^2}{2}$$\n\n$$25 + 49 = 2AI^2 + \\dfrac{36}{2}$$\n\n$$74 = 2AI^2 + 18$$\n\n$$2AI^2 = 74 - 18 = ___56___$$\n\n$$AI^2 = 28$$\n\nDonc $AI = \\sqrt{28} = 2\\sqrt{7}$"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

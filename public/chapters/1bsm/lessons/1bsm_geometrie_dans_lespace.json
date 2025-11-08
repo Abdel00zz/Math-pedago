@@ -1,0 +1,178 @@
+{
+  "header": {
+    "title": "Géométrie dans l'Espace",
+    "subtitle": "Droites, plans et positions relatives",
+    "classe": "1ère Bac Sciences Mathématiques",
+    "chapter": "Chapitre 14",
+    "academicYear": "2025-2026"
+  },
+  "sections": [
+    {
+      "title": "Droites dans l'Espace",
+      "subsections": [
+        {
+          "title": "Représentation d'une Droite",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Représentation paramétrique d'une droite** :",
+              "content": "Une droite $D$ passant par un point $A(x_A; y_A; z_A)$ et de vecteur directeur $\\overrightarrow{u}\\begin{pmatrix} a \\\\ b \\\\ c \\end{pmatrix}$ admet la représentation paramétrique :\n\n$$D : \\begin{cases} x = x_A + ta \\\\ y = y_A + tb \\\\ z = z_A + tc \\end{cases}, \\quad t \\in \\mathbb{R}$$\n\nOu vectoriellement : $\\overrightarrow{AM} = t\\overrightarrow{u}$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Équation de droite** :",
+              "content": "Déterminer une représentation paramétrique de la droite $(AB)$ avec $A(1; 2; 0)$ et $B(3; -1; 4)$.\n\n**Vecteur directeur** : $\\overrightarrow{AB}\\begin{pmatrix} 3-1 \\\\ -1-2 \\\\ 4-0 \\end{pmatrix} = \\begin{pmatrix} ___2___ \\\\ ___-3___ \\\\ ___4___ \\end{pmatrix}$\n\n**Représentation** : $\\begin{cases} x = 1 + 2t \\\\ y = 2 - 3t \\\\ z = 4t \\end{cases}$, $t \\in \\mathbb{R}$"
+            }
+          ]
+        },
+        {
+          "title": "Position de Deux Droites",
+          "elements": [
+            {
+              "type": "property-box",
+              "preamble": "**Positions relatives de deux droites** :",
+              "content": [
+                "**Strictement parallèles** : Même direction, aucun point commun",
+                "**Confondues** : Mêmes points",
+                "**Sécantes** : Un point d'intersection",
+                "**Non coplanaires** : Pas dans le même plan (cas spécifique à l'espace)"
+              ],
+              "listType": "bullet"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Condition de parallélisme** :",
+              "content": "Deux droites $D$ et $D'$ de vecteurs directeurs $\\overrightarrow{u}$ et $\\overrightarrow{u'}$ sont **parallèles** si et seulement si $\\overrightarrow{u}$ et $\\overrightarrow{u'}$ sont **colinéaires** :\n\n$$\\exists k \\in \\mathbb{R}, \\overrightarrow{u'} = k\\overrightarrow{u}$$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Plans dans l'Espace",
+      "subsections": [
+        {
+          "title": "Équation Cartésienne",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Équation cartésienne d'un plan** :",
+              "content": "Dans un repère de l'espace, tout plan admet une **équation cartésienne** de la forme :\n\n$$ax + by + cz + d = 0$$\n\navec $(a, b, c) \\neq (0, 0, 0)$.\n\nLe vecteur $\\overrightarrow{n}\\begin{pmatrix} a \\\\ b \\\\ c \\end{pmatrix}$ est appelé **vecteur normal** au plan."
+            },
+            {
+              "type": "remark-box",
+              "content": "Un vecteur est **normal** à un plan s'il est orthogonal à tous les vecteurs du plan."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Équation d'un plan** :",
+              "content": "Le plan d'équation $2x - y + 3z - 6 = 0$ admet pour vecteur normal :\n\n$$\\overrightarrow{n}\\begin{pmatrix} ___2___ \\\\ ___-1___ \\\\ ___3___ \\end{pmatrix}$$"
+            }
+          ]
+        },
+        {
+          "title": "Position Relative Droite-Plan",
+          "elements": [
+            {
+              "type": "property-box",
+              "preamble": "**Positions relatives** :",
+              "content": [
+                "**Droite incluse dans le plan** : Tous les points de la droite appartiennent au plan",
+                "**Droite strictement parallèle au plan** : Aucun point d'intersection",
+                "**Droite sécante au plan** : Un unique point d'intersection"
+              ],
+              "listType": "bullet"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Condition de parallélisme** :",
+              "content": "Une droite $D$ de vecteur directeur $\\overrightarrow{u}$ est **parallèle** à un plan $P$ de vecteur normal $\\overrightarrow{n}$ si et seulement si :\n\n$$\\overrightarrow{u} \\cdot \\overrightarrow{n} = 0$$\n\n(Le vecteur directeur est orthogonal au vecteur normal)"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Condition de perpendicularité** :",
+              "content": "Une droite $D$ de vecteur directeur $\\overrightarrow{u}$ est **perpendiculaire** à un plan $P$ si $\\overrightarrow{u}$ est colinéaire au vecteur normal $\\overrightarrow{n}$ du plan :\n\n$$\\exists k \\in \\mathbb{R}^*, \\overrightarrow{u} = k\\overrightarrow{n}$$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Intersections et Systèmes",
+      "subsections": [
+        {
+          "title": "Intersection Droite-Plan",
+          "elements": [
+            {
+              "type": "p",
+              "content": "Pour déterminer l'intersection d'une droite et d'un plan, on résout un système d'équations."
+            },
+            {
+              "type": "practice-box",
+              "statement": "Déterminer l'intersection de la droite $D : \\begin{cases} x = 1 + t \\\\ y = 2 - t \\\\ z = 3 + 2t \\end{cases}$ et du plan $P : x + y + z - 5 = 0$.",
+              "content": [
+                "Substituer les expressions de $x$, $y$, $z$ dans l'équation du plan",
+                "Résoudre pour trouver $t$",
+                "Calculer les coordonnées du point d'intersection"
+              ],
+              "solution": [
+                "On remplace dans l'équation du plan :\n$$(1 + t) + (2 - t) + (3 + 2t) - 5 = 0$$\n$$1 + t + 2 - t + 3 + 2t - 5 = 0$$\n$$2t + 1 = 0$$",
+                "$$t = -\\dfrac{1}{2}$$",
+                "Point d'intersection $I$ :\n$$x = 1 + \\left(-\\dfrac{1}{2}\\right) = \\dfrac{1}{2}$$\n$$y = 2 - \\left(-\\dfrac{1}{2}\\right) = \\dfrac{5}{2}$$\n$$z = 3 + 2\\left(-\\dfrac{1}{2}\\right) = 2$$\n\nDonc $I\\left(\\dfrac{1}{2}; \\dfrac{5}{2}; 2\\right)$"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Intersection de Deux Plans",
+          "elements": [
+            {
+              "type": "property-box",
+              "preamble": "**Positions de deux plans** :",
+              "content": [
+                "**Strictement parallèles** : Vecteurs normaux colinéaires, aucun point commun",
+                "**Confondus** : Même équation (à un coefficient près)",
+                "**Sécants** : Intersection selon une droite"
+              ],
+              "listType": "bullet"
+            },
+            {
+              "type": "p",
+              "content": "?> **Méthode** : Pour trouver l'intersection de deux plans, on résout le système formé par leurs deux équations. Si le système admet une infinité de solutions, l'intersection est une droite."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Solides Usuels",
+      "subsections": [
+        {
+          "title": "Parallélépipède et Cube",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Parallélépipède rectangle** :",
+              "content": "Un **parallélépipède rectangle** (ou pavé droit) est un solide dont les six faces sont des rectangles.\n\nIl possède :\n- 8 sommets\n- 12 arêtes\n- 6 faces rectangulaires\n\n**Volume** : $V = L \\times l \\times h$"
+            },
+            {
+              "type": "definition-box",
+              "preamble": "**Cube** :",
+              "content": "Un **cube** est un parallélépipède dont toutes les faces sont des carrés.\n\nSi $a$ est la longueur d'une arête :\n- **Volume** : $V = a^3$\n- **Aire totale** : $A = 6a^2$\n- **Diagonale** : $d = a\\sqrt{3}$"
+            }
+          ]
+        },
+        {
+          "title": "Tétraèdre",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Tétraèdre** :",
+              "content": "Un **tétraèdre** est un solide à quatre faces triangulaires.\n\nIl possède :\n- 4 sommets\n- 6 arêtes\n- 4 faces triangulaires\n\n**Tétraèdre régulier** : Toutes les faces sont des triangles équilatéraux."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

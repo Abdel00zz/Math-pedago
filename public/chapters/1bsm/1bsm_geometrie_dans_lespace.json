@@ -2,6 +2,7 @@
   "class": "1bsm",
   "chapter": "Géométrie dans l'espace",
   "sessionDates": [],
+  "lessonFile": "lessons/1bsm_geometrie_dans_lespace.json",
   "videos": [],
   "quiz": [
     {
@@ -12,17 +13,454 @@
         {
           "text": "D'une droite",
           "is_correct": false,
-          "explanation": null
+          "explanation": "Non. Une droite dans l'espace nécessite 2 équations de plans ou une représentation paramétrique."
         },
         {
           "text": "D'un plan",
-          "is_correct": false,
-          "explanation": null
+          "is_correct": true,
+          "explanation": "Exact ! Une équation de la forme $ax + by + cz + d = 0$ représente un plan dans l'espace. Le vecteur $(1, -2, 3)$ est un vecteur normal à ce plan."
         },
         {
           "text": "D'une sphère",
           "is_correct": false,
-          "explanation": null
+          "explanation": "Non. L'équation d'une sphère a la forme $(x-a)^2 + (y-b)^2 + (z-c)^2 = r^2$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_geo_espace_2",
+      "question": "Deux plans sont parallèles si et seulement si :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Leurs vecteurs normaux sont colinéaires",
+          "is_correct": true,
+          "explanation": "Exact ! Deux plans sont parallèles si et seulement si leurs vecteurs normaux sont colinéaires."
+        },
+        {
+          "text": "Leurs vecteurs normaux sont orthogonaux",
+          "is_correct": false,
+          "explanation": "Non. Des vecteurs normaux orthogonaux signifient que les plans sont perpendiculaires."
+        },
+        {
+          "text": "Ils ont la même constante dans leur équation",
+          "is_correct": false,
+          "explanation": "Non. La constante ne détermine pas le parallélisme."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_geo_espace_3",
+      "question": "Une représentation paramétrique d'une droite dans l'espace requiert :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Un point de la droite et un vecteur directeur",
+          "is_correct": true,
+          "explanation": "Correct ! Une droite est définie par un point $A$ et un vecteur directeur $\\vec{u}$ : $M = A + t\\vec{u}$ où $t \\in \\mathbb{R}$."
+        },
+        {
+          "text": "Deux vecteurs non colinéaires",
+          "is_correct": false,
+          "explanation": "Non. Cela définit un plan, pas une droite."
+        },
+        {
+          "text": "Trois points non alignés",
+          "is_correct": false,
+          "explanation": "Non. Trois points non alignés définissent un plan."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_geo_espace_4",
+      "question": "Deux droites dans l'espace peuvent être :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Sécantes, parallèles ou non coplanaires",
+          "is_correct": true,
+          "explanation": "Exact ! Dans l'espace, deux droites peuvent être sécantes (se coupent), parallèles (même direction) ou non coplanaires (gauches, ne se rencontrent pas et ne sont pas parallèles)."
+        },
+        {
+          "text": "Seulement sécantes ou parallèles",
+          "is_correct": false,
+          "explanation": "Non. Contrairement au plan, dans l'espace, deux droites peuvent aussi être non coplanaires (gauches)."
+        },
+        {
+          "text": "Toujours coplanaires",
+          "is_correct": false,
+          "explanation": "Non. Deux droites dans l'espace ne sont pas toujours dans un même plan."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_geo_espace_5",
+      "question": "L'équation d'une sphère de centre $\\Omega(a, b, c)$ et de rayon $r$ est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$(x-a)^2 + (y-b)^2 + (z-c)^2 = r^2$",
+          "is_correct": true,
+          "explanation": "Exact ! C'est l'ensemble des points $M(x,y,z)$ tels que $\\Omega M = r$."
+        },
+        {
+          "text": "$x^2 + y^2 + z^2 = r^2$",
+          "is_correct": false,
+          "explanation": "Non. Cela représente une sphère de centre $O(0,0,0)$ uniquement."
+        },
+        {
+          "text": "$(x-a) + (y-b) + (z-c) = r$",
+          "is_correct": false,
+          "explanation": "Non. Il manque les carrés et la somme des termes."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_geo_espace_6",
+      "question": "Un plan est défini par :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Un point et un vecteur normal",
+          "is_correct": true,
+          "explanation": "Exact ! Un plan peut être défini par un point $A$ et un vecteur normal $\\vec{n}$. L'équation est alors $\\vec{n} \\cdot \\vec{AM} = 0$."
+        },
+        {
+          "text": "Deux points",
+          "is_correct": false,
+          "explanation": "Non. Deux points définissent une droite, pas un plan."
+        },
+        {
+          "text": "Un seul vecteur",
+          "is_correct": false,
+          "explanation": "Non. Il faut aussi un point du plan."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_geo_espace_7",
+      "question": "La distance d'un point $A$ à un plan $P$ est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "La longueur du segment perpendiculaire de $A$ au plan",
+          "is_correct": true,
+          "explanation": "Exact ! C'est la plus courte distance entre le point et le plan, obtenue par une perpendiculaire."
+        },
+        {
+          "text": "La longueur de n'importe quel segment joignant $A$ à un point du plan",
+          "is_correct": false,
+          "explanation": "Non. Il faut que ce segment soit perpendiculaire au plan."
+        },
+        {
+          "text": "Toujours égale à zéro",
+          "is_correct": false,
+          "explanation": "Non. Elle est nulle seulement si $A$ appartient au plan."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_geo_espace_8",
+      "question": "Dans le repère $(O, \\vec{i}, \\vec{j}, \\vec{k})$, le vecteur $\\vec{AB}$ avec $A(1,2,3)$ et $B(4,5,6)$ a pour coordonnées :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$(3, 3, 3)$",
+          "is_correct": true,
+          "explanation": "Exact ! $\\vec{AB} = (x_B - x_A, y_B - y_A, z_B - z_A) = (4-1, 5-2, 6-3) = (3, 3, 3)$."
+        },
+        {
+          "text": "$(5, 7, 9)$",
+          "is_correct": false,
+          "explanation": "Non. Vous avez additionné les coordonnées au lieu de les soustraire."
+        },
+        {
+          "text": "$(-3, -3, -3)$",
+          "is_correct": false,
+          "explanation": "Non. C'est $\\vec{BA}$, pas $\\vec{AB}$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_geo_espace_9",
+      "question": "Deux vecteurs $\\vec{u}(x_1, y_1, z_1)$ et $\\vec{v}(x_2, y_2, z_2)$ sont colinéaires si :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Il existe un réel $k$ tel que $\\vec{v} = k\\vec{u}$",
+          "is_correct": true,
+          "explanation": "Exact ! Deux vecteurs sont colinéaires s'ils sont proportionnels : $x_2 = kx_1$, $y_2 = ky_1$, $z_2 = kz_1$."
+        },
+        {
+          "text": "Leur produit scalaire est nul",
+          "is_correct": false,
+          "explanation": "Non. Un produit scalaire nul signifie qu'ils sont orthogonaux."
+        },
+        {
+          "text": "Leurs coordonnées sont égales",
+          "is_correct": false,
+          "explanation": "Non. Des coordonnées égales signifie que ce sont le même vecteur."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_geo_espace_10",
+      "question": "L'intersection de deux plans non parallèles est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Une droite",
+          "is_correct": true,
+          "explanation": "Exact ! Deux plans non parallèles se coupent selon une droite."
+        },
+        {
+          "text": "Un point",
+          "is_correct": false,
+          "explanation": "Non. Deux plans se coupent selon une droite (infinie)."
+        },
+        {
+          "text": "Un plan",
+          "is_correct": false,
+          "explanation": "Non. Deux plans distincts ne peuvent pas avoir un plan comme intersection."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_geo_espace_11",
+      "question": "Une droite et un plan peuvent être :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Sécants (en un point), parallèles ou la droite contenue dans le plan",
+          "is_correct": true,
+          "explanation": "Exact ! Une droite peut couper un plan en un point, être parallèle au plan, ou être entièrement contenue dans le plan."
+        },
+        {
+          "text": "Seulement sécants ou parallèles",
+          "is_correct": false,
+          "explanation": "Non. La droite peut aussi être contenue dans le plan."
+        },
+        {
+          "text": "Toujours sécants",
+          "is_correct": false,
+          "explanation": "Non. Une droite peut être parallèle à un plan."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_geo_espace_12",
+      "question": "Le volume d'un tétraèdre $ABCD$ est donné par :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$V = \\frac{1}{6}|\\vec{AB} \\cdot (\\vec{AC} \\wedge \\vec{AD})|$",
+          "is_correct": true,
+          "explanation": "Exact ! C'est la formule du volume utilisant le produit mixte des vecteurs."
+        },
+        {
+          "text": "$V = \\vec{AB} \\cdot \\vec{AC} \\cdot \\vec{AD}$",
+          "is_correct": false,
+          "explanation": "Non. Le volume nécessite un produit mixte, pas un simple produit."
+        },
+        {
+          "text": "$V = \\frac{1}{3}|\\vec{AB}||\\vec{AC}||\\vec{AD}|$",
+          "is_correct": false,
+          "explanation": "Non. Cette formule ne tient pas compte des angles entre les vecteurs."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_geo_espace_13",
+      "question": "La distance entre deux points $A(x_1, y_1, z_1)$ et $B(x_2, y_2, z_2)$ est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\sqrt{(x_2-x_1)^2 + (y_2-y_1)^2 + (z_2-z_1)^2}$",
+          "is_correct": true,
+          "explanation": "Exact ! C'est la formule de la distance euclidienne dans l'espace."
+        },
+        {
+          "text": "$(x_2-x_1) + (y_2-y_1) + (z_2-z_1)$",
+          "is_correct": false,
+          "explanation": "Non. Il faut élever au carré puis prendre la racine."
+        },
+        {
+          "text": "$|x_2-x_1| + |y_2-y_1| + |z_2-z_1|$",
+          "is_correct": false,
+          "explanation": "Non. C'est la distance de Manhattan, pas la distance euclidienne."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_geo_espace_14",
+      "question": "Un repère de l'espace est défini par :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Un point origine et trois vecteurs non coplanaires",
+          "is_correct": true,
+          "explanation": "Exact ! Un repère $(O, \\vec{i}, \\vec{j}, \\vec{k})$ nécessite un point $O$ et trois vecteurs non coplanaires."
+        },
+        {
+          "text": "Quatre points quelconques",
+          "is_correct": false,
+          "explanation": "Non. Il faut un point origine et trois vecteurs non coplanaires."
+        },
+        {
+          "text": "Deux vecteurs seulement",
+          "is_correct": false,
+          "explanation": "Non. Deux vecteurs définissent un repère du plan, pas de l'espace."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_geo_espace_15",
+      "question": "Trois points $A$, $B$, $C$ sont alignés si et seulement si :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Les vecteurs $\\vec{AB}$ et $\\vec{AC}$ sont colinéaires",
+          "is_correct": true,
+          "explanation": "Exact ! Si $\\vec{AB}$ et $\\vec{AC}$ sont colinéaires, alors $A$, $B$, $C$ sont sur une même droite."
+        },
+        {
+          "text": "Les vecteurs $\\vec{AB}$ et $\\vec{AC}$ sont orthogonaux",
+          "is_correct": false,
+          "explanation": "Non. L'orthogonalité n'implique pas l'alignement."
+        },
+        {
+          "text": "$AB = AC$",
+          "is_correct": false,
+          "explanation": "Non. Des distances égales ne garantissent pas l'alignement."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_geo_espace_16",
+      "question": "Le plan médiateur du segment $[AB]$ est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "L'ensemble des points équidistants de $A$ et $B$",
+          "is_correct": true,
+          "explanation": "Exact ! C'est le plan perpendiculaire à $[AB]$ passant par son milieu."
+        },
+        {
+          "text": "La droite passant par $A$ et $B$",
+          "is_correct": false,
+          "explanation": "Non. C'est une droite, pas un plan."
+        },
+        {
+          "text": "Un plan contenant $A$ et $B$",
+          "is_correct": false,
+          "explanation": "Non. Le plan médiateur est perpendiculaire au segment."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_geo_espace_17",
+      "question": "Quatre points $A$, $B$, $C$, $D$ sont coplanaires si :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Les vecteurs $\\vec{AB}$, $\\vec{AC}$, $\\vec{AD}$ sont coplanaires",
+          "is_correct": true,
+          "explanation": "Exact ! Si $\\vec{AD} = \\alpha\\vec{AB} + \\beta\\vec{AC}$, alors les 4 points sont dans un même plan."
+        },
+        {
+          "text": "$A$, $B$, $C$, $D$ forment un carré",
+          "is_correct": false,
+          "explanation": "Non. Former un carré est une condition plus restrictive."
+        },
+        {
+          "text": "Ils sont tous alignés",
+          "is_correct": false,
+          "explanation": "Non. L'alignement est plus restrictif que la coplanarité."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_geo_espace_18",
+      "question": "Un plan défini par l'équation $2x - y + 3z = 0$ passe par :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "L'origine $O(0, 0, 0)$",
+          "is_correct": true,
+          "explanation": "Exact ! Si on remplace $x=y=z=0$ dans l'équation, on obtient $0=0$, donc $O$ appartient au plan."
+        },
+        {
+          "text": "Le point $(1, 1, 1)$",
+          "is_correct": false,
+          "explanation": "Non. $2(1) - 1 + 3(1) = 4 \\neq 0$."
+        },
+        {
+          "text": "Aucun point particulier",
+          "is_correct": false,
+          "explanation": "Non. Le plan passe par l'origine."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_geo_espace_19",
+      "question": "La norme d'un vecteur $\\vec{u}(x, y, z)$ est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\sqrt{x^2 + y^2 + z^2}$",
+          "is_correct": true,
+          "explanation": "Exact ! C'est la longueur du vecteur dans l'espace."
+        },
+        {
+          "text": "$x + y + z$",
+          "is_correct": false,
+          "explanation": "Non. Il faut élever au carré puis prendre la racine."
+        },
+        {
+          "text": "$|x| + |y| + |z|$",
+          "is_correct": false,
+          "explanation": "Non. C'est la norme Manhattan, pas la norme euclidienne."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_geo_espace_20",
+      "question": "Deux plans $P_1: ax + by + cz + d_1 = 0$ et $P_2: ax + by + cz + d_2 = 0$ (avec $d_1 \\neq d_2$) sont :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Parallèles distincts",
+          "is_correct": true,
+          "explanation": "Exact ! Ils ont le même vecteur normal $(a, b, c)$ donc sont parallèles, mais $d_1 \\neq d_2$ donc ils sont distincts."
+        },
+        {
+          "text": "Sécants",
+          "is_correct": false,
+          "explanation": "Non. Des vecteurs normaux colinéaires impliquent le parallélisme."
+        },
+        {
+          "text": "Confondus",
+          "is_correct": false,
+          "explanation": "Non. Ils seraient confondus si $d_1 = d_2$."
         }
       ],
       "steps": []
@@ -33,7 +471,100 @@
       "id": "exo_geo_espace_1",
       "title": "Représentation paramétrique",
       "statement": "Donner une représentation paramétrique de la droite (D) passant par le point $A(1,0,2)$ et dirigée par le vecteur $\\vec{u}(2, -1, 1)$.",
-      "sub_questions": []
+      "sub_questions": [
+        {
+          "question": "Rappeler la forme d'une représentation paramétrique.",
+          "hint": "$\\begin{cases} x = x_A + t \\cdot u_x \\\\ y = y_A + t \\cdot u_y \\\\ z = z_A + t \\cdot u_z \\end{cases}$ avec $t \\in \\mathbb{R}$"
+        },
+        {
+          "question": "Écrire la représentation paramétrique de (D).",
+          "hint": "$\\begin{cases} x = 1 + 2t \\\\ y = 0 - t \\\\ z = 2 + t \\end{cases}$ avec $t \\in \\mathbb{R}$"
+        }
+      ]
+    },
+    {
+      "id": "exo_geo_espace_2",
+      "title": "Équation cartésienne d'un plan",
+      "statement": "Déterminer l'équation cartésienne du plan $P$ passant par $A(1, 2, 3)$ et de vecteur normal $\\vec{n}(2, -1, 4)$.",
+      "sub_questions": [
+        {
+          "question": "Rappeler la forme générale d'une équation de plan.",
+          "hint": "$ax + by + cz + d = 0$ où $(a, b, c)$ sont les coordonnées du vecteur normal."
+        },
+        {
+          "question": "Écrire l'équation avec les coordonnées de $\\vec{n}$.",
+          "hint": "$2x - y + 4z + d = 0$"
+        },
+        {
+          "question": "Utiliser le point $A$ pour déterminer $d$.",
+          "hint": "$2(1) - 2 + 4(3) + d = 0 \\Rightarrow 2 - 2 + 12 + d = 0 \\Rightarrow d = -12$"
+        },
+        {
+          "question": "Donner l'équation finale du plan.",
+          "hint": "$2x - y + 4z - 12 = 0$"
+        }
+      ]
+    },
+    {
+      "id": "exo_geo_espace_3",
+      "title": "Distance entre deux points",
+      "statement": "Calculer la distance entre les points $M(2, -1, 5)$ et $N(-1, 3, 1)$.",
+      "sub_questions": [
+        {
+          "question": "Rappeler la formule de la distance.",
+          "hint": "$MN = \\sqrt{(x_N-x_M)^2 + (y_N-y_M)^2 + (z_N-z_M)^2}$"
+        },
+        {
+          "question": "Calculer les différences de coordonnées.",
+          "hint": "$x_N - x_M = -1 - 2 = -3$, $y_N - y_M = 3 - (-1) = 4$, $z_N - z_M = 1 - 5 = -4$"
+        },
+        {
+          "question": "Calculer la distance.",
+          "hint": "$MN = \\sqrt{(-3)^2 + 4^2 + (-4)^2} = \\sqrt{9 + 16 + 16} = \\sqrt{41}$"
+        }
+      ]
+    },
+    {
+      "id": "exo_geo_espace_4",
+      "title": "Coplanarité de quatre points",
+      "statement": "Les points $A(1,0,0)$, $B(0,1,0)$, $C(0,0,1)$ et $D(1,1,1)$ sont-ils coplanaires ?",
+      "sub_questions": [
+        {
+          "question": "Calculer les vecteurs $\\vec{AB}$, $\\vec{AC}$ et $\\vec{AD}$.",
+          "hint": "$\\vec{AB}(-1,1,0)$, $\\vec{AC}(-1,0,1)$, $\\vec{AD}(0,1,1)$"
+        },
+        {
+          "question": "Vérifier s'il existe $\\alpha$ et $\\beta$ tels que $\\vec{AD} = \\alpha\\vec{AB} + \\beta\\vec{AC}$.",
+          "hint": "$(0,1,1) = \\alpha(-1,1,0) + \\beta(-1,0,1)$. En résolvant: $\\alpha = 1, \\beta = 1$."
+        },
+        {
+          "question": "Conclure sur la coplanarité.",
+          "hint": "Oui, car $\\vec{AD} = \\vec{AB} + \\vec{AC}$. Les 4 points sont coplanaires."
+        }
+      ]
+    },
+    {
+      "id": "exo_geo_espace_5",
+      "title": "Position relative de deux droites",
+      "statement": "Étudier la position relative des droites $D_1: \\begin{cases} x = 1 + t \\\\ y = 2t \\\\ z = -1 + t \\end{cases}$ et $D_2: \\begin{cases} x = 2 + s \\\\ y = 1 + 2s \\\\ z = 3s \\end{cases}$",
+      "sub_questions": [
+        {
+          "question": "Identifier les vecteurs directeurs de $D_1$ et $D_2$.",
+          "hint": "$\\vec{u_1}(1, 2, 1)$ pour $D_1$ et $\\vec{u_2}(1, 2, 3)$ pour $D_2$"
+        },
+        {
+          "question": "Vérifier si les vecteurs directeurs sont colinéaires.",
+          "hint": "Non, car $\\frac{1}{1} = \\frac{2}{2} \\neq \\frac{1}{3}$. Ils ne sont pas colinéaires."
+        },
+        {
+          "question": "Chercher un éventuel point d'intersection en résolvant le système.",
+          "hint": "$1+t = 2+s$, $2t = 1+2s$, $-1+t = 3s$. De la 3ème: $t = 1+3s$. En substituant dans la 1ère: $1+(1+3s) = 2+s \\Rightarrow s = -1$, $t = -2$. Vérification dans la 2ème: $2(-2) = 1+2(-1) \\Rightarrow -4 = -1$. Faux!"
+        },
+        {
+          "question": "Conclure.",
+          "hint": "Les droites ne sont ni parallèles ni sécantes. Elles sont non coplanaires (gauches)."
+        }
+      ]
     }
   ],
   "version": "v1.1.0-2c2516"

@@ -4,7 +4,6 @@
  */
 
 import { Chapter, ChapterProgress } from '../types';
-import { calculateLessonProgress } from './lessonProgressHelpers';
 
 /**
  * Vérifie si un chapitre est complété à 100%
@@ -135,4 +134,144 @@ export function determineInitialStatus(
 
     // Sinon, à venir par défaut
     return 'a-venir';
+}
+
+/**
+ * Vérifie si un chapitre a une session active (en direct maintenant)
+ * Une session est considérée comme active si elle est en cours (entre la date de début et 2h après)
+ */
+export function hasActiveSession(sessionDates: string[]): boolean {
+    if (!Array.isArray(sessionDates) || sessionDates.length === 0) {
+        return false;
+    }
+
+    const SESSION_DURATION_MS = 2 * 60 * 60 * 1000; // 2 heures
+    const now = Date.now();
+
+    return sessionDates.some(dateStr => {
+        const sessionDate = new Date(dateStr);
+        if (isNaN(sessionDate.getTime())) {
+            return false;
+        }
+
+        const sessionStart = sessionDate.getTime();
+        const sessionEnd = sessionStart + SESSION_DURATION_MS;
+
+        return now >= sessionStart && now <= sessionEnd;
+    });
+}
+
+/**
+ * Vérifie si un chapitre a une session à venir (future)
+ * Une session est considérée comme à venir si elle n'a pas encore commencé
+ */
+export function hasUpcomingSession(sessionDates: string[]): boolean {
+    if (!Array.isArray(sessionDates) || sessionDates.length === 0) {
+        return false;
+    }
+
+    const now = Date.now();
+
+    return sessionDates.some(dateStr => {
+        const sessionDate = new Date(dateStr);
+        if (isNaN(sessionDate.getTime())) {
+            return false;
+        }
+
+        const sessionStart = sessionDate.getTime();
+        return now < sessionStart;
+    });
+}
+
+/**
+ * Vérifie si toutes les sessions d'un chapitre sont terminées
+ * Une session est considérée comme terminée si elle a dépassé la date de fin (début + 2h)
+ */
+export function hasAllSessionsEnded(sessionDates: string[]): boolean {
+    if (!Array.isArray(sessionDates) || sessionDates.length === 0) {
+        return false;
+    }
+
+    const SESSION_DURATION_MS = 2 * 60 * 60 * 1000; // 2 heures
+    const now = Date.now();
+
+    // Vérifier que toutes les sessions sont terminées
+    return sessionDates.every(dateStr => {
+        const sessionDate = new Date(dateStr);
+        if (isNaN(sessionDate.getTime())) {
+            return false;
+        }
+
+        const sessionStart = sessionDate.getTime();
+        const sessionEnd = sessionStart + SESSION_DURATION_MS;
+
+        // La session est terminée si maintenant > fin de session
+        return now > sessionEnd;
+    });
+}
+
+/**
+ * Statut de session pour le tri intelligent
+ */
+type SessionStatus = 'live' | 'upcoming' | 'ended' | 'none';
+
+/**
+ * Détermine le statut de session d'un chapitre pour un tri intelligent
+ */
+function getSessionStatus(sessionDates: string[]): SessionStatus {
+    if (!Array.isArray(sessionDates) || sessionDates.length === 0) {
+        return 'none';
+    }
+
+    // Priorité 1: Session en cours (LIVE)
+    if (hasActiveSession(sessionDates)) {
+        return 'live';
+    }
+
+    // Priorité 2: Session à venir (prochainement)
+    if (hasUpcomingSession(sessionDates)) {
+        return 'upcoming';
+    }
+
+    // Priorité 3: Toutes les sessions sont terminées
+    if (hasAllSessionsEnded(sessionDates)) {
+        return 'ended';
+    }
+
+    return 'none';
+}
+
+/**
+ * Compare deux chapitres pour les trier intelligemment selon leurs sessions :
+ * 🔴 1. Sessions LIVE (actives en ce moment) → EN HAUT ⬆️
+ * 🟡 2. Sessions à venir ou pas de session → AU MILIEU
+ * ⚫ 3. Sessions terminées (toutes passées) → EN BAS ⬇️
+ * 
+ * Ce mécanisme garantit que les chapitres avec séance active restent toujours visibles en premier,
+ * tandis que ceux avec "séance terminée" sont placés en bas de la liste.
+ */
+export function sortChaptersByActiveSession(chapters: Chapter[]): Chapter[] {
+    return [...chapters].sort((a, b) => {
+        const aStatus = getSessionStatus(a.sessionDates || []);
+        const bStatus = getSessionStatus(b.sessionDates || []);
+
+        // Ordre de priorité : live > upcoming/none > ended
+        const priorityOrder: Record<SessionStatus, number> = {
+            'live': 1,          // 🔴 Priorité MAXIMALE - toujours en haut
+            'upcoming': 2,      // 🟡 Priorité normale - au milieu
+            'none': 2,          // 🟡 Priorité normale - au milieu (même niveau que upcoming)
+            'ended': 3          // ⚫ Priorité MINIMALE - toujours en bas
+        };
+
+        const aPriority = priorityOrder[aStatus];
+        const bPriority = priorityOrder[bStatus];
+
+        // Trier par priorité (plus petit = plus haut dans la liste)
+        if (aPriority !== bPriority) {
+            return aPriority - bPriority;
+        }
+
+        // Si même priorité, garder l'ordre original (stable sort)
+        return 0;
+    });
 }
