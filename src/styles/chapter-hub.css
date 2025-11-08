@@ -223,3 +223,72 @@
     padding: 1rem 0.85rem;
   }
 }
+
+/* ========================================
+   OPTIMISATIONS MODE LANDSCAPE MOBILE
+   ======================================== */
+@media (max-height: 500px) and (orientation: landscape) {
+  .chapter-hub-container {
+    min-height: auto;
+  }
+
+  .chapter-hub-back-floating {
+    top: 0.5rem;
+    left: 0.5rem;
+  }
+
+  .chapter-hub-container,
+  .chapter-hub-content {
+    gap: 0.75rem;
+  }
+
+  .learning-step {
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+  }
+
+  .learning-step__header {
+    margin-bottom: 0.5rem;
+  }
+
+  .learning-step__title {
+    font-size: 1rem;
+  }
+
+  .learning-step__description {
+    font-size: 0.85rem;
+    line-height: 1.35;
+  }
+
+  .learning-step__meta {
+    gap: 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .learning-step__button {
+    padding: 0.5rem 0.85rem;
+    font-size: 0.8rem;
+  }
+
+  .learning-step > .flex {
+    gap: 0.75rem;
+  }
+
+  /* Exercices en landscape */
+  .exercise-container {
+    padding: 0.5rem;
+  }
+
+  .exercise-question {
+    margin-bottom: 0.6rem;
+  }
+
+  .exercise-field {
+    padding: 0.5rem;
+  }
+
+  .exercise-button {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
+}
