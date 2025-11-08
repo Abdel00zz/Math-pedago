@@ -590,3 +590,73 @@
     gap: 0.2rem;
   }
 }
+
+/* Mobile - Very small screens (phones in portrait) */
+@media (max-width: 480px) {
+  .lesson-navigator {
+    top: 60px;
+    left: 0.4rem;
+    right: 0.4rem;
+    max-height: calc(100vh - 80px);
+    border-radius: 10px;
+  }
+
+  .lesson-navigator__panel {
+    padding: 0.5rem 0.6rem;
+  }
+
+  .lesson-navigator__scroll-container {
+    max-height: calc(100vh - 170px);
+  }
+
+  .lesson-navigator__section {
+    padding: 0.25rem 0.4rem;
+    gap: 0.2rem;
+  }
+
+  .lesson-navigator__section-trigger {
+    padding: 0.28rem 0.45rem;
+    font-size: 0.68rem;
+    gap: 0.5rem;
+  }
+
+  .lesson-navigator__section-index {
+    width: 1.15rem;
+    height: 1.15rem;
+    font-size: 0.6rem;
+  }
+
+  .lesson-navigator__subsection-trigger {
+    padding: 0.22rem 0.45rem 0.22rem 0.45rem;
+    font-size: 0.63rem;
+  }
+
+  .lesson-navigator__subsection-index {
+    min-width: 1.1rem;
+    height: 1.1rem;
+    font-size: 0.58rem;
+  }
+
+  .lesson-navigator__section-title {
+    font-size: 0.68rem;
+    line-height: 1.3;
+  }
+
+  .lesson-navigator__subsection-title {
+    font-size: 0.63rem;
+    line-height: 1.25;
+  }
+
+  .lesson-navigator__sections {
+    gap: 0.3rem;
+  }
+
+  .lesson-navigator__subsections {
+    gap: 0.18rem;
+  }
+
+  .lesson-experience__content {
+    padding-bottom: 1.5rem;
+    margin-top: 0.4rem;
+  }
+}

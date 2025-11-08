@@ -1304,72 +1304,6 @@
   color: #475569;
 }
 
-/* Action button section */
-.chapter-card-v2__action {
-  margin-top: 0.5rem;
-  width: 100%;
-}
-
-.chapter-action-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
-  padding: 0.5rem 0.85rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  border-radius: 0.5rem;
-  border: 1.5px solid;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  cursor: pointer;
-  white-space: nowrap;
-  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
-  letter-spacing: 0.01em;
-}
-
-.chapter-action-button .material-symbols-outlined {
-  font-size: 1rem !important;
-  font-variation-settings: 'FILL' 1, 'wght' 500;
-}
-
-/* Bouton "Commencer" pour chapitres à venir */
-.chapter-action-button--start {
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-  color: white;
-  border-color: #2563eb;
-  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.25);
-}
-
-.chapter-action-button--start:hover {
-  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-  border-color: #1d4ed8;
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.35);
-  transform: translateY(-1px);
-}
-
-.chapter-action-button--start:active {
-  transform: translateY(0);
-  box-shadow: 0 1px 4px rgba(59, 130, 246, 0.2);
-}
-
-/* Indicateur "En cours" */
-.chapter-action-button--current {
-  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
-  color: #92400e;
-  border-color: #fbbf24;
-  cursor: default;
-  box-shadow: 0 2px 6px rgba(251, 191, 36, 0.2);
-}
-
-/* Indicateur "Terminé" */
-.chapter-action-button--completed {
-  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
-  color: #065f46;
-  border-color: #22c55e;
-  cursor: default;
-  box-shadow: 0 2px 6px rgba(34, 197, 94, 0.2);
-}
-
 /* Status variants */
 .chapter-card-v2[data-status="todo"] .chapter-card-v2__bg {
   background: linear-gradient(135deg, 
@@ -1406,11 +1340,12 @@
   border-color: rgba(226, 232, 240, 0.5);
 }
 
-/* Responsive adjustments */
+/* Responsive adjustments - Optimized for mobile */
 @media (max-width: 768px) {
   .chapter-card-v2__container {
     grid-template-columns: auto 1fr;
-    gap: 1rem;
+    gap: clamp(0.85rem, 2vw, 1rem);
+    padding: clamp(1rem, 2.5vw, 1.25rem);
   }
 
   .chapter-card-v2__status {
@@ -1426,6 +1361,7 @@
     writing-mode: horizontal-tb;
     transform: none;
     flex-direction: row;
+    gap: 0.5rem;
   }
 
   .chapter-card-v2__progress-ring {
@@ -1435,18 +1371,67 @@
 
   .chapter-card-v2__stats {
     flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .chapter-card-v2__stat {
+    flex: 0 1 calc(50% - 0.25rem);
+    min-width: 0;
+  }
+
+  .chapter-card-v2__header {
+    gap: 0.25rem;
+  }
+
+  .chapter-card-v2__title {
+    font-size: clamp(1rem, 3vw, 1.1rem);
+    line-height: 1.3;
   }
 }
 
 @media (max-width: 480px) {
+  .dashboard-shell {
+    padding-left: clamp(0.75rem, 3vw, 1rem);
+    padding-right: clamp(0.75rem, 3vw, 1rem);
+  }
+
+  .chapter-card-v2 {
+    margin-bottom: 0.75rem;
+  }
+
+  .chapter-card-v2__container {
+    padding: clamp(0.85rem, 2vw, 1rem);
+  }
+
   .chapter-card-v2__progress-ring {
     width: 60px;
     height: 60px;
   }
 
+  .chapter-card-v2__progress-number {
+    font-size: 1.25rem;
+  }
+
+  .chapter-card-v2__progress-unit {
+    font-size: 0.7rem;
+  }
+
   .chapter-card-v2__stat {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.55rem;
+    flex: 1 1 100%;
+  }
+
+  .chapter-card-v2__stat-icon {
+    font-size: 0.9rem !important;
+  }
+
+  .chapter-card-v2__eyebrow {
+    font-size: 0.65rem;
+  }
+
+  .chapter-card-v2__sessions {
     font-size: 0.75rem;
-    padding: 0.35rem 0.65rem;
   }
 }
 
