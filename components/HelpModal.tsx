@@ -227,13 +227,13 @@ const HelpModal: React.FC<HelpModalProps> = ({ isOpen, onClose }) => {
     const [activeTab, setActiveTab] = useState<'fr' | 'ar'>('fr');
 
     return (
-        <Modal 
-            isOpen={isOpen} 
-            onClose={onClose} 
+        <Modal
+            isOpen={isOpen}
+            onClose={onClose}
             title="Guide d'Utilisation"
             titleClassName="text-2xl font-bold text-foreground"
             hideHeaderBorder={false}
-            className="sm:max-w-3xl"
+            className="sm:max-w-3xl landscape:max-w-[85vw] landscape:max-h-[90vh]"
         >
             <div className="p-2">
                 {/* Tabs */}
@@ -261,7 +261,7 @@ const HelpModal: React.FC<HelpModalProps> = ({ isOpen, onClose }) => {
                 </div>
 
                 {/* Content */}
-                <div className="pb-4 px-2 max-h-[75vh] overflow-y-auto">
+                <div className="pb-4 px-2 max-h-[75vh] landscape:max-h-[70vh] overflow-y-auto">
                     {activeTab === 'fr' ? <FrenchContent /> : <ArabicContent />}
                 </div>
             </div>

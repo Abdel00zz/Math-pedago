@@ -106,11 +106,20 @@ const Blank: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
     if (shouldShow) {
         return (
-            <MathContent
-                key={`revealed-${renderKey}`}
-                content={typeof children === 'string' ? children : String(children)}
-                inline={true}
-            />
+            <span
+                className="inline-flex items-center px-2 py-0.5 mx-1 rounded bg-red-50 border border-red-200 animate-pulse-once"
+                style={{
+                    color: '#dc2626',
+                    fontWeight: 600,
+                    animation: 'reveal-answer 0.4s ease-out'
+                }}
+            >
+                <MathContent
+                    key={`revealed-${renderKey}`}
+                    content={typeof children === 'string' ? children : String(children)}
+                    inline={true}
+                />
+            </span>
         );
     }
 
