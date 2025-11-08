@@ -82,7 +82,7 @@ const DashboardView: React.FC = () => {
         return withSup.replace(/<\/sup>\s*(?=\S)/gi, '</sup>&nbsp;');
     }, []);
 
-    // ✅ OPTIMISATION 4: Catégorisation optimisée avec reduce
+    // ✅ OPTIMISATION 4: Catégorisation optimisée avec reduce basée sur les statuts
     const categorizedActivities = useMemo((): CategorizedActivities => {
         if (!profile) return { inProgress: [], completed: [], upcoming: [] };
 
@@ -93,9 +93,12 @@ const DashboardView: React.FC = () => {
         return allUserActivities.reduce<CategorizedActivities>(
             (acc, chapter) => {
                 const chapterProgress = progress[chapter.id];
-                if (chapterProgress?.isWorkSubmitted) {
+                const status = chapterProgress?.status || 'a-venir';
+
+                // Utiliser le statut pour catégoriser intelligemment
+                if (status === 'acheve') {
                     acc.completed.push(chapter);
-                } else if (chapter.isActive) {
+                } else if (status === 'en-cours') {
                     acc.inProgress.push(chapter);
                 } else {
                     acc.upcoming.push(chapter);

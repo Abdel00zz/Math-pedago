@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Chapter, ChapterProgress } from '../types';
 import SessionStatus from './SessionStatus';
+import ChapterActionButton from './ChapterActionButton';
 import {
     LESSON_PROGRESS_EVENT,
     LESSON_PROGRESS_REFRESH_EVENT,
@@ -9,6 +10,7 @@ import {
     type LessonCompletionSummary,
     type LessonProgressEventDetail,
 } from '../utils/lessonProgressHelpers';
+import { isChapterCompleted } from '../utils/chapterStatusHelpers';
 
 interface ChapterCardProps {
     chapter: Chapter;
@@ -76,6 +78,9 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
     }, [lessonId]);
 
     const getStatusInfo = useCallback((): StatusInfo => {
+        const status = progress?.status || 'a-venir';
+
+        // Prioriser les mises à jour
         if (progress?.hasUpdate) {
             return {
                 text: 'Mis à jour',
@@ -85,47 +90,49 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
                 color: '#a855f7',
             };
         }
-        if (progress?.isWorkSubmitted) {
-            return {
-                text: 'Terminé',
-                icon: 'check_circle',
-                disabled: false,
-                variant: 'completed',
-                color: '#22c55e',
-            };
+
+        // Utiliser le statut pour déterminer l'affichage
+        switch (status) {
+            case 'acheve':
+                return {
+                    text: 'Terminé',
+                    icon: 'check_circle',
+                    disabled: false,
+                    variant: 'completed',
+                    color: '#22c55e',
+                };
+            case 'en-cours':
+                return {
+                    text: 'En cours',
+                    icon: 'pending',
+                    disabled: false,
+                    variant: 'progress',
+                    color: '#eab308',
+                };
+            case 'a-venir':
+            default:
+                // Vérifier si le chapitre est verrouillé
+                if (!chapter.isActive) {
+                    return {
+                        text: 'Verrouillé',
+                        icon: 'lock',
+                        disabled: true,
+                        variant: 'locked',
+                        color: '#94a3b8',
+                    };
+                }
+                return {
+                    text: 'À venir',
+                    icon: 'radio_button_unchecked',
+                    disabled: false,
+                    variant: 'todo',
+                    color: '#3b82f6',
+                };
         }
-        if (!chapter.isActive) {
-            return {
-                text: 'Verrouillé',
-                icon: 'lock',
-                disabled: true,
-                variant: 'locked',
-                color: '#94a3b8',
-            };
-        }
-        if (
-            progress?.quiz?.isSubmitted ||
-            Object.keys(progress?.exercisesFeedback || {}).length > 0 ||
-            lessonCompletion.percentage > 0
-        ) {
-            return {
-                text: 'En cours',
-                icon: 'pending',
-                disabled: false,
-                variant: 'progress',
-                color: '#eab308',
-            };
-        }
-        return {
-            text: 'À faire',
-            icon: 'radio_button_unchecked',
-            disabled: false,
-            variant: 'todo',
-            color: '#f97316',
-        };
-    }, [chapter.isActive, progress, lessonCompletion.percentage]);
+    }, [chapter.isActive, progress]);
 
     const { text, icon, variant, disabled, color } = getStatusInfo();
+    const completed = useMemo(() => isChapterCompleted(chapter, progress), [chapter, progress]);
 
     const handleClick = useCallback(() => {
         if (!disabled) {
@@ -276,7 +283,7 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
                     </div>
                 </div>
 
-                {/* Right section: Status badge */}
+                {/* Right section: Status badge & action button */}
                 <div className="chapter-card-v2__status" data-variant={variant}>
                     <div className="chapter-card-v2__status-content">
                         <span
@@ -286,6 +293,13 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
                             {icon}
                         </span>
                         <span className="chapter-card-v2__status-text">{text}</span>
+                    </div>
+                    <div className="chapter-card-v2__action">
+                        <ChapterActionButton
+                            chapterId={chapter.id}
+                            status={progress?.status || 'a-venir'}
+                            isCompleted={completed}
+                        />
                     </div>
                 </div>
             </div>

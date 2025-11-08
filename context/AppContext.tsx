@@ -2,6 +2,7 @@ import React, { createContext, useReducer, useEffect, ReactNode, Dispatch, useCo
 import { AppState, Action, Chapter, Profile, QuizProgress, ChapterProgress, Feedback, UINotification } from '../types';
 import { DB_KEY } from '../constants';
 import { useNotification } from './NotificationContext';
+import { isChapterCompleted, determineInitialStatus } from '../utils/chapterStatusHelpers';
 
 const initialState: AppState = {
     view: 'login',
@@ -10,6 +11,7 @@ const initialState: AppState = {
     activityVersions: {},
     progress: {},
     currentChapterId: null,
+    currentActiveChapterId: null,
     activitySubView: null,
     isReviewMode: false,
     chapterOrder: [],
@@ -29,7 +31,7 @@ const appReducer = (state: AppState, action: Action): AppState => {
 
     switch (action.type) {
         case 'INIT': {
-            const { profile, progress = {}, view, currentChapterId, activitySubView, chapterOrder, activityVersions } = action.payload;
+            const { profile, progress = {}, view, currentChapterId, currentActiveChapterId, activitySubView, chapterOrder, activityVersions } = action.payload;
             const restoredView = profile && profile.classId ? (view || 'dashboard') : 'login';
 
             return {
@@ -40,6 +42,7 @@ const appReducer = (state: AppState, action: Action): AppState => {
                 activityVersions: activityVersions || {},
                 view: restoredView,
                 currentChapterId: currentChapterId || null,
+                currentActiveChapterId: currentActiveChapterId || null,
                 activitySubView: activitySubView || null,
             };
         }
@@ -332,15 +335,29 @@ const appReducer = (state: AppState, action: Action): AppState => {
             if (!chapterId || !state.progress[chapterId] || !state.activities[chapterId]) return state;
             const progress = state.progress[chapterId];
             const chapter = state.activities[chapterId];
+
+            // Vérifier si le chapitre est complété à 100%
+            const isCompleted = isChapterCompleted(chapter, progress);
+
+            // Déterminer le nouveau statut
+            const newStatus = isCompleted ? 'acheve' : (progress.status || 'en-cours');
+
+            // Si le chapitre est achevé et qu'il était le chapitre actif, retirer le statut actif
+            const newCurrentActiveChapterId = isCompleted && state.currentActiveChapterId === chapterId
+                ? null
+                : state.currentActiveChapterId;
+
             return {
                 ...state,
+                currentActiveChapterId: newCurrentActiveChapterId,
                 progress: {
                     ...state.progress,
-                    [chapterId]: { 
-                        ...progress, 
+                    [chapterId]: {
+                        ...progress,
                         isWorkSubmitted: true,
                         submittedVersion: chapter.version,
                         hasUpdate: false,
+                        status: newStatus,
                     }
                 },
             };
@@ -396,6 +413,7 @@ const appReducer = (state: AppState, action: Action): AppState => {
             Object.values(action.payload.activities).forEach(newChapter => {
                 // Assurer l'existence d'un objet progress pour chaque chapitre
                 if (!newProgress[newChapter.id]) {
+                    // Nouveau chapitre - initialiser avec statut "à venir"
                     newProgress[newChapter.id] = {
                         // Initialiser videosProgress si le chapitre contient des vidéos
                         ...(newChapter.videos && newChapter.videos.length > 0 && {
@@ -417,14 +435,27 @@ const appReducer = (state: AppState, action: Action): AppState => {
                         exercisesFeedback: {},
                         isWorkSubmitted: false,
                         exercisesDuration: 0,
+                        status: 'a-venir',
                     };
-                } else if (newChapter.videos && newChapter.videos.length > 0 && !newProgress[newChapter.id].videos) {
-                    // Si le chapitre existe déjà mais n'a pas de videosProgress et que des vidéos ont été ajoutées
-                    newProgress[newChapter.id].videos = {
-                        watched: {},
-                        allWatched: false,
-                        duration: 0,
-                    };
+                } else {
+                    // Chapitre existant - ajouter videosProgress si nécessaire
+                    if (newChapter.videos && newChapter.videos.length > 0 && !newProgress[newChapter.id].videos) {
+                        newProgress[newChapter.id].videos = {
+                            watched: {},
+                            allWatched: false,
+                            duration: 0,
+                        };
+                    }
+
+                    // Ajouter le statut s'il n'existe pas encore
+                    if (!newProgress[newChapter.id].status) {
+                        const isCurrentActive = state.currentActiveChapterId === newChapter.id;
+                        newProgress[newChapter.id].status = determineInitialStatus(
+                            newChapter,
+                            newProgress[newChapter.id],
+                            isCurrentActive
+                        );
+                    }
                 }
 
                 const currentProgress = newProgress[newChapter.id];
@@ -572,6 +603,51 @@ const appReducer = (state: AppState, action: Action): AppState => {
             };
         }
         
+        case 'SET_CHAPTER_STATUS': {
+            const { chapterId, status } = action.payload;
+            if (!chapterId || !state.progress[chapterId]) return state;
+
+            return {
+                ...state,
+                progress: {
+                    ...state.progress,
+                    [chapterId]: {
+                        ...state.progress[chapterId],
+                        status,
+                    }
+                },
+            };
+        }
+
+        case 'START_CHAPTER': {
+            const { chapterId } = action.payload;
+            if (!chapterId || !state.progress[chapterId]) return state;
+
+            // Mettre l'ancien chapitre actif en "à venir" s'il existe
+            const updatedProgress = { ...state.progress };
+            if (state.currentActiveChapterId && state.currentActiveChapterId !== chapterId) {
+                const oldActiveProgress = updatedProgress[state.currentActiveChapterId];
+                if (oldActiveProgress && oldActiveProgress.status === 'en-cours') {
+                    updatedProgress[state.currentActiveChapterId] = {
+                        ...oldActiveProgress,
+                        status: 'a-venir',
+                    };
+                }
+            }
+
+            // Mettre le nouveau chapitre en "en-cours"
+            updatedProgress[chapterId] = {
+                ...updatedProgress[chapterId],
+                status: 'en-cours',
+            };
+
+            return {
+                ...state,
+                currentActiveChapterId: chapterId,
+                progress: updatedProgress,
+            };
+        }
+
         default:
             return state;
     }
