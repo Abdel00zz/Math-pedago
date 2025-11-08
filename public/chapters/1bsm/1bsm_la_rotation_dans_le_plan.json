@@ -13,17 +13,454 @@
         {
           "text": "Un cercle de même centre et de même rayon",
           "is_correct": false,
-          "explanation": null
+          "explanation": "Non. La rotation change le centre du cercle."
         },
         {
           "text": "Un cercle de même rayon mais de centre différent",
-          "is_correct": false,
-          "explanation": null
+          "is_correct": true,
+          "explanation": "Correct ! Une rotation conserve les distances, donc le rayon reste identique, mais le centre du cercle est déplacé."
         },
         {
           "text": "Une ellipse",
           "is_correct": false,
-          "explanation": null
+          "explanation": "Non. Les rotations conservent la forme géométrique."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_rotation_2",
+      "question": "Une rotation de centre $O$ et d'angle $\\frac{\\pi}{2}$ transforme le point $A(1, 0)$ en :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$A'(0, 1)$",
+          "is_correct": true,
+          "explanation": "Exact ! Dans un repère orthonormé, une rotation de centre $O$ et d'angle $\\frac{\\pi}{2}$ transforme le point $(x, y)$ en $(-y, x)$. Donc $A(1, 0)$ devient $A'(0, 1)$."
+        },
+        {
+          "text": "$A'(0, -1)$",
+          "is_correct": false,
+          "explanation": "Non. Cela correspondrait à une rotation de $-\\frac{\\pi}{2}$."
+        },
+        {
+          "text": "$A'(-1, 0)$",
+          "is_correct": false,
+          "explanation": "Non. Cela correspondrait à une rotation de $\\pi$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_rotation_3",
+      "question": "La composée de deux rotations de même centre $O$ et d'angles $\\alpha$ et $\\beta$ est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Une rotation de centre $O$ et d'angle $\\alpha + \\beta$",
+          "is_correct": true,
+          "explanation": "Correct ! La composition de deux rotations de même centre s'obtient en additionnant les angles : $R_{O, \\alpha} \\circ R_{O, \\beta} = R_{O, \\alpha + \\beta}$."
+        },
+        {
+          "text": "Une rotation de centre $O$ et d'angle $\\alpha \\times \\beta$",
+          "is_correct": false,
+          "explanation": "Non. On additionne les angles, on ne les multiplie pas."
+        },
+        {
+          "text": "Une translation",
+          "is_correct": false,
+          "explanation": "Non. La composée de deux rotations de même centre est encore une rotation de ce centre."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_rotation_4",
+      "question": "L'image d'un segment $[AB]$ par une rotation est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Un segment de même longueur",
+          "is_correct": true,
+          "explanation": "Exact ! La rotation est une isométrie : elle conserve les longueurs."
+        },
+        {
+          "text": "Un segment de longueur différente",
+          "is_correct": false,
+          "explanation": "Non. Les rotations conservent les distances."
+        },
+        {
+          "text": "Un arc de cercle",
+          "is_correct": false,
+          "explanation": "Non. L'image d'un segment est un segment."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_rotation_5",
+      "question": "Dans un repère orthonormé, l'image du point $M(x, y)$ par la rotation de centre $O$ et d'angle $\\frac{\\pi}{2}$ a pour coordonnées :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$M'(-y, x)$",
+          "is_correct": true,
+          "explanation": "Correct ! Pour une rotation de $\\frac{\\pi}{2}$ (sens trigonométrique), les coordonnées se transforment selon : $(x, y) \\rightarrow (-y, x)$."
+        },
+        {
+          "text": "$M'(y, -x)$",
+          "is_correct": false,
+          "explanation": "Non. Cela correspondrait à une rotation de $-\\frac{\\pi}{2}$."
+        },
+        {
+          "text": "$M'(x, -y)$",
+          "is_correct": false,
+          "explanation": "Non. Cela correspondrait à une symétrie par rapport à l'axe des abscisses."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_rotation_6",
+      "question": "Une rotation conserve-t-elle les angles ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Oui, toujours",
+          "is_correct": true,
+          "explanation": "Exact ! La rotation est une isométrie qui conserve les angles. Si deux droites forment un angle $\\alpha$, leurs images forment le même angle $\\alpha$."
+        },
+        {
+          "text": "Non, jamais",
+          "is_correct": false,
+          "explanation": "Non. Les rotations conservent toujours les angles."
+        },
+        {
+          "text": "Seulement pour certains angles de rotation",
+          "is_correct": false,
+          "explanation": "Non. La conservation des angles est vraie quelle que soit la rotation."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_rotation_7",
+      "question": "Quel est l'ensemble des points invariants par une rotation de centre $O$ et d'angle $\\theta \\neq 0$ (modulo $2\\pi$) ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Le point $O$ uniquement",
+          "is_correct": true,
+          "explanation": "Correct ! Seul le centre de rotation reste fixe. Tous les autres points sont déplacés."
+        },
+        {
+          "text": "Tous les points du plan",
+          "is_correct": false,
+          "explanation": "Non. Seul le centre est invariant."
+        },
+        {
+          "text": "Une droite passant par $O$",
+          "is_correct": false,
+          "explanation": "Non. Même les points sur une droite passant par $O$ sont déplacés (sauf $O$ lui-même)."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_rotation_8",
+      "question": "La réciproque d'une rotation $R_{O, \\theta}$ est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$R_{O, -\\theta}$",
+          "is_correct": true,
+          "explanation": "Exact ! Pour annuler une rotation d'angle $\\theta$, on applique une rotation d'angle opposé $-\\theta$ de même centre."
+        },
+        {
+          "text": "$R_{O, \\frac{1}{\\theta}}$",
+          "is_correct": false,
+          "explanation": "Non. On prend l'opposé de l'angle, pas son inverse."
+        },
+        {
+          "text": "La même rotation $R_{O, \\theta}$",
+          "is_correct": false,
+          "explanation": "Non. Composer une rotation avec elle-même donne une rotation d'angle double."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_rotation_9",
+      "question": "Soient deux points $A$ et $A'$ avec $OA = OA'$ et $\\widehat{AOA'} = \\theta$. Quelle transformation fait passer de $A$ à $A'$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Une rotation de centre $O$ et d'angle $\\theta$",
+          "is_correct": true,
+          "explanation": "Correct ! Si $A'$ est à la même distance de $O$ que $A$, et que l'angle $\\widehat{AOA'} = \\theta$, alors $A'$ est l'image de $A$ par $R_{O, \\theta}$."
+        },
+        {
+          "text": "Une translation",
+          "is_correct": false,
+          "explanation": "Non. Une translation ne conserve pas les distances à un point fixe."
+        },
+        {
+          "text": "Une symétrie centrale",
+          "is_correct": false,
+          "explanation": "Non. Une symétrie centrale correspond à une rotation de $\\pi$, ce qui n'est pas nécessairement le cas ici."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_rotation_10",
+      "question": "L'image d'un triangle équilatéral par une rotation est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Un triangle équilatéral de même côté",
+          "is_correct": true,
+          "explanation": "Exact ! La rotation conserve les longueurs et les angles, donc un triangle équilatéral reste équilatéral avec la même dimension."
+        },
+        {
+          "text": "Un triangle isocèle",
+          "is_correct": false,
+          "explanation": "Non. Un triangle équilatéral reste équilatéral par rotation."
+        },
+        {
+          "text": "Un triangle quelconque",
+          "is_correct": false,
+          "explanation": "Non. La rotation conserve la nature géométrique des figures."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_rotation_11",
+      "question": "Dans un repère orthonormé, l'image de $B(0, 1)$ par une rotation de centre $O$ et d'angle $-\\frac{\\pi}{2}$ est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$B'(1, 0)$",
+          "is_correct": true,
+          "explanation": "Exact ! Pour une rotation d'angle $-\\frac{\\pi}{2}$ (sens horaire), $(x, y) \\rightarrow (y, -x)$. Donc $B(0, 1)$ devient $B'(1, 0)$."
+        },
+        {
+          "text": "$B'(-1, 0)$",
+          "is_correct": false,
+          "explanation": "Non. Cela correspondrait à une rotation de $\\frac{\\pi}{2}$ (sens trigonométrique)."
+        },
+        {
+          "text": "$B'(0, -1)$",
+          "is_correct": false,
+          "explanation": "Non. Cela correspondrait à une symétrie par rapport à l'axe des abscisses."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_rotation_12",
+      "question": "Quelle est l'image de la droite $(AB)$ par une rotation de centre $O$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Une droite",
+          "is_correct": true,
+          "explanation": "Correct ! Les rotations conservent l'alignement. L'image d'une droite est toujours une droite."
+        },
+        {
+          "text": "Un cercle",
+          "is_correct": false,
+          "explanation": "Non. L'image d'une droite ne peut pas être un cercle par une rotation."
+        },
+        {
+          "text": "Un arc de cercle",
+          "is_correct": false,
+          "explanation": "Non. Les droites restent des droites par rotation."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_rotation_13",
+      "question": "La rotation de centre $O$ et d'angle $2\\pi$ est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "L'identité (tout point reste fixe)",
+          "is_correct": true,
+          "explanation": "Exact ! Une rotation de $2\\pi$ (tour complet) ramène chaque point à sa position initiale. C'est l'application identité."
+        },
+        {
+          "text": "Une symétrie centrale",
+          "is_correct": false,
+          "explanation": "Non. Une symétrie centrale correspond à une rotation de $\\pi$, pas $2\\pi$."
+        },
+        {
+          "text": "Une translation",
+          "is_correct": false,
+          "explanation": "Non. C'est l'application identité."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_rotation_14",
+      "question": "Comment détermine-t-on le centre d'une rotation qui transforme $A$ en $A'$ et $B$ en $B'$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Intersection des médiatrices de $[AA']$ et $[BB']$",
+          "is_correct": true,
+          "explanation": "Exact ! Le centre de rotation est équidistant de $A$ et $A'$, et de $B$ et $B'$. Il se trouve donc à l'intersection des médiatrices."
+        },
+        {
+          "text": "Milieu du segment $[AA']$",
+          "is_correct": false,
+          "explanation": "Non. Le milieu de $[AA']$ donne le centre d'une symétrie centrale, pas d'une rotation générale."
+        },
+        {
+          "text": "Intersection des droites $(AA')$ et $(BB')$",
+          "is_correct": false,
+          "explanation": "Non. Ces droites ne se coupent pas nécessairement au centre de rotation."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_rotation_15",
+      "question": "L'aire d'une figure est-elle conservée par une rotation ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Oui, toujours",
+          "is_correct": true,
+          "explanation": "Exact ! Les rotations conservent toutes les mesures géométriques : longueurs, angles, aires, volumes."
+        },
+        {
+          "text": "Non, jamais",
+          "is_correct": false,
+          "explanation": "Non. L'aire est toujours conservée par rotation."
+        },
+        {
+          "text": "Seulement pour les rotations d'angle $\\frac{\\pi}{2}$",
+          "is_correct": false,
+          "explanation": "Non. Toutes les rotations conservent l'aire, quel que soit l'angle."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_rotation_16",
+      "question": "Dans un repère orthonormé, l'image de $C(3, 4)$ par une rotation de centre $O$ et d'angle $\\pi$ est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$C'(-3, -4)$",
+          "is_correct": true,
+          "explanation": "Exact ! Une rotation de $\\pi$ autour de l'origine est une symétrie centrale : $(x, y) \\rightarrow (-x, -y)$."
+        },
+        {
+          "text": "$C'(3, -4)$",
+          "is_correct": false,
+          "explanation": "Non. Cela correspondrait à une symétrie par rapport à l'axe des abscisses."
+        },
+        {
+          "text": "$C'(-4, 3)$",
+          "is_correct": false,
+          "explanation": "Non. Cette transformation ne correspond pas à une rotation de $\\pi$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_rotation_17",
+      "question": "Quelle est la nature de la composée de deux rotations de centres différents $O_1$ et $O_2$ et d'angles $\\alpha$ et $-\\alpha$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Une translation",
+          "is_correct": true,
+          "explanation": "Correct ! Lorsque les angles s'annulent ($\\alpha$ et $-\\alpha$), la composée de deux rotations de centres différents est une translation."
+        },
+        {
+          "text": "Une rotation",
+          "is_correct": false,
+          "explanation": "Non. Comme les angles s'annulent, ce n'est pas une rotation."
+        },
+        {
+          "text": "L'identité",
+          "is_correct": false,
+          "explanation": "Non. Les centres étant différents, on obtient une translation non nulle."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_rotation_18",
+      "question": "La rotation conserve-t-elle l'orientation des figures ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Oui, toujours",
+          "is_correct": true,
+          "explanation": "Exact ! Une rotation est une isométrie directe : elle conserve l'orientation. Si on parcourt un triangle dans le sens trigonométrique, son image se parcourt aussi dans le sens trigonométrique."
+        },
+        {
+          "text": "Non, elle inverse l'orientation",
+          "is_correct": false,
+          "explanation": "Non. Les symétries inversent l'orientation, pas les rotations."
+        },
+        {
+          "text": "Cela dépend de l'angle",
+          "is_correct": false,
+          "explanation": "Non. Quelle que soit l'angle, la rotation conserve l'orientation."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_rotation_19",
+      "question": "Combien de paramètres faut-il pour définir complètement une rotation dans le plan ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "3 paramètres : les coordonnées du centre et l'angle",
+          "is_correct": true,
+          "explanation": "Exact ! Une rotation est définie par son centre $O(x_0, y_0)$ (2 paramètres) et son angle $\\theta$ (1 paramètre), soit 3 paramètres au total."
+        },
+        {
+          "text": "1 paramètre : l'angle uniquement",
+          "is_correct": false,
+          "explanation": "Non. Il faut aussi spécifier le centre de rotation."
+        },
+        {
+          "text": "2 paramètres : le centre uniquement",
+          "is_correct": false,
+          "explanation": "Non. Il faut aussi spécifier l'angle de rotation."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_rotation_20",
+      "question": "Dans un repère orthonormé, une rotation de centre $O$ et d'angle $\\frac{\\pi}{4}$ transforme le point $D(\\sqrt{2}, 0)$ en un point $D'$ de coordonnées :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$D'(1, 1)$",
+          "is_correct": true,
+          "explanation": "Exact ! Pour une rotation d'angle $\\frac{\\pi}{4}$, on a : $x' = x\\cos(\\frac{\\pi}{4}) - y\\sin(\\frac{\\pi}{4}) = \\sqrt{2} \\cdot \\frac{\\sqrt{2}}{2} - 0 = 1$ et $y' = x\\sin(\\frac{\\pi}{4}) + y\\cos(\\frac{\\pi}{4}) = \\sqrt{2} \\cdot \\frac{\\sqrt{2}}{2} + 0 = 1$."
+        },
+        {
+          "text": "$D'(0, \\sqrt{2})$",
+          "is_correct": false,
+          "explanation": "Non. Cela correspondrait à une rotation de $\\frac{\\pi}{2}$."
+        },
+        {
+          "text": "$D'(\\frac{\\sqrt{2}}{2}, \\frac{\\sqrt{2}}{2})$",
+          "is_correct": false,
+          "explanation": "Non. Vérifiez les calculs avec les formules de rotation."
         }
       ],
       "steps": []
@@ -34,7 +471,104 @@
       "id": "exo_rotation_1",
       "title": "Image d'un point",
       "statement": "Dans le plan muni d'un repère orthonormé, on considère le point $A(2,0)$. Déterminer les coordonnées du point $A'$ image de A par la rotation de centre O et d'angle $\\frac{\\pi}{2}$.",
-      "sub_questions": []
+      "sub_questions": [
+        {
+          "question": "Rappeler la formule de rotation de centre $O$ et d'angle $\\frac{\\pi}{2}$.",
+          "hint": "Pour une rotation de $\\frac{\\pi}{2}$, $(x, y) \\rightarrow (-y, x)$."
+        },
+        {
+          "question": "Appliquer cette formule au point $A(2, 0)$.",
+          "hint": "Remplacez $x = 2$ et $y = 0$ dans la formule."
+        },
+        {
+          "question": "Vérifier que $OA = OA'$.",
+          "hint": "Calculez les distances en utilisant $d = \\sqrt{x^2 + y^2}$."
+        }
+      ]
+    },
+    {
+      "id": "exo_rotation_2",
+      "title": "Composition de rotations",
+      "statement": "Soit $R_1$ la rotation de centre $O$ et d'angle $\\frac{\\pi}{3}$ et $R_2$ la rotation de centre $O$ et d'angle $\\frac{\\pi}{6}$.",
+      "sub_questions": [
+        {
+          "question": "Déterminer la nature et les éléments caractéristiques de $R_1 \\circ R_2$.",
+          "hint": "La composée de deux rotations de même centre est une rotation de ce centre. Additionnez les angles."
+        },
+        {
+          "question": "Que représente géométriquement $R_1 \\circ R_1^{-1}$ ?",
+          "hint": "C'est l'application identité."
+        },
+        {
+          "question": "Exprimer $R_1^{-1}$ en fonction de l'angle.",
+          "hint": "La rotation réciproque a pour angle l'opposé : $R_1^{-1} = R_{O, -\\frac{\\pi}{3}}$."
+        }
+      ]
+    },
+    {
+      "id": "exo_rotation_3",
+      "title": "Détermination du centre de rotation",
+      "statement": "Une rotation transforme $A(1, 0)$ en $A'(0, 1)$ et $B(2, 0)$ en $B'(0, 2)$. Déterminer le centre et l'angle de cette rotation.",
+      "sub_questions": [
+        {
+          "question": "Déterminer l'équation de la médiatrice de $[AA']$.",
+          "hint": "La médiatrice passe par le milieu de $[AA']$ et est perpendiculaire à $(AA')$."
+        },
+        {
+          "question": "Déterminer l'équation de la médiatrice de $[BB']$.",
+          "hint": "Utilisez la même méthode."
+        },
+        {
+          "question": "En déduire le centre $O$ de la rotation.",
+          "hint": "Le centre est à l'intersection des deux médiatrices."
+        },
+        {
+          "question": "Calculer l'angle $\\theta$ de la rotation en utilisant $\\widehat{AOA'}$.",
+          "hint": "Utilisez les vecteurs $\\vec{OA}$ et $\\vec{OA'}$ et l'angle orienté."
+        }
+      ]
+    },
+    {
+      "id": "exo_rotation_4",
+      "title": "Image d'un cercle",
+      "statement": "On considère le cercle $\\mathcal{C}$ de centre $I(1, 2)$ et de rayon $r = 3$. Soit $R$ la rotation de centre $O(0, 0)$ et d'angle $\\frac{\\pi}{2}$.",
+      "sub_questions": [
+        {
+          "question": "Déterminer les coordonnées de $I'$, image de $I$ par $R$.",
+          "hint": "Appliquez la formule $(x, y) \\rightarrow (-y, x)$."
+        },
+        {
+          "question": "Quel est le rayon du cercle $\\mathcal{C}'$, image de $\\mathcal{C}$ par $R$ ?",
+          "hint": "Les rotations conservent les distances, donc le rayon reste le même."
+        },
+        {
+          "question": "Écrire l'équation cartésienne du cercle $\\mathcal{C}'$.",
+          "hint": "$(x - x_{I'})^2 + (y - y_{I'})^2 = r^2$."
+        }
+      ]
+    },
+    {
+      "id": "exo_rotation_5",
+      "title": "Application aux triangles",
+      "statement": "Soit un triangle équilatéral $ABC$ de côté $a$. On note $O$ le centre du cercle circonscrit à $ABC$.",
+      "sub_questions": [
+        {
+          "question": "Quelle rotation de centre $O$ transforme $A$ en $B$ ?",
+          "hint": "L'angle au centre est $\\frac{2\\pi}{3}$ (un tiers de tour)."
+        },
+        {
+          "question": "Déterminer l'image du triangle $ABC$ par la rotation $R_{O, \\frac{2\\pi}{3}}$.",
+          "hint": "$A \\rightarrow B$, $B \\rightarrow C$, $C \\rightarrow A$."
+        },
+        {
+          "question": "Montrer que le triangle $ABC$ est globalement invariant par $R_{O, \\frac{2\\pi}{3}}$.",
+          "hint": "L'ensemble des points du triangle reste le même, même si chaque sommet se déplace."
+        },
+        {
+          "question": "Combien de rotations distinctes (incluant l'identité) laissent le triangle globalement invariant ?",
+          "hint": "Il y en a 3 : $R_{O, 0}$, $R_{O, \\frac{2\\pi}{3}}$, $R_{O, \\frac{4\\pi}{3}}$."
+        }
+      ]
     }
   ],
   "version": "v1.1.0-f60e07"

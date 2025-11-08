@@ -12,17 +12,454 @@
         {
           "text": "6",
           "is_correct": false,
-          "explanation": null
+          "explanation": "Non. 6 est un diviseur commun mais pas le plus grand."
         },
         {
           "text": "12",
-          "is_correct": false,
-          "explanation": "On décompose en facteurs premiers: $48 = 2^4 \\times 3$ et $36 = 2^2 \\times 3^2$. Le PGCD est le produit des facteurs communs avec le plus petit exposant: $2^2 \\times 3^1 = 4 \\times 3 = 12$."
+          "is_correct": true,
+          "explanation": "Correct ! On décompose en facteurs premiers: $48 = 2^4 \\times 3$ et $36 = 2^2 \\times 3^2$. Le PGCD est le produit des facteurs communs avec le plus petit exposant: $2^2 \\times 3^1 = 4 \\times 3 = 12$."
         },
         {
           "text": "18",
           "is_correct": false,
-          "explanation": null
+          "explanation": "Non. 18 ne divise pas 48."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_arithmetique_2",
+      "question": "Dans la division euclidienne de 157 par 12, quel est le reste ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "1",
+          "is_correct": true,
+          "explanation": "Exact ! $157 = 12 \\times 13 + 1$. Le quotient est 13 et le reste est 1."
+        },
+        {
+          "text": "5",
+          "is_correct": false,
+          "explanation": "Non. Vérifiez le calcul: $157 = 12 \\times 13 + 1$."
+        },
+        {
+          "text": "13",
+          "is_correct": false,
+          "explanation": "Non. 13 est le quotient, pas le reste."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_arithmetique_3",
+      "question": "Deux nombres entiers $a$ et $b$ sont premiers entre eux si et seulement si :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\text{PGCD}(a, b) = 1$",
+          "is_correct": true,
+          "explanation": "Exact ! Deux nombres sont premiers entre eux si leur seul diviseur commun est 1, c'est-à-dire si $\\text{PGCD}(a, b) = 1$."
+        },
+        {
+          "text": "$\\text{PPCM}(a, b) = 1$",
+          "is_correct": false,
+          "explanation": "Non. Le PPCM de deux entiers positifs est toujours au moins égal au plus grand des deux nombres."
+        },
+        {
+          "text": "$a$ et $b$ sont tous deux premiers",
+          "is_correct": false,
+          "explanation": "Non. Deux nombres peuvent être premiers entre eux sans être premiers. Par exemple, 8 et 9 sont premiers entre eux."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_arithmetique_4",
+      "question": "L'algorithme d'Euclide permet de calculer :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Le PGCD de deux nombres",
+          "is_correct": true,
+          "explanation": "Correct ! L'algorithme d'Euclide calcule le PGCD de deux nombres entiers en effectuant des divisions euclidiennes successives."
+        },
+        {
+          "text": "Le PPCM de deux nombres",
+          "is_correct": false,
+          "explanation": "Non. L'algorithme d'Euclide calcule le PGCD, pas le PPCM."
+        },
+        {
+          "text": "La somme de deux nombres",
+          "is_correct": false,
+          "explanation": "Non. L'algorithme d'Euclide sert à calculer le PGCD."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_arithmetique_5",
+      "question": "Si $a$ divise $b$ et $b$ divise $c$, alors :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$a$ divise $c$",
+          "is_correct": true,
+          "explanation": "Exact ! C'est la propriété de transitivité de la divisibilité. Si $a|b$ et $b|c$, alors $a|c$."
+        },
+        {
+          "text": "$c$ divise $a$",
+          "is_correct": false,
+          "explanation": "Non. La relation de divisibilité ne s'inverse pas."
+        },
+        {
+          "text": "$a = c$",
+          "is_correct": false,
+          "explanation": "Non. Par exemple, 2 divise 4 et 4 divise 8, mais $2 \\neq 8$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_arithmetique_6",
+      "question": "La relation entre PGCD$(a,b)$ et PPCM$(a,b)$ pour deux entiers positifs $a$ et $b$ est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\text{PGCD}(a,b) \\times \\text{PPCM}(a,b) = a \\times b$",
+          "is_correct": true,
+          "explanation": "Exact ! C'est une relation fondamentale : le produit du PGCD et du PPCM de deux nombres égale le produit de ces deux nombres."
+        },
+        {
+          "text": "$\\text{PGCD}(a,b) + \\text{PPCM}(a,b) = a + b$",
+          "is_correct": false,
+          "explanation": "Non. La relation est multiplicative, pas additive."
+        },
+        {
+          "text": "$\\text{PGCD}(a,b) = \\text{PPCM}(a,b)$",
+          "is_correct": false,
+          "explanation": "Non. Ils sont égaux seulement si $a = b$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_arithmetique_7",
+      "question": "Un nombre premier est un entier naturel qui possède exactement :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "2 diviseurs positifs : 1 et lui-même",
+          "is_correct": true,
+          "explanation": "Exact ! Un nombre premier $p > 1$ n'est divisible que par 1 et par lui-même. Par exemple, 2, 3, 5, 7, 11..."
+        },
+        {
+          "text": "1 diviseur positif : lui-même",
+          "is_correct": false,
+          "explanation": "Non. Tous les nombres sont divisibles par 1 et par eux-mêmes."
+        },
+        {
+          "text": "3 diviseurs positifs ou plus",
+          "is_correct": false,
+          "explanation": "Non. Un nombre avec 3 diviseurs ou plus est composé."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_arithmetique_8",
+      "question": "Le théorème de Bézout affirme que si $\\text{PGCD}(a,b) = d$, alors :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Il existe des entiers $u$ et $v$ tels que $au + bv = d$",
+          "is_correct": true,
+          "explanation": "Exact ! Le théorème de Bézout garantit l'existence de coefficients de Bézout $u$ et $v$ tels que $au + bv = \\text{PGCD}(a,b)$."
+        },
+        {
+          "text": "$a + b = d$",
+          "is_correct": false,
+          "explanation": "Non. Ce n'est pas la formulation du théorème de Bézout."
+        },
+        {
+          "text": "$a \\times b = d$",
+          "is_correct": false,
+          "explanation": "Non. Le produit $ab$ est lié au PPCM, pas au PGCD selon le théorème de Bézout."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_arithmetique_9",
+      "question": "Quel est le PPCM (Plus Petit Commun Multiple) de 12 et 18 ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "36",
+          "is_correct": true,
+          "explanation": "Exact ! On décompose: $12 = 2^2 \\times 3$ et $18 = 2 \\times 3^2$. Le PPCM prend les facteurs avec les plus grands exposants: $2^2 \\times 3^2 = 36$. Ou bien: $\\text{PPCM}(12,18) = \\frac{12 \\times 18}{\\text{PGCD}(12,18)} = \\frac{216}{6} = 36$."
+        },
+        {
+          "text": "6",
+          "is_correct": false,
+          "explanation": "Non. 6 est le PGCD, pas le PPCM."
+        },
+        {
+          "text": "216",
+          "is_correct": false,
+          "explanation": "Non. 216 est le produit $12 \\times 18$, pas le PPCM."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_arithmetique_10",
+      "question": "Si $a \\equiv b \\pmod{n}$, cela signifie que :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$n$ divise $(a - b)$",
+          "is_correct": true,
+          "explanation": "Exact ! La congruence $a \\equiv b \\pmod{n}$ signifie que $a$ et $b$ ont le même reste dans la division par $n$, c'est-à-dire que $n|(a-b)$."
+        },
+        {
+          "text": "$a$ divise $(b - n)$",
+          "is_correct": false,
+          "explanation": "Non. C'est $n$ qui divise $(a - b)$."
+        },
+        {
+          "text": "$a = b$",
+          "is_correct": false,
+          "explanation": "Non. $a$ et $b$ peuvent être différents. Par exemple, $7 \\equiv 2 \\pmod{5}$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_arithmetique_11",
+      "question": "Combien y a-t-il de nombres premiers inférieurs à 20 ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "8 nombres premiers",
+          "is_correct": true,
+          "explanation": "Correct ! Les nombres premiers inférieurs à 20 sont : 2, 3, 5, 7, 11, 13, 17, 19. Soit 8 nombres."
+        },
+        {
+          "text": "7 nombres premiers",
+          "is_correct": false,
+          "explanation": "Non. Il y en a 8 : 2, 3, 5, 7, 11, 13, 17, 19."
+        },
+        {
+          "text": "9 nombres premiers",
+          "is_correct": false,
+          "explanation": "Non. Il y en a exactement 8."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_arithmetique_12",
+      "question": "Le théorème fondamental de l'arithmétique affirme que :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Tout entier naturel $n \\geq 2$ s'écrit de manière unique comme produit de nombres premiers",
+          "is_correct": true,
+          "explanation": "Exact ! C'est le théorème fondamental de l'arithmétique (ou théorème de décomposition en facteurs premiers). L'unicité est à l'ordre près des facteurs."
+        },
+        {
+          "text": "Il existe une infinité de nombres premiers",
+          "is_correct": false,
+          "explanation": "Non. Bien que cette affirmation soit vraie (théorème d'Euclide), ce n'est pas le théorème fondamental de l'arithmétique."
+        },
+        {
+          "text": "Tout nombre pair est la somme de deux nombres premiers",
+          "is_correct": false,
+          "explanation": "Non. C'est la conjecture de Goldbach, qui n'est pas démontrée."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_arithmetique_13",
+      "question": "Dans la division euclidienne de $a$ par $b$ (avec $b > 0$), le reste $r$ vérifie toujours :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$0 \\leq r < b$",
+          "is_correct": true,
+          "explanation": "Exact ! C'est la condition fondamentale sur le reste dans la division euclidienne : $a = bq + r$ avec $0 \\leq r < b$."
+        },
+        {
+          "text": "$0 < r \\leq b$",
+          "is_correct": false,
+          "explanation": "Non. Le reste peut être 0, et doit être strictement inférieur à $b$."
+        },
+        {
+          "text": "$r < a$",
+          "is_correct": false,
+          "explanation": "Non. Cette condition n'est pas suffisamment précise."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_arithmetique_14",
+      "question": "Si $a \\equiv b \\pmod{n}$ et $c \\equiv d \\pmod{n}$, alors :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$a + c \\equiv b + d \\pmod{n}$",
+          "is_correct": true,
+          "explanation": "Exact ! Les congruences se conservent par addition (et par multiplication). C'est une propriété fondamentale des congruences."
+        },
+        {
+          "text": "$a - c \\equiv d - b \\pmod{n}$",
+          "is_correct": false,
+          "explanation": "Non. On aurait plutôt $a - c \\equiv b - d \\pmod{n}$."
+        },
+        {
+          "text": "$a = b$ et $c = d$",
+          "is_correct": false,
+          "explanation": "Non. Les congruences n'impliquent pas l'égalité."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_arithmetique_15",
+      "question": "Le lemme de Gauss affirme que si $a$ divise $bc$ et si $\\text{PGCD}(a,b) = 1$, alors :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$a$ divise $c$",
+          "is_correct": true,
+          "explanation": "Exact ! C'est le lemme de Gauss : si $a|bc$ et $\\text{PGCD}(a,b) = 1$, alors $a|c$."
+        },
+        {
+          "text": "$a$ divise $b$",
+          "is_correct": false,
+          "explanation": "Non. On sait déjà que $\\text{PGCD}(a,b) = 1$, donc $a$ ne divise pas $b$ (sauf si $a=1$)."
+        },
+        {
+          "text": "$b$ divise $c$",
+          "is_correct": false,
+          "explanation": "Non. Le lemme de Gauss concerne la divisibilité par $a$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_arithmetique_16",
+      "question": "Quelle est la décomposition en facteurs premiers de 360 ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$2^3 \\times 3^2 \\times 5$",
+          "is_correct": true,
+          "explanation": "Exact ! $360 = 8 \\times 45 = 8 \\times 9 \\times 5 = 2^3 \\times 3^2 \\times 5$."
+        },
+        {
+          "text": "$2^2 \\times 3^2 \\times 10$",
+          "is_correct": false,
+          "explanation": "Non. 10 n'est pas premier. La bonne décomposition est $2^3 \\times 3^2 \\times 5$."
+        },
+        {
+          "text": "$2 \\times 3 \\times 60$",
+          "is_correct": false,
+          "explanation": "Non. 60 n'est pas premier. Il faut décomposer complètement."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_arithmetique_17",
+      "question": "Que vaut $7^2 \\pmod{5}$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$4$",
+          "is_correct": true,
+          "explanation": "Exact ! $7 \\equiv 2 \\pmod{5}$, donc $7^2 \\equiv 2^2 \\equiv 4 \\pmod{5}$. Ou directement : $49 = 5 \\times 9 + 4$, donc $49 \\equiv 4 \\pmod{5}$."
+        },
+        {
+          "text": "$2$",
+          "is_correct": false,
+          "explanation": "Non. $7^2 = 49 \\equiv 4 \\pmod{5}$."
+        },
+        {
+          "text": "$0$",
+          "is_correct": false,
+          "explanation": "Non. $7^2 = 49$ n'est pas divisible par 5."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_arithmetique_18",
+      "question": "Si $p$ est un nombre premier et $p$ divise $ab$, alors :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$p$ divise $a$ ou $p$ divise $b$",
+          "is_correct": true,
+          "explanation": "Exact ! C'est le lemme d'Euclide : un nombre premier qui divise un produit divise au moins l'un des facteurs."
+        },
+        {
+          "text": "$p$ divise $a$ et $p$ divise $b$",
+          "is_correct": false,
+          "explanation": "Non. Il suffit que $p$ divise l'un des deux facteurs."
+        },
+        {
+          "text": "$p$ ne divise ni $a$ ni $b$",
+          "is_correct": false,
+          "explanation": "Non. Si $p|ab$, alors $p$ divise au moins l'un des deux."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_arithmetique_19",
+      "question": "Le petit théorème de Fermat affirme que si $p$ est premier et $a$ n'est pas divisible par $p$, alors :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$a^{p-1} \\equiv 1 \\pmod{p}$",
+          "is_correct": true,
+          "explanation": "Exact ! C'est le petit théorème de Fermat. Par exemple, si $p=5$ et $a=2$ : $2^4 = 16 \\equiv 1 \\pmod{5}$."
+        },
+        {
+          "text": "$a^p \\equiv 1 \\pmod{p}$",
+          "is_correct": false,
+          "explanation": "Non. L'exposant est $p-1$, pas $p$. (Toutefois, $a^p \\equiv a \\pmod{p}$ est aussi vrai.)"
+        },
+        {
+          "text": "$a \\equiv 1 \\pmod{p}$",
+          "is_correct": false,
+          "explanation": "Non. C'est $a^{p-1}$ qui est congru à 1."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_arithmetique_20",
+      "question": "Deux entiers consécutifs sont toujours :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Premiers entre eux",
+          "is_correct": true,
+          "explanation": "Exact ! Si $d$ divise $n$ et $n+1$, alors $d$ divise $(n+1) - n = 1$, donc $d = 1$. Ainsi, $\\text{PGCD}(n, n+1) = 1$."
+        },
+        {
+          "text": "Tous deux pairs",
+          "is_correct": false,
+          "explanation": "Non. L'un est pair et l'autre impair."
+        },
+        {
+          "text": "Tous deux premiers",
+          "is_correct": false,
+          "explanation": "Non. Par exemple, 8 et 9 sont consécutifs mais 8 n'est pas premier."
         }
       ],
       "steps": []
@@ -33,7 +470,108 @@
       "id": "exo_arithmetique_1",
       "title": "Division Euclidienne",
       "statement": "Effectuer la division euclidienne de 157 par 12. Donner le quotient et le reste.",
-      "sub_questions": []
+      "sub_questions": [
+        {
+          "question": "Rappeler la forme de la division euclidienne.",
+          "hint": "$a = bq + r$ avec $0 \\leq r < b$"
+        },
+        {
+          "question": "Trouver le plus grand multiple de 12 qui ne dépasse pas 157.",
+          "hint": "$12 \\times 13 = 156$"
+        },
+        {
+          "question": "En déduire le quotient et le reste.",
+          "hint": "$157 = 12 \\times 13 + 1$, donc $q = 13$ et $r = 1$"
+        }
+      ]
+    },
+    {
+      "id": "exo_arithmetique_2",
+      "title": "Calcul du PGCD par l'algorithme d'Euclide",
+      "statement": "Calculer le PGCD de 252 et 105 en utilisant l'algorithme d'Euclide.",
+      "sub_questions": [
+        {
+          "question": "Effectuer la division euclidienne de 252 par 105.",
+          "hint": "$252 = 105 \\times 2 + 42$"
+        },
+        {
+          "question": "Continuer avec 105 et 42.",
+          "hint": "$105 = 42 \\times 2 + 21$"
+        },
+        {
+          "question": "Continuer jusqu'à obtenir un reste nul.",
+          "hint": "$42 = 21 \\times 2 + 0$. Le PGCD est le dernier reste non nul : 21."
+        },
+        {
+          "question": "Vérifier en décomposant 252 et 105 en facteurs premiers.",
+          "hint": "$252 = 2^2 \\times 3^2 \\times 7$ et $105 = 3 \\times 5 \\times 7$. PGCD = $3 \\times 7 = 21$."
+        }
+      ]
+    },
+    {
+      "id": "exo_arithmetique_3",
+      "title": "Théorème de Bézout",
+      "statement": "On sait que $\\text{PGCD}(15, 28) = 1$. Trouver des entiers $u$ et $v$ tels que $15u + 28v = 1$.",
+      "sub_questions": [
+        {
+          "question": "Utiliser l'algorithme d'Euclide étendu en partant de $28 = 15 \\times 1 + 13$.",
+          "hint": "Exprimer le reste en fonction de 28 et 15 : $13 = 28 - 15 \\times 1$"
+        },
+        {
+          "question": "Continuer : $15 = 13 \\times 1 + 2$.",
+          "hint": "$2 = 15 - 13 \\times 1 = 15 - (28 - 15 \\times 1) = 2 \\times 15 - 28$"
+        },
+        {
+          "question": "Continuer : $13 = 2 \\times 6 + 1$.",
+          "hint": "$1 = 13 - 2 \\times 6 = (28 - 15) - 6(2 \\times 15 - 28) = 7 \\times 28 - 13 \\times 15$"
+        },
+        {
+          "question": "En déduire $u$ et $v$.",
+          "hint": "$u = -13$ et $v = 7$ (ou $15 \\times (-13) + 28 \\times 7 = -195 + 196 = 1$)"
+        }
+      ]
+    },
+    {
+      "id": "exo_arithmetique_4",
+      "title": "Congruences et calculs modulaires",
+      "statement": "Calculer le reste de la division de $2^{10}$ par 7.",
+      "sub_questions": [
+        {
+          "question": "Calculer $2^1, 2^2, 2^3 \\pmod{7}$ pour identifier un motif.",
+          "hint": "$2^1 \\equiv 2$, $2^2 \\equiv 4$, $2^3 \\equiv 8 \\equiv 1 \\pmod{7}$"
+        },
+        {
+          "question": "Utiliser la périodicité : $2^3 \\equiv 1 \\pmod{7}$.",
+          "hint": "$2^{10} = 2^{3 \\times 3 + 1} = (2^3)^3 \\times 2^1$"
+        },
+        {
+          "question": "Calculer $2^{10} \\pmod{7}$.",
+          "hint": "$(2^3)^3 \\times 2 \\equiv 1^3 \\times 2 \\equiv 2 \\pmod{7}$"
+        }
+      ]
+    },
+    {
+      "id": "exo_arithmetique_5",
+      "title": "Décomposition en facteurs premiers et applications",
+      "statement": "Soit $n = 2^3 \\times 3^2 \\times 5$. Déterminer le nombre de diviseurs positifs de $n$ et calculer $\\text{PGCD}(n, 450)$.",
+      "sub_questions": [
+        {
+          "question": "Rappeler la formule du nombre de diviseurs d'un nombre décomposé en facteurs premiers.",
+          "hint": "Si $n = p_1^{a_1} \\times p_2^{a_2} \\times \\cdots \\times p_k^{a_k}$, le nombre de diviseurs est $(a_1+1)(a_2+1)\\cdots(a_k+1)$"
+        },
+        {
+          "question": "Calculer le nombre de diviseurs de $n = 2^3 \\times 3^2 \\times 5$.",
+          "hint": "$(3+1)(2+1)(1+1) = 4 \\times 3 \\times 2 = 24$ diviseurs"
+        },
+        {
+          "question": "Décomposer 450 en facteurs premiers.",
+          "hint": "$450 = 2 \\times 225 = 2 \\times 9 \\times 25 = 2 \\times 3^2 \\times 5^2$"
+        },
+        {
+          "question": "Calculer $\\text{PGCD}(2^3 \\times 3^2 \\times 5, 2 \\times 3^2 \\times 5^2)$.",
+          "hint": "On prend les facteurs communs avec les plus petits exposants : $2^1 \\times 3^2 \\times 5^1 = 2 \\times 9 \\times 5 = 90$"
+        }
+      ]
     }
   ],
   "version": "v1.1.0-c11a85"
