@@ -82,7 +82,7 @@ const DashboardView: React.FC = () => {
         return withSup.replace(/<\/sup>\s*(?=\S)/gi, '</sup>&nbsp;');
     }, []);
 
-    // ✅ OPTIMISATION 4: Catégorisation optimisée avec reduce
+    // ✅ OPTIMISATION 4: Catégorisation optimisée avec reduce basée sur les statuts
     const categorizedActivities = useMemo((): CategorizedActivities => {
         if (!profile) return { inProgress: [], completed: [], upcoming: [] };
 
@@ -93,9 +93,12 @@ const DashboardView: React.FC = () => {
         return allUserActivities.reduce<CategorizedActivities>(
             (acc, chapter) => {
                 const chapterProgress = progress[chapter.id];
-                if (chapterProgress?.isWorkSubmitted) {
+                const status = chapterProgress?.status || 'a-venir';
+
+                // Utiliser le statut pour catégoriser intelligemment
+                if (status === 'acheve') {
                     acc.completed.push(chapter);
-                } else if (chapter.isActive) {
+                } else if (status === 'en-cours') {
                     acc.inProgress.push(chapter);
                 } else {
                     acc.upcoming.push(chapter);
@@ -121,9 +124,9 @@ const DashboardView: React.FC = () => {
 
             dispatch({ type: 'CHANGE_VIEW', payload: { view: 'work-plan', chapterId } });
         } else {
-            // Gérer le cas où le chapitre est verrouillé
-            addNotification('Chapitre verrouillé', 'warning', {
-                message: `Complétez d'abord les chapitres précédents`,
+            // Gérer le cas où le chapitre n'est pas encore disponible
+            addNotification('Patience !', 'info', {
+                message: `Ce chapitre sera bientôt disponible`,
                 duration: 3000
             });
         }
@@ -155,25 +158,25 @@ const DashboardView: React.FC = () => {
         const updatesCount = progressValues.filter(item => item?.hasUpdate).length;
 
         const workCaption = workSubmitted > 0
-            ? `${workSubmitted} ${workSubmitted > 1 ? 'travaux remis' : 'travail remis'}`
-            : 'Remise à venir';
+            ? `${workSubmitted} ${workSubmitted > 1 ? 'chapitres réussis' : 'chapitre réussi'}`
+            : 'Premiers pas à faire';
 
         const updatesCaption = updatesCount > 0
             ? `${updatesCount} ${updatesCount > 1 ? 'mises à jour' : 'mise à jour'}`
-            : 'Séances programmées';
+            : 'Nouveaux défis à découvrir';
 
         return [
             {
                 id: 'in-progress',
-                label: 'En cours',
+                label: 'En apprentissage',
                 icon: 'auto_stories',
                 value: inProgress.length,
-                caption: inProgress.length > 0 ? 'Apprentissages actifs' : 'Prêt à démarrer',
+                caption: inProgress.length > 0 ? 'Votre parcours actuel' : 'Prêt à démarrer',
                 tone: 'progress' as const,
             },
             {
                 id: 'completed',
-                label: 'Acquis',
+                label: 'Maîtrisés',
                 icon: 'workspace_premium',
                 value: completed.length,
                 caption: completed.length > 0 ? workCaption : 'Objectifs à atteindre',
@@ -181,16 +184,16 @@ const DashboardView: React.FC = () => {
             },
             {
                 id: 'quiz',
-                label: 'Quiz soumis',
+                label: 'Quiz validés',
                 icon: 'fact_check',
                 value: quizSubmitted,
-                caption: quizSubmitted > 0 ? 'Résultats enregistrés' : 'Scores à venir',
+                caption: quizSubmitted > 0 ? 'Résultats enregistrés' : 'Évaluations à venir',
                 tone: 'quiz' as const,
             },
             {
                 id: 'upcoming',
-                label: 'À venir',
-                icon: 'calendar_month',
+                label: 'Disponibles',
+                icon: 'explore',
                 value: upcoming.length,
                 caption: updatesCaption,
                 tone: 'upcoming' as const,
@@ -243,24 +246,24 @@ const DashboardView: React.FC = () => {
                 {hasAnyActivity ? (
                     <div className="dashboard-section-stack">
                         <ChapterSection
-                            title="Chapitres en cours"
+                            title="🎯 Votre apprentissage en cours"
                             chapters={inProgress}
                             progress={progress}
                             onSelect={handleChapterSelect}
                         />
                         <ChapterSection
-                            title="Chapitres achevés"
-                            chapters={completed}
-                            progress={progress}
-                            onSelect={handleChapterSelect}
-                            icon="✓"
-                        />
-                        <ChapterSection
-                            title="Chapitres à venir"
+                            title="Chapitres disponibles"
                             chapters={upcoming}
                             progress={progress}
                             onSelect={handleChapterSelect}
                             variant="upcoming"
+                        />
+                        <ChapterSection
+                            title="✅ Chapitres réussis"
+                            chapters={completed}
+                            progress={progress}
+                            onSelect={handleChapterSelect}
+                            icon="✓"
                         />
                     </div>
                 ) : (

@@ -203,6 +203,8 @@ export interface LessonProgress {
     checklistPercentage: number; // Pourcentage de la checklist (0-100)
 }
 
+export type ChapterStatus = 'en-cours' | 'a-venir' | 'acheve';
+
 export interface ChapterProgress {
     videos?: VideosProgress; // Nouveau champ pour le tracking des vidéos
     lesson?: LessonProgress; // Nouveau champ pour le tracking des leçons
@@ -212,6 +214,7 @@ export interface ChapterProgress {
     submittedVersion?: string; // Track version on submission
     exercisesDuration: number; // in seconds
     hasUpdate?: boolean;
+    status: ChapterStatus; // Statut du chapitre : en cours, à venir ou achevé
 }
 
 export interface AppState {
@@ -221,6 +224,7 @@ export interface AppState {
     activityVersions: { [chapterId: string]: string }; // To track versions for update notifications
     progress: { [chapterId: string]: ChapterProgress };
     currentChapterId: string | null;
+    currentActiveChapterId: string | null; // Le chapitre actuellement "en cours" (1 seul à la fois)
     activitySubView: 'videos' | 'quiz' | 'exercises' | 'lesson' | null; // Ajout de 'lesson'
     isReviewMode: boolean;
     chapterOrder: string[];
@@ -305,4 +309,6 @@ export type Action =
     | { type: 'UPDATE_EXERCISES_DURATION'; payload: { duration: number } }
     | { type: 'SUBMIT_WORK'; payload: { chapterId: string } }
     | { type: 'MARK_UPDATE_SEEN'; payload: { chapterId: string } }
-    | { type: 'SYNC_ACTIVITIES'; payload: { activities: { [id: string]: Chapter }; progress: { [id: string]: ChapterProgress }; chapterOrder: string[] } };
+    | { type: 'SYNC_ACTIVITIES'; payload: { activities: { [id: string]: Chapter }; progress: { [id: string]: ChapterProgress }; chapterOrder: string[] } }
+    | { type: 'SET_CHAPTER_STATUS'; payload: { chapterId: string; status: ChapterStatus } } // Nouvelle action pour gérer les statuts
+    | { type: 'START_CHAPTER'; payload: { chapterId: string } }; // Nouvelle action pour démarrer un chapitre

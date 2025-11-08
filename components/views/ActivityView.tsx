@@ -104,9 +104,9 @@ const ActivityView: React.FC = () => {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                             </svg>
                         </div>
-                        <h2 className="text-2xl font-playfair text-text mb-4">Quiz verrouillé</h2>
+                        <h2 className="text-2xl font-playfair text-text mb-4">Quiz en attente</h2>
                         <p className="text-secondary text-lg mb-6">
-                            Terminez la leçon à 100% pour débloquer le quiz.
+                            Terminez la leçon à 100% pour accéder au quiz.
                         </p>
                         <div className="bg-background p-6 rounded-lg border border-border">
                             <div className="flex justify-between items-center mb-2">
