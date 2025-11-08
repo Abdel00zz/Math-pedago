@@ -573,7 +573,7 @@ const ChapterHubView: React.FC = () => {
             disabled: !hasLesson,
             buttonText: hasLesson
                 ? (isChapterLocked ? 'Consulter' : lessonReadPercentage === 100 ? 'Relire' : lessonReadPercentage > 0 ? 'Continuer' : 'Commencer')
-                : 'À venir',
+                : 'Bientôt',
             buttonVariant: hasLesson
                 ? ((isChapterLocked || lessonReadPercentage === 100 ? 'secondary' : 'primary') as ButtonVariant)
                 : 'disabled' as ButtonVariant,
@@ -591,9 +591,9 @@ const ChapterHubView: React.FC = () => {
             progressInfo: hasVideos ? `${watchedVideosCount} / ${totalVideos}` : undefined,
             onClick: hasVideos ? handleStartVideos : () => {},
             disabled: !hasVideos,
-            buttonText: hasVideos 
+            buttonText: hasVideos
                 ? (isChapterLocked ? 'Consulter' : areAllVideosWatched ? 'Revoir' : watchedVideosCount > 0 ? 'Continuer' : 'Commencer')
-                : 'À venir',
+                : 'Bientôt',
             buttonVariant: hasVideos 
                 ? ((isChapterLocked || areAllVideosWatched ? 'secondary' : 'primary') as ButtonVariant)
                 : 'disabled' as ButtonVariant,
@@ -613,8 +613,8 @@ const ChapterHubView: React.FC = () => {
                 : (isQuizCompleted ? `Score : ${quiz.score}/${totalQuestions}` : `${answeredQuestionsCount} / ${totalQuestions}`),
             onClick: lessonReadPercentage < 100 ? () => {} : (isQuizCompleted ? handleReviewQuiz : handleStartQuiz),
             disabled: lessonReadPercentage < 100,
-            buttonText: lessonReadPercentage < 100 
-                ? 'Verrouillé'
+            buttonText: lessonReadPercentage < 100
+                ? 'En attente'
                 : (isChapterLocked ? 'Consulter' : isQuizCompleted ? 'Revoir' : answeredQuestionsCount > 0 ? 'Continuer' : 'Commencer'),
             buttonVariant: lessonReadPercentage < 100 
                 ? 'disabled'

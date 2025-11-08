@@ -93,7 +93,7 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
         switch (status) {
             case 'acheve':
                 return {
-                    text: 'Terminé',
+                    text: 'Réussi',
                     icon: 'check_circle',
                     disabled: false,
                     variant: 'completed',
@@ -101,7 +101,7 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
                 };
             case 'en-cours':
                 return {
-                    text: 'En cours',
+                    text: 'En apprentissage',
                     icon: 'pending',
                     disabled: false,
                     variant: 'progress',
@@ -112,7 +112,7 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
                 // Vérifier si le chapitre est verrouillé
                 if (!chapter.isActive) {
                     return {
-                        text: 'Verrouillé',
+                        text: 'Bientôt',
                         icon: 'lock',
                         disabled: true,
                         variant: 'locked',
@@ -120,8 +120,8 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
                     };
                 }
                 return {
-                    text: 'À venir',
-                    icon: 'radio_button_unchecked',
+                    text: 'Disponible',
+                    icon: 'auto_stories',
                     disabled: false,
                     variant: 'todo',
                     color: '#3b82f6',
@@ -246,7 +246,7 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
                 <div className="chapter-card-v2__content">
                     <div className="chapter-card-v2__header">
                         <span className="chapter-card-v2__eyebrow">
-                            {progress?.isWorkSubmitted ? 'Chapitre complété' : chapter.isActive ? 'Chapitre actif' : 'Chapitre verrouillé'}
+                            {progress?.isWorkSubmitted ? 'Chapitre maîtrisé' : chapter.isActive ? 'Chapitre ouvert' : 'Bientôt disponible'}
                         </span>
                         <h3 className="chapter-card-v2__title">{chapter.chapter}</h3>
                     </div>
