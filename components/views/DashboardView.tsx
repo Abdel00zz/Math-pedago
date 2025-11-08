@@ -7,6 +7,7 @@ import ChapterSection from '../ChapterSection';
 import GlobalActionButtons from '../GlobalActionButtons';
 import StandardHeader from '../StandardHeader';
 import { LESSON_PROGRESS_REFRESH_EVENT } from '../../utils/lessonProgressHelpers';
+import { sortChaptersByActiveSession } from '../../utils/chapterStatusHelpers';
 
 // ✅ OPTIMISATION 1: Suppression du code mort (CacheService, useThemePreference, useIdleDetection)
 // Ces hooks/services étaient créés mais jamais utilisés
@@ -83,6 +84,7 @@ const DashboardView: React.FC = () => {
     }, []);
 
     // ✅ OPTIMISATION 4: Catégorisation optimisée avec reduce basée sur les statuts
+    // Trier pour mettre les chapitres avec séances actives en premier
     const categorizedActivities = useMemo((): CategorizedActivities => {
         if (!profile) return { inProgress: [], completed: [], upcoming: [] };
 
@@ -90,7 +92,7 @@ const DashboardView: React.FC = () => {
             .map(id => activities[id])
             .filter(Boolean);
 
-        return allUserActivities.reduce<CategorizedActivities>(
+        const categorized = allUserActivities.reduce<CategorizedActivities>(
             (acc, chapter) => {
                 const chapterProgress = progress[chapter.id];
                 const status = chapterProgress?.status || 'a-venir';
@@ -107,6 +109,13 @@ const DashboardView: React.FC = () => {
             },
             { inProgress: [], completed: [], upcoming: [] }
         );
+
+        // Trier chaque catégorie pour placer les chapitres avec séances actives en premier
+        return {
+            inProgress: sortChaptersByActiveSession(categorized.inProgress),
+            completed: sortChaptersByActiveSession(categorized.completed),
+            upcoming: sortChaptersByActiveSession(categorized.upcoming),
+        };
     }, [activities, progress, profile, chapterOrder]);
 
     // ✅ OPTIMISATION 5: handleChapterSelect avec useCallback

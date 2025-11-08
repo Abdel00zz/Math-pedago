@@ -136,3 +136,49 @@ export function determineInitialStatus(
     // Sinon, à venir par défaut
     return 'a-venir';
 }
+
+/**
+ * Vérifie si un chapitre a une session active (en direct maintenant)
+ * Une session est considérée comme active si elle est en cours (entre la date de début et 2h après)
+ */
+export function hasActiveSession(sessionDates: string[]): boolean {
+    if (!Array.isArray(sessionDates) || sessionDates.length === 0) {
+        return false;
+    }
+
+    const SESSION_DURATION_MS = 2 * 60 * 60 * 1000; // 2 heures
+    const now = Date.now();
+
+    return sessionDates.some(dateStr => {
+        const sessionDate = new Date(dateStr);
+        if (isNaN(sessionDate.getTime())) {
+            return false;
+        }
+
+        const sessionStart = sessionDate.getTime();
+        const sessionEnd = sessionStart + SESSION_DURATION_MS;
+
+        return now >= sessionStart && now <= sessionEnd;
+    });
+}
+
+/**
+ * Compare deux chapitres pour les trier en mettant ceux avec sessions actives en premier
+ */
+export function sortChaptersByActiveSession(chapters: Chapter[]): Chapter[] {
+    return [...chapters].sort((a, b) => {
+        const aHasActiveSession = hasActiveSession(a.sessionDates || []);
+        const bHasActiveSession = hasActiveSession(b.sessionDates || []);
+
+        // Si a a une session active mais pas b, a vient en premier
+        if (aHasActiveSession && !bHasActiveSession) {
+            return -1;
+        }
+        // Si b a une session active mais pas a, b vient en premier
+        if (!aHasActiveSession && bHasActiveSession) {
+            return 1;
+        }
+        // Sinon, garder l'ordre original
+        return 0;
+    });
+}

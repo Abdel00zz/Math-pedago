@@ -9,6 +9,7 @@ import {
     type LessonCompletionSummary,
     type LessonProgressEventDetail,
 } from '../utils/lessonProgressHelpers';
+import { hasActiveSession } from '../utils/chapterStatusHelpers';
 
 interface ChapterCardProps {
     chapter: Chapter;
@@ -137,6 +138,11 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
         }
     }, [disabled, onSelect, chapter.id]);
 
+    // Vérifier si le chapitre a une session active
+    const isSessionActive = useMemo(() => {
+        return hasActiveSession(chapter.sessionDates || []);
+    }, [chapter.sessionDates]);
+
     // 🎯 Calcul de progression avec coefficients égaux pour leçons, quiz et exercices
     const progressPercentage = useMemo(() => {
         const params = {
@@ -204,7 +210,7 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
         <button
             onClick={handleClick}
             disabled={disabled}
-            className={`chapter-card-v2 ${disabled ? 'is-disabled' : ''}`}
+            className={`chapter-card-v2 ${disabled ? 'is-disabled' : ''} ${isSessionActive ? 'has-active-session' : ''}`}
             aria-label={`Accéder au ${chapter.chapter}`}
             aria-disabled={disabled}
             data-status={variant}

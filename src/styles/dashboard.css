@@ -1457,3 +1457,42 @@
 .chapter-card-v2:nth-child(4) { animation-delay: 0.2s; }
 .chapter-card-v2:nth-child(5) { animation-delay: 0.25s; }
 .chapter-card-v2:nth-child(6) { animation-delay: 0.3s; }
+
+/* ============================================================================
+   ACTIVE SESSION BLINKING BORDER EFFECT
+   ============================================================================ */
+
+/* Animation de clignotement pour les bordures */
+@keyframes activeBorderPulse {
+  0%, 100% {
+    border-color: rgba(239, 68, 68, 0.8);
+    box-shadow:
+      0 8px 24px rgba(15, 23, 42, 0.08),
+      0 4px 8px rgba(15, 23, 42, 0.06),
+      0 0 0 0 rgba(239, 68, 68, 0),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  }
+  50% {
+    border-color: rgba(239, 68, 68, 1);
+    box-shadow:
+      0 8px 24px rgba(15, 23, 42, 0.08),
+      0 4px 8px rgba(15, 23, 42, 0.06),
+      0 0 0 8px rgba(239, 68, 68, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  }
+}
+
+/* Appliquer l'effet de clignotement aux cartes avec session active */
+.chapter-card-v2.has-active-session .chapter-card-v2__bg {
+  animation: activeBorderPulse 2s ease-in-out infinite;
+  border-width: 3px;
+}
+
+.chapter-card-v2.has-active-session:not(.is-disabled):hover .chapter-card-v2__bg {
+  border-color: rgba(239, 68, 68, 0.5);
+  box-shadow:
+    0 16px 40px rgba(15, 23, 42, 0.12),
+    0 8px 16px rgba(239, 68, 68, 0.2),
+    0 0 0 10px rgba(239, 68, 68, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
+}
