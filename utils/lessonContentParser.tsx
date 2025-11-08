@@ -1,10 +1,10 @@
 /**
  * Parser de contenu pour les leçons dans Pedago
- * Réutilise MathContent existant de Pedago
- * Version améliorée avec support complet des listes, tableaux et formatage
+ * Version avec support KaTeX
  */
 
 import React, { useEffect, useRef } from 'react';
+import katex from 'katex';
 import MathContent from '../components/MathContent';
 import type { LessonImageConfig } from '../types';
 
@@ -32,12 +32,73 @@ export const LessonProvider: React.FC<{ children: React.ReactNode; showAnswers: 
 // WRAPPER POUR MATHCONTENT QUI SUPPORTE LES REACTNODE
 // ============================================================================
 
+/**
+ * Remplace les expressions mathématiques dans le HTML par du HTML rendu par KaTeX
+ */
+const renderMathInHTML = (html: string): string => {
+    if (!html || !/\$/.test(html)) return html;
+
+    let result = html;
+
+    // Traiter les math display ($$...$$)
+    result = result.replace(/\$\$([\s\S]+?)\$\$/g, (match, math) => {
+        try {
+            return katex.renderToString(math.trim(), {
+                displayMode: true,
+                throwOnError: false,
+                strict: false,
+            });
+        } catch (e) {
+            console.error('KaTeX display error in lesson:', e);
+            return match;
+        }
+    });
+
+    // Traiter les math inline ($...$)
+    result = result.replace(/\$([^\$]+?)\$/g, (match, math) => {
+        try {
+            return katex.renderToString(math.trim(), {
+                displayMode: false,
+                throwOnError: false,
+                strict: false,
+            });
+        } catch (e) {
+            console.error('KaTeX inline error in lesson:', e);
+            return match;
+        }
+    });
+
+    return result;
+};
+
 const MathContentWrapper: React.FC<{ children: React.ReactNode; inline?: boolean }> = ({ children, inline = false }) => {
-    // Convertir les enfants en string pour MathContent
-    const content = typeof children === 'string' ? children : String(children);
+    const containerRef = useRef<HTMLElement | null>(null);
+
+    useEffect(() => {
+        const el = containerRef.current;
+        if (!el) return;
+
+        // Rendre les formules mathématiques dans le HTML
+        const textContent = el.textContent || '';
+        if (/\$/.test(textContent)) {
+            const processedHTML = renderMathInHTML(el.innerHTML);
+            if (el.innerHTML !== processedHTML) {
+                el.innerHTML = processedHTML;
+            }
+        }
+    }, [children]);
+
+    const Tag = inline ? 'span' : 'div';
 
     return (
-        <MathContent content={content} inline={inline} className="math-content-wrapper" />
+        <Tag
+            ref={(node) => {
+                containerRef.current = node as HTMLElement | null;
+            }}
+            className="math-content-wrapper"
+        >
+            {children}
+        </Tag>
     );
 };
 
