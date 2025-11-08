@@ -13,17 +13,554 @@
         {
           "text": "$\\frac{1+\\sqrt{3}}{2}$",
           "is_correct": false,
-          "explanation": null
+          "explanation": "Non. $\\cos(\\frac{\\pi}{3}) = \\frac{1}{2}$ et $\\sin(\\frac{\\pi}{6}) = \\frac{1}{2}$, donc la somme vaut 1."
         },
         {
           "text": "1",
-          "is_correct": false,
-          "explanation": null
+          "is_correct": true,
+          "explanation": "Exact ! $\\cos(\\frac{\\pi}{3}) = \\frac{1}{2}$ et $\\sin(\\frac{\\pi}{6}) = \\frac{1}{2}$, donc la somme est 1."
         },
         {
           "text": "$\\sqrt{3}$",
           "is_correct": false,
-          "explanation": null
+          "explanation": "Vous confondez avec d'autres valeurs remarquables."
+        },
+        {
+          "text": "$\\frac{\\sqrt{3}}{2}$",
+          "is_correct": false,
+          "explanation": "C'est la valeur de $\\sin(\\frac{\\pi}{3})$ ou $\\cos(\\frac{\\pi}{6})$, pas de cette somme."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_trigo_2",
+      "question": "Sur le cercle trigonométrique, le point correspondant à l'angle $\\frac{5\\pi}{4}$ est situé dans quel quadrant ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Premier quadrant",
+          "is_correct": false,
+          "explanation": "Le premier quadrant correspond aux angles entre 0 et $\\frac{\\pi}{2}$."
+        },
+        {
+          "text": "Deuxième quadrant",
+          "is_correct": false,
+          "explanation": "Le deuxième quadrant correspond aux angles entre $\\frac{\\pi}{2}$ et $\\pi$."
+        },
+        {
+          "text": "Troisième quadrant",
+          "is_correct": true,
+          "explanation": "Correct ! $\\frac{5\\pi}{4}$ est entre $\\pi$ et $\\frac{3\\pi}{2}$, donc dans le troisième quadrant."
+        },
+        {
+          "text": "Quatrième quadrant",
+          "is_correct": false,
+          "explanation": "Le quatrième quadrant correspond aux angles entre $\\frac{3\\pi}{2}$ et $2\\pi$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_trigo_3",
+      "question": "Quelle est la valeur de $\\cos(-x)$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\cos(x)$",
+          "is_correct": true,
+          "explanation": "Parfait ! La fonction cosinus est paire : $\\cos(-x) = \\cos(x)$."
+        },
+        {
+          "text": "$-\\cos(x)$",
+          "is_correct": false,
+          "explanation": "Non, c'est la fonction sinus qui change de signe : $\\sin(-x) = -\\sin(x)$."
+        },
+        {
+          "text": "$\\sin(x)$",
+          "is_correct": false,
+          "explanation": "Il n'y a pas de relation directe entre $\\cos(-x)$ et $\\sin(x)$."
+        },
+        {
+          "text": "$-\\sin(x)$",
+          "is_correct": false,
+          "explanation": "Cette relation n'est pas correcte."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_trigo_4",
+      "question": "Quelle est la valeur de $\\sin(\\pi - x)$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\sin(x)$",
+          "is_correct": true,
+          "explanation": "Exact ! C'est une formule des angles associés : $\\sin(\\pi - x) = \\sin(x)$."
+        },
+        {
+          "text": "$-\\sin(x)$",
+          "is_correct": false,
+          "explanation": "Non, le sinus garde le même signe pour l'angle supplémentaire."
+        },
+        {
+          "text": "$\\cos(x)$",
+          "is_correct": false,
+          "explanation": "C'est pour $\\sin(\\frac{\\pi}{2} - x)$ qu'on obtient $\\cos(x)$."
+        },
+        {
+          "text": "$-\\cos(x)$",
+          "is_correct": false,
+          "explanation": "Cette relation est fausse."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_trigo_5",
+      "question": "Quelle est la valeur de $\\cos(\\pi + x)$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\cos(x)$",
+          "is_correct": false,
+          "explanation": "Non, le cosinus change de signe pour l'angle opposé."
+        },
+        {
+          "text": "$-\\cos(x)$",
+          "is_correct": true,
+          "explanation": "Correct ! C'est la formule des angles associés : $\\cos(\\pi + x) = -\\cos(x)$."
+        },
+        {
+          "text": "$\\sin(x)$",
+          "is_correct": false,
+          "explanation": "Il ne s'agit pas d'une transformation cosinus-sinus."
+        },
+        {
+          "text": "$-\\sin(x)$",
+          "is_correct": false,
+          "explanation": "Cette relation est incorrecte."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_trigo_6",
+      "question": "Pour tous réels $a$ et $b$, $\\cos(a + b)$ est égal à :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\cos(a) + \\cos(b)$",
+          "is_correct": false,
+          "explanation": "Non, le cosinus d'une somme n'est pas la somme des cosinus."
+        },
+        {
+          "text": "$\\cos(a) \\cdot \\cos(b) - \\sin(a) \\cdot \\sin(b)$",
+          "is_correct": true,
+          "explanation": "Parfait ! C'est la formule d'addition du cosinus."
+        },
+        {
+          "text": "$\\cos(a) \\cdot \\cos(b) + \\sin(a) \\cdot \\sin(b)$",
+          "is_correct": false,
+          "explanation": "Attention au signe, c'est un moins et non un plus."
+        },
+        {
+          "text": "$\\sin(a) \\cdot \\cos(b) + \\cos(a) \\cdot \\sin(b)$",
+          "is_correct": false,
+          "explanation": "Ceci est la formule de $\\sin(a + b)$, pas de $\\cos(a + b)$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_trigo_7",
+      "question": "Pour tous réels $a$ et $b$, $\\sin(a + b)$ est égal à :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\sin(a) + \\sin(b)$",
+          "is_correct": false,
+          "explanation": "Non, le sinus d'une somme n'est pas la somme des sinus."
+        },
+        {
+          "text": "$\\sin(a) \\cdot \\cos(b) + \\cos(a) \\cdot \\sin(b)$",
+          "is_correct": true,
+          "explanation": "Exact ! C'est la formule d'addition du sinus."
+        },
+        {
+          "text": "$\\sin(a) \\cdot \\sin(b) + \\cos(a) \\cdot \\cos(b)$",
+          "is_correct": false,
+          "explanation": "Cette combinaison n'est pas correcte."
+        },
+        {
+          "text": "$\\cos(a) \\cdot \\cos(b) - \\sin(a) \\cdot \\sin(b)$",
+          "is_correct": false,
+          "explanation": "Ceci est la formule de $\\cos(a + b)$, pas de $\\sin(a + b)$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_trigo_8",
+      "question": "La formule de duplication $\\cos(2x)$ est égale à :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$2\\cos(x)$",
+          "is_correct": false,
+          "explanation": "Non, ce n'est pas une simple multiplication par 2."
+        },
+        {
+          "text": "$\\cos^2(x) - \\sin^2(x)$",
+          "is_correct": true,
+          "explanation": "Correct ! C'est l'une des formes de la formule de duplication du cosinus."
+        },
+        {
+          "text": "$\\cos^2(x) + \\sin^2(x)$",
+          "is_correct": false,
+          "explanation": "Cette somme vaut toujours 1, pas $\\cos(2x)$."
+        },
+        {
+          "text": "$2\\sin(x)\\cos(x)$",
+          "is_correct": false,
+          "explanation": "Ceci est la formule de $\\sin(2x)$, pas de $\\cos(2x)$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_trigo_9",
+      "question": "La formule de duplication $\\sin(2x)$ est égale à :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$2\\sin(x)$",
+          "is_correct": false,
+          "explanation": "Non, ce n'est pas une simple multiplication par 2."
+        },
+        {
+          "text": "$2\\sin(x)\\cos(x)$",
+          "is_correct": true,
+          "explanation": "Parfait ! C'est la formule de duplication du sinus."
+        },
+        {
+          "text": "$\\sin^2(x) - \\cos^2(x)$",
+          "is_correct": false,
+          "explanation": "Cette formule n'est pas correcte."
+        },
+        {
+          "text": "$\\sin^2(x) + \\cos^2(x)$",
+          "is_correct": false,
+          "explanation": "Cette somme vaut toujours 1, pas $\\sin(2x)$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_trigo_10",
+      "question": "L'identité fondamentale de la trigonométrie est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\cos^2(x) + \\sin^2(x) = 1$",
+          "is_correct": true,
+          "explanation": "Exact ! C'est l'identité fondamentale, valable pour tout réel $x$."
+        },
+        {
+          "text": "$\\cos(x) + \\sin(x) = 1$",
+          "is_correct": false,
+          "explanation": "Non, ce sont les carrés qui s'additionnent pour donner 1."
+        },
+        {
+          "text": "$\\cos^2(x) - \\sin^2(x) = 1$",
+          "is_correct": false,
+          "explanation": "Cette formule correspond à $\\cos(2x)$, pas à l'identité fondamentale."
+        },
+        {
+          "text": "$\\cos(x) \\cdot \\sin(x) = 1$",
+          "is_correct": false,
+          "explanation": "Cette relation n'est généralement pas vraie."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_trigo_11",
+      "question": "Quelle est la période de la fonction $f(x) = \\sin(x)$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\pi$",
+          "is_correct": false,
+          "explanation": "C'est la demi-période, pas la période complète."
+        },
+        {
+          "text": "$2\\pi$",
+          "is_correct": true,
+          "explanation": "Correct ! La fonction sinus est périodique de période $2\\pi$."
+        },
+        {
+          "text": "$\\frac{\\pi}{2}$",
+          "is_correct": false,
+          "explanation": "Cette valeur est trop petite."
+        },
+        {
+          "text": "$4\\pi$",
+          "is_correct": false,
+          "explanation": "Cette valeur est trop grande."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_trigo_12",
+      "question": "Si $\\cos(x) = \\frac{3}{5}$ avec $x \\in [0, \\frac{\\pi}{2}]$, que vaut $\\sin(x)$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\frac{4}{5}$",
+          "is_correct": true,
+          "explanation": "Exact ! En utilisant $\\sin^2(x) + \\cos^2(x) = 1$, on trouve $\\sin^2(x) = 1 - \\frac{9}{25} = \\frac{16}{25}$, donc $\\sin(x) = \\frac{4}{5}$ (positif car $x \\in [0, \\frac{\\pi}{2}]$)."
+        },
+        {
+          "text": "$-\\frac{4}{5}$",
+          "is_correct": false,
+          "explanation": "Le sinus est positif dans le premier quadrant."
+        },
+        {
+          "text": "$\\frac{3}{5}$",
+          "is_correct": false,
+          "explanation": "Ce serait le cas si $\\sin(x) = \\cos(x)$, ce qui n'est pas toujours vrai."
+        },
+        {
+          "text": "$\\frac{2}{5}$",
+          "is_correct": false,
+          "explanation": "Erreur de calcul. Utilisez $\\sin^2(x) + \\cos^2(x) = 1$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_trigo_13",
+      "question": "La formule de transformation $\\cos(p) + \\cos(q)$ est égale à :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$2\\cos(\\frac{p+q}{2})\\cos(\\frac{p-q}{2})$",
+          "is_correct": true,
+          "explanation": "Correct ! C'est la formule de transformation somme-produit."
+        },
+        {
+          "text": "$2\\sin(\\frac{p+q}{2})\\cos(\\frac{p-q}{2})$",
+          "is_correct": false,
+          "explanation": "Ceci est la formule pour $\\sin(p) + \\sin(q)$."
+        },
+        {
+          "text": "$\\cos(p+q)$",
+          "is_correct": false,
+          "explanation": "La somme de cosinus n'est pas le cosinus de la somme."
+        },
+        {
+          "text": "$2\\cos(p)\\cos(q)$",
+          "is_correct": false,
+          "explanation": "Cette formule n'est pas correcte."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_trigo_14",
+      "question": "L'équation $\\cos(x) = \\frac{1}{2}$ dans $[0, 2\\pi]$ admet combien de solutions ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "1 solution",
+          "is_correct": false,
+          "explanation": "Il y a plus d'une solution sur $[0, 2\\pi]$."
+        },
+        {
+          "text": "2 solutions",
+          "is_correct": true,
+          "explanation": "Exact ! Les solutions sont $x = \\frac{\\pi}{3}$ et $x = \\frac{5\\pi}{3}$."
+        },
+        {
+          "text": "3 solutions",
+          "is_correct": false,
+          "explanation": "Le cosinus ne prend qu'une valeur donnée deux fois sur $[0, 2\\pi]$."
+        },
+        {
+          "text": "4 solutions",
+          "is_correct": false,
+          "explanation": "C'est trop. Sur une période, il y a exactement 2 solutions."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_trigo_15",
+      "question": "Pour résoudre $\\sin(x) = \\sin(a)$ dans $\\mathbb{R}$, les solutions sont :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$x = a + 2k\\pi$ où $k \\in \\mathbb{Z}$",
+          "is_correct": false,
+          "explanation": "Il manque une famille de solutions."
+        },
+        {
+          "text": "$x = a + 2k\\pi$ ou $x = \\pi - a + 2k\\pi$ où $k \\in \\mathbb{Z}$",
+          "is_correct": true,
+          "explanation": "Parfait ! Ce sont les deux familles de solutions de l'équation."
+        },
+        {
+          "text": "$x = a + k\\pi$ où $k \\in \\mathbb{Z}$",
+          "is_correct": false,
+          "explanation": "Cette formulation ne capture pas toutes les solutions."
+        },
+        {
+          "text": "$x = a$ uniquement",
+          "is_correct": false,
+          "explanation": "Il y a une infinité de solutions en raison de la périodicité."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_trigo_16",
+      "question": "La valeur exacte de $\\tan(\\frac{\\pi}{4})$ est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "0",
+          "is_correct": false,
+          "explanation": "$\\tan(\\frac{\\pi}{4})$ n'est pas nul."
+        },
+        {
+          "text": "1",
+          "is_correct": true,
+          "explanation": "Exact ! $\\tan(\\frac{\\pi}{4}) = \\frac{\\sin(\\frac{\\pi}{4})}{\\cos(\\frac{\\pi}{4})} = \\frac{\\frac{\\sqrt{2}}{2}}{\\frac{\\sqrt{2}}{2}} = 1$."
+        },
+        {
+          "text": "$\\frac{\\sqrt{3}}{3}$",
+          "is_correct": false,
+          "explanation": "C'est la valeur de $\\tan(\\frac{\\pi}{6})$."
+        },
+        {
+          "text": "$\\sqrt{3}$",
+          "is_correct": false,
+          "explanation": "C'est la valeur de $\\tan(\\frac{\\pi}{3})$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_trigo_17",
+      "question": "Quelle est la valeur de $\\sin(\\frac{\\pi}{2} - x)$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\cos(x)$",
+          "is_correct": true,
+          "explanation": "Correct ! C'est la formule des angles complémentaires : $\\sin(\\frac{\\pi}{2} - x) = \\cos(x)$."
+        },
+        {
+          "text": "$\\sin(x)$",
+          "is_correct": false,
+          "explanation": "Non, il y a une transformation sinus-cosinus."
+        },
+        {
+          "text": "$-\\cos(x)$",
+          "is_correct": false,
+          "explanation": "Le signe est positif pour les angles complémentaires."
+        },
+        {
+          "text": "$-\\sin(x)$",
+          "is_correct": false,
+          "explanation": "Cette relation est incorrecte."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_trigo_18",
+      "question": "L'équation $2\\sin(x) - \\sqrt{3} = 0$ dans $[0, 2\\pi]$ admet pour solutions :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$x = \\frac{\\pi}{3}$ et $x = \\frac{2\\pi}{3}$",
+          "is_correct": true,
+          "explanation": "Exact ! $\\sin(x) = \\frac{\\sqrt{3}}{2}$ a pour solutions $\\frac{\\pi}{3}$ et $\\frac{2\\pi}{3}$ dans $[0, 2\\pi]$."
+        },
+        {
+          "text": "$x = \\frac{\\pi}{6}$ et $x = \\frac{5\\pi}{6}$",
+          "is_correct": false,
+          "explanation": "Ces angles correspondent à $\\sin(x) = \\frac{1}{2}$, pas $\\frac{\\sqrt{3}}{2}$."
+        },
+        {
+          "text": "$x = \\frac{\\pi}{4}$ et $x = \\frac{3\\pi}{4}$",
+          "is_correct": false,
+          "explanation": "Ces angles correspondent à $\\sin(x) = \\frac{\\sqrt{2}}{2}$."
+        },
+        {
+          "text": "$x = 0$ et $x = \\pi$",
+          "is_correct": false,
+          "explanation": "Pour ces valeurs, $\\sin(x) = 0$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_trigo_19",
+      "question": "La fonction $f(x) = \\cos(x)$ est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Paire",
+          "is_correct": true,
+          "explanation": "Correct ! $\\cos(-x) = \\cos(x)$, donc la fonction cosinus est paire."
+        },
+        {
+          "text": "Impaire",
+          "is_correct": false,
+          "explanation": "Non, c'est la fonction sinus qui est impaire."
+        },
+        {
+          "text": "Ni paire ni impaire",
+          "is_correct": false,
+          "explanation": "Le cosinus est bien une fonction paire."
+        },
+        {
+          "text": "Périodique de période $\\pi$",
+          "is_correct": false,
+          "explanation": "La période est $2\\pi$, pas $\\pi$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_trigo_20",
+      "question": "Quelle est une autre forme de $\\cos(2x)$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$1 - 2\\sin^2(x)$",
+          "is_correct": true,
+          "explanation": "Exact ! En utilisant $\\cos^2(x) = 1 - \\sin^2(x)$ dans $\\cos(2x) = \\cos^2(x) - \\sin^2(x)$, on obtient cette forme."
+        },
+        {
+          "text": "$2\\cos^2(x)$",
+          "is_correct": false,
+          "explanation": "Il manque un terme constant : $\\cos(2x) = 2\\cos^2(x) - 1$."
+        },
+        {
+          "text": "$1 + 2\\sin^2(x)$",
+          "is_correct": false,
+          "explanation": "Le signe est incorrect, c'est un moins."
+        },
+        {
+          "text": "$\\sin^2(x) + \\cos^2(x)$",
+          "is_correct": false,
+          "explanation": "Cette somme vaut toujours 1, pas $\\cos(2x)$."
         }
       ],
       "steps": []
@@ -32,9 +569,122 @@
   "exercises": [
     {
       "id": "exo_trigo_1",
-      "title": "Équation trigonométrique",
+      "title": "Équation trigonométrique simple",
       "statement": "Résoudre dans $\\mathbb{R}$ l'équation suivante : $2\\cos(x) - 1 = 0$.",
-      "sub_questions": []
+      "sub_questions": [
+        {
+          "question": "Isoler $\\cos(x)$ dans l'équation",
+          "hint": "$\\cos(x) = \\frac{1}{2}$"
+        },
+        {
+          "question": "Identifier l'angle de référence dans $[0, 2\\pi]$ tel que $\\cos(\\alpha) = \\frac{1}{2}$",
+          "hint": "$\\alpha = \\frac{\\pi}{3}$"
+        },
+        {
+          "question": "Trouver toutes les solutions dans $[0, 2\\pi]$",
+          "hint": "Le cosinus est positif dans les quadrants 1 et 4, donc $x = \\frac{\\pi}{3}$ ou $x = 2\\pi - \\frac{\\pi}{3} = \\frac{5\\pi}{3}$"
+        },
+        {
+          "question": "Donner l'ensemble de toutes les solutions dans $\\mathbb{R}$",
+          "hint": "Ajouter la périodicité : $x = \\frac{\\pi}{3} + 2k\\pi$ ou $x = \\frac{5\\pi}{3} + 2k\\pi$, où $k \\in \\mathbb{Z}$"
+        }
+      ]
+    },
+    {
+      "id": "exo_trigo_2",
+      "title": "Valeurs exactes et angles associés",
+      "statement": "Sans calculatrice, calculer les valeurs exactes suivantes en utilisant les formules des angles associés.",
+      "sub_questions": [
+        {
+          "question": "Calculer $\\cos(\\frac{5\\pi}{6})$",
+          "hint": "$\\frac{5\\pi}{6} = \\pi - \\frac{\\pi}{6}$, donc $\\cos(\\frac{5\\pi}{6}) = -\\cos(\\frac{\\pi}{6}) = -\\frac{\\sqrt{3}}{2}$"
+        },
+        {
+          "question": "Calculer $\\sin(\\frac{7\\pi}{4})$",
+          "hint": "$\\frac{7\\pi}{4} = 2\\pi - \\frac{\\pi}{4}$, donc $\\sin(\\frac{7\\pi}{4}) = -\\sin(\\frac{\\pi}{4}) = -\\frac{\\sqrt{2}}{2}$"
+        },
+        {
+          "question": "Calculer $\\cos(-\\frac{\\pi}{3})$",
+          "hint": "La fonction cosinus est paire : $\\cos(-\\frac{\\pi}{3}) = \\cos(\\frac{\\pi}{3}) = \\frac{1}{2}$"
+        },
+        {
+          "question": "Calculer $\\sin(\\frac{11\\pi}{6})$",
+          "hint": "$\\frac{11\\pi}{6} = 2\\pi - \\frac{\\pi}{6}$, donc $\\sin(\\frac{11\\pi}{6}) = -\\sin(\\frac{\\pi}{6}) = -\\frac{1}{2}$"
+        }
+      ]
+    },
+    {
+      "id": "exo_trigo_3",
+      "title": "Formules d'addition",
+      "statement": "En utilisant les formules d'addition, calculer les valeurs exactes de $\\cos(\\frac{\\pi}{12})$ et $\\sin(\\frac{\\pi}{12})$.",
+      "sub_questions": [
+        {
+          "question": "Écrire $\\frac{\\pi}{12}$ comme différence de deux angles remarquables",
+          "hint": "$\\frac{\\pi}{12} = \\frac{\\pi}{3} - \\frac{\\pi}{4}$"
+        },
+        {
+          "question": "Appliquer la formule $\\cos(a - b) = \\cos(a)\\cos(b) + \\sin(a)\\sin(b)$",
+          "hint": "$\\cos(\\frac{\\pi}{12}) = \\cos(\\frac{\\pi}{3})\\cos(\\frac{\\pi}{4}) + \\sin(\\frac{\\pi}{3})\\sin(\\frac{\\pi}{4})$"
+        },
+        {
+          "question": "Calculer $\\cos(\\frac{\\pi}{12})$ avec les valeurs remarquables",
+          "hint": "$\\cos(\\frac{\\pi}{12}) = \\frac{1}{2} \\times \\frac{\\sqrt{2}}{2} + \\frac{\\sqrt{3}}{2} \\times \\frac{\\sqrt{2}}{2} = \\frac{\\sqrt{2} + \\sqrt{6}}{4}$"
+        },
+        {
+          "question": "Calculer de même $\\sin(\\frac{\\pi}{12})$ en utilisant $\\sin(a - b)$",
+          "hint": "$\\sin(\\frac{\\pi}{12}) = \\sin(\\frac{\\pi}{3})\\cos(\\frac{\\pi}{4}) - \\cos(\\frac{\\pi}{3})\\sin(\\frac{\\pi}{4}) = \\frac{\\sqrt{6} - \\sqrt{2}}{4}$"
+        }
+      ]
+    },
+    {
+      "id": "exo_trigo_4",
+      "title": "Formules de duplication",
+      "statement": "Soit $x$ un réel tel que $\\sin(x) = \\frac{3}{5}$ avec $x \\in [0, \\frac{\\pi}{2}]$.",
+      "sub_questions": [
+        {
+          "question": "Calculer $\\cos(x)$",
+          "hint": "Utiliser $\\cos^2(x) + \\sin^2(x) = 1$, donc $\\cos^2(x) = 1 - \\frac{9}{25} = \\frac{16}{25}$. Comme $x \\in [0, \\frac{\\pi}{2}]$, $\\cos(x) = \\frac{4}{5}$"
+        },
+        {
+          "question": "Calculer $\\sin(2x)$ en utilisant la formule de duplication",
+          "hint": "$\\sin(2x) = 2\\sin(x)\\cos(x) = 2 \\times \\frac{3}{5} \\times \\frac{4}{5} = \\frac{24}{25}$"
+        },
+        {
+          "question": "Calculer $\\cos(2x)$ en utilisant la formule de duplication",
+          "hint": "$\\cos(2x) = \\cos^2(x) - \\sin^2(x) = \\frac{16}{25} - \\frac{9}{25} = \\frac{7}{25}$"
+        },
+        {
+          "question": "Vérifier l'identité fondamentale pour l'angle $2x$",
+          "hint": "$\\sin^2(2x) + \\cos^2(2x) = (\\frac{24}{25})^2 + (\\frac{7}{25})^2 = \\frac{576 + 49}{625} = \\frac{625}{625} = 1$ ✓"
+        }
+      ]
+    },
+    {
+      "id": "exo_trigo_5",
+      "title": "Équations trigonométriques avancées",
+      "statement": "Résoudre dans $[0, 2\\pi]$ l'équation : $\\cos(2x) + \\sin(x) = 0$.",
+      "sub_questions": [
+        {
+          "question": "Remplacer $\\cos(2x)$ par son expression en fonction de $\\sin(x)$",
+          "hint": "$\\cos(2x) = 1 - 2\\sin^2(x)$, donc l'équation devient $1 - 2\\sin^2(x) + \\sin(x) = 0$"
+        },
+        {
+          "question": "Poser $X = \\sin(x)$ et écrire l'équation du second degré",
+          "hint": "$-2X^2 + X + 1 = 0$ ou $2X^2 - X - 1 = 0$"
+        },
+        {
+          "question": "Résoudre l'équation du second degré et trouver les valeurs de $X$",
+          "hint": "$\\Delta = 1 + 8 = 9$, donc $X = \\frac{1 \\pm 3}{4}$. On obtient $X = 1$ ou $X = -\\frac{1}{2}$"
+        },
+        {
+          "question": "Pour $\\sin(x) = 1$, trouver les solutions dans $[0, 2\\pi]$",
+          "hint": "$x = \\frac{\\pi}{2}$"
+        },
+        {
+          "question": "Pour $\\sin(x) = -\\frac{1}{2}$, trouver les solutions dans $[0, 2\\pi]$",
+          "hint": "$x = \\frac{7\\pi}{6}$ et $x = \\frac{11\\pi}{6}$"
+        }
+      ]
     }
   ],
   "version": "v1.1.0-1a39ea"

@@ -13,17 +13,554 @@
         {
           "text": "20",
           "is_correct": false,
-          "explanation": null
+          "explanation": "Erreur de calcul. Utilisez la formule $u_n = u_0 + nr$."
         },
         {
           "text": "23",
-          "is_correct": false,
-          "explanation": null
+          "is_correct": true,
+          "explanation": "Correct ! $u_5 = u_0 + 5r = 3 + 5 \\times 4 = 3 + 20 = 23$."
         },
         {
           "text": "15",
           "is_correct": false,
-          "explanation": null
+          "explanation": "Vous avez peut-être oublié d'ajouter le premier terme."
+        },
+        {
+          "text": "27",
+          "is_correct": false,
+          "explanation": "Vous avez probablement utilisé $n = 6$ au lieu de $n = 5$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_suites_2",
+      "question": "La formule du terme général d'une suite arithmétique $(u_n)$ de premier terme $u_0$ et de raison $r$ est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$u_n = u_0 + nr$",
+          "is_correct": true,
+          "explanation": "Exact ! C'est la formule du terme général d'une suite arithmétique."
+        },
+        {
+          "text": "$u_n = u_0 \\times r^n$",
+          "is_correct": false,
+          "explanation": "Ceci est la formule d'une suite géométrique."
+        },
+        {
+          "text": "$u_n = u_0 + (n-1)r$",
+          "is_correct": false,
+          "explanation": "Cette formule est valable si la suite commence à $u_1$, pas $u_0$."
+        },
+        {
+          "text": "$u_n = nr$",
+          "is_correct": false,
+          "explanation": "Vous avez oublié d'ajouter le premier terme $u_0$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_suites_3",
+      "question": "Soit $(v_n)$ une suite géométrique de premier terme $v_0 = 2$ et de raison $q = 3$. Que vaut $v_4$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "162",
+          "is_correct": true,
+          "explanation": "Parfait ! $v_4 = v_0 \\times q^4 = 2 \\times 3^4 = 2 \\times 81 = 162$."
+        },
+        {
+          "text": "81",
+          "is_correct": false,
+          "explanation": "Vous avez oublié de multiplier par le premier terme $v_0 = 2$."
+        },
+        {
+          "text": "14",
+          "is_correct": false,
+          "explanation": "Vous avez utilisé la formule d'une suite arithmétique au lieu d'une suite géométrique."
+        },
+        {
+          "text": "486",
+          "is_correct": false,
+          "explanation": "Vous avez probablement calculé $v_5$ au lieu de $v_4$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_suites_4",
+      "question": "La formule du terme général d'une suite géométrique $(v_n)$ de premier terme $v_0$ et de raison $q$ est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$v_n = v_0 \\times q^n$",
+          "is_correct": true,
+          "explanation": "Exact ! C'est la formule du terme général d'une suite géométrique."
+        },
+        {
+          "text": "$v_n = v_0 + nq$",
+          "is_correct": false,
+          "explanation": "Ceci est la formule d'une suite arithmétique."
+        },
+        {
+          "text": "$v_n = v_0 \\times q^{n-1}$",
+          "is_correct": false,
+          "explanation": "Cette formule est valable si la suite commence à $v_1$, pas $v_0$."
+        },
+        {
+          "text": "$v_n = q^n$",
+          "is_correct": false,
+          "explanation": "Vous avez oublié de multiplier par le premier terme $v_0$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_suites_5",
+      "question": "Une suite $(u_n)$ est strictement croissante si :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$u_{n+1} > u_n$ pour tout $n$",
+          "is_correct": true,
+          "explanation": "Correct ! Une suite est strictement croissante si chaque terme est strictement supérieur au précédent."
+        },
+        {
+          "text": "$u_{n+1} \\geq u_n$ pour tout $n$",
+          "is_correct": false,
+          "explanation": "Ceci définit une suite croissante (au sens large), pas strictement croissante."
+        },
+        {
+          "text": "$u_{n+1} < u_n$ pour tout $n$",
+          "is_correct": false,
+          "explanation": "Ceci définit une suite strictement décroissante."
+        },
+        {
+          "text": "$u_n > 0$ pour tout $n$",
+          "is_correct": false,
+          "explanation": "Le signe des termes ne détermine pas la croissance de la suite."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_suites_6",
+      "question": "Pour étudier le sens de variation d'une suite $(u_n)$, on peut calculer :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$u_{n+1} - u_n$",
+          "is_correct": true,
+          "explanation": "Exact ! Si $u_{n+1} - u_n > 0$, la suite est croissante ; si $u_{n+1} - u_n < 0$, elle est décroissante."
+        },
+        {
+          "text": "$u_n + u_{n+1}$",
+          "is_correct": false,
+          "explanation": "La somme ne donne pas d'information sur la variation."
+        },
+        {
+          "text": "$u_n \\times u_{n+1}$",
+          "is_correct": false,
+          "explanation": "Le produit ne permet pas d'étudier la variation."
+        },
+        {
+          "text": "$u_{n+1}^2$",
+          "is_correct": false,
+          "explanation": "Le carré d'un terme ne donne pas d'information sur la variation."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_suites_7",
+      "question": "Une suite $(u_n)$ est majorée s'il existe un réel $M$ tel que :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$u_n \\leq M$ pour tout $n$",
+          "is_correct": true,
+          "explanation": "Parfait ! Une suite est majorée si tous ses termes sont inférieurs ou égaux à un certain réel $M$."
+        },
+        {
+          "text": "$u_n \\geq M$ pour tout $n$",
+          "is_correct": false,
+          "explanation": "Ceci définit une suite minorée, pas majorée."
+        },
+        {
+          "text": "$u_n < M$ pour tout $n$",
+          "is_correct": false,
+          "explanation": "La définition utilise l'inégalité large ($\\leq$), pas stricte."
+        },
+        {
+          "text": "$u_n = M$ pour tout $n$",
+          "is_correct": false,
+          "explanation": "Ceci définirait une suite constante."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_suites_8",
+      "question": "Une suite qui est à la fois majorée et minorée est dite :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Bornée",
+          "is_correct": true,
+          "explanation": "Exact ! Une suite bornée est une suite à la fois majorée et minorée."
+        },
+        {
+          "text": "Convergente",
+          "is_correct": false,
+          "explanation": "Une suite bornée n'est pas nécessairement convergente."
+        },
+        {
+          "text": "Monotone",
+          "is_correct": false,
+          "explanation": "Monotone signifie croissante ou décroissante, pas bornée."
+        },
+        {
+          "text": "Constante",
+          "is_correct": false,
+          "explanation": "Une suite peut être bornée sans être constante."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_suites_9",
+      "question": "La somme des $n$ premiers termes d'une suite arithmétique de premier terme $u_0$ et de raison $r$ est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$S_n = \\frac{n(u_0 + u_{n-1})}{2}$",
+          "is_correct": true,
+          "explanation": "Correct ! C'est la formule de la somme des termes d'une suite arithmétique."
+        },
+        {
+          "text": "$S_n = n \\times u_0$",
+          "is_correct": false,
+          "explanation": "Cette formule ne tient pas compte de la raison."
+        },
+        {
+          "text": "$S_n = u_0 + u_{n-1}$",
+          "is_correct": false,
+          "explanation": "Il faut sommer tous les termes, pas seulement le premier et le dernier."
+        },
+        {
+          "text": "$S_n = u_0 \\times \\frac{1-q^n}{1-q}$",
+          "is_correct": false,
+          "explanation": "Ceci est la formule pour une suite géométrique."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_suites_10",
+      "question": "La somme des $n$ premiers termes d'une suite géométrique de premier terme $v_0$ et de raison $q \\neq 1$ est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$S_n = v_0 \\times \\frac{1-q^n}{1-q}$",
+          "is_correct": true,
+          "explanation": "Exact ! C'est la formule de la somme des termes d'une suite géométrique."
+        },
+        {
+          "text": "$S_n = \\frac{n(v_0 + v_{n-1})}{2}$",
+          "is_correct": false,
+          "explanation": "Ceci est la formule pour une suite arithmétique."
+        },
+        {
+          "text": "$S_n = n \\times v_0 \\times q$",
+          "is_correct": false,
+          "explanation": "Cette formule n'est pas correcte."
+        },
+        {
+          "text": "$S_n = v_0 \\times q^n$",
+          "is_correct": false,
+          "explanation": "Ceci est le terme général, pas la somme."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_suites_11",
+      "question": "Soit $(u_n)$ définie par $u_{n+1} = 2u_n + 3$ avec $u_0 = 1$. Quel est $u_1$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "5",
+          "is_correct": true,
+          "explanation": "Parfait ! $u_1 = 2u_0 + 3 = 2 \\times 1 + 3 = 5$."
+        },
+        {
+          "text": "3",
+          "is_correct": false,
+          "explanation": "Vous avez oublié de multiplier $u_0$ par 2."
+        },
+        {
+          "text": "2",
+          "is_correct": false,
+          "explanation": "Vous avez oublié d'ajouter 3."
+        },
+        {
+          "text": "4",
+          "is_correct": false,
+          "explanation": "Erreur de calcul. Vérifiez : $2 \\times 1 + 3 = 5$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_suites_12",
+      "question": "Une suite arithmétique de raison $r > 0$ est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Strictement croissante",
+          "is_correct": true,
+          "explanation": "Correct ! Si $r > 0$, alors $u_{n+1} - u_n = r > 0$, donc la suite est strictement croissante."
+        },
+        {
+          "text": "Strictement décroissante",
+          "is_correct": false,
+          "explanation": "Une suite arithmétique de raison positive est croissante."
+        },
+        {
+          "text": "Constante",
+          "is_correct": false,
+          "explanation": "Une suite est constante si $r = 0$."
+        },
+        {
+          "text": "Ni croissante ni décroissante",
+          "is_correct": false,
+          "explanation": "Avec $r > 0$, la suite est nécessairement croissante."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_suites_13",
+      "question": "Pour une suite géométrique de raison $q$ avec $0 < q < 1$, la suite est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Strictement décroissante si $v_0 > 0$",
+          "is_correct": true,
+          "explanation": "Exact ! Si $v_0 > 0$ et $0 < q < 1$, alors $\\frac{v_{n+1}}{v_n} = q < 1$, donc $v_{n+1} < v_n$."
+        },
+        {
+          "text": "Strictement croissante",
+          "is_correct": false,
+          "explanation": "Avec $0 < q < 1$ et $v_0 > 0$, la suite est décroissante."
+        },
+        {
+          "text": "Constante",
+          "is_correct": false,
+          "explanation": "Une suite est constante si $q = 1$."
+        },
+        {
+          "text": "Non monotone",
+          "is_correct": false,
+          "explanation": "La suite est bien monotone (décroissante)."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_suites_14",
+      "question": "Le raisonnement par récurrence permet de démontrer qu'une propriété $P(n)$ est vraie pour tout $n \\geq n_0$. Quelles sont les étapes ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Initialisation, hérédité et conclusion",
+          "is_correct": true,
+          "explanation": "Parfait ! Ce sont les trois étapes du raisonnement par récurrence."
+        },
+        {
+          "text": "Initialisation et conclusion",
+          "is_correct": false,
+          "explanation": "Il manque l'étape d'hérédité."
+        },
+        {
+          "text": "Hérédité uniquement",
+          "is_correct": false,
+          "explanation": "Il faut aussi l'initialisation et la conclusion."
+        },
+        {
+          "text": "Vérification pour quelques valeurs",
+          "is_correct": false,
+          "explanation": "Ce n'est pas suffisant pour un raisonnement par récurrence."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_suites_15",
+      "question": "Dans le raisonnement par récurrence, l'étape d'hérédité consiste à :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Montrer que si $P(n)$ est vraie, alors $P(n+1)$ est vraie",
+          "is_correct": true,
+          "explanation": "Exact ! C'est l'étape cruciale du raisonnement par récurrence."
+        },
+        {
+          "text": "Vérifier que $P(n_0)$ est vraie",
+          "is_correct": false,
+          "explanation": "Ceci est l'étape d'initialisation, pas l'hérédité."
+        },
+        {
+          "text": "Conclure que $P(n)$ est vraie pour tout $n$",
+          "is_correct": false,
+          "explanation": "Ceci est l'étape de conclusion."
+        },
+        {
+          "text": "Montrer que $P(n+1)$ est vraie",
+          "is_correct": false,
+          "explanation": "Il faut montrer l'implication : si $P(n)$ alors $P(n+1)$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_suites_16",
+      "question": "Si $(u_n)$ est une suite arithmétique avec $u_3 = 10$ et $u_7 = 22$, quelle est la raison $r$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "3",
+          "is_correct": true,
+          "explanation": "Correct ! $u_7 - u_3 = 4r$, donc $22 - 10 = 4r$, d'où $r = 3$."
+        },
+        {
+          "text": "4",
+          "is_correct": false,
+          "explanation": "Vous avez divisé par le nombre de termes au lieu de la différence d'indices."
+        },
+        {
+          "text": "12",
+          "is_correct": false,
+          "explanation": "C'est la différence entre les termes, pas la raison."
+        },
+        {
+          "text": "2",
+          "is_correct": false,
+          "explanation": "Erreur de calcul. Vérifiez : $(22 - 10) / 4 = 3$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_suites_17",
+      "question": "Pour une suite géométrique, si $v_1 = 6$ et $v_3 = 24$, quelle est la raison $q$ (en supposant $q > 0$) ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "2",
+          "is_correct": true,
+          "explanation": "Parfait ! $v_3 = v_1 \\times q^2$, donc $24 = 6 \\times q^2$, d'où $q^2 = 4$ et $q = 2$ (positif)."
+        },
+        {
+          "text": "4",
+          "is_correct": false,
+          "explanation": "C'est $q^2$, pas $q$."
+        },
+        {
+          "text": "18",
+          "is_correct": false,
+          "explanation": "C'est la différence entre les termes, pas la raison."
+        },
+        {
+          "text": "3",
+          "is_correct": false,
+          "explanation": "Erreur. Résolvez $6 \\times q^2 = 24$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_suites_18",
+      "question": "Quelle affirmation sur les suites est FAUSSE ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Une suite croissante et majorée est nécessairement convergente",
+          "is_correct": false,
+          "explanation": "C'est vrai ! C'est un théorème fondamental sur les suites monotones."
+        },
+        {
+          "text": "Une suite bornée est nécessairement convergente",
+          "is_correct": true,
+          "explanation": "C'est FAUX ! Exemple : $u_n = (-1)^n$ est bornée mais non convergente."
+        },
+        {
+          "text": "Une suite arithmétique de raison non nulle n'est pas bornée",
+          "is_correct": false,
+          "explanation": "C'est vrai ! Elle tend vers $+\\infty$ ou $-\\infty$."
+        },
+        {
+          "text": "Une suite géométrique de raison $|q| < 1$ converge vers 0",
+          "is_correct": false,
+          "explanation": "C'est vrai ! Si $|q| < 1$, alors $\\lim q^n = 0$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_suites_19",
+      "question": "La suite définie par $u_n = \\frac{3n + 2}{n + 1}$ est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Ni arithmétique ni géométrique",
+          "is_correct": true,
+          "explanation": "Correct ! Cette suite n'a ni raison constante ni quotient constant."
+        },
+        {
+          "text": "Arithmétique",
+          "is_correct": false,
+          "explanation": "La différence $u_{n+1} - u_n$ n'est pas constante."
+        },
+        {
+          "text": "Géométrique",
+          "is_correct": false,
+          "explanation": "Le quotient $\\frac{u_{n+1}}{u_n}$ n'est pas constant."
+        },
+        {
+          "text": "Constante",
+          "is_correct": false,
+          "explanation": "Les termes varient avec $n$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_suites_20",
+      "question": "Pour montrer qu'une suite $(u_n)$ est bornée, on peut montrer que :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Il existe $m$ et $M$ tels que $m \\leq u_n \\leq M$ pour tout $n$",
+          "is_correct": true,
+          "explanation": "Exact ! C'est la définition d'une suite bornée."
+        },
+        {
+          "text": "$u_n$ converge vers une limite finie",
+          "is_correct": false,
+          "explanation": "Une suite convergente est bornée, mais ce n'est pas la définition directe."
+        },
+        {
+          "text": "$u_n$ est croissante",
+          "is_correct": false,
+          "explanation": "Une suite croissante n'est pas nécessairement bornée."
+        },
+        {
+          "text": "$u_n > 0$ pour tout $n$",
+          "is_correct": false,
+          "explanation": "Être positive ne suffit pas pour être bornée."
         }
       ],
       "steps": []
@@ -34,7 +571,116 @@
       "id": "exo_suites_1",
       "title": "Suite géométrique",
       "statement": "Soit $(v_n)$ une suite géométrique de premier terme $v_0=2$ et de raison $q=3$. Calculer la somme des 4 premiers termes $S = v_0+v_1+v_2+v_3$.",
-      "sub_questions": []
+      "sub_questions": [
+        {
+          "question": "Rappeler la formule de la somme des $n$ premiers termes d'une suite géométrique",
+          "hint": "$S_n = v_0 \\times \\frac{1-q^n}{1-q}$ pour $q \\neq 1$"
+        },
+        {
+          "question": "Appliquer la formule avec $v_0 = 2$, $q = 3$ et $n = 4$",
+          "hint": "$S = 2 \\times \\frac{1-3^4}{1-3}$"
+        },
+        {
+          "question": "Calculer $3^4$",
+          "hint": "$3^4 = 81$"
+        },
+        {
+          "question": "Simplifier et donner le résultat final",
+          "hint": "$S = 2 \\times \\frac{1-81}{-2} = 2 \\times \\frac{-80}{-2} = 2 \\times 40 = 80$"
+        }
+      ]
+    },
+    {
+      "id": "exo_suites_2",
+      "title": "Suite arithmétique et somme",
+      "statement": "Soit $(u_n)$ une suite arithmétique telle que $u_3 = 14$ et $u_8 = 34$.",
+      "sub_questions": [
+        {
+          "question": "Déterminer la raison $r$ de la suite",
+          "hint": "$u_8 - u_3 = 5r$, donc $34 - 14 = 5r$, d'où $r = 4$"
+        },
+        {
+          "question": "Calculer le premier terme $u_0$",
+          "hint": "$u_3 = u_0 + 3r$, donc $14 = u_0 + 12$, d'où $u_0 = 2$"
+        },
+        {
+          "question": "Exprimer le terme général $u_n$ en fonction de $n$",
+          "hint": "$u_n = u_0 + nr = 2 + 4n$"
+        },
+        {
+          "question": "Calculer la somme des 10 premiers termes $S_9 = u_0 + u_1 + \\ldots + u_9$",
+          "hint": "$S_9 = \\frac{10(u_0 + u_9)}{2} = \\frac{10(2 + 38)}{2} = 200$"
+        }
+      ]
+    },
+    {
+      "id": "exo_suites_3",
+      "title": "Étude de variation d'une suite",
+      "statement": "Soit $(u_n)$ la suite définie pour tout $n \\geq 0$ par $u_n = n^2 - 5n + 2$.",
+      "sub_questions": [
+        {
+          "question": "Calculer $u_0$, $u_1$, $u_2$ et $u_3$",
+          "hint": "$u_0 = 2$, $u_1 = -2$, $u_2 = -4$, $u_3 = -4$"
+        },
+        {
+          "question": "Exprimer $u_{n+1} - u_n$ en fonction de $n$",
+          "hint": "$u_{n+1} - u_n = (n+1)^2 - 5(n+1) + 2 - (n^2 - 5n + 2) = 2n - 4$"
+        },
+        {
+          "question": "Étudier le signe de $u_{n+1} - u_n$ selon les valeurs de $n$",
+          "hint": "$u_{n+1} - u_n = 2n - 4 \\geq 0$ si et seulement si $n \\geq 2$"
+        },
+        {
+          "question": "Conclure sur le sens de variation de la suite",
+          "hint": "La suite est décroissante pour $n < 2$ et croissante pour $n \\geq 2$"
+        }
+      ]
+    },
+    {
+      "id": "exo_suites_4",
+      "title": "Suite définie par récurrence",
+      "statement": "Soit $(u_n)$ la suite définie par $u_0 = 1$ et pour tout $n \\geq 0$, $u_{n+1} = \\frac{1}{2}u_n + 3$.",
+      "sub_questions": [
+        {
+          "question": "Calculer $u_1$, $u_2$ et $u_3$",
+          "hint": "$u_1 = \\frac{1}{2} \\times 1 + 3 = 3.5$, $u_2 = 4.75$, $u_3 = 5.375$"
+        },
+        {
+          "question": "On pose $v_n = u_n - 6$. Montrer que $(v_n)$ est une suite géométrique",
+          "hint": "$v_{n+1} = u_{n+1} - 6 = \\frac{1}{2}u_n + 3 - 6 = \\frac{1}{2}u_n - 3 = \\frac{1}{2}(u_n - 6) = \\frac{1}{2}v_n$"
+        },
+        {
+          "question": "Exprimer $v_n$ puis $u_n$ en fonction de $n$",
+          "hint": "$v_n = v_0 \\times (\\frac{1}{2})^n = -5 \\times (\\frac{1}{2})^n$, donc $u_n = 6 - 5 \\times (\\frac{1}{2})^n$"
+        },
+        {
+          "question": "Déterminer la limite de la suite $(u_n)$ quand $n$ tend vers $+\\infty$",
+          "hint": "$\\lim_{n \\to +\\infty} (\\frac{1}{2})^n = 0$, donc $\\lim_{n \\to +\\infty} u_n = 6$"
+        }
+      ]
+    },
+    {
+      "id": "exo_suites_5",
+      "title": "Raisonnement par récurrence",
+      "statement": "Soit $(u_n)$ la suite définie par $u_0 = 1$ et $u_{n+1} = 3u_n + 2$ pour tout $n \\geq 0$. Démontrer par récurrence que pour tout $n \\geq 0$, $u_n = 2 \\times 3^n - 1$.",
+      "sub_questions": [
+        {
+          "question": "Initialisation : vérifier la propriété pour $n = 0$",
+          "hint": "$u_0 = 1$ et $2 \\times 3^0 - 1 = 2 - 1 = 1$. La propriété est vraie pour $n = 0$."
+        },
+        {
+          "question": "Hérédité : supposer que $u_n = 2 \\times 3^n - 1$ pour un certain $n$ et exprimer $u_{n+1}$",
+          "hint": "$u_{n+1} = 3u_n + 2 = 3(2 \\times 3^n - 1) + 2 = 6 \\times 3^n - 3 + 2 = 6 \\times 3^n - 1$"
+        },
+        {
+          "question": "Montrer que $u_{n+1} = 2 \\times 3^{n+1} - 1$",
+          "hint": "$6 \\times 3^n = 2 \\times 3 \\times 3^n = 2 \\times 3^{n+1}$, donc $u_{n+1} = 2 \\times 3^{n+1} - 1$"
+        },
+        {
+          "question": "Conclure",
+          "hint": "Par récurrence, la propriété est vraie pour tout $n \\geq 0$."
+        }
+      ]
     }
   ],
   "version": "v1.1.0-997c89"

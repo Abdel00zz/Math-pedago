@@ -13,17 +13,554 @@
         {
           "text": "12",
           "is_correct": false,
-          "explanation": null
+          "explanation": "Attention, il faut calculer $x_u \\times x_v + y_u \\times y_v$, pas seulement les produits des coordonnées."
         },
         {
           "text": "0",
-          "is_correct": false,
-          "explanation": null
+          "is_correct": true,
+          "explanation": "Correct ! $\\vec{u} \\cdot \\vec{v} = 2 \\times 3 + (-1) \\times 6 = 6 - 6 = 0$. Les vecteurs sont orthogonaux."
         },
         {
           "text": "-4",
           "is_correct": false,
-          "explanation": null
+          "explanation": "Erreur de calcul. Il faut bien respecter les signes : $2 \\times 3 + (-1) \\times 6 = 0$."
+        },
+        {
+          "text": "6",
+          "is_correct": false,
+          "explanation": "Vous avez oublié de soustraire le produit des ordonnées."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_pscalaire_plan_2",
+      "question": "La définition géométrique du produit scalaire $\\vec{u} \\cdot \\vec{v}$ lorsque $\\vec{u} \\neq \\vec{0}$ et $\\vec{v} \\neq \\vec{0}$ est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\|\\vec{u}\\| \\times \\|\\vec{v}\\| \\times \\sin(\\vec{u}, \\vec{v})$",
+          "is_correct": false,
+          "explanation": "Non, c'est le sinus qui intervient dans le produit vectoriel, pas dans le produit scalaire."
+        },
+        {
+          "text": "$\\|\\vec{u}\\| \\times \\|\\vec{v}\\| \\times \\cos(\\vec{u}, \\vec{v})$",
+          "is_correct": true,
+          "explanation": "Exact ! La définition géométrique fait intervenir le cosinus de l'angle entre les vecteurs."
+        },
+        {
+          "text": "$\\|\\vec{u}\\| + \\|\\vec{v}\\| \\times \\cos(\\vec{u}, \\vec{v})$",
+          "is_correct": false,
+          "explanation": "Il s'agit d'un produit des normes, pas d'une somme."
+        },
+        {
+          "text": "$\\frac{\\|\\vec{u}\\|}{\\|\\vec{v}\\|} \\times \\cos(\\vec{u}, \\vec{v})$",
+          "is_correct": false,
+          "explanation": "Les normes doivent être multipliées, pas divisées."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_pscalaire_plan_3",
+      "question": "Deux vecteurs non nuls $\\vec{u}$ et $\\vec{v}$ sont orthogonaux si et seulement si :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\vec{u} \\cdot \\vec{v} = 1$",
+          "is_correct": false,
+          "explanation": "Non, la condition d'orthogonalité fait intervenir le produit scalaire nul."
+        },
+        {
+          "text": "$\\vec{u} \\cdot \\vec{v} = 0$",
+          "is_correct": true,
+          "explanation": "Parfait ! Deux vecteurs sont orthogonaux si et seulement si leur produit scalaire est nul."
+        },
+        {
+          "text": "$\\|\\vec{u}\\| = \\|\\vec{v}\\|$",
+          "is_correct": false,
+          "explanation": "L'égalité des normes n'implique pas l'orthogonalité."
+        },
+        {
+          "text": "$\\vec{u} \\cdot \\vec{v} = -1$",
+          "is_correct": false,
+          "explanation": "C'est bien zéro qui caractérise l'orthogonalité."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_pscalaire_plan_4",
+      "question": "Quelle propriété du produit scalaire est correcte ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\vec{u} \\cdot \\vec{v} = \\vec{v} \\cdot \\vec{u}$ (symétrie)",
+          "is_correct": true,
+          "explanation": "Oui ! Le produit scalaire est symétrique."
+        },
+        {
+          "text": "$\\vec{u} \\cdot (\\vec{v} \\cdot \\vec{w}) = (\\vec{u} \\cdot \\vec{v}) \\cdot \\vec{w}$ (associativité)",
+          "is_correct": false,
+          "explanation": "Le produit scalaire n'est pas associatif car $\\vec{v} \\cdot \\vec{w}$ est un scalaire, pas un vecteur."
+        },
+        {
+          "text": "$\\vec{u} \\cdot \\vec{v} = -\\vec{v} \\cdot \\vec{u}$ (antisymétrie)",
+          "is_correct": false,
+          "explanation": "Non, le produit scalaire est symétrique, pas antisymétrique."
+        },
+        {
+          "text": "$k(\\vec{u} \\cdot \\vec{v}) = (k\\vec{u}) \\cdot \\vec{v} + \\vec{u} \\cdot (k\\vec{v})$",
+          "is_correct": false,
+          "explanation": "Faux, on a $k(\\vec{u} \\cdot \\vec{v}) = (k\\vec{u}) \\cdot \\vec{v} = \\vec{u} \\cdot (k\\vec{v})$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_pscalaire_plan_5",
+      "question": "Si $\\vec{u}$ est un vecteur, que vaut $\\vec{u} \\cdot \\vec{u}$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "0",
+          "is_correct": false,
+          "explanation": "Le produit scalaire d'un vecteur par lui-même n'est nul que si le vecteur est nul."
+        },
+        {
+          "text": "$\\|\\vec{u}\\|^2$",
+          "is_correct": true,
+          "explanation": "Exact ! $\\vec{u} \\cdot \\vec{u} = \\|\\vec{u}\\|^2$ est une formule fondamentale."
+        },
+        {
+          "text": "$\\|\\vec{u}\\|$",
+          "is_correct": false,
+          "explanation": "C'est le carré de la norme, pas la norme elle-même."
+        },
+        {
+          "text": "1",
+          "is_correct": false,
+          "explanation": "Cela ne vaut 1 que si $\\vec{u}$ est un vecteur unitaire."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_pscalaire_plan_6",
+      "question": "Dans un repère orthonormé, on a $A(1, 2)$ et $B(4, 6)$. Que vaut $\\|\\vec{AB}\\|$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "7",
+          "is_correct": false,
+          "explanation": "Il faut utiliser la formule $\\|\\vec{AB}\\| = \\sqrt{(x_B - x_A)^2 + (y_B - y_A)^2}$."
+        },
+        {
+          "text": "5",
+          "is_correct": true,
+          "explanation": "Correct ! $\\vec{AB}(3, 4)$, donc $\\|\\vec{AB}\\| = \\sqrt{3^2 + 4^2} = \\sqrt{25} = 5$."
+        },
+        {
+          "text": "$\\sqrt{7}$",
+          "is_correct": false,
+          "explanation": "Erreur de calcul. Les coordonnées de $\\vec{AB}$ sont $(3, 4)$."
+        },
+        {
+          "text": "25",
+          "is_correct": false,
+          "explanation": "Vous avez oublié de prendre la racine carrée."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_pscalaire_plan_7",
+      "question": "Le produit scalaire $\\vec{u} \\cdot (\\vec{v} + \\vec{w})$ est égal à :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\vec{u} \\cdot \\vec{v} + \\vec{u} \\cdot \\vec{w}$ (distributivité)",
+          "is_correct": true,
+          "explanation": "Parfait ! Le produit scalaire est distributif par rapport à l'addition vectorielle."
+        },
+        {
+          "text": "$(\\vec{u} \\cdot \\vec{v}) + \\vec{w}$",
+          "is_correct": false,
+          "explanation": "Non, la distributivité s'applique correctement."
+        },
+        {
+          "text": "$\\vec{u} \\cdot \\vec{v} \\times \\vec{u} \\cdot \\vec{w}$",
+          "is_correct": false,
+          "explanation": "Il s'agit d'une addition, pas d'une multiplication."
+        },
+        {
+          "text": "$\\vec{u} + \\vec{v} \\cdot \\vec{w}$",
+          "is_correct": false,
+          "explanation": "Cette expression n'a pas de sens (somme d'un vecteur et d'un scalaire)."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_pscalaire_plan_8",
+      "question": "Si $\\vec{u}(x, y)$ et $\\vec{n}(a, b)$ avec $\\vec{n} \\neq \\vec{0}$, une équation de la droite perpendiculaire à $\\vec{n}$ passant par $A(x_0, y_0)$ est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$ax + by = 0$",
+          "is_correct": false,
+          "explanation": "Cette droite passe par l'origine, pas nécessairement par $A$."
+        },
+        {
+          "text": "$a(x - x_0) + b(y - y_0) = 0$",
+          "is_correct": true,
+          "explanation": "Exact ! C'est l'équation de la droite passant par $A$ et perpendiculaire à $\\vec{n}$."
+        },
+        {
+          "text": "$x - x_0 = y - y_0$",
+          "is_correct": false,
+          "explanation": "Cette équation ne fait pas intervenir le vecteur normal."
+        },
+        {
+          "text": "$ax_0 + by_0 = 0$",
+          "is_correct": false,
+          "explanation": "Ceci n'est pas l'équation d'une droite, c'est une condition sur le point $A$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_pscalaire_plan_9",
+      "question": "Dans un triangle $ABC$, le théorème d'Al-Kashi stipule que :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$BC^2 = AB^2 + AC^2 - 2 \\cdot AB \\cdot AC \\cdot \\cos(\\widehat{BAC})$",
+          "is_correct": true,
+          "explanation": "C'est exact ! C'est la généralisation du théorème de Pythagore aux triangles quelconques."
+        },
+        {
+          "text": "$BC^2 = AB^2 + AC^2 + 2 \\cdot AB \\cdot AC \\cdot \\cos(\\widehat{BAC})$",
+          "is_correct": false,
+          "explanation": "Attention au signe, c'est un moins et non un plus."
+        },
+        {
+          "text": "$BC = AB + AC - 2 \\cdot AB \\cdot AC \\cdot \\cos(\\widehat{BAC})$",
+          "is_correct": false,
+          "explanation": "Ce sont les carrés des longueurs qui interviennent."
+        },
+        {
+          "text": "$BC^2 = AB^2 + AC^2$",
+          "is_correct": false,
+          "explanation": "Ceci n'est vrai que pour un triangle rectangle, c'est le théorème de Pythagore."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_pscalaire_plan_10",
+      "question": "Soit $\\vec{u}$ et $\\vec{v}$ deux vecteurs non nuls. Si $\\vec{u} \\cdot \\vec{v} < 0$, l'angle $(\\vec{u}, \\vec{v})$ est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Aigu (entre 0 et $\\frac{\\pi}{2}$)",
+          "is_correct": false,
+          "explanation": "Un produit scalaire négatif indique un angle obtus."
+        },
+        {
+          "text": "Obtus (entre $\\frac{\\pi}{2}$ et $\\pi$)",
+          "is_correct": true,
+          "explanation": "Correct ! Si $\\vec{u} \\cdot \\vec{v} < 0$, alors $\\cos(\\vec{u}, \\vec{v}) < 0$, donc l'angle est obtus."
+        },
+        {
+          "text": "Droit (égal à $\\frac{\\pi}{2}$)",
+          "is_correct": false,
+          "explanation": "Un angle droit correspondrait à un produit scalaire nul."
+        },
+        {
+          "text": "Nul",
+          "is_correct": false,
+          "explanation": "Un angle nul correspondrait à des vecteurs colinéaires de même sens."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_pscalaire_plan_11",
+      "question": "Le théorème de la médiane stipule que dans un triangle $ABC$, si $I$ est le milieu de $[BC]$, alors :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$AB^2 + AC^2 = 2(AI^2 + BI^2)$",
+          "is_correct": true,
+          "explanation": "Exact ! C'est le théorème de la médiane (ou théorème d'Apollonius)."
+        },
+        {
+          "text": "$AB^2 + AC^2 = AI^2 + BI^2$",
+          "is_correct": false,
+          "explanation": "Il manque le coefficient 2 devant la parenthèse."
+        },
+        {
+          "text": "$AB + AC = 2AI$",
+          "is_correct": false,
+          "explanation": "Ce sont les carrés des longueurs qui sont en jeu, pas les longueurs elles-mêmes."
+        },
+        {
+          "text": "$AB^2 = AC^2 + BC^2$",
+          "is_correct": false,
+          "explanation": "Ceci serait le théorème de Pythagore, mais pas le théorème de la médiane."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_pscalaire_plan_12",
+      "question": "Dans un repère orthonormé, le vecteur $\\vec{u}(3, 4)$ a pour norme :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "7",
+          "is_correct": false,
+          "explanation": "Il ne faut pas additionner les coordonnées, mais utiliser la formule de la norme."
+        },
+        {
+          "text": "5",
+          "is_correct": true,
+          "explanation": "Parfait ! $\\|\\vec{u}\\| = \\sqrt{3^2 + 4^2} = \\sqrt{25} = 5$."
+        },
+        {
+          "text": "$\\sqrt{7}$",
+          "is_correct": false,
+          "explanation": "Erreur de calcul : $3^2 + 4^2 = 25$, pas 7."
+        },
+        {
+          "text": "12",
+          "is_correct": false,
+          "explanation": "Ce serait le produit des coordonnées, pas la norme."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_pscalaire_plan_13",
+      "question": "Pour calculer l'angle entre deux vecteurs $\\vec{u}$ et $\\vec{v}$ non nuls, on utilise la formule :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\cos(\\vec{u}, \\vec{v}) = \\frac{\\vec{u} \\cdot \\vec{v}}{\\|\\vec{u}\\| \\times \\|\\vec{v}\\|}$",
+          "is_correct": true,
+          "explanation": "Exact ! C'est la formule pour trouver le cosinus de l'angle entre deux vecteurs."
+        },
+        {
+          "text": "$\\cos(\\vec{u}, \\vec{v}) = \\vec{u} \\cdot \\vec{v}$",
+          "is_correct": false,
+          "explanation": "Il faut diviser par le produit des normes."
+        },
+        {
+          "text": "$\\sin(\\vec{u}, \\vec{v}) = \\frac{\\vec{u} \\cdot \\vec{v}}{\\|\\vec{u}\\| \\times \\|\\vec{v}\\|}$",
+          "is_correct": false,
+          "explanation": "C'est le cosinus qui intervient dans le produit scalaire, pas le sinus."
+        },
+        {
+          "text": "$\\cos(\\vec{u}, \\vec{v}) = \\|\\vec{u}\\| \\times \\|\\vec{v}\\|$",
+          "is_correct": false,
+          "explanation": "Il faut faire intervenir le produit scalaire."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_pscalaire_plan_14",
+      "question": "Si $\\vec{u}(2, 3)$ et $k = -2$, que vaut $k\\vec{u} \\cdot \\vec{u}$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$-26$",
+          "is_correct": true,
+          "explanation": "Correct ! $\\vec{u} \\cdot \\vec{u} = 2^2 + 3^2 = 13$, donc $k\\vec{u} \\cdot \\vec{u} = -2 \\times 13 = -26$."
+        },
+        {
+          "text": "$26$",
+          "is_correct": false,
+          "explanation": "Attention au signe, $k = -2$ est négatif."
+        },
+        {
+          "text": "$-13$",
+          "is_correct": false,
+          "explanation": "Vous avez oublié de multiplier par $k = -2$."
+        },
+        {
+          "text": "$13$",
+          "is_correct": false,
+          "explanation": "C'est $\\vec{u} \\cdot \\vec{u}$, mais il faut aussi multiplier par $k = -2$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_pscalaire_plan_15",
+      "question": "Deux vecteurs $\\vec{u}$ et $\\vec{v}$ sont colinéaires et de même sens. Que vaut $\\vec{u} \\cdot \\vec{v}$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\|\\vec{u}\\| \\times \\|\\vec{v}\\|$",
+          "is_correct": true,
+          "explanation": "Exact ! Si les vecteurs sont colinéaires de même sens, l'angle est 0 et $\\cos(0) = 1$."
+        },
+        {
+          "text": "$-\\|\\vec{u}\\| \\times \\|\\vec{v}\\|$",
+          "is_correct": false,
+          "explanation": "Ce serait le cas s'ils étaient de sens opposé."
+        },
+        {
+          "text": "0",
+          "is_correct": false,
+          "explanation": "Le produit scalaire serait nul s'ils étaient orthogonaux."
+        },
+        {
+          "text": "$\\|\\vec{u}\\| + \\|\\vec{v}\\|$",
+          "is_correct": false,
+          "explanation": "C'est un produit des normes, pas une somme."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_pscalaire_plan_16",
+      "question": "La projection orthogonale de $\\vec{u}$ sur $\\vec{v}$ (avec $\\vec{v} \\neq \\vec{0}$) a pour norme :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\frac{|\\vec{u} \\cdot \\vec{v}|}{\\|\\vec{v}\\|}$",
+          "is_correct": true,
+          "explanation": "C'est exact ! La norme de la projection est $\\frac{|\\vec{u} \\cdot \\vec{v}|}{\\|\\vec{v}\\|}$."
+        },
+        {
+          "text": "$\\frac{\\vec{u} \\cdot \\vec{v}}{\\|\\vec{v}\\|^2}$",
+          "is_correct": false,
+          "explanation": "Cette formule donne le scalaire pour le vecteur projeté, pas sa norme."
+        },
+        {
+          "text": "$\\vec{u} \\cdot \\vec{v}$",
+          "is_correct": false,
+          "explanation": "Il faut diviser par la norme de $\\vec{v}$."
+        },
+        {
+          "text": "$\\|\\vec{u}\\| \\times \\cos(\\vec{u}, \\vec{v})$",
+          "is_correct": false,
+          "explanation": "Cette formule est correcte mais pas sous la forme demandée avec le produit scalaire."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_pscalaire_plan_17",
+      "question": "Dans un repère orthonormé, la droite d'équation $2x - 3y + 5 = 0$ admet pour vecteur normal :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\vec{n}(2, -3)$",
+          "is_correct": true,
+          "explanation": "Exact ! Le vecteur normal a pour coordonnées les coefficients de $x$ et $y$."
+        },
+        {
+          "text": "$\\vec{n}(3, 2)$",
+          "is_correct": false,
+          "explanation": "Vous avez inversé les coordonnées et oublié le signe."
+        },
+        {
+          "text": "$\\vec{n}(-3, 2)$",
+          "is_correct": false,
+          "explanation": "Les coordonnées sont dans le mauvais ordre."
+        },
+        {
+          "text": "$\\vec{n}(5, 0)$",
+          "is_correct": false,
+          "explanation": "Le terme constant ne fait pas partie des coordonnées du vecteur normal."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_pscalaire_plan_18",
+      "question": "Si $\\vec{u} \\cdot \\vec{v} = 12$, $\\|\\vec{u}\\| = 4$ et $\\|\\vec{v}\\| = 6$, alors $\\cos(\\vec{u}, \\vec{v})$ vaut :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\frac{1}{2}$",
+          "is_correct": true,
+          "explanation": "Parfait ! $\\cos(\\vec{u}, \\vec{v}) = \\frac{12}{4 \\times 6} = \\frac{12}{24} = \\frac{1}{2}$."
+        },
+        {
+          "text": "$\\frac{1}{3}$",
+          "is_correct": false,
+          "explanation": "Erreur de calcul : $\\frac{12}{24} = \\frac{1}{2}$."
+        },
+        {
+          "text": "$2$",
+          "is_correct": false,
+          "explanation": "Le cosinus d'un angle est toujours compris entre -1 et 1."
+        },
+        {
+          "text": "$\\frac{2}{3}$",
+          "is_correct": false,
+          "explanation": "Vérifiez votre calcul : $\\frac{12}{4 \\times 6} = \\frac{1}{2}$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_pscalaire_plan_19",
+      "question": "Parmi les affirmations suivantes sur le produit scalaire, laquelle est FAUSSE ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Le produit scalaire de deux vecteurs peut être négatif",
+          "is_correct": false,
+          "explanation": "C'est vrai, par exemple si l'angle est obtus."
+        },
+        {
+          "text": "Le produit scalaire est commutatif",
+          "is_correct": false,
+          "explanation": "C'est vrai, $\\vec{u} \\cdot \\vec{v} = \\vec{v} \\cdot \\vec{u}$."
+        },
+        {
+          "text": "Le produit scalaire de deux vecteurs est toujours un scalaire",
+          "is_correct": false,
+          "explanation": "C'est vrai, d'où le nom 'produit scalaire'."
+        },
+        {
+          "text": "Si $\\vec{u} \\cdot \\vec{v} = 0$ alors $\\vec{u} = \\vec{0}$ ou $\\vec{v} = \\vec{0}$",
+          "is_correct": true,
+          "explanation": "C'est FAUX ! Si $\\vec{u} \\cdot \\vec{v} = 0$, les vecteurs peuvent être orthogonaux sans être nuls."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_pscalaire_plan_20",
+      "question": "Dans un triangle $ABC$ rectangle en $A$, quelle relation est vraie ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\vec{AB} \\cdot \\vec{AC} = 0$",
+          "is_correct": true,
+          "explanation": "Exact ! Les côtés de l'angle droit sont orthogonaux, donc leur produit scalaire est nul."
+        },
+        {
+          "text": "$\\vec{AB} \\cdot \\vec{BC} = 0$",
+          "is_correct": false,
+          "explanation": "Ces vecteurs ne sont pas orthogonaux car $B$ n'est pas le sommet de l'angle droit."
+        },
+        {
+          "text": "$\\vec{AC} \\cdot \\vec{BC} = 0$",
+          "is_correct": false,
+          "explanation": "Ces vecteurs ne sont pas orthogonaux car $C$ n'est pas le sommet de l'angle droit."
+        },
+        {
+          "text": "$\\vec{AB} \\cdot \\vec{AC} = 1$",
+          "is_correct": false,
+          "explanation": "Le produit scalaire de vecteurs orthogonaux est nul, pas 1."
         }
       ],
       "steps": []
@@ -34,7 +571,120 @@
       "id": "exo_pscalaire_plan_1",
       "title": "Équation de droite",
       "statement": "Déterminer une équation cartésienne de la droite (D) passant par le point $A(1, 2)$ et de vecteur normal $\\vec{n}(3, -1)$.",
-      "sub_questions": []
+      "sub_questions": [
+        {
+          "question": "Rappeler la forme générale d'une équation de droite avec un vecteur normal $\\vec{n}(a, b)$ passant par un point $A(x_0, y_0)$",
+          "hint": "L'équation est de la forme : $a(x - x_0) + b(y - y_0) = 0$"
+        },
+        {
+          "question": "Appliquer la formule avec les valeurs données",
+          "hint": "Remplacer $a = 3$, $b = -1$, $x_0 = 1$, $y_0 = 2$"
+        },
+        {
+          "question": "Développer et simplifier l'équation obtenue",
+          "hint": "Distribuer et regrouper les termes constants"
+        },
+        {
+          "question": "Donner l'équation sous la forme $ax + by + c = 0$",
+          "hint": "La réponse devrait être : $3x - y - 1 = 0$"
+        }
+      ]
+    },
+    {
+      "id": "exo_pscalaire_plan_2",
+      "title": "Calcul de produit scalaire et orthogonalité",
+      "statement": "Dans un repère orthonormé $(O; \\vec{i}, \\vec{j})$, on considère les vecteurs $\\vec{u}(4, -2)$, $\\vec{v}(1, k)$ et $\\vec{w}(-3, 6)$.",
+      "sub_questions": [
+        {
+          "question": "Calculer $\\vec{u} \\cdot \\vec{w}$",
+          "hint": "$\\vec{u} \\cdot \\vec{w} = x_u \\times x_w + y_u \\times y_w$"
+        },
+        {
+          "question": "Que peut-on en déduire sur la position relative de $\\vec{u}$ et $\\vec{w}$ ?",
+          "hint": "Si le produit scalaire est nul, les vecteurs sont orthogonaux"
+        },
+        {
+          "question": "Déterminer la valeur de $k$ pour que $\\vec{u}$ et $\\vec{v}$ soient orthogonaux",
+          "hint": "$\\vec{u} \\perp \\vec{v}$ équivaut à $\\vec{u} \\cdot \\vec{v} = 0$, donc $4 \\times 1 + (-2) \\times k = 0$"
+        },
+        {
+          "question": "Pour $k = 2$, calculer $\\|\\vec{v}\\|$",
+          "hint": "$\\|\\vec{v}\\| = \\sqrt{x_v^2 + y_v^2}$"
+        }
+      ]
+    },
+    {
+      "id": "exo_pscalaire_plan_3",
+      "title": "Angle entre deux vecteurs",
+      "statement": "Soit $\\vec{u}(1, \\sqrt{3})$ et $\\vec{v}(\\sqrt{3}, 1)$ deux vecteurs dans un repère orthonormé.",
+      "sub_questions": [
+        {
+          "question": "Calculer $\\vec{u} \\cdot \\vec{v}$",
+          "hint": "$\\vec{u} \\cdot \\vec{v} = 1 \\times \\sqrt{3} + \\sqrt{3} \\times 1 = 2\\sqrt{3}$"
+        },
+        {
+          "question": "Calculer $\\|\\vec{u}\\|$ et $\\|\\vec{v}\\|$",
+          "hint": "$\\|\\vec{u}\\| = \\sqrt{1^2 + (\\sqrt{3})^2} = \\sqrt{1 + 3} = 2$"
+        },
+        {
+          "question": "En déduire $\\cos(\\vec{u}, \\vec{v})$",
+          "hint": "$\\cos(\\vec{u}, \\vec{v}) = \\frac{\\vec{u} \\cdot \\vec{v}}{\\|\\vec{u}\\| \\times \\|\\vec{v}\\|}$"
+        },
+        {
+          "question": "Déterminer la mesure de l'angle $(\\vec{u}, \\vec{v})$ en radians",
+          "hint": "Chercher l'angle dont le cosinus vaut $\\frac{\\sqrt{3}}{2}$. Penser aux angles remarquables."
+        }
+      ]
+    },
+    {
+      "id": "exo_pscalaire_plan_4",
+      "title": "Théorème d'Al-Kashi",
+      "statement": "Dans un triangle $ABC$, on donne : $AB = 5$ cm, $AC = 7$ cm et $\\widehat{BAC} = 60°$.",
+      "sub_questions": [
+        {
+          "question": "Rappeler la formule du théorème d'Al-Kashi",
+          "hint": "$BC^2 = AB^2 + AC^2 - 2 \\cdot AB \\cdot AC \\cdot \\cos(\\widehat{BAC})$"
+        },
+        {
+          "question": "Calculer $\\cos(60°)$",
+          "hint": "$\\cos(60°) = \\frac{1}{2}$"
+        },
+        {
+          "question": "Appliquer le théorème d'Al-Kashi pour calculer $BC^2$",
+          "hint": "Remplacer les valeurs : $BC^2 = 5^2 + 7^2 - 2 \\times 5 \\times 7 \\times \\frac{1}{2}$"
+        },
+        {
+          "question": "En déduire la longueur $BC$",
+          "hint": "Prendre la racine carrée du résultat obtenu"
+        }
+      ]
+    },
+    {
+      "id": "exo_pscalaire_plan_5",
+      "title": "Théorème de la médiane",
+      "statement": "Dans un triangle $ABC$, on donne : $AB = 8$ cm, $AC = 6$ cm et $BC = 10$ cm. Soit $I$ le milieu de $[BC]$.",
+      "sub_questions": [
+        {
+          "question": "Rappeler le théorème de la médiane",
+          "hint": "$AB^2 + AC^2 = 2(AI^2 + BI^2)$"
+        },
+        {
+          "question": "Calculer $BI$ (la moitié de $BC$)",
+          "hint": "$I$ est le milieu de $[BC]$, donc $BI = \\frac{BC}{2}$"
+        },
+        {
+          "question": "Utiliser le théorème de la médiane pour trouver $AI^2$",
+          "hint": "$AI^2 = \\frac{AB^2 + AC^2}{2} - BI^2$"
+        },
+        {
+          "question": "En déduire la longueur de la médiane $AI$",
+          "hint": "Prendre la racine carrée de $AI^2$"
+        },
+        {
+          "question": "Vérifier que le triangle est rectangle et préciser en quel sommet",
+          "hint": "Vérifier si $AB^2 + AC^2 = BC^2$ (théorème de Pythagore)"
+        }
+      ]
     }
   ],
   "version": "v1.1.0-6a8023"

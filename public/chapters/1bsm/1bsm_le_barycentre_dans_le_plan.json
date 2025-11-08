@@ -12,18 +12,555 @@
       "options": [
         {
           "text": "$2\\vec{GA} + \\vec{GB} = \\vec{0}$",
-          "is_correct": false,
-          "explanation": null
+          "is_correct": true,
+          "explanation": "Par définition du barycentre, on a $\\alpha\\vec{GA} + \\beta\\vec{GB} = \\vec{0}$ avec $\\alpha = 2$ et $\\beta = 1$."
         },
         {
           "text": "$\\vec{GA} + 2\\vec{GB} = \\vec{0}$",
           "is_correct": false,
-          "explanation": null
+          "explanation": "Les coefficients sont inversés. C'est $2\\vec{GA} + \\vec{GB} = \\vec{0}$."
         },
         {
           "text": "$2\\vec{AG} + \\vec{BG} = \\vec{0}$",
           "is_correct": false,
-          "explanation": null
+          "explanation": "La relation doit être avec les vecteurs depuis G vers les points, pas l'inverse."
+        },
+        {
+          "text": "$\\vec{GA} + \\vec{GB} = \\vec{0}$",
+          "is_correct": false,
+          "explanation": "Cette relation correspond au milieu de [AB], pas au barycentre avec coefficients (2,1)."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_barycentre_2",
+      "question": "Pour qu'un barycentre $G = bar\\{(A, \\alpha); (B, \\beta)\\}$ existe, quelle condition est nécessaire ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\alpha + \\beta \\neq 0$",
+          "is_correct": true,
+          "explanation": "Le barycentre existe si et seulement si la somme des coefficients est non nulle."
+        },
+        {
+          "text": "$\\alpha = \\beta$",
+          "is_correct": false,
+          "explanation": "Les coefficients peuvent être différents."
+        },
+        {
+          "text": "$\\alpha > 0$ et $\\beta > 0$",
+          "is_correct": false,
+          "explanation": "Les coefficients peuvent être négatifs."
+        },
+        {
+          "text": "$\\alpha \\times \\beta > 0$",
+          "is_correct": false,
+          "explanation": "La condition porte sur la somme, pas sur le produit."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_barycentre_3",
+      "question": "Si G est le milieu de [AB], alors G est le barycentre de :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\{(A, 1); (B, 1)\\}$",
+          "is_correct": true,
+          "explanation": "Le milieu correspond au barycentre avec coefficients égaux : $\\vec{GA} + \\vec{GB} = \\vec{0}$."
+        },
+        {
+          "text": "$\\{(A, 2); (B, 1)\\}$",
+          "is_correct": false,
+          "explanation": "Ceci donnerait un point plus proche de A que de B."
+        },
+        {
+          "text": "$\\{(A, 1); (B, 2)\\}$",
+          "is_correct": false,
+          "explanation": "Ceci donnerait un point plus proche de B que de A."
+        },
+        {
+          "text": "$\\{(A, 0); (B, 1)\\}$",
+          "is_correct": false,
+          "explanation": "Avec $\\alpha = 0$, le barycentre serait confondu avec B."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_barycentre_4",
+      "question": "Soit $G = bar\\{(A, 3); (B, -2)\\}$. Comment se situe G par rapport à A et B ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "G est à l'extérieur du segment [AB], du côté de A",
+          "is_correct": true,
+          "explanation": "Avec $\\beta = -2 < 0$, G est à l'extérieur du segment, du côté du point ayant le coefficient positif le plus grand en valeur absolue."
+        },
+        {
+          "text": "G est sur le segment [AB]",
+          "is_correct": false,
+          "explanation": "G serait sur [AB] si les deux coefficients étaient de même signe."
+        },
+        {
+          "text": "G est à l'extérieur du segment [AB], du côté de B",
+          "is_correct": false,
+          "explanation": "Avec $\\alpha = 3 > 0$ dominant, G est du côté de A."
+        },
+        {
+          "text": "G est confondu avec A",
+          "is_correct": false,
+          "explanation": "G serait confondu avec A si $\\beta = 0$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_barycentre_5",
+      "question": "Si $G = bar\\{(A, 2); (B, 3)\\}$, quelle est la relation entre $\\vec{AG}$ et $\\vec{AB}$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\vec{AG} = \\frac{3}{5}\\vec{AB}$",
+          "is_correct": true,
+          "explanation": "$\\vec{AG} = \\frac{\\beta}{\\alpha + \\beta}\\vec{AB} = \\frac{3}{2+3}\\vec{AB} = \\frac{3}{5}\\vec{AB}$"
+        },
+        {
+          "text": "$\\vec{AG} = \\frac{2}{5}\\vec{AB}$",
+          "is_correct": false,
+          "explanation": "Ce serait $\\frac{\\alpha}{\\alpha + \\beta}$, ce qui correspond à $\\vec{BG}$ et non $\\vec{AG}$."
+        },
+        {
+          "text": "$\\vec{AG} = \\frac{3}{2}\\vec{AB}$",
+          "is_correct": false,
+          "explanation": "La formule correcte est $\\frac{\\beta}{\\alpha + \\beta}$, pas $\\frac{\\beta}{\\alpha}$."
+        },
+        {
+          "text": "$\\vec{AG} = \\frac{1}{2}\\vec{AB}$",
+          "is_correct": false,
+          "explanation": "Ceci correspondrait au milieu (coefficients égaux)."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_barycentre_6",
+      "question": "Pour tout point M, si $G = bar\\{(A, \\alpha); (B, \\beta)\\}$, alors :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\alpha\\vec{MA} + \\beta\\vec{MB} = (\\alpha + \\beta)\\vec{MG}$",
+          "is_correct": true,
+          "explanation": "C'est la propriété fondamentale du barycentre."
+        },
+        {
+          "text": "$\\alpha\\vec{MA} + \\beta\\vec{MB} = \\vec{MG}$",
+          "is_correct": false,
+          "explanation": "Il manque le facteur $(\\alpha + \\beta)$."
+        },
+        {
+          "text": "$\\vec{MA} + \\vec{MB} = \\vec{MG}$",
+          "is_correct": false,
+          "explanation": "Cette relation ne tient pas compte des coefficients."
+        },
+        {
+          "text": "$\\alpha\\vec{MA} + \\beta\\vec{MB} = \\alpha\\beta\\vec{MG}$",
+          "is_correct": false,
+          "explanation": "Le facteur est la somme $\\alpha + \\beta$, pas le produit."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_barycentre_7",
+      "question": "Le centre de gravité G d'un triangle ABC est le barycentre de :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\{(A, 1); (B, 1); (C, 1)\\}$",
+          "is_correct": true,
+          "explanation": "Le centre de gravité correspond aux coefficients tous égaux à 1."
+        },
+        {
+          "text": "$\\{(A, 2); (B, 1); (C, 1)\\}$",
+          "is_correct": false,
+          "explanation": "Ceci donnerait un barycentre plus proche de A."
+        },
+        {
+          "text": "$\\{(A, 0); (B, 1); (C, 1)\\}$",
+          "is_correct": false,
+          "explanation": "Avec $\\alpha = 0$, on obtiendrait le milieu de [BC]."
+        },
+        {
+          "text": "$\\{(A, 3); (B, 3); (C, 3)\\}$",
+          "is_correct": false,
+          "explanation": "Bien que les coefficients soient égaux, on utilise conventionnellement (1,1,1)."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_barycentre_8",
+      "question": "Si I est le milieu de [AB] et $G = bar\\{(I, 2); (C, 1)\\}$, alors G est aussi :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$G = bar\\{(A, 1); (B, 1); (C, 1)\\}$",
+          "is_correct": true,
+          "explanation": "Par associativité : $bar\\{(bar\\{(A,1);(B,1)\\}, 2); (C,1)\\} = bar\\{(A,1);(B,1);(C,1)\\}$"
+        },
+        {
+          "text": "$G = bar\\{(A, 2); (B, 2); (C, 1)\\}$",
+          "is_correct": false,
+          "explanation": "Les coefficients de A et B seraient 1 chacun, pas 2."
+        },
+        {
+          "text": "$G = bar\\{(A, 1); (B, 2); (C, 1)\\}$",
+          "is_correct": false,
+          "explanation": "Les coefficients de A et B sont égaux."
+        },
+        {
+          "text": "$G = bar\\{(A, 2); (C, 1)\\}$",
+          "is_correct": false,
+          "explanation": "On ne peut pas ignorer le point B."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_barycentre_9",
+      "question": "Dans un repère, $A(1; 2)$, $B(5; 4)$ et $G = bar\\{(A, 3); (B, 1)\\}$. Les coordonnées de G sont :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$G(2; 2.5)$",
+          "is_correct": true,
+          "explanation": "$x_G = \\frac{3 \\times 1 + 1 \\times 5}{3+1} = \\frac{8}{4} = 2$ ; $y_G = \\frac{3 \\times 2 + 1 \\times 4}{4} = \\frac{10}{4} = 2.5$"
+        },
+        {
+          "text": "$G(3; 3)$",
+          "is_correct": false,
+          "explanation": "Ceci correspondrait au milieu de [AB]."
+        },
+        {
+          "text": "$G(4; 3.5)$",
+          "is_correct": false,
+          "explanation": "Les coefficients ont été inversés dans le calcul."
+        },
+        {
+          "text": "$G(1.8; 2.4)$",
+          "is_correct": false,
+          "explanation": "Erreur de calcul dans la formule du barycentre."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_barycentre_10",
+      "question": "Si $\\vec{GA} + 2\\vec{GB} + 3\\vec{GC} = \\vec{0}$, alors G est le barycentre de :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\{(A, 1); (B, 2); (C, 3)\\}$",
+          "is_correct": true,
+          "explanation": "La relation vectorielle donne directement les coefficients du barycentre."
+        },
+        {
+          "text": "$\\{(A, 3); (B, 2); (C, 1)\\}$",
+          "is_correct": false,
+          "explanation": "Les coefficients correspondent aux coefficients devant chaque vecteur."
+        },
+        {
+          "text": "$\\{(A, 1); (B, 1); (C, 1)\\}$",
+          "is_correct": false,
+          "explanation": "Les coefficients ne sont pas égaux."
+        },
+        {
+          "text": "$\\{(A, 6); (B, 3); (C, 2)\\}$",
+          "is_correct": false,
+          "explanation": "Il ne faut pas multiplier les coefficients."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_barycentre_11",
+      "question": "L'ensemble des points M tels que $\\|\\vec{MA} + 2\\vec{MB}\\| = 3$ est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Un cercle de centre $G = bar\\{(A,1);(B,2)\\}$ et de rayon 1",
+          "is_correct": true,
+          "explanation": "$\\vec{MA} + 2\\vec{MB} = 3\\vec{MG}$ où $G = bar\\{(A,1);(B,2)\\}$, donc $\\|3\\vec{MG}\\| = 3 \\Rightarrow MG = 1$"
+        },
+        {
+          "text": "Un cercle de centre A et de rayon 3",
+          "is_correct": false,
+          "explanation": "Le centre est le barycentre de (A,1) et (B,2), pas A."
+        },
+        {
+          "text": "Un cercle de centre B et de rayon 3",
+          "is_correct": false,
+          "explanation": "Le centre est le barycentre, pas B."
+        },
+        {
+          "text": "Une droite",
+          "is_correct": false,
+          "explanation": "La norme constante définit un cercle, pas une droite."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_barycentre_12",
+      "question": "Si $G = bar\\{(A, -1); (B, 3)\\}$, on a :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\vec{AG} = \\frac{3}{2}\\vec{AB}$",
+          "is_correct": true,
+          "explanation": "$\\vec{AG} = \\frac{3}{-1+3}\\vec{AB} = \\frac{3}{2}\\vec{AB}$. G est à l'extérieur de [AB]."
+        },
+        {
+          "text": "$\\vec{AG} = -\\frac{1}{2}\\vec{AB}$",
+          "is_correct": false,
+          "explanation": "Erreur de signe dans la formule."
+        },
+        {
+          "text": "$\\vec{AG} = \\frac{1}{3}\\vec{AB}$",
+          "is_correct": false,
+          "explanation": "La formule est $\\frac{\\beta}{\\alpha+\\beta}$, pas $\\frac{1}{\\beta}$."
+        },
+        {
+          "text": "G est sur le segment [AB]",
+          "is_correct": false,
+          "explanation": "Avec un coefficient négatif, G est à l'extérieur de [AB]."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_barycentre_13",
+      "question": "Dans un repère, si $G = bar\\{(A, 2); (B, 1); (C, -1)\\}$ avec $A(1;0)$, $B(4;3)$, $C(0;2)$, alors :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$x_G = 4$ et $y_G = 0.5$",
+          "is_correct": true,
+          "explanation": "$x_G = \\frac{2(1)+1(4)+(-1)(0)}{2+1-1} = \\frac{6}{2} = 4$ ; $y_G = \\frac{2(0)+1(3)+(-1)(2)}{2} = \\frac{1}{2}$"
+        },
+        {
+          "text": "$x_G = 2.5$ et $y_G = 1.5$",
+          "is_correct": false,
+          "explanation": "Il faut tenir compte des coefficients négatifs."
+        },
+        {
+          "text": "$x_G = 5/3$ et $y_G = 5/3$",
+          "is_correct": false,
+          "explanation": "Erreur dans la somme des coefficients."
+        },
+        {
+          "text": "$x_G = 3$ et $y_G = 2$",
+          "is_correct": false,
+          "explanation": "Les calculs ne tiennent pas compte correctement des coefficients."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_barycentre_14",
+      "question": "Quelle affirmation est vraie concernant le barycentre ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Le barycentre de $(A, k\\alpha)$ et $(B, k\\beta)$ avec $k \\neq 0$ est le même que celui de $(A, \\alpha)$ et $(B, \\beta)$",
+          "is_correct": true,
+          "explanation": "Multiplier tous les coefficients par une même constante non nulle ne change pas le barycentre."
+        },
+        {
+          "text": "Le barycentre est toujours à l'intérieur du triangle ABC",
+          "is_correct": false,
+          "explanation": "Avec des coefficients négatifs, le barycentre peut être à l'extérieur."
+        },
+        {
+          "text": "Le barycentre de deux points est toujours leur milieu",
+          "is_correct": false,
+          "explanation": "C'est vrai uniquement si les coefficients sont égaux."
+        },
+        {
+          "text": "Le barycentre existe toujours",
+          "is_correct": false,
+          "explanation": "Il n'existe que si la somme des coefficients est non nulle."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_barycentre_15",
+      "question": "Si ABCD est un parallélogramme et $G = bar\\{(A,1);(B,1);(C,1);(D,1)\\}$, alors :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "G est le centre du parallélogramme (intersection des diagonales)",
+          "is_correct": true,
+          "explanation": "Le barycentre de 4 points avec coefficients égaux est le centre de symétrie."
+        },
+        {
+          "text": "G est confondu avec A",
+          "is_correct": false,
+          "explanation": "G est au centre, pas sur un sommet."
+        },
+        {
+          "text": "G est sur le côté [AB]",
+          "is_correct": false,
+          "explanation": "G est à l'intérieur du parallélogramme."
+        },
+        {
+          "text": "G est à l'extérieur du parallélogramme",
+          "is_correct": false,
+          "explanation": "Avec tous les coefficients positifs et égaux, G est au centre."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_barycentre_16",
+      "question": "Pour quelles valeurs de $k$ le point $G = bar\\{(A,2);(B,k);(C,1)\\}$ existe-t-il ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$k \\neq -3$",
+          "is_correct": true,
+          "explanation": "Il faut $2 + k + 1 \\neq 0$, donc $k \\neq -3$."
+        },
+        {
+          "text": "$k > 0$",
+          "is_correct": false,
+          "explanation": "k peut être négatif, sauf $k = -3$."
+        },
+        {
+          "text": "$k \\neq 0$",
+          "is_correct": false,
+          "explanation": "k peut être nul, c'est $k = -3$ qui pose problème."
+        },
+        {
+          "text": "Pour tout $k$",
+          "is_correct": false,
+          "explanation": "Le barycentre n'existe pas si $k = -3$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_barycentre_17",
+      "question": "Si M est sur la droite (AB) et $\\vec{AM} = \\frac{2}{3}\\vec{AB}$, alors M est le barycentre de :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\{(A,1);(B,2)\\}$",
+          "is_correct": true,
+          "explanation": "$\\vec{AM} = \\frac{\\beta}{\\alpha+\\beta}\\vec{AB}$ avec $\\frac{2}{3} = \\frac{2}{1+2}$, donc $\\alpha=1$ et $\\beta=2$."
+        },
+        {
+          "text": "$\\{(A,2);(B,1)\\}$",
+          "is_correct": false,
+          "explanation": "Ceci donnerait $\\vec{AM} = \\frac{1}{3}\\vec{AB}$."
+        },
+        {
+          "text": "$\\{(A,2);(B,3)\\}$",
+          "is_correct": false,
+          "explanation": "Ceci donnerait $\\vec{AM} = \\frac{3}{5}\\vec{AB}$."
+        },
+        {
+          "text": "$\\{(A,3);(B,2)\\}$",
+          "is_correct": false,
+          "explanation": "Ceci donnerait $\\vec{AM} = \\frac{2}{5}\\vec{AB}$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_barycentre_18",
+      "question": "Si I, J, K sont les milieux respectifs des côtés [BC], [CA], [AB] d'un triangle ABC, et $G = bar\\{(A,1);(B,1);(C,1)\\}$, alors :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Les médianes (AI), (BJ), (CK) passent par G",
+          "is_correct": true,
+          "explanation": "Le centre de gravité est le point d'intersection des médianes du triangle."
+        },
+        {
+          "text": "G est le centre du cercle circonscrit",
+          "is_correct": false,
+          "explanation": "Le centre du cercle circonscrit est différent du centre de gravité."
+        },
+        {
+          "text": "G est confondu avec I",
+          "is_correct": false,
+          "explanation": "I est sur [BC], pas au centre de gravité."
+        },
+        {
+          "text": "G est à l'extérieur du triangle",
+          "is_correct": false,
+          "explanation": "Avec des coefficients positifs égaux, G est à l'intérieur."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_barycentre_19",
+      "question": "Dans un repère orthonormé, l'ensemble des points M tels que $2MA^2 + 3MB^2 = k$ (où k est une constante) est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Un cercle de centre $G = bar\\{(A,2);(B,3)\\}$",
+          "is_correct": true,
+          "explanation": "En utilisant la formule $\\alpha MA^2 + \\beta MB^2 = (\\alpha+\\beta)MG^2 + C$, on obtient un cercle centré en G."
+        },
+        {
+          "text": "Une droite",
+          "is_correct": false,
+          "explanation": "La somme de carrés de distances donne un cercle, pas une droite."
+        },
+        {
+          "text": "Un cercle de centre A",
+          "is_correct": false,
+          "explanation": "Le centre est le barycentre, pas A."
+        },
+        {
+          "text": "Une ellipse",
+          "is_correct": false,
+          "explanation": "C'est un cercle, pas une ellipse."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_barycentre_20",
+      "question": "Si $G_1 = bar\\{(A,1);(B,1)\\}$ et $G_2 = bar\\{(C,1);(D,1)\\}$, alors le milieu de [$G_1 G_2$] est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$G = bar\\{(A,1);(B,1);(C,1);(D,1)\\}$",
+          "is_correct": true,
+          "explanation": "Par associativité, $bar\\{(G_1,1);(G_2,1)\\} = bar\\{(bar\\{(A,1);(B,1)\\},2);(bar\\{(C,1);(D,1)\\},2)\\} = bar\\{(A,1);(B,1);(C,1);(D,1)\\}$"
+        },
+        {
+          "text": "$G = bar\\{(A,1);(B,1)\\}$",
+          "is_correct": false,
+          "explanation": "Ceci ne tient pas compte des points C et D."
+        },
+        {
+          "text": "$G = bar\\{(A,2);(B,2);(C,1);(D,1)\\}$",
+          "is_correct": false,
+          "explanation": "Les coefficients doivent être égaux par associativité."
+        },
+        {
+          "text": "Le point A",
+          "is_correct": false,
+          "explanation": "C'est le barycentre des 4 points, pas A."
         }
       ],
       "steps": []
@@ -34,7 +571,88 @@
       "id": "exo_barycentre_1",
       "title": "Construction d'un barycentre",
       "statement": "Soit un triangle ABC. Construire le point G, barycentre de $(A, 1)$, $(B, 2)$ et $(C, -1)$.",
-      "sub_questions": []
+      "sub_questions": [
+        {
+          "question": "Vérifier que G existe",
+          "hint": "Calculer la somme des coefficients"
+        },
+        {
+          "question": "Utiliser l'associativité pour construire G",
+          "hint": "Calculer d'abord $I = bar\\{(A,1);(B,2)\\}$ puis $G = bar\\{(I,3);(C,-1)\\}$"
+        }
+      ]
+    },
+    {
+      "id": "exo_barycentre_2",
+      "title": "Coordonnées du barycentre",
+      "statement": "Dans un repère orthonormé, on donne $A(2; 1)$, $B(-1; 3)$ et $C(4; -2)$. Déterminer les coordonnées de $G = bar\\{(A, 2); (B, 1); (C, 3)\\}$.",
+      "sub_questions": [
+        {
+          "question": "Calculer $x_G$ en utilisant la formule du barycentre",
+          "hint": "$x_G = \\frac{\\alpha x_A + \\beta x_B + \\gamma x_C}{\\alpha + \\beta + \\gamma}$"
+        },
+        {
+          "question": "Calculer $y_G$ de la même manière",
+          "hint": "Appliquer la même formule pour les ordonnées"
+        },
+        {
+          "question": "Vérifier le résultat graphiquement",
+          "hint": "Placer les points et vérifier que G est bien positionné"
+        }
+      ]
+    },
+    {
+      "id": "exo_barycentre_3",
+      "title": "Relation vectorielle",
+      "statement": "Soit ABC un triangle et G le point défini par $\\vec{AG} = \\frac{1}{3}\\vec{AB} + \\frac{1}{2}\\vec{AC}$.",
+      "sub_questions": [
+        {
+          "question": "Exprimer $\\vec{AG}$ en fonction de $\\vec{AB}$ et $\\vec{AC}$ sous forme de barycentre",
+          "hint": "Chercher $\\alpha$, $\\beta$, $\\gamma$ tels que $\\alpha\\vec{GA} + \\beta\\vec{GB} + \\gamma\\vec{GC} = \\vec{0}$"
+        },
+        {
+          "question": "En déduire que G est le barycentre de $(A, \\alpha)$, $(B, \\beta)$, $(C, \\gamma)$ et déterminer $\\alpha$, $\\beta$, $\\gamma$",
+          "hint": "Utiliser $\\vec{AG} = \\frac{\\beta\\vec{AB} + \\gamma\\vec{AC}}{\\alpha + \\beta + \\gamma}$"
+        }
+      ]
+    },
+    {
+      "id": "exo_barycentre_4",
+      "title": "Ensemble de points",
+      "statement": "Dans le plan rapporté à un repère orthonormé, on donne deux points $A(1; 0)$ et $B(5; 0)$. Déterminer l'ensemble des points M du plan tels que $\\|\\vec{MA} + 2\\vec{MB}\\| = 6$.",
+      "sub_questions": [
+        {
+          "question": "Déterminer le point $G = bar\\{(A, 1); (B, 2)\\}$",
+          "hint": "Calculer les coordonnées de G"
+        },
+        {
+          "question": "Transformer la relation $\\|\\vec{MA} + 2\\vec{MB}\\| = 6$ en utilisant G",
+          "hint": "$\\vec{MA} + 2\\vec{MB} = 3\\vec{MG}$"
+        },
+        {
+          "question": "En déduire la nature et les caractéristiques de l'ensemble cherché",
+          "hint": "C'est un cercle de centre G"
+        }
+      ]
+    },
+    {
+      "id": "exo_barycentre_5",
+      "title": "Application du barycentre - Médianes",
+      "statement": "Soit ABC un triangle. On note I, J, K les milieux respectifs des côtés [BC], [CA], [AB]. Montrer que les médianes (AI), (BJ) et (CK) sont concourantes en un point G appelé centre de gravité du triangle.",
+      "sub_questions": [
+        {
+          "question": "Exprimer I comme barycentre de B et C",
+          "hint": "$I = bar\\{(B,1);(C,1)\\}$"
+        },
+        {
+          "question": "Montrer que le centre de gravité $G = bar\\{(A,1);(B,1);(C,1)\\}$ appartient à la médiane (AI)",
+          "hint": "Utiliser l'associativité : $G = bar\\{(A,1);(I,2)\\}$"
+        },
+        {
+          "question": "Montrer que $\\vec{AG} = \\frac{2}{3}\\vec{AI}$",
+          "hint": "Utiliser la formule du barycentre"
+        }
+      ]
     }
   ],
   "version": "v1.1.0-1da49c"
