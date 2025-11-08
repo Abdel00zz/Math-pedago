@@ -1,5 +1,6 @@
 import React, { createContext, useState, useCallback, ReactNode, useContext, useRef, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import katex from 'katex';
 import { ToastNotification, ToastNotificationType } from '../types';
 
 interface NotificationContextType {
@@ -33,7 +34,7 @@ const containsMathExpressions = (text: string): boolean => /\$\$([\s\S]+?)\$\$|\
 
 const mathCompilationCache = new Map<string, string>();
 
-const compileMathMessage = async (message: string): Promise<string> => {
+const compileMathMessage = (message: string): string => {
     if (typeof window === 'undefined') {
         return message;
     }
@@ -47,77 +48,37 @@ const compileMathMessage = async (message: string): Promise<string> => {
         return cached;
     }
 
-    let mathJax = window.MathJax;
-    if (!mathJax) {
-        await new Promise<void>((resolve) => {
-            const start = performance.now();
-            const attempt = () => {
-                mathJax = window.MathJax;
-                if (mathJax || performance.now() - start > 1200) {
-                    resolve();
-                } else {
-                    setTimeout(attempt, 25);
-                }
-            };
-            attempt();
-        });
-    }
-
-    if (!mathJax) {
-        return message;
-    }
-
     try {
-        if (mathJax.startup?.promise) {
-            await mathJax.startup.promise;
-        }
+        let result = message;
 
-        const adaptor = mathJax.startup?.adaptor;
-        const tex2chtmlPromise = mathJax.tex2chtmlPromise;
-        const tex2chtml = mathJax.tex2chtml;
-
-        if (!adaptor || (!tex2chtmlPromise && !tex2chtml)) {
-            return message;
-        }
-
-        const mathRegex = /\$\$([\s\S]+?)\$\$|\$([^$]+?)\$/g;
-        let result = '';
-        let lastIndex = 0;
-        const matches = [...message.matchAll(mathRegex)];
-
-        if (matches.length === 0) {
-            mathCompilationCache.set(message, message);
-            return message;
-        }
-
-        for (const match of matches) {
-            const index = match.index ?? 0;
-            result += message.slice(lastIndex, index);
-
-            const rawMath = (match[1] ?? match[2] ?? '').trim();
-            const display = Boolean(match[1]);
-
-            if (!rawMath) {
-                result += match[0];
-                lastIndex = index + match[0].length;
-                continue;
-            }
-
+        // Traiter les math display ($$...$$)
+        result = result.replace(/\$\$([\s\S]+?)\$\$/g, (match, math) => {
             try {
-                mathJax.texReset?.();
-                const node = tex2chtml
-                    ? tex2chtml(rawMath, { display })
-                    : await tex2chtmlPromise!(rawMath, { display });
-                result += adaptor.outerHTML(node);
-            } catch (compileError) {
-                console.warn('[NotificationContext] MathJax compile error:', compileError);
-                result += match[0];
+                return katex.renderToString(math.trim(), {
+                    displayMode: true,
+                    throwOnError: false,
+                    strict: false,
+                });
+            } catch (e) {
+                console.warn('[NotificationContext] KaTeX display error:', e);
+                return match;
             }
+        });
 
-            lastIndex = index + match[0].length;
-        }
+        // Traiter les math inline ($...$)
+        result = result.replace(/\$([^\$]+?)\$/g, (match, math) => {
+            try {
+                return katex.renderToString(math.trim(), {
+                    displayMode: false,
+                    throwOnError: false,
+                    strict: false,
+                });
+            } catch (e) {
+                console.warn('[NotificationContext] KaTeX inline error:', e);
+                return match;
+            }
+        });
 
-        result += message.slice(lastIndex);
         mathCompilationCache.set(message, result);
         return result;
     } catch (error) {
@@ -292,12 +253,13 @@ export const NotificationProvider: React.FC<{ children: ReactNode }> = ({ childr
             };
 
             if (hasMath) {
-                compileMathMessage(message)
-                    .then(finalize)
-                    .catch(error => {
-                        console.warn('[NotificationContext] Fallback vers message brut (MathJax indisponible):', error);
-                        finalize(message);
-                    });
+                try {
+                    const preparedMessage = compileMathMessage(message);
+                    finalize(preparedMessage);
+                } catch (error) {
+                    console.warn('[NotificationContext] Fallback vers message brut (KaTeX indisponible):', error);
+                    finalize(message);
+                }
             } else {
                 finalize(message);
             }

@@ -3,7 +3,6 @@ import { useAppState, useAppDispatch } from '../../context/AppContext';
 import { Option } from '../../types';
 import OrderingQuestion from './OrderingQuestion';
 import FormattedText from '../FormattedText';
-import { useMathJax } from '../../hooks/useMathJax';
 
 const Quiz: React.FC = () => {
     const state = useAppState();
@@ -151,17 +150,6 @@ const Quiz: React.FC = () => {
             });
         }
     }, [chapter, dispatch, isReviewMode, isSubmitted]);
-
-    // Hook MathJax optimisé pour le rendu des questions
-    useMathJax(
-        [question, isSubmitted, isReviewMode], 
-        { 
-            delay: 100,
-            containerId: 'quiz-container',
-            onSuccess: () => console.log('✅ Question rendue avec MathJax'),
-            onError: (error) => console.error('❌ Erreur MathJax Quiz:', error)
-        }
-    );
 
     // ✅ OPTIMISATION 3: Handlers mémorisés avec useCallback
     const handleOptionChange = useCallback((answer: string) => {

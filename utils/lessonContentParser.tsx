@@ -33,54 +33,11 @@ export const LessonProvider: React.FC<{ children: React.ReactNode; showAnswers: 
 // ============================================================================
 
 const MathContentWrapper: React.FC<{ children: React.ReactNode; inline?: boolean }> = ({ children, inline = false }) => {
-    const containerRef = useRef<HTMLElement | null>(null);
+    // Convertir les enfants en string pour MathContent
+    const content = typeof children === 'string' ? children : String(children);
 
-    useEffect(() => {
-        const el = containerRef.current;
-        if (!el) return;
-
-        const typeset = async () => {
-            if (!window.MathJax || !containerRef.current) return;
-
-            try {
-                if (window.MathJax.startup?.promise) {
-                    await window.MathJax.startup.promise;
-                }
-
-                const container = containerRef.current;
-                if (!container) return;
-
-                if (window.MathJax.typesetClear) {
-                    try {
-                        window.MathJax.typesetClear([container]);
-                    } catch (e) {
-                        // Silently ignore if node doesn't exist
-                    }
-                }
-
-                if (window.MathJax.typesetPromise) {
-                    await window.MathJax.typesetPromise([container]);
-                }
-            } catch (error) {
-                console.error('MathJax rendering error:', error);
-            }
-        };
-
-        const timeoutId = setTimeout(typeset, 50);
-        return () => clearTimeout(timeoutId);
-    }, [children]);
-
-    const Tag = inline ? 'span' : 'div';
-    
     return (
-        <Tag
-            ref={(node) => {
-                containerRef.current = node as HTMLElement | null;
-            }}
-            className="math-content-wrapper"
-        >
-            {children}
-        </Tag>
+        <MathContent content={content} inline={inline} className="math-content-wrapper" />
     );
 };
 
