@@ -11,7 +11,7 @@ Ce guide détaille **l'architecture complète** du système de leçons interacti
 ### 🔧 Technologies Utilisées
 
 - **Frontend** : React + TypeScript
-- **Rendu LaTeX** : MathJax 3.x
+- **Rendu LaTeX** : KaTeX 0.16+ (plus rapide et léger que MathJax)
 - **Styling** : CSS moderne avec variables CSS dynamiques
 - **Parsing** : Parser personnalisé avec support Markdown/LaTeX
 
@@ -511,7 +511,7 @@ ___réponse___
 
 **🔴 IMPORTANT - Séparation texte/LaTeX :**
 
-Pour que la syntaxe LaTeX soit **correctement compilée** par MathJax, il est **crucial de séparer** :
+Pour que la syntaxe LaTeX soit **correctement compilée** par KaTeX, il est **crucial de séparer** :
 - Le **texte ordinaire** (hors des `$...$`)
 - Les **expressions mathématiques** (dans `$...$` ou `$$...$$`)
 
@@ -519,7 +519,7 @@ Pour que la syntaxe LaTeX soit **correctement compilée** par MathJax, il est **
 ```json
 {
   "content": "La fonction est définie sur ___$\\mathbb{R}$ sauf $0$___"
-  // ❌ LaTeX mal séparé, risque d'erreur de compilation MathJax
+  // ❌ LaTeX mal séparé, risque d'erreur de compilation KaTeX
 }
 ```
 
@@ -762,7 +762,7 @@ parseContent()           → Détection type de contenu
     ↓
 parseLine()              → Parsing inline (blanks, bold)
     ↓
-MathContent              → Rendu LaTeX avec MathJax
+MathContent              → Rendu LaTeX avec KaTeX
     ↓
 React Component
 ```
@@ -788,7 +788,7 @@ Le parser détecte automatiquement :
 **Étapes de parsing :**
 1. `parseLine()` détecte `___croissante___`
 2. Crée un composant `<Blank>` avec contenu "croissante"
-3. MathJax render `$[0, +\\infty[$`
+3. KaTeX render `$[0, +\\infty[$`
 4. Résultat : Texte avec blank interactif et LaTeX
 
 ---

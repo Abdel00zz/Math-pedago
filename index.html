@@ -200,7 +200,7 @@
         /* Base KaTeX styling */
         .katex {
             font-size: 1em !important;
-            color: var(--math-text-color);
+            color: #1e293b !important;
         }
 
         .katex-display {
@@ -208,21 +208,35 @@
             text-align: center !important;
         }
 
-        /* Coloration du texte mathématique */
+        /* Coloration du texte mathématique - Noir par défaut */
+        .katex * {
+            color: #1e293b !important;
+        }
+
         .bg-white .katex,
         .bg-gray-100 .katex,
         .bg-blue-50 .katex,
         .bg-green-50 .katex,
         .bg-red-50 .katex {
-            color: #0F172A;
+            color: #0F172A !important;
         }
 
-        .text-white .katex {
-            color: #FFFFFF;
+        .bg-white .katex *,
+        .bg-gray-100 .katex *,
+        .bg-blue-50 .katex *,
+        .bg-green-50 .katex *,
+        .bg-red-50 .katex * {
+            color: #0F172A !important;
+        }
+
+        .text-white .katex,
+        .text-white .katex * {
+            color: #FFFFFF !important;
         }
 
         /* Quiz specific rendering */
-        .bg-black .katex {
+        .bg-black .katex,
+        .bg-black .katex * {
             color: #FFFFFF !important;
         }
 
