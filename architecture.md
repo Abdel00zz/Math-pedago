@@ -196,6 +196,264 @@ Le dépôt actuel ne contient pas encore de suites de tests automatisés. Recomm
 - Tests d'intégration UI (React Testing Library) pour les vues principales.
 - Lint/format check (ESLint, Prettier) à ajouter dans la toolchain Vite.
 
+## 18. Patterns de Design & Bonnes Pratiques
+
+### Architecture Patterns Utilisés
+
+1. **Compound Components Pattern**
+   - Les composants comme `Quiz`, `LessonNavigator` utilisent des sous-composants compositionnels
+   - Permet une flexibilité et réutilisabilité maximale
+
+2. **Provider Pattern**
+   - Centralisation de l'état via Context API
+   - Séparation claire entre logique métier et présentation
+
+3. **Render Props & Custom Hooks**
+   - Hooks personnalisés (`useMathJax`, `useSectionObserver`)
+   - Réutilisation de la logique sans duplication
+
+4. **Service Layer Pattern**
+   - Services dédiés (`lessonProgressService`)
+   - Séparation de la logique de persistance
+
+### Conventions de Code
+
+```typescript
+// Nomenclature des fichiers
+- Composants: PascalCase (LessonNavigator.tsx)
+- Hooks: camelCase avec préfixe 'use' (useMathJax.ts)
+- Services: camelCase (lessonProgressService.ts)
+- Types: types.ts centralisé
+- Styles: kebab-case (lesson-navigator.css)
+
+// Structure des composants
+export const ComponentName: React.FC<Props> = ({ prop1, prop2 }) => {
+  // 1. Hooks d'état
+  const [state, setState] = useState();
+
+  // 2. Hooks de contexte
+  const context = useContext();
+
+  // 3. Refs
+  const ref = useRef();
+
+  // 4. Callbacks mémorisés
+  const handler = useCallback(() => {}, []);
+
+  // 5. Effects
+  useEffect(() => {}, []);
+
+  // 6. Render
+  return <div>...</div>;
+};
+```
+
+## 19. Performance & Optimisation
+
+### Stratégies Actuelles
+
+1. **Mémorisation**
+   - `useMemo` pour calculs coûteux (progression, navigation window)
+   - `useCallback` pour handlers stables
+   - Évite re-renders inutiles
+
+2. **Lazy Loading**
+   - Chargement différé des chapitres (JSON dynamique)
+   - Composants MathJax rendus à la demande
+
+3. **Optimisations CSS**
+   - `contain: layout style` sur navigateur
+   - Transitions limitées aux éléments non-critiques
+   - Variables CSS pour cohérence et performance
+
+4. **Virtual Scrolling Potentiel**
+   - Pour les longues listes de questions quiz
+   - TOC avec fenêtrage glissant (déjà implémenté)
+
+### Recommandations d'Amélioration
+
+```typescript
+// 1. Code Splitting par route
+const DashboardView = lazy(() => import('./components/views/DashboardView'));
+const ActivityView = lazy(() => import('./components/views/ActivityView'));
+
+// 2. Image optimization
+// Utiliser WebP avec fallback PNG
+// Lazy loading des images via Intersection Observer
+
+// 3. Service Worker pour mise en cache
+// Progressive Web App avec offline support
+
+// 4. Debounce/Throttle pour scroll events
+const debouncedScroll = useDebouncedCallback(handleScroll, 100);
+```
+
+## 20. Accessibilité (A11y)
+
+### Conformité WCAG 2.1
+
+1. **Navigation au clavier**
+   - Support des touches fléchées dans quiz
+   - Focus visible sur tous les éléments interactifs
+   - Skip links pour navigation rapide
+
+2. **ARIA Labels**
+   - `aria-label` sur boutons d'action
+   - `aria-expanded` sur éléments pliables
+   - `role="navigation"` sur sommaire
+
+3. **Contraste & Lisibilité**
+   - Ratio de contraste minimum 4.5:1
+   - Tailles de police ajustables via CSS variables
+   - Mode sombre (prévu via `darkMode: "class"`)
+
+4. **Screen Readers**
+   - Sémantique HTML appropriée
+   - Messages de progression annoncés
+   - États des quiz verbalisés
+
+### Améliorations Futures
+
+```tsx
+// 1. Annonces dynamiques
+<div role="status" aria-live="polite" aria-atomic="true">
+  {progressMessage}
+</div>
+
+// 2. Skip navigation
+<a href="#main-content" className="skip-link">
+  Aller au contenu principal
+</a>
+
+// 3. Préférences utilisateur
+const [fontSize, setFontSize] = useState('medium');
+const [reducedMotion, setReducedMotion] = useState(false);
+```
+
+## 21. Architecture Évolutive - Roadmap
+
+### Phase 1: Stabilisation (Court terme)
+- [ ] Tests unitaires et d'intégration
+- [ ] Documentation des composants (Storybook)
+- [ ] Audit de performance (Lighthouse)
+- [ ] Correction des bugs identifiés
+
+### Phase 2: Amélioration UX (Moyen terme)
+- [ ] Mode hors ligne complet (Service Worker)
+- [ ] Animations et transitions fluides
+- [ ] Feedback utilisateur enrichi
+- [ ] Personnalisation du thème
+
+### Phase 3: Scalabilité (Long terme)
+- [ ] Backend API pour synchronisation multi-appareils
+- [ ] Système de gamification (badges, points)
+- [ ] Collaboration temps réel (commentaires, forums)
+- [ ] Analytics et tableaux de bord professeur
+
+### Architecture Cible
+
+```
+┌─────────────────────────────────────────────────────┐
+│                   Frontend (React)                   │
+│  ┌──────────┐  ┌──────────┐  ┌──────────────────┐  │
+│  │ Student  │  │ Teacher  │  │  Admin Panel     │  │
+│  │ Portal   │  │ Dashboard│  │  (Futur)         │  │
+│  └──────────┘  └──────────┘  └──────────────────┘  │
+└─────────────────────────────────────────────────────┘
+                        ↕
+        ┌───────────────────────────────┐
+        │     API Gateway (REST/GraphQL) │
+        └───────────────────────────────┘
+                        ↕
+    ┌───────────────────────────────────────┐
+    │         Microservices Layer           │
+    │  ┌──────────┐  ┌──────────┐  ┌─────┐ │
+    │  │ Auth     │  │ Progress │  │ CMS │ │
+    │  │ Service  │  │ Service  │  │     │ │
+    │  └──────────┘  └──────────┘  └─────┘ │
+    └───────────────────────────────────────┘
+                        ↕
+        ┌───────────────────────────────┐
+        │   Database Layer (PostgreSQL)  │
+        │   Cache Layer (Redis)          │
+        └───────────────────────────────┘
+```
+
+## 22. Sécurité & Conformité
+
+### Pratiques Actuelles
+- Validation côté client (TypeScript strict)
+- Sanitization des inputs utilisateur
+- Pas de données sensibles en localStorage
+
+### Recommandations
+1. **HTTPS obligatoire** en production
+2. **Content Security Policy (CSP)** headers
+3. **RGPD compliance** pour données utilisateur
+4. **Rate limiting** sur API futures
+5. **Authentication/Authorization** robuste (JWT, OAuth)
+
+```typescript
+// Exemple de validation renforcée
+const validateAnswer = (answer: unknown): string => {
+  if (typeof answer !== 'string') {
+    throw new Error('Invalid answer type');
+  }
+
+  const sanitized = DOMPurify.sanitize(answer);
+  if (sanitized.length > MAX_ANSWER_LENGTH) {
+    throw new Error('Answer too long');
+  }
+
+  return sanitized;
+};
+```
+
+## 23. Monitoring & Observabilité
+
+### Métriques Clés à Suivre
+1. **Performance**
+   - Time to Interactive (TTI)
+   - First Contentful Paint (FCP)
+   - Largest Contentful Paint (LCP)
+
+2. **Engagement**
+   - Taux de completion des leçons
+   - Temps moyen par activité
+   - Taux de réussite aux quiz
+
+3. **Erreurs**
+   - Taux d'erreur JavaScript
+   - Erreurs de chargement de ressources
+   - Échecs de sauvegarde localStorage
+
+### Outils Recommandés
+```typescript
+// Error tracking (Sentry exemple)
+import * as Sentry from '@sentry/react';
+
+Sentry.init({
+  dsn: process.env.VITE_SENTRY_DSN,
+  integrations: [new BrowserTracing()],
+  tracesSampleRate: 1.0,
+});
+
+// Analytics (Google Analytics / Plausible)
+const trackEvent = (category: string, action: string, label?: string) => {
+  if (window.gtag) {
+    window.gtag('event', action, { category, label });
+  }
+};
+```
+
 ---
 
-Ce document couvre l'architecture fonctionnelle et technique de **Math-pedago** de A à Z. Il sert de guide de référence pour tout nouveau contributeur ou pour la maintenance future.
+## Conclusion
+
+Ce document couvre l'architecture fonctionnelle, technique et évolutive de **Math-pedago**. Il sert de guide de référence pour :
+- Les nouveaux contributeurs souhaitant comprendre le projet
+- Les développeurs travaillant sur des évolutions
+- Les décideurs techniques planifiant la roadmap
+- Les auditeurs de code et de sécurité
+
+**Math-pedago** est conçu pour être une plateforme éducative moderne, performante et accessible, avec une architecture solide permettant une évolution progressive vers un écosystème complet d'apprentissage en ligne.
