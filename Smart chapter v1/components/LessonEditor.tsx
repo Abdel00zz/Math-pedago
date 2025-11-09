@@ -4,15 +4,15 @@
  */
 
 import React, { useState, useCallback, useEffect, useRef } from 'react';
-import { 
-    TrashIcon, 
-    PlusIcon, 
-    ChevronDownIcon, 
-    ChevronRightIcon, 
-    GripVerticalIcon, 
-    SaveIcon, 
-    EyeIcon, 
-    UndoIcon, 
+import {
+    TrashIcon,
+    PlusIcon,
+    ChevronDownIcon,
+    ChevronRightIcon,
+    GripVerticalIcon,
+    SaveIcon,
+    EyeIcon,
+    UndoIcon,
     RedoIcon,
     RefreshIcon,
     BookOpenIcon,
@@ -20,6 +20,7 @@ import {
 } from './icons';
 import { FileSystemDirectoryHandle } from '../types';
 import { ImageUploadModal, ImageConfig } from './ImageUploadModal';
+import { RichTextEditor } from './RichTextEditor';
 
 // Types
 interface LessonHeader {
@@ -809,17 +810,17 @@ export const LessonEditor: React.FC<LessonEditorProps> = ({
                                             <label className="block text-xs font-semibold text-gray-700 mb-2 uppercase tracking-wide">
                                                 📄 Texte Introductif (sans cadre)
                                             </label>
-                                            <textarea
+                                            <RichTextEditor
                                                 value={section.intro}
-                                                onChange={(e) => {
+                                                onChange={(value) => {
                                                     const newLesson = { ...lesson };
-                                                    newLesson.sections[sIdx].intro = e.target.value;
+                                                    newLesson.sections[sIdx].intro = value;
                                                     setLesson(newLesson);
                                                     saveToHistory(newLesson);
                                                 }}
-                                                className="w-full px-3 py-2 border border-gray-300 rounded font-mono text-sm text-gray-900"
-                                                rows={3}
                                                 placeholder="Ce texte apparaîtra après le titre, sans encadrement..."
+                                                rows={3}
+                                                elementType="intro"
                                             />
                                         </div>
                                     )}
@@ -903,30 +904,39 @@ export const LessonEditor: React.FC<LessonEditorProps> = ({
                                                             </div>
 
                                                             {element.type === 'p' ? (
-                                                                <textarea
+                                                                <RichTextEditor
                                                                     value={element.content as string}
-                                                                    onChange={(e) => updateElement(sIdx, ssIdx, eIdx, 'content', e.target.value)}
-                                                                    className="w-full px-3 py-2 border border-gray-300 rounded font-mono text-sm text-gray-900"
-                                                                    rows={4}
+                                                                    onChange={(value) => updateElement(sIdx, ssIdx, eIdx, 'content', value)}
                                                                     placeholder="Contenu du paragraphe..."
+                                                                    rows={4}
+                                                                    elementType="p"
+                                                                    onImageClick={() => openImageModal(sIdx, ssIdx, eIdx)}
+                                                                    hasImage={!!(element as any).image}
                                                                 />
                                                             ) : element.type === 'table' ? (
-                                                                <textarea
+                                                                <RichTextEditor
                                                                     value={element.content as string}
-                                                                    onChange={(e) => updateElement(sIdx, ssIdx, eIdx, 'content', e.target.value)}
-                                                                    className="w-full px-3 py-2 border border-gray-300 rounded font-mono text-sm text-gray-900"
-                                                                    rows={6}
+                                                                    onChange={(value) => updateElement(sIdx, ssIdx, eIdx, 'content', value)}
                                                                     placeholder="Format tableau Markdown..."
+                                                                    rows={6}
+                                                                    elementType="table"
+                                                                    onImageClick={() => openImageModal(sIdx, ssIdx, eIdx)}
+                                                                    hasImage={!!(element as any).image}
                                                                 />
                                                             ) : (
                                                                 <div className="space-y-2">
-                                                                    <textarea
-                                                                        value={element.preamble || ''}
-                                                                        onChange={(e) => updateElement(sIdx, ssIdx, eIdx, 'preamble', e.target.value)}
-                                                                        className="w-full px-3 py-2 border border-gray-300 rounded text-sm text-gray-900"
-                                                                        rows={2}
-                                                                        placeholder="Préambule..."
-                                                                    />
+                                                                    <div>
+                                                                        <label className="block text-xs font-semibold text-gray-700 mb-1 uppercase tracking-wide">
+                                                                            Préambule
+                                                                        </label>
+                                                                        <RichTextEditor
+                                                                            value={element.preamble || ''}
+                                                                            onChange={(value) => updateElement(sIdx, ssIdx, eIdx, 'preamble', value)}
+                                                                            placeholder="Préambule..."
+                                                                            rows={2}
+                                                                            elementType={`${element.type}-preamble`}
+                                                                        />
+                                                                    </div>
                                                                     
                                                                     {/* Sélecteur de type de liste */}
                                                                     <div className="flex items-center gap-3 p-2 bg-blue-50 border border-blue-200 rounded">
@@ -959,18 +969,25 @@ export const LessonEditor: React.FC<LessonEditorProps> = ({
                                                                             </label>
                                                                         )}
                                                                     </div>
-                                                                    
-                                                                    <textarea
-                                                                        value={Array.isArray(element.content) ? element.content.join('\n') : element.content}
-                                                                        onChange={(e) => updateElement(sIdx, ssIdx, eIdx, 'content', e.target.value.split('\n'))}
-                                                                        className="w-full px-3 py-2 border border-gray-300 rounded font-mono text-sm text-gray-900"
-                                                                        rows={6}
-                                                                        placeholder={
-                                                                            element.listType === 'bullet' ? "Contenu (une ligne = une puce ⭐)\n💡 Astuce : Commencez par >> pour désactiver la puce sur une ligne" :
-                                                                            element.listType === 'numbered' ? "Contenu (une ligne = un numéro ①②③)\n💡 Astuce : Commencez par >> pour désactiver le numéro sur une ligne" :
-                                                                            "Contenu du cadre..."
-                                                                        }
-                                                                    />
+
+                                                                    <div>
+                                                                        <label className="block text-xs font-semibold text-gray-700 mb-1 uppercase tracking-wide">
+                                                                            Contenu {element.listType && `(${element.listType === 'bullet' ? 'une ligne = une puce ⭐' : 'une ligne = un numéro ①②③'})`}
+                                                                        </label>
+                                                                        <RichTextEditor
+                                                                            value={Array.isArray(element.content) ? element.content.join('\n') : (element.content || '')}
+                                                                            onChange={(value) => updateElement(sIdx, ssIdx, eIdx, 'content', value.split('\n'))}
+                                                                            placeholder={
+                                                                                element.listType === 'bullet' ? "Contenu (une ligne = une puce ⭐)\n💡 Astuce : Commencez par >> pour désactiver la puce sur une ligne" :
+                                                                                element.listType === 'numbered' ? "Contenu (une ligne = un numéro ①②③)\n💡 Astuce : Commencez par >> pour désactiver le numéro sur une ligne" :
+                                                                                "Contenu du cadre..."
+                                                                            }
+                                                                            rows={6}
+                                                                            elementType={element.type}
+                                                                            onImageClick={() => openImageModal(sIdx, ssIdx, eIdx)}
+                                                                            hasImage={!!(element as any).image}
+                                                                        />
+                                                                    </div>
                                                                     
                                                                     {element.listType && (
                                                                         <div className="text-xs text-blue-600 bg-blue-50 p-2 rounded border border-blue-200 space-y-1">
