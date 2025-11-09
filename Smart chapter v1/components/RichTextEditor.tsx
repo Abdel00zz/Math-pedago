@@ -1,10 +1,20 @@
 /**
- * RichTextEditor v2 - Éditeur de texte riche optimisé pour les leçons
- * Avec aperçu en temps réel MathJax et interface moderne
+ * RichTextEditor v3 - Éditeur avec KaTeX et interface optimisée
+ * - KaTeX au lieu de MathJax (plus rapide)
+ * - Mode colonnes intégré dans la toolbar
+ * - Interface moderne et aérée
  */
 
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { ImageIcon } from './icons';
+
+// Déclaration TypeScript pour KaTeX
+declare global {
+    interface Window {
+        katex?: any;
+        renderMathInElement?: any;
+    }
+}
 
 // Types pour les props
 interface RichTextEditorProps {
@@ -17,10 +27,12 @@ interface RichTextEditorProps {
     hasImage?: boolean;
     listType?: 'bullet' | 'numbered' | undefined;
     onListTypeChange?: (type: 'bullet' | 'numbered' | undefined) => void;
+    columns?: boolean;
+    onColumnsChange?: (columns: boolean) => void;
 }
 
 /**
- * Composant de prévisualisation avec support MathJax
+ * Composant de prévisualisation avec support KaTeX
  */
 const LivePreview: React.FC<{ content: string }> = ({ content }) => {
     const previewRef = useRef<HTMLDivElement>(null);
@@ -69,29 +81,36 @@ const LivePreview: React.FC<{ content: string }> = ({ content }) => {
 
         el.innerHTML = processed || '<span style="color: #9ca3af;">Aperçu...</span>';
 
-        // Appliquer MathJax
-        const typeset = async () => {
-            if (!window.MathJax || !el) return;
+        // Appliquer KaTeX
+        const renderMath = () => {
+            if (!window.renderMathInElement || !el) return;
 
             try {
-                if (window.MathJax.startup?.promise) {
-                    await window.MathJax.startup.promise;
-                }
-                if (window.MathJax.typesetClear) {
-                    try {
-                        window.MathJax.typesetClear([el]);
-                    } catch {}
-                }
-                if (window.MathJax.typesetPromise) {
-                    await window.MathJax.typesetPromise([el]);
-                }
+                window.renderMathInElement(el, {
+                    delimiters: [
+                        { left: '$$', right: '$$', display: true },
+                        { left: '$', right: '$', display: false }
+                    ],
+                    throwOnError: false,
+                    errorColor: '#cc0000'
+                });
             } catch (error) {
-                console.error('MathJax error:', error);
+                console.error('KaTeX error:', error);
             }
         };
 
-        const timeoutId = setTimeout(typeset, 100);
-        return () => clearTimeout(timeoutId);
+        // Attendre que KaTeX soit chargé
+        if (window.renderMathInElement) {
+            renderMath();
+        } else {
+            const checkKatex = setInterval(() => {
+                if (window.renderMathInElement) {
+                    clearInterval(checkKatex);
+                    renderMath();
+                }
+            }, 50);
+            setTimeout(() => clearInterval(checkKatex), 2000);
+        }
     }, [content]);
 
     return (
@@ -112,7 +131,9 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
     onImageClick,
     hasImage = false,
     listType,
-    onListTypeChange
+    onListTypeChange,
+    columns,
+    onColumnsChange
 }) => {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const [showMathMenu, setShowMathMenu] = useState(false);
@@ -185,18 +206,18 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
 
     return (
         <div className="rich-text-editor w-full">
-            {/* Barre d'outils améliorée */}
-            <div className="toolbar bg-gradient-to-r from-slate-50 to-slate-100 border border-gray-300 border-b-0 rounded-t-lg p-3 shadow-sm">
+            {/* Barre d'outils moderne */}
+            <div className="toolbar bg-gradient-to-r from-slate-50 via-white to-slate-50 border-2 border-gray-300 border-b-0 rounded-t-xl p-4 shadow-md">
                 <div className="flex flex-wrap items-center gap-2">
                     {/* Groupe: Formatage */}
-                    <div className="flex items-center gap-1 px-2 border-r border-gray-300">
+                    <div className="flex items-center gap-1 px-3 border-r-2 border-gray-300">
                         <button
                             type="button"
                             onClick={makeBold}
                             className="toolbar-btn"
                             title="Gras (Ctrl+B)"
                         >
-                            <span className="material-symbols-outlined" style={{ fontSize: '20px', fontWeight: 'bold' }}>format_bold</span>
+                            <span className="material-symbols-outlined" style={{ fontSize: '22px', fontWeight: '700' }}>format_bold</span>
                         </button>
                         <button
                             type="button"
@@ -204,7 +225,7 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
                             className="toolbar-btn"
                             title="Italique (Ctrl+I)"
                         >
-                            <span className="material-symbols-outlined" style={{ fontSize: '20px', fontStyle: 'italic' }}>format_italic</span>
+                            <span className="material-symbols-outlined" style={{ fontSize: '22px' }}>format_italic</span>
                         </button>
                         <button
                             type="button"
@@ -212,7 +233,7 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
                             className="toolbar-btn"
                             title="Souligné (Ctrl+U)"
                         >
-                            <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>format_underlined</span>
+                            <span className="material-symbols-outlined" style={{ fontSize: '22px' }}>format_underlined</span>
                         </button>
                         <button
                             type="button"
@@ -220,70 +241,86 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
                             className="toolbar-btn"
                             title="Surligner"
                         >
-                            <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>format_ink_highlighter</span>
+                            <span className="material-symbols-outlined" style={{ fontSize: '22px' }}>format_ink_highlighter</span>
                         </button>
                     </div>
 
-                    {/* Groupe: Listes (intégré) */}
+                    {/* Groupe: Listes */}
                     {onListTypeChange && (
-                        <div className="flex items-center gap-1 px-2 border-r border-gray-300">
+                        <div className="flex items-center gap-1 px-3 border-r-2 border-gray-300">
+                            <label className="text-xs font-bold text-gray-700 mr-1">Liste:</label>
                             <select
                                 value={listType || 'none'}
                                 onChange={(e) => {
                                     const val = e.target.value;
                                     onListTypeChange(val === 'none' ? undefined : val as 'bullet' | 'numbered');
                                 }}
-                                className="px-3 py-1.5 border border-gray-400 rounded-md text-sm font-medium bg-white hover:bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                                style={{ minWidth: '140px' }}
+                                className="px-3 py-2 border-2 border-gray-400 rounded-lg text-sm font-semibold bg-white hover:bg-blue-50 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-all"
+                                style={{ minWidth: '160px' }}
                             >
-                                <option value="none">Sans liste</option>
+                                <option value="none">Aucune</option>
                                 <option value="bullet">⭐ Puces</option>
                                 <option value="numbered">① Numérotée</option>
                             </select>
                         </div>
                     )}
 
+                    {/* Groupe: Mode colonnes */}
+                    {onColumnsChange && (
+                        <div className="flex items-center gap-2 px-3 border-r-2 border-gray-300">
+                            <button
+                                type="button"
+                                onClick={() => onColumnsChange(!columns)}
+                                className={`toolbar-btn flex items-center gap-1.5 px-3 ${columns ? 'bg-green-100 text-green-800 ring-2 ring-green-400' : ''}`}
+                                title="Mode colonnes (affichage côte à côte)"
+                            >
+                                <span className="material-symbols-outlined" style={{ fontSize: '22px' }}>view_column</span>
+                                <span className="text-xs font-semibold">Colonnes</span>
+                            </button>
+                        </div>
+                    )}
+
                     {/* Groupe: Math */}
-                    <div className="relative px-2 border-r border-gray-300">
+                    <div className="relative px-3 border-r-2 border-gray-300">
                         <button
                             type="button"
                             onClick={() => {
                                 setShowMathMenu(!showMathMenu);
                                 setShowCalloutMenu(false);
                             }}
-                            className={`toolbar-btn ${showMathMenu ? 'bg-purple-100 text-purple-700' : ''}`}
-                            title="Formules mathématiques"
+                            className={`toolbar-btn ${showMathMenu ? 'bg-purple-100 text-purple-800 ring-2 ring-purple-400' : ''}`}
+                            title="Formules mathématiques (KaTeX)"
                         >
-                            <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>function</span>
+                            <span className="material-symbols-outlined" style={{ fontSize: '22px' }}>function</span>
                         </button>
 
                         {showMathMenu && (
-                            <div className="absolute top-full left-0 mt-1 bg-white border border-gray-300 rounded-lg shadow-2xl z-50 min-w-60" style={{ maxHeight: '320px', overflowY: 'auto' }}>
-                                <div className="p-1.5">
+                            <div className="absolute top-full left-0 mt-2 bg-white border-2 border-gray-400 rounded-xl shadow-2xl z-50 min-w-64" style={{ maxHeight: '360px', overflowY: 'auto' }}>
+                                <div className="p-2">
                                     <button type="button" onClick={() => { insertInlineMath(); setShowMathMenu(false); }} className="menu-item">
-                                        <code className="bg-purple-100 px-2 py-1 rounded text-xs font-mono">$...$</code>
-                                        <span>Formule en ligne</span>
+                                        <code className="bg-purple-100 px-2.5 py-1.5 rounded text-xs font-mono font-bold">$...$</code>
+                                        <span className="font-medium">Formule en ligne</span>
                                     </button>
                                     <button type="button" onClick={() => { insertBlockMath(); setShowMathMenu(false); }} className="menu-item">
-                                        <code className="bg-purple-100 px-2 py-1 rounded text-xs font-mono">$$...$$</code>
-                                        <span>Formule centrée</span>
+                                        <code className="bg-purple-100 px-2.5 py-1.5 rounded text-xs font-mono font-bold">$$...$$</code>
+                                        <span className="font-medium">Formule centrée</span>
                                     </button>
-                                    <div className="border-t border-gray-200 my-1"></div>
+                                    <div className="border-t-2 border-gray-200 my-2"></div>
                                     <button type="button" onClick={() => { insertFraction(); setShowMathMenu(false); }} className="menu-item">
-                                        <span className="text-lg font-serif">a/b</span>
-                                        <span>Fraction</span>
+                                        <span className="text-xl font-serif font-bold">a/b</span>
+                                        <span className="font-medium">Fraction</span>
                                     </button>
                                     <button type="button" onClick={() => { insertSqrt(); setShowMathMenu(false); }} className="menu-item">
-                                        <span className="text-lg font-serif">√x</span>
-                                        <span>Racine carrée</span>
+                                        <span className="text-xl font-serif font-bold">√x</span>
+                                        <span className="font-medium">Racine carrée</span>
                                     </button>
                                     <button type="button" onClick={() => { insertSum(); setShowMathMenu(false); }} className="menu-item">
-                                        <span className="text-xl font-serif">∑</span>
-                                        <span>Somme</span>
+                                        <span className="text-2xl font-serif font-bold">∑</span>
+                                        <span className="font-medium">Somme</span>
                                     </button>
                                     <button type="button" onClick={() => { insertIntegral(); setShowMathMenu(false); }} className="menu-item">
-                                        <span className="text-xl font-serif">∫</span>
-                                        <span>Intégrale</span>
+                                        <span className="text-2xl font-serif font-bold">∫</span>
+                                        <span className="font-medium">Intégrale</span>
                                     </button>
                                 </div>
                             </div>
@@ -291,34 +328,34 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
                     </div>
 
                     {/* Groupe: Callouts */}
-                    <div className="relative px-2 border-r border-gray-300">
+                    <div className="relative px-3 border-r-2 border-gray-300">
                         <button
                             type="button"
                             onClick={() => {
                                 setShowCalloutMenu(!showCalloutMenu);
                                 setShowMathMenu(false);
                             }}
-                            className={`toolbar-btn ${showCalloutMenu ? 'bg-orange-100 text-orange-700' : ''}`}
+                            className={`toolbar-btn ${showCalloutMenu ? 'bg-orange-100 text-orange-800 ring-2 ring-orange-400' : ''}`}
                             title="Encadrés spéciaux"
                         >
-                            <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>campaign</span>
+                            <span className="material-symbols-outlined" style={{ fontSize: '22px' }}>campaign</span>
                         </button>
 
                         {showCalloutMenu && (
-                            <div className="absolute top-full left-0 mt-1 bg-white border border-gray-300 rounded-lg shadow-2xl z-50 min-w-64">
-                                <div className="p-1.5">
+                            <div className="absolute top-full left-0 mt-2 bg-white border-2 border-gray-400 rounded-xl shadow-2xl z-50 min-w-72">
+                                <div className="p-2">
                                     <button type="button" onClick={() => { insertWarning(); setShowCalloutMenu(false); }} className="menu-item">
-                                        <span className="text-orange-500 text-xl">⚠️</span>
+                                        <span className="text-orange-600 text-2xl">⚠️</span>
                                         <div>
-                                            <div className="font-semibold">Attention</div>
-                                            <code className="text-xs bg-gray-100 px-1.5 py-0.5 rounded font-mono">!&gt; message</code>
+                                            <div className="font-bold text-orange-900">Attention</div>
+                                            <code className="text-xs bg-gray-100 px-2 py-0.5 rounded font-mono">!&gt; message</code>
                                         </div>
                                     </button>
                                     <button type="button" onClick={() => { insertTip(); setShowCalloutMenu(false); }} className="menu-item">
-                                        <span className="text-cyan-500 text-xl">💡</span>
+                                        <span className="text-cyan-600 text-2xl">💡</span>
                                         <div>
-                                            <div className="font-semibold">Conseil</div>
-                                            <code className="text-xs bg-gray-100 px-1.5 py-0.5 rounded font-mono">?&gt; astuce</code>
+                                            <div className="font-bold text-cyan-900">Conseil</div>
+                                            <code className="text-xs bg-gray-100 px-2 py-0.5 rounded font-mono">?&gt; astuce</code>
                                         </div>
                                     </button>
                                 </div>
@@ -327,14 +364,14 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
                     </div>
 
                     {/* Groupe: Autres */}
-                    <div className="flex items-center gap-1 px-2 border-r border-gray-300">
+                    <div className="flex items-center gap-1 px-3 border-r-2 border-gray-300">
                         <button
                             type="button"
                             onClick={makeLink}
                             className="toolbar-btn"
                             title="Insérer un lien"
                         >
-                            <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>link</span>
+                            <span className="material-symbols-outlined" style={{ fontSize: '22px' }}>link</span>
                         </button>
                         <button
                             type="button"
@@ -342,64 +379,64 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
                             className="toolbar-btn"
                             title="Texte à trou"
                         >
-                            <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>text_fields</span>
+                            <span className="material-symbols-outlined" style={{ fontSize: '22px' }}>text_fields</span>
                         </button>
                     </div>
 
-                    {/* Groupe: Image & Aperçu */}
-                    <div className="flex items-center gap-1 px-2">
+                    {/* Groupe: Contrôles */}
+                    <div className="flex items-center gap-1 px-3">
                         {onImageClick && (
                             <button
                                 type="button"
                                 onClick={onImageClick}
-                                className={`toolbar-btn ${hasImage ? 'bg-blue-100 text-blue-700 ring-2 ring-blue-300' : ''}`}
+                                className={`toolbar-btn ${hasImage ? 'bg-blue-100 text-blue-800 ring-2 ring-blue-400' : ''}`}
                                 title={hasImage ? "Modifier l'image" : "Ajouter une image"}
                             >
-                                <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>image</span>
+                                <span className="material-symbols-outlined" style={{ fontSize: '22px' }}>image</span>
                             </button>
                         )}
                         <button
                             type="button"
                             onClick={() => setShowPreview(!showPreview)}
-                            className={`toolbar-btn ${showPreview ? 'bg-green-100 text-green-700' : ''}`}
+                            className={`toolbar-btn ${showPreview ? 'bg-green-100 text-green-800 ring-2 ring-green-400' : ''}`}
                             title={showPreview ? "Masquer l'aperçu" : "Afficher l'aperçu"}
                         >
-                            <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>
+                            <span className="material-symbols-outlined" style={{ fontSize: '22px' }}>
                                 {showPreview ? 'visibility' : 'visibility_off'}
                             </span>
                         </button>
                     </div>
                 </div>
 
-                {/* Aide rapide compacte */}
-                <details className="mt-2 pt-2 border-t border-gray-300">
-                    <summary className="cursor-pointer text-xs font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1">
-                        <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>help</span>
+                {/* Aide rapide */}
+                <details className="mt-3 pt-3 border-t-2 border-gray-300">
+                    <summary className="cursor-pointer text-xs font-bold text-gray-800 hover:text-blue-600 flex items-center gap-1.5 transition-colors">
+                        <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>help</span>
                         Aide rapide
                     </summary>
-                    <div className="mt-2 grid grid-cols-2 gap-x-4 gap-y-1 text-xs text-gray-600 bg-white p-2 rounded border border-gray-200">
-                        <div><code className="bg-gray-100 px-1 rounded">**gras**</code> → <strong>gras</strong></div>
-                        <div><code className="bg-gray-100 px-1 rounded">*italique*</code> → <em>italique</em></div>
-                        <div><code className="bg-gray-100 px-1 rounded">$x^2$</code> → formule</div>
-                        <div><code className="bg-gray-100 px-1 rounded">___rep___</code> → trou</div>
-                        <div><code className="bg-gray-100 px-1 rounded">!&gt; att</code> → attention</div>
-                        <div><code className="bg-gray-100 px-1 rounded">?&gt; tip</code> → conseil</div>
+                    <div className="mt-2 grid grid-cols-2 gap-x-4 gap-y-1.5 text-xs text-gray-700 bg-blue-50 p-3 rounded-lg border border-blue-200">
+                        <div><code className="bg-white px-1.5 py-0.5 rounded font-bold">**gras**</code> → <strong>gras</strong></div>
+                        <div><code className="bg-white px-1.5 py-0.5 rounded font-bold">*italique*</code> → <em>italique</em></div>
+                        <div><code className="bg-white px-1.5 py-0.5 rounded font-bold">$x^2$</code> → formule</div>
+                        <div><code className="bg-white px-1.5 py-0.5 rounded font-bold">___rep___</code> → trou</div>
+                        <div><code className="bg-white px-1.5 py-0.5 rounded font-bold">!&gt; att</code> → attention</div>
+                        <div><code className="bg-white px-1.5 py-0.5 rounded font-bold">?&gt; tip</code> → conseil</div>
                     </div>
                 </details>
             </div>
 
             {/* Zone d'édition avec aperçu */}
-            <div className={`editor-area grid ${showPreview ? 'grid-cols-2' : 'grid-cols-1'} gap-0 border border-gray-300 border-t-0`}>
+            <div className={`editor-area grid ${showPreview ? 'grid-cols-2' : 'grid-cols-1'} gap-0 border-2 border-gray-300 border-t-0 rounded-b-xl overflow-hidden`}>
                 {/* Textarea */}
-                <div className={`${showPreview ? 'border-r border-gray-300' : ''}`}>
+                <div className={`${showPreview ? 'border-r-2 border-gray-300' : ''}`}>
                     <textarea
                         ref={textareaRef}
                         value={value}
                         onChange={(e) => onChange(e.target.value)}
                         placeholder={placeholder}
                         rows={rows}
-                        className="w-full px-4 py-3 rounded-none rounded-bl-lg font-mono text-sm text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-y border-0 focus:outline-none"
-                        style={{ minHeight: `${rows * 28}px` }}
+                        className="w-full px-5 py-4 rounded-none font-mono text-sm text-gray-900 focus:ring-4 focus:ring-blue-400 focus:border-transparent resize-y border-0 focus:outline-none bg-gray-50"
+                        style={{ minHeight: `${rows * 32}px` }}
                         onKeyDown={(e) => {
                             if (e.ctrlKey || e.metaKey) {
                                 switch(e.key) {
@@ -414,10 +451,10 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
 
                 {/* Aperçu en temps réel */}
                 {showPreview && (
-                    <div className="bg-gray-50 p-2 rounded-br-lg overflow-auto" style={{ maxHeight: `${rows * 28}px` }}>
-                        <div className="text-xs font-semibold text-gray-600 mb-2 flex items-center gap-1">
-                            <span className="material-symbols-outlined" style={{ fontSize: '14px' }}>preview</span>
-                            Aperçu en direct
+                    <div className="bg-gradient-to-br from-gray-50 to-white p-3 overflow-auto" style={{ maxHeight: `${rows * 32}px` }}>
+                        <div className="text-xs font-bold text-gray-700 mb-2 flex items-center gap-1.5 pb-2 border-b border-gray-300">
+                            <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>preview</span>
+                            Aperçu en direct (KaTeX)
                         </div>
                         <LivePreview content={value} />
                     </div>
@@ -438,41 +475,46 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
             {/* Styles CSS inline */}
             <style>{`
                 .toolbar-btn {
-                    padding: 6px 10px;
-                    border-radius: 6px;
-                    transition: all 0.2s;
+                    padding: 8px 12px;
+                    border-radius: 8px;
+                    transition: all 0.2s ease-in-out;
                     background: white;
-                    border: 1px solid #e5e7eb;
+                    border: 2px solid #e5e7eb;
                     cursor: pointer;
                     display: inline-flex;
                     align-items: center;
                     justify-content: center;
+                    font-weight: 600;
+                    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
                 }
                 .toolbar-btn:hover {
-                    background-color: #f3f4f6;
-                    border-color: #d1d5db;
-                    transform: translateY(-1px);
-                    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+                    background-color: #f9fafb;
+                    border-color: #3b82f6;
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 6px rgba(59, 130, 246, 0.15);
                 }
                 .toolbar-btn:active {
                     transform: translateY(0);
+                    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
                 }
                 .menu-item {
                     width: 100%;
                     text-align: left;
-                    padding: 10px 14px;
-                    border-radius: 6px;
-                    transition: background 0.15s;
+                    padding: 12px 16px;
+                    border-radius: 8px;
+                    transition: all 0.15s;
                     display: flex;
                     align-items: center;
-                    gap: 10px;
+                    gap: 12px;
                     font-size: 0.875rem;
                     background: white;
                     border: none;
                     cursor: pointer;
+                    margin-bottom: 4px;
                 }
                 .menu-item:hover {
                     background-color: #f3f4f6;
+                    transform: translateX(4px);
                 }
             `}</style>
         </div>

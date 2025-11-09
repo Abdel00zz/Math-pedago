@@ -938,24 +938,6 @@ export const LessonEditor: React.FC<LessonEditorProps> = ({
                                                                         />
                                                                     </div>
 
-                                                                    {/* Option Colonnes pour boxes */}
-                                                                    {element.type !== 'p' && element.type !== 'table' && (
-                                                                        <div className="flex items-center gap-2 p-2 bg-green-50 border border-green-200 rounded">
-                                                                            <input
-                                                                                type="checkbox"
-                                                                                id={`columns-${sIdx}-${ssIdx}-${eIdx}`}
-                                                                                checked={element.columns || false}
-                                                                                onChange={(e) => {
-                                                                                    updateElement(sIdx, ssIdx, eIdx, 'columns', e.target.checked);
-                                                                                }}
-                                                                                className="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
-                                                                            />
-                                                                            <label htmlFor={`columns-${sIdx}-${ssIdx}-${eIdx}`} className="text-sm font-medium text-green-900 cursor-pointer">
-                                                                                🔲 Mode colonnes (affichage côte à côte)
-                                                                            </label>
-                                                                        </div>
-                                                                    )}
-
                                                                     <div>
                                                                         <label className="block text-xs font-semibold text-gray-700 mb-2 uppercase tracking-wide">
                                                                             Contenu
@@ -970,6 +952,8 @@ export const LessonEditor: React.FC<LessonEditorProps> = ({
                                                                             hasImage={!!(element as any).image}
                                                                             listType={element.listType}
                                                                             onListTypeChange={(type) => updateElement(sIdx, ssIdx, eIdx, 'listType', type)}
+                                                                            columns={element.columns}
+                                                                            onColumnsChange={element.type !== 'p' && element.type !== 'table' ? (columns) => updateElement(sIdx, ssIdx, eIdx, 'columns', columns) : undefined}
                                                                         />
                                                                     </div>
 
