@@ -95,11 +95,11 @@
     <!-- MathJax Configuration -->
     <script>
       window.MathJax = {
-        loader: { load: ['[tex]/html'] },
+        loader: { load: ['[tex]/html', '[tex]/color'] },
         tex: {
           inlineMath: [['$', '$'], ['\\(', '\\)']],
           displayMath: [['$$', '$$'], ['\\[', '\\]']],
-          packages: {'[+]': ['html']},
+          packages: {'[+]': ['html', 'color']},
         },
         svg: {
           fontCache: 'global',

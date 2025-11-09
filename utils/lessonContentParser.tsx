@@ -190,11 +190,12 @@ const preprocessMathBlanks = (text: string): string => {
                 return fullMatch;
             }
 
-            // Remplacer les ___content___ par \class{blank-math-answer}{content}
+            // Remplacer les ___content___ par \bbox avec style inline
             const processedMath = mathContent.replace(/___(.+?)___/g, (match: string, content: string) => {
-                // Utiliser \class de MathJax pour appliquer un style CSS personnalisé
+                // Utiliser \bbox de MathJax avec styles inline pour créer un élément stylisé
                 // Le contenu reste dans la formule mathématique, donc MathJax le compile correctement
-                return `\\class{blank-math-answer}{${content}}`;
+                // Couleur rouge foncé avec fond rose léger
+                return `\\bbox[border:2px dotted #dc2626;background:#fef2f2;padding:2px 6px;border-radius:4px]{\\color{#dc2626}{${content}}}`;
             });
 
             return delimiter + processedMath + delimiter;
