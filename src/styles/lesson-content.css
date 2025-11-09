@@ -811,3 +811,86 @@
     line-height: 1.5;
   }
 }
+
+/* ========================================
+   FILL IN BLANK DANS LES FORMULES MATHÉMATIQUES
+   Style pour les blanks (___content___) dans les formules LaTeX
+   Version 2: Minimaliste et moderne
+   ======================================== */
+
+/* Conteneur principal pour le champ à remplir.
+   Plus de boîte, juste un conteneur en ligne pour la position. */
+mjx-container .blank-math-answer,
+.MathJax .blank-math-answer {
+  position: relative;
+  display: inline-block !important; /* Changé pour un meilleur positionnement */
+  margin: 0 2px !important;
+  padding: 2px 0 !important; /* Espace vertical pour la ligne */
+  cursor: pointer;
+  min-width: calc(max(4, var(--blank-answer-length, 6)) * 0.6rem);
+  text-align: center;
+  vertical-align: -2px; /* Ajustement vertical si nécessaire */
+}
+
+/* Le contenu de la réponse (la bonne réponse).
+   Caché par défaut, apparaît en douceur. */
+mjx-container .blank-math-answer__content,
+.MathJax .blank-math-answer__content {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+  color: #c01212 !important; /* Couleur rouge pour la réponse */
+  font-weight: 600 !important;
+}
+
+/* Le placeholder (la zone cliquable avant révélation).
+   Maintenant une série de points circulaires rouges. */
+mjx-container .blank-math-answer__placeholder,
+.MathJax .blank-math-answer__placeholder {
+  position: absolute;
+  bottom: 0; /* Aligné avec la ligne de base du texte */
+  left: 0;
+  right: 0;
+  height: 3px; /* Hauteur de la zone des points */
+  background-image: radial-gradient(circle, #dc2626 1.2px, transparent 1.6px);
+  background-size: 7px 3px; /* Espacement horizontal des points */
+  background-repeat: repeat-x;
+  background-position: center;
+  opacity: 0.65;
+  transition: all 0.2s ease-in-out;
+}
+
+/* État révélé (après clic ou via le bouton "Afficher les réponses"). */
+mjx-container .blank-math-answer[data-revealed='true'],
+.MathJax .blank-math-answer[data-revealed='true'] {
+  cursor: default;
+}
+
+/* La réponse devient visible. */
+mjx-container .blank-math-answer[data-revealed='true'] .blank-math-answer__content,
+.MathJax .blank-math-answer[data-revealed='true'] .blank-math-answer__content {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Le placeholder (ligne pointillée) disparaît. */
+mjx-container .blank-math-answer[data-revealed='true'] .blank-math-answer__placeholder,
+.MathJax .blank-math-answer[data-revealed='true'] .blank-math-answer__placeholder {
+  opacity: 0;
+}
+
+/* Effet au survol (avant que la réponse ne soit révélée).
+   Les points deviennent plus gros et plus opaques. */
+mjx-container .blank-math-answer:not([data-revealed='true']):hover .blank-math-answer__placeholder,
+.MathJax .blank-math-answer:not([data-revealed='true']):hover .blank-math-answer__placeholder {
+  opacity: 1;
+  background-image: radial-gradient(circle, #c01212 1.5px, transparent 1.8px);
+  transform: translateY(1px);
+}
+
+/* Ajustement pour les maths en mode display (bloc). */
+mjx-container[display="true"] .blank-math-answer,
+.MathJax[display="true"] .blank-math-answer {
+  margin: 0 4px !important;
+  vertical-align: -3px;
+}

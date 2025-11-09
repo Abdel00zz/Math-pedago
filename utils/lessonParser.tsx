@@ -192,15 +192,6 @@ const Blank: React.FC<{ content: string }> = ({ content }) => {
         ? 'blank relative inline-flex min-w-[32px] select-none items-center justify-center rounded-md bg-indigo-50 px-2 pb-1 font-semibold text-indigo-700 transition-all duration-300 cursor-pointer hover:bg-indigo-100'
         : 'blank relative inline-flex min-w-[32px] select-none items-center justify-center px-2 pb-1 text-slate-600 transition-all duration-300 cursor-pointer hover:bg-blue-50 active:scale-95';
 
-    const renderAnswer = (hidden: boolean = false) => (
-        <span
-            className={`relative z-10 inline-flex items-center whitespace-nowrap transition-opacity duration-300 ${hidden ? 'pointer-events-none select-none opacity-0' : 'opacity-100'}`}
-            aria-hidden={hidden || undefined}
-        >
-            <MathContent content={content} inline className="blank__answer inline-flex items-center text-[0.95em]" />
-        </span>
-    );
-
     return (
         <span 
             className={containerClasses}
@@ -214,7 +205,12 @@ const Blank: React.FC<{ content: string }> = ({ content }) => {
                 }
             }}
         >
-            {renderAnswer()}
+            {/* ✅ FIX: Afficher la réponse SEULEMENT si shouldShow est true */}
+            {shouldShow && (
+                <span className="relative z-10 inline-flex items-center whitespace-nowrap">
+                    <MathContent content={content} inline className="blank__answer inline-flex items-center text-[0.95em]" />
+                </span>
+            )}
             {!shouldShow && (
                 <>
                     {/* Ligne pointillée */}

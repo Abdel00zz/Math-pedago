@@ -34,44 +34,148 @@ export const LessonProvider: React.FC<{ children: React.ReactNode; showAnswers: 
 
 const MathContentWrapper: React.FC<{ children: React.ReactNode; inline?: boolean }> = ({ children, inline = false }) => {
     const containerRef = useRef<HTMLElement | null>(null);
+    const blankHandlersRef = useRef(new Map<HTMLElement, { click: EventListener; keydown: EventListener }>());
+    const { showAnswers } = useLessonContext();
 
     useEffect(() => {
-        const el = containerRef.current;
-        if (!el) return;
+        const container = containerRef.current;
+        if (!container) return;
+
+        const detachHandlers = () => {
+            blankHandlersRef.current.forEach((handlers, element) => {
+                element.removeEventListener('click', handlers.click);
+                element.removeEventListener('keydown', handlers.keydown);
+            });
+            blankHandlersRef.current.clear();
+        };
+
+        const ensureBlankStructure = (blank: HTMLElement) => {
+            if (!blank.dataset.blankInitialized) {
+                const contentWrapper = document.createElement('span');
+                contentWrapper.className = 'blank-math-answer__content';
+                while (blank.firstChild) {
+                    contentWrapper.appendChild(blank.firstChild);
+                }
+                blank.appendChild(contentWrapper);
+
+                const placeholder = document.createElement('span');
+                placeholder.className = 'blank-math-answer__placeholder';
+                placeholder.setAttribute('aria-hidden', 'true');
+                blank.appendChild(placeholder);
+
+                blank.dataset.blankInitialized = 'true';
+            }
+
+            const contentWrapper = blank.querySelector<HTMLElement>('.blank-math-answer__content');
+            const placeholder = blank.querySelector<HTMLElement>('.blank-math-answer__placeholder');
+            return { contentWrapper, placeholder };
+        };
+
+        const applyInteractivity = () => {
+            const host = containerRef.current;
+            if (!host) return;
+
+            const blanks = Array.from(host.querySelectorAll('.blank-math-answer')) as HTMLElement[];
+
+            // Nettoyer les anciens handlers avant de recréer les interactions
+            detachHandlers();
+
+            blanks.forEach((blank, index) => {
+                const { contentWrapper, placeholder } = ensureBlankStructure(blank);
+                if (!contentWrapper || !placeholder) {
+                    return;
+                }
+
+                const rawAnswer = contentWrapper.textContent?.trim() ?? '';
+                const semanticLength = Math.max(4, Math.min(rawAnswer.replace(/\s+/g, '').length || 4, 18));
+                blank.style.setProperty('--blank-answer-length', semanticLength.toString());
+
+                const baseReveal = blank.dataset.revealed === 'true';
+                const shouldReveal = showAnswers || baseReveal;
+
+                blank.dataset.revealed = shouldReveal ? 'true' : 'false';
+                blank.classList.toggle('blank-math-answer--revealed', shouldReveal);
+                blank.setAttribute('data-blank-index', index.toString());
+
+                if (showAnswers) {
+                    blank.removeAttribute('role');
+                    blank.removeAttribute('tabindex');
+                    blank.removeAttribute('aria-label');
+                    blank.removeAttribute('aria-pressed');
+                    return;
+                }
+
+                blank.setAttribute('role', 'button');
+                blank.setAttribute('tabindex', '0');
+                blank.setAttribute('aria-pressed', shouldReveal ? 'true' : 'false');
+                blank.setAttribute('aria-label', shouldReveal ? 'Masquer la réponse' : 'Révéler la réponse');
+
+                const toggleReveal = () => {
+                    const currentlyRevealed = blank.dataset.revealed === 'true';
+                    const nextState = !currentlyRevealed;
+                    blank.dataset.revealed = nextState ? 'true' : 'false';
+                    blank.classList.toggle('blank-math-answer--revealed', nextState);
+                    blank.setAttribute('aria-pressed', nextState ? 'true' : 'false');
+                    blank.setAttribute('aria-label', nextState ? 'Masquer la réponse' : 'Révéler la réponse');
+                };
+
+                const handleKeydown = (event: KeyboardEvent) => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        toggleReveal();
+                    }
+                };
+
+                blank.addEventListener('click', toggleReveal);
+                blank.addEventListener('keydown', handleKeydown);
+                blankHandlersRef.current.set(blank, { click: toggleReveal, keydown: handleKeydown });
+            });
+        };
 
         const typeset = async () => {
-            if (!window.MathJax || !containerRef.current) return;
+            if (!window.MathJax || !containerRef.current) {
+                applyInteractivity();
+                return;
+            }
 
             try {
                 if (window.MathJax.startup?.promise) {
                     await window.MathJax.startup.promise;
                 }
 
-                const container = containerRef.current;
-                if (!container) return;
+                const currentContainer = containerRef.current;
+                if (!currentContainer) return;
 
                 if (window.MathJax.typesetClear) {
                     try {
-                        window.MathJax.typesetClear([container]);
+                        window.MathJax.typesetClear([currentContainer]);
                     } catch (e) {
-                        // Silently ignore if node doesn't exist
+                        // Silently ignore if the node vanished
                     }
                 }
 
                 if (window.MathJax.typesetPromise) {
-                    await window.MathJax.typesetPromise([container]);
+                    await window.MathJax.typesetPromise([currentContainer]);
                 }
             } catch (error) {
                 console.error('MathJax rendering error:', error);
+            } finally {
+                applyInteractivity();
             }
         };
 
-        const timeoutId = setTimeout(typeset, 50);
-        return () => clearTimeout(timeoutId);
-    }, [children]);
+        const typesetTimeout = window.setTimeout(typeset, 50);
+        const fallbackTimeout = window.setTimeout(applyInteractivity, 120);
+
+        return () => {
+            window.clearTimeout(typesetTimeout);
+            window.clearTimeout(fallbackTimeout);
+            detachHandlers();
+        };
+    }, [children, showAnswers]);
 
     const Tag = inline ? 'span' : 'div';
-    
+
     return (
         <Tag
             ref={(node) => {
@@ -167,22 +271,62 @@ const Blank: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 // PARSING DE LIGNE AVEC SUPPORT ___solution___
 // ============================================================================
 
+/**
+ * Pré-traite les blanks (___content___) dans les formules mathématiques
+ * Les convertit en commandes LaTeX \class pour éviter de briser la syntaxe MathJax
+ */
+const preprocessMathBlanks = (text: string): string => {
+    if (!text || !text.includes('___')) return text;
+
+    let result = text;
+
+    // Trouver toutes les formules mathématiques ($$...$$ et $...$)
+    // On traite d'abord $$ pour éviter les conflits avec $
+    const mathPatterns = [
+        { regex: /\$\$([\s\S]+?)\$\$/g, delimiter: '$$' },
+        { regex: /\$([^\$]+?)\$/g, delimiter: '$' }
+    ];
+
+    mathPatterns.forEach(({ regex, delimiter }) => {
+        result = result.replace(regex, (fullMatch, mathContent) => {
+            // Vérifier si cette formule contient des blanks
+            if (!mathContent.includes('___')) {
+                return fullMatch;
+            }
+
+            // Remplacer les ___content___ par \class{blank-math-answer}{content}
+            const processedMath = mathContent.replace(/___(.+?)___/g, (match: string, content: string) => {
+                // Utiliser \class de MathJax pour appliquer un style CSS personnalisé
+                // Le contenu reste dans la formule mathématique, donc MathJax le compile correctement
+                return `\\class{blank-math-answer}{${content}}`;
+            });
+
+            return delimiter + processedMath + delimiter;
+        });
+    });
+
+    return result;
+};
+
 const parseLine = (line: string): React.ReactNode => {
     if (!line || !line.trim()) return null;
+
+    // Pré-traiter pour convertir les blanks dans les formules mathématiques
+    const preprocessedLine = preprocessMathBlanks(line);
 
     const regex = /___(.+?)___|(\*\*(.+?)\*\*)/g;
     const result: React.ReactNode[] = [];
     let lastIndex = 0;
 
     let match;
-    while ((match = regex.exec(line)) !== null) {
+    while ((match = regex.exec(preprocessedLine)) !== null) {
         const fullMatch = match[0];
         const blankContent = match[1];
         const boldContent = match[3];
         const matchIndex = match.index;
 
         if (matchIndex > lastIndex) {
-            result.push(line.substring(lastIndex, matchIndex));
+            result.push(preprocessedLine.substring(lastIndex, matchIndex));
         }
 
         if (boldContent !== undefined) {
@@ -194,11 +338,11 @@ const parseLine = (line: string): React.ReactNode => {
         lastIndex = matchIndex + fullMatch.length;
     }
 
-    if (lastIndex < line.length) {
-        result.push(line.substring(lastIndex));
+    if (lastIndex < preprocessedLine.length) {
+        result.push(preprocessedLine.substring(lastIndex));
     }
 
-    return result.length === 0 ? line : result.map((part, index) => <React.Fragment key={index}>{part}</React.Fragment>);
+    return result.length === 0 ? preprocessedLine : result.map((part, index) => <React.Fragment key={index}>{part}</React.Fragment>);
 };
 
 // ============================================================================
