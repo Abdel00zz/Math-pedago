@@ -455,6 +455,164 @@ export const LessonEditor: React.FC<LessonEditorProps> = ({
         setImageModalOpen(true);
     }, []);
 
+    // Render preview mode
+    const renderPreview = () => {
+        if (!lesson) return null;
+
+        const getBoxStyles = (type: LessonElementType) => {
+            const styles: { [key: string]: string } = {
+                'definition-box': 'bg-blue-50 border-l-4 border-blue-500',
+                'theorem-box': 'bg-green-50 border-l-4 border-green-500',
+                'proposition-box': 'bg-teal-50 border-l-4 border-teal-500',
+                'property-box': 'bg-indigo-50 border-l-4 border-indigo-500',
+                'example-box': 'bg-orange-50 border-l-4 border-orange-500',
+                'remark-box': 'bg-purple-50 border-l-4 border-purple-500',
+                'practice-box': 'bg-red-50 border-l-4 border-red-500',
+                'explain-box': 'bg-cyan-50 border-l-4 border-cyan-500',
+            };
+            return styles[type] || '';
+        };
+
+        const renderElement = (element: LessonElement, idx: number) => {
+            const config = ELEMENT_CONFIGS[element.type];
+
+            if (element.type === 'p') {
+                return (
+                    <p key={idx} className="text-gray-800 leading-relaxed whitespace-pre-wrap">
+                        {element.content as string}
+                    </p>
+                );
+            }
+
+            if (element.type === 'table') {
+                // Simple table rendering (could be enhanced with proper markdown parsing)
+                return (
+                    <div key={idx} className="overflow-x-auto">
+                        <pre className="bg-gray-100 p-4 rounded-lg text-sm">{element.content as string}</pre>
+                    </div>
+                );
+            }
+
+            // Box elements
+            const boxClass = getBoxStyles(element.type);
+            const contentArray = Array.isArray(element.content) ? element.content : [];
+
+            return (
+                <div key={idx} className={`${boxClass} p-6 rounded-lg shadow-sm`}>
+                    <div className="flex items-center gap-2 mb-3">
+                        <span className="text-2xl">{config.icon}</span>
+                        <h4 className="font-bold text-lg">{config.label}</h4>
+                    </div>
+
+                    {element.preamble && (
+                        <p className="text-gray-800 mb-3 font-medium">{element.preamble}</p>
+                    )}
+
+                    {element.listType === 'bullet' ? (
+                        <ul className="space-y-2">
+                            {contentArray.map((item, i) => {
+                                if (item.startsWith('>>')) {
+                                    return <li key={i} className="list-none text-gray-700">{item.substring(2).trim()}</li>;
+                                }
+                                return (
+                                    <li key={i} className="flex items-start gap-3">
+                                        <span className="text-yellow-500 text-xl mt-0.5">⭐</span>
+                                        <span className="flex-1 text-gray-800">{item}</span>
+                                    </li>
+                                );
+                            })}
+                        </ul>
+                    ) : element.listType === 'numbered' ? (
+                        <ol className="space-y-2">
+                            {contentArray.map((item, i) => {
+                                if (item.startsWith('>>')) {
+                                    return <li key={i} className="list-none text-gray-700">{item.substring(2).trim()}</li>;
+                                }
+                                const numberCircles = ['①', '②', '③', '④', '⑤', '⑥', '⑦', '⑧', '⑨', '⑩'];
+                                const number = i < numberCircles.length ? numberCircles[i] : `${i + 1}.`;
+                                return (
+                                    <li key={i} className="flex items-start gap-3">
+                                        <span className="text-blue-600 font-bold text-lg mt-0.5">{number}</span>
+                                        <span className="flex-1 text-gray-800">{item}</span>
+                                    </li>
+                                );
+                            })}
+                        </ol>
+                    ) : (
+                        <div className="text-gray-800 whitespace-pre-wrap">
+                            {contentArray.join('\n')}
+                        </div>
+                    )}
+
+                    {/* Display image if exists */}
+                    {(element as any).image && (
+                        <div className="mt-4">
+                            <img
+                                src={(element as any).image.src}
+                                alt={(element as any).image.alt || ''}
+                                className="rounded-lg shadow-md"
+                                style={{
+                                    width: (element as any).image.width || '100%',
+                                    margin: (element as any).image.align === 'center' ? '0 auto' :
+                                           (element as any).image.align === 'right' ? '0 0 0 auto' : '0'
+                                }}
+                            />
+                            {(element as any).image.caption && (
+                                <p className="text-sm text-gray-600 italic mt-2 text-center">
+                                    {(element as any).image.caption}
+                                </p>
+                            )}
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        return (
+            <div className="flex-1 overflow-y-auto p-8 bg-gradient-to-br from-gray-50 to-blue-50">
+                <div className="max-w-5xl mx-auto bg-white rounded-xl shadow-2xl p-12">
+                    {/* Header */}
+                    <div className="mb-8 pb-6 border-b-2 border-gray-200">
+                        <h1 className="text-4xl font-bold text-gray-900 mb-2">
+                            {lesson.header.title || 'Nouvelle Leçon'}
+                        </h1>
+                        {lesson.header.subtitle && (
+                            <p className="text-xl text-gray-700 font-medium">{lesson.header.subtitle}</p>
+                        )}
+                        {lesson.header.chapter && (
+                            <p className="text-sm text-gray-600 mt-2">Chapitre: {lesson.header.chapter}</p>
+                        )}
+                    </div>
+
+                    {/* Sections */}
+                    <div className="space-y-12">
+                        {lesson.sections.map((section, sIdx) => (
+                            <div key={sIdx} className="border-l-4 border-blue-500 pl-6">
+                                <h2 className="text-3xl font-bold text-gray-900 mb-4">{section.title}</h2>
+
+                                {section.intro && (
+                                    <p className="text-gray-800 mb-6 leading-relaxed">{section.intro}</p>
+                                )}
+
+                                {section.subsections.map((subsection, ssIdx) => (
+                                    <div key={ssIdx} className="mb-8">
+                                        <h3 className="text-2xl font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-300">
+                                            {subsection.title}
+                                        </h3>
+
+                                        <div className="space-y-5">
+                                            {subsection.elements.map((element, eIdx) => renderElement(element, eIdx))}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        );
+    };
+
     const handleImageUpload = useCallback(async (imageConfig: ImageConfig) => {
         if (!dirHandle || !imageTargetPath) {
             alert('Aucun répertoire de projet disponible');
@@ -575,11 +733,15 @@ export const LessonEditor: React.FC<LessonEditorProps> = ({
                 <div className="flex items-center gap-3">
                     <button
                         onClick={() => setPreviewMode(!previewMode)}
-                        className="px-4 py-2 bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100 hover:shadow-md flex items-center gap-2 font-medium transition-all"
+                        className={`px-5 py-2.5 rounded-lg hover:shadow-lg flex items-center gap-2 font-semibold transition-all ${
+                            previewMode
+                                ? 'bg-gradient-to-r from-purple-600 to-purple-700 text-white hover:from-purple-700 hover:to-purple-800'
+                                : 'bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800'
+                        }`}
                         disabled={!lesson}
                     >
                         <EyeIcon className="w-5 h-5" />
-                        {previewMode ? 'Éditer' : 'Aperçu'}
+                        {previewMode ? '✏️ Mode Édition' : '👁️ Mode Aperçu'}
                     </button>
                     <button
                         onClick={saveLesson}
@@ -623,48 +785,53 @@ export const LessonEditor: React.FC<LessonEditorProps> = ({
             {/* Main Content - Only render if lesson is loaded */}
             {!isLoading && lesson && (
             <div className="flex-1 overflow-hidden flex">
+                {/* Preview Mode */}
+                {previewMode ? (
+                    renderPreview()
+                ) : (
+                    <>
                 {/* Left Panel - Structure */}
-                <div className="w-80 bg-gray-50 border-r border-gray-200 flex flex-col">
-                    <div className="p-4 border-b border-gray-200 bg-white">
-                        <h2 className="font-bold text-gray-900 mb-3 text-base">En-tête de la Leçon</h2>
-                        <div className="space-y-2.5">
+                <div className="w-96 bg-gray-50 border-r border-gray-200 flex flex-col">
+                    <div className="p-5 border-b border-gray-200 bg-white">
+                        <h2 className="font-bold text-gray-900 mb-4 text-lg">En-tête de la Leçon</h2>
+                        <div className="space-y-3">
                             <input
                                 type="text"
                                 value={lesson.header.title}
                                 onChange={(e) => updateHeader('title', e.target.value)}
                                 placeholder="Titre de la leçon"
-                                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900 bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm font-medium"
+                                className="w-full px-4 py-2.5 border-2 border-gray-300 rounded-lg text-gray-900 bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-base font-medium"
                             />
                             <input
                                 type="text"
                                 value={lesson.header.subtitle || ''}
                                 onChange={(e) => updateHeader('subtitle', e.target.value)}
                                 placeholder="Sous-titre"
-                                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900 bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                                className="w-full px-4 py-2.5 border-2 border-gray-300 rounded-lg text-gray-900 bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-sm"
                             />
                             <input
                                 type="text"
                                 value={lesson.header.chapter || ''}
                                 onChange={(e) => updateHeader('chapter', e.target.value)}
                                 placeholder="Chapitre"
-                                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900 bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                                className="w-full px-4 py-2.5 border-2 border-gray-300 rounded-lg text-gray-900 bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-sm"
                             />
                         </div>
                     </div>
 
-                    <div className="flex-1 overflow-y-auto p-4">
-                        <div className="flex items-center justify-between mb-3">
-                            <h2 className="font-bold text-gray-900 text-base">Structure du Contenu</h2>
+                    <div className="flex-1 overflow-y-auto p-5">
+                        <div className="flex items-center justify-between mb-4">
+                            <h2 className="font-bold text-gray-900 text-lg">Structure du Contenu</h2>
                             <button
                                 onClick={addSection}
-                                className="p-1.5 rounded-lg hover:bg-blue-50 text-blue-600 transition-colors"
+                                className="p-2 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-600 transition-all hover:shadow-md"
                                 title="Ajouter une section"
                             >
-                                <PlusIcon className="w-5 h-5" />
+                                <PlusIcon className="w-6 h-6" />
                             </button>
                         </div>
 
-                        <div className="space-y-2">
+                        <div className="space-y-3">
                             {lesson.sections.map((section, sIdx) => (
                                 <div key={sIdx} className="border border-gray-300 rounded-lg group/section bg-white shadow-sm">
                                     <div
@@ -791,17 +958,17 @@ export const LessonEditor: React.FC<LessonEditorProps> = ({
                 </div>
 
                 {/* Right Panel - Editor */}
-                <div className="flex-1 overflow-y-auto p-6 bg-gray-50">
-                    <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-sm p-6">
+                <div className="flex-1 overflow-y-auto p-8 bg-gray-50">
+                    <div className="max-w-6xl mx-auto bg-white rounded-xl shadow-lg p-10">
                         <h1 className="text-3xl font-bold text-gray-900 mb-2">{lesson.header.title || 'Nouvelle Leçon'}</h1>
                         {lesson.header.subtitle && (
                             <p className="text-lg text-gray-900 mb-4 font-medium">{lesson.header.subtitle}</p>
                         )}
 
-                        <div className="mt-8 space-y-8">
+                        <div className="mt-10 space-y-12">
                             {lesson.sections.map((section, sIdx) => (
-                                <div key={sIdx} className="border-l-4 border-blue-500 pl-4">
-                                    <h2 className="text-2xl font-bold text-gray-900 mb-4">{section.title}</h2>
+                                <div key={sIdx} className="border-l-4 border-blue-500 pl-6 py-2">
+                                    <h2 className="text-3xl font-bold text-gray-900 mb-6">{section.title}</h2>
                                     
                                     {/* Intro section (texte sans cadre) */}
                                     {section.intro !== undefined && (
@@ -839,65 +1006,65 @@ export const LessonEditor: React.FC<LessonEditorProps> = ({
                                     )}
 
                                     {section.subsections.map((subsection, ssIdx) => (
-                                        <div 
-                                            key={ssIdx} 
-                                            className="mb-6"
+                                        <div
+                                            key={ssIdx}
+                                            className="mb-10 p-4 bg-gray-50/50 rounded-lg"
                                             ref={el => elementRefs.current[`s${sIdx}-ss${ssIdx}`] = el}
                                         >
-                                            <h3 className="text-xl font-semibold text-gray-900 mb-3">{subsection.title}</h3>
+                                            <h3 className="text-2xl font-semibold text-gray-900 mb-5 pb-2 border-b-2 border-gray-200">{subsection.title}</h3>
 
-                                            <div className="space-y-4">
+                                            <div className="space-y-6">
                                                 {subsection.elements.map((element, eIdx) => {
                                                     const config = ELEMENT_CONFIGS[element.type];
                                                     const elementPath = `s${sIdx}-ss${ssIdx}-e${eIdx}`;
                                                     return (
-                                                        <div 
-                                                            key={eIdx} 
-                                                            className="border border-gray-200 rounded-lg p-4 transition-colors"
+                                                        <div
+                                                            key={eIdx}
+                                                            className="border-2 border-gray-200 rounded-xl p-6 transition-all hover:border-blue-300 hover:shadow-md bg-white"
                                                             ref={el => elementRefs.current[elementPath] = el}
                                                         >
-                                                            <div className="flex items-center justify-between mb-3">
-                                                                <span className="flex items-center gap-2 font-medium text-sm">
-                                                                    <span>{config.icon}</span>
+                                                            <div className="flex items-center justify-between mb-4">
+                                                                <span className="flex items-center gap-3 font-semibold text-base">
+                                                                    <span className="text-2xl">{config.icon}</span>
                                                                     <span>{config.label}</span>
                                                                 </span>
-                                                                <div className="flex items-center gap-1">
+                                                                <div className="flex items-center gap-2">
                                                                     {/* Move Up Button */}
                                                                     <button
                                                                         onClick={() => moveElementUp(sIdx, ssIdx, eIdx)}
                                                                         disabled={eIdx === 0}
-                                                                        className="p-1 rounded hover:bg-gray-100 text-gray-600 disabled:opacity-30 disabled:cursor-not-allowed"
+                                                                        className="p-2 rounded-lg hover:bg-blue-50 text-blue-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all border border-transparent hover:border-blue-300"
                                                                         title="Déplacer vers le haut"
                                                                     >
-                                                                        <span className="text-lg">▲</span>
+                                                                        <span className="text-xl">▲</span>
                                                                     </button>
                                                                     {/* Move Down Button */}
                                                                     <button
                                                                         onClick={() => moveElementDown(sIdx, ssIdx, eIdx)}
                                                                         disabled={eIdx === subsection.elements.length - 1}
-                                                                        className="p-1 rounded hover:bg-gray-100 text-gray-600 disabled:opacity-30 disabled:cursor-not-allowed"
+                                                                        className="p-2 rounded-lg hover:bg-blue-50 text-blue-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all border border-transparent hover:border-blue-300"
                                                                         title="Déplacer vers le bas"
                                                                     >
-                                                                        <span className="text-lg">▼</span>
+                                                                        <span className="text-xl">▼</span>
                                                                     </button>
                                                                     {/* Image Button - Shows if image exists */}
                                                                     <button
                                                                         onClick={() => openImageModal(sIdx, ssIdx, eIdx)}
-                                                                        className={`p-1 rounded transition-colors ${
-                                                                            (element as any).image 
-                                                                                ? 'bg-blue-100 text-blue-700 hover:bg-blue-200' 
-                                                                                : 'hover:bg-blue-50 text-blue-600'
+                                                                        className={`p-2 rounded-lg transition-all border ${
+                                                                            (element as any).image
+                                                                                ? 'bg-blue-100 text-blue-700 hover:bg-blue-200 border-blue-300'
+                                                                                : 'hover:bg-purple-50 text-purple-600 border-transparent hover:border-purple-300'
                                                                         }`}
                                                                         title={(element as any).image ? "Remplacer l'image" : "Ajouter une image"}
                                                                     >
-                                                                        <ImageIcon className="w-4 h-4" />
+                                                                        <ImageIcon className="w-5 h-5" />
                                                                     </button>
                                                                     {/* Delete Button */}
                                                                     <button
                                                                         onClick={() => deleteElement(sIdx, ssIdx, eIdx)}
-                                                                        className="p-1 rounded hover:bg-red-50 text-red-600"
+                                                                        className="p-2 rounded-lg hover:bg-red-50 text-red-600 border border-transparent hover:border-red-300 transition-all"
                                                                     >
-                                                                        <TrashIcon className="w-4 h-4" />
+                                                                        <TrashIcon className="w-5 h-5" />
                                                                     </button>
                                                                 </div>
                                                             </div>
@@ -1048,15 +1215,17 @@ export const LessonEditor: React.FC<LessonEditorProps> = ({
                                                     );
                                                 })}
 
-                                                <div className="flex gap-2">
+                                                <div className="flex flex-wrap gap-3 mt-6 p-4 bg-gradient-to-br from-gray-50 to-blue-50 rounded-xl border-2 border-dashed border-gray-300">
+                                                    <p className="w-full text-sm font-semibold text-gray-700 mb-2">➕ Ajouter un élément :</p>
                                                     {Object.entries(ELEMENT_CONFIGS).map(([type, config]) => (
                                                         <button
                                                             key={type}
                                                             onClick={() => addElement(sIdx, ssIdx, type as LessonElementType)}
-                                                            className="px-3 py-1.5 text-sm bg-gray-100 hover:bg-gray-200 rounded flex items-center gap-1"
+                                                            className="px-4 py-2.5 text-sm font-medium bg-white hover:bg-blue-50 border-2 border-gray-200 hover:border-blue-400 rounded-lg flex items-center gap-2 shadow-sm hover:shadow-md transition-all"
                                                             title={`Ajouter ${config.label}`}
                                                         >
-                                                            <span>{config.icon}</span>
+                                                            <span className="text-lg">{config.icon}</span>
+                                                            <span>{config.label}</span>
                                                         </button>
                                                     ))}
                                                 </div>
@@ -1068,9 +1237,11 @@ export const LessonEditor: React.FC<LessonEditorProps> = ({
                         </div>
                     </div>
                 </div>
+                    </>
+                )}
             </div>
             )}
-            
+
             {/* Image Upload Modal */}
             <ImageUploadModal 
                 isOpen={imageModalOpen}

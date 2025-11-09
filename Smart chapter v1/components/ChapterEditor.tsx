@@ -34,43 +34,43 @@ export const ChapterEditor: React.FC<ChapterEditorProps> = ({ chapter, onClose, 
     };
 
     const InfoTab: React.FC = () => (
-        <div className="space-y-6 p-6">
+        <div className="space-y-8 p-8 max-w-4xl">
             <div>
-                <label className="block text-sm font-semibold text-gray-900 mb-2">
+                <label className="block text-base font-semibold text-gray-900 mb-3">
                     Nom du Chapitre
                 </label>
                 <input
                     type="text"
                     value={editedChapter.chapter_name}
                     onChange={(e) => setEditedChapter(c => ({...c, chapter_name: e.target.value}))}
-                    className="block w-full px-4 py-2.5 text-gray-900 bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                    className="block w-full px-5 py-3.5 text-lg text-gray-900 bg-white border-2 border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
                     placeholder="Ex: Logique mathématique"
                 />
             </div>
             <div>
-                <label className="block text-sm font-semibold text-gray-900 mb-2">
+                <label className="block text-base font-semibold text-gray-900 mb-3">
                     Fichier de Leçon (optionnel)
                 </label>
                 <input
                     type="text"
                     value={editedChapter.lessonFile || ''}
                     onChange={(e) => setEditedChapter(c => ({...c, lessonFile: e.target.value || undefined}))}
-                    className="block w-full px-4 py-2.5 text-gray-900 bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                    className="block w-full px-5 py-3.5 text-base text-gray-900 bg-white border-2 border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
                     placeholder="lessons/logique_mathematique.json"
                 />
-                <p className="mt-2 text-xs text-gray-600">
-                    Chemin relatif vers le fichier JSON de la leçon pour ce chapitre
+                <p className="mt-3 text-sm text-gray-600 bg-blue-50 p-3 rounded-lg border border-blue-100">
+                    💡 Chemin relatif vers le fichier JSON de la leçon pour ce chapitre
                 </p>
             </div>
             <div>
-                <label className="block text-sm font-semibold text-gray-900 mb-2">
+                <label className="block text-base font-semibold text-gray-900 mb-3">
                     Dates des Séances (format ISO 8601)
                 </label>
                 <textarea
-                    rows={4}
+                    rows={6}
                     value={editedChapter.session_dates.join('\n')}
                     onChange={(e) => setEditedChapter(c => ({...c, session_dates: e.target.value.split('\n').filter(d => d.trim() !== '')}))}
-                    className="block w-full px-4 py-2.5 text-gray-900 bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors font-mono text-sm"
+                    className="block w-full px-5 py-3.5 text-base text-gray-900 bg-white border-2 border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all font-mono"
                     placeholder="2025-09-01T14:00:00Z&#10;2025-09-08T14:00:00Z"
                 />
             </div>
@@ -86,8 +86,8 @@ export const ChapterEditor: React.FC<ChapterEditorProps> = ({ chapter, onClose, 
     ];
 
     return (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 flex items-center justify-center p-4" onClick={onClose}>
-            <div className="bg-white rounded-xl shadow-2xl w-full max-w-7xl h-[92vh] flex flex-col overflow-hidden" onClick={e => e.stopPropagation()}>
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 flex items-center justify-center p-3" onClick={onClose}>
+            <div className="bg-white rounded-xl shadow-2xl w-full max-w-[98vw] h-[96vh] flex flex-col overflow-hidden" onClick={e => e.stopPropagation()}>
                 {/* Header */}
                 <header className="flex justify-between items-center px-6 py-4 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-white">
                     <div>
@@ -108,19 +108,19 @@ export const ChapterEditor: React.FC<ChapterEditorProps> = ({ chapter, onClose, 
                 {/* Content */}
                 <div className="flex-grow flex overflow-hidden">
                     {/* Sidebar Navigation */}
-                    <aside className="w-56 bg-gray-50 border-r border-gray-200 p-3">
-                        <nav className="flex flex-col space-y-1">
+                    <aside className="w-64 bg-gray-50 border-r border-gray-200 p-4">
+                        <nav className="flex flex-col space-y-2">
                             {tabs.map(tab => (
                                 <button
                                     key={tab.id}
                                     onClick={() => setActiveTab(tab.id)}
-                                    className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all ${
-                                        activeTab === tab.id 
-                                            ? 'bg-blue-600 text-white shadow-md' 
-                                            : 'text-gray-700 hover:bg-white hover:shadow-sm'
+                                    className={`flex items-center gap-3 px-5 py-4 rounded-lg text-base font-medium transition-all ${
+                                        activeTab === tab.id
+                                            ? 'bg-blue-600 text-white shadow-lg scale-105'
+                                            : 'text-gray-700 hover:bg-white hover:shadow-md hover:scale-102'
                                     }`}
                                 >
-                                    <tab.icon className={`w-5 h-5 ${activeTab === tab.id ? 'text-white' : 'text-gray-500'}`} />
+                                    <tab.icon className={`w-6 h-6 ${activeTab === tab.id ? 'text-white' : 'text-gray-500'}`} />
                                     <span>{tab.name}</span>
                                 </button>
                             ))}
