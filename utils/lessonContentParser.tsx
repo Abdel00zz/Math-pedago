@@ -167,22 +167,62 @@ const Blank: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 // PARSING DE LIGNE AVEC SUPPORT ___solution___
 // ============================================================================
 
+/**
+ * Pré-traite les blanks (___content___) dans les formules mathématiques
+ * Les convertit en commandes LaTeX \class pour éviter de briser la syntaxe MathJax
+ */
+const preprocessMathBlanks = (text: string): string => {
+    if (!text || !text.includes('___')) return text;
+
+    let result = text;
+
+    // Trouver toutes les formules mathématiques ($$...$$ et $...$)
+    // On traite d'abord $$ pour éviter les conflits avec $
+    const mathPatterns = [
+        { regex: /\$\$([\s\S]+?)\$\$/g, delimiter: '$$' },
+        { regex: /\$([^\$]+?)\$/g, delimiter: '$' }
+    ];
+
+    mathPatterns.forEach(({ regex, delimiter }) => {
+        result = result.replace(regex, (fullMatch, mathContent) => {
+            // Vérifier si cette formule contient des blanks
+            if (!mathContent.includes('___')) {
+                return fullMatch;
+            }
+
+            // Remplacer les ___content___ par \class{blank-math-answer}{content}
+            const processedMath = mathContent.replace(/___(.+?)___/g, (match: string, content: string) => {
+                // Utiliser \class de MathJax pour appliquer un style CSS personnalisé
+                // Le contenu reste dans la formule mathématique, donc MathJax le compile correctement
+                return `\\class{blank-math-answer}{${content}}`;
+            });
+
+            return delimiter + processedMath + delimiter;
+        });
+    });
+
+    return result;
+};
+
 const parseLine = (line: string): React.ReactNode => {
     if (!line || !line.trim()) return null;
+
+    // Pré-traiter pour convertir les blanks dans les formules mathématiques
+    const preprocessedLine = preprocessMathBlanks(line);
 
     const regex = /___(.+?)___|(\*\*(.+?)\*\*)/g;
     const result: React.ReactNode[] = [];
     let lastIndex = 0;
 
     let match;
-    while ((match = regex.exec(line)) !== null) {
+    while ((match = regex.exec(preprocessedLine)) !== null) {
         const fullMatch = match[0];
         const blankContent = match[1];
         const boldContent = match[3];
         const matchIndex = match.index;
 
         if (matchIndex > lastIndex) {
-            result.push(line.substring(lastIndex, matchIndex));
+            result.push(preprocessedLine.substring(lastIndex, matchIndex));
         }
 
         if (boldContent !== undefined) {
@@ -194,11 +234,11 @@ const parseLine = (line: string): React.ReactNode => {
         lastIndex = matchIndex + fullMatch.length;
     }
 
-    if (lastIndex < line.length) {
-        result.push(line.substring(lastIndex));
+    if (lastIndex < preprocessedLine.length) {
+        result.push(preprocessedLine.substring(lastIndex));
     }
 
-    return result.length === 0 ? line : result.map((part, index) => <React.Fragment key={index}>{part}</React.Fragment>);
+    return result.length === 0 ? preprocessedLine : result.map((part, index) => <React.Fragment key={index}>{part}</React.Fragment>);
 };
 
 // ============================================================================

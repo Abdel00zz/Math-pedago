@@ -811,3 +811,42 @@
     line-height: 1.5;
   }
 }
+
+/* ========================================
+   FILL IN BLANK DANS LES FORMULES MATHÉMATIQUES
+   Style pour les blanks (___content___) dans les formules LaTeX
+   ======================================== */
+
+/* Style global pour les blanks dans les formules mathématiques */
+mjx-container .blank-math-answer,
+.MathJax .blank-math-answer {
+  /* Bordure et fond similaires aux blanks normaux */
+  border-bottom: 3px dotted #dc2626 !important;
+  padding: 2px 6px !important;
+  background: linear-gradient(to bottom, transparent 0%, rgba(254, 242, 242, 0.4) 100%) !important;
+  border-radius: 4px !important;
+  color: #dc2626 !important;
+  font-weight: 600 !important;
+  display: inline-block !important;
+  margin: 0 2px !important;
+}
+
+/* Animation pour les blanks mathématiques révélés via showAnswers */
+mjx-container .blank-math-answer.revealed,
+.MathJax .blank-math-answer.revealed {
+  animation: reveal-answer 0.4s ease-out;
+  background: rgba(254, 242, 242, 0.8) !important;
+}
+
+/* Support pour les équations en display mode ($$...$$) */
+mjx-container[display="true"] .blank-math-answer {
+  padding: 4px 8px !important;
+  margin: 0 4px !important;
+}
+
+/* Hover effect pour les blanks mathématiques */
+mjx-container .blank-math-answer:hover,
+.MathJax .blank-math-answer:hover {
+  background: rgba(254, 242, 242, 0.7) !important;
+  border-bottom-color: #b91c1c !important;
+}
