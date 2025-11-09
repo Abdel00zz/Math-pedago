@@ -36,6 +36,39 @@ interface RichTextEditorProps {
  */
 const LivePreview: React.FC<{ content: string }> = ({ content }) => {
     const previewRef = useRef<HTMLDivElement>(null);
+    const [katexReady, setKatexReady] = useState(false);
+
+    // Détecter quand KaTeX est disponible
+    useEffect(() => {
+        const checkKatex = () => {
+            if (window.renderMathInElement) {
+                setKatexReady(true);
+                return true;
+            }
+            return false;
+        };
+
+        // Vérifier immédiatement
+        if (checkKatex()) return;
+
+        // Sinon, vérifier périodiquement
+        const interval = setInterval(() => {
+            if (checkKatex()) {
+                clearInterval(interval);
+            }
+        }, 100);
+
+        // Nettoyer après 5 secondes
+        const timeout = setTimeout(() => {
+            clearInterval(interval);
+            console.warn('KaTeX non disponible après 5 secondes');
+        }, 5000);
+
+        return () => {
+            clearInterval(interval);
+            clearTimeout(timeout);
+        };
+    }, []);
 
     useEffect(() => {
         const el = previewRef.current;
@@ -81,10 +114,8 @@ const LivePreview: React.FC<{ content: string }> = ({ content }) => {
 
         el.innerHTML = processed || '<span style="color: #9ca3af;">Aperçu...</span>';
 
-        // Appliquer KaTeX
-        const renderMath = () => {
-            if (!window.renderMathInElement || !el) return;
-
+        // Appliquer KaTeX si disponible
+        if (katexReady && window.renderMathInElement) {
             try {
                 window.renderMathInElement(el, {
                     delimiters: [
@@ -92,26 +123,14 @@ const LivePreview: React.FC<{ content: string }> = ({ content }) => {
                         { left: '$', right: '$', display: false }
                     ],
                     throwOnError: false,
-                    errorColor: '#cc0000'
+                    errorColor: '#cc0000',
+                    strict: false
                 });
             } catch (error) {
-                console.error('KaTeX error:', error);
+                console.error('Erreur KaTeX:', error);
             }
-        };
-
-        // Attendre que KaTeX soit chargé
-        if (window.renderMathInElement) {
-            renderMath();
-        } else {
-            const checkKatex = setInterval(() => {
-                if (window.renderMathInElement) {
-                    clearInterval(checkKatex);
-                    renderMath();
-                }
-            }, 50);
-            setTimeout(() => clearInterval(checkKatex), 2000);
         }
-    }, [content]);
+    }, [content, katexReady]);
 
     return (
         <div

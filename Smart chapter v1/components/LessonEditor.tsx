@@ -127,6 +127,11 @@ export const LessonEditor: React.FC<LessonEditorProps> = ({
     const [imageModalOpen, setImageModalOpen] = useState(false);
     const [imageTargetPath, setImageTargetPath] = useState<{ sIdx: number; ssIdx: number; eIdx: number } | null>(null);
 
+    // Interface moderne avec onglets
+    const [activeTab, setActiveTab] = useState<'lesson' | 'quiz' | 'exercises' | 'videos'>('lesson');
+    const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+    const [sidebarSection, setSidebarSection] = useState<'header' | 'structure' | null>('header');
+
     // Charger la leçon depuis le fichier
     useEffect(() => {
         const loadLesson = async () => {
@@ -623,49 +628,137 @@ export const LessonEditor: React.FC<LessonEditorProps> = ({
 
             {/* Main Content - Only render if lesson is loaded */}
             {!isLoading && lesson && (
-            <div className="flex-1 overflow-hidden flex">
-                {/* Left Panel - Structure */}
-                <div className="w-80 bg-gray-50 border-r border-gray-200 flex flex-col">
-                    <div className="p-4 border-b border-gray-200 bg-white">
-                        <h2 className="font-bold text-gray-900 mb-3 text-base">En-tête de la Leçon</h2>
-                        <div className="space-y-2.5">
-                            <input
-                                type="text"
-                                value={lesson.header.title}
-                                onChange={(e) => updateHeader('title', e.target.value)}
-                                placeholder="Titre de la leçon"
-                                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900 bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm font-medium"
-                            />
-                            <input
-                                type="text"
-                                value={lesson.header.subtitle || ''}
-                                onChange={(e) => updateHeader('subtitle', e.target.value)}
-                                placeholder="Sous-titre"
-                                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900 bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-                            />
-                            <input
-                                type="text"
-                                value={lesson.header.chapter || ''}
-                                onChange={(e) => updateHeader('chapter', e.target.value)}
-                                placeholder="Chapitre"
-                                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900 bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-                            />
-                        </div>
+            <div className="flex-1 overflow-hidden flex flex-col">
+                {/* Onglets horizontaux */}
+                <div className="bg-white border-b-2 border-gray-200">
+                    <div className="flex items-center px-6">
+                        <button
+                            onClick={() => setActiveTab('lesson')}
+                            className={`px-6 py-3 font-semibold text-sm border-b-3 transition-all ${
+                                activeTab === 'lesson'
+                                    ? 'border-blue-600 text-blue-700 bg-blue-50'
+                                    : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                            }`}
+                        >
+                            📖 Leçon
+                        </button>
+                        <button
+                            onClick={() => setActiveTab('quiz')}
+                            className={`px-6 py-3 font-semibold text-sm border-b-3 transition-all ${
+                                activeTab === 'quiz'
+                                    ? 'border-blue-600 text-blue-700 bg-blue-50'
+                                    : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                            }`}
+                            disabled
+                        >
+                            🎯 Quiz
+                        </button>
+                        <button
+                            onClick={() => setActiveTab('exercises')}
+                            className={`px-6 py-3 font-semibold text-sm border-b-3 transition-all ${
+                                activeTab === 'exercises'
+                                    ? 'border-blue-600 text-blue-700 bg-blue-50'
+                                    : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                            }`}
+                            disabled
+                        >
+                            ✏️ Exercices
+                        </button>
+                        <button
+                            onClick={() => setActiveTab('videos')}
+                            className={`px-6 py-3 font-semibold text-sm border-b-3 transition-all ${
+                                activeTab === 'videos'
+                                    ? 'border-blue-600 text-blue-700 bg-blue-50'
+                                    : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                            }`}
+                            disabled
+                        >
+                            🎥 Vidéos
+                        </button>
                     </div>
+                </div>
 
-                    <div className="flex-1 overflow-y-auto p-4">
-                        <div className="flex items-center justify-between mb-3">
-                            <h2 className="font-bold text-gray-900 text-base">Structure du Contenu</h2>
-                            <button
-                                onClick={addSection}
-                                className="p-1.5 rounded-lg hover:bg-blue-50 text-blue-600 transition-colors"
-                                title="Ajouter une section"
-                            >
-                                <PlusIcon className="w-5 h-5" />
-                            </button>
-                        </div>
+                {/* Container principal avec sidebar + contenu */}
+                <div className="flex-1 overflow-hidden flex">
+                    {/* Sidebar collapsible */}
+                    <div className={`${sidebarCollapsed ? 'w-12' : 'w-80'} bg-white border-r-2 border-gray-300 flex flex-col transition-all duration-300 shadow-lg`}>
+                        {/* Bouton toggle */}
+                        <button
+                            onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+                            className="p-3 border-b-2 border-gray-300 hover:bg-gray-100 transition-colors flex items-center justify-center"
+                            title={sidebarCollapsed ? 'Développer' : 'Réduire'}
+                        >
+                            <span className="material-symbols-outlined text-gray-700" style={{ fontSize: '24px' }}>
+                                {sidebarCollapsed ? 'chevron_right' : 'chevron_left'}
+                            </span>
+                        </button>
 
-                        <div className="space-y-2">
+                        {!sidebarCollapsed && (
+                            <>
+                                {/* En-tête */}
+                                <div className={`${sidebarSection === 'header' ? 'block' : 'hidden'}`}>
+                                    <div className="p-4 border-b-2 border-gray-200 bg-gradient-to-r from-blue-50 to-white">
+                                        <button
+                                            onClick={() => setSidebarSection(sidebarSection === 'header' ? null : 'header')}
+                                            className="w-full flex items-center justify-between"
+                                        >
+                                            <h2 className="font-bold text-gray-900 text-base flex items-center gap-2">
+                                                <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>description</span>
+                                                En-tête de la Leçon
+                                            </h2>
+                                            <span className="material-symbols-outlined text-gray-600" style={{ fontSize: '20px' }}>
+                                                {sidebarSection === 'header' ? 'expand_less' : 'expand_more'}
+                                            </span>
+                                        </button>
+                                    </div>
+                                    {sidebarSection === 'header' && (
+                                        <div className="p-4 space-y-3">
+                                            <input
+                                                type="text"
+                                                value={lesson.header.title}
+                                                onChange={(e) => updateHeader('title', e.target.value)}
+                                                placeholder="Titre de la leçon"
+                                                className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg text-gray-900 bg-white focus:ring-2 focus:ring-blue-600 focus:border-blue-600 text-sm font-semibold"
+                                            />
+                                            <input
+                                                type="text"
+                                                value={lesson.header.subtitle || ''}
+                                                onChange={(e) => updateHeader('subtitle', e.target.value)}
+                                                placeholder="Sous-titre"
+                                                className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg text-gray-900 bg-white focus:ring-2 focus:ring-blue-600 focus:border-blue-600 text-sm"
+                                            />
+                                            <input
+                                                type="text"
+                                                value={lesson.header.chapter || ''}
+                                                onChange={(e) => updateHeader('chapter', e.target.value)}
+                                                placeholder="Chapitre"
+                                                className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg text-gray-900 bg-white focus:ring-2 focus:ring-blue-600 focus:border-blue-600 text-sm"
+                                            />
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* Structure - Toujours visible */}
+                                <div className="flex-1 overflow-y-auto">
+                                    <div className="p-4 border-b-2 border-gray-200 bg-gradient-to-r from-green-50 to-white">
+                                        <h2 className="font-bold text-gray-900 text-base flex items-center gap-2">
+                                            <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>account_tree</span>
+                                            Structure du Contenu
+                                        </h2>
+                                    </div>
+                                    <div className="p-4">
+                                        <div className="flex items-center justify-between mb-3">
+                                            <button
+                                                onClick={addSection}
+                                                className="w-full px-4 py-2 rounded-lg bg-green-600 hover:bg-green-700 text-white font-semibold transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+                                                title="Ajouter une section"
+                                            >
+                                                <PlusIcon className="w-5 h-5" />
+                                                Nouvelle Section
+                                            </button>
+                                        </div>
+
+                                        <div className="space-y-2">
                             {lesson.sections.map((section, sIdx) => (
                                 <div key={sIdx} className="border border-gray-300 rounded-lg group/section bg-white shadow-sm">
                                     <div
@@ -790,271 +883,266 @@ export const LessonEditor: React.FC<LessonEditorProps> = ({
                         </div>
                     </div>
                 </div>
-
-                {/* Right Panel - Editor */}
-                <div className="flex-1 overflow-y-auto p-6 bg-gray-50">
-                    <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-sm p-6">
-                        <h1 className="text-3xl font-bold text-gray-900 mb-2">{lesson.header.title || 'Nouvelle Leçon'}</h1>
-                        {lesson.header.subtitle && (
-                            <p className="text-lg text-gray-900 mb-4 font-medium">{lesson.header.subtitle}</p>
+                            </>
                         )}
+                    </div>
 
-                        <div className="mt-8 space-y-8">
-                            {lesson.sections.map((section, sIdx) => (
-                                <div key={sIdx} className="border-l-4 border-blue-500 pl-4">
-                                    <h2 className="text-2xl font-bold text-gray-900 mb-4">{section.title}</h2>
-                                    
-                                    {/* Intro section (texte sans cadre) */}
-                                    {section.intro !== undefined && (
-                                        <div className="mb-4 p-3 bg-gray-50 border border-gray-200 rounded-lg">
-                                            <label className="block text-xs font-semibold text-gray-700 mb-2 uppercase tracking-wide">
-                                                📄 Texte Introductif (sans cadre)
-                                            </label>
-                                            <RichTextEditor
-                                                value={section.intro}
-                                                onChange={(value) => {
-                                                    const newLesson = { ...lesson };
-                                                    newLesson.sections[sIdx].intro = value;
-                                                    setLesson(newLesson);
-                                                    saveToHistory(newLesson);
-                                                }}
-                                                placeholder="Ce texte apparaîtra après le titre, sans encadrement..."
-                                                rows={3}
-                                                elementType="intro"
-                                            />
-                                        </div>
-                                    )}
-                                    {!section.intro && (
-                                        <button
-                                            onClick={() => {
+                    {/* Zone principale d'édition */}
+                    <div className="flex-1 overflow-y-auto p-6 bg-gray-50">
+                        {lesson.sections.map((section, sIdx) => (
+                            <div key={sIdx} className="border-l-4 border-blue-500 pl-4 mb-8">
+                                <h2 className="text-2xl font-bold text-gray-900 mb-4">{section.title}</h2>
+
+                                {/* Intro section (texte sans cadre) */}
+                                {section.intro !== undefined && (
+                                    <div className="mb-4 p-3 bg-gray-50 border border-gray-200 rounded-lg">
+                                        <label className="block text-xs font-semibold text-gray-700 mb-2 uppercase tracking-wide">
+                                            📄 Texte Introductif (sans cadre)
+                                        </label>
+                                        <RichTextEditor
+                                            value={section.intro}
+                                            onChange={(value) => {
                                                 const newLesson = { ...lesson };
-                                                newLesson.sections[sIdx].intro = '';
+                                                newLesson.sections[sIdx].intro = value;
                                                 setLesson(newLesson);
                                                 saveToHistory(newLesson);
                                             }}
-                                            className="mb-4 px-3 py-1.5 text-xs bg-blue-50 hover:bg-blue-100 text-blue-700 rounded flex items-center gap-2 transition-colors"
-                                        >
-                                            <PlusIcon className="w-3 h-3" />
-                                            Ajouter un texte introductif
-                                        </button>
-                                    )}
+                                            placeholder="Ce texte apparaîtra après le titre, sans encadrement..."
+                                            rows={3}
+                                            elementType="intro"
+                                        />
+                                    </div>
+                                )}
+                                {!section.intro && (
+                                    <button
+                                        onClick={() => {
+                                            const newLesson = { ...lesson };
+                                            newLesson.sections[sIdx].intro = '';
+                                            setLesson(newLesson);
+                                            saveToHistory(newLesson);
+                                        }}
+                                        className="mb-4 px-3 py-1.5 text-xs bg-blue-50 hover:bg-blue-100 text-blue-700 rounded flex items-center gap-2 transition-colors"
+                                    >
+                                        <PlusIcon className="w-3 h-3" />
+                                        Ajouter un texte introductif
+                                    </button>
+                                )}
 
-                                    {section.subsections.map((subsection, ssIdx) => (
-                                        <div 
-                                            key={ssIdx} 
-                                            className="mb-6"
-                                            ref={el => elementRefs.current[`s${sIdx}-ss${ssIdx}`] = el}
-                                        >
-                                            <h3 className="text-xl font-semibold text-gray-900 mb-3">{subsection.title}</h3>
+                                {section.subsections.map((subsection, ssIdx) => (
+                                    <div
+                                        key={ssIdx}
+                                        className="mb-6"
+                                        ref={el => elementRefs.current[`s${sIdx}-ss${ssIdx}`] = el}
+                                    >
+                                        <h3 className="text-xl font-semibold text-gray-900 mb-3">{subsection.title}</h3>
 
-                                            <div className="space-y-4">
-                                                {subsection.elements.map((element, eIdx) => {
-                                                    const config = ELEMENT_CONFIGS[element.type];
-                                                    const elementPath = `s${sIdx}-ss${ssIdx}-e${eIdx}`;
-                                                    return (
-                                                        <div 
-                                                            key={eIdx} 
-                                                            className="border border-gray-200 rounded-lg p-4 transition-colors"
-                                                            ref={el => elementRefs.current[elementPath] = el}
-                                                        >
-                                                            <div className="flex items-center justify-between mb-3">
-                                                                <span className="flex items-center gap-2 font-medium text-sm">
-                                                                    <span>{config.icon}</span>
-                                                                    <span>{config.label}</span>
-                                                                </span>
-                                                                <div className="flex items-center gap-1">
-                                                                    {/* Move Up Button */}
-                                                                    <button
-                                                                        onClick={() => moveElementUp(sIdx, ssIdx, eIdx)}
-                                                                        disabled={eIdx === 0}
-                                                                        className="p-1 rounded hover:bg-gray-100 text-gray-600 disabled:opacity-30 disabled:cursor-not-allowed"
-                                                                        title="Déplacer vers le haut"
-                                                                    >
-                                                                        <span className="text-lg">▲</span>
-                                                                    </button>
-                                                                    {/* Move Down Button */}
-                                                                    <button
-                                                                        onClick={() => moveElementDown(sIdx, ssIdx, eIdx)}
-                                                                        disabled={eIdx === subsection.elements.length - 1}
-                                                                        className="p-1 rounded hover:bg-gray-100 text-gray-600 disabled:opacity-30 disabled:cursor-not-allowed"
-                                                                        title="Déplacer vers le bas"
-                                                                    >
-                                                                        <span className="text-lg">▼</span>
-                                                                    </button>
-                                                                    {/* Image Button - Shows if image exists */}
-                                                                    <button
-                                                                        onClick={() => openImageModal(sIdx, ssIdx, eIdx)}
-                                                                        className={`p-1 rounded transition-colors ${
-                                                                            (element as any).image 
-                                                                                ? 'bg-blue-100 text-blue-700 hover:bg-blue-200' 
-                                                                                : 'hover:bg-blue-50 text-blue-600'
-                                                                        }`}
-                                                                        title={(element as any).image ? "Remplacer l'image" : "Ajouter une image"}
-                                                                    >
+                                        <div className="space-y-4">
+                                            {subsection.elements.map((element, eIdx) => {
+                                                const config = ELEMENT_CONFIGS[element.type];
+                                                const elementPath = `s${sIdx}-ss${ssIdx}-e${eIdx}`;
+                                                return (
+                                                    <div
+                                                        key={eIdx}
+                                                        className="border border-gray-200 rounded-lg p-4 transition-colors bg-white"
+                                                        ref={el => elementRefs.current[elementPath] = el}
+                                                    >
+                                                        <div className="flex items-center justify-between mb-3">
+                                                            <span className="flex items-center gap-2 font-medium text-sm">
+                                                                <span>{config.icon}</span>
+                                                                <span>{config.label}</span>
+                                                            </span>
+                                                            <div className="flex items-center gap-1">
+                                                                {/* Move Up Button */}
+                                                                <button
+                                                                    onClick={() => moveElementUp(sIdx, ssIdx, eIdx)}
+                                                                    disabled={eIdx === 0}
+                                                                    className="p-1 rounded hover:bg-gray-100 text-gray-600 disabled:opacity-30 disabled:cursor-not-allowed"
+                                                                    title="Déplacer vers le haut"
+                                                                >
+                                                                    <span className="text-lg">▲</span>
+                                                                </button>
+                                                                {/* Move Down Button */}
+                                                                <button
+                                                                    onClick={() => moveElementDown(sIdx, ssIdx, eIdx)}
+                                                                    disabled={eIdx === subsection.elements.length - 1}
+                                                                    className="p-1 rounded hover:bg-gray-100 text-gray-600 disabled:opacity-30 disabled:cursor-not-allowed"
+                                                                    title="Déplacer vers le bas"
+                                                                >
+                                                                    <span className="text-lg">▼</span>
+                                                                </button>
+                                                                {/* Image Button - Shows if image exists */}
+                                                                <button
+                                                                    onClick={() => openImageModal(sIdx, ssIdx, eIdx)}
+                                                                    className={`p-1 rounded transition-colors ${
+                                                                        (element as any).image
+                                                                            ? 'bg-blue-100 text-blue-700 hover:bg-blue-200'
+                                                                            : 'hover:bg-blue-50 text-blue-600'
+                                                                    }`}
+                                                                    title={(element as any).image ? "Remplacer l'image" : "Ajouter une image"}
+                                                                >
+                                                                    <ImageIcon className="w-4 h-4" />
+                                                                </button>
+                                                                {/* Delete Button */}
+                                                                <button
+                                                                    onClick={() => deleteElement(sIdx, ssIdx, eIdx)}
+                                                                    className="p-1 rounded hover:bg-red-50 text-red-600"
+                                                                >
+                                                                    <TrashIcon className="w-4 h-4" />
+                                                                </button>
+                                                            </div>
+                                                        </div>
+
+                                                        {element.type === 'p' ? (
+                                                            <RichTextEditor
+                                                                value={element.content as string}
+                                                                onChange={(value) => updateElement(sIdx, ssIdx, eIdx, 'content', value)}
+                                                                placeholder="Contenu du paragraphe..."
+                                                                rows={4}
+                                                                elementType="p"
+                                                                onImageClick={() => openImageModal(sIdx, ssIdx, eIdx)}
+                                                                hasImage={!!(element as any).image}
+                                                            />
+                                                        ) : element.type === 'table' ? (
+                                                            <RichTextEditor
+                                                                value={element.content as string}
+                                                                onChange={(value) => updateElement(sIdx, ssIdx, eIdx, 'content', value)}
+                                                                placeholder="Format tableau Markdown..."
+                                                                rows={6}
+                                                                elementType="table"
+                                                                onImageClick={() => openImageModal(sIdx, ssIdx, eIdx)}
+                                                                hasImage={!!(element as any).image}
+                                                            />
+                                                        ) : (
+                                                            <div className="space-y-3">
+                                                                <div>
+                                                                    <label className="block text-xs font-semibold text-gray-700 mb-2 uppercase tracking-wide">
+                                                                        Préambule
+                                                                    </label>
+                                                                    <RichTextEditor
+                                                                        value={element.preamble || ''}
+                                                                        onChange={(value) => updateElement(sIdx, ssIdx, eIdx, 'preamble', value)}
+                                                                        placeholder="Préambule..."
+                                                                        rows={3}
+                                                                        elementType={`${element.type}-preamble`}
+                                                                    />
+                                                                </div>
+
+                                                                <div>
+                                                                    <label className="block text-xs font-semibold text-gray-700 mb-2 uppercase tracking-wide">
+                                                                        Contenu
+                                                                    </label>
+                                                                    <RichTextEditor
+                                                                        value={Array.isArray(element.content) ? element.content.join('\n') : (element.content || '')}
+                                                                        onChange={(value) => updateElement(sIdx, ssIdx, eIdx, 'content', value.split('\n'))}
+                                                                        placeholder="Contenu du cadre... Chaque ligne = un élément de liste"
+                                                                        rows={10}
+                                                                        elementType={element.type}
+                                                                        onImageClick={() => openImageModal(sIdx, ssIdx, eIdx)}
+                                                                        hasImage={!!(element as any).image}
+                                                                        listType={element.listType}
+                                                                        onListTypeChange={(type) => updateElement(sIdx, ssIdx, eIdx, 'listType', type)}
+                                                                        columns={element.columns}
+                                                                        onColumnsChange={element.type !== 'p' && element.type !== 'table' ? (columns) => updateElement(sIdx, ssIdx, eIdx, 'columns', columns) : undefined}
+                                                                    />
+                                                                </div>
+
+                                                                {element.listType && (
+                                                                    <div className="text-xs text-blue-600 bg-blue-50 p-3 rounded border border-blue-200">
+                                                                        <div className="font-medium mb-1">💡 Mode liste actif :</div>
+                                                                        <div>• Chaque ligne = {element.listType === 'bullet' ? 'une puce ⭐' : 'un numéro ①②③'}</div>
+                                                                        <div className="text-xs text-purple-600">
+                                                                            <span className="font-medium">🎯 NoBullet:</span> Commencez une ligne par <code className="px-1 bg-purple-100 rounded">&gt;&gt;</code> pour la masquer (utile pour titres/notes)
+                                                                        </div>
+                                                                    </div>
+                                                                )}
+
+                                                                {element.columns && (
+                                                                    <div className="text-xs text-green-600 bg-green-50 p-2 rounded border border-green-200">
+                                                                        <span className="font-medium">🔲 Mode colonnes activé!</span> Le contenu sera affiché en colonnes côte à côte.
+                                                                    </div>
+                                                                )}
+                                                            </div>
+                                                        )}
+
+                                                        {/* Display image if exists */}
+                                                        {(element as any).image && (
+                                                            <div className="mt-4 border border-blue-200 rounded-lg p-4 bg-blue-50">
+                                                                <div className="flex items-start justify-between mb-3">
+                                                                    <h4 className="text-sm font-semibold text-blue-800 flex items-center gap-2">
                                                                         <ImageIcon className="w-4 h-4" />
-                                                                    </button>
-                                                                    {/* Delete Button */}
+                                                                        Image attachée
+                                                                    </h4>
                                                                     <button
-                                                                        onClick={() => deleteElement(sIdx, ssIdx, eIdx)}
-                                                                        className="p-1 rounded hover:bg-red-50 text-red-600"
+                                                                        onClick={() => {
+                                                                            if (confirm('Supprimer cette image ?')) {
+                                                                                const newLesson = { ...lesson! };
+                                                                                const elem = newLesson.sections[sIdx].subsections[ssIdx].elements[eIdx];
+                                                                                delete (elem as any).image;
+                                                                                setLesson(newLesson);
+                                                                                saveToHistory(newLesson);
+                                                                            }
+                                                                        }}
+                                                                        className="p-1.5 rounded-full bg-red-100 hover:bg-red-200 text-red-700 transition-colors"
+                                                                        title="Supprimer l'image"
                                                                     >
                                                                         <TrashIcon className="w-4 h-4" />
                                                                     </button>
                                                                 </div>
+
+                                                                <div className="bg-white rounded-lg p-3 mb-3">
+                                                                    <div className="aspect-video flex items-center justify-center overflow-hidden rounded">
+                                                                        <img
+                                                                            src={(element as any).image.src}
+                                                                            alt={(element as any).image.alt || ''}
+                                                                            className="max-w-full max-h-full object-contain"
+                                                                        />
+                                                                    </div>
+                                                                </div>
+
+                                                                <div className="grid grid-cols-2 gap-2 text-xs text-blue-700">
+                                                                    <div>
+                                                                        <span className="font-medium">Position:</span> {(element as any).image.position || 'bottom'}
+                                                                    </div>
+                                                                    <div>
+                                                                        <span className="font-medium">Alignement:</span> {(element as any).image.align || 'center'}
+                                                                    </div>
+                                                                    <div>
+                                                                        <span className="font-medium">Largeur:</span> {(element as any).image.width || '100%'}
+                                                                    </div>
+                                                                    {(element as any).image.caption && (
+                                                                        <div className="col-span-2">
+                                                                            <span className="font-medium">Légende:</span> {(element as any).image.caption}
+                                                                        </div>
+                                                                    )}
+                                                                </div>
                                                             </div>
+                                                        )}
+                                                    </div>
+                                                );
+                                            })}
 
-                                                            {element.type === 'p' ? (
-                                                                <RichTextEditor
-                                                                    value={element.content as string}
-                                                                    onChange={(value) => updateElement(sIdx, ssIdx, eIdx, 'content', value)}
-                                                                    placeholder="Contenu du paragraphe..."
-                                                                    rows={4}
-                                                                    elementType="p"
-                                                                    onImageClick={() => openImageModal(sIdx, ssIdx, eIdx)}
-                                                                    hasImage={!!(element as any).image}
-                                                                />
-                                                            ) : element.type === 'table' ? (
-                                                                <RichTextEditor
-                                                                    value={element.content as string}
-                                                                    onChange={(value) => updateElement(sIdx, ssIdx, eIdx, 'content', value)}
-                                                                    placeholder="Format tableau Markdown..."
-                                                                    rows={6}
-                                                                    elementType="table"
-                                                                    onImageClick={() => openImageModal(sIdx, ssIdx, eIdx)}
-                                                                    hasImage={!!(element as any).image}
-                                                                />
-                                                            ) : (
-                                                                <div className="space-y-3">
-                                                                    <div>
-                                                                        <label className="block text-xs font-semibold text-gray-700 mb-2 uppercase tracking-wide">
-                                                                            Préambule
-                                                                        </label>
-                                                                        <RichTextEditor
-                                                                            value={element.preamble || ''}
-                                                                            onChange={(value) => updateElement(sIdx, ssIdx, eIdx, 'preamble', value)}
-                                                                            placeholder="Préambule..."
-                                                                            rows={3}
-                                                                            elementType={`${element.type}-preamble`}
-                                                                        />
-                                                                    </div>
-
-                                                                    <div>
-                                                                        <label className="block text-xs font-semibold text-gray-700 mb-2 uppercase tracking-wide">
-                                                                            Contenu
-                                                                        </label>
-                                                                        <RichTextEditor
-                                                                            value={Array.isArray(element.content) ? element.content.join('\n') : (element.content || '')}
-                                                                            onChange={(value) => updateElement(sIdx, ssIdx, eIdx, 'content', value.split('\n'))}
-                                                                            placeholder="Contenu du cadre... Chaque ligne = un élément de liste"
-                                                                            rows={10}
-                                                                            elementType={element.type}
-                                                                            onImageClick={() => openImageModal(sIdx, ssIdx, eIdx)}
-                                                                            hasImage={!!(element as any).image}
-                                                                            listType={element.listType}
-                                                                            onListTypeChange={(type) => updateElement(sIdx, ssIdx, eIdx, 'listType', type)}
-                                                                            columns={element.columns}
-                                                                            onColumnsChange={element.type !== 'p' && element.type !== 'table' ? (columns) => updateElement(sIdx, ssIdx, eIdx, 'columns', columns) : undefined}
-                                                                        />
-                                                                    </div>
-
-                                                                    {element.listType && (
-                                                                        <div className="text-xs text-blue-600 bg-blue-50 p-3 rounded border border-blue-200">
-                                                                            <div className="font-medium mb-1">💡 Mode liste actif :</div>
-                                                                            <div>• Chaque ligne = {element.listType === 'bullet' ? 'une puce ⭐' : 'un numéro ①②③'}</div>
-                                                                            <div className="text-xs text-purple-600">
-                                                                                <span className="font-medium">🎯 NoBullet:</span> Commencez une ligne par <code className="px-1 bg-purple-100 rounded">&gt;&gt;</code> pour la masquer (utile pour titres/notes)
-                                                                            </div>
-                                                                        </div>
-                                                                    )}
-                                                                    
-                                                                    {element.columns && (
-                                                                        <div className="text-xs text-green-600 bg-green-50 p-2 rounded border border-green-200">
-                                                                            <span className="font-medium">🔲 Mode colonnes activé!</span> Le contenu sera affiché en colonnes côte à côte.
-                                                                        </div>
-                                                                    )}
-                                                                </div>
-                                                            )}
-                                                            
-                                                            {/* Display image if exists */}
-                                                            {(element as any).image && (
-                                                                <div className="mt-4 border border-blue-200 rounded-lg p-4 bg-blue-50">
-                                                                    <div className="flex items-start justify-between mb-3">
-                                                                        <h4 className="text-sm font-semibold text-blue-800 flex items-center gap-2">
-                                                                            <ImageIcon className="w-4 h-4" />
-                                                                            Image attachée
-                                                                        </h4>
-                                                                        <button
-                                                                            onClick={() => {
-                                                                                if (confirm('Supprimer cette image ?')) {
-                                                                                    const newLesson = { ...lesson! };
-                                                                                    const elem = newLesson.sections[sIdx].subsections[ssIdx].elements[eIdx];
-                                                                                    delete (elem as any).image;
-                                                                                    setLesson(newLesson);
-                                                                                    saveToHistory(newLesson);
-                                                                                }
-                                                                            }}
-                                                                            className="p-1.5 rounded-full bg-red-100 hover:bg-red-200 text-red-700 transition-colors"
-                                                                            title="Supprimer l'image"
-                                                                        >
-                                                                            <TrashIcon className="w-4 h-4" />
-                                                                        </button>
-                                                                    </div>
-                                                                    
-                                                                    <div className="bg-white rounded-lg p-3 mb-3">
-                                                                        <div className="aspect-video flex items-center justify-center overflow-hidden rounded">
-                                                                            <img 
-                                                                                src={(element as any).image.src} 
-                                                                                alt={(element as any).image.alt || ''}
-                                                                                className="max-w-full max-h-full object-contain"
-                                                                            />
-                                                                        </div>
-                                                                    </div>
-                                                                    
-                                                                    <div className="grid grid-cols-2 gap-2 text-xs text-blue-700">
-                                                                        <div>
-                                                                            <span className="font-medium">Position:</span> {(element as any).image.position || 'bottom'}
-                                                                        </div>
-                                                                        <div>
-                                                                            <span className="font-medium">Alignement:</span> {(element as any).image.align || 'center'}
-                                                                        </div>
-                                                                        <div>
-                                                                            <span className="font-medium">Largeur:</span> {(element as any).image.width || '100%'}
-                                                                        </div>
-                                                                        {(element as any).image.caption && (
-                                                                            <div className="col-span-2">
-                                                                                <span className="font-medium">Légende:</span> {(element as any).image.caption}
-                                                                            </div>
-                                                                        )}
-                                                                    </div>
-                                                                </div>
-                                                            )}
-                                                        </div>
-                                                    );
-                                                })}
-
-                                                <div className="flex gap-2">
-                                                    {Object.entries(ELEMENT_CONFIGS).map(([type, config]) => (
-                                                        <button
-                                                            key={type}
-                                                            onClick={() => addElement(sIdx, ssIdx, type as LessonElementType)}
-                                                            className="px-3 py-1.5 text-sm bg-gray-100 hover:bg-gray-200 rounded flex items-center gap-1"
-                                                            title={`Ajouter ${config.label}`}
-                                                        >
-                                                            <span>{config.icon}</span>
-                                                        </button>
-                                                    ))}
-                                                </div>
+                                            <div className="flex gap-2">
+                                                {Object.entries(ELEMENT_CONFIGS).map(([type, config]) => (
+                                                    <button
+                                                        key={type}
+                                                        onClick={() => addElement(sIdx, ssIdx, type as LessonElementType)}
+                                                        className="px-3 py-1.5 text-sm bg-gray-100 hover:bg-gray-200 rounded flex items-center gap-1"
+                                                        title={`Ajouter ${config.label}`}
+                                                    >
+                                                        <span>{config.icon}</span>
+                                                    </button>
+                                                ))}
                                             </div>
                                         </div>
-                                    ))}
-                                </div>
-                            ))}
-                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
             )}
-            
+
             {/* Image Upload Modal */}
             <ImageUploadModal 
                 isOpen={imageModalOpen}
