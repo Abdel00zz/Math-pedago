@@ -169,7 +169,7 @@ const Blank: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
 /**
  * Pré-traite les blanks (___content___) dans les formules mathématiques
- * Les convertit en commandes LaTeX \class pour éviter de briser la syntaxe MathJax
+ * Les convertit en commandes KaTeX \htmlClass pour éviter de briser la syntaxe LaTeX
  */
 const preprocessMathBlanks = (text: string): string => {
     if (!text || !text.includes('___')) return text;
@@ -190,12 +190,12 @@ const preprocessMathBlanks = (text: string): string => {
                 return fullMatch;
             }
 
-            // Remplacer les ___content___ par \bbox avec style inline
+            // Remplacer les ___content___ par une commande KaTeX avec HTML
             const processedMath = mathContent.replace(/___(.+?)___/g, (match: string, content: string) => {
-                // Utiliser \bbox de MathJax avec styles inline pour créer un élément stylisé
-                // Le contenu reste dans la formule mathématique, donc MathJax le compile correctement
-                // Couleur rouge foncé avec fond rose léger
-                return `\\bbox[border:2px dotted #dc2626;background:#fef2f2;padding:2px 6px;border-radius:4px]{\\color{#dc2626}{${content}}}`;
+                // Utiliser \htmlClass de KaTeX pour appliquer une classe CSS
+                // KaTeX supporte les commandes HTML avec trust: true
+                // On wrap le contenu coloré dans un htmlClass pour le style
+                return `\\htmlClass{math-blank-answer}{\\textcolor{dc2626}{${content}}}`;
             });
 
             return delimiter + processedMath + delimiter;

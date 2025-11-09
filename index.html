@@ -91,39 +91,9 @@
     />
     
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-    
-    <!-- MathJax Configuration -->
-    <script>
-      window.MathJax = {
-        loader: { load: ['[tex]/html', '[tex]/color'] },
-        tex: {
-          inlineMath: [['$', '$'], ['\\(', '\\)']],
-          displayMath: [['$$', '$$'], ['\\[', '\\]']],
-          packages: {'[+]': ['html', 'color']},
-        },
-        svg: {
-          fontCache: 'global',
-          scale: 1,
-          minScale: 0.5,
-          mtextInheritFont: true,
-          displayAlign: 'center',
-          displayIndent: '0',
-        },
-        options: {
-          enableMenu: false,
-          skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-          ignoreHtmlClass: 'tex2jax_ignore',
-          processHtmlClass: 'tex2jax_process',
-        },
-        startup: {
-          ready: () => {
-            console.log('MathJax est chargé et prêt');
-            window.MathJax.startup.defaultReady();
-          }
-        }
-      };
-    </script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
     
     <style>
         body {
@@ -204,16 +174,11 @@
             font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
         }
         
-        /* ===== MATHJAX STYLING - Responsive Math Fonts ===== */
+        /* ===== KATEX STYLING - Responsive Math Fonts ===== */
         :root {
             --math-text-color: #E2E8F0;
             --math-bg-color: transparent;
-            
-            /* Math formula scaling - Taille normale et lisible */
-            --math-scale-mobile: 1.0;
-            --math-scale-tablet: 1.0;
-            --math-scale-desktop: 1.0;
-            
+
             /* Component-specific font sizes */
             --quiz-question-size: 16px;
             --quiz-question-size-md: 18px;
@@ -228,79 +193,39 @@
         }
 
         /* Base responsive math container - Alignement parfait */
-        mjx-container {
-            display: inline !important;
-            vertical-align: baseline !important;
-            line-height: inherit !important;
-            margin: 0 0.1em !important;
-            transform: none !important;
+        .katex {
+            font-size: 1.05em !important;
+            color: var(--math-text-color) !important;
         }
 
-        mjx-container[jax="CHTML"] {
-            display: inline !important;
-            vertical-align: baseline !important;
-        }
-
-        mjx-container svg {
-            display: inline-block !important;
-            vertical-align: baseline !important;
-        }
-
-        /* Display math (centered equations) */
-        mjx-container[display="true"] {
-            display: block !important;
-            text-align: center !important;
+        .katex-display {
             margin: 1em 0 !important;
         }
 
-
-        /* Coloration du texte mathématique */
-        mjx-container svg g[fill] {
-            fill: var(--math-text-color) !important;
+        .katex-display > .katex {
+            display: block !important;
+            text-align: center !important;
         }
 
-        .bg-white, .bg-gray-100, .bg-blue-50, .bg-green-50, .bg-red-50 {
-            --math-text-color: #0F172A;
-        }
-        
-        .text-white {
-            --math-text-color: #FFFFFF;
-        }
-
-        /* Quiz specific math rendering */
-        .bg-black mjx-container svg g[fill] {
-            fill: #FFFFFF !important;
+        /* Coloration selon le contexte */
+        .bg-white .katex,
+        .bg-gray-100 .katex,
+        .bg-blue-50 .katex,
+        .bg-green-50 .katex,
+        .bg-red-50 .katex {
+            color: #0F172A !important;
         }
 
-        /* ===== ALIGNEMENT PARFAIT - TOUS LES CONTEXTES ===== */
-        
-        /* Alignement baseline universel pour tous les éléments mathématiques */
-        mjx-math {
-            display: inline !important;
+        .text-white .katex,
+        .bg-black .katex {
+            color: #FFFFFF !important;
+        }
+
+        /* Alignement dans les contextes spécifiques */
+        .quiz-content .katex,
+        .exercise-content .katex,
+        .formatted-text .katex {
             vertical-align: baseline !important;
-        }
-
-        mjx-mfrac {
-            vertical-align: baseline !important;
-            margin: 0 0.05em !important;
-        }
-
-        mjx-msup, mjx-msub, mjx-msubsup {
-            vertical-align: baseline !important;
-        }
-
-        mjx-mrow {
-            display: inline !important;
-            vertical-align: baseline !important;
-        }
-
-        /* Améliorer l'alignement dans les quiz et exercices */
-        .quiz-content mjx-container,
-        .exercise-content mjx-container,
-        .formatted-text mjx-container {
-            vertical-align: baseline !important;
-            display: inline !important;
-            line-height: inherit !important;
         }
 
         /* ===== COMPONENT-SPECIFIC FONT CLASSES ===== */
