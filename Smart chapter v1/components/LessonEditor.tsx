@@ -924,76 +924,59 @@ export const LessonEditor: React.FC<LessonEditorProps> = ({
                                                                     hasImage={!!(element as any).image}
                                                                 />
                                                             ) : (
-                                                                <div className="space-y-2">
+                                                                <div className="space-y-3">
                                                                     <div>
-                                                                        <label className="block text-xs font-semibold text-gray-700 mb-1 uppercase tracking-wide">
+                                                                        <label className="block text-xs font-semibold text-gray-700 mb-2 uppercase tracking-wide">
                                                                             Préambule
                                                                         </label>
                                                                         <RichTextEditor
                                                                             value={element.preamble || ''}
                                                                             onChange={(value) => updateElement(sIdx, ssIdx, eIdx, 'preamble', value)}
                                                                             placeholder="Préambule..."
-                                                                            rows={2}
+                                                                            rows={3}
                                                                             elementType={`${element.type}-preamble`}
                                                                         />
                                                                     </div>
-                                                                    
-                                                                    {/* Sélecteur de type de liste */}
-                                                                    <div className="flex items-center gap-3 p-2 bg-blue-50 border border-blue-200 rounded">
-                                                                        <label className="text-sm font-medium text-blue-900">Type de liste:</label>
-                                                                        <select
-                                                                            value={element.listType || 'none'}
-                                                                            onChange={(e) => {
-                                                                                const value = e.target.value === 'none' ? undefined : e.target.value as 'bullet' | 'numbered';
-                                                                                updateElement(sIdx, ssIdx, eIdx, 'listType', value);
-                                                                            }}
-                                                                            className="px-3 py-1.5 border border-blue-300 rounded text-sm text-blue-900 bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent font-medium"
-                                                                        >
-                                                                            <option value="none">Aucune (texte simple)</option>
-                                                                            <option value="bullet">⭐ Puces (bullets)</option>
-                                                                            <option value="numbered">① Numérotée</option>
-                                                                        </select>
-                                                                        
-                                                                        {/* Option Colonnes pour boxes */}
-                                                                        {element.type !== 'p' && element.type !== 'table' && (
-                                                                            <label className="flex items-center gap-2 ml-4">
-                                                                                <input
-                                                                                    type="checkbox"
-                                                                                    checked={element.columns || false}
-                                                                                    onChange={(e) => {
-                                                                                        updateElement(sIdx, ssIdx, eIdx, 'columns', e.target.checked);
-                                                                                    }}
-                                                                                    className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                                                                                />
-                                                                                <span className="text-sm font-medium text-blue-900">🔲 Mode colonnes</span>
+
+                                                                    {/* Option Colonnes pour boxes */}
+                                                                    {element.type !== 'p' && element.type !== 'table' && (
+                                                                        <div className="flex items-center gap-2 p-2 bg-green-50 border border-green-200 rounded">
+                                                                            <input
+                                                                                type="checkbox"
+                                                                                id={`columns-${sIdx}-${ssIdx}-${eIdx}`}
+                                                                                checked={element.columns || false}
+                                                                                onChange={(e) => {
+                                                                                    updateElement(sIdx, ssIdx, eIdx, 'columns', e.target.checked);
+                                                                                }}
+                                                                                className="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
+                                                                            />
+                                                                            <label htmlFor={`columns-${sIdx}-${ssIdx}-${eIdx}`} className="text-sm font-medium text-green-900 cursor-pointer">
+                                                                                🔲 Mode colonnes (affichage côte à côte)
                                                                             </label>
-                                                                        )}
-                                                                    </div>
+                                                                        </div>
+                                                                    )}
 
                                                                     <div>
-                                                                        <label className="block text-xs font-semibold text-gray-700 mb-1 uppercase tracking-wide">
-                                                                            Contenu {element.listType && `(${element.listType === 'bullet' ? 'une ligne = une puce ⭐' : 'une ligne = un numéro ①②③'})`}
+                                                                        <label className="block text-xs font-semibold text-gray-700 mb-2 uppercase tracking-wide">
+                                                                            Contenu
                                                                         </label>
                                                                         <RichTextEditor
                                                                             value={Array.isArray(element.content) ? element.content.join('\n') : (element.content || '')}
                                                                             onChange={(value) => updateElement(sIdx, ssIdx, eIdx, 'content', value.split('\n'))}
-                                                                            placeholder={
-                                                                                element.listType === 'bullet' ? "Contenu (une ligne = une puce ⭐)\n💡 Astuce : Commencez par >> pour désactiver la puce sur une ligne" :
-                                                                                element.listType === 'numbered' ? "Contenu (une ligne = un numéro ①②③)\n💡 Astuce : Commencez par >> pour désactiver le numéro sur une ligne" :
-                                                                                "Contenu du cadre..."
-                                                                            }
-                                                                            rows={6}
+                                                                            placeholder="Contenu du cadre... Chaque ligne = un élément de liste"
+                                                                            rows={10}
                                                                             elementType={element.type}
                                                                             onImageClick={() => openImageModal(sIdx, ssIdx, eIdx)}
                                                                             hasImage={!!(element as any).image}
+                                                                            listType={element.listType}
+                                                                            onListTypeChange={(type) => updateElement(sIdx, ssIdx, eIdx, 'listType', type)}
                                                                         />
                                                                     </div>
-                                                                    
+
                                                                     {element.listType && (
-                                                                        <div className="text-xs text-blue-600 bg-blue-50 p-2 rounded border border-blue-200 space-y-1">
-                                                                            <div>
-                                                                                <span className="font-medium">💡 Aide:</span> Chaque ligne sera affichée avec {element.listType === 'bullet' ? 'une étoile ⭐' : 'un numéro ①②③'}
-                                                                            </div>
+                                                                        <div className="text-xs text-blue-600 bg-blue-50 p-3 rounded border border-blue-200">
+                                                                            <div className="font-medium mb-1">💡 Mode liste actif :</div>
+                                                                            <div>• Chaque ligne = {element.listType === 'bullet' ? 'une puce ⭐' : 'un numéro ①②③'}</div>
                                                                             <div className="text-xs text-purple-600">
                                                                                 <span className="font-medium">🎯 NoBullet:</span> Commencez une ligne par <code className="px-1 bg-purple-100 rounded">&gt;&gt;</code> pour la masquer (utile pour titres/notes)
                                                                             </div>

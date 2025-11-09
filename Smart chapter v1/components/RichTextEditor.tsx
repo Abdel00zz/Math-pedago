@@ -1,9 +1,9 @@
 /**
- * RichTextEditor - Éditeur de texte riche pour les leçons
- * Barre d'outils avec formatage, LaTeX, images, etc.
+ * RichTextEditor v2 - Éditeur de texte riche optimisé pour les leçons
+ * Avec aperçu en temps réel MathJax et interface moderne
  */
 
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { ImageIcon } from './icons';
 
 // Types pour les props
@@ -12,90 +12,112 @@ interface RichTextEditorProps {
     onChange: (value: string) => void;
     placeholder?: string;
     rows?: number;
-    elementType?: string; // Type d'élément pour afficher des options spécifiques
-    onImageClick?: () => void; // Callback pour ouvrir le modal d'image
-    hasImage?: boolean; // Indique si l'élément a déjà une image
+    elementType?: string;
+    onImageClick?: () => void;
+    hasImage?: boolean;
+    listType?: 'bullet' | 'numbered' | undefined;
+    onListTypeChange?: (type: 'bullet' | 'numbered' | undefined) => void;
 }
 
-// Icônes SVG pour la barre d'outils
-const BoldIcon = () => (
-    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z" />
-    </svg>
-);
+/**
+ * Composant de prévisualisation avec support MathJax
+ */
+const LivePreview: React.FC<{ content: string }> = ({ content }) => {
+    const previewRef = useRef<HTMLDivElement>(null);
 
-const ItalicIcon = () => (
-    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 4h4 M8 20h8 M15 4L9 20" />
-    </svg>
-);
+    useEffect(() => {
+        const el = previewRef.current;
+        if (!el) return;
 
-const UnderlineIcon = () => (
-    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 19h12 M8 5v8a4 4 0 0 0 8 0V5" />
-    </svg>
-);
+        // Traiter le contenu Markdown de base
+        let processed = content;
 
-const ListBulletIcon = () => (
-    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16 M4 12h16 M4 18h16" />
-    </svg>
-);
+        // Protéger les expressions LaTeX
+        const mathExpressions: string[] = [];
+        let mathIndex = 0;
 
-const ListNumberIcon = () => (
-    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5h12 M9 12h12 M9 19h12 M5 5v3 M5 12v3 M5 19v3" />
-    </svg>
-);
+        processed = processed.replace(/\$\$[\s\S]+?\$\$|\$[^\$]+?\$/g, (match) => {
+            const placeholder = `__MATH_${mathIndex}__`;
+            mathExpressions.push(match);
+            mathIndex++;
+            return placeholder;
+        });
 
-const MathIcon = () => (
-    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <text x="12" y="16" textAnchor="middle" fontSize="14" fontFamily="serif" fontStyle="italic" fill="currentColor">∑</text>
-    </svg>
-);
+        // Markdown basique
+        processed = processed.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+        processed = processed.replace(/(?<!\*)\*([^*]+)\*(?!\*)/g, '<em>$1</em>');
+        processed = processed.replace(/<u>([^<]+)<\/u>/g, '<u>$1</u>');
+        processed = processed.replace(/<mark>([^<]+)<\/mark>/g, '<mark style="background-color: #fef08a; padding: 0 4px;">$1</mark>');
 
-const LinkIcon = () => (
-    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 0 0-5.656 0l-4 4a4 4 0 1 0 5.656 5.656l1.102-1.101m-.758-4.899a4 4 0 0 0 5.656 0l4-4a4 4 0 0 0-5.656-5.656l-1.1 1.1" />
-    </svg>
-);
+        // Callouts
+        processed = processed.replace(/^!>\s*(.+)$/gm, '<div style="background-color: #fff7ed; border-left: 4px solid #f97316; padding: 12px; margin: 8px 0; border-radius: 4px;">⚠️ $1</div>');
+        processed = processed.replace(/^\?>\s*(.+)$/gm, '<div style="background-color: #ecfeff; border-left: 4px solid #06b6d4; padding: 12px; margin: 8px 0; border-radius: 4px;">💡 $1</div>');
 
-const HighlightIcon = () => (
-    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M17.75 3c.414 0 .75.336.75.75v4.5a.75.75 0 0 1-1.5 0V4.81l-7.72 7.72a.75.75 0 0 1-1.06-1.06l7.72-7.72h-3.44a.75.75 0 0 1 0-1.5h4.5zM3 13.25a.75.75 0 0 1 .75-.75h5.5a.75.75 0 0 1 0 1.5h-5.5A.75.75 0 0 1 3 13.25zm0 4a.75.75 0 0 1 .75-.75h9.5a.75.75 0 0 1 0 1.5h-9.5A.75.75 0 0 1 3 17.25zm0 4a.75.75 0 0 1 .75-.75h13.5a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1-.75-.75z"/>
-    </svg>
-);
+        // Textes à trous
+        processed = processed.replace(/___([^_]+)___/g, '<span style="background-color: #e0f2fe; border-bottom: 2px dashed #0369a1; padding: 2px 8px; font-family: monospace;">$1</span>');
 
-const AlertIcon = () => (
-    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-    </svg>
-);
+        // Liens
+        processed = processed.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" style="color: #2563eb; text-decoration: underline;">$1</a>');
 
-const LightBulbIcon = () => (
-    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 1 1 7.072 0l-.548.547A3.374 3.374 0 0 0 14 18.469V19a2 2 0 1 1-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-    </svg>
-);
+        // Sauts de ligne
+        processed = processed.replace(/\n/g, '<br>');
 
-const BlankIcon = () => (
-    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <rect x="3" y="10" width="18" height="4" rx="1" strokeWidth={2} fill="none" strokeDasharray="3 3"/>
-    </svg>
-);
+        // Restaurer les expressions LaTeX
+        mathExpressions.forEach((mathExpr, idx) => {
+            processed = processed.replace(`__MATH_${idx}__`, mathExpr);
+        });
+
+        el.innerHTML = processed || '<span style="color: #9ca3af;">Aperçu...</span>';
+
+        // Appliquer MathJax
+        const typeset = async () => {
+            if (!window.MathJax || !el) return;
+
+            try {
+                if (window.MathJax.startup?.promise) {
+                    await window.MathJax.startup.promise;
+                }
+                if (window.MathJax.typesetClear) {
+                    try {
+                        window.MathJax.typesetClear([el]);
+                    } catch {}
+                }
+                if (window.MathJax.typesetPromise) {
+                    await window.MathJax.typesetPromise([el]);
+                }
+            } catch (error) {
+                console.error('MathJax error:', error);
+            }
+        };
+
+        const timeoutId = setTimeout(typeset, 100);
+        return () => clearTimeout(timeoutId);
+    }, [content]);
+
+    return (
+        <div
+            ref={previewRef}
+            className="preview-content p-4 bg-white border border-gray-300 rounded-lg min-h-[120px] text-sm leading-relaxed"
+            style={{ fontSize: '0.9rem', lineHeight: '1.6' }}
+        />
+    );
+};
 
 export const RichTextEditor: React.FC<RichTextEditorProps> = ({
     value,
     onChange,
     placeholder = 'Saisissez votre contenu...',
-    rows = 6,
+    rows = 8,
     elementType,
     onImageClick,
-    hasImage = false
+    hasImage = false,
+    listType,
+    onListTypeChange
 }) => {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const [showMathMenu, setShowMathMenu] = useState(false);
     const [showCalloutMenu, setShowCalloutMenu] = useState(false);
+    const [showPreview, setShowPreview] = useState(true);
 
     // Fonction pour insérer du texte à la position du curseur
     const insertText = useCallback((before: string, after: string = '', placeholder: string = '') => {
@@ -114,7 +136,6 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
 
         onChange(newValue);
 
-        // Remettre le focus et sélectionner le texte inséré
         setTimeout(() => {
             textarea.focus();
             const newStart = start + before.length;
@@ -130,45 +151,10 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
     const makeHighlight = () => insertText('<mark>', '</mark>', 'texte surligné');
     const makeLink = () => {
         const url = prompt('URL du lien:');
-        if (url) {
-            insertText('[', `](${url})`, 'texte du lien');
-        }
+        if (url) insertText('[', `](${url})`, 'texte du lien');
     };
 
-    // Insérer une liste
-    const insertBulletList = () => {
-        const textarea = textareaRef.current;
-        if (!textarea) return;
-
-        const start = textarea.selectionStart;
-        const lineStart = value.lastIndexOf('\n', start - 1) + 1;
-        const currentLine = value.substring(lineStart, start);
-
-        // Si on est au début d'une ligne, insérer "- "
-        if (currentLine.trim() === '') {
-            insertText('- ', '', '');
-        } else {
-            // Sinon, aller à la ligne et insérer "- "
-            insertText('\n- ', '', '');
-        }
-    };
-
-    const insertNumberedList = () => {
-        const textarea = textareaRef.current;
-        if (!textarea) return;
-
-        const start = textarea.selectionStart;
-        const lineStart = value.lastIndexOf('\n', start - 1) + 1;
-        const currentLine = value.substring(lineStart, start);
-
-        if (currentLine.trim() === '') {
-            insertText('1. ', '', '');
-        } else {
-            insertText('\n1. ', '', '');
-        }
-    };
-
-    // Insérer des formules LaTeX
+    // Insérer formules LaTeX
     const insertInlineMath = () => insertText('$', '$', 'formule');
     const insertBlockMath = () => insertText('$$\n', '\n$$', 'formule mathématique');
     const insertFraction = () => insertText('$\\frac{', '}{b}$', 'a');
@@ -176,19 +162,14 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
     const insertSum = () => insertText('$\\sum_{i=1}^{n} ', '$', 'expression');
     const insertIntegral = () => insertText('$\\int_{a}^{b} ', ' dx$', 'f(x)');
 
-    // Insérer des callouts
+    // Insérer callouts
     const insertWarning = () => {
         const textarea = textareaRef.current;
         if (!textarea) return;
         const start = textarea.selectionStart;
         const lineStart = value.lastIndexOf('\n', start - 1) + 1;
         const atLineStart = lineStart === start;
-
-        if (atLineStart) {
-            insertText('!> ', '', 'Message d\'attention');
-        } else {
-            insertText('\n!> ', '', 'Message d\'attention');
-        }
+        insertText(atLineStart ? '!> ' : '\n!> ', '', 'Message d\'attention');
     };
 
     const insertTip = () => {
@@ -197,146 +178,111 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
         const start = textarea.selectionStart;
         const lineStart = value.lastIndexOf('\n', start - 1) + 1;
         const atLineStart = lineStart === start;
-
-        if (atLineStart) {
-            insertText('?> ', '', 'Conseil ou astuce');
-        } else {
-            insertText('\n?> ', '', 'Conseil ou astuce');
-        }
+        insertText(atLineStart ? '?> ' : '\n?> ', '', 'Conseil ou astuce');
     };
 
-    // Insérer un blank (fill-in-the-blank)
     const insertBlank = () => insertText('___', '___', 'réponse');
 
     return (
-        <div className="w-full">
-            {/* Barre d'outils */}
-            <div className="border border-gray-300 border-b-0 rounded-t-lg bg-gradient-to-r from-gray-50 to-gray-100 p-2">
-                <div className="flex flex-wrap items-center gap-1">
-                    {/* Groupe Formatage de texte */}
-                    <div className="flex items-center gap-0.5 px-1 border-r border-gray-300">
+        <div className="rich-text-editor w-full">
+            {/* Barre d'outils améliorée */}
+            <div className="toolbar bg-gradient-to-r from-slate-50 to-slate-100 border border-gray-300 border-b-0 rounded-t-lg p-3 shadow-sm">
+                <div className="flex flex-wrap items-center gap-2">
+                    {/* Groupe: Formatage */}
+                    <div className="flex items-center gap-1 px-2 border-r border-gray-300">
                         <button
                             type="button"
                             onClick={makeBold}
-                            className="p-2 rounded hover:bg-blue-100 text-gray-700 hover:text-blue-700 transition-colors"
+                            className="toolbar-btn"
                             title="Gras (Ctrl+B)"
                         >
-                            <BoldIcon />
+                            <span className="material-symbols-outlined" style={{ fontSize: '20px', fontWeight: 'bold' }}>format_bold</span>
                         </button>
                         <button
                             type="button"
                             onClick={makeItalic}
-                            className="p-2 rounded hover:bg-blue-100 text-gray-700 hover:text-blue-700 transition-colors"
+                            className="toolbar-btn"
                             title="Italique (Ctrl+I)"
                         >
-                            <ItalicIcon />
+                            <span className="material-symbols-outlined" style={{ fontSize: '20px', fontStyle: 'italic' }}>format_italic</span>
                         </button>
                         <button
                             type="button"
                             onClick={makeUnderline}
-                            className="p-2 rounded hover:bg-blue-100 text-gray-700 hover:text-blue-700 transition-colors"
+                            className="toolbar-btn"
                             title="Souligné (Ctrl+U)"
                         >
-                            <UnderlineIcon />
+                            <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>format_underlined</span>
                         </button>
                         <button
                             type="button"
                             onClick={makeHighlight}
-                            className="p-2 rounded hover:bg-yellow-100 text-gray-700 hover:text-yellow-700 transition-colors"
+                            className="toolbar-btn"
                             title="Surligner"
                         >
-                            <HighlightIcon />
+                            <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>format_ink_highlighter</span>
                         </button>
                     </div>
 
-                    {/* Groupe Listes */}
-                    <div className="flex items-center gap-0.5 px-1 border-r border-gray-300">
-                        <button
-                            type="button"
-                            onClick={insertBulletList}
-                            className="p-2 rounded hover:bg-green-100 text-gray-700 hover:text-green-700 transition-colors"
-                            title="Liste à puces"
-                        >
-                            <ListBulletIcon />
-                        </button>
-                        <button
-                            type="button"
-                            onClick={insertNumberedList}
-                            className="p-2 rounded hover:bg-green-100 text-gray-700 hover:text-green-700 transition-colors"
-                            title="Liste numérotée"
-                        >
-                            <ListNumberIcon />
-                        </button>
-                    </div>
+                    {/* Groupe: Listes (intégré) */}
+                    {onListTypeChange && (
+                        <div className="flex items-center gap-1 px-2 border-r border-gray-300">
+                            <select
+                                value={listType || 'none'}
+                                onChange={(e) => {
+                                    const val = e.target.value;
+                                    onListTypeChange(val === 'none' ? undefined : val as 'bullet' | 'numbered');
+                                }}
+                                className="px-3 py-1.5 border border-gray-400 rounded-md text-sm font-medium bg-white hover:bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                                style={{ minWidth: '140px' }}
+                            >
+                                <option value="none">Sans liste</option>
+                                <option value="bullet">⭐ Puces</option>
+                                <option value="numbered">① Numérotée</option>
+                            </select>
+                        </div>
+                    )}
 
-                    {/* Groupe Math - Menu déroulant */}
-                    <div className="relative px-1 border-r border-gray-300">
+                    {/* Groupe: Math */}
+                    <div className="relative px-2 border-r border-gray-300">
                         <button
                             type="button"
                             onClick={() => {
                                 setShowMathMenu(!showMathMenu);
                                 setShowCalloutMenu(false);
                             }}
-                            className={`p-2 rounded transition-colors ${
-                                showMathMenu
-                                    ? 'bg-purple-100 text-purple-700'
-                                    : 'hover:bg-purple-100 text-gray-700 hover:text-purple-700'
-                            }`}
+                            className={`toolbar-btn ${showMathMenu ? 'bg-purple-100 text-purple-700' : ''}`}
                             title="Formules mathématiques"
                         >
-                            <MathIcon />
+                            <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>function</span>
                         </button>
 
                         {showMathMenu && (
-                            <div className="absolute top-full left-0 mt-1 bg-white border border-gray-300 rounded-lg shadow-xl z-10 min-w-48">
-                                <div className="p-1">
-                                    <button
-                                        type="button"
-                                        onClick={() => { insertInlineMath(); setShowMathMenu(false); }}
-                                        className="w-full text-left px-3 py-2 text-sm rounded hover:bg-purple-50 hover:text-purple-700 flex items-center gap-2"
-                                    >
-                                        <code className="bg-gray-100 px-1.5 py-0.5 rounded text-xs">$...$</code>
+                            <div className="absolute top-full left-0 mt-1 bg-white border border-gray-300 rounded-lg shadow-2xl z-50 min-w-60" style={{ maxHeight: '320px', overflowY: 'auto' }}>
+                                <div className="p-1.5">
+                                    <button type="button" onClick={() => { insertInlineMath(); setShowMathMenu(false); }} className="menu-item">
+                                        <code className="bg-purple-100 px-2 py-1 rounded text-xs font-mono">$...$</code>
                                         <span>Formule en ligne</span>
                                     </button>
-                                    <button
-                                        type="button"
-                                        onClick={() => { insertBlockMath(); setShowMathMenu(false); }}
-                                        className="w-full text-left px-3 py-2 text-sm rounded hover:bg-purple-50 hover:text-purple-700 flex items-center gap-2"
-                                    >
-                                        <code className="bg-gray-100 px-1.5 py-0.5 rounded text-xs">$$...$$</code>
+                                    <button type="button" onClick={() => { insertBlockMath(); setShowMathMenu(false); }} className="menu-item">
+                                        <code className="bg-purple-100 px-2 py-1 rounded text-xs font-mono">$$...$$</code>
                                         <span>Formule centrée</span>
                                     </button>
                                     <div className="border-t border-gray-200 my-1"></div>
-                                    <button
-                                        type="button"
-                                        onClick={() => { insertFraction(); setShowMathMenu(false); }}
-                                        className="w-full text-left px-3 py-2 text-sm rounded hover:bg-purple-50 hover:text-purple-700 flex items-center gap-2"
-                                    >
-                                        <span className="text-base">a/b</span>
+                                    <button type="button" onClick={() => { insertFraction(); setShowMathMenu(false); }} className="menu-item">
+                                        <span className="text-lg font-serif">a/b</span>
                                         <span>Fraction</span>
                                     </button>
-                                    <button
-                                        type="button"
-                                        onClick={() => { insertSqrt(); setShowMathMenu(false); }}
-                                        className="w-full text-left px-3 py-2 text-sm rounded hover:bg-purple-50 hover:text-purple-700 flex items-center gap-2"
-                                    >
-                                        <span className="text-base">√x</span>
+                                    <button type="button" onClick={() => { insertSqrt(); setShowMathMenu(false); }} className="menu-item">
+                                        <span className="text-lg font-serif">√x</span>
                                         <span>Racine carrée</span>
                                     </button>
-                                    <button
-                                        type="button"
-                                        onClick={() => { insertSum(); setShowMathMenu(false); }}
-                                        className="w-full text-left px-3 py-2 text-sm rounded hover:bg-purple-50 hover:text-purple-700 flex items-center gap-2"
-                                    >
-                                        <span className="text-base">∑</span>
+                                    <button type="button" onClick={() => { insertSum(); setShowMathMenu(false); }} className="menu-item">
+                                        <span className="text-xl font-serif">∑</span>
                                         <span>Somme</span>
                                     </button>
-                                    <button
-                                        type="button"
-                                        onClick={() => { insertIntegral(); setShowMathMenu(false); }}
-                                        className="w-full text-left px-3 py-2 text-sm rounded hover:bg-purple-50 hover:text-purple-700 flex items-center gap-2"
-                                    >
-                                        <span className="text-base">∫</span>
+                                    <button type="button" onClick={() => { insertIntegral(); setShowMathMenu(false); }} className="menu-item">
+                                        <span className="text-xl font-serif">∫</span>
                                         <span>Intégrale</span>
                                     </button>
                                 </div>
@@ -344,47 +290,35 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
                         )}
                     </div>
 
-                    {/* Groupe Callouts - Menu déroulant */}
-                    <div className="relative px-1 border-r border-gray-300">
+                    {/* Groupe: Callouts */}
+                    <div className="relative px-2 border-r border-gray-300">
                         <button
                             type="button"
                             onClick={() => {
                                 setShowCalloutMenu(!showCalloutMenu);
                                 setShowMathMenu(false);
                             }}
-                            className={`p-2 rounded transition-colors ${
-                                showCalloutMenu
-                                    ? 'bg-orange-100 text-orange-700'
-                                    : 'hover:bg-orange-100 text-gray-700 hover:text-orange-700'
-                            }`}
+                            className={`toolbar-btn ${showCalloutMenu ? 'bg-orange-100 text-orange-700' : ''}`}
                             title="Encadrés spéciaux"
                         >
-                            <AlertIcon />
+                            <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>campaign</span>
                         </button>
 
                         {showCalloutMenu && (
-                            <div className="absolute top-full left-0 mt-1 bg-white border border-gray-300 rounded-lg shadow-xl z-10 min-w-56">
-                                <div className="p-1">
-                                    <button
-                                        type="button"
-                                        onClick={() => { insertWarning(); setShowCalloutMenu(false); }}
-                                        className="w-full text-left px-3 py-2 text-sm rounded hover:bg-orange-50 hover:text-orange-700 flex items-center gap-2"
-                                    >
-                                        <span className="text-orange-500 text-base">⚠️</span>
+                            <div className="absolute top-full left-0 mt-1 bg-white border border-gray-300 rounded-lg shadow-2xl z-50 min-w-64">
+                                <div className="p-1.5">
+                                    <button type="button" onClick={() => { insertWarning(); setShowCalloutMenu(false); }} className="menu-item">
+                                        <span className="text-orange-500 text-xl">⚠️</span>
                                         <div>
-                                            <div className="font-medium">Attention</div>
-                                            <code className="text-xs bg-gray-100 px-1 rounded">!&gt; message</code>
+                                            <div className="font-semibold">Attention</div>
+                                            <code className="text-xs bg-gray-100 px-1.5 py-0.5 rounded font-mono">!&gt; message</code>
                                         </div>
                                     </button>
-                                    <button
-                                        type="button"
-                                        onClick={() => { insertTip(); setShowCalloutMenu(false); }}
-                                        className="w-full text-left px-3 py-2 text-sm rounded hover:bg-cyan-50 hover:text-cyan-700 flex items-center gap-2"
-                                    >
-                                        <span className="text-cyan-500 text-base">💡</span>
+                                    <button type="button" onClick={() => { insertTip(); setShowCalloutMenu(false); }} className="menu-item">
+                                        <span className="text-cyan-500 text-xl">💡</span>
                                         <div>
-                                            <div className="font-medium">Conseil</div>
-                                            <code className="text-xs bg-gray-100 px-1 rounded">?&gt; astuce</code>
+                                            <div className="font-semibold">Conseil</div>
+                                            <code className="text-xs bg-gray-100 px-1.5 py-0.5 rounded font-mono">?&gt; astuce</code>
                                         </div>
                                     </button>
                                 </div>
@@ -392,103 +326,155 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
                         )}
                     </div>
 
-                    {/* Groupe Autres */}
-                    <div className="flex items-center gap-0.5 px-1 border-r border-gray-300">
+                    {/* Groupe: Autres */}
+                    <div className="flex items-center gap-1 px-2 border-r border-gray-300">
                         <button
                             type="button"
                             onClick={makeLink}
-                            className="p-2 rounded hover:bg-blue-100 text-gray-700 hover:text-blue-700 transition-colors"
+                            className="toolbar-btn"
                             title="Insérer un lien"
                         >
-                            <LinkIcon />
+                            <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>link</span>
                         </button>
                         <button
                             type="button"
                             onClick={insertBlank}
-                            className="p-2 rounded hover:bg-indigo-100 text-gray-700 hover:text-indigo-700 transition-colors"
-                            title="Texte à trou (fill-in-the-blank)"
+                            className="toolbar-btn"
+                            title="Texte à trou"
                         >
-                            <BlankIcon />
+                            <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>text_fields</span>
                         </button>
                     </div>
 
-                    {/* Bouton Image (si disponible) */}
-                    {onImageClick && (
-                        <div className="px-1">
+                    {/* Groupe: Image & Aperçu */}
+                    <div className="flex items-center gap-1 px-2">
+                        {onImageClick && (
                             <button
                                 type="button"
                                 onClick={onImageClick}
-                                className={`p-2 rounded transition-colors ${
-                                    hasImage
-                                        ? 'bg-blue-100 text-blue-700 hover:bg-blue-200'
-                                        : 'hover:bg-blue-100 text-gray-700 hover:text-blue-700'
-                                }`}
+                                className={`toolbar-btn ${hasImage ? 'bg-blue-100 text-blue-700 ring-2 ring-blue-300' : ''}`}
                                 title={hasImage ? "Modifier l'image" : "Ajouter une image"}
                             >
-                                <ImageIcon className="w-4 h-4" />
+                                <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>image</span>
                             </button>
-                        </div>
-                    )}
+                        )}
+                        <button
+                            type="button"
+                            onClick={() => setShowPreview(!showPreview)}
+                            className={`toolbar-btn ${showPreview ? 'bg-green-100 text-green-700' : ''}`}
+                            title={showPreview ? "Masquer l'aperçu" : "Afficher l'aperçu"}
+                        >
+                            <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>
+                                {showPreview ? 'visibility' : 'visibility_off'}
+                            </span>
+                        </button>
+                    </div>
                 </div>
 
-                {/* Aide rapide */}
-                <div className="mt-2 pt-2 border-t border-gray-300">
-                    <details className="text-xs text-gray-600">
-                        <summary className="cursor-pointer hover:text-gray-800 font-medium">
-                            📚 Aide rapide
-                        </summary>
-                        <div className="mt-2 space-y-1 bg-white rounded p-2 border border-gray-200">
-                            <div><code className="bg-gray-100 px-1 rounded">**gras**</code> → <strong>gras</strong></div>
-                            <div><code className="bg-gray-100 px-1 rounded">*italique*</code> → <em>italique</em></div>
-                            <div><code className="bg-gray-100 px-1 rounded">$x^2$</code> → formule en ligne</div>
-                            <div><code className="bg-gray-100 px-1 rounded">___réponse___</code> → texte à trou</div>
-                            <div><code className="bg-gray-100 px-1 rounded">!&gt; attention</code> → encadré orange</div>
-                            <div><code className="bg-gray-100 px-1 rounded">?&gt; conseil</code> → encadré cyan</div>
-                            <div><code className="bg-gray-100 px-1 rounded">&gt;&gt; texte</code> → ligne sans puce</div>
-                        </div>
-                    </details>
-                </div>
+                {/* Aide rapide compacte */}
+                <details className="mt-2 pt-2 border-t border-gray-300">
+                    <summary className="cursor-pointer text-xs font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1">
+                        <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>help</span>
+                        Aide rapide
+                    </summary>
+                    <div className="mt-2 grid grid-cols-2 gap-x-4 gap-y-1 text-xs text-gray-600 bg-white p-2 rounded border border-gray-200">
+                        <div><code className="bg-gray-100 px-1 rounded">**gras**</code> → <strong>gras</strong></div>
+                        <div><code className="bg-gray-100 px-1 rounded">*italique*</code> → <em>italique</em></div>
+                        <div><code className="bg-gray-100 px-1 rounded">$x^2$</code> → formule</div>
+                        <div><code className="bg-gray-100 px-1 rounded">___rep___</code> → trou</div>
+                        <div><code className="bg-gray-100 px-1 rounded">!&gt; att</code> → attention</div>
+                        <div><code className="bg-gray-100 px-1 rounded">?&gt; tip</code> → conseil</div>
+                    </div>
+                </details>
             </div>
 
-            {/* Zone de texte */}
-            <textarea
-                ref={textareaRef}
-                value={value}
-                onChange={(e) => onChange(e.target.value)}
-                placeholder={placeholder}
-                rows={rows}
-                className="w-full px-3 py-2 border border-gray-300 rounded-b-lg font-mono text-sm text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-y"
-                onKeyDown={(e) => {
-                    // Raccourcis clavier
-                    if (e.ctrlKey || e.metaKey) {
-                        switch(e.key) {
-                            case 'b':
-                                e.preventDefault();
-                                makeBold();
-                                break;
-                            case 'i':
-                                e.preventDefault();
-                                makeItalic();
-                                break;
-                            case 'u':
-                                e.preventDefault();
-                                makeUnderline();
-                                break;
-                        }
-                    }
-                }}
-            />
+            {/* Zone d'édition avec aperçu */}
+            <div className={`editor-area grid ${showPreview ? 'grid-cols-2' : 'grid-cols-1'} gap-0 border border-gray-300 border-t-0`}>
+                {/* Textarea */}
+                <div className={`${showPreview ? 'border-r border-gray-300' : ''}`}>
+                    <textarea
+                        ref={textareaRef}
+                        value={value}
+                        onChange={(e) => onChange(e.target.value)}
+                        placeholder={placeholder}
+                        rows={rows}
+                        className="w-full px-4 py-3 rounded-none rounded-bl-lg font-mono text-sm text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-y border-0 focus:outline-none"
+                        style={{ minHeight: `${rows * 28}px` }}
+                        onKeyDown={(e) => {
+                            if (e.ctrlKey || e.metaKey) {
+                                switch(e.key) {
+                                    case 'b': e.preventDefault(); makeBold(); break;
+                                    case 'i': e.preventDefault(); makeItalic(); break;
+                                    case 'u': e.preventDefault(); makeUnderline(); break;
+                                }
+                            }
+                        }}
+                    />
+                </div>
+
+                {/* Aperçu en temps réel */}
+                {showPreview && (
+                    <div className="bg-gray-50 p-2 rounded-br-lg overflow-auto" style={{ maxHeight: `${rows * 28}px` }}>
+                        <div className="text-xs font-semibold text-gray-600 mb-2 flex items-center gap-1">
+                            <span className="material-symbols-outlined" style={{ fontSize: '14px' }}>preview</span>
+                            Aperçu en direct
+                        </div>
+                        <LivePreview content={value} />
+                    </div>
+                )}
+            </div>
 
             {/* Fermer les menus si on clique ailleurs */}
             {(showMathMenu || showCalloutMenu) && (
                 <div
-                    className="fixed inset-0 z-0"
+                    className="fixed inset-0 z-40"
                     onClick={() => {
                         setShowMathMenu(false);
                         setShowCalloutMenu(false);
                     }}
                 />
             )}
+
+            {/* Styles CSS inline */}
+            <style>{`
+                .toolbar-btn {
+                    padding: 6px 10px;
+                    border-radius: 6px;
+                    transition: all 0.2s;
+                    background: white;
+                    border: 1px solid #e5e7eb;
+                    cursor: pointer;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+                .toolbar-btn:hover {
+                    background-color: #f3f4f6;
+                    border-color: #d1d5db;
+                    transform: translateY(-1px);
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+                }
+                .toolbar-btn:active {
+                    transform: translateY(0);
+                }
+                .menu-item {
+                    width: 100%;
+                    text-align: left;
+                    padding: 10px 14px;
+                    border-radius: 6px;
+                    transition: background 0.15s;
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    font-size: 0.875rem;
+                    background: white;
+                    border: none;
+                    cursor: pointer;
+                }
+                .menu-item:hover {
+                    background-color: #f3f4f6;
+                }
+            `}</style>
         </div>
     );
 };
