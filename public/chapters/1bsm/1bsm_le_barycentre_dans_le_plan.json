@@ -653,6 +653,418 @@
           "hint": "Utiliser la formule du barycentre"
         }
       ]
+    },
+    {
+      "id": "exo_barycentre_6",
+      "title": "Exercice 1 du PDF - Détermination de coefficients",
+      "statement": "Déterminer deux réels $a$ et $b$ tel que $G = bar\\{(A;a);(B;b)\\}$ dans chacun des cas suivants :",
+      "sub_questions": [
+        {
+          "question": "1) $2\\vec{GA} - 3\\vec{GB} = \\vec{0}$",
+          "hint": "Identifier directement les coefficients"
+        },
+        {
+          "question": "2) $2\\vec{GA} + 3\\vec{BA} = \\vec{0}$",
+          "hint": "Exprimer $\\vec{BA}$ en fonction de $\\vec{BG}$ et $\\vec{GA}$"
+        },
+        {
+          "question": "3) $\\vec{GA} + \\vec{GB} = 3\\vec{AB}$",
+          "hint": "Transformer $\\vec{AB}$ en fonction de $\\vec{AG}$ et $\\vec{GB}$"
+        },
+        {
+          "question": "4) $\\vec{AG} = \\frac{2}{3}\\vec{AB}$",
+          "hint": "Utiliser la formule $\\vec{AG} = \\frac{b}{a+b}\\vec{AB}$"
+        }
+      ]
+    },
+    {
+      "id": "exo_barycentre_7",
+      "title": "Exercice 2 du PDF - Construction de barycentres",
+      "statement": "Soit A et B deux points du plan, construire le point G dans chacun des cas suivants :",
+      "sub_questions": [
+        {
+          "question": "1) $G = bar\\{(A;-5);(B;-1)\\}$ et $AB = 6$",
+          "hint": "Calculer $\\vec{AG} = \\frac{b}{a+b}\\vec{AB}$"
+        },
+        {
+          "question": "2) $G = bar\\{(A;-1);(B;6)\\}$ et $AB = 5$",
+          "hint": "Vérifier si G est sur [AB] ou à l'extérieur"
+        },
+        {
+          "question": "3) $G = bar\\{(A;5);(B;-1)\\}$ et $AB = 4$",
+          "hint": "Attention au signe du résultat"
+        },
+        {
+          "question": "4) $G = bar\\{(A;-8);(B;5)\\}$ et $AB = 3$",
+          "hint": "G peut être à l'extérieur du segment"
+        },
+        {
+          "question": "5) $G = bar\\{(A;-2);(B;3)\\}$ et $AB = 2$",
+          "hint": "Construire G géométriquement"
+        },
+        {
+          "question": "6) $G = bar\\{(A;6);(B;-5)\\}$ et $AB = 1$",
+          "hint": "Calculer la position exacte de G"
+        }
+      ]
+    },
+    {
+      "id": "exo_barycentre_8",
+      "title": "Exercice 3 du PDF - Triangle et points alignés",
+      "statement": "On considère un triangle ABC et les points G, K et I tels que : $G = bar\\{(A;-1);(B;-4);(C;3)\\}$, $K = bar\\{(A;-1);(B;-4)\\}$, $I = bar\\{(B;-4);(C;3)\\}$",
+      "sub_questions": [
+        {
+          "question": "1) Construire les points G, K et I",
+          "hint": "Utiliser la formule de construction pour chaque point"
+        },
+        {
+          "question": "2) En utilisant l'associativité du barycentre montrer que G est le milieu de [AI]",
+          "hint": "Montrer que $G = bar\\{(A;-1);(I;-1)\\}$"
+        },
+        {
+          "question": "3) a) En appliquons la propriété caractéristique du barycentre montrer que $\\vec{CG} = \\frac{1}{2}\\vec{CA} + 2\\vec{CB}$",
+          "hint": "Utiliser M = C dans la propriété caractéristique"
+        },
+        {
+          "question": "3) b) Construire le point G",
+          "hint": "Utiliser la relation vectorielle trouvée"
+        },
+        {
+          "question": "4) Déterminer l'ensemble des points M du plan dans chacun des cas suivants : a) $\\|-3\\vec{MA} - 2\\vec{MB} + 3\\vec{MC}\\| = \\|-2\\vec{MA} + 3\\vec{AC}\\|$",
+          "hint": "Utiliser la propriété caractéristique avec les barycentres"
+        },
+        {
+          "question": "b) $\\|-2\\vec{MB} + 3\\vec{MC}\\| = 3$",
+          "hint": "C'est un cercle, déterminer son centre et son rayon"
+        }
+      ]
+    },
+    {
+      "id": "exo_barycentre_9",
+      "title": "Exercice 4 du PDF - Repère et coordonnées",
+      "statement": "Dans un repère $(O;\\vec{i},\\vec{j})$ du plan, on considère les points $A(2;0)$, $B(5;6)$, $C(-4;2)$, $D(-1;5)$. On pose $G = bar\\{(A;1);(B;2)\\}$ et $G' = bar\\{(C;1);(D;2)\\}$",
+      "sub_questions": [
+        {
+          "question": "1) Déterminer les coordonnées de G et de G'",
+          "hint": "Utiliser la formule des coordonnées du barycentre"
+        },
+        {
+          "question": "2) Soit I, J et K les milieux des segments [AC], [GG'] respectivement",
+          "hint": "Les coordonnées du milieu de [AB] sont $\\left(\\frac{x_A+x_B}{2};\\frac{y_A+y_B}{2}\\right)$"
+        },
+        {
+          "question": "a) Déterminer les coordonnées des points I, J et K",
+          "hint": "Appliquer la formule du milieu"
+        },
+        {
+          "question": "b) Montrer que les points I, J et K sont alignés",
+          "hint": "Montrer que les vecteurs $\\vec{IJ}$ et $\\vec{IK}$ sont colinéaires"
+        }
+      ]
+    },
+    {
+      "id": "exo_barycentre_10",
+      "title": "Exercice 5 du PDF - Triangle et barycentres",
+      "statement": "On considère un triangle ABC et les points G, H et D tels que : $G = bar\\{(A;1);(B;2);(C;1)\\}$, $H = bar\\{(A;5);(B;2);(C;-3)\\}$, D est le milieu de [AC]",
+      "sub_questions": [
+        {
+          "question": "1) a) Montrer que $\\vec{AH} = \\frac{1}{4}\\vec{AB} + \\frac{-3}{4}\\vec{AC}$",
+          "hint": "Utiliser la propriété caractéristique avec M = A"
+        },
+        {
+          "question": "b) Construire les points H et D",
+          "hint": "Utiliser les relations vectorielles"
+        },
+        {
+          "question": "2) a) Exprimer D sous forme du barycentre de deux points",
+          "hint": "$D = bar\\{(A;1);(C;1)\\}$"
+        },
+        {
+          "question": "b) En appliquons la propriété de l'associativité du barycentre déduire que G est le milieu de [DB]",
+          "hint": "Montrer que $G = bar\\{(D;2);(B;2)\\}$"
+        },
+        {
+          "question": "c) Placer le point G dans la figure",
+          "hint": "G est au milieu de [DB]"
+        },
+        {
+          "question": "3) a) En appliquons la propriété caractéristique du barycentre sur G montrer que $\\vec{CG} = \\frac{1}{4}\\vec{CA} + \\frac{1}{2}\\vec{CB}$",
+          "hint": "Utiliser M = C dans la propriété"
+        },
+        {
+          "question": "b) En déduire que $\\vec{CG} = \\frac{1}{4}\\vec{AB} - \\frac{3}{4}\\vec{AC}$",
+          "hint": "Transformer les vecteurs"
+        },
+        {
+          "question": "c) En déduire que le quadrilatère CGHA est un parallélogramme",
+          "hint": "Montrer que $\\vec{CG} = \\vec{AH}$"
+        },
+        {
+          "question": "4) Soit E le milieu de [AB], montrer que les points H, E et G sont alignés",
+          "hint": "Utiliser les barycentres partiels"
+        },
+        {
+          "question": "5) Déterminer l'ensemble des points M du plan tel que : $\\|5\\vec{MA} + 2\\vec{MB} - 3\\vec{MC}\\| = \\|\\vec{MA} + 2\\vec{MB} + \\vec{MC}\\|$",
+          "hint": "Utiliser les barycentres H et G"
+        }
+      ]
+    },
+    {
+      "id": "exo_barycentre_11",
+      "title": "Exercice 6 du PDF - Triangle et barycentres multiples",
+      "statement": "On considère un triangle ABC et les points G, I et K tels que : $G = bar\\{(A;3);(B;2);(C;-1)\\}$ ; I est le milieu de [AC] et $\\vec{AK} = \\frac{2}{5}\\vec{AB}$",
+      "sub_questions": [
+        {
+          "question": "1) Montrer que $\\vec{AG} = \\frac{1}{2}\\vec{AB} - \\frac{1}{4}\\vec{AC}$ et $\\vec{BI} = -\\vec{AB} + \\frac{1}{2}\\vec{AC}$",
+          "hint": "Utiliser la propriété caractéristique"
+        },
+        {
+          "question": "2) En déduire que $(BI) \\| (AG)$",
+          "hint": "Montrer que $\\vec{BI} = k\\vec{AG}$"
+        },
+        {
+          "question": "3) a) Montrer que $K = bar\\{(A;3);(B;2)\\}$",
+          "hint": "Utiliser $\\vec{AK} = \\frac{2}{5}\\vec{AB}$ et la formule du barycentre"
+        },
+        {
+          "question": "b) Montrer que les points C, K et G sont alignés",
+          "hint": "Utiliser l'associativité du barycentre"
+        },
+        {
+          "question": "4) Déterminer l'ensemble des points M du plan tel que : $\\|3\\vec{MA} + 2\\vec{MB}\\| = 10$",
+          "hint": "Utiliser le barycentre K"
+        }
+      ]
+    },
+    {
+      "id": "exo_barycentre_12",
+      "title": "Exercice 7 du PDF - Barycentre et construction",
+      "statement": "On considère un triangle ABC et l'on désigne par G le barycentre de $(A;1)$, $(B;4)$ et $(C;-3)$.",
+      "sub_questions": [
+        {
+          "question": "1) Construire le barycentre I de $(B;4)$ et $(C;-3)$",
+          "hint": "Calculer $\\vec{BI}$ en fonction de $\\vec{BC}$"
+        },
+        {
+          "question": "2) Montrer que $G = bar\\{(A;1);(I;1)\\}$",
+          "hint": "Utiliser l'associativité du barycentre"
+        },
+        {
+          "question": "3) En déduire la position de G sur (AI)",
+          "hint": "G est le milieu de [AI]"
+        }
+      ]
+    },
+    {
+      "id": "exo_barycentre_13",
+      "title": "Exercice 8 du PDF - Coordonnées dans un repère",
+      "statement": "Placer dans un repère les points : $A(4;2)$, $B(3;4)$ et $C(2;5)$.",
+      "sub_questions": [
+        {
+          "question": "1) a) Quelles sont les coordonnées de G ? Placer G",
+          "hint": "Si G est le barycentre, lesquels coefficients utiliser ?"
+        },
+        {
+          "question": "b) La droite (BG) passe-t-elle par l'origine du repère ?",
+          "hint": "Vérifier si O, B et G sont alignés"
+        }
+      ]
+    },
+    {
+      "id": "exo_barycentre_14",
+      "title": "Exercice 9 du PDF - Triangle ABC",
+      "statement": "Soit ABC un triangle.",
+      "sub_questions": [
+        {
+          "question": "1) a) Construire le point I tel que $\\vec{BI} = 3\\vec{BC}$",
+          "hint": "I est sur la droite (BC)"
+        },
+        {
+          "question": "b) Montrer que $I = Bar\\{(B;-2);(C;3)\\}$",
+          "hint": "Vérifier la relation vectorielle"
+        },
+        {
+          "question": "c) Montrer que $\\vec{AI} = -2\\vec{AB} + 3\\vec{AC}$",
+          "hint": "Utiliser la relation de Chasles"
+        },
+        {
+          "question": "2) Soit $G = bar\\{(A;-3);(B;-2);(C;3)\\}$",
+          "hint": "Vérifier que la somme des coefficients est non nulle"
+        },
+        {
+          "question": "Montrer que $\\vec{AG} = \\vec{AB} - \\frac{3}{2}\\vec{AC}$",
+          "hint": "Utiliser la propriété caractéristique avec M = A"
+        },
+        {
+          "question": "3) a) En déduire que les points A, I et G sont alignés",
+          "hint": "Montrer que $\\vec{AI}$ et $\\vec{AG}$ sont colinéaires"
+        },
+        {
+          "question": "b) Construire le point G",
+          "hint": "G est sur la droite (AI)"
+        },
+        {
+          "question": "4) Déterminer l'ensemble des points M du plan dans chacun des cas suivants :",
+          "hint": "Utiliser les barycentres"
+        }
+      ]
+    },
+    {
+      "id": "exo_barycentre_15",
+      "title": "Exercice 10 du PDF - Quadrilatère ABCD",
+      "statement": "ABCD un quadrilatère dans le plan, on considère les points H, I et J tels que : $CH = 2\\vec{AC} + 2\\vec{BC} + \\vec{AD}$, $I = bar\\{(A;3);(C;-5)\\}$",
+      "sub_questions": [
+        {
+          "question": "1) Montrer que $H = bar\\{(A;2);(B;-1);(C;-2)\\}$",
+          "hint": "Développer la relation vectorielle"
+        },
+        {
+          "question": "2) En appliquons la propriété de l'associativité du barycentre montrer que $H = bar\\{(I;-2);(J;1)\\}$",
+          "hint": "Regrouper les points appropriés"
+        },
+        {
+          "question": "3) a) On considère le point $G_m$ barycentre du système pondéré $\\{(A;3m+1);(B;-2m-3);(C;3-m)\\}$",
+          "hint": "Vérifier la condition d'existence"
+        },
+        {
+          "question": "a) Établir l'existence du point $G_m$",
+          "hint": "Calculer la somme des coefficients"
+        },
+        {
+          "question": "b) Trouver les coordonnées de $G_m$",
+          "hint": "Utiliser la formule des coordonnées"
+        },
+        {
+          "question": "c) Quel est l'ensemble des points $G_m$ lorsque m varie sur $\\mathbb{R}$",
+          "hint": "Éliminer le paramètre m"
+        },
+        {
+          "question": "6) Déterminer l'ensemble des points M du plan tels que : $\\|-3\\vec{MA} - 4\\vec{MB} + 3\\vec{MC}\\| = 32$",
+          "hint": "Identifier le barycentre approprié"
+        }
+      ]
+    },
+    {
+      "id": "exo_barycentre_16",
+      "title": "Exercice 11 du PDF - Repère et barycentre",
+      "statement": "Dans le plan muni d'un repère $(O;\\vec{i},\\vec{j})$, on considère les points $A(1;2)$, $B(-3;2)$ et $C(2;4)$",
+      "sub_questions": [
+        {
+          "question": "1) Déterminer les coordonnées du point G barycentre du système pondéré $\\{(A;1);(B;-3);(C;3)\\}$",
+          "hint": "Utiliser la formule des coordonnées"
+        },
+        {
+          "question": "2) Soit $m \\in \\mathbb{R}$, on considère le point $G_m$ barycentre du système pondéré $\\{(A;3m+1);(B;-2m-3);(C;3-m)\\}$",
+          "hint": "Vérifier d'abord l'existence"
+        }
+      ]
+    },
+    {
+      "id": "exo_barycentre_17",
+      "title": "Exercice 12 du PDF - Parallélogramme",
+      "statement": "Soit ABCD un parallélogramme et $\\alpha \\in ]0;+\\infty[$. On considère les points K et L définis par $\\vec{DK} = (\\alpha+2)\\vec{DB}$ et $\\vec{CL} = \\alpha\\vec{BC}$. Soit M le point d'intersection de (CK) et (DL)",
+      "sub_questions": [
+        {
+          "question": "Montrer que $\\vec{DM} = \\frac{\\alpha+2}{\\alpha^2+2\\alpha+2}\\vec{DL}$",
+          "hint": "Utiliser les barycentres partiels"
+        }
+      ]
+    },
+    {
+      "id": "exo_barycentre_18",
+      "title": "Exercice 13 du PDF - Triangle avec milieu",
+      "statement": "Soit ABC un triangle. Y est le milieu de [BC].",
+      "sub_questions": [
+        {
+          "question": "1) Placer, en justifiant, le barycentre U de $(A;4)$ et $(C;1)$ puis placer le barycentre E de $(A;4)$ et $(B;1)$",
+          "hint": "Utiliser la formule de construction"
+        },
+        {
+          "question": "2) Soit $G = bar\\{(A;4);(B;1);(C;1)\\}$. Montrer que G est aussi barycentre de $(E;5)$ et $(C;1)$",
+          "hint": "Utiliser l'associativité"
+        },
+        {
+          "question": "3) Démontrer que les droites (EC), (AY) et (BU) sont concourantes",
+          "hint": "Montrer qu'elles passent toutes par G"
+        }
+      ]
+    },
+    {
+      "id": "exo_barycentre_19",
+      "title": "Exercice 14 du PDF - Trapèze",
+      "statement": "$a \\in \\mathbb{R}\\backslash\\{0;1\\}$ et ABCD un trapèze tel que $\\vec{AB} = a\\vec{CD}$",
+      "sub_questions": [
+        {
+          "question": "1) Déterminer les réels b et c pour que le point D soit le barycentre du système pondéré $\\{(A;1);(B;b);(C;c)\\}$",
+          "hint": "Utiliser la condition de trapèze"
+        },
+        {
+          "question": "2) On suppose dans cette équation que $a = -1$",
+          "hint": "Remplacer a par -1 dans les expressions"
+        },
+        {
+          "question": "Soit E et F les milieux respectifs de [AC] et [BE]",
+          "hint": "Exprimer E et F comme barycentres"
+        },
+        {
+          "question": "Soit $\\vec{AB} = \\frac{2}{3}\\vec{AB}$ ; $\\vec{AJ} = \\frac{2}{3}\\vec{AC}$ ; $\\vec{AM} = \\frac{1}{3}\\vec{AC}$",
+          "hint": "Construire les points"
+        },
+        {
+          "question": "Démontrer que les droites : (IS), (MR) et (NJ) sont concourantes en G",
+          "hint": "Utiliser les barycentres et l'associativité"
+        }
+      ]
+    },
+    {
+      "id": "exo_barycentre_20",
+      "title": "Exercice 15 du PDF - Réel k non nul",
+      "statement": "Étant donné un triangle ABC et k un réel non nul donné, on définit les points D et E par les relations : $\\vec{AD} = k\\vec{AB}$ et $\\vec{CE} = k\\vec{CA}$",
+      "sub_questions": [
+        {
+          "question": "1) Faire une figure illustrant ces données lorsque $k = \\frac{1}{3}$, puis lorsque $k = -1$",
+          "hint": "Placer les points selon les relations vectorielles"
+        },
+        {
+          "question": "2) Montrer que $D = bar\\{(A;1-k);(B;k)\\}$",
+          "hint": "Vérifier la relation vectorielle"
+        },
+        {
+          "question": "3) Montrer que $E = bar\\{(C;1-k);(A;k)\\}$",
+          "hint": "Utiliser la même méthode"
+        },
+        {
+          "question": "4) En déduire que pour tout point M du plan, on a : $\\vec{MD} + \\vec{ME} = \\vec{MA} + \\vec{MC} + k\\vec{CB}$, où",
+          "hint": "Utiliser la propriété caractéristique"
+        },
+        {
+          "question": "B' et C' sont les milieux respectifs de [AC] et [AB]",
+          "hint": "Exprimer comme barycentres"
+        },
+        {
+          "question": "5) Soit I le milieu de [DE]. Déduire de la question précédente que I, B' et C' sont alignés",
+          "hint": "Montrer que les vecteurs sont colinéaires"
+        }
+      ]
+    },
+    {
+      "id": "exo_barycentre_21",
+      "title": "Exercice 16 du PDF - Centre de gravité",
+      "statement": "ABC est un triangle de centre de gravité G. On note I, J, M, N, R et S les points définis par :",
+      "sub_questions": [
+        {
+          "question": "$\\vec{AI} = \\frac{1}{3}\\vec{AB}$ ; $\\vec{AJ} = \\frac{2}{3}\\vec{AB}$ ; $\\vec{AM} = \\frac{1}{3}\\vec{AC}$",
+          "hint": "Exprimer chaque point comme barycentre"
+        },
+        {
+          "question": "$\\vec{AN} = \\frac{2}{3}\\vec{AC}$ ; $\\vec{BR} = \\frac{1}{3}\\vec{BC}$ ; $\\vec{BS} = \\frac{2}{3}\\vec{BC}$",
+          "hint": "Continuer avec les barycentres"
+        },
+        {
+          "question": "Démontrer que les droites (IS), (MR) et (NJ) sont concourantes en G",
+          "hint": "Utiliser les propriétés du centre de gravité et l'associativité"
+        }
+      ]
     }
   ],
   "version": "v1.1.0-1da49c"
