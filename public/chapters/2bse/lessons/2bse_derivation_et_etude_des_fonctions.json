@@ -18,13 +18,24 @@
               "elements": [
                 {
                   "type": "definition-box",
-                  "preamble": "Dérivabilité en un point :",
-                  "content": "Soit $f$ une fonction définie sur un intervalle ouvert contenant $x_0$.\\n\\nOn dit que $f$ est **dérivable en $x_0$** s'il existe un réel $\\ell$ tel que :\\n\\n$$\\displaystyle \\lim_{x \\to x_0} \\frac{f(x) - f(x_0)}{x - x_0} = \\ell$$\\n\\nLe réel $\\ell$ est appelé **nombre dérivé** de la fonction $f$ en $x_0$ et noté $f'(x_0) = \\ell$."
+                  "preamble": "Dérivabilité en un point",
+                  "content": [
+                    "Soit $f$ une fonction définie sur un intervalle ouvert contenant $x_0$.",
+                    "On dit que $f$ est **dérivable en $x_0$** s'il existe un réel $\\ell$ tel que :",
+                    "$$\\displaystyle \\lim_{x \\to x_0} \\frac{f(x) - f(x_0)}{x - x_0} = \\ell$$",
+                    "Le réel $\\ell$ est appelé **nombre dérivé** de la fonction $f$ en $x_0$ et noté $f'(x_0) = \\ell$."
+                  ]
                 },
                 {
                   "type": "example-box",
-                  "preamble": "**Application :**",
-                  "content": "Soit $f(x) = 2x^2$. Étudions la dérivabilité de $f$ en $x_0 = 2$.\\n\\nOn calcule :\\n\\n$$\\displaystyle \\lim_{x \\to 2} \\frac{f(x) - f(2)}{x - 2} = \\lim_{x \\to 2} \\frac{2x^2 - 8}{x - 2}$$\\n\\n$$= \\lim_{x \\to 2} \\frac{2(x^2 - 4)}{x - 2} = \\lim_{x \\to 2} \\frac{2(x-2)(x+2)}{x-2}$$\\n\\n$$= \\lim_{x \\to 2} 2(x+2) = ___8___$$\\n\\nDonc $f$ est dérivable en $x_0 = 2$ et $f'(2) = ___8___$"
+                  "content": [
+                    "Soit $f(x) = 2x^2$. Étudions la dérivabilité de $f$ en $x_0 = 2$.",
+                    "On calcule :",
+                    "$$\\displaystyle \\lim_{x \\to 2} \\frac{f(x) - f(2)}{x - 2} = \\lim_{x \\to 2} \\frac{2x^2 - 8}{x - 2}$$",
+                    "$$= \\lim_{x \\to 2} \\frac{2(x^2 - 4)}{x - 2} = \\lim_{x \\to 2} \\frac{2(x-2)(x+2)}{x-2}$$",
+                    "$$= \\lim_{x \\to 2} 2(x+2) = ___8___$$",
+                    "Donc $f$ est dérivable en $x_0 = 2$ et $f'(2) = ___8___$"
+                  ]
                 }
               ]
             },
@@ -33,13 +44,26 @@
               "elements": [
                 {
                   "type": "property-box",
-                  "preamble": "Équation de la tangente :",
-                  "content": "Soit $f$ une fonction dérivable en un point $x_0$.\\n\\nUne équation de la tangente à $(C_f)$ au point d'abscisse $x_0$ est :\\n\\n$$y = f'(x_0)(x - x_0) + f(x_0)$$\\n\\nLe nombre $f'(x_0)$ représente le **coefficient directeur** de la tangente."
+                  "preamble": "Équation de la tangente",
+                  "content": [
+                    "Soit $f$ une fonction dérivable en un point $x_0$.",
+                    "Une équation de la tangente à $(C_f)$ au point d'abscisse $x_0$ est :",
+                    "$$y = f'(x_0)(x - x_0) + f(x_0)$$",
+                    "Le nombre $f'(x_0)$ représente le **coefficient directeur** de la tangente."
+                  ]
                 },
                 {
                   "type": "example-box",
-                  "preamble": "**Application :**",
-                  "content": "Soit $g(x) = x^3$. Déterminons l'équation de la tangente à $(C_g)$ au point d'abscisse 1.\\n\\n**Étape 1 :** Calculons $g'(1)$\\n\\n$$\\displaystyle \\lim_{x \\to 1} \\frac{g(x) - g(1)}{x - 1} = \\lim_{x \\to 1} \\frac{x^3 - 1}{x - 1}$$\\n\\n$$= \\lim_{x \\to 1} \\frac{(x-1)(x^2+x+1)}{x-1} = \\lim_{x \\to 1} (x^2+x+1) = ___3___$$\\n\\nDonc $g'(1) = ___3___$ et $g(1) = ___1___$\\n\\n**Étape 2 :** Équation de la tangente\\n\\n$$y = g'(1)(x-1) + g(1) = 3(x-1) + 1 = 3x - 2$$\\n\\n**Réponse :** $(T): y = 3x - 2$"
+                  "content": [
+                    "Soit $g(x) = x^3$. Déterminons l'équation de la tangente à $(C_g)$ au point d'abscisse 1.",
+                    "**Étape 1 :** Calculons $g'(1)$",
+                    "$$\\displaystyle \\lim_{x \\to 1} \\frac{g(x) - g(1)}{x - 1} = \\lim_{x \\to 1} \\frac{x^3 - 1}{x - 1}$$",
+                    "$$= \\lim_{x \\to 1} \\frac{(x-1)(x^2+x+1)}{x-1} = \\lim_{x \\to 1} (x^2+x+1) = ___3___$$",
+                    "Donc $g'(1) = ___3___$ et $g(1) = ___1___$",
+                    "**Étape 2 :** Équation de la tangente",
+                    "$$y = g'(1)(x-1) + g(1) = 3(x-1) + 1 = 3x - 2$$",
+                    "**Réponse :** $(T): y = 3x - 2$"
+                  ]
                 },
                 {
                   "type": "practice-box",
@@ -65,15 +89,19 @@
               "elements": [
                 {
                   "type": "definition-box",
-                  "preamble": "Dérivées latérales :",
+                  "preamble": "Dérivées latérales",
                   "listType": "bullet",
                   "content": [
                     ">> **Dérivabilité à droite :**",
                     "Soit $f$ une fonction définie sur un intervalle $[x_0, \\alpha[$.",
-                    "On dit que $f$ est **dérivable à droite** en $x_0$ s'il existe un réel $\\ell$ tel que :\\n$$\\displaystyle \\lim_{x \\to x_0^+} \\frac{f(x) - f(x_0)}{x - x_0} = \\ell$$\\nLe réel $\\ell$ est noté $f'_d(x_0)$.",
+                    "On dit que $f$ est **dérivable à droite** en $x_0$ s'il existe un réel $\\ell$ tel que :",
+                    "$$\\displaystyle \\lim_{x \\to x_0^+} \\frac{f(x) - f(x_0)}{x - x_0} = \\ell$$",
+                    "Le réel $\\ell$ est noté $f'_d(x_0)$.",
                     ">> **Dérivabilité à gauche :**",
                     "Soit $f$ une fonction définie sur un intervalle $]\\alpha, x_0]$.",
-                    "On dit que $f$ est **dérivable à gauche** en $x_0$ s'il existe un réel $\\ell$ tel que :\\n$$\\displaystyle \\lim_{x \\to x_0^-} \\frac{f(x) - f(x_0)}{x - x_0} = \\ell$$\\nLe réel $\\ell$ est noté $f'_g(x_0)$."
+                    "On dit que $f$ est **dérivable à gauche** en $x_0$ s'il existe un réel $\\ell$ tel que :",
+                    "$$\\displaystyle \\lim_{x \\to x_0^-} \\frac{f(x) - f(x_0)}{x - x_0} = \\ell$$",
+                    "Le réel $\\ell$ est noté $f'_g(x_0)$."
                   ]
                 },
                 {
@@ -82,8 +110,16 @@
                 },
                 {
                   "type": "example-box",
-                  "preamble": "**Application :**",
-                  "content": "Soit $f(x) = |x^2 - 1|$ définie sur $\\mathbb{R}$. Étudions la dérivabilité de $f$ en $x_0 = 1$.\\n\\n**À droite de 1 :** Pour $x > 1$, on a $x^2 - 1 > 0$, donc $f(x) = x^2 - 1$\\n\\n$$\\displaystyle \\lim_{x \\to 1^+} \\frac{f(x) - f(1)}{x - 1} = \\lim_{x \\to 1^+} \\frac{x^2-1}{x-1} = \\lim_{x \\to 1^+} (x+1) = ___2___$$\\n\\nDonc $f'_d(1) = ___2___$\\n\\n**À gauche de 1 :** Pour $x < 1$, on a $x^2 - 1 < 0$, donc $f(x) = -(x^2-1)$\\n\\n$$\\displaystyle \\lim_{x \\to 1^-} \\frac{f(x) - f(1)}{x - 1} = \\lim_{x \\to 1^-} \\frac{-(x^2-1)}{x-1} = \\lim_{x \\to 1^-} -(x+1) = ___-2___$$\\n\\nDonc $f'_g(1) = ___-2___$\\n\\n**Conclusion :** Puisque $f'_d(1) \\neq f'_g(1)$, la fonction $f$ **n'est pas dérivable en 1**."
+                  "content": [
+                    "Soit $f(x) = |x^2 - 1|$ définie sur $\\mathbb{R}$. Étudions la dérivabilité de $f$ en $x_0 = 1$.",
+                    "**À droite de 1 :** Pour $x > 1$, on a $x^2 - 1 > 0$, donc $f(x) = x^2 - 1$",
+                    "$$\\displaystyle \\lim_{x \\to 1^+} \\frac{f(x) - f(1)}{x - 1} = \\lim_{x \\to 1^+} \\frac{x^2-1}{x-1} = \\lim_{x \\to 1^+} (x+1) = ___2___$$",
+                    "Donc $f'_d(1) = ___2___$",
+                    "**À gauche de 1 :** Pour $x < 1$, on a $x^2 - 1 < 0$, donc $f(x) = -(x^2-1)$",
+                    "$$\\displaystyle \\lim_{x \\to 1^-} \\frac{f(x) - f(1)}{x - 1} = \\lim_{x \\to 1^-} \\frac{-(x^2-1)}{x-1} = \\lim_{x \\to 1^-} -(x+1) = ___-2___$$",
+                    "Donc $f'_g(1) = ___-2___$",
+                    "**Conclusion :** Puisque $f'_d(1) \\neq f'_g(1)$, la fonction $f$ **n'est pas dérivable en 1**."
+                  ]
                 }
               ]
             },
@@ -92,11 +128,13 @@
               "elements": [
                 {
                   "type": "property-box",
-                  "preamble": "Demi-tangentes :",
+                  "preamble": "Demi-tangentes",
                   "listType": "bullet",
                   "content": [
-                    "Si $f$ est dérivable à droite en $x_0$, alors $(C_f)$ admet une **demi-tangente à droite** au point d'abscisse $x_0$ d'équation :\\n$$\\begin{cases} y = f'_d(x_0)(x - x_0) + f(x_0) \\\\ x \\geq x_0 \\end{cases}$$",
-                    "Si $f$ est dérivable à gauche en $x_0$, alors $(C_f)$ admet une **demi-tangente à gauche** au point d'abscisse $x_0$ d'équation :\\n$$\\begin{cases} y = f'_g(x_0)(x - x_0) + f(x_0) \\\\ x \\leq x_0 \\end{cases}$$"
+                    "Si $f$ est dérivable à droite en $x_0$, alors $(C_f)$ admet une **demi-tangente à droite** au point d'abscisse $x_0$ d'équation :",
+                    "$$\\begin{cases} y = f'_d(x_0)(x - x_0) + f(x_0) \\\\ x \\geq x_0 \\end{cases}$$",
+                    "Si $f$ est dérivable à gauche en $x_0$, alors $(C_f)$ admet une **demi-tangente à gauche** au point d'abscisse $x_0$ d'équation :",
+                    "$$\\begin{cases} y = f'_g(x_0)(x - x_0) + f(x_0) \\\\ x \\leq x_0 \\end{cases}$$"
                   ]
                 },
                 {
@@ -139,7 +177,7 @@
           "elements": [
             {
               "type": "definition-box",
-              "preamble": "Fonction dérivée :",
+              "preamble": "Fonction dérivée",
               "listType": "bullet",
               "content": [
                 "Soit $f$ une fonction définie sur un intervalle ouvert $I$.",
@@ -149,7 +187,7 @@
             },
             {
               "type": "definition-box",
-              "preamble": "Dérivées d'ordre supérieur :",
+              "preamble": "Dérivées d'ordre supérieur",
               "listType": "bullet",
               "content": [
                 "Si la fonction dérivée $f'$ est dérivable sur $I$, alors sa fonction dérivée est appelée la **dérivée seconde** de $f$ et notée $f''$",
@@ -184,7 +222,7 @@
           "elements": [
             {
               "type": "property-box",
-              "preamble": "Formules de dérivation :",
+              "preamble": "Formules de dérivation",
               "content": "Soit $f$ et $g$ deux fonctions dérivables sur un intervalle $I$ et $k$ un nombre réel."
             },
             {
@@ -231,8 +269,17 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Application :**",
-              "content": "Soit $f$ définie sur $\\mathbb{R}$ par :\\n$$f(x) = \\begin{cases} \\sqrt{x+1} & \\text{si } x \\geq 0 \\\\ x^2 + \\sqrt{1-x} & \\text{si } x < 0 \\end{cases}$$\\n\\n**Continuité en 0 :**\\n\\nOn a $f(0) = ___1___$, $\\displaystyle \\lim_{x \\to 0^+} f(x) = \\sqrt{1} = ___1___$ et $\\displaystyle \\lim_{x \\to 0^-} f(x) = 0 + \\sqrt{1} = ___1___$\\n\\nDonc $f$ est **continue** en 0.\\n\\n**Dérivabilité en 0 :**\\n\\nÀ droite : $\\displaystyle \\lim_{x \\to 0^+} \\frac{\\sqrt{x+1} - 1}{x} = \\lim_{x \\to 0^+} \\frac{1}{\\sqrt{x+1}+1} = ___\\frac{1}{2}___$\\n\\nÀ gauche : $\\displaystyle \\lim_{x \\to 0^-} \\frac{x^2 + \\sqrt{1-x} - 1}{x} = \\lim_{x \\to 0^-} \\left(x - \\frac{1}{\\sqrt{1-x}+1}\\right) = ___-\\frac{1}{2}___$\\n\\nPuisque $f'_d(0) \\neq f'_g(0)$, $f$ **n'est pas dérivable** en 0."
+              "content": [
+                "Soit $f$ définie sur $\\mathbb{R}$ par :",
+                "$$f(x) = \\begin{cases} \\sqrt{x+1} & \\text{si } x \\geq 0 \\\\ x^2 + \\sqrt{1-x} & \\text{si } x < 0 \\end{cases}$$",
+                "**Continuité en 0 :**",
+                "On a $f(0) = ___1___$, $\\displaystyle \\lim_{x \\to 0^+} f(x) = \\sqrt{1} = ___1___$ et $\\displaystyle \\lim_{x \\to 0^-} f(x) = 0 + \\sqrt{1} = ___1___$",
+                "Donc $f$ est **continue** en 0.",
+                "**Dérivabilité en 0 :**",
+                "À droite : $\\displaystyle \\lim_{x \\to 0^+} \\frac{\\sqrt{x+1} - 1}{x} = \\lim_{x \\to 0^+} \\frac{1}{\\sqrt{x+1}+1} = ___\\frac{1}{2}___$",
+                "À gauche : $\\displaystyle \\lim_{x \\to 0^-} \\frac{x^2 + \\sqrt{1-x} - 1}{x} = \\lim_{x \\to 0^-} \\left(x - \\frac{1}{\\sqrt{1-x}+1}\\right) = ___-\\frac{1}{2}___$",
+                "Puisque $f'_d(0) \\neq f'_g(0)$, $f$ **n'est pas dérivable** en 0."
+              ]
             },
             {
               "type": "remark-box",
@@ -261,17 +308,29 @@
           "elements": [
             {
               "type": "property-box",
-              "preamble": "Dérivée de la composée :",
+              "preamble": "Dérivée de la composée",
               "listType": "bullet",
               "content": [
-                "Si $f$ est dérivable en un point $a$ et $g$ en $f(a)$, alors $g \\circ f$ est dérivable en $a$ et :\\n$$(g \\circ f)'(a) = g'(f(a)) \\times f'(a)$$",
-                "Si $f$ est dérivable sur un intervalle $I$ et $g$ sur $f(I)$, alors $g \\circ f$ est dérivable sur $I$ et :\\n$$(\\forall x \\in I) : (g \\circ f)'(x) = g'(f(x)) \\times f'(x)$$"
+                "Si $f$ est dérivable en un point $a$ et $g$ en $f(a)$, alors $g \\circ f$ est dérivable en $a$ et :",
+                "$$(g \\circ f)'(a) = g'(f(a)) \\times f'(a)$$",
+                "Si $f$ est dérivable sur un intervalle $I$ et $g$ sur $f(I)$, alors $g \\circ f$ est dérivable sur $I$ et :",
+                "$$(\\forall x \\in I) : (g \\circ f)'(x) = g'(f(x)) \\times f'(x)$$"
               ]
             },
             {
               "type": "example-box",
-              "preamble": "**Application :**",
-              "content": "Soient $f(x) = x^2 + 1$ et $g(x) = \\displaystyle \\frac{x}{x-2}$.\\n\\nMontrons que $g \\circ f$ est dérivable sur $I = ]1, +\\infty[$ sans déterminer $(g \\circ f)(x)$.\\n\\n**Analyse de $f$ :**\\n\\n$f$ est une fonction polynôme, donc dérivable sur $I$ et $f'(x) = ___2x___ > 0$ sur $I$.\\n\\nOn a : $f(I) = ]\\lim_{x \\to 1^+} f(x), \\lim_{x \\to +\\infty} f(x)[ = ]___2___, +\\infty[$\\n\\n**Analyse de $g$ :**\\n\\n$g$ est une fonction rationnelle, donc dérivable sur tout intervalle de $\\mathbb{R} \\setminus \\{2\\}$. En particulier, sur $f(I) = ]2, +\\infty[$ et $g'(x) = \\displaystyle \\frac{-2}{(x-2)^2}$\\n\\n**Conclusion :**\\n\\n$(g \\circ f)$ est dérivable sur $I$ et :\\n\\n$$(g \\circ f)'(x) = g'(f(x)) \\times f'(x) = \\frac{-2}{((x^2+1)-2)^2} \\times 2x = \\frac{-4x}{(x^2-1)^2}$$"
+              "content": [
+                "Soient $f(x) = x^2 + 1$ et $g(x) = \\displaystyle \\frac{x}{x-2}$.",
+                "Montrons que $g \\circ f$ est dérivable sur $I = ]1, +\\infty[$ sans déterminer $(g \\circ f)(x)$.",
+                "**Analyse de $f$ :**",
+                "$f$ est une fonction polynôme, donc dérivable sur $I$ et $f'(x) = ___2x___ > 0$ sur $I$.",
+                "On a : $f(I) = ]\\lim_{x \\to 1^+} f(x), \\lim_{x \\to +\\infty} f(x)[ = ]___2___, +\\infty[$",
+                "**Analyse de $g$ :**",
+                "$g$ est une fonction rationnelle, donc dérivable sur tout intervalle de $\\mathbb{R} \\setminus \\{2\\}$. En particulier, sur $f(I) = ]2, +\\infty[$ et $g'(x) = \\displaystyle \\frac{-2}{(x-2)^2}$",
+                "**Conclusion :**",
+                "$(g \\circ f)$ est dérivable sur $I$ et :",
+                "$$(g \\circ f)'(x) = g'(f(x)) \\times f'(x) = \\frac{-2}{((x^2+1)-2)^2} \\times 2x = \\frac{-4x}{(x^2-1)^2}$$"
+              ]
             },
             {
               "type": "practice-box",
@@ -290,13 +349,29 @@
           "elements": [
             {
               "type": "property-box",
-              "preamble": "Dérivée de la fonction réciproque :",
-              "content": "Soit $f$ une fonction continue et strictement monotone sur un intervalle $I$ et $a \\in I$.\\n\\n• Si $f$ est dérivable en $a$ et $f'(a) \\neq 0$, alors $f^{-1}$ est dérivable en $f(a)$ et :\\n$$(f^{-1})'(f(a)) = \\frac{1}{f'(a)}$$\\n\\n• Si $f$ est dérivable sur $I$ et $f'$ ne s'annule pas sur $I$, alors $f^{-1}$ est dérivable sur $f(I)$ et :\\n$$(\\forall x \\in f(I)) : (f^{-1})'(x) = \\frac{1}{f'(f^{-1}(x))}$$"
+              "preamble": "Dérivée de la fonction réciproque",
+              "content": [
+                "Soit $f$ une fonction continue et strictement monotone sur un intervalle $I$ et $a \\in I$.",
+                "• Si $f$ est dérivable en $a$ et $f'(a) \\neq 0$, alors $f^{-1}$ est dérivable en $f(a)$ et :",
+                "$$(f^{-1})'(f(a)) = \\frac{1}{f'(a)}$$",
+                "• Si $f$ est dérivable sur $I$ et $f'$ ne s'annule pas sur $I$, alors $f^{-1}$ est dérivable sur $f(I)$ et :",
+                "$$(\\forall x \\in f(I)) : (f^{-1})'(x) = \\frac{1}{f'(f^{-1}(x))}$$"
+              ]
             },
             {
               "type": "example-box",
-              "preamble": "**Application :**",
-              "content": "Soit $f(x) = \\sqrt{x^2+1}$ définie sur $\\mathbb{R}^+$.\\n\\n**Étape 1 : Montrer que $f$ admet une fonction réciproque**\\n\\nLa fonction $x \\mapsto x^2 + 1$ est dérivable et strictement positive sur $\\mathbb{R}^+$, donc $f$ est dérivable sur $\\mathbb{R}^+$ avec :\\n\\n$$f'(x) = \\frac{x}{\\sqrt{x^2+1}}$$\\n\\nPour $x > 0$, on a $f'(x) > 0$ et $f'(0) = 0$, donc $f$ est strictement croissante sur $\\mathbb{R}^+$.\\n\\nDe plus, $f$ est continue sur $\\mathbb{R}^+$ (car dérivable).\\n\\nDonc $f$ admet une fonction réciproque définie sur $f(\\mathbb{R}^+) = [___1___, +\\infty[$.\\n\\n**Étape 2 : Calculer $(f^{-1})'(2)$**\\n\\nOn a $f(\\sqrt{3}) = \\sqrt{3+1} = ___2___$ et $f'(\\sqrt{3}) = \\frac{\\sqrt{3}}{2}$\\n\\nDonc $(f^{-1})'(2) = \\frac{1}{f'(\\sqrt{3})} = \\frac{1}{\\frac{\\sqrt{3}}{2}} = ___\\frac{2\\sqrt{3}}{3}___$"
+              "content": [
+                "Soit $f(x) = \\sqrt{x^2+1}$ définie sur $\\mathbb{R}^+$.",
+                "**Étape 1 : Montrer que $f$ admet une fonction réciproque**",
+                "La fonction $x \\mapsto x^2 + 1$ est dérivable et strictement positive sur $\\mathbb{R}^+$, donc $f$ est dérivable sur $\\mathbb{R}^+$ avec :",
+                "$$f'(x) = \\frac{x}{\\sqrt{x^2+1}}$$",
+                "Pour $x > 0$, on a $f'(x) > 0$ et $f'(0) = 0$, donc $f$ est strictement croissante sur $\\mathbb{R}^+$.",
+                "De plus, $f$ est continue sur $\\mathbb{R}^+$ (car dérivable).",
+                "Donc $f$ admet une fonction réciproque définie sur $f(\\mathbb{R}^+) = [___1___, +\\infty[$.",
+                "**Étape 2 : Calculer $(f^{-1})'(2)$**",
+                "On a $f(\\sqrt{3}) = \\sqrt{3+1} = ___2___$ et $f'(\\sqrt{3}) = \\frac{\\sqrt{3}}{2}$",
+                "Donc $(f^{-1})'(2) = \\frac{1}{f'(\\sqrt{3})} = \\frac{1}{\\frac{\\sqrt{3}}{2}} = ___\\frac{2\\sqrt{3}}{3}___$"
+              ]
             },
             {
               "type": "practice-box",
@@ -319,16 +394,26 @@
           "elements": [
             {
               "type": "property-box",
-              "preamble": "Dérivée de $\\sqrt[n]{x}$ :",
-              "content": "Soit $n$ un entier naturel supérieur ou égal à 2.\\n\\n• La fonction $x \\mapsto \\sqrt[n]{x} = x^{\\frac{1}{n}}$ est dérivable sur $\\mathbb{R}_+^*$ et :\\n$$(\\sqrt[n]{x})' = \\left(x^{\\frac{1}{n}}\\right)' = \\frac{1}{n}x^{\\frac{1}{n}-1} = \\frac{1}{n\\sqrt[n]{x^{n-1}}}$$\\n\\n• Si $u$ est une fonction dérivable et strictement positive sur un intervalle $I$, alors :\\n$$(\\sqrt[n]{u(x)})' = \\frac{u'(x)}{n\\sqrt[n]{u(x)^{n-1}}}$$"
+              "preamble": "Dérivée de $\\sqrt[n]{x}$",
+              "content": [
+                "Soit $n$ un entier naturel supérieur ou égal à 2.",
+                "• La fonction $x \\mapsto \\sqrt[n]{x} = x^{\\frac{1}{n}}$ est dérivable sur $\\mathbb{R}_+^*$ et :",
+                "$$(\\sqrt[n]{x})' = \\left(x^{\\frac{1}{n}}\\right)' = \\frac{1}{n}x^{\\frac{1}{n}-1} = \\frac{1}{n\\sqrt[n]{x^{n-1}}}$$",
+                "• Si $u$ est une fonction dérivable et strictement positive sur un intervalle $I$, alors :",
+                "$$(\\sqrt[n]{u(x)})' = \\frac{u'(x)}{n\\sqrt[n]{u(x)^{n-1}}}$$"
+              ]
             },
             {
               "type": "example-box",
-              "preamble": "**Applications :**",
               "listType": "bullet",
               "content": [
-                "**Fonction $x \\mapsto \\sqrt[3]{x}$ :**\\n\\nElle est dérivable sur $\\mathbb{R}_+^*$ et :\\n$$(\\sqrt[3]{x})' = \\frac{1}{3}x^{-\\frac{2}{3}} = \\frac{1}{3\\sqrt[3]{x^2}}$$",
-                "**Fonction $f(x) = \\sqrt[3]{8x-5}$ :**\\n\\nLa fonction $u(x) = 8x - 5$ est dérivable et strictement positive sur $]\\frac{5}{8}, +\\infty[$\\n\\nDonc $f$ est dérivable sur $]\\frac{5}{8}, +\\infty[$ et :\\n$$f'(x) = \\frac{8}{3\\sqrt[3]{(8x-5)^2}}$$"
+                "**Fonction $x \\mapsto \\sqrt[3]{x}$ :**",
+                "Elle est dérivable sur $\\mathbb{R}_+^*$ et :",
+                "$$(\\sqrt[3]{x})' = \\frac{1}{3}x^{-\\frac{2}{3}} = \\frac{1}{3\\sqrt[3]{x^2}}$$",
+                "**Fonction $f(x) = \\sqrt[3]{8x-5}$ :**",
+                "La fonction $u(x) = 8x - 5$ est dérivable et strictement positive sur $]\\frac{5}{8}, +\\infty[$",
+                "Donc $f$ est dérivable sur $]\\frac{5}{8}, +\\infty[$ et :",
+                "$$f'(x) = \\frac{8}{3\\sqrt[3]{(8x-5)^2}}$$"
               ]
             },
             {
@@ -357,8 +442,13 @@
           "elements": [
             {
               "type": "property-box",
-              "preamble": "Sens de variation et signe de la dérivée :",
-              "content": "Soit $f$ une fonction dérivable sur un intervalle $I$.\\n\\n• $f$ est **constante** sur $I$ $\\Leftrightarrow$ $f'(x) = 0$ pour tout $x \\in I$\\n\\n• $f$ est **croissante** sur $I$ $\\Leftrightarrow$ $f'(x) \\geq 0$ pour tout $x \\in I$\\n\\n• $f$ est **décroissante** sur $I$ $\\Leftrightarrow$ $f'(x) \\leq 0$ pour tout $x \\in I$"
+              "preamble": "Sens de variation et signe de la dérivée",
+              "content": [
+                "Soit $f$ une fonction dérivable sur un intervalle $I$.",
+                "• $f$ est **constante** sur $I$ $\\Leftrightarrow$ $f'(x) = 0$ pour tout $x \\in I$",
+                "• $f$ est **croissante** sur $I$ $\\Leftrightarrow$ $f'(x) \\geq 0$ pour tout $x \\in I$",
+                "• $f$ est **décroissante** sur $I$ $\\Leftrightarrow$ $f'(x) \\leq 0$ pour tout $x \\in I$"
+              ]
             },
             {
               "type": "remark-box",
@@ -366,8 +456,21 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Application :**",
-              "content": "Soit $f(x) = \\displaystyle \\frac{x}{\\sqrt[3]{x^2+x}}$ définie sur $I = ]-\\infty, -1[$.\\n\\nÉtudions les variations de $f$.\\n\\n**Calcul de la dérivée :**\\n\\nPosons $u(x) = x$ et $v(x) = \\sqrt[3]{x^2+x} = (x^2+x)^{\\frac{1}{3}}$\\n\\nOn a $u'(x) = 1$ et $v'(x) = \\frac{2x+1}{3(x^2+x)^{\\frac{2}{3}}}$\\n\\nDonc :\\n\\n$$f'(x) = \\frac{v - u \\cdot \\frac{2x+1}{3v^2}}{v^2} = \\frac{3v^3 - x(2x+1)}{3v^4}$$\\n\\n$$= \\frac{3(x^2+x) - x(2x+1)}{3(x^2+x)^{\\frac{4}{3}}} = \\frac{x^2 + 2x}{3(x^2+x)^{\\frac{4}{3}}} = \\frac{x(x+2)}{3(x^2+x)^{\\frac{4}{3}}}$$\\n\\n**Tableau de variations :**\\n\\nSur $I = ]-\\infty, -1[$, on étudie le signe de $f'(x)$ :\\n\\nPour $x \\in ]-\\infty, -2[$ : $x < 0$ et $x+2 < 0$, donc $f'(x) > 0$ → $f$ croissante\\n\\nPour $x \\in ]-2, -1[$ : $x < 0$ et $x+2 > 0$, donc $f'(x) < 0$ → $f$ décroissante\\n\\nLa fonction $f$ admet un **maximum** en $x = -2$ avec $f(-2) = \\frac{-2}{\\sqrt[3]{2}} = -\\sqrt[3]{4}$"
+              "content": [
+                "Soit $f(x) = \\displaystyle \\frac{x}{\\sqrt[3]{x^2+x}}$ définie sur $I = ]-\\infty, -1[$.",
+                "Étudions les variations de $f$.",
+                "**Calcul de la dérivée :**",
+                "Posons $u(x) = x$ et $v(x) = \\sqrt[3]{x^2+x} = (x^2+x)^{\\frac{1}{3}}$",
+                "On a $u'(x) = 1$ et $v'(x) = \\frac{2x+1}{3(x^2+x)^{\\frac{2}{3}}}$",
+                "Donc :",
+                "$$f'(x) = \\frac{v - u \\cdot \\frac{2x+1}{3v^2}}{v^2} = \\frac{3v^3 - x(2x+1)}{3v^4}$$",
+                "$$= \\frac{3(x^2+x) - x(2x+1)}{3(x^2+x)^{\\frac{4}{3}}} = \\frac{x^2 + 2x}{3(x^2+x)^{\\frac{4}{3}}} = \\frac{x(x+2)}{3(x^2+x)^{\\frac{4}{3}}}$$",
+                "**Tableau de variations :**",
+                "Sur $I = ]-\\infty, -1[$, on étudie le signe de $f'(x)$ :",
+                "Pour $x \\in ]-\\infty, -2[$ : $x < 0$ et $x+2 < 0$, donc $f'(x) > 0$ → $f$ croissante",
+                "Pour $x \\in ]-2, -1[$ : $x < 0$ et $x+2 > 0$, donc $f'(x) < 0$ → $f$ décroissante",
+                "La fonction $f$ admet un **maximum** en $x = -2$ avec $f(-2) = \\frac{-2}{\\sqrt[3]{2}} = -\\sqrt[3]{4}$"
+              ]
             }
           ]
         },
@@ -376,8 +479,12 @@
           "elements": [
             {
               "type": "property-box",
-              "preamble": "Condition nécessaire et suffisante :",
-              "content": "Soit $f$ une fonction dérivable sur un intervalle ouvert $I$ et $a \\in I$.\\n\\n• Si $f$ admet un **extremum local** au point $a$, alors $f'(a) = 0$ (**condition nécessaire**)\\n\\n• Si $f'(a) = 0$ **et** $f'$ **change de signe** au voisinage de $a$, alors $f$ admet un **extremum local** au point $a$ (**condition suffisante**)"
+              "preamble": "Condition nécessaire et suffisante",
+              "content": [
+                "Soit $f$ une fonction dérivable sur un intervalle ouvert $I$ et $a \\in I$.",
+                "• Si $f$ admet un **extremum local** au point $a$, alors $f'(a) = 0$ (**condition nécessaire**)",
+                "• Si $f'(a) = 0$ **et** $f'$ **change de signe** au voisinage de $a$, alors $f$ admet un **extremum local** au point $a$ (**condition suffisante**)"
+              ]
             },
             {
               "type": "remark-box",
@@ -390,8 +497,18 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Application :**",
-              "content": "Soit $f(x) = x + \\displaystyle \\frac{1+x}{1+2x}$ définie sur $\\mathbb{R} \\setminus \\{-\\frac{1}{2}\\}$.\\n\\nDéterminons les extremums locaux de $f$.\\n\\n**Calcul de $f'(x)$ :**\\n\\n$$f'(x) = 1 + \\frac{(1+2x) - 2(1+x)}{(1+2x)^2} = 1 + \\frac{-1}{(1+2x)^2} = \\frac{(1+2x)^2 - 1}{(1+2x)^2}$$\\n\\n$$= \\frac{4x^2 + 4x}{(1+2x)^2} = \\frac{4x(x+1)}{(1+2x)^2}$$\\n\\n**Tableau de variations :**\\n\\n$f'(x) = 0 \\Leftrightarrow x = ___-1___ \\text{ ou } x = ___0___$\\n\\nLa fonction $f$ admet :\\n• Un **maximum local** en $x = -1$ avec $f(-1) = ___-1___$\\n• Un **minimum local** en $x = 0$ avec $f(0) = ___1___$"
+              "content": [
+                "Soit $f(x) = x + \\displaystyle \\frac{1+x}{1+2x}$ définie sur $\\mathbb{R} \\setminus \\{-\\frac{1}{2}\\}$.",
+                "Déterminons les extremums locaux de $f$.",
+                "**Calcul de $f'(x)$ :**",
+                "$$f'(x) = 1 + \\frac{(1+2x) - 2(1+x)}{(1+2x)^2} = 1 + \\frac{-1}{(1+2x)^2} = \\frac{(1+2x)^2 - 1}{(1+2x)^2}$$",
+                "$$= \\frac{4x^2 + 4x}{(1+2x)^2} = \\frac{4x(x+1)}{(1+2x)^2}$$",
+                "**Tableau de variations :**",
+                "$f'(x) = 0 \\Leftrightarrow x = ___-1___ \\text{ ou } x = ___0___$",
+                "La fonction $f$ admet :",
+                "• Un **maximum local** en $x = -1$ avec $f(-1) = ___-1___$",
+                "• Un **minimum local** en $x = 0$ avec $f(0) = ___1___$"
+              ]
             },
             {
               "type": "practice-box",
@@ -414,13 +531,15 @@
           "elements": [
             {
               "type": "property-box",
-              "preamble": "Symétries de la courbe :",
+              "preamble": "Symétries de la courbe",
               "listType": "bullet",
               "content": [
                 ">> **Axe de symétrie :**",
-                "La droite $x = a$ est un **axe de symétrie** de $(C_f)$ si et seulement si :\\n$$\\begin{cases} (\\forall x \\in D_f), \\; 2a - x \\in D_f \\\\ (\\forall x \\in D_f), \\; f(2a-x) = f(x) \\end{cases}$$",
+                "La droite $x = a$ est un **axe de symétrie** de $(C_f)$ si et seulement si :",
+                "$$\\begin{cases} (\\forall x \\in D_f), \\; 2a - x \\in D_f \\\\ (\\forall x \\in D_f), \\; f(2a-x) = f(x) \\end{cases}$$",
                 ">> **Centre de symétrie :**",
-                "Le point $I(a, b)$ est un **centre de symétrie** de $(C_f)$ si et seulement si :\\n$$\\begin{cases} (\\forall x \\in D_f), \\; 2a - x \\in D_f \\\\ (\\forall x \\in D_f), \\; f(2a-x) = 2b - f(x) \\end{cases}$$"
+                "Le point $I(a, b)$ est un **centre de symétrie** de $(C_f)$ si et seulement si :",
+                "$$\\begin{cases} (\\forall x \\in D_f), \\; 2a - x \\in D_f \\\\ (\\forall x \\in D_f), \\; f(2a-x) = 2b - f(x) \\end{cases}$$"
               ]
             },
             {
@@ -434,13 +553,30 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Application 1 :** Axe de symétrie",
-              "content": "Montrons que la droite $x = \\frac{1}{2}$ est un axe de symétrie de la courbe de $f(x) = x^2 - x + 1$.\\n\\n**Vérification :**\\n\\n1. Pour tout $x \\in \\mathbb{R}$, on a $2 \\times \\frac{1}{2} - x = 1 - x \\in \\mathbb{R}$ ✓\\n\\n2. Calculons $f(1-x)$ :\\n\\n$$f(1-x) = (1-x)^2 - (1-x) + 1 = 1 - 2x + x^2 - 1 + x + 1$$\\n$$= x^2 - x + 1 = f(x)$$ ✓\\n\\nDonc $x = \\frac{1}{2}$ est bien un axe de symétrie de $(C_f)$."
+              "subtitle": "Axe de symétrie",
+              "content": [
+                "Montrons que la droite $x = \\frac{1}{2}$ est un axe de symétrie de la courbe de $f(x) = x^2 - x + 1$.",
+                "**Vérification :**",
+                "1. Pour tout $x \\in \\mathbb{R}$, on a $2 \\times \\frac{1}{2} - x = 1 - x \\in \\mathbb{R}$ ✓",
+                "2. Calculons $f(1-x)$ :",
+                "$$f(1-x) = (1-x)^2 - (1-x) + 1 = 1 - 2x + x^2 - 1 + x + 1$$",
+                "$$= x^2 - x + 1 = f(x)$$ ✓",
+                "Donc $x = \\frac{1}{2}$ est bien un axe de symétrie de $(C_f)$."
+              ]
             },
             {
               "type": "example-box",
-              "preamble": "**Application 2 :** Centre de symétrie",
-              "content": "Montrons que le point $I(0, 2)$ est un centre de symétrie de la courbe de $g(x) = -x^3 + 3x + 2$.\\n\\n**Vérification :**\\n\\n1. Pour tout $x \\in \\mathbb{R}$, on a $2 \\times 0 - x = -x \\in \\mathbb{R}$ ✓\\n\\n2. Calculons $g(-x)$ et $2 \\times 2 - g(x)$ :\\n\\n$$g(-x) = -(-x)^3 + 3(-x) + 2 = x^3 - 3x + 2$$\\n\\n$$2 \\times 2 - g(x) = 4 - (-x^3 + 3x + 2) = 4 + x^3 - 3x - 2 = x^3 - 3x + 2$$\\n\\nDonc $g(-x) = 4 - g(x)$ ✓\\n\\nLe point $I(0, 2)$ est bien un centre de symétrie de $(C_g)$."
+              "subtitle": "Centre de symétrie",
+              "content": [
+                "Montrons que le point $I(0, 2)$ est un centre de symétrie de la courbe de $g(x) = -x^3 + 3x + 2$.",
+                "**Vérification :**",
+                "1. Pour tout $x \\in \\mathbb{R}$, on a $2 \\times 0 - x = -x \\in \\mathbb{R}$ ✓",
+                "2. Calculons $g(-x)$ et $2 \\times 2 - g(x)$ :",
+                "$$g(-x) = -(-x)^3 + 3(-x) + 2 = x^3 - 3x + 2$$",
+                "$$2 \\times 2 - g(x) = 4 - (-x^3 + 3x + 2) = 4 + x^3 - 3x - 2 = x^3 - 3x + 2$$",
+                "Donc $g(-x) = 4 - g(x)$ ✓",
+                "Le point $I(0, 2)$ est bien un centre de symétrie de $(C_g)$."
+              ]
             }
           ]
         },
@@ -449,17 +585,41 @@
           "elements": [
             {
               "type": "property-box",
-              "preamble": "Concavité et dérivée seconde :",
-              "content": "Soit $f$ une fonction deux fois dérivable sur un intervalle $I$.\\n\\n• Si $f''(x) > 0$ sur $I$, alors la courbe $(C_f)$ est **convexe** sur $I$\\n\\n• Si $f''(x) < 0$ sur $I$, alors la courbe $(C_f)$ est **concave** sur $I$\\n\\n• Si $f''(x) = 0$ **et** $f''$ **change de signe** en $a$, alors $I(a, f(a))$ est un **point d'inflexion** de $(C_f)$"
+              "preamble": "Concavité et dérivée seconde",
+              "content": [
+                "Soit $f$ une fonction deux fois dérivable sur un intervalle $I$.",
+                "• Si $f''(x) > 0$ sur $I$, alors la courbe $(C_f)$ est **convexe** sur $I$",
+                "• Si $f''(x) < 0$ sur $I$, alors la courbe $(C_f)$ est **concave** sur $I$",
+                "• Si $f''(x) = 0$ **et** $f''$ **change de signe** en $a$, alors $I(a, f(a))$ est un **point d'inflexion** de $(C_f)$"
+              ]
             },
             {
               "type": "remark-box",
-              "content": "**Interprétation graphique :**\\n\\n• Une courbe **convexe** est \"tournée vers le haut\" (comme un U).\\n• Une courbe **concave** est \"tournée vers le bas\" (comme un ∩).\\n• À un **point d'inflexion**, la courbe **traverse sa tangente**."
+              "content": [
+                "**Interprétation graphique :**",
+                "• Une courbe **convexe** est \"tournée vers le haut\" (comme un U).",
+                "• Une courbe **concave** est \"tournée vers le bas\" (comme un ∩).",
+                "• À un **point d'inflexion**, la courbe **traverse sa tangente**."
+              ]
             },
             {
               "type": "example-box",
-              "preamble": "**Application :**",
-              "content": "Étudier la concavité de la fonction $f(x) = \\displaystyle \\frac{x}{x^2+1}$ sur $\\mathbb{R}$.\\n\\n**Calcul de $f'(x)$ :**\\n\\n$$f'(x) = \\frac{(x^2+1) - x(2x)}{(x^2+1)^2} = \\frac{1-x^2}{(x^2+1)^2}$$\\n\\n**Calcul de $f''(x)$ :**\\n\\n$$f''(x) = \\frac{-2x(x^2+1)^2 - (1-x^2) \\cdot 2(x^2+1) \\cdot 2x}{(x^2+1)^4}$$\\n\\n$$= \\frac{-2x(x^2+1) - 4x(1-x^2)}{(x^2+1)^3} = \\frac{-2x^3 - 2x - 4x + 4x^3}{(x^2+1)^3}$$\\n\\n$$= \\frac{2x^3 - 6x}{(x^2+1)^3} = \\frac{2x(x^2-3)}{(x^2+1)^3}$$\\n\\n**Étude du signe :**\\n\\n$f''(x) = 0 \\Leftrightarrow x = ___0___ \\text{ ou } x = ___-\\sqrt{3}___ \\text{ ou } x = ___\\sqrt{3}___$\\n\\n• Sur $]-\\infty, -\\sqrt{3}[$, $f''(x) < 0$ → $(C_f)$ est **concave**\\n• Sur $]-\\sqrt{3}, 0[$, $f''(x) > 0$ → $(C_f)$ est **convexe**\\n• Sur $]0, \\sqrt{3}[$, $f''(x) < 0$ → $(C_f)$ est **concave**\\n• Sur $]\\sqrt{3}, +\\infty[$, $f''(x) > 0$ → $(C_f)$ est **convexe**\\n\\n**Points d'inflexion :** $I_1(-\\sqrt{3}, f(-\\sqrt{3}))$, $I_2(0, 0)$, $I_3(\\sqrt{3}, f(\\sqrt{3}))$"
+              "content": [
+                "Étudier la concavité de la fonction $f(x) = \\displaystyle \\frac{x}{x^2+1}$ sur $\\mathbb{R}$.",
+                "**Calcul de $f'(x)$ :**",
+                "$$f'(x) = \\frac{(x^2+1) - x(2x)}{(x^2+1)^2} = \\frac{1-x^2}{(x^2+1)^2}$$",
+                "**Calcul de $f''(x)$ :**",
+                "$$f''(x) = \\frac{-2x(x^2+1)^2 - (1-x^2) \\cdot 2(x^2+1) \\cdot 2x}{(x^2+1)^4}$$",
+                "$$= \\frac{-2x(x^2+1) - 4x(1-x^2)}{(x^2+1)^3} = \\frac{-2x^3 - 2x - 4x + 4x^3}{(x^2+1)^3}$$",
+                "$$= \\frac{2x^3 - 6x}{(x^2+1)^3} = \\frac{2x(x^2-3)}{(x^2+1)^3}$$",
+                "**Étude du signe :**",
+                "$f''(x) = 0 \\Leftrightarrow x = ___0___ \\text{ ou } x = ___-\\sqrt{3}___ \\text{ ou } x = ___\\sqrt{3}___$",
+                "• Sur $]-\\infty, -\\sqrt{3}[$, $f''(x) < 0$ → $(C_f)$ est **concave**",
+                "• Sur $]-\\sqrt{3}, 0[$, $f''(x) > 0$ → $(C_f)$ est **convexe**",
+                "• Sur $]0, \\sqrt{3}[$, $f''(x) < 0$ → $(C_f)$ est **concave**",
+                "• Sur $]\\sqrt{3}, +\\infty[$, $f''(x) > 0$ → $(C_f)$ est **convexe**",
+                "**Points d'inflexion :** $I_1(-\\sqrt{3}, f(-\\sqrt{3}))$, $I_2(0, 0)$, $I_3(\\sqrt{3}, f(\\sqrt{3}))$"
+              ]
             }
           ]
         },
@@ -476,12 +636,26 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Application :**",
-              "content": "Étudier les branches infinies de $f(x) = x + \\displaystyle \\frac{3}{x} + \\frac{3}{2x^2}$.\\n\\n**En $x = 0$ :**\\n\\n$$\\lim_{x \\to 0^+} f(x) = \\lim_{x \\to 0^+} \\left(x + \\frac{3}{x} + \\frac{3}{2x^2}\\right) = +\\infty$$\\n\\n$$\\lim_{x \\to 0^-} f(x) = +\\infty$$\\n\\nDonc $x = 0$ est une **asymptote verticale**.\\n\\n**En $\\pm\\infty$ :**\\n\\n$$\\lim_{x \\to \\pm\\infty} f(x) = \\pm\\infty$$\\n\\n$$\\lim_{x \\to \\pm\\infty} [f(x) - x] = \\lim_{x \\to \\pm\\infty} \\left(\\frac{3}{x} + \\frac{3}{2x^2}\\right) = 0$$\\n\\nDonc $y = x$ est une **asymptote oblique** au voisinage de $\\pm\\infty$."
+              "content": [
+                "Étudier les branches infinies de $f(x) = x + \\displaystyle \\frac{3}{x} + \\frac{3}{2x^2}$.",
+                "**En $x = 0$ :**",
+                "$$\\lim_{x \\to 0^+} f(x) = \\lim_{x \\to 0^+} \\left(x + \\frac{3}{x} + \\frac{3}{2x^2}\\right) = +\\infty$$",
+                "$$\\lim_{x \\to 0^-} f(x) = +\\infty$$",
+                "Donc $x = 0$ est une **asymptote verticale**.",
+                "**En $\\pm\\infty$ :**",
+                "$$\\lim_{x \\to \\pm\\infty} f(x) = \\pm\\infty$$",
+                "$$\\lim_{x \\to \\pm\\infty} [f(x) - x] = \\lim_{x \\to \\pm\\infty} \\left(\\frac{3}{x} + \\frac{3}{2x^2}\\right) = 0$$",
+                "Donc $y = x$ est une **asymptote oblique** au voisinage de $\\pm\\infty$."
+              ]
             },
             {
               "type": "remark-box",
-              "content": "?> **Méthode pour trouver une asymptote oblique :**\\n\\n1. Calculer $\\displaystyle \\lim_{x \\to \\pm\\infty} \\frac{f(x)}{x} = a$\\n2. Si $a$ est un réel fini non nul, calculer $\\displaystyle \\lim_{x \\to \\pm\\infty} [f(x) - ax] = b$\\n3. Si $b$ est un réel fini, alors $y = ax + b$ est une asymptote oblique"
+              "content": [
+                "?> **Méthode pour trouver une asymptote oblique :**",
+                "1. Calculer $\\displaystyle \\lim_{x \\to \\pm\\infty} \\frac{f(x)}{x} = a$",
+                "2. Si $a$ est un réel fini non nul, calculer $\\displaystyle \\lim_{x \\to \\pm\\infty} [f(x) - ax] = b$",
+                "3. Si $b$ est un réel fini, alors $y = ax + b$ est une asymptote oblique"
+              ]
             }
           ]
         },
