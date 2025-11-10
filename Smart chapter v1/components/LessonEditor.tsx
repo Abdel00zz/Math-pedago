@@ -22,6 +22,7 @@ import {
 import { FileSystemDirectoryHandle } from '../types';
 import { ImageUploadModal, ImageConfig } from './ImageUploadModal';
 import { LessonPreview } from './LessonPreview';
+import { RichTextToolbar } from './RichTextToolbar';
 
 // Types
 interface LessonHeader {
@@ -740,12 +741,10 @@ export const LessonEditor: React.FC<LessonEditorProps> = ({
 
                                                                 {/* Element Content */}
                                                                 {element.type === 'p' ? (
-                                                                    <textarea
-                                                                        value={element.content as string}
-                                                                        onChange={(e) => updateElement(sIdx, ssIdx, eIdx, 'content', e.target.value)}
-                                                                        className="form-textarea font-mono text-sm"
-                                                                        rows={4}
-                                                                        placeholder="Contenu du paragraphe..."
+                                                                    <RichTextToolbar
+                                                                        value={element.content as string || ''}
+                                                                        onChange={(value) => updateElement(sIdx, ssIdx, eIdx, 'content', value)}
+                                                                        elementType="p"
                                                                     />
                                                                 ) : element.type === 'table' ? (
                                                                     <textarea
@@ -757,34 +756,27 @@ export const LessonEditor: React.FC<LessonEditorProps> = ({
                                                                     />
                                                                 ) : (
                                                                     <div className="space-y-2">
-                                                                        <textarea
-                                                                            value={element.preamble || ''}
-                                                                            onChange={(e) => updateElement(sIdx, ssIdx, eIdx, 'preamble', e.target.value)}
-                                                                            className="form-textarea text-sm"
-                                                                            rows={2}
-                                                                            placeholder="Préambule..."
-                                                                        />
-                                                                        <div className="flex items-center gap-3 p-2 bg-blue-50 rounded">
-                                                                            <select
-                                                                                value={element.listType || 'none'}
-                                                                                onChange={(e) => {
-                                                                                    const value = e.target.value === 'none' ? undefined : e.target.value as 'bullet' | 'numbered';
-                                                                                    updateElement(sIdx, ssIdx, eIdx, 'listType', value);
-                                                                                }}
-                                                                                className="form-select text-sm"
-                                                                            >
-                                                                                <option value="none">Aucune liste</option>
-                                                                                <option value="bullet">⭐ Puces</option>
-                                                                                <option value="numbered">① Numérotée</option>
-                                                                            </select>
+                                                                        {/* Préambule avec toolbar */}
+                                                                        <div>
+                                                                            <label className="form-label text-xs text-gray-600 mb-1">Préambule</label>
+                                                                            <RichTextToolbar
+                                                                                value={element.preamble || ''}
+                                                                                onChange={(value) => updateElement(sIdx, ssIdx, eIdx, 'preamble', typeof value === 'string' ? value : value.join('\n'))}
+                                                                                elementType="box"
+                                                                            />
                                                                         </div>
-                                                                        <textarea
-                                                                            value={Array.isArray(element.content) ? element.content.join('\n') : element.content}
-                                                                            onChange={(e) => updateElement(sIdx, ssIdx, eIdx, 'content', e.target.value.split('\n'))}
-                                                                            className="form-textarea font-mono text-sm"
-                                                                            rows={6}
-                                                                            placeholder="Contenu (une ligne par élément)..."
-                                                                        />
+
+                                                                        {/* Contenu avec toolbar et liste */}
+                                                                        <div>
+                                                                            <label className="form-label text-xs text-gray-600 mb-1">Contenu</label>
+                                                                            <RichTextToolbar
+                                                                                value={Array.isArray(element.content) ? element.content : [element.content || '']}
+                                                                                onChange={(value) => updateElement(sIdx, ssIdx, eIdx, 'content', Array.isArray(value) ? value : value.split('\n'))}
+                                                                                elementType="box"
+                                                                                listType={element.listType}
+                                                                                onListTypeChange={(type) => updateElement(sIdx, ssIdx, eIdx, 'listType', type)}
+                                                                            />
+                                                                        </div>
                                                                     </div>
                                                                 )}
 

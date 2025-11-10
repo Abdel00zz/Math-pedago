@@ -4,6 +4,7 @@
  */
 
 import React from 'react';
+import { renderMathText } from '../utils/katex-helper';
 
 // Types (mêmes que LessonEditor)
 interface LessonHeader {
@@ -80,10 +81,11 @@ export const LessonPreview: React.FC<LessonPreviewProps> = ({ lesson }) => {
     const renderElement = (element: LessonElement, index: number) => {
         // Paragraphe simple
         if (element.type === 'p') {
+            const content = typeof element.content === 'string' ? element.content : '';
             return (
                 <div key={index} className="my-4">
-                    <p className="text-gray-800 leading-relaxed whitespace-pre-wrap">
-                        {element.content}
+                    <p className="text-gray-800 leading-relaxed">
+                        {renderMathText(content)}
                     </p>
                 </div>
             );
@@ -112,7 +114,7 @@ export const LessonPreview: React.FC<LessonPreviewProps> = ({ lesson }) => {
                     <span className="text-3xl flex-shrink-0">{boxStyle.icon}</span>
                     {element.preamble && (
                         <div className={`flex-1 font-medium ${boxStyle.text} text-base leading-relaxed`}>
-                            {element.preamble}
+                            {renderMathText(element.preamble)}
                         </div>
                     )}
                 </div>
@@ -126,14 +128,14 @@ export const LessonPreview: React.FC<LessonPreviewProps> = ({ lesson }) => {
                                     if (item.startsWith('>>')) {
                                         return (
                                             <li key={idx} className="list-none text-gray-700 font-medium">
-                                                {item.substring(2).trim()}
+                                                {renderMathText(item.substring(2).trim())}
                                             </li>
                                         );
                                     }
                                     return (
                                         <li key={idx} className="flex items-start gap-2">
                                             <span className="text-yellow-500 text-lg flex-shrink-0 mt-0.5">⭐</span>
-                                            <span className="text-gray-800 leading-relaxed">{item}</span>
+                                            <span className="text-gray-800 leading-relaxed">{renderMathText(item)}</span>
                                         </li>
                                     );
                                 })}
@@ -144,7 +146,7 @@ export const LessonPreview: React.FC<LessonPreviewProps> = ({ lesson }) => {
                                     if (item.startsWith('>>')) {
                                         return (
                                             <li key={idx} className="list-none text-gray-700 font-medium mb-1">
-                                                {item.substring(2).trim()}
+                                                {renderMathText(item.substring(2).trim())}
                                             </li>
                                         );
                                     }
@@ -153,7 +155,7 @@ export const LessonPreview: React.FC<LessonPreviewProps> = ({ lesson }) => {
                                             <span className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white text-sm font-bold flex items-center justify-center">
                                                 {idx + 1}
                                             </span>
-                                            <span className="text-gray-800 leading-relaxed flex-1">{item}</span>
+                                            <span className="text-gray-800 leading-relaxed flex-1">{renderMathText(item)}</span>
                                         </li>
                                     );
                                 })}
@@ -162,7 +164,7 @@ export const LessonPreview: React.FC<LessonPreviewProps> = ({ lesson }) => {
                             <div className="space-y-2">
                                 {contentArray.map((item, idx) => (
                                     <p key={idx} className="text-gray-800 leading-relaxed">
-                                        {item}
+                                        {renderMathText(item)}
                                     </p>
                                 ))}
                             </div>
@@ -182,7 +184,7 @@ export const LessonPreview: React.FC<LessonPreviewProps> = ({ lesson }) => {
                                 />
                                 {element.image.caption && (
                                     <p className="text-center text-sm text-gray-600 mt-2 italic">
-                                        {element.image.caption}
+                                        {renderMathText(element.image.caption)}
                                     </p>
                                 )}
                             </div>
@@ -203,7 +205,7 @@ export const LessonPreview: React.FC<LessonPreviewProps> = ({ lesson }) => {
                     </h1>
                     {lesson.header.subtitle && (
                         <p className="text-xl text-gray-700 mb-2 font-medium">
-                            {lesson.header.subtitle}
+                            {renderMathText(lesson.header.subtitle)}
                         </p>
                     )}
                     <div className="flex items-center justify-center gap-6 text-sm text-gray-600 mt-4">
@@ -239,7 +241,7 @@ export const LessonPreview: React.FC<LessonPreviewProps> = ({ lesson }) => {
                             {/* Texte introductif */}
                             {section.intro && (
                                 <div className="mb-6 text-gray-700 leading-relaxed text-lg italic bg-gray-50 p-4 rounded-lg border-l-4 border-gray-300">
-                                    {section.intro}
+                                    {renderMathText(section.intro)}
                                 </div>
                             )}
 
