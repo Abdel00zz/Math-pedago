@@ -775,6 +775,8 @@ export const LessonEditor: React.FC<LessonEditorProps> = ({
                                                                                 elementType="box"
                                                                                 listType={element.listType}
                                                                                 onListTypeChange={(type) => updateElement(sIdx, ssIdx, eIdx, 'listType', type)}
+                                                                                columns={element.columns}
+                                                                                onColumnsChange={(cols) => updateElement(sIdx, ssIdx, eIdx, 'columns', cols)}
                                                                             />
                                                                         </div>
                                                                     </div>

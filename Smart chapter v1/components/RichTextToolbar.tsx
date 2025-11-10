@@ -13,6 +13,8 @@ interface RichTextToolbarProps {
     elementType?: 'p' | 'box';
     listType?: 'bullet' | 'numbered' | undefined;
     onListTypeChange?: (type: 'bullet' | 'numbered' | undefined) => void;
+    columns?: boolean;
+    onColumnsChange?: (columns: boolean) => void;
 }
 
 export const RichTextToolbar: React.FC<RichTextToolbarProps> = ({
@@ -21,7 +23,9 @@ export const RichTextToolbar: React.FC<RichTextToolbarProps> = ({
     onImageClick,
     elementType = 'p',
     listType,
-    onListTypeChange
+    onListTypeChange,
+    columns,
+    onColumnsChange
 }) => {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -138,6 +142,24 @@ export const RichTextToolbar: React.FC<RichTextToolbarProps> = ({
                                 ①
                             </button>
 
+                            {/* Séparateur avant Colonnes */}
+                            {onColumnsChange && <div className="h-6 w-px bg-gray-400 mx-1"></div>}
+
+                            {/* Bouton Colonnes */}
+                            {onColumnsChange && (
+                                <>
+                                    <span className="text-xs font-semibold text-gray-600 uppercase tracking-wide mr-1">Colonnes:</span>
+                                    <button
+                                        onClick={() => onColumnsChange(!columns)}
+                                        className={`toolbar-btn ${columns ? 'bg-green-500 text-white hover:bg-green-600' : ''}`}
+                                        title="Afficher en colonnes côte à côte"
+                                        type="button"
+                                    >
+                                        🔲
+                                    </button>
+                                </>
+                            )}
+
                             {onImageClick && <div className="h-6 w-px bg-gray-400 mx-1"></div>}
                         </>
                     )}
@@ -160,7 +182,10 @@ export const RichTextToolbar: React.FC<RichTextToolbarProps> = ({
                     <span className="font-semibold">💡 Astuce:</span>
                     <span>Sélectionnez du texte puis cliquez sur un bouton</span>
                     {listType && (
-                        <span>• Ligne avec <code className="bg-gray-200 px-1 rounded">&gt;&gt;</code> = titre non listé</span>
+                        <span>• Ligne avec <code className="bg-gray-200 px-1 rounded">&gt;&gt;</code> = titre {columns ? 'de colonne' : 'non listé'}</span>
+                    )}
+                    {columns && (
+                        <span>• <span className="font-semibold">🔲 Mode colonnes:</span> lignes <code className="bg-gray-200 px-1 rounded">&gt;&gt;</code> = titres de colonnes</span>
                     )}
                 </div>
             </div>
@@ -179,8 +204,12 @@ export const RichTextToolbar: React.FC<RichTextToolbarProps> = ({
                 className="w-full px-3 py-3 font-mono text-sm border-0 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset resize-none"
                 rows={elementType === 'p' ? 4 : 6}
                 placeholder={
-                    listType === 'bullet' ? 'Contenu (une ligne = une puce ⭐)\nExemple : Première idée\n>> Titre intermédiaire\nDeuxième idée' :
-                    listType === 'numbered' ? 'Contenu (une ligne = un numéro ①②③)\nExemple : Première étape\n>> Titre intermédiaire\nDeuxième étape' :
+                    columns && listType ?
+                        `Mode colonnes activé 🔲\n>> Colonne 1\nContenu colonne 1\nAutre ligne colonne 1\n>> Colonne 2\nContenu colonne 2\nAutre ligne colonne 2` :
+                    listType === 'bullet' ?
+                        'Contenu (une ligne = une puce ⭐)\nExemple : Première idée\n>> Titre intermédiaire\nDeuxième idée' :
+                    listType === 'numbered' ?
+                        'Contenu (une ligne = un numéro ①②③)\nExemple : Première étape\n>> Titre intermédiaire\nDeuxième étape' :
                     'Tapez votre texte ici...\n\nUtilisez les boutons ci-dessus pour formater le texte.'
                 }
             />
