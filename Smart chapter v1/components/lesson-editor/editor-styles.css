@@ -1,0 +1,410 @@
+/**
+ * Styles modernes pour l'éditeur de leçons
+ * Design aéré et professionnel
+ */
+
+/* ===== LAYOUT PRINCIPAL ===== */
+.lesson-editor-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    height: calc(100vh - 120px);
+    padding: 1.5rem;
+    background: #f8fafc;
+}
+
+.lesson-editor-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    height: 100%;
+    overflow: hidden;
+}
+
+.lesson-editor-panel__header {
+    flex-shrink: 0;
+    background: white;
+    padding: 1.25rem;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.lesson-editor-panel__title {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 0.75rem;
+}
+
+.lesson-editor-panel__title-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: #6366f1;
+}
+
+.lesson-editor-panel__actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.lesson-editor-panel__content {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+}
+
+/* Scrollbar personnalisé */
+.lesson-editor-panel__content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.lesson-editor-panel__content::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 4px;
+}
+
+.lesson-editor-panel__content::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+.lesson-editor-panel__content::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* ===== HEADER EDITOR ===== */
+.header-editor {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    margin-bottom: 1rem;
+}
+
+.header-field {
+    margin-bottom: 1rem;
+}
+
+.header-field:last-child {
+    margin-bottom: 0;
+}
+
+.header-field-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 0.5rem;
+}
+
+.header-field-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 0.9375rem;
+    transition: all 0.2s;
+    background: white;
+}
+
+.header-field-input:focus {
+    outline: none;
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.header-field-input--large {
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+
+/* ===== SECTIONS ===== */
+.section-editor {
+    background: white;
+    padding: 1.25rem;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    margin-bottom: 1rem;
+    transition: all 0.2s;
+}
+
+.section-editor:hover {
+    border-color: #cbd5e1;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.section-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+    color: white;
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 0.875rem;
+    flex-shrink: 0;
+}
+
+.section-title-input {
+    flex: 1;
+    font-size: 1.125rem;
+    font-weight: 600;
+    padding: 0.5rem 0.75rem;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.section-title-input:focus {
+    outline: none;
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.section-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.section-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: #64748b;
+}
+
+.section-btn:hover {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+    color: #334155;
+}
+
+.section-btn--danger:hover {
+    background: #fef2f2;
+    border-color: #fecaca;
+    color: #ef4444;
+}
+
+/* ===== SUBSECTIONS ===== */
+.subsection-editor {
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+    border-left: 3px solid #e2e8f0;
+}
+
+.subsection-header {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    margin-bottom: 0.875rem;
+}
+
+.subsection-bullet {
+    width: 0.625rem;
+    height: 0.625rem;
+    background: #6366f1;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.subsection-title-input {
+    flex: 1;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.5rem 0.75rem;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 6px;
+}
+
+.subsection-title-input:focus {
+    outline: none;
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+/* ===== BOUTONS ===== */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn--primary {
+    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+    color: white;
+    border-color: #4338ca;
+}
+
+.btn--primary:hover:not(:disabled) {
+    background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    transform: translateY(-1px);
+}
+
+.btn--secondary {
+    background: white;
+    color: #475569;
+    border-color: #e2e8f0;
+}
+
+.btn--secondary:hover:not(:disabled) {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+}
+
+.btn--success {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+}
+
+.btn--success:hover:not(:disabled) {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    transform: translateY(-1px);
+}
+
+.btn--danger {
+    background: white;
+    color: #ef4444;
+    border-color: #fee2e2;
+}
+
+.btn--danger:hover:not(:disabled) {
+    background: #fef2f2;
+    border-color: #fecaca;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1280px) {
+    .lesson-editor-container {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+
+    .lesson-editor-panel__content {
+        max-height: 600px;
+    }
+}
+
+@media (max-width: 768px) {
+    .lesson-editor-container {
+        padding: 1rem;
+        gap: 1rem;
+    }
+
+    .lesson-editor-panel__header {
+        padding: 1rem;
+    }
+
+    .section-header {
+        flex-wrap: wrap;
+    }
+
+    .section-actions {
+        width: 100%;
+        justify-content: flex-end;
+    }
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.section-editor,
+.subsection-editor {
+    animation: slideIn 0.2s ease-out;
+}
+
+/* ===== ÉTATS ===== */
+.is-loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.is-saving {
+    position: relative;
+}
+
+.is-saving::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+}
+
+/* ===== MESSAGES ===== */
+.error-message {
+    padding: 1rem 1.25rem;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+    color: #991b1b;
+    margin-bottom: 1rem;
+}
+
+.success-message {
+    padding: 1rem 1.25rem;
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 8px;
+    color: #166534;
+    margin-bottom: 1rem;
+}
+
+.info-message {
+    padding: 1rem 1.25rem;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 8px;
+    color: #1e40af;
+    margin-bottom: 1rem;
+}
