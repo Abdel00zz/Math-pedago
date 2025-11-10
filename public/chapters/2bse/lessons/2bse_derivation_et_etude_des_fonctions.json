@@ -11,165 +11,155 @@
       "title": "Dérivabilité d'une fonction numérique (Rappels)",
       "subsections": [
         {
-          "title": "Dérivabilité d'une fonction en un point",
-          "subsubsections": [
+          "title": "Définition",
+          "elements": [
             {
-              "title": "Définition",
-              "elements": [
-                {
-                  "type": "definition-box",
-                  "preamble": "Dérivabilité en un point",
-                  "content": [
-                    "Soit $f$ une fonction définie sur un intervalle ouvert contenant $x_0$.",
-                    "On dit que $f$ est **dérivable en $x_0$** s'il existe un réel $\\ell$ tel que :",
-                    "$$\\displaystyle \\lim_{x \\to x_0} \\frac{f(x) - f(x_0)}{x - x_0} = \\ell$$",
-                    "Le réel $\\ell$ est appelé **nombre dérivé** de la fonction $f$ en $x_0$ et noté $f'(x_0) = \\ell$."
-                  ]
-                },
-                {
-                  "type": "example-box",
-                  "content": [
-                    "Soit $f(x) = 2x^2$. Étudions la dérivabilité de $f$ en $x_0 = 2$.",
-                    "On calcule :",
-                    "$$\\displaystyle \\lim_{x \\to 2} \\frac{f(x) - f(2)}{x - 2} = \\lim_{x \\to 2} \\frac{2x^2 - 8}{x - 2}$$",
-                    "$$= \\lim_{x \\to 2} \\frac{2(x^2 - 4)}{x - 2} = \\lim_{x \\to 2} \\frac{2(x-2)(x+2)}{x-2}$$",
-                    "$$= \\lim_{x \\to 2} 2(x+2) = ___8___$$",
-                    "Donc $f$ est dérivable en $x_0 = 2$ et $f'(2) = ___8___$"
-                  ]
-                }
+              "type": "definition-box",
+              "preamble": "Dérivabilité en un point",
+              "content": [
+                "Soit $f$ une fonction définie sur un intervalle ouvert contenant $x_0$.",
+                "On dit que $f$ est **dérivable en $x_0$** s'il existe un réel $\\ell$ tel que :",
+                "$$\\displaystyle \\lim_{x \\to x_0} \\frac{f(x) - f(x_0)}{x - x_0} = \\ell$$",
+                "Le réel $\\ell$ est appelé **nombre dérivé** de la fonction $f$ en $x_0$ et noté $f'(x_0) = \\ell$."
               ]
             },
             {
-              "title": "Interprétation géométrique",
-              "elements": [
-                {
-                  "type": "property-box",
-                  "preamble": "Équation de la tangente",
-                  "content": [
-                    "Soit $f$ une fonction dérivable en un point $x_0$.",
-                    "Une équation de la tangente à $(C_f)$ au point d'abscisse $x_0$ est :",
-                    "$$y = f'(x_0)(x - x_0) + f(x_0)$$",
-                    "Le nombre $f'(x_0)$ représente le **coefficient directeur** de la tangente."
-                  ]
-                },
-                {
-                  "type": "example-box",
-                  "content": [
-                    "Soit $g(x) = x^3$. Déterminons l'équation de la tangente à $(C_g)$ au point d'abscisse 1.",
-                    "**Étape 1 :** Calculons $g'(1)$",
-                    "$$\\displaystyle \\lim_{x \\to 1} \\frac{g(x) - g(1)}{x - 1} = \\lim_{x \\to 1} \\frac{x^3 - 1}{x - 1}$$",
-                    "$$= \\lim_{x \\to 1} \\frac{(x-1)(x^2+x+1)}{x-1} = \\lim_{x \\to 1} (x^2+x+1) = ___3___$$",
-                    "Donc $g'(1) = ___3___$ et $g(1) = ___1___$",
-                    "**Étape 2 :** Équation de la tangente",
-                    "$$y = g'(1)(x-1) + g(1) = 3(x-1) + 1 = 3x - 2$$",
-                    "**Réponse :** $(T): y = 3x - 2$"
-                  ]
-                },
-                {
-                  "type": "practice-box",
-                  "statement": "Soit $f$ la fonction définie sur $\\mathbb{R} \\setminus \\{-1\\}$ par : $f(x) = \\displaystyle \\frac{2}{x+1}$",
-                  "content": [
-                    "Étudier la dérivabilité de $f$ au point d'abscisse $x_0 = 1$",
-                    "Déterminer l'équation de la tangente à $(C_f)$ au point d'abscisse $x_0 = 1$"
-                  ],
-                  "solution": [
-                    "**Dérivabilité en $x_0 = 1$ :**\\n\\nCalculons $\\displaystyle \\lim_{x \\to 1} \\frac{f(x) - f(1)}{x - 1}$\\n\\nOn a $f(1) = \\frac{2}{1+1} = 1$\\n\\n$$\\displaystyle \\lim_{x \\to 1} \\frac{\\frac{2}{x+1} - 1}{x - 1} = \\lim_{x \\to 1} \\frac{2 - (x+1)}{(x+1)(x-1)}$$\\n\\n$$= \\lim_{x \\to 1} \\frac{1-x}{(x+1)(x-1)} = \\lim_{x \\to 1} \\frac{-(x-1)}{(x+1)(x-1)}$$\\n\\n$$= \\lim_{x \\to 1} \\frac{-1}{x+1} = \\frac{-1}{2}$$\\n\\nDonc $f$ est dérivable en 1 et $f'(1) = -\\frac{1}{2}$",
-                    "**Équation de la tangente :**\\n\\nOn utilise : $y = f'(1)(x-1) + f(1)$\\n\\n$$y = -\\frac{1}{2}(x-1) + 1 = -\\frac{1}{2}x + \\frac{1}{2} + 1 = -\\frac{1}{2}x + \\frac{3}{2}$$\\n\\n**Réponse :** $(T): y = -\\frac{1}{2}x + \\frac{3}{2}$"
-                  ]
-                }
+              "type": "example-box",
+              "content": [
+                "Soit $f(x) = 2x^2$. Étudions la dérivabilité de $f$ en $x_0 = 2$.",
+                "On calcule :",
+                "$$\\displaystyle \\lim_{x \\to 2} \\frac{f(x) - f(2)}{x - 2} = \\lim_{x \\to 2} \\frac{2x^2 - 8}{x - 2}$$",
+                "$$= \\lim_{x \\to 2} \\frac{2(x^2 - 4)}{x - 2} = \\lim_{x \\to 2} \\frac{2(x-2)(x+2)}{x-2}$$",
+                "$$= \\lim_{x \\to 2} 2(x+2) = ___8___$$",
+                "Donc $f$ est dérivable en $x_0 = 2$ et $f'(2) = ___8___$"
               ]
             }
           ]
         },
         {
-          "title": "Dérivabilité à gauche - Dérivabilité à droite",
-          "subsubsections": [
+          "title": "Interprétation géométrique",
+          "elements": [
             {
-              "title": "Définition et propriété",
-              "elements": [
-                {
-                  "type": "definition-box",
-                  "preamble": "Dérivées latérales",
-                  "listType": "bullet",
-                  "content": [
-                    ">> **Dérivabilité à droite :**",
-                    "Soit $f$ une fonction définie sur un intervalle $[x_0, \\alpha[$.",
-                    "On dit que $f$ est **dérivable à droite** en $x_0$ s'il existe un réel $\\ell$ tel que :",
-                    "$$\\displaystyle \\lim_{x \\to x_0^+} \\frac{f(x) - f(x_0)}{x - x_0} = \\ell$$",
-                    "Le réel $\\ell$ est noté $f'_d(x_0)$.",
-                    ">> **Dérivabilité à gauche :**",
-                    "Soit $f$ une fonction définie sur un intervalle $]\\alpha, x_0]$.",
-                    "On dit que $f$ est **dérivable à gauche** en $x_0$ s'il existe un réel $\\ell$ tel que :",
-                    "$$\\displaystyle \\lim_{x \\to x_0^-} \\frac{f(x) - f(x_0)}{x - x_0} = \\ell$$",
-                    "Le réel $\\ell$ est noté $f'_g(x_0)$."
-                  ]
-                },
-                {
-                  "type": "property-box",
-                  "content": "$f$ est dérivable en $a$ si et seulement si $f$ est dérivable à droite en $a$, $f$ est dérivable à gauche en $a$ **et** $f'_d(a) = f'_g(a)$"
-                },
-                {
-                  "type": "example-box",
-                  "content": [
-                    "Soit $f(x) = |x^2 - 1|$ définie sur $\\mathbb{R}$. Étudions la dérivabilité de $f$ en $x_0 = 1$.",
-                    "**À droite de 1 :** Pour $x > 1$, on a $x^2 - 1 > 0$, donc $f(x) = x^2 - 1$",
-                    "$$\\displaystyle \\lim_{x \\to 1^+} \\frac{f(x) - f(1)}{x - 1} = \\lim_{x \\to 1^+} \\frac{x^2-1}{x-1} = \\lim_{x \\to 1^+} (x+1) = ___2___$$",
-                    "Donc $f'_d(1) = ___2___$",
-                    "**À gauche de 1 :** Pour $x < 1$, on a $x^2 - 1 < 0$, donc $f(x) = -(x^2-1)$",
-                    "$$\\displaystyle \\lim_{x \\to 1^-} \\frac{f(x) - f(1)}{x - 1} = \\lim_{x \\to 1^-} \\frac{-(x^2-1)}{x-1} = \\lim_{x \\to 1^-} -(x+1) = ___-2___$$",
-                    "Donc $f'_g(1) = ___-2___$",
-                    "**Conclusion :** Puisque $f'_d(1) \\neq f'_g(1)$, la fonction $f$ **n'est pas dérivable en 1**."
-                  ]
-                }
+              "type": "property-box",
+              "preamble": "Équation de la tangente",
+              "content": [
+                "Soit $f$ une fonction dérivable en un point $x_0$.",
+                "Une équation de la tangente à $(C_f)$ au point d'abscisse $x_0$ est :",
+                "$$y = f'(x_0)(x - x_0) + f(x_0)$$",
+                "Le nombre $f'(x_0)$ représente le **coefficient directeur** de la tangente."
               ]
             },
             {
-              "title": "Interprétation géométrique",
-              "elements": [
-                {
-                  "type": "property-box",
-                  "preamble": "Demi-tangentes",
-                  "content": [
-                    ">> **Demi-tangente à droite :**",
-                    "Si $f$ est dérivable à droite en $x_0$, alors $(C_f)$ admet une **demi-tangente à droite** au point d'abscisse $x_0$ d'équation :",
-                    "$$\\begin{cases} y = f'_d(x_0)(x - x_0) + f(x_0) \\\\ x \\geq x_0 \\end{cases}$$",
-                    ">> **Demi-tangente à gauche :**",
-                    "Si $f$ est dérivable à gauche en $x_0$, alors $(C_f)$ admet une **demi-tangente à gauche** au point d'abscisse $x_0$ d'équation :",
-                    "$$\\begin{cases} y = f'_g(x_0)(x - x_0) + f(x_0) \\\\ x \\leq x_0 \\end{cases}$$"
-                  ]
-                },
-                {
-                  "type": "remark-box",
-                  "content": "Si $f'_d(x_0) \\neq f'_g(x_0)$, la courbe $(C_f)$ présente un **point anguleux** en $x_0$, c'est-à-dire que les deux demi-tangentes ont des pentes différentes."
-                },
-                {
-                  "type": "practice-box",
-                  "statement": "Soit $f$ la fonction définie sur $]-\\infty, 1]$ par : $f(x) = |x|\\sqrt{1-x}$",
-                  "content": [
-                    "Étudier la dérivabilité de $f$ à droite en $x_0 = 0$, puis interpréter géométriquement le résultat obtenu",
-                    "Étudier la dérivabilité de $f$ à gauche en $x_0 = 0$, puis interpréter géométriquement le résultat obtenu",
-                    "La fonction $f$ est-elle dérivable en $x_0 = 0$ ?"
-                  ],
-                  "solution": [
-                    "**Dérivabilité à droite en 0 :**\\n\\nPour $x \\geq 0$, on a $|x| = x$, donc $f(x) = x\\sqrt{1-x}$\\n\\n$$\\displaystyle \\lim_{x \\to 0^+} \\frac{f(x) - f(0)}{x - 0} = \\lim_{x \\to 0^+} \\frac{x\\sqrt{1-x}}{x} = \\lim_{x \\to 0^+} \\sqrt{1-x} = 1$$\\n\\nDonc $f'_d(0) = 1$ et $(C_f)$ admet une demi-tangente à droite de pente 1 au point $(0, 0)$.",
-                    "**Dérivabilité à gauche en 0 :**\\n\\nPour $x < 0$, on a $|x| = -x$, donc $f(x) = -x\\sqrt{1-x}$\\n\\n$$\\displaystyle \\lim_{x \\to 0^-} \\frac{f(x) - f(0)}{x - 0} = \\lim_{x \\to 0^-} \\frac{-x\\sqrt{1-x}}{x} = \\lim_{x \\to 0^-} -\\sqrt{1-x} = -1$$\\n\\nDonc $f'_g(0) = -1$ et $(C_f)$ admet une demi-tangente à gauche de pente $-1$ au point $(0, 0)$.",
-                    "**Conclusion :**\\n\\nPuisque $f'_d(0) = 1 \\neq -1 = f'_g(0)$, la fonction $f$ **n'est pas dérivable en 0**. La courbe présente un point anguleux en $(0, 0)$."
-                  ]
-                }
+              "type": "example-box",
+              "content": [
+                "Soit $g(x) = x^3$. Déterminons l'équation de la tangente à $(C_g)$ au point d'abscisse 1.",
+                "**Étape 1 :** Calculons $g'(1)$",
+                "$$\\displaystyle \\lim_{x \\to 1} \\frac{g(x) - g(1)}{x - 1} = \\lim_{x \\to 1} \\frac{x^3 - 1}{x - 1}$$",
+                "$$= \\lim_{x \\to 1} \\frac{(x-1)(x^2+x+1)}{x-1} = \\lim_{x \\to 1} (x^2+x+1) = ___3___$$",
+                "Donc $g'(1) = ___3___$ et $g(1) = ___1___$",
+                "**Étape 2 :** Équation de la tangente",
+                "$$y = g'(1)(x-1) + g(1) = 3(x-1) + 1 = 3x - 2$$",
+                "**Réponse :** $(T): y = 3x - 2$"
               ]
             },
             {
-              "title": "Récapitulatif",
-              "elements": [
-                {
-                  "type": "p",
-                  "content": "Le tableau suivant résume les différents cas de dérivabilité et leur interprétation géométrique :"
-                },
-                {
-                  "type": "table",
-                  "content": "| Limite | Valeur | Interprétation géométrique |\n|--------|--------|---------------------------|\n| $\\displaystyle \\lim_{x \\to x_0} \\frac{f(x)-f(x_0)}{x-x_0}$ | $a \\in \\mathbb{R}^*$ | $(C_f)$ admet une tangente de coefficient directeur $a$ |\n| $\\displaystyle \\lim_{x \\to x_0} \\frac{f(x)-f(x_0)}{x-x_0}$ | $0$ | $(C_f)$ admet une tangente horizontale |\n| $\\displaystyle \\lim_{x \\to x_0^+} \\frac{f(x)-f(x_0)}{x-x_0}$ | $+\\infty$ | Demi-tangente verticale à droite dirigée vers le haut |\n| $\\displaystyle \\lim_{x \\to x_0^+} \\frac{f(x)-f(x_0)}{x-x_0}$ | $-\\infty$ | Demi-tangente verticale à droite dirigée vers le bas |\n| $\\displaystyle \\lim_{x \\to x_0^-} \\frac{f(x)-f(x_0)}{x-x_0}$ | $+\\infty$ | Demi-tangente verticale à gauche dirigée vers le haut |\n| $\\displaystyle \\lim_{x \\to x_0^-} \\frac{f(x)-f(x_0)}{x-x_0}$ | $-\\infty$ | Demi-tangente verticale à gauche dirigée vers le bas |"
-                }
+              "type": "practice-box",
+              "statement": "Soit $f$ la fonction définie sur $\\mathbb{R} \\setminus \\{-1\\}$ par : $f(x) = \\displaystyle \\frac{2}{x+1}$",
+              "content": [
+                "Étudier la dérivabilité de $f$ au point d'abscisse $x_0 = 1$",
+                "Déterminer l'équation de la tangente à $(C_f)$ au point d'abscisse $x_0 = 1$"
+              ],
+              "solution": [
+                "**Dérivabilité en $x_0 = 1$ :**\\n\\nCalculons $\\displaystyle \\lim_{x \\to 1} \\frac{f(x) - f(1)}{x - 1}$\\n\\nOn a $f(1) = \\frac{2}{1+1} = 1$\\n\\n$$\\displaystyle \\lim_{x \\to 1} \\frac{\\frac{2}{x+1} - 1}{x - 1} = \\lim_{x \\to 1} \\frac{2 - (x+1)}{(x+1)(x-1)}$$\\n\\n$$= \\lim_{x \\to 1} \\frac{1-x}{(x+1)(x-1)} = \\lim_{x \\to 1} \\frac{-(x-1)}{(x+1)(x-1)}$$\\n\\n$$= \\lim_{x \\to 1} \\frac{-1}{x+1} = \\frac{-1}{2}$$\\n\\nDonc $f$ est dérivable en 1 et $f'(1) = -\\frac{1}{2}$",
+                "**Équation de la tangente :**\\n\\nOn utilise : $y = f'(1)(x-1) + f(1)$\\n\\n$$y = -\\frac{1}{2}(x-1) + 1 = -\\frac{1}{2}x + \\frac{1}{2} + 1 = -\\frac{1}{2}x + \\frac{3}{2}$$\\n\\n**Réponse :** $(T): y = -\\frac{1}{2}x + \\frac{3}{2}$"
               ]
+            }
+          ]
+        },
+        {
+          "title": "Définition et propriété",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "Dérivées latérales",
+              "listType": "bullet",
+              "content": [
+                ">> **Dérivabilité à droite :**",
+                "Soit $f$ une fonction définie sur un intervalle $[x_0, \\alpha[$.",
+                "On dit que $f$ est **dérivable à droite** en $x_0$ s'il existe un réel $\\ell$ tel que :",
+                "$$\\displaystyle \\lim_{x \\to x_0^+} \\frac{f(x) - f(x_0)}{x - x_0} = \\ell$$",
+                "Le réel $\\ell$ est noté $f'_d(x_0)$.",
+                ">> **Dérivabilité à gauche :**",
+                "Soit $f$ une fonction définie sur un intervalle $]\\alpha, x_0]$.",
+                "On dit que $f$ est **dérivable à gauche** en $x_0$ s'il existe un réel $\\ell$ tel que :",
+                "$$\\displaystyle \\lim_{x \\to x_0^-} \\frac{f(x) - f(x_0)}{x - x_0} = \\ell$$",
+                "Le réel $\\ell$ est noté $f'_g(x_0)$."
+              ]
+            },
+            {
+              "type": "property-box",
+              "content": "$f$ est dérivable en $a$ si et seulement si $f$ est dérivable à droite en $a$, $f$ est dérivable à gauche en $a$ **et** $f'_d(a) = f'_g(a)$"
+            },
+            {
+              "type": "example-box",
+              "content": [
+                "Soit $f(x) = |x^2 - 1|$ définie sur $\\mathbb{R}$. Étudions la dérivabilité de $f$ en $x_0 = 1$.",
+                "**À droite de 1 :** Pour $x > 1$, on a $x^2 - 1 > 0$, donc $f(x) = x^2 - 1$",
+                "$$\\displaystyle \\lim_{x \\to 1^+} \\frac{f(x) - f(1)}{x - 1} = \\lim_{x \\to 1^+} \\frac{x^2-1}{x-1} = \\lim_{x \\to 1^+} (x+1) = ___2___$$",
+                "Donc $f'_d(1) = ___2___$",
+                "**À gauche de 1 :** Pour $x < 1$, on a $x^2 - 1 < 0$, donc $f(x) = -(x^2-1)$",
+                "$$\\displaystyle \\lim_{x \\to 1^-} \\frac{f(x) - f(1)}{x - 1} = \\lim_{x \\to 1^-} \\frac{-(x^2-1)}{x-1} = \\lim_{x \\to 1^-} -(x+1) = ___-2___$$",
+                "Donc $f'_g(1) = ___-2___$",
+                "**Conclusion :** Puisque $f'_d(1) \\neq f'_g(1)$, la fonction $f$ **n'est pas dérivable en 1**."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Interprétation géométrique",
+          "elements": [
+            {
+              "type": "property-box",
+              "preamble": "Demi-tangentes",
+              "content": [
+                ">> **Demi-tangente à droite :**",
+                "Si $f$ est dérivable à droite en $x_0$, alors $(C_f)$ admet une **demi-tangente à droite** au point d'abscisse $x_0$ d'équation :",
+                "$$\\begin{cases} y = f'_d(x_0)(x - x_0) + f(x_0) \\\\ x \\geq x_0 \\end{cases}$$",
+                ">> **Demi-tangente à gauche :**",
+                "Si $f$ est dérivable à gauche en $x_0$, alors $(C_f)$ admet une **demi-tangente à gauche** au point d'abscisse $x_0$ d'équation :",
+                "$$\\begin{cases} y = f'_g(x_0)(x - x_0) + f(x_0) \\\\ x \\leq x_0 \\end{cases}$$"
+              ]
+            },
+            {
+              "type": "remark-box",
+              "content": "Si $f'_d(x_0) \\neq f'_g(x_0)$, la courbe $(C_f)$ présente un **point anguleux** en $x_0$, c'est-à-dire que les deux demi-tangentes ont des pentes différentes."
+            },
+            {
+              "type": "practice-box",
+              "statement": "Soit $f$ la fonction définie sur $]-\\infty, 1]$ par : $f(x) = |x|\\sqrt{1-x}$",
+              "content": [
+                "Étudier la dérivabilité de $f$ à droite en $x_0 = 0$, puis interpréter géométriquement le résultat obtenu",
+                "Étudier la dérivabilité de $f$ à gauche en $x_0 = 0$, puis interpréter géométriquement le résultat obtenu",
+                "La fonction $f$ est-elle dérivable en $x_0 = 0$ ?"
+              ],
+              "solution": [
+                "**Dérivabilité à droite en 0 :**\\n\\nPour $x \\geq 0$, on a $|x| = x$, donc $f(x) = x\\sqrt{1-x}$\\n\\n$$\\displaystyle \\lim_{x \\to 0^+} \\frac{f(x) - f(0)}{x - 0} = \\lim_{x \\to 0^+} \\frac{x\\sqrt{1-x}}{x} = \\lim_{x \\to 0^+} \\sqrt{1-x} = 1$$\\n\\nDonc $f'_d(0) = 1$ et $(C_f)$ admet une demi-tangente à droite de pente 1 au point $(0, 0)$.",
+                "**Dérivabilité à gauche en 0 :**\\n\\nPour $x < 0$, on a $|x| = -x$, donc $f(x) = -x\\sqrt{1-x}$\\n\\n$$\\displaystyle \\lim_{x \\to 0^-} \\frac{f(x) - f(0)}{x - 0} = \\lim_{x \\to 0^-} \\frac{-x\\sqrt{1-x}}{x} = \\lim_{x \\to 0^-} -\\sqrt{1-x} = -1$$\\n\\nDonc $f'_g(0) = -1$ et $(C_f)$ admet une demi-tangente à gauche de pente $-1$ au point $(0, 0)$.",
+                "**Conclusion :**\\n\\nPuisque $f'_d(0) = 1 \\neq -1 = f'_g(0)$, la fonction $f$ **n'est pas dérivable en 0**. La courbe présente un point anguleux en $(0, 0)$."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Récapitulatif",
+          "elements": [
+            {
+              "type": "p",
+              "content": "Le tableau suivant résume les différents cas de dérivabilité et leur interprétation géométrique :"
+            },
+            {
+              "type": "table",
+              "content": "| Limite | Valeur | Interprétation géométrique |\n|--------|--------|---------------------------|\n| $\\displaystyle \\lim_{x \\to x_0} \\frac{f(x)-f(x_0)}{x-x_0}$ | $a \\in \\mathbb{R}^*$ | $(C_f)$ admet une tangente de coefficient directeur $a$ |\n| $\\displaystyle \\lim_{x \\to x_0} \\frac{f(x)-f(x_0)}{x-x_0}$ | $0$ | $(C_f)$ admet une tangente horizontale |\n| $\\displaystyle \\lim_{x \\to x_0^+} \\frac{f(x)-f(x_0)}{x-x_0}$ | $+\\infty$ | Demi-tangente verticale à droite dirigée vers le haut |\n| $\\displaystyle \\lim_{x \\to x_0^+} \\frac{f(x)-f(x_0)}{x-x_0}$ | $-\\infty$ | Demi-tangente verticale à droite dirigée vers le bas |\n| $\\displaystyle \\lim_{x \\to x_0^-} \\frac{f(x)-f(x_0)}{x-x_0}$ | $+\\infty$ | Demi-tangente verticale à gauche dirigée vers le haut |\n| $\\displaystyle \\lim_{x \\to x_0^-} \\frac{f(x)-f(x_0)}{x-x_0}$ | $-\\infty$ | Demi-tangente verticale à gauche dirigée vers le bas |"
             }
           ]
         },
@@ -754,74 +744,69 @@
           ]
         },
         {
-          "title": "Exemples d'études complètes de fonctions",
-          "subsubsections": [
+          "title": "Étude d'un polynôme",
+          "elements": [
             {
-              "title": "Étude d'un polynôme",
-              "elements": [
-                {
-                  "type": "p",
-                  "content": "Soit $g(x) = x^3 - 3x - 3$ définie sur $\\mathbb{R}$. Étudions cette fonction."
-                },
-                {
-                  "type": "explain-box",
-                  "statement": "**Variations de $g$ :**",
-                  "content": "On calcule la dérivée : $g'(x) = 3x^2 - 3 = 3(x^2 - 1)$",
-                  "solution": "$g'(x) = 0 \\Leftrightarrow x = -1$ ou $x = 1$\\n\\n**Tableau de variations :**\\n\\n• Sur $]-\\infty, -1[$, $g'(x) > 0$ → $g$ croissante\\n• Sur $]-1, 1[$, $g'(x) < 0$ → $g$ décroissante\\n• Sur $]1, +\\infty[$, $g'(x) > 0$ → $g$ croissante\\n\\nOn a $g(-1) = -1$ (maximum local) et $g(1) = -5$ (minimum local)"
-                },
-                {
-                  "type": "explain-box",
-                  "statement": "**Équation $g(x) = 0$ :**",
-                  "content": "Montrer que $g(x) = 0$ admet une unique solution $\\alpha$ dans $[1, +\\infty[$ et que $2 < \\alpha < 3$",
-                  "solution": "$g$ est continue et strictement croissante sur $[1, +\\infty[$ et $g([1, +\\infty[) = [-5, +\\infty[$\\n\\nPuisque $0 \\in [-5, +\\infty[$, l'équation $g(x) = 0$ admet une **solution unique** $\\alpha$ dans $[1, +\\infty[$.\\n\\nOn a $g(2) = 8 - 6 - 3 = -1 < 0$ et $g(3) = 27 - 9 - 3 = 15 > 0$\\n\\nDonc $g(2) \\times g(3) < 0$, ce qui implique $2 < \\alpha < 3$"
-                },
-                {
-                  "type": "explain-box",
-                  "statement": "**Signe de $g(x)$ :**",
-                  "content": "En déduire le signe de $g(x)$ sur $\\mathbb{R}$",
-                  "solution": "• Sur $]-\\infty, 1]$, $g$ est décroissante et $g(1) = -5 < 0$, donc $g(x) < 0$\\n\\n• Sur $[1, \\alpha]$, $g$ est croissante de $g(1) = -5$ à $g(\\alpha) = 0$, donc $g(x) \\leq 0$\\n\\n• Sur $[\\alpha, +\\infty[$, $g$ est croissante et $g(\\alpha) = 0$, donc $g(x) \\geq 0$"
-                },
-                {
-                  "type": "explain-box",
-                  "statement": "**Branches infinies :**",
-                  "content": "Étudier les branches infinies de $(C_g)$",
-                  "solution": "$\\displaystyle \\lim_{x \\to +\\infty} g(x) = +\\infty$ et $\\displaystyle \\lim_{x \\to +\\infty} \\frac{g(x)}{x} = +\\infty$\\n\\nDonc $(C_g)$ admet une **branche parabolique** de direction $(Oy)$ au voisinage de $+\\infty$.\\n\\nDe même au voisinage de $-\\infty$."
-                },
-                {
-                  "type": "explain-box",
-                  "statement": "**Point d'inflexion :**",
-                  "content": "Montrer que $I(0, -3)$ est un point d'inflexion de $(C_g)$",
-                  "solution": "On calcule $g''(x) = 6x$\\n\\n$g''$ s'annule en $x = 0$ en changeant de signe (négatif à gauche, positif à droite).\\n\\nDe plus, $g(0) = -3$.\\n\\nDonc $I(0, -3)$ est un **point d'inflexion** de $(C_g)$.\\n\\nL'équation de la tangente en $I$ est : $y = g'(0)(x-0) + g(0) = -3x - 3$"
-                }
-              ]
+              "type": "p",
+              "content": "Soit $g(x) = x^3 - 3x - 3$ définie sur $\\mathbb{R}$. Étudions cette fonction."
             },
             {
-              "title": "Étude d'une fonction rationnelle",
-              "elements": [
-                {
-                  "type": "p",
-                  "content": "Soit $f(x) = x + \\displaystyle \\frac{3}{x} + \\frac{3}{2x^2}$ définie sur $\\mathbb{R}^*$."
-                },
-                {
-                  "type": "practice-box",
-                  "statement": "Étude complète de $f$ :",
-                  "content": [
-                    "Calculer les limites de $f$ aux bornes de son domaine de définition",
-                    "Déterminer les branches infinies de $(C_f)$",
-                    "Montrer que $(\\forall x \\in \\mathbb{R}^*), f'(x) = \\displaystyle \\frac{g(x)}{x^3}$ où $g(x) = x^3 - 3x - 3$ (étudiée précédemment)",
-                    "Étudier le signe de $f'(x)$ et dresser le tableau de variations de $f$",
-                    "Étudier la position relative de $(C_f)$ avec la droite $(\\Delta): y = x$",
-                    "Étudier la convexité de $(C_f)$ et déterminer ses points d'inflexion"
-                  ],
-                  "solution": [
-                    "$\\displaystyle \\lim_{x \\to -\\infty} f(x) = -\\infty$, $\\displaystyle \\lim_{x \\to 0^-} f(x) = +\\infty$, $\\displaystyle \\lim_{x \\to 0^+} f(x) = +\\infty$, $\\displaystyle \\lim_{x \\to +\\infty} f(x) = +\\infty$",
-                    "$x = 0$ est une **asymptote verticale** car $\\displaystyle \\lim_{x \\to 0^\\pm} f(x) = +\\infty$\\n\\n$y = x$ est une **asymptote oblique** car $\\displaystyle \\lim_{x \\to \\pm\\infty} [f(x) - x] = \\displaystyle \\lim_{x \\to \\pm\\infty} \\left(\\frac{3}{x} + \\frac{3}{2x^2}\\right) = 0$",
-                    "$$f'(x) = 1 - \\frac{3}{x^2} - \\frac{3}{x^3} = \\frac{x^3 - 3x - 3}{x^3} = \\frac{g(x)}{x^3}$$",
-                    "Le signe de $f'(x)$ est celui de $\\frac{g(x)}{x^3}$ :\\n\\n• Sur $]-\\infty, 0[$, $x^3 < 0$ et $g(x) < 0$, donc $f'(x) > 0$ → $f$ croissante\\n• Sur $]0, \\alpha[$, $x^3 > 0$ et $g(x) < 0$, donc $f'(x) < 0$ → $f$ décroissante\\n• Sur $]\\alpha, +\\infty[$, $x^3 > 0$ et $g(x) > 0$, donc $f'(x) > 0$ → $f$ croissante\\n\\nLa fonction admet un minimum local en $\\alpha$ (avec $\\alpha \\approx 2{,}1$)",
-                    "$f(x) - x = \\displaystyle \\frac{3}{x} + \\frac{3}{2x^2} = \\frac{6x + 3}{2x^2} = \\frac{3(2x+1)}{2x^2}$\\n\\n• Sur $]-\\infty, -\\frac{1}{2}[$, $f(x) - x < 0$ → $(C_f)$ en dessous de $(\\Delta)$\\n• Au point $x = -\\frac{1}{2}$, $f(x) = x$ → intersection\\n• Sur $]-\\frac{1}{2}, 0[$ et $]0, +\\infty[$, $f(x) - x > 0$ → $(C_f)$ au-dessus de $(\\Delta)$",
-                    "$$f''(x) = \\frac{6}{x^3} + \\frac{9}{x^4} = \\frac{6x + 9}{x^4} = \\frac{3(2x+3)}{x^4}$$\\n\\n$f''(x) = 0 \\Leftrightarrow x = -\\frac{3}{2}$\\n\\n• Sur $]-\\infty, -\\frac{3}{2}[$, $f''(x) < 0$ → $(C_f)$ concave\\n• Sur $]-\\frac{3}{2}, 0[$ et $]0, +\\infty[$, $f''(x) > 0$ → $(C_f)$ convexe\\n\\n**Point d'inflexion :** $K\\left(-\\frac{3}{2}, f\\left(-\\frac{3}{2}\\right)\\right) = K\\left(-\\frac{3}{2}, -\\frac{17}{6}\\right)$"
-                  ]
-                }
+              "type": "explain-box",
+              "statement": "**Variations de $g$ :**",
+              "content": "On calcule la dérivée : $g'(x) = 3x^2 - 3 = 3(x^2 - 1)$",
+              "solution": "$g'(x) = 0 \\Leftrightarrow x = -1$ ou $x = 1$\\n\\n**Tableau de variations :**\\n\\n• Sur $]-\\infty, -1[$, $g'(x) > 0$ → $g$ croissante\\n• Sur $]-1, 1[$, $g'(x) < 0$ → $g$ décroissante\\n• Sur $]1, +\\infty[$, $g'(x) > 0$ → $g$ croissante\\n\\nOn a $g(-1) = -1$ (maximum local) et $g(1) = -5$ (minimum local)"
+            },
+            {
+              "type": "explain-box",
+              "statement": "**Équation $g(x) = 0$ :**",
+              "content": "Montrer que $g(x) = 0$ admet une unique solution $\\alpha$ dans $[1, +\\infty[$ et que $2 < \\alpha < 3$",
+              "solution": "$g$ est continue et strictement croissante sur $[1, +\\infty[$ et $g([1, +\\infty[) = [-5, +\\infty[$\\n\\nPuisque $0 \\in [-5, +\\infty[$, l'équation $g(x) = 0$ admet une **solution unique** $\\alpha$ dans $[1, +\\infty[$.\\n\\nOn a $g(2) = 8 - 6 - 3 = -1 < 0$ et $g(3) = 27 - 9 - 3 = 15 > 0$\\n\\nDonc $g(2) \\times g(3) < 0$, ce qui implique $2 < \\alpha < 3$"
+            },
+            {
+              "type": "explain-box",
+              "statement": "**Signe de $g(x)$ :**",
+              "content": "En déduire le signe de $g(x)$ sur $\\mathbb{R}$",
+              "solution": "• Sur $]-\\infty, 1]$, $g$ est décroissante et $g(1) = -5 < 0$, donc $g(x) < 0$\\n\\n• Sur $[1, \\alpha]$, $g$ est croissante de $g(1) = -5$ à $g(\\alpha) = 0$, donc $g(x) \\leq 0$\\n\\n• Sur $[\\alpha, +\\infty[$, $g$ est croissante et $g(\\alpha) = 0$, donc $g(x) \\geq 0$"
+            },
+            {
+              "type": "explain-box",
+              "statement": "**Branches infinies :**",
+              "content": "Étudier les branches infinies de $(C_g)$",
+              "solution": "$\\displaystyle \\lim_{x \\to +\\infty} g(x) = +\\infty$ et $\\displaystyle \\lim_{x \\to +\\infty} \\frac{g(x)}{x} = +\\infty$\\n\\nDonc $(C_g)$ admet une **branche parabolique** de direction $(Oy)$ au voisinage de $+\\infty$.\\n\\nDe même au voisinage de $-\\infty$."
+            },
+            {
+              "type": "explain-box",
+              "statement": "**Point d'inflexion :**",
+              "content": "Montrer que $I(0, -3)$ est un point d'inflexion de $(C_g)$",
+              "solution": "On calcule $g''(x) = 6x$\\n\\n$g''$ s'annule en $x = 0$ en changeant de signe (négatif à gauche, positif à droite).\\n\\nDe plus, $g(0) = -3$.\\n\\nDonc $I(0, -3)$ est un **point d'inflexion** de $(C_g)$.\\n\\nL'équation de la tangente en $I$ est : $y = g'(0)(x-0) + g(0) = -3x - 3$"
+            }
+          ]
+        },
+        {
+          "title": "Étude d'une fonction rationnelle",
+          "elements": [
+            {
+              "type": "p",
+              "content": "Soit $f(x) = x + \\displaystyle \\frac{3}{x} + \\frac{3}{2x^2}$ définie sur $\\mathbb{R}^*$."
+            },
+            {
+              "type": "practice-box",
+              "statement": "Étude complète de $f$ :",
+              "content": [
+                "Calculer les limites de $f$ aux bornes de son domaine de définition",
+                "Déterminer les branches infinies de $(C_f)$",
+                "Montrer que $(\\forall x \\in \\mathbb{R}^*), f'(x) = \\displaystyle \\frac{g(x)}{x^3}$ où $g(x) = x^3 - 3x - 3$ (étudiée précédemment)",
+                "Étudier le signe de $f'(x)$ et dresser le tableau de variations de $f$",
+                "Étudier la position relative de $(C_f)$ avec la droite $(\\Delta): y = x$",
+                "Étudier la convexité de $(C_f)$ et déterminer ses points d'inflexion"
+              ],
+              "solution": [
+                "$\\displaystyle \\lim_{x \\to -\\infty} f(x) = -\\infty$, $\\displaystyle \\lim_{x \\to 0^-} f(x) = +\\infty$, $\\displaystyle \\lim_{x \\to 0^+} f(x) = +\\infty$, $\\displaystyle \\lim_{x \\to +\\infty} f(x) = +\\infty$",
+                "$x = 0$ est une **asymptote verticale** car $\\displaystyle \\lim_{x \\to 0^\\pm} f(x) = +\\infty$\\n\\n$y = x$ est une **asymptote oblique** car $\\displaystyle \\lim_{x \\to \\pm\\infty} [f(x) - x] = \\displaystyle \\lim_{x \\to \\pm\\infty} \\left(\\frac{3}{x} + \\frac{3}{2x^2}\\right) = 0$",
+                "$$f'(x) = 1 - \\frac{3}{x^2} - \\frac{3}{x^3} = \\frac{x^3 - 3x - 3}{x^3} = \\frac{g(x)}{x^3}$$",
+                "Le signe de $f'(x)$ est celui de $\\frac{g(x)}{x^3}$ :\\n\\n• Sur $]-\\infty, 0[$, $x^3 < 0$ et $g(x) < 0$, donc $f'(x) > 0$ → $f$ croissante\\n• Sur $]0, \\alpha[$, $x^3 > 0$ et $g(x) < 0$, donc $f'(x) < 0$ → $f$ décroissante\\n• Sur $]\\alpha, +\\infty[$, $x^3 > 0$ et $g(x) > 0$, donc $f'(x) > 0$ → $f$ croissante\\n\\nLa fonction admet un minimum local en $\\alpha$ (avec $\\alpha \\approx 2{,}1$)",
+                "$f(x) - x = \\displaystyle \\frac{3}{x} + \\frac{3}{2x^2} = \\frac{6x + 3}{2x^2} = \\frac{3(2x+1)}{2x^2}$\\n\\n• Sur $]-\\infty, -\\frac{1}{2}[$, $f(x) - x < 0$ → $(C_f)$ en dessous de $(\\Delta)$\\n• Au point $x = -\\frac{1}{2}$, $f(x) = x$ → intersection\\n• Sur $]-\\frac{1}{2}, 0[$ et $]0, +\\infty[$, $f(x) - x > 0$ → $(C_f)$ au-dessus de $(\\Delta)$",
+                "$$f''(x) = \\frac{6}{x^3} + \\frac{9}{x^4} = \\frac{6x + 9}{x^4} = \\frac{3(2x+3)}{x^4}$$\\n\\n$f''(x) = 0 \\Leftrightarrow x = -\\frac{3}{2}$\\n\\n• Sur $]-\\infty, -\\frac{3}{2}[$, $f''(x) < 0$ → $(C_f)$ concave\\n• Sur $]-\\frac{3}{2}, 0[$ et $]0, +\\infty[$, $f''(x) > 0$ → $(C_f)$ convexe\\n\\n**Point d'inflexion :** $K\\left(-\\frac{3}{2}, f\\left(-\\frac{3}{2}\\right)\\right) = K\\left(-\\frac{3}{2}, -\\frac{17}{6}\\right)$"
               ]
             }
           ]
