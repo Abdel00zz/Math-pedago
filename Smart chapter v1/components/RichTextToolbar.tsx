@@ -178,14 +178,14 @@ export const RichTextToolbar: React.FC<RichTextToolbarProps> = ({
                 </div>
 
                 {/* Aide rapide */}
-                <div className="text-xs text-gray-600 mt-2 flex items-center gap-4">
+                <div className="text-xs text-gray-600 mt-2 flex flex-wrap items-center gap-4">
                     <span className="font-semibold">💡 Astuce:</span>
                     <span>Sélectionnez du texte puis cliquez sur un bouton</span>
-                    {listType && (
-                        <span>• Ligne avec <code className="bg-gray-200 px-1 rounded">&gt;&gt;</code> = titre {columns ? 'de colonne' : 'non listé'}</span>
+                    {listType && !columns && (
+                        <span>• Ligne avec <code className="bg-gray-200 px-1 rounded">&gt;&gt;</code> = titre non listé</span>
                     )}
                     {columns && (
-                        <span>• <span className="font-semibold">🔲 Mode colonnes:</span> lignes <code className="bg-gray-200 px-1 rounded">&gt;&gt;</code> = titres de colonnes</span>
+                        <span>• <span className="font-semibold">🔲 Mode colonnes:</span> Utilisez <code className="bg-gray-200 px-1 rounded">|</code> pour séparer les colonnes (ex: Item 1 | Item 2 | Item 3)</span>
                     )}
                 </div>
             </div>
@@ -205,7 +205,7 @@ export const RichTextToolbar: React.FC<RichTextToolbarProps> = ({
                 rows={elementType === 'p' ? 4 : 6}
                 placeholder={
                     columns && listType ?
-                        `Mode colonnes activé 🔲\n>> Colonne 1\nContenu colonne 1\nAutre ligne colonne 1\n>> Colonne 2\nContenu colonne 2\nAutre ligne colonne 2` :
+                        `Mode colonnes activé 🔲\nUtilisez | pour séparer les colonnes\n\nExemple:\n$(u+v)'$ | $u' + v'$\n$(uv)'$ | $u'v + uv'$\n$(u/v)'$ | $(u'v - uv')/v^2$` :
                     listType === 'bullet' ?
                         'Contenu (une ligne = une puce ⭐)\nExemple : Première idée\n>> Titre intermédiaire\nDeuxième idée' :
                     listType === 'numbered' ?

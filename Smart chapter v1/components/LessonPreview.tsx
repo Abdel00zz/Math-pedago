@@ -123,58 +123,60 @@ export const LessonPreview: React.FC<LessonPreviewProps> = ({ lesson }) => {
                 {contentArray.length > 0 && (
                     <div className="ml-11">
                         {element.columns && element.listType ? (
-                            // Mode Colonnes : regrouper le contenu par colonnes
-                            (() => {
-                                const columns: { title: string; items: string[] }[] = [];
-                                let currentColumn: { title: string; items: string[] } | null = null;
+                            // Mode Colonnes : listes parallèles côte à côte
+                            <div className="space-y-3">
+                                {contentArray.map((line, lineIdx) => {
+                                    // Diviser la ligne par le séparateur |
+                                    const parts = line.split('|').map(p => p.trim());
+                                    const numCols = parts.length;
 
-                                contentArray.forEach((item) => {
-                                    if (item.startsWith('>>')) {
-                                        // Nouvelle colonne
-                                        if (currentColumn) columns.push(currentColumn);
-                                        currentColumn = { title: item.substring(2).trim(), items: [] };
-                                    } else if (currentColumn) {
-                                        // Ajouter à la colonne actuelle
-                                        currentColumn.items.push(item);
-                                    }
-                                });
-                                if (currentColumn) columns.push(currentColumn);
-
-                                return (
-                                    <div className="grid gap-6" style={{ gridTemplateColumns: `repeat(${columns.length}, 1fr)` }}>
-                                        {columns.map((col, colIdx) => (
-                                            <div key={colIdx} className="space-y-3">
-                                                {/* Titre de colonne */}
-                                                <div className="font-bold text-gray-900 pb-2 border-b-2 border-gray-400">
-                                                    {renderMathText(col.title)}
+                                    if (numCols === 1) {
+                                        // Pas de séparateur, affichage normal
+                                        if (element.listType === 'bullet') {
+                                            return (
+                                                <div key={lineIdx} className="flex items-start gap-2">
+                                                    <span className="text-yellow-500 text-lg flex-shrink-0 mt-0.5">⭐</span>
+                                                    <span className="text-gray-800 leading-relaxed">{renderMathText(parts[0])}</span>
                                                 </div>
-                                                {/* Items de la colonne */}
-                                                {element.listType === 'bullet' ? (
-                                                    <ul className="space-y-2">
-                                                        {col.items.map((item, itemIdx) => (
-                                                            <li key={itemIdx} className="flex items-start gap-2">
-                                                                <span className="text-yellow-500 text-lg flex-shrink-0 mt-0.5">⭐</span>
-                                                                <span className="text-gray-800 leading-relaxed">{renderMathText(item)}</span>
-                                                            </li>
-                                                        ))}
-                                                    </ul>
-                                                ) : (
-                                                    <ol className="space-y-2" start={1}>
-                                                        {col.items.map((item, itemIdx) => (
-                                                            <li key={itemIdx} className="flex items-start gap-3">
-                                                                <span className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white text-sm font-bold flex items-center justify-center">
-                                                                    {itemIdx + 1}
-                                                                </span>
-                                                                <span className="text-gray-800 leading-relaxed flex-1">{renderMathText(item)}</span>
-                                                            </li>
-                                                        ))}
-                                                    </ol>
-                                                )}
-                                            </div>
-                                        ))}
-                                    </div>
-                                );
-                            })()
+                                            );
+                                        } else {
+                                            return (
+                                                <div key={lineIdx} className="flex items-start gap-3">
+                                                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white text-sm font-bold flex items-center justify-center">
+                                                        {lineIdx + 1}
+                                                    </span>
+                                                    <span className="text-gray-800 leading-relaxed flex-1">{renderMathText(parts[0])}</span>
+                                                </div>
+                                            );
+                                        }
+                                    }
+
+                                    // Affichage en colonnes parallèles
+                                    return (
+                                        <div key={lineIdx} className="grid gap-4" style={{ gridTemplateColumns: `repeat(${numCols}, 1fr)` }}>
+                                            {parts.map((part, partIdx) => {
+                                                if (element.listType === 'bullet') {
+                                                    return (
+                                                        <div key={partIdx} className="flex items-start gap-2">
+                                                            <span className="text-yellow-500 text-lg flex-shrink-0 mt-0.5">⭐</span>
+                                                            <span className="text-gray-800 leading-relaxed">{renderMathText(part)}</span>
+                                                        </div>
+                                                    );
+                                                } else {
+                                                    return (
+                                                        <div key={partIdx} className="flex items-start gap-3">
+                                                            <span className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white text-sm font-bold flex items-center justify-center">
+                                                                {lineIdx + 1}
+                                                            </span>
+                                                            <span className="text-gray-800 leading-relaxed flex-1">{renderMathText(part)}</span>
+                                                        </div>
+                                                    );
+                                                }
+                                            })}
+                                        </div>
+                                    );
+                                })}
+                            </div>
                         ) : element.listType === 'bullet' ? (
                             <ul className="space-y-2">
                                 {contentArray.map((item, idx) => {
