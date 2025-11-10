@@ -1,10 +1,27 @@
+/**
+ * ChapterEditor - Éditeur principal avec arbre hiérarchique et interface moderne
+ * Layout à 3 panneaux : Arbre de navigation | Contenu principal | Propriétés
+ */
+
 import React, { useState, useEffect } from 'react';
 import { ChapterData, FileSystemDirectoryHandle } from '../types';
 import { VideoEditor } from './VideoEditor';
 import { QuizEditor } from './QuizEditor';
 import { ExerciseEditor } from './ExerciseEditor';
 import { LessonEditor } from './LessonEditor';
-import { DocumentTextIcon, VideoCameraIcon, QuestionMarkCircleIcon, PencilSquareIcon, InformationCircleIcon, BookOpenIcon } from './icons';
+import { TreeView } from './TreeView';
+import {
+    DocumentTextIcon,
+    VideoCameraIcon,
+    QuestionMarkCircleIcon,
+    PencilSquareIcon,
+    InformationCircleIcon,
+    BookOpenIcon,
+    SaveIcon,
+    XCircleIcon,
+    LayoutIcon,
+    EyeIcon
+} from './icons';
 
 interface ChapterEditorProps {
     chapter: ChapterData;
@@ -18,6 +35,9 @@ type Tab = 'info' | 'videos' | 'quiz' | 'exercises' | 'lesson';
 export const ChapterEditor: React.FC<ChapterEditorProps> = ({ chapter, onClose, onSave, dirHandle }) => {
     const [editedChapter, setEditedChapter] = useState<ChapterData>(() => JSON.parse(JSON.stringify(chapter)));
     const [activeTab, setActiveTab] = useState<Tab>('info');
+    const [activeElement, setActiveElement] = useState<{ type: string; id?: string } | null>({ type: 'info' });
+    const [showTreeView, setShowTreeView] = useState(true);
+    const [showProperties, setShowProperties] = useState(false);
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -33,46 +53,116 @@ export const ChapterEditor: React.FC<ChapterEditorProps> = ({ chapter, onClose, 
         onSave(editedChapter);
     };
 
+    // Gestionnaire pour la navigation depuis le TreeView
+    const handleSelectElement = (type: string, id?: string) => {
+        setActiveElement({ type, id });
+
+        // Mapper le type à l'onglet approprié
+        if (type === 'info') {
+            setActiveTab('info');
+        } else if (type === 'lesson' || type === 'lesson-content') {
+            setActiveTab('lesson');
+        } else if (type.includes('video')) {
+            setActiveTab('videos');
+        } else if (type.includes('quiz')) {
+            setActiveTab('quiz');
+        } else if (type.includes('exercise')) {
+            setActiveTab('exercises');
+        }
+    };
+
     const InfoTab: React.FC = () => (
-        <div className="space-y-6 p-6">
-            <div>
-                <label className="block text-sm font-semibold text-gray-900 mb-2">
-                    Nom du Chapitre
-                </label>
-                <input
-                    type="text"
-                    value={editedChapter.chapter_name}
-                    onChange={(e) => setEditedChapter(c => ({...c, chapter_name: e.target.value}))}
-                    className="block w-full px-4 py-2.5 text-gray-900 bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                    placeholder="Ex: Logique mathématique"
-                />
-            </div>
-            <div>
-                <label className="block text-sm font-semibold text-gray-900 mb-2">
-                    Fichier de Leçon (optionnel)
-                </label>
-                <input
-                    type="text"
-                    value={editedChapter.lessonFile || ''}
-                    onChange={(e) => setEditedChapter(c => ({...c, lessonFile: e.target.value || undefined}))}
-                    className="block w-full px-4 py-2.5 text-gray-900 bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                    placeholder="lessons/logique_mathematique.json"
-                />
-                <p className="mt-2 text-xs text-gray-600">
-                    Chemin relatif vers le fichier JSON de la leçon pour ce chapitre
-                </p>
-            </div>
-            <div>
-                <label className="block text-sm font-semibold text-gray-900 mb-2">
-                    Dates des Séances (format ISO 8601)
-                </label>
-                <textarea
-                    rows={4}
-                    value={editedChapter.session_dates.join('\n')}
-                    onChange={(e) => setEditedChapter(c => ({...c, session_dates: e.target.value.split('\n').filter(d => d.trim() !== '')}))}
-                    className="block w-full px-4 py-2.5 text-gray-900 bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors font-mono text-sm"
-                    placeholder="2025-09-01T14:00:00Z&#10;2025-09-08T14:00:00Z"
-                />
+        <div className="p-8 max-w-4xl mx-auto animate-fade-in">
+            <div className="space-y-8">
+                {/* En-tête de section */}
+                <div>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-2 flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center">
+                            <InformationCircleIcon className="w-6 h-6 text-blue-600" />
+                        </div>
+                        Informations Générales
+                    </h3>
+                    <p className="text-sm text-gray-600">
+                        Configurez les informations de base du chapitre
+                    </p>
+                </div>
+
+                {/* Nom du chapitre */}
+                <div className="form-group">
+                    <label className="form-label">
+                        Nom du Chapitre
+                    </label>
+                    <input
+                        type="text"
+                        value={editedChapter.chapter_name}
+                        onChange={(e) => setEditedChapter(c => ({...c, chapter_name: e.target.value}))}
+                        className="form-input"
+                        placeholder="Ex: Logique mathématique"
+                    />
+                </div>
+
+                {/* Fichier de leçon */}
+                <div className="form-group">
+                    <label className="form-label">
+                        Fichier de Leçon
+                        <span className="ml-2 text-xs font-normal text-gray-500">(optionnel)</span>
+                    </label>
+                    <input
+                        type="text"
+                        value={editedChapter.lessonFile || ''}
+                        onChange={(e) => setEditedChapter(c => ({...c, lessonFile: e.target.value || undefined}))}
+                        className="form-input"
+                        placeholder="lessons/logique_mathematique.json"
+                    />
+                    <p className="form-help">
+                        Chemin relatif vers le fichier JSON de la leçon pour ce chapitre
+                    </p>
+                </div>
+
+                {/* Dates des séances */}
+                <div className="form-group">
+                    <label className="form-label">
+                        Dates des Séances
+                        <span className="ml-2 text-xs font-normal text-gray-500">(format ISO 8601)</span>
+                    </label>
+                    <textarea
+                        rows={6}
+                        value={editedChapter.session_dates.join('\n')}
+                        onChange={(e) => setEditedChapter(c => ({...c, session_dates: e.target.value.split('\n').filter(d => d.trim() !== '')}))}
+                        className="form-textarea font-mono"
+                        placeholder="2025-09-01T14:00:00Z&#10;2025-09-08T14:00:00Z"
+                    />
+                    <p className="form-help">
+                        Une date par ligne. Total : {editedChapter.session_dates.length} séance(s)
+                    </p>
+                </div>
+
+                {/* Statistiques */}
+                <div className="card">
+                    <div className="card-header">
+                        <h4 className="text-sm font-semibold text-gray-900">Statistiques du Chapitre</h4>
+                    </div>
+                    <div className="card-body">
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                            <div className="text-center">
+                                <div className="text-3xl font-bold text-blue-600">{editedChapter.session_dates.length}</div>
+                                <div className="text-sm text-gray-600 mt-1">Séances</div>
+                            </div>
+                            <div className="text-center">
+                                <div className="text-3xl font-bold text-red-600">{editedChapter.videos?.length || 0}</div>
+                                <div className="text-sm text-gray-600 mt-1">Vidéos</div>
+                            </div>
+                            <div className="text-center">
+                                <div className="text-3xl font-bold text-purple-600">{editedChapter.quiz_questions?.length || 0}</div>
+                                <div className="text-sm text-gray-600 mt-1">Quiz</div>
+                            </div>
+                            <div className="text-center">
+                                <div className="text-3xl font-bold text-orange-600">{editedChapter.exercises?.length || 0}</div>
+                                <div className="text-sm text-gray-600 mt-1">Exercices</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     );
@@ -86,52 +176,73 @@ export const ChapterEditor: React.FC<ChapterEditorProps> = ({ chapter, onClose, 
     ];
 
     return (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 flex items-center justify-center p-4" onClick={onClose}>
-            <div className="bg-white rounded-xl shadow-2xl w-full max-w-7xl h-[92vh] flex flex-col overflow-hidden" onClick={e => e.stopPropagation()}>
+        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-40 flex items-center justify-center p-4" onClick={onClose}>
+            <div
+                className="bg-white rounded-2xl shadow-2xl w-full max-w-[98vw] h-[95vh] flex flex-col overflow-hidden animate-fade-in"
+                onClick={e => e.stopPropagation()}
+            >
                 {/* Header */}
-                <header className="flex justify-between items-center px-6 py-4 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-white">
-                    <div>
-                        <h2 className="text-2xl font-bold text-gray-900">Édition du Chapitre</h2>
-                        <p className="text-sm text-gray-600 mt-1">{chapter.chapter_name}</p>
+                <header className="flex-shrink-0 flex justify-between items-center px-8 py-5 border-b border-gray-200 bg-gradient-to-r from-blue-50 via-white to-blue-50">
+                    <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-lg">
+                            <BookOpenIcon className="w-7 h-7 text-white" />
+                        </div>
+                        <div>
+                            <h2 className="text-2xl font-bold text-gray-900">Éditeur de Chapitre</h2>
+                            <p className="text-sm text-gray-600 mt-0.5">{chapter.chapter_name}</p>
+                        </div>
                     </div>
-                    <button 
-                        onClick={onClose} 
-                        className="text-gray-400 hover:text-gray-600 transition-colors p-2 hover:bg-gray-100 rounded-lg"
-                        title="Fermer (Échap)"
-                    >
-                        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
+
+                    <div className="flex items-center gap-3">
+                        {/* Toggle TreeView */}
+                        <button
+                            onClick={() => setShowTreeView(!showTreeView)}
+                            className={`btn btn-sm ${showTreeView ? 'btn-primary' : 'btn-secondary'}`}
+                            title="Afficher/Masquer l'arbre"
+                        >
+                            <LayoutIcon className="w-4 h-4" />
+                            Arbre
+                        </button>
+
+                        {/* Toggle Properties */}
+                        <button
+                            onClick={() => setShowProperties(!showProperties)}
+                            className={`btn btn-sm ${showProperties ? 'btn-primary' : 'btn-secondary'}`}
+                            title="Afficher/Masquer les propriétés"
+                        >
+                            <EyeIcon className="w-4 h-4" />
+                            Propriétés
+                        </button>
+
+                        {/* Close button */}
+                        <button
+                            onClick={onClose}
+                            className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+                            title="Fermer (Échap)"
+                        >
+                            <XCircleIcon className="w-6 h-6" />
+                        </button>
+                    </div>
                 </header>
 
-                {/* Content */}
-                <div className="flex-grow flex overflow-hidden">
-                    {/* Sidebar Navigation */}
-                    <aside className="w-56 bg-gray-50 border-r border-gray-200 p-3">
-                        <nav className="flex flex-col space-y-1">
-                            {tabs.map(tab => (
-                                <button
-                                    key={tab.id}
-                                    onClick={() => setActiveTab(tab.id)}
-                                    className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all ${
-                                        activeTab === tab.id 
-                                            ? 'bg-blue-600 text-white shadow-md' 
-                                            : 'text-gray-700 hover:bg-white hover:shadow-sm'
-                                    }`}
-                                >
-                                    <tab.icon className={`w-5 h-5 ${activeTab === tab.id ? 'text-white' : 'text-gray-500'}`} />
-                                    <span>{tab.name}</span>
-                                </button>
-                            ))}
-                        </nav>
-                    </aside>
+                {/* Content avec 3 panneaux */}
+                <div className="flex-1 flex overflow-hidden">
+                    {/* Panel 1: TreeView (Navigation) */}
+                    {showTreeView && (
+                        <aside className="w-80 bg-gray-50 border-r border-gray-200 flex-shrink-0 animate-slide-in-right">
+                            <TreeView
+                                chapter={editedChapter}
+                                onSelectElement={handleSelectElement}
+                                activeElement={activeElement}
+                            />
+                        </aside>
+                    )}
 
-                    {/* Main Content Area */}
+                    {/* Panel 2: Main Content */}
                     <main className="flex-1 bg-white overflow-y-auto">
                         {activeTab === 'info' && <InfoTab />}
                         {activeTab === 'lesson' && (
-                            <LessonEditor 
+                            <LessonEditor
                                 chapterId={editedChapter.id}
                                 lessonFilePath={editedChapter.lessonFile}
                                 classType={editedChapter.class_type}
@@ -143,20 +254,57 @@ export const ChapterEditor: React.FC<ChapterEditorProps> = ({ chapter, onClose, 
                         {activeTab === 'quiz' && <QuizEditor chapter={editedChapter} setChapter={setEditedChapter} />}
                         {activeTab === 'exercises' && <ExerciseEditor chapter={editedChapter} setChapter={setEditedChapter} dirHandle={dirHandle} />}
                     </main>
+
+                    {/* Panel 3: Properties (optionnel, pour le futur) */}
+                    {showProperties && (
+                        <aside className="w-80 bg-gray-50 border-l border-gray-200 flex-shrink-0 animate-slide-in-right overflow-y-auto">
+                            <div className="p-6">
+                                <h3 className="text-lg font-bold text-gray-900 mb-4">Propriétés</h3>
+                                <div className="space-y-4 text-sm">
+                                    <div>
+                                        <div className="text-gray-600">ID</div>
+                                        <div className="font-mono text-xs bg-gray-100 p-2 rounded mt-1">{editedChapter.id}</div>
+                                    </div>
+                                    <div>
+                                        <div className="text-gray-600">Classe</div>
+                                        <div className="font-semibold mt-1">{editedChapter.class_type.toUpperCase()}</div>
+                                    </div>
+                                    <div>
+                                        <div className="text-gray-600">Version</div>
+                                        <div className="font-mono text-xs bg-gray-100 p-2 rounded mt-1">{editedChapter.version}</div>
+                                    </div>
+                                    <div>
+                                        <div className="text-gray-600">Fichier</div>
+                                        <div className="font-mono text-xs bg-gray-100 p-2 rounded mt-1 break-all">{editedChapter.file_name}</div>
+                                    </div>
+                                    <div>
+                                        <div className="text-gray-600">Statut</div>
+                                        <div className="mt-1">
+                                            <span className={`badge ${editedChapter.is_active ? 'badge-success' : 'badge-danger'}`}>
+                                                {editedChapter.is_active ? 'Actif' : 'Inactif'}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </aside>
+                    )}
                 </div>
 
                 {/* Footer */}
-                <footer className="flex justify-between items-center px-6 py-4 border-t border-gray-200 bg-gray-50">
-                    <button 
-                        onClick={onClose} 
-                        className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border-2 border-gray-300 rounded-lg shadow-sm hover:bg-gray-50 hover:border-gray-400 transition-all"
+                <footer className="flex-shrink-0 flex justify-between items-center px-8 py-5 border-t border-gray-200 bg-gray-50">
+                    <button
+                        onClick={onClose}
+                        className="btn btn-secondary"
                     >
+                        <XCircleIcon className="w-5 h-5" />
                         Annuler
                     </button>
-                    <button 
-                        onClick={handleSave} 
-                        className="px-6 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-blue-700 rounded-lg shadow-md hover:from-blue-700 hover:to-blue-800 hover:shadow-lg transition-all"
+                    <button
+                        onClick={handleSave}
+                        className="btn btn-primary btn-lg"
                     >
+                        <SaveIcon className="w-5 h-5" />
                         Sauvegarder les Modifications
                     </button>
                 </footer>
