@@ -129,10 +129,11 @@
                 {
                   "type": "property-box",
                   "preamble": "Demi-tangentes",
-                  "listType": "bullet",
                   "content": [
+                    ">> **Demi-tangente à droite :**",
                     "Si $f$ est dérivable à droite en $x_0$, alors $(C_f)$ admet une **demi-tangente à droite** au point d'abscisse $x_0$ d'équation :",
                     "$$\\begin{cases} y = f'_d(x_0)(x - x_0) + f(x_0) \\\\ x \\geq x_0 \\end{cases}$$",
+                    ">> **Demi-tangente à gauche :**",
                     "Si $f$ est dérivable à gauche en $x_0$, alors $(C_f)$ admet une **demi-tangente à gauche** au point d'abscisse $x_0$ d'équation :",
                     "$$\\begin{cases} y = f'_g(x_0)(x - x_0) + f(x_0) \\\\ x \\leq x_0 \\end{cases}$$"
                   ]
@@ -178,20 +179,20 @@
             {
               "type": "definition-box",
               "preamble": "Fonction dérivée",
-              "listType": "bullet",
               "content": [
                 "Soit $f$ une fonction définie sur un intervalle ouvert $I$.",
+                ">> **Dérivabilité sur un intervalle :**",
                 "On dit que $f$ est **dérivable sur $I$** si $f$ est dérivable en tout point de $I$.",
+                ">> **Fonction dérivée :**",
                 "La fonction $f'$ définie sur $I$ par : $x \\mapsto f'(x)$ est appelée la **fonction dérivée** de $f$."
               ]
             },
             {
               "type": "definition-box",
               "preamble": "Dérivées d'ordre supérieur",
-              "listType": "bullet",
               "content": [
-                "Si la fonction dérivée $f'$ est dérivable sur $I$, alors sa fonction dérivée est appelée la **dérivée seconde** de $f$ et notée $f''$",
-                "De même, on définit la fonction dérivée 3ème ($f'''$) de la fonction $f$, et ainsi de suite."
+                "Si la fonction dérivée $f'$ est dérivable sur $I$, alors sa fonction dérivée est appelée la **dérivée seconde** de $f$ et notée $f''$.",
+                "De même, on définit la fonction dérivée 3ème ($f'''$), 4ème ($f^{(4)}$), etc."
               ]
             },
             {
@@ -200,6 +201,24 @@
               "content": [
                 "Toute fonction polynôme est dérivable sur $\\mathbb{R}$.",
                 "Toute fonction rationnelle est dérivable sur tout intervalle inclus dans son domaine de définition."
+              ]
+            },
+            {
+              "type": "example-box",
+              "subtitle": "Calcul de dérivées successives",
+              "content": [
+                "Soit $f(x) = x^4 - 3x^3 + 2x$ définie sur $\\mathbb{R}$. Calculons ses dérivées successives.",
+                "**Fonction dérivée première :**",
+                "$$f'(x) = 4x^3 - 9x^2 + 2$$",
+                "**Dérivée seconde :**",
+                "$$f''(x) = (f')'(x) = 12x^2 - 18x$$",
+                "**Dérivée troisième :**",
+                "$$f'''(x) = (f'')'(x) = 24x - 18$$",
+                "**Dérivée quatrième :**",
+                "$$f^{(4)}(x) = (f''')'(x) = 24$$",
+                "**Dérivée cinquième et suivantes :**",
+                "$$f^{(5)}(x) = f^{(6)}(x) = \\ldots = 0$$",
+                "On remarque que pour un polynôme de degré $n$, la dérivée d'ordre $n+1$ est nulle."
               ]
             }
           ]
@@ -309,10 +328,11 @@
             {
               "type": "property-box",
               "preamble": "Dérivée de la composée",
-              "listType": "bullet",
               "content": [
+                ">> **En un point :**",
                 "Si $f$ est dérivable en un point $a$ et $g$ en $f(a)$, alors $g \\circ f$ est dérivable en $a$ et :",
                 "$$(g \\circ f)'(a) = g'(f(a)) \\times f'(a)$$",
+                ">> **Sur un intervalle :**",
                 "Si $f$ est dérivable sur un intervalle $I$ et $g$ sur $f(I)$, alors $g \\circ f$ est dérivable sur $I$ et :",
                 "$$(\\forall x \\in I) : (g \\circ f)'(x) = g'(f(x)) \\times f'(x)$$"
               ]
@@ -336,10 +356,12 @@
               "type": "practice-box",
               "statement": "Soient $f(x) = \\displaystyle \\frac{x-1}{x+2}$ et $g(x) = \\sqrt{x}$",
               "content": [
-                "Sans calculer $f \\circ g(x)$, montrer que $f \\circ g$ est dérivable sur $]0, +\\infty[$ et calculer $(f \\circ g)'(x)$"
+                "Sans calculer $f \\circ g(x)$, montrer que $f \\circ g$ est dérivable sur $]0, +\\infty[$",
+                "Calculer $(f \\circ g)'(x)$"
               ],
               "solution": [
-                "$g$ est dérivable sur $]0, +\\infty[$ avec $g'(x) = \\frac{1}{2\\sqrt{x}}$ et $g(]0,+\\infty[) = ]0, +\\infty[$\\n\\n$f$ est dérivable sur $\\mathbb{R} \\setminus \\{-2\\}$, donc en particulier sur $]0, +\\infty[$\\n\\nOn a : $f'(x) = \\frac{(x+2) - (x-1)}{(x+2)^2} = \\frac{3}{(x+2)^2}$\\n\\nDonc $f \\circ g$ est dérivable sur $]0, +\\infty[$ et :\\n\\n$$(f \\circ g)'(x) = f'(g(x)) \\times g'(x) = \\frac{3}{(\\sqrt{x}+2)^2} \\times \\frac{1}{2\\sqrt{x}} = \\frac{3}{2\\sqrt{x}(\\sqrt{x}+2)^2}$$"
+                "$g$ est dérivable sur $]0, +\\infty[$ avec $g'(x) = \\frac{1}{2\\sqrt{x}}$ et $g(]0,+\\infty[) = ]0, +\\infty[$\\n\\n$f$ est dérivable sur $\\mathbb{R} \\setminus \\{-2\\}$, donc en particulier sur $]0, +\\infty[$\\n\\nDonc $f \\circ g$ est **dérivable sur $]0, +\\infty[$**.",
+                "On calcule d'abord : $f'(x) = \\frac{(x+2) - (x-1)}{(x+2)^2} = \\frac{3}{(x+2)^2}$\\n\\nEn appliquant la formule de dérivation des fonctions composées :\\n\\n$$(f \\circ g)'(x) = f'(g(x)) \\times g'(x) = \\frac{3}{(\\sqrt{x}+2)^2} \\times \\frac{1}{2\\sqrt{x}} = \\frac{3}{2\\sqrt{x}(\\sqrt{x}+2)^2}$$"
               ]
             }
           ]
@@ -421,7 +443,7 @@
               "statement": "Calculer la dérivée de la fonction $f$ dans chacun des cas suivants :",
               "content": [
                 "$f(x) = \\sqrt[4]{3 + \\cos^2 x}$",
-                "$f(x) = x \\cdot \\sqrt[7]{x-x}$",
+                "$f(x) = x \\cdot \\sqrt[7]{\\frac{x}{x}}$ pour $x \\neq 0$",
                 "$f(x) = \\sqrt[3]{(x^3-1)^4}$"
               ],
               "solution": [
@@ -471,6 +493,20 @@
                 "Pour $x \\in ]-2, -1[$ : $x < 0$ et $x+2 > 0$, donc $f'(x) < 0$ → $f$ décroissante",
                 "La fonction $f$ admet un **maximum** en $x = -2$ avec $f(-2) = \\frac{-2}{\\sqrt[3]{2}} = -\\sqrt[3]{4}$"
               ]
+            },
+            {
+              "type": "practice-box",
+              "statement": "Soit $h$ la fonction définie sur $\\mathbb{R}$ par : $h(x) = x^3 - 6x^2 + 9x + 1$",
+              "content": [
+                "Calculer $h'(x)$ et étudier son signe",
+                "Dresser le tableau de variations de $h$",
+                "Déterminer les extremums locaux de $h$"
+              ],
+              "solution": [
+                "$h$ est un polynôme, donc dérivable sur $\\mathbb{R}$.\\n\\n$$h'(x) = 3x^2 - 12x + 9 = 3(x^2 - 4x + 3) = 3(x-1)(x-3)$$\\n\\n**Signe de $h'(x)$ :**\\n\\n• Pour $x < 1$ : $h'(x) > 0$\\n• Pour $1 < x < 3$ : $h'(x) < 0$\\n• Pour $x > 3$ : $h'(x) > 0$",
+                "**Tableau de variations :**\\n\\n• Sur $]-\\infty, 1]$, $h'(x) \\geq 0$ → $h$ est **croissante**\\n• Sur $[1, 3]$, $h'(x) \\leq 0$ → $h$ est **décroissante**\\n• Sur $[3, +\\infty[$, $h'(x) \\geq 0$ → $h$ est **croissante**\\n\\nOn calcule :\\n• $h(1) = 1 - 6 + 9 + 1 = 5$\\n• $h(3) = 27 - 54 + 27 + 1 = 1$",
+                "La fonction $h$ admet :\\n\\n• Un **maximum local** en $x = 1$ avec $h(1) = 5$\\n• Un **minimum local** en $x = 3$ avec $h(3) = 1$"
+              ]
             }
           ]
         },
@@ -508,6 +544,23 @@
                 "La fonction $f$ admet :",
                 "• Un **maximum local** en $x = -1$ avec $f(-1) = ___-1___$",
                 "• Un **minimum local** en $x = 0$ avec $f(0) = ___1___$"
+              ]
+            },
+            {
+              "type": "example-box",
+              "subtitle": "Point d'inflexion à tangente horizontale",
+              "content": [
+                "Soit $f(x) = x^3$ définie sur $\\mathbb{R}$. Étudions le point où $f'(x) = 0$.",
+                "**Calcul de la dérivée :**",
+                "$$f'(x) = 3x^2$$",
+                "$f'(x) = 0 \\Leftrightarrow x = 0$",
+                "**Étude du signe de $f'(x)$ :**",
+                "Pour tout $x \\in \\mathbb{R}$, on a $f'(x) = 3x^2 \\geq 0$",
+                "La dérivée est **toujours positive ou nulle**, donc $f'$ ne change **pas de signe** en 0.",
+                "**Conclusion :**",
+                "Bien que $f'(0) = 0$, la fonction $f$ **n'admet pas d'extremum** en $x = 0$.",
+                "Le point $A(0, 0)$ est un **point d'inflexion à tangente horizontale** (la tangente au point $A$ a pour équation $y = 0$).",
+                "La fonction $f$ est **strictement croissante** sur $\\mathbb{R}$ car $f'(x) \\geq 0$ et $f'$ ne s'annule qu'en un point isolé."
               ]
             },
             {
@@ -577,6 +630,18 @@
                 "Donc $g(-x) = 4 - g(x)$ ✓",
                 "Le point $I(0, 2)$ est bien un centre de symétrie de $(C_g)$."
               ]
+            },
+            {
+              "type": "practice-box",
+              "statement": "Soit $f$ la fonction définie sur $\\mathbb{R}$ par : $f(x) = \\displaystyle \\frac{x}{x^2+1}$",
+              "content": [
+                "Montrer que la courbe $(C_f)$ admet l'origine du repère comme centre de symétrie",
+                "En déduire qu'il suffit d'étudier $f$ sur $[0, +\\infty[$ pour tracer $(C_f)$"
+              ],
+              "solution": [
+                "**Vérification :**\\n\\n1. Le domaine de définition est $D_f = \\mathbb{R}$, donc pour tout $x \\in D_f$, on a $-x \\in D_f$ ✓\\n\\n2. Calculons $f(-x)$ :\\n\\n$$f(-x) = \\frac{-x}{(-x)^2+1} = \\frac{-x}{x^2+1} = -\\frac{x}{x^2+1} = -f(x)$$\\n\\nDonc $f(-x) + f(x) = 0$, ce qui équivaut à $f(-x) = -f(x)$\\n\\n**Conclusion :** La fonction $f$ est **impaire**, donc $(C_f)$ admet **l'origine $O(0,0)$ comme centre de symétrie**.",
+                "Puisque $(C_f)$ admet $O$ comme centre de symétrie, il suffit d'étudier $f$ sur $[0, +\\infty[$.\\n\\nLa partie de la courbe sur $]-\\infty, 0]$ s'obtient par **symétrie centrale** par rapport à l'origine."
+              ]
             }
           ]
         },
@@ -595,11 +660,12 @@
             },
             {
               "type": "remark-box",
+              "preamble": "Interprétation graphique",
+              "listType": "bullet",
               "content": [
-                "**Interprétation graphique :**",
-                "• Une courbe **convexe** est \"tournée vers le haut\" (comme un U).",
-                "• Une courbe **concave** est \"tournée vers le bas\" (comme un ∩).",
-                "• À un **point d'inflexion**, la courbe **traverse sa tangente**."
+                "Une courbe **convexe** est \"tournée vers le haut\" (comme un U)",
+                "Une courbe **concave** est \"tournée vers le bas\" (comme un ∩)",
+                "À un **point d'inflexion**, la courbe **traverse sa tangente**"
               ]
             },
             {
@@ -619,6 +685,20 @@
                 "• Sur $]0, \\sqrt{3}[$, $f''(x) < 0$ → $(C_f)$ est **concave**",
                 "• Sur $]\\sqrt{3}, +\\infty[$, $f''(x) > 0$ → $(C_f)$ est **convexe**",
                 "**Points d'inflexion :** $I_1(-\\sqrt{3}, f(-\\sqrt{3}))$, $I_2(0, 0)$, $I_3(\\sqrt{3}, f(\\sqrt{3}))$"
+              ]
+            },
+            {
+              "type": "practice-box",
+              "statement": "Soit $f$ la fonction définie sur $\\mathbb{R}$ par : $f(x) = x^4 - 2x^3 + 1$",
+              "content": [
+                "Calculer $f''(x)$ et étudier son signe",
+                "Étudier la concavité de $(C_f)$",
+                "Déterminer les points d'inflexion de $(C_f)$"
+              ],
+              "solution": [
+                "$f$ est un polynôme, donc deux fois dérivable sur $\\mathbb{R}$.\\n\\n$$f'(x) = 4x^3 - 6x^2$$\\n\\n$$f''(x) = 12x^2 - 12x = 12x(x-1)$$\\n\\n**Signe de $f''(x)$ :**\\n\\n• Pour $x < 0$ : $f''(x) > 0$\\n• Pour $0 < x < 1$ : $f''(x) < 0$\\n• Pour $x > 1$ : $f''(x) > 0$",
+                "**Concavité de $(C_f)$ :**\\n\\n• Sur $]-\\infty, 0[$, $f''(x) > 0$ → $(C_f)$ est **convexe**\\n• Sur $]0, 1[$, $f''(x) < 0$ → $(C_f)$ est **concave**\\n• Sur $]1, +\\infty[$, $f''(x) > 0$ → $(C_f)$ est **convexe**",
+                "**Points d'inflexion :**\\n\\n$f''$ s'annule et change de signe en $x = 0$ et $x = 1$.\\n\\nOn calcule :\\n• $f(0) = 0^4 - 2(0)^3 + 1 = 1$\\n• $f(1) = 1 - 2 + 1 = 0$\\n\\n**Réponse :** Les points d'inflexion sont $I_1(0, 1)$ et $I_2(1, 0)$."
               ]
             }
           ]
@@ -655,6 +735,20 @@
                 "1. Calculer $\\displaystyle \\lim_{x \\to \\pm\\infty} \\frac{f(x)}{x} = a$",
                 "2. Si $a$ est un réel fini non nul, calculer $\\displaystyle \\lim_{x \\to \\pm\\infty} [f(x) - ax] = b$",
                 "3. Si $b$ est un réel fini, alors $y = ax + b$ est une asymptote oblique"
+              ]
+            },
+            {
+              "type": "practice-box",
+              "statement": "Soit $f$ la fonction définie sur $\\mathbb{R}^*$ par : $f(x) = 2x + \\displaystyle \\frac{1}{x} - 3$",
+              "content": [
+                "Déterminer les limites de $f$ aux bornes de son domaine de définition",
+                "Déterminer les asymptotes de $(C_f)$",
+                "Étudier la position relative de $(C_f)$ par rapport à son asymptote oblique"
+              ],
+              "solution": [
+                "**Limites :**\\n\\n$$\\lim_{x \\to 0^-} f(x) = \\lim_{x \\to 0^-} \\left(2x + \\frac{1}{x} - 3\\right) = -\\infty$$\\n\\n$$\\lim_{x \\to 0^+} f(x) = \\lim_{x \\to 0^+} \\left(2x + \\frac{1}{x} - 3\\right) = +\\infty$$\\n\\n$$\\lim_{x \\to -\\infty} f(x) = -\\infty \\text{ et } \\lim_{x \\to +\\infty} f(x) = +\\infty$$",
+                "**Asymptotes :**\\n\\n• **Asymptote verticale :** La droite $x = 0$ (axe des ordonnées) est une asymptote verticale car $\\lim_{x \\to 0^\\pm} f(x) = \\pm\\infty$\\n\\n• **Asymptote oblique :** Calculons $\\displaystyle \\lim_{x \\to \\pm\\infty} [f(x) - (2x-3)]$ :\\n\\n$$\\lim_{x \\to \\pm\\infty} \\left[2x + \\frac{1}{x} - 3 - (2x-3)\\right] = \\lim_{x \\to \\pm\\infty} \\frac{1}{x} = 0$$\\n\\nDonc la droite $(\\Delta): y = 2x - 3$ est une **asymptote oblique** au voisinage de $\\pm\\infty$.",
+                "**Position relative :**\\n\\nÉtudions le signe de $f(x) - (2x-3)$ :\\n\\n$$f(x) - (2x-3) = \\frac{1}{x}$$\\n\\n• Pour $x < 0$ : $\\frac{1}{x} < 0$, donc $(C_f)$ est **en dessous** de $(\\Delta)$\\n• Pour $x > 0$ : $\\frac{1}{x} > 0$, donc $(C_f)$ est **au-dessus** de $(\\Delta)$"
               ]
             }
           ]
