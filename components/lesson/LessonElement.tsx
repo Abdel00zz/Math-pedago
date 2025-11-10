@@ -141,10 +141,10 @@ const InfoBox: React.FC<{ element: ElementType; showAnswers?: boolean }> = ({ el
     const infoElement = element as LessonInfoBoxElement;
     const config = BOX_CONFIG[infoElement.type as keyof typeof BOX_CONFIG];
     const { getNextNumber } = useNumbering();
-    
+
     // Obtenir le numéro pour cette box AVANT le check de config
     const boxNumber = useMemo(() => getNextNumber(infoElement.type as keyof typeof BOX_CONFIG), [infoElement.type, getNextNumber]);
-    
+
     if (!config) return null;
 
     const wantsNumbering = infoElement.listType === 'number' || infoElement.listType === 'numbered';
@@ -152,6 +152,14 @@ const InfoBox: React.FC<{ element: ElementType; showAnswers?: boolean }> = ({ el
 
     // Pour les exemples, showAnswers est toujours false (les solutions sont dans les ___blanks___)
     const effectiveShowAnswers = false;
+
+    // Nettoyer le preamble : retirer les ":" à la fin et espaces inutiles
+    const cleanPreamble = infoElement.preamble ? infoElement.preamble.trim().replace(/:+\s*$/, '').trim() : '';
+
+    // Pour les remarques, ne pas afficher le titre s'il est vide après nettoyage
+    const isRemark = infoElement.type === 'remark-box';
+    const shouldShowTitle = cleanPreamble.length > 0 && !(isRemark && cleanPreamble === '');
+
     const boxStyle = {
         '--lesson-accent': config.accent,
         '--lesson-accent-soft': config.accentSoft,
@@ -172,9 +180,9 @@ const InfoBox: React.FC<{ element: ElementType; showAnswers?: boolean }> = ({ el
                 <header className="lesson-inline__header">
                     <div className="lesson-inline__header-left">
                         <span className="lesson-inline__badge">{config.label}</span>
-                        {infoElement.preamble && (
+                        {shouldShowTitle && (
                             <div className="lesson-inline__title">
-                                {parseContent(infoElement.preamble, false, effectiveShowAnswers)}
+                                {parseContent(cleanPreamble, false, effectiveShowAnswers)}
                             </div>
                         )}
                     </div>
@@ -196,9 +204,9 @@ const InfoBox: React.FC<{ element: ElementType; showAnswers?: boolean }> = ({ el
                 <header className="lesson-box__header">
                     <div className="lesson-box__header-left">
                         <span className="lesson-box__badge">{config.label} {boxNumber}</span>
-                        {infoElement.preamble && (
+                        {shouldShowTitle && (
                             <div className="lesson-box__title">
-                                {parseContent(infoElement.preamble, false, effectiveShowAnswers)}
+                                {parseContent(cleanPreamble, false, effectiveShowAnswers)}
                             </div>
                         )}
                     </div>
