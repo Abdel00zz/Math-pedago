@@ -88,7 +88,10 @@ const DashboardView: React.FC = () => {
     const categorizedActivities = useMemo((): CategorizedActivities => {
         if (!profile) return { inProgress: [], completed: [], upcoming: [] };
 
-        const allUserActivities = chapterOrder
+        // Dédupliquer chapterOrder pour éviter les cartes en double
+        const uniqueChapterOrder = Array.from(new Set(chapterOrder));
+
+        const allUserActivities = uniqueChapterOrder
             .map(id => activities[id])
             .filter(Boolean);
 
