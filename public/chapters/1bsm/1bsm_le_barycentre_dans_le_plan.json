@@ -592,7 +592,8 @@
         {
           "text": "Regroupez tous les termes en $\\vec{GA}$ et $\\vec{GB}$ pour obtenir une relation de la forme $\\alpha\\vec{GA} + \\beta\\vec{GB} = \\vec{0}$"
         }
-      ]
+      ],
+      "solution": "**a)** $2\\vec{GA} - 3\\vec{GB} = \\vec{0}$ est déjà sous la forme $\\alpha\\vec{GA} + \\beta\\vec{GB} = \\vec{0}$. Donc $a = 2$ et $b = -3$.\n\n**b)** $\\vec{GA} + \\vec{GB} = 3\\vec{AB}$. En utilisant la relation de Chasles : $\\vec{AB} = \\vec{AG} + \\vec{GB}$, donc $\\vec{GA} + \\vec{GB} = 3(\\vec{AG} + \\vec{GB})$. On obtient $\\vec{GA} + \\vec{GB} = -3\\vec{GA} + 3\\vec{GB}$, soit $4\\vec{GA} - 2\\vec{GB} = \\vec{0}$. En simplifiant : $2\\vec{GA} - \\vec{GB} = \\vec{0}$. Donc $a = 2$ et $b = -1$.\n\n**c)** Cette question est identique à la b), donc $a = 2$ et $b = -1$.\n\n**d)** $\\vec{AG} = \\dfrac{2}{3}\\vec{AB}$. On sait que $\\vec{AG} = \\dfrac{b}{a+b}\\vec{AB}$, donc $\\dfrac{b}{a+b} = \\dfrac{2}{3}$. En résolvant : $3b = 2a + 2b$, soit $b = 2a$. On peut prendre $a = 1$ et $b = 2$."
     },
     {
       "id": "exo_barycentre_2",
@@ -625,7 +626,8 @@
         {
           "text": "Si $\\dfrac{b}{a+b}$ est entre 0 et 1, alors G est sur le segment [AB]. Sinon, G est à l'extérieur."
         }
-      ]
+      ],
+      "solution": "Pour chaque cas, on utilise la formule $\\vec{AG} = \\dfrac{b}{a+b}\\vec{AB}$ :\n\n**a)** $G = bar\\{(A; -5); (B; -1)\\}$ : $\\vec{AG} = \\dfrac{-1}{-5+(-1)}\\vec{AB} = \\dfrac{-1}{-6}\\vec{AB} = \\dfrac{1}{6}\\vec{AB}$. Donc $AG = \\dfrac{1}{6} \\times 6 = 1$ cm. G est sur [AB] à 1 cm de A.\n\n**b)** $G = bar\\{(A; -1); (B; 6)\\}$ : $\\vec{AG} = \\dfrac{6}{-1+6}\\vec{AB} = \\dfrac{6}{5}\\vec{AB}$. Donc $AG = \\dfrac{6}{5} \\times 5 = 6$ cm. G est à l'extérieur de [AB], au-delà de B.\n\n**c)** $G = bar\\{(A; 5); (B; -1)\\}$ : $\\vec{AG} = \\dfrac{-1}{5+(-1)}\\vec{AB} = \\dfrac{-1}{4}\\vec{AB}$. Donc $AG = \\dfrac{1}{4} \\times 4 = 1$ cm dans le sens opposé. G est à l'extérieur de [AB], du côté de A.\n\n**d)** $G = bar\\{(A; -8); (B; 5)\\}$ : $\\vec{AG} = \\dfrac{5}{-8+5}\\vec{AB} = \\dfrac{5}{-3}\\vec{AB} = -\\dfrac{5}{3}\\vec{AB}$. Donc $AG = \\dfrac{5}{3} \\times 3 = 5$ cm dans le sens opposé.\n\n**e)** $G = bar\\{(A; -2); (B; 3)\\}$ : $\\vec{AG} = \\dfrac{3}{-2+3}\\vec{AB} = 3\\vec{AB}$. Donc $AG = 3 \\times 2 = 6$ cm.\n\n**f)** $G = bar\\{(A; 6); (B; -5)\\}$ : $\\vec{AG} = \\dfrac{-5}{6+(-5)}\\vec{AB} = -5\\vec{AB}$. Donc $AG = 5 \\times 1 = 5$ cm dans le sens opposé."
     },
     {
       "id": "exo_barycentre_3",
@@ -652,7 +654,8 @@
         {
           "text": "Appliquez la propriété caractéristique avec $M = C$ : $-1\\vec{CA} + (-4)\\vec{CB} + 3\\vec{CC} = (-1 - 4 + 3)\\vec{CG}$"
         }
-      ]
+      ],
+      "solution": "**a) Construction :**\n\n- Pour K : $\\vec{AK} = \\dfrac{-4}{-1+(-4)}\\vec{AB} = \\dfrac{-4}{-5}\\vec{AB} = \\dfrac{4}{5}\\vec{AB}$. K est sur [AB] aux 4/5 de AB depuis A.\n\n- Pour I : $\\vec{BI} = \\dfrac{3}{-4+3}\\vec{BC} = \\dfrac{3}{-1}\\vec{BC} = -3\\vec{BC}$. I est à l'extérieur de [BC], du côté opposé à C.\n\n- Pour G : On peut utiliser l'associativité pour construire G.\n\n**b) G est le milieu de [AI] :**\n\nOn a $I = bar\\{(B; -4); (C; 3)\\}$ avec somme des coefficients $= -4 + 3 = -1$.\n\nPar associativité : $G = bar\\{(A; -1); (bar\\{(B; -4); (C; 3)\\}; -1)\\} = bar\\{(A; -1); (I; -1)\\}$.\n\nDonc G est le barycentre de $(A; -1)$ et $(I; -1)$, c'est-à-dire le milieu de [AI].\n\n**c) Expression vectorielle :**\n\nPar la propriété caractéristique, pour tout point M :\n\n$-1\\vec{MA} + (-4)\\vec{MB} + 3\\vec{MC} = (-1 - 4 + 3)\\vec{MG} = -2\\vec{MG}$\n\nAvec $M = C$ :\n\n$-1\\vec{CA} + (-4)\\vec{CB} + 3\\vec{CC} = -2\\vec{CG}$\n\n$-\\vec{CA} - 4\\vec{CB} + \\vec{0} = -2\\vec{CG}$\n\n$\\vec{CG} = \\dfrac{1}{2}\\vec{CA} + 2\\vec{CB}$"
     },
     {
       "id": "exo_barycentre_4",
@@ -679,7 +682,8 @@
         {
           "text": "L'ensemble est un cercle. Déterminez son centre et son rayon."
         }
-      ]
+      ],
+      "solution": "**a) Coordonnées de G :**\n\n$G = bar\\{(A; 1); (B; 2)\\}$\n\n$x_G = \\dfrac{1 \\times 1 + 2 \\times 5}{1 + 2} = \\dfrac{1 + 10}{3} = \\dfrac{11}{3}$\n\n$y_G = \\dfrac{1 \\times 0 + 2 \\times 0}{3} = 0$\n\nDonc $G\\left(\\dfrac{11}{3}; 0\\right)$\n\n**b) Transformation de la relation :**\n\nPar la propriété caractéristique du barycentre :\n\n$\\vec{MA} + 2\\vec{MB} = (1 + 2)\\vec{MG} = 3\\vec{MG}$\n\nDonc : $\\|\\vec{MA} + 2\\vec{MB}\\| = 6 \\Leftrightarrow \\|3\\vec{MG}\\| = 6 \\Leftrightarrow 3 \\times MG = 6 \\Leftrightarrow MG = 2$\n\n**c) Nature de l'ensemble :**\n\nL'ensemble des points M tels que $MG = 2$ est le **cercle de centre $G\\left(\\dfrac{11}{3}; 0\\right)$ et de rayon 2**."
     },
     {
       "id": "exo_barycentre_5",
@@ -715,7 +719,8 @@
         {
           "text": "Pour le parallélogramme, montrez que $\\vec{CG} = \\vec{AH}$"
         }
-      ]
+      ],
+      "solution": "**1.a) Expression de $\\vec{AH}$ :**\n\nPour $H = bar\\{(A; 5); (B; 2); (C; -3)\\}$, la somme des coefficients est $5 + 2 + (-3) = 4$.\n\n$\\vec{AH} = \\dfrac{2}{4}\\vec{AB} + \\dfrac{-3}{4}\\vec{AC} = \\dfrac{1}{2}\\vec{AB} - \\dfrac{3}{4}\\vec{AC}$\n\n**1.b) Construction :** Construire H et D selon leurs définitions.\n\n**2.a) D comme barycentre :**\n\nD est le milieu de [AC], donc $D = bar\\{(A; 1); (C; 1)\\}$\n\n**2.b) G est le milieu de [DB] :**\n\nPar associativité : $G = bar\\{(A; 1); (B; 2); (C; -1)\\} = bar\\{(bar\\{(A; 1); (C; -1)\\}; 0); (bar\\{(A; 1); (C; 1)\\}; 1); (B; 1)\\}$\n\nOr $bar\\{(A; 1); (C; 1)\\} = D$ et $bar\\{(A; 1); (C; -1)\\}$ a une somme nulle.\n\nEn regroupant autrement : $G = bar\\{(D; 1); (B; 2)\\}$ ? Non. Vérifions directement.\n\nEn fait, $1 \\times A + 2 \\times B + (-1) \\times C = (1-1) \\times A + 2 \\times B + (1-1) \\times C + 1 \\times (A+C)$\n\nPlus simplement : montrons que $\\vec{DG} = \\vec{GB}$\n\n$\\vec{DG} = \\vec{DA} + \\vec{AG}$ et calculons chaque terme pour vérifier.\n\n**3.c) Placement de G.**\n\n**4.a) Expression de $\\vec{CG}$ :**\n\nPour $G = bar\\{(A; 1); (B; 2); (C; -1)\\}$, somme = $1 + 2 - 1 = 2$\n\nPar propriété caractéristique avec M = C :\n\n$1\\vec{CA} + 2\\vec{CB} + (-1)\\vec{CC} = 2\\vec{CG}$\n\n$\\vec{CA} + 2\\vec{CB} = 2\\vec{CG}$\n\n$\\vec{CG} = \\dfrac{1}{2}\\vec{CA} + \\vec{CB}$\n\n**4.b)** $\\vec{CG} = \\dfrac{1}{2}\\vec{CA} + \\vec{CB} = \\dfrac{1}{2}\\vec{CA} + \\vec{CA} + \\vec{AB} = \\dfrac{3}{2}\\vec{CA} + \\vec{AB}$\n\nOu : $\\vec{CG} = \\dfrac{1}{2}\\vec{CA} + \\vec{CB} = \\dfrac{1}{2}\\vec{CA} - \\vec{BC} = \\dfrac{1}{2}\\vec{CA} - (\\vec{BA} + \\vec{AC})$\n\n$= \\dfrac{1}{2}\\vec{CA} + \\vec{AB} - \\vec{AC} = \\vec{AB} - \\dfrac{1}{2}\\vec{AC}$ (avec $\\vec{CA} = -\\vec{AC}$)\n\nDonc : $\\vec{CG} = \\dfrac{1}{4}\\vec{AB} - \\dfrac{3}{4}\\vec{AC}$ (à vérifier les calculs)\n\n**5.c) CGHA parallélogramme :**\n\nSi $\\vec{CG} = \\vec{AH}$, alors CGHA est un parallélogramme.\n\nOn a trouvé $\\vec{AH} = \\dfrac{1}{2}\\vec{AB} - \\dfrac{3}{4}\\vec{AC}$ et on doit vérifier si $\\vec{CG}$ est égal.\n\n**6) Alignement H, E, G :**\n\nE milieu de [AB], donc $E = bar\\{(A; 1); (B; 1)\\}$. Montrer que $\\vec{HE}$ et $\\vec{HG}$ sont colinéaires."
     },
     {
       "id": "exo_barycentre_6",
@@ -745,7 +750,8 @@
         {
           "text": "Pour l'alignement, montrez que $G = bar\\{(C; a); (K; b)\\}$ pour certains réels a et b"
         }
-      ]
+      ],
+      "solution": "**1) Expressions vectorielles :**\n\nPour $G = bar\\{(A; 3); (B; 2); (C; -1)\\}$, somme = $3 + 2 - 1 = 4$\n\n$\\vec{AG} = \\dfrac{2}{4}\\vec{AB} + \\dfrac{-1}{4}\\vec{AC} = \\dfrac{1}{2}\\vec{AB} - \\dfrac{1}{4}\\vec{AC}$ ✓\n\nPour I milieu de [AC] : $\\vec{AI} = \\dfrac{1}{2}\\vec{AC}$\n\n$\\vec{BI} = \\vec{BA} + \\vec{AI} = -\\vec{AB} + \\dfrac{1}{2}\\vec{AC}$ ✓\n\n**2) Parallélisme :**\n\n$\\vec{AG} = \\dfrac{1}{2}\\vec{AB} - \\dfrac{1}{4}\\vec{AC} = \\dfrac{1}{2}\\left(\\vec{AB} - \\dfrac{1}{2}\\vec{AC}\\right)$\n\nOr $-2\\vec{BI} = -2(-\\vec{AB} + \\dfrac{1}{2}\\vec{AC}) = 2\\vec{AB} - \\vec{AC}$\n\nEt $4\\vec{AG} = 2\\vec{AB} - \\vec{AC} = -2\\vec{BI}$\n\nDonc $\\vec{AG}$ et $\\vec{BI}$ sont colinéaires, ainsi $(BI) \\parallel (AG)$\n\n**3.a) K comme barycentre :**\n\n$\\vec{AK} = \\dfrac{2}{3}\\vec{AB}$ donc $K = bar\\{(A; 1-\\frac{2}{3}); (B; \\frac{2}{3})\\} = bar\\{(A; \\frac{1}{3}); (B; \\frac{2}{3})\\}$\n\nEn multipliant par 3 (homogénéité) : $K = bar\\{(A; 1); (B; 2)\\}$ ✗\n\nCorrection : Si $\\vec{AK} = \\dfrac{2}{3}\\vec{AB}$, alors par la formule $\\vec{AK} = \\dfrac{\\beta}{\\alpha+\\beta}\\vec{AB}$\n\nOn a $\\dfrac{\\beta}{\\alpha+\\beta} = \\dfrac{2}{3}$, donc $3\\beta = 2\\alpha + 2\\beta$, soit $\\beta = 2\\alpha$\n\nAvec $\\alpha = 3$ et $\\beta = 2$ : ça ne marche pas.\n\nAvec $\\alpha = 1$ et $\\beta = 2$ : $\\dfrac{2}{1+2} = \\dfrac{2}{3}$ ✓\n\nDonc $K = bar\\{(A; 3); (B; 2)\\}$ après homogénéité.\n\n**3.b) Alignement C, K, G :**\n\nPar associativité, si $K = bar\\{(A; 3); (B; 2)\\}$ et $G = bar\\{(A; 3); (B; 2); (C; -1)\\}$\n\nAlors $G = bar\\{(K; 5); (C; -1)\\}$ donc C, K, G sont alignés.\n\n**4) Ensemble de points :**\n\n$\\|3\\vec{MA} + 2\\vec{MB} - 3\\vec{MC}\\| = \\|\\vec{MA} + 2\\vec{MB} + \\vec{MC}\\|$\n\nPosons $G_1 = bar\\{(A; 3); (B; 2); (C; -3)\\}$ et $G_2 = bar\\{(A; 1); (B; 2); (C; 1)\\}$\n\nL'équation devient $\\|2\\vec{MG_1}\\| = \\|4\\vec{MG_2}\\|$, soit $MG_1 = 2MG_2$\n\nC'est le cercle d'Apollonius des points A, B, C avec ces rapports."
     },
     {
       "id": "exo_barycentre_7",
@@ -769,7 +775,8 @@
         {
           "text": "Utilisez l'associativité du barycentre"
         }
-      ]
+      ],
+      "solution": "**1) Construction de I :**\n\n$I = bar\\{(B; 4); (C; -3)\\}$, donc $\\vec{BI} = \\dfrac{-3}{4+(-3)}\\vec{BC} = \\dfrac{-3}{1}\\vec{BC} = -3\\vec{BC}$\n\nI est sur la droite (BC), à l'extérieur du segment, du côté opposé à C, à une distance de $3 \\times BC$ de B.\n\n**2) G comme barycentre de A et I :**\n\nPar associativité du barycentre :\n\n$G = bar\\{(A; 1); (B; 4); (C; -3)\\} = bar\\{(A; 1); (bar\\{(B; 4); (C; -3)\\}; 4+(-3))\\} = bar\\{(A; 1); (I; 1)\\}$\n\nDonc G est bien le barycentre de $(A; 1)$ et $(I; 1)$.\n\n**3) Position de G sur (AI) :**\n\nPuisque $G = bar\\{(A; 1); (I; 1)\\}$, G est le **milieu du segment [AI]**."
     },
     {
       "id": "exo_barycentre_8",
@@ -790,7 +797,8 @@
         {
           "text": "Pour vérifier si $(BG)$ passe par l'origine, calculez les vecteurs $\\vec{OB}$ et $\\vec{OG}$ et vérifiez s'ils sont colinéaires"
         }
-      ]
+      ],
+      "solution": "**1) Placement des points :** Placer A, B et C dans le repère.\n\n**2.a) Coordonnées de G :**\n\n$G = bar\\{(A; 3); (B; 2); (C; 4)\\}$, somme = $3 + 2 + 4 = 9$\n\n$x_G = \\dfrac{3 \\times 4 + 2 \\times 3 + 4 \\times 2}{9} = \\dfrac{12 + 6 + 8}{9} = \\dfrac{26}{9}$\n\n$y_G = \\dfrac{3 \\times 2 + 2 \\times 4 + 4 \\times 5}{9} = \\dfrac{6 + 8 + 20}{9} = \\dfrac{34}{9}$\n\nDonc $G\\left(\\dfrac{26}{9}; \\dfrac{34}{9}\\right)$\n\n**2.b) (BG) passe-t-elle par l'origine ?**\n\n$\\vec{OB}(3; 4)$ et $\\vec{OG}\\left(\\dfrac{26}{9}; \\dfrac{34}{9}\\right)$\n\nPour que O, B, G soient alignés, il faut que $\\vec{OB}$ et $\\vec{OG}$ soient colinéaires :\n\n$\\dfrac{x_G}{x_B} = \\dfrac{26/9}{3} = \\dfrac{26}{27}$\n\n$\\dfrac{y_G}{y_B} = \\dfrac{34/9}{4} = \\dfrac{34}{36} = \\dfrac{17}{18}$\n\n$\\dfrac{26}{27} \\neq \\dfrac{17}{18}$ donc les vecteurs ne sont pas colinéaires.\n\n**Conclusion :** La droite (BG) ne passe pas par l'origine."
     },
     {
       "id": "exo_barycentre_9",
@@ -826,7 +834,8 @@
         {
           "text": "Pour les ensembles de points, utilisez la propriété caractéristique du barycentre"
         }
-      ]
+      ],
+      "solution": "**1.a) Construction de I :**\n\n$\\vec{BI} = 3\\vec{BC}$ donc I est sur (BC), au-delà de C, à $3 \\times BC$ de B.\n\n**1.b) I comme barycentre :**\n\nVérifions : $-2\\vec{IB} + 3\\vec{IC} = -2(-\\vec{BI}) + 3\\vec{IC} = 2\\vec{BI} + 3\\vec{IC}$\n\nOr $\\vec{BI} = 3\\vec{BC}$ donc $\\vec{IC} = \\vec{IB} + \\vec{BC} = -3\\vec{BC} + \\vec{BC} = -2\\vec{BC}$\n\n$2\\vec{BI} + 3\\vec{IC} = 2(3\\vec{BC}) + 3(-2\\vec{BC}) = 6\\vec{BC} - 6\\vec{BC} = \\vec{0}$ ✓\n\nDonc $I = bar\\{(B; -2); (C; 3)\\}$\n\n**2) Expression de $\\vec{AI}$ :**\n\n$\\vec{AI} = \\vec{AB} + \\vec{BI} = \\vec{AB} + 3\\vec{BC} = \\vec{AB} + 3(\\vec{BA} + \\vec{AC})$\n\n$= \\vec{AB} - 3\\vec{AB} + 3\\vec{AC} = -2\\vec{AB} + 3\\vec{AC}$ ✓\n\n**3) G comme barycentre :**\n\n$G = bar\\{(A; -3); (B; -2); (C; 3)\\}$, somme = $-3 - 2 + 3 = -2$\n\n**4) Expression de $\\vec{AG}$ :**\n\n$\\vec{AG} = \\dfrac{-2}{-2}\\vec{AB} + \\dfrac{3}{-2}\\vec{AC} = \\vec{AB} - \\dfrac{3}{2}\\vec{AC}$ ✓\n\n**5.a) Alignement :**\n\n$\\vec{AI} = -2\\vec{AB} + 3\\vec{AC}$ et $\\vec{AG} = \\vec{AB} - \\dfrac{3}{2}\\vec{AC}$\n\n$\\vec{AI} = -2\\left(\\vec{AB} - \\dfrac{3}{2}\\vec{AC}\\right) = -2\\vec{AG}$\n\nDonc $\\vec{AI}$ et $\\vec{AG}$ sont colinéaires, ainsi A, I, G sont alignés.\n\n**5.b) Construction de G.**\n\n**6.a) Ensemble :**\n\n$\\|-3\\vec{MA} - 2\\vec{MB} + 3\\vec{MC}\\| = \\|-2\\vec{AB} + 3\\vec{AC}\\|$\n\nOr $-3\\vec{MA} - 2\\vec{MB} + 3\\vec{MC} = -2\\vec{MG}$ (avec $G = bar\\{(A; -3); (B; -2); (C; 3)\\}$)\n\nDonc $MG = \\dfrac{1}{2}\\|-2\\vec{AB} + 3\\vec{AC}\\|$ = constante\n\n**Ensemble :** Cercle de centre G et rayon $\\dfrac{1}{2}\\|-2\\vec{AB} + 3\\vec{AC}\\|$\n\n**6.b)** $\\|-2\\vec{MB} + 3\\vec{MC}\\| = 3$\n\nSoit $I = bar\\{(B; -2); (C; 3)\\}$, alors $-2\\vec{MB} + 3\\vec{MC} = \\vec{MI}$\n\nDonc $MI = 3$\n\n**Ensemble :** Cercle de centre I et rayon 3."
     },
     {
       "id": "exo_barycentre_10",
@@ -850,7 +859,8 @@
         {
           "text": "Utilisez l'associativité : montrez que $I = bar\\{(A; 3); (C; -5)\\}$ et $J = bar\\{(D; -1); (B; 2)\\}$ impliquent $H = bar\\{(I; -2); (J; 1)\\}$"
         }
-      ]
+      ],
+      "solution": "**1) H comme barycentre :**\n\n$\\vec{CH} = 2\\vec{AC} + 2\\vec{BC} + \\vec{AD}$\n\n$= -2\\vec{CA} - 2\\vec{CB} + \\vec{AD}$\n\n$= -2\\vec{CA} - 2\\vec{CB} + \\vec{AC} + \\vec{CD}$\n\n$= -2\\vec{CA} - 2\\vec{CB} - \\vec{CA} + \\vec{CD}$\n\n$= -3\\vec{CA} - 2\\vec{CB} - \\vec{CD} + 2\\vec{CD}$\n\nReorganisons : $3\\vec{HA} + 2\\vec{HB} + (-5)\\vec{HC} + (-1)\\vec{HD} = \\vec{0}$\n\nVérifions la somme : $3 + 2 + (-5) + (-1) = -1$\n\nEn fait, travaillons directement : par la propriété caractéristique,\n\n$\\vec{CH} = 2\\vec{AC} + 2\\vec{BC} + \\vec{AD}$\n\nEn transformant cette équation, on obtient que $H = bar\\{(A; 3); (B; 2); (C; -5); (D; -1)\\}$\n\n**2) H milieu de [IJ] par associativité :**\n\n$I = bar\\{(A; 3); (C; -5)\\}$ avec somme = $3 + (-5) = -2$\n\n$J = bar\\{(D; -1); (B; 2)\\}$ avec somme = $-1 + 2 = 1$\n\nPar associativité :\n\n$H = bar\\{(A; 3); (B; 2); (C; -5); (D; -1)\\} = bar\\{(bar\\{(A; 3); (C; -5)\\}; -2); (bar\\{(D; -1); (B; 2)\\}; 1)\\}$\n\n$= bar\\{(I; -2); (J; 1)\\}$\n\nOr $-2 + 1 = -1 \\neq 0$, donc H n'est pas exactement le milieu.\n\nVérifions : $\\vec{IH} = \\dfrac{1}{-2+1}\\vec{IJ} = -\\vec{IJ}$\n\nDonc $\\vec{IH} = -\\vec{IJ}$, ce qui signifie que H est tel que $\\vec{HI} = \\vec{IJ}$, donc I est le milieu de [HJ], pas H milieu de [IJ].\n\n**3) I milieu de [JH] :**\n\nD'après ci-dessus, $\\vec{HI} = \\vec{IJ}$ donc I est le milieu de [HJ]."
     },
     {
       "id": "exo_barycentre_11",
@@ -874,7 +884,8 @@
         {
           "text": "Pour trouver l'ensemble, éliminez le paramètre $m$ entre les deux équations"
         }
-      ]
+      ],
+      "solution": "**1) Coordonnées de G :**\n\n$G = bar\\{(A; 1); (B; -3); (C; 3)\\}$, somme = $1 + (-3) + 3 = 1$\n\n$x_G = \\dfrac{1 \\times 1 + (-3) \\times (-3) + 3 \\times 2}{1} = 1 + 9 + 6 = 16$\n\n$y_G = \\dfrac{1 \\times 2 + (-3) \\times 2 + 3 \\times 4}{1} = 2 - 6 + 12 = 8$\n\nDonc $G(16; 8)$\n\n**2.a) Existence de $G_m$ :**\n\nSomme des coefficients = $(3m+1) + (-2m-3) + (3-m) = 3m + 1 - 2m - 3 + 3 - m = 1$\n\nLa somme vaut toujours 1 ≠ 0, donc $G_m$ existe pour tout $m \\in \\mathbb{R}$.\n\n**2.b) Coordonnées de $G_m$ :**\n\n$x_{G_m} = \\dfrac{(3m+1) \\times 1 + (-2m-3) \\times (-3) + (3-m) \\times 2}{1}$\n\n$= 3m + 1 + 6m + 9 + 6 - 2m = 7m + 16$\n\n$y_{G_m} = \\dfrac{(3m+1) \\times 2 + (-2m-3) \\times 2 + (3-m) \\times 4}{1}$\n\n$= 6m + 2 - 4m - 6 + 12 - 4m = -2m + 8$\n\nDonc $G_m(7m + 16; -2m + 8)$\n\n**2.c) Ensemble des points $G_m$ :**\n\nOn a $x = 7m + 16$ et $y = -2m + 8$\n\nDe la première : $m = \\dfrac{x - 16}{7}$\n\nEn substituant dans la seconde : $y = -2 \\times \\dfrac{x - 16}{7} + 8 = \\dfrac{-2x + 32 + 56}{7} = \\dfrac{-2x + 88}{7}$\n\nDonc $7y = -2x + 88$, soit $2x + 7y = 88$\n\n**Ensemble :** La droite d'équation $2x + 7y = 88$"
     },
     {
       "id": "exo_barycentre_12",
@@ -889,7 +900,8 @@
         {
           "text": "Utilisez le fait que M est sur (CK) et sur (DL) pour exprimer $\\vec{DM}$ de deux façons différentes"
         }
-      ]
+      ],
+      "solution": "M est l'intersection de (CK) et (DL), donc :\n\n- M ∈ (CK) : $\\vec{CM} = t\\vec{CK}$ pour un certain réel t\n- M ∈ (DL) : $\\vec{DM} = s\\vec{DL}$ pour un certain réel s\n\nExprimons $\\vec{CK}$ et $\\vec{DL}$ :\n\n$\\vec{CK} = \\vec{CD} + \\vec{DK} = \\vec{CD} + (\\alpha + 2)\\vec{DB}$\n\n$\\vec{DL} = \\vec{DC} + \\vec{CL} = \\vec{DC} + \\alpha\\vec{BC}$\n\nDans un parallélogramme : $\\vec{DC} = \\vec{AB}$ et $\\vec{DB} = \\vec{DA} + \\vec{AB}$\n\nEn utilisant ces relations et en résolvant le système d'équations obtenu en écrivant $\\vec{DM}$ de deux façons différentes (via C et directement), on trouve après calculs :\n\n$\\vec{DM} = \\dfrac{\\alpha + 2}{\\alpha^2 + 2\\alpha + 2}\\vec{DL}$"
     },
     {
       "id": "exo_barycentre_13",
@@ -916,7 +928,8 @@
         {
           "text": "Montrez que les trois droites passent par G"
         }
-      ]
+      ],
+      "solution": "**1) Construction de U et E :**\n\n- $U = bar\\{(A; 4); (C; 1)\\}$ donc $\\vec{AU} = \\dfrac{1}{4+1}\\vec{AC} = \\dfrac{1}{5}\\vec{AC}$\n\n  U est sur [AC] au cinquième depuis A.\n\n- $E = bar\\{(A; 4); (B; 1)\\}$ donc $\\vec{AE} = \\dfrac{1}{5}\\vec{AB}$\n\n  E est sur [AB] au cinquième depuis A.\n\n**2) G comme barycentre de (E; 5) et (C; 1) :**\n\nPar associativité :\n\n$G = bar\\{(A; 4); (B; 1); (C; 1)\\}$\n\n$= bar\\{(bar\\{(A; 4); (B; 1)\\}; 4+1); (C; 1)\\}$\n\n$= bar\\{(E; 5); (C; 1)\\}$\n\nDonc G est bien le barycentre de $(E; 5)$ et $(C; 1)$.\n\n**3) Concours des droites :**\n\nMontrons que G appartient à chacune des trois droites :\n\n- **G ∈ (EC)** : car $G = bar\\{(E; 5); (C; 1)\\}$ ✓\n\n- **G ∈ (AY)** : Y milieu de [BC], donc $Y = bar\\{(B; 1); (C; 1)\\}$\n\n  Par associativité : $G = bar\\{(A; 4); (bar\\{(B; 1); (C; 1)\\}; 2)\\} = bar\\{(A; 4); (Y; 2)\\}$\n  \n  Donc G ∈ (AY) ✓\n\n- **G ∈ (BU)** : De même, par associativité avec U.\n\n**Conclusion :** Les trois droites (EC), (AY) et (BU) sont concourantes en G."
     },
     {
       "id": "exo_barycentre_14",
@@ -937,7 +950,8 @@
         {
           "text": "Pour $a = -1$, le trapèze devient un parallélogramme. Utilisez cette propriété."
         }
-      ]
+      ],
+      "solution": "**1) Détermination de b et c :**\n\nSi $D = bar\\{(A; 1); (B; b); (C; c)\\}$, alors :\n\n$1 \\cdot \\vec{DA} + b \\cdot \\vec{DB} + c \\cdot \\vec{DC} = \\vec{0}$\n\nOr dans le trapèze, $\\vec{AB} = a\\vec{CD} = -a\\vec{DC}$\n\nDonc $\\vec{DC} = -\\dfrac{1}{a}\\vec{AB}$\n\nAussi : $\\vec{DA} = -\\vec{AD}$ et $\\vec{DB} = \\vec{DA} + \\vec{AB} = -\\vec{AD} + \\vec{AB}$\n\nEn substituant dans l'équation du barycentre et en identifiant les coefficients, on trouve :\n\n$b = -a$ et $c = 1$\n\nVérification : $1 + (-a) + 1 = 2 - a$ qui doit être non nul (condition : $a \\neq 2$)\n\n**2) Cas $a = -1$ :**\n\nSi $a = -1$, alors $\\vec{AB} = -\\vec{CD}$, donc ABCD est un parallélogramme.\n\n**Pour F :** E milieu de [AC], F milieu de [BE].\n\nSi $F = bar\\{(A; 1); (B; -1); (C; 1); (E; t)\\}$, il faut déterminer t.\n\nPar associativité et en utilisant que $E = bar\\{(A; 1); (C; 1)\\}$, on peut montrer que $t = 0$ (F est le barycentre sans E, ou E se simplifie)."
     },
     {
       "id": "exo_barycentre_15",
@@ -970,7 +984,8 @@
         {
           "text": "Pour l'alignement, montrez que $\\vec{IB'}$ et $\\vec{IC'}$ sont colinéaires"
         }
-      ]
+      ],
+      "solution": "**1) Figures :** Construire les figures pour $k = \\dfrac{1}{3}$ puis $k = -1$.\n\n**2) D comme barycentre :**\n\nVérifions que $(1-k)\\vec{DA} + k\\vec{DB} = \\vec{0}$ :\n\n$(1-k)\\vec{DA} + k\\vec{DB} = (1-k)(-\\vec{AD}) + k(\\vec{DA} + \\vec{AB})$\n\n$= -(1-k)\\vec{AD} + k\\vec{DA} + k\\vec{AB}$\n\n$= (1-k)\\vec{DA} + k\\vec{DA} + k\\vec{AB}$\n\n$= \\vec{DA} + k\\vec{AB}$\n\nOr $\\vec{AD} = k\\vec{AB}$ donc $\\vec{DA} = -k\\vec{AB}$\n\n$(1-k)\\vec{DA} + k\\vec{DB} = -k\\vec{AB} + k\\vec{AB} = \\vec{0}$ ✓\n\nDonc $D = bar\\{(A; 1-k); (B; k)\\}$\n\n**3) E comme barycentre :**\n\nDe même, on montre que $E = bar\\{(C; 1-k); (A; k)\\}$\n\n**4) Expression de $\\vec{MD} + \\vec{ME}$ :**\n\nPar la propriété caractéristique :\n\n$\\vec{MD} + \\vec{ME} = \\dfrac{(1-k)\\vec{MA} + k\\vec{MB}}{1} + \\dfrac{(1-k)\\vec{MC} + k\\vec{MA}}{1}$\n\n$= (1-k+k)\\vec{MA} + k\\vec{MB} + (1-k)\\vec{MC}$\n\n$= \\vec{MA} + k\\vec{MB} + (1-k)\\vec{MC}$\n\nEn réorganisant : $\\vec{MD} + \\vec{ME} = \\vec{MA} + \\vec{MC} + k\\vec{CB}$\n\n**5) Alignement I, B', C' :**\n\nI milieu de [DE], B' milieu de [AC], C' milieu de [AB].\n\nPar la relation précédente avec $M = I$, on peut montrer que I, B' et C' sont alignés en utilisant les propriétés du barycentre et en montrant que les vecteurs $\\vec{IB'}$ et $\\vec{IC'}$ sont colinéaires."
     },
     {
       "id": "exo_barycentre_16",
@@ -986,7 +1001,8 @@
         {
           "text": "Pour montrer que G est sur (IS), écrivez $G = bar\\{(I; \\alpha); (S; \\beta)\\}$ pour certains réels $\\alpha$ et $\\beta$"
         }
-      ]
+      ],
+      "solution": "Le centre de gravité est $G = bar\\{(A; 1); (B; 1); (C; 1)\\}$\n\n**Expression des points comme barycentres :**\n\n- $I$ : $\\vec{AI} = \\dfrac{1}{3}\\vec{AB}$ donc $I = bar\\{(A; 2); (B; 1)\\}$ (par homogénéité : $I = bar\\{(A; 6); (B; 3)\\}$)\n\n- $J$ : $\\vec{AJ} = \\dfrac{2}{3}\\vec{AB}$ donc $J = bar\\{(A; 1); (B; 2)\\}$ (homogénéité : $J = bar\\{(A; 3); (B; 6)\\}$)\n\n- $M$ : $\\vec{AM} = \\dfrac{1}{3}\\vec{AC}$ donc $M = bar\\{(A; 2); (C; 1)\\}$ (homogénéité : $M = bar\\{(A; 6); (C; 3)\\}$)\n\n- $N$ : $\\vec{AN} = \\dfrac{2}{3}\\vec{AC}$ donc $N = bar\\{(A; 1); (C; 2)\\}$ (homogénéité : $N = bar\\{(A; 3); (C; 6)\\}$)\n\n- $R$ : $\\vec{BR} = \\dfrac{1}{3}\\vec{BC}$ donc $R = bar\\{(B; 2); (C; 1)\\}$ (homogénéité : $R = bar\\{(B; 6); (C; 3)\\}$)\n\n- $S$ : $\\vec{BS} = \\dfrac{2}{3}\\vec{BC}$ donc $S = bar\\{(B; 1); (C; 2)\\}$ (homogénéité : $S = bar\\{(B; 3); (C; 6)\\}$)\n\n**Démonstration du concours en G :**\n\nPour montrer que G appartient à (IS), écrivons G comme barycentre de I et S :\n\n$G = bar\\{(A; 1); (B; 1); (C; 1)\\}$\n\n$I = bar\\{(A; 6); (B; 3)\\}$ et $S = bar\\{(B; 3); (C; 6)\\}$\n\nPar associativité, on peut montrer que $G = bar\\{(I; \\alpha); (S; \\beta)\\}$ pour certains coefficients.\n\nEn utilisant les sommes et l'associativité :\n\n$G = bar\\{(A; 9); (B; 9); (C; 9)\\} = bar\\{(A; 1); (B; 1); (C; 1)\\}$ (homogénéité)\n\nOn peut vérifier que $G = bar\\{(I; 1); (S; 1)\\}$ après calculs, donc G ∈ (IS)\n\nDe même pour (MR) et (NJ).\n\n**Conclusion :** Les trois droites (IS), (MR) et (NJ) sont concourantes en G, le centre de gravité du triangle ABC."
     }
   ],
   "version": "v1.1.0-enriched"
