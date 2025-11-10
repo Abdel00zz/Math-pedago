@@ -745,6 +745,7 @@ export const LessonEditor: React.FC<LessonEditorProps> = ({
                                                                         value={element.content as string || ''}
                                                                         onChange={(value) => updateElement(sIdx, ssIdx, eIdx, 'content', value)}
                                                                         elementType="p"
+                                                                        onImageClick={() => openImageModal(sIdx, ssIdx, eIdx)}
                                                                     />
                                                                 ) : element.type === 'table' ? (
                                                                     <textarea
@@ -777,6 +778,7 @@ export const LessonEditor: React.FC<LessonEditorProps> = ({
                                                                                 onListTypeChange={(type) => updateElement(sIdx, ssIdx, eIdx, 'listType', type)}
                                                                                 columns={element.columns}
                                                                                 onColumnsChange={(cols) => updateElement(sIdx, ssIdx, eIdx, 'columns', cols)}
+                                                                                onImageClick={() => openImageModal(sIdx, ssIdx, eIdx)}
                                                                             />
                                                                         </div>
                                                                     </div>

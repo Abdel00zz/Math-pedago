@@ -115,7 +115,7 @@ export const RichTextToolbar: React.FC<RichTextToolbarProps> = ({
                     </button>
 
                     {/* Séparateur */}
-                    {(elementType === 'box' && onListTypeChange) || onImageClick ? (
+                    {((elementType === 'box' && onListTypeChange) || onImageClick) ? (
                         <div className="h-6 w-px bg-gray-400 mx-1"></div>
                     ) : null}
 
@@ -160,11 +160,12 @@ export const RichTextToolbar: React.FC<RichTextToolbarProps> = ({
                                 </>
                             )}
 
+                            {/* Séparateur avant Image */}
                             {onImageClick && <div className="h-6 w-px bg-gray-400 mx-1"></div>}
                         </>
                     )}
 
-                    {/* Image */}
+                    {/* Image (disponible pour tous les types) */}
                     {onImageClick && (
                         <button
                             onClick={onImageClick}
