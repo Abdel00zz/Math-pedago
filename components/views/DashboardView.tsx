@@ -7,7 +7,7 @@ import ChapterSection from '../ChapterSection';
 import GlobalActionButtons from '../GlobalActionButtons';
 import StandardHeader from '../StandardHeader';
 import { LESSON_PROGRESS_REFRESH_EVENT } from '../../utils/lessonProgressHelpers';
-import { sortChaptersByActiveSession } from '../../utils/chapterStatusHelpers';
+import { sortChaptersByActiveSession, hasActiveSession, hasUpcomingSession } from '../../utils/chapterStatusHelpers';
 
 // ✅ OPTIMISATION 1: Suppression du code mort (CacheService, useThemePreference, useIdleDetection)
 // Ces hooks/services étaient créés mais jamais utilisés
@@ -88,9 +88,60 @@ const DashboardView: React.FC = () => {
     const categorizedActivities = useMemo((): CategorizedActivities => {
         if (!profile) return { inProgress: [], completed: [], upcoming: [] };
 
-        const allUserActivities = chapterOrder
+        // Dédupliquer chapterOrder pour éviter les cartes en double
+        const uniqueChapterOrder = Array.from(new Set(chapterOrder));
+
+        // Construire la liste des activités à afficher depuis l'ordre fourni
+        const rawActivities = uniqueChapterOrder
             .map(id => activities[id])
-            .filter(Boolean);
+            .filter(Boolean) as typeof activities[keyof typeof activities][];
+
+        // DEDUPE BY TITLE - certains chapitres (différents id/file) peuvent partager le même titre
+        // Exemple: '1bsm_generalites...' et '1bsm_etude_des_fonctions' utilisent le même titre.
+        // On choisit une représentation unique par titre en priorisant :
+        // 1) celui qui est actif (isActive === true)
+        // 2) ensuite celui qui a une session live
+        // 3) ensuite celui qui a une session à venir
+        // 4) enfin le premier rencontré
+        const dedupedByTitle: { [normalizedTitle: string]: typeof rawActivities[number] } = {};
+
+        const normalize = (s: string) => s.trim().toLowerCase();
+
+        for (const ch of rawActivities) {
+            const key = normalize(ch.chapter || ch.title || String(ch.id || ''));
+            if (!dedupedByTitle[key]) {
+                dedupedByTitle[key] = ch;
+                continue;
+            }
+
+            const existing = dedupedByTitle[key];
+
+            // If new one is active, prefer it
+            if (ch.isActive && !existing.isActive) {
+                dedupedByTitle[key] = ch;
+                continue;
+            }
+
+            // Prefer one with live session
+            const chLive = hasActiveSession(ch.sessionDates || []);
+            const exLive = hasActiveSession(existing.sessionDates || []);
+            if (chLive && !exLive) {
+                dedupedByTitle[key] = ch;
+                continue;
+            }
+
+            // Prefer one with upcoming session
+            const chUpcoming = hasUpcomingSession(ch.sessionDates || []);
+            const exUpcoming = hasUpcomingSession(existing.sessionDates || []);
+            if (chUpcoming && !exUpcoming) {
+                dedupedByTitle[key] = ch;
+                continue;
+            }
+
+            // Otherwise keep existing (first encountered)
+        }
+
+        const allUserActivities = Object.values(dedupedByTitle);
 
         const categorized = allUserActivities.reduce<CategorizedActivities>(
             (acc, chapter) => {
