@@ -720,15 +720,6 @@ export const LessonEditor: React.FC<LessonEditorProps> = ({
                                                                         >
                                                                             <ArrowDownIcon className="w-4 h-4" />
                                                                         </button>
-                                                                        {element.type !== 'table' && (
-                                                                            <button
-                                                                                onClick={() => openImageModal(sIdx, ssIdx, eIdx)}
-                                                                                className={`p-1 rounded ${(element as any).image ? 'bg-blue-100 text-blue-700' : 'hover:bg-blue-50 text-blue-600'}`}
-                                                                                title="Ajouter/Modifier image"
-                                                                            >
-                                                                                <ImageIcon className="w-4 h-4" />
-                                                                            </button>
-                                                                        )}
                                                                         <button
                                                                             onClick={() => deleteElement(sIdx, ssIdx, eIdx)}
                                                                             className="p-1 rounded hover:bg-red-50 text-red-600"
@@ -756,15 +747,21 @@ export const LessonEditor: React.FC<LessonEditorProps> = ({
                                                                         placeholder="Format tableau Markdown..."
                                                                     />
                                                                 ) : (
-                                                                    <div className="space-y-2">
-                                                                        {/* Préambule avec toolbar */}
+                                                                    <div className="space-y-3">
+                                                                        {/* Titre / Énoncé */}
                                                                         <div>
-                                                                            <label className="form-label text-xs text-gray-600 mb-1">Préambule</label>
-                                                                            <RichTextToolbar
+                                                                            <label className="form-label text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+                                                                                <span>{config.icon}</span>
+                                                                                <span>Titre / Énoncé du {config.label}</span>
+                                                                            </label>
+                                                                            <input
+                                                                                type="text"
                                                                                 value={element.preamble || ''}
-                                                                                onChange={(value) => updateElement(sIdx, ssIdx, eIdx, 'preamble', typeof value === 'string' ? value : value.join('\n'))}
-                                                                                elementType="box"
+                                                                                onChange={(e) => updateElement(sIdx, ssIdx, eIdx, 'preamble', e.target.value)}
+                                                                                className="w-full px-4 py-3 text-base font-medium border-2 border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-blue-50"
+                                                                                placeholder={`Ex: ${config.label} 1 : Titre ici...`}
                                                                             />
+                                                                            <p className="text-xs text-gray-500 mt-1">💡 Vous pouvez utiliser des formules : $x^2$, **gras**, *italique*</p>
                                                                         </div>
 
                                                                         {/* Contenu avec toolbar et liste */}
