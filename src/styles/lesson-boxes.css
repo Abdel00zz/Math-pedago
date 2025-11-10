@@ -42,11 +42,21 @@
 /* Header de la boîte */
 .lesson-box__header {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
-  margin-bottom: clamp(0.8rem, 1.8vw, 1.35rem);
+  margin-bottom: clamp(1rem, 2vw, 1.5rem);
   position: relative;
   z-index: 2;
+  gap: 1rem;
+}
+
+/* Conteneur gauche du header (badge + titre) */
+.lesson-box__header-left {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.75rem, 1.5vw, 1rem);
+  flex: 1;
+  min-width: 0;
 }
 
 /* Badge (type de boîte) */
@@ -54,15 +64,28 @@
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  padding: 0.35rem 0.85rem;
-  font-size: 0.68rem;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.7rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   border-radius: 6px;
-  background: transparent;
+  background: var(--lesson-accent);
+  color: #FFFFFF;
+  border: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* Titre de la boîte (preamble dans le header) */
+.lesson-box__title {
+  flex: 1;
+  min-width: 0;
+  font-size: clamp(0.95rem, 1.7vw, 1.05rem);
+  line-height: 1.5;
   color: var(--lesson-accent);
-  border: 1px solid var(--lesson-accent);
+  font-weight: 600;
 }
 
 /* Bouton d'action */
@@ -88,15 +111,7 @@
   height: 1.15rem;
 }
 
-/* Préambule (introduction de la boîte) */
-.lesson-box__preamble {
-  margin-bottom: clamp(0.75rem, 1.6vw, 1.2rem);
-  position: relative;
-  z-index: 2;
-  font-size: clamp(0.93rem, 1.6vw, 1.02rem);
-  line-height: 1.65;
-  color: var(--text-color);
-}
+/* Note: .lesson-box__preamble supprimé car le preamble est maintenant dans le header comme titre */
 
 /* Corps de la boîte */
 .lesson-box__body {
@@ -121,33 +136,49 @@
 }
 
 .lesson-inline__header {
-  margin-bottom: 0.9rem;
+  margin-bottom: clamp(0.85rem, 1.6vw, 1.1rem);
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+/* Conteneur gauche du header inline (badge + titre) */
+.lesson-inline__header-left {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.7rem, 1.4vw, 0.9rem);
+  flex: 1;
+  min-width: 0;
 }
 
 .lesson-inline__badge {
-  display: inline-block;
-  padding: 0.3rem 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.8rem;
   font-size: 0.68rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.11em;
   border-radius: 6px;
-  background: transparent;
+  background: var(--lesson-inline-accent);
+  color: #FFFFFF;
+  border: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* Titre de la boîte inline (preamble dans le header) */
+.lesson-inline__title {
+  flex: 1;
+  min-width: 0;
+  font-size: clamp(0.92rem, 1.6vw, 1rem);
+  line-height: 1.5;
   color: var(--lesson-inline-accent);
-  border: 1px solid var(--lesson-inline-accent);
+  font-weight: 600;
 }
 
-.lesson-inline__content {
-  display: flex;
-  flex-direction: column;
-  gap: 0.65rem;
-}
-
-.lesson-inline__preamble {
-  font-size: clamp(0.9rem, 1.5vw, 1rem);
-  line-height: 1.6;
-  color: var(--text-color);
-}
+/* Note: .lesson-inline__content et .lesson-inline__preamble supprimés car restructurés */
 
 .lesson-inline__body {
   display: flex;
@@ -225,20 +256,24 @@
     border-radius: 10px;
   }
 
+  .lesson-box__header-left {
+    gap: 0.75rem;
+  }
+
   .lesson-box__badge {
     font-size: 0.68rem;
     letter-spacing: 0.12em;
     padding: 0.4rem 0.85rem;
   }
 
+  .lesson-box__title {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
   .lesson-box__action {
     width: 2.3rem;
     height: 2.3rem;
-  }
-
-  .lesson-box__preamble {
-    font-size: 0.92rem;
-    line-height: 1.6;
   }
 
   .lesson-box__body {
@@ -248,6 +283,14 @@
 
   .lesson-inline {
     padding: 0.9rem 1rem;
+  }
+
+  .lesson-inline__header-left {
+    gap: 0.7rem;
+  }
+
+  .lesson-inline__title {
+    font-size: 0.93rem;
   }
 }
 
@@ -261,9 +304,12 @@
     margin-bottom: 0.9rem;
   }
 
-  .lesson-box__preamble {
-    font-size: 0.9rem;
-    margin-bottom: 0.85rem;
+  .lesson-box__header-left {
+    gap: 0.7rem;
+  }
+
+  .lesson-box__title {
+    font-size: 0.92rem;
   }
 
   .lesson-box__body {
@@ -272,6 +318,14 @@
 
   .lesson-inline {
     padding: 0.85rem 0.95rem;
+  }
+
+  .lesson-inline__header-left {
+    gap: 0.65rem;
+  }
+
+  .lesson-inline__title {
+    font-size: 0.9rem;
   }
 }
 
@@ -284,17 +338,28 @@
   }
 
   .lesson-box__header {
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.6rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.7rem;
     margin-bottom: 0.8rem;
+  }
+
+  .lesson-box__header-left {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+    width: 100%;
   }
 
   .lesson-box__badge {
     font-size: 0.64rem;
     padding: 0.35rem 0.7rem;
     letter-spacing: 0.1em;
+  }
+
+  .lesson-box__title {
+    font-size: 0.9rem;
+    line-height: 1.45;
   }
 
   .lesson-box__action {
@@ -308,12 +373,6 @@
     height: 1rem;
   }
 
-  .lesson-box__preamble {
-    font-size: 0.88rem;
-    line-height: 1.55;
-    margin-bottom: 0.75rem;
-  }
-
   .lesson-box__body {
     font-size: 0.88rem;
     line-height: 1.55;
@@ -324,8 +383,19 @@
     border-radius: 8px;
   }
 
+  .lesson-inline__header-left {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.55rem;
+  }
+
   .lesson-inline__badge {
     font-size: 0.64rem;
     padding: 0.3rem 0.65rem;
+  }
+
+  .lesson-inline__title {
+    font-size: 0.88rem;
+    line-height: 1.45;
   }
 }
