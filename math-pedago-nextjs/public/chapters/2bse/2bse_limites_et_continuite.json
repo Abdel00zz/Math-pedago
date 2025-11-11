@@ -1,0 +1,651 @@
+{
+  "class": "2bse",
+  "chapter": "Limites et continuité",
+  "sessionDates": [
+    "2025-10-06T08:00:00Z",
+    "2025-10-13T09:00:00Z"
+  ],
+  "videos": [],
+  "quiz": [
+    {
+      "id": "q_continuite_graphique_intuition",
+      "question": "Graphiquement, une fonction est continue sur un intervalle si sa courbe peut être tracée...",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "en restant toujours au-dessus de l'axe des abscisses.",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "sans jamais lever le crayon.",
+          "is_correct": true,
+          "explanation": "L'idée fondamentale de la continuité est celle d'un tracé ininterrompu, sans 'saut' ni 'rupture'."
+        },
+        {
+          "text": "en coupant l'axe des ordonnées en un seul point.",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_continuite_definition_formelle",
+      "question": "La définition mathématique de la continuité de $\\displaystyle f$ en un point $\\displaystyle a$ est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\displaystyle \\lim_{x \\to a} f(x)$ existe.",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$\\displaystyle \\lim_{x \\to a} f(x) = f(a)$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$f(a)$ est un nombre réel.",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_ordering_etude_continuite_morceaux",
+      "question": "Ordonnez les étapes pour étudier la continuité d'une fonction $f$ au point de jonction $a$.",
+      "type": "ordering",
+      "options": [],
+      "steps": [
+        "Calculer la limite de $f(x)$ quand $x$ tend vers $a$ par la gauche ($x \\to a^-$).",
+        "Calculer la limite de $f(x)$ quand $x$ tend vers $a$ par la droite ($x \\to a^+$).",
+        "Calculer la valeur de la fonction au point, $f(a)$.",
+        "Comparer les trois résultats : s'ils sont finis et égaux, la fonction est continue."
+      ]
+    },
+    {
+      "id": "q_polynome_continu",
+      "question": "Une fonction polynôme est continue sur l'intervalle $\\mathbb{R}$.",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Cette affirmation est Vraie.",
+          "is_correct": true,
+          "explanation": "Les fonctions polynômes sont des fonctions de référence ne présentant aucune rupture sur leur domaine de définition, qui est $\\mathbb{R}$."
+        },
+        {
+          "text": "Cette affirmation est Fausse.",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_rationnelle_continue",
+      "question": "Une fonction rationnelle est continue :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "sur $\\mathbb{R}$ tout entier.",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "uniquement si le degré du numérateur est plus grand que celui du dénominateur.",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "sur chaque intervalle de son ensemble de définition.",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_operations_continuite",
+      "question": "Si $f$ et $g$ sont continues sur I, quelle opération peut générer une discontinuité ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "La somme $\\displaystyle f+g$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "La composition $\\displaystyle f \\circ g$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Le quotient $\\displaystyle f/g$",
+          "is_correct": true,
+          "explanation": "Le quotient n'est pas défini là où le dénominateur s'annule ($g(x)=0$), créant des points de discontinuité."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_asymptote_verticale_limite",
+      "question": "La droite $\\displaystyle x=a$ est une asymptote verticale pour la courbe de $\\displaystyle f$ si :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\displaystyle \\lim_{x \\to a} f(x) = \\pm\\infty$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$\\displaystyle \\lim_{x \\to \\pm\\infty} f(x) = a$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$f(a)$ n'est pas défini.",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_tvi_application_simple",
+      "question": "Soit $f$ continue sur $\\displaystyle [0, 1]$ avec $\\displaystyle f(0)=-5$ et $\\displaystyle f(1)=5$. Le TVI assure que l'équation $\\displaystyle f(x)=2$ :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "admet une unique solution dans $\\displaystyle [0,1]$.",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "n'admet pas de solution dans $\\displaystyle [0,1]$.",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "admet au moins une solution dans $\\displaystyle [0,1]$.",
+          "is_correct": true,
+          "explanation": "Correct. 2 est une valeur intermédiaire entre $\\displaystyle f(0)=-5$ et $\\displaystyle f(1)=5$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_ordering_tvi_application",
+      "question": "Ordonnez les étapes pour appliquer le Théorème des Valeurs Intermédiaires (TVI) et prouver que $f(x)=k$ a au moins une solution sur $[a,b]$.",
+      "type": "ordering",
+      "options": [],
+      "steps": [
+        "Justifier que la fonction $\\displaystyle f$ est continue sur l'intervalle $\\displaystyle [a,b]$.",
+        "Calculer les valeurs de la fonction aux bornes, $\\displaystyle f(a)$ et $\\displaystyle f(b)$.",
+        "Vérifier que $k$ est une valeur intermédiaire, c'est-à-dire comprise entre $\\displaystyle f(a)$ et $\\displaystyle f(b)$.",
+        "Conclure, d'après le Théorème des Valeurs Intermédiaires, à l'existence d'au moins une solution."
+      ]
+    },
+    {
+      "id": "q_corollaire_tvi_unicite",
+      "question": "Pour prouver qu'une équation $\\displaystyle f(x)=k$ admet une solution UNIQUE sur $\\displaystyle [a,b]$ (Théorème de la bijection), il faut que $\\displaystyle f$ soit :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Continue et strictement monotone.",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Continue et positive.",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Dérivable.",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_image_intervalle_general",
+      "question": "L'image d'un intervalle par une fonction continue est toujours un intervalle.",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Cette affirmation est Vraie.",
+          "is_correct": true,
+          "explanation": "C'est une conséquence majeure du TVI : une fonction continue ne peut pas 'sauter' de valeurs, donc elle prend toutes les valeurs intermédiaires."
+        },
+        {
+          "text": "Cette affirmation est Fausse.",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_fonction_reciproque_continuite",
+      "question": "Si $f$ est une bijection continue de l'intervalle $I$ sur l'intervalle $J$, sa réciproque $f^{-1}$ :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "n'est pas forcément continue.",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "est continue de $\\displaystyle J$ sur $\\displaystyle I$.",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "a un sens de variation opposé à celui de $\\displaystyle f$.",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_reciproque_courbes",
+      "question": "Les courbes représentatives d'une fonction $\\displaystyle f$ et de sa réciproque $\\displaystyle f^{-1}$ sont symétriques par rapport à :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "L'axe des abscisses.",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "L'axe des ordonnées.",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "La première bissectrice (droite $\\displaystyle y=x$).",
+          "is_correct": true,
+          "explanation": "La symétrie entre une fonction et sa réciproque se fait toujours par rapport à la droite d'équation $\\displaystyle y=x$, car l'action d'inverser les rôles de $\\displaystyle x$ et $\\displaystyle y$ équivaut à cette symétrie."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_racine_nieme_propriete",
+      "question": "Soit $\\displaystyle n \\in \\mathbb{N}^*$. La fonction racine $\\displaystyle n$-ième, $\\displaystyle x \\mapsto \\sqrt[n]{x}$ est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Strictement décroissante sur $\\displaystyle [0, +\\infty[$.",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Strictement croissante sur $\\displaystyle [0, +\\infty[$.",
+          "is_correct": true,
+          "explanation": "La fonction $\\displaystyle x \\mapsto x^n$ est strictement croissante sur $\\displaystyle [0, +\\infty[$, donc sa réciproque (la fonction racine $\\displaystyle n$-ième) hérite de la même stricte monotonie."
+        },
+        {
+          "text": "Définie uniquement pour les $\\displaystyle n$ impairs sur $\\mathbb{R}$.",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_ordering_domaine_reciproque",
+      "question": "Ordonnez les étapes pour déterminer le domaine de définition $\\displaystyle D_{f^{-1}}$ de la fonction réciproque de $\\displaystyle f$.",
+      "type": "ordering",
+      "options": [],
+      "steps": [
+        "Vérifier que $\\displaystyle f$ est une bijection de son domaine de départ $\\displaystyle D_f$ vers son image $\\displaystyle f(D_f)$.",
+        "Justifier que la réciproque $\\displaystyle f^{-1}$ existe.",
+        "Déterminer l'intervalle image $\\displaystyle f(D_f)$ en utilisant les variations et les limites de $\\displaystyle f$.",
+        "Conclure que le domaine de définition de la réciproque est cet intervalle image : $\\displaystyle D_{f^{-1}} = f(D_f)$."
+      ]
+    },
+    {
+      "id": "q_prolongement_continuite",
+      "question": "Une fonction $f$ qui n'est pas définie en $a$ peut être prolongée par continuité si :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Sa limite en $\\displaystyle a$ est infinie.",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Sa limite en $\\displaystyle a$ est un nombre fini.",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Sa limite à gauche et à droite en $\\displaystyle a$ sont différentes.",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_derivabilite_implique_continuite",
+      "question": "Si une fonction est dérivable en un point, alors elle est continue en ce point.",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Cette affirmation est Vraie.",
+          "is_correct": true,
+          "explanation": "La dérivabilité est une condition plus forte que la continuité. Si l'on peut calculer le nombre dérivé $\\displaystyle f'(a)$, la fonction doit être continue en $\\displaystyle a$."
+        },
+        {
+          "text": "Cette affirmation est Fausse.",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_continuite_implique_derivabilite_faux",
+      "question": "Une fonction continue en un point est forcément dérivable en ce point.",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Cette affirmation est Vraie.",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Cette affirmation est Fausse.",
+          "is_correct": true,
+          "explanation": "Contre-exemple classique : la fonction $\\displaystyle f(x)=|x|$ est continue en 0 mais n'est pas dérivable en ce point (point anguleux)."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_ordering_dichotomie",
+      "question": "Ordonnez les étapes de l'algorithme de dichotomie pour encadrer une solution de $\\displaystyle f(x)=0$ sur $\\displaystyle [a,b]$.",
+      "type": "ordering",
+      "options": [],
+      "steps": [
+        "Vérifier les prérequis : $\\displaystyle f$ est continue et $\\displaystyle f(a)f(b)<0$.",
+        "Calculer le milieu de l'intervalle, $\\displaystyle c = \\frac{a+b}{2}$.",
+        "Évaluer le signe de $\\displaystyle f(c)$.",
+        "Remplacer l'une des bornes ($\\displaystyle a$ ou $\\displaystyle b$) par $\\displaystyle c$ pour conserver un intervalle où les signes des images sont opposés."
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "id": "exo_etude_fonction_auxiliaire_01",
+      "title": "Étude d'une fonction via une fonction auxiliaire",
+      "statement": "Soit la fonction $f$ définie sur $\\mathbb{R}$ par : $f(x) = \\displaystyle \\frac{x^3 - 4}{x^2 + 1}$.",
+      "sub_questions": [
+        {
+          "text": "<strong>Étude de la fonction $g$</strong> <br> On pose $g(x) = x^3 + 3x + 8$.",
+          "questionNumber": "1",
+          "sub_sub_questions": [
+            {
+              "text": "Étudier les variations de la fonction $g$."
+            },
+            {
+              "text": "Montrer que l'équation $g(x) = 0$ admet une unique solution $\\alpha$ sur $\\mathbb{R}$ et que $\\alpha \\in [-2; 0]$."
+            },
+            {
+              "text": "Préciser le signe de $g(x)$ selon les valeurs de $x$."
+            }
+          ],
+          "images": []
+        },
+        {
+          "text": "<strong>Étude de la fonction $f$</strong>",
+          "questionNumber": "2",
+          "sub_sub_questions": [
+            {
+              "text": "Déterminer les limites de $f$ en $+\\infty$ et $-\\infty$."
+            },
+            {
+              "text": "Calculer $f'(x)$ et montrer que : $f'(x) = \\displaystyle \\frac{x(x^3 + 3x + 8)}{(x^2 + 1)^2}$."
+            },
+            {
+              "text": "À l'aide d'un tableau de signe, donner le signe de $f'(x)$ puis dresser le tableau de variation de la fonction $f$."
+            },
+            {
+              "text": "En utilisant la relation $g(\\alpha) = 0$, montrer que $f(\\alpha) = \\displaystyle \\frac{3}{2}\\alpha$."
+            },
+            {
+              "text": "En déduire un encadrement de $f(\\alpha)$."
+            }
+          ],
+          "images": []
+        }
+      ]
+    },
+    {
+      "id": "exo_continuite_parametres_02",
+      "title": "Continuité d'une fonction définie par morceaux",
+      "statement": "Soit $a$ et $b$ deux réels et $f$ la fonction définie sur $\\mathbb{R}$ par : \n$$f(x) = \\begin{cases} \\frac{a - x}{x + 1} & \\text{si } x \\in ]-\\infty; -2[ \\cup ]1; +\\infty[ \\\\ \\frac{1}{2}x^2 + x + b & \\text{si } x \\in [-2; 1] \\end{cases}$$ \n Déterminer les valeurs de $a$ et $b$ pour que $f$ soit continue sur $\\mathbb{R}$.",
+      "sub_questions": []
+    },
+    {
+      "id": "exo_continuite_tvi_dichotomie_10",
+      "title": "Continuité, TVI et fonctions multiples",
+      "statement": "Cet exercice aborde plusieurs aspects de la continuité et de ses théorèmes.",
+      "sub_questions": [
+        {
+          "text": "Soit $f$ la fonction numérique définie sur $\\mathbb{R}$ par $f(x) = x^3 - 3x + 1$.",
+          "questionNumber": "1",
+          "sub_sub_questions": [
+            {
+              "text": "Déterminer les images des intervalles suivants par $f$ : $I = [0; +\\infty[$, $J = ]0; 1[$ et $K = ]-\\infty; -1]$."
+            },
+            {
+              "text": "Montrer que l'équation $f(x) = 0$ admet une solution unique $\\alpha$ dans l'intervalle $]-1; 1[$."
+            },
+            {
+              "text": "En utilisant la méthode de dichotomie, déterminer un encadrement de $\\alpha$ d'amplitude 0,25."
+            },
+            {
+              "text": "Résoudre dans $\\mathbb{R}$ l'inéquation : $f(x) > 0$."
+            }
+          ],
+          "images": []
+        },
+        {
+          "text": "On considère la fonction numérique $\\varphi$ définie sur $\\mathbb{R}$ par : <br><br> $$\\varphi(x) = \\begin{cases} 2x - 3 & \\text{si } x < 2 \\\\ x^2 - 3 & \\text{si } x \\ge 2 \\end{cases}$$",
+          "questionNumber": "2",
+          "sub_sub_questions": [
+            {
+              "text": "Justifier la continuité de $\\varphi$ sur $\\mathbb{R}$."
+            },
+            {
+              "text": "Déterminer $\\varphi([-2; 4])$ et $\\varphi(]-\\infty; 1])$."
+            }
+          ],
+          "images": []
+        },
+        {
+          "text": "Soit $\\psi$ une fonction continue sur $[0; 1]$ à valeurs dans $[0; 1]$. Montrer que l'équation $\\psi(x) = x$ admet au moins une solution dans l'intervalle $[0; 1]$.",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Soit $f$ la fonction numérique définie sur $\\mathbb{R}$ par $f(x) = x^5 + 3x^3 + 4x - 5$. Montrer que la courbe représentative $(C_f)$ de $f$ coupe l'axe des abscisses en un point unique dont l'abscisse $\\alpha$ vérifie $0 < \\alpha < 1$.",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Soit $f$ la fonction définie par $f(x) = \\displaystyle \\frac{1}{x} - 2\\sqrt{x+1}$.",
+          "questionNumber": "5",
+          "sub_sub_questions": [
+            {
+              "text": "Déterminer  l'ensemble de définition de $f$, et calculer $\\displaystyle \\lim_{x \\to +\\infty} f(x)$."
+            },
+            {
+              "text": "Montrer que l'équation $f(x) = 0$ admet une solution unique $\\alpha$ puis que $\\displaystyle \\frac{1}{2} < \\alpha < 1$."
+            },
+            {
+              "text": "Montrer que le réel $\\alpha$ vérifie la relation $4\\alpha^3 + 4\\alpha^2 - 1 = 0$."
+            }
+          ],
+          "images": []
+        }
+      ],
+      "hint": [
+        {
+          "text": "**Point fixe** : Appliquez le **TVI** à la fonction auxiliaire $h(x) = \\psi(x) - x$ sur $[0, 1]$. Calculez $h(0)$ et $h(1)$ en utilisant $\\psi(x) \\in [0, 1]$.",
+          "questionNumber": "3"
+        },
+        {
+          "text": "**Intersection unique** : Prouvez que $f$ est continue et strictement croissante sur $\\mathbb{R}$ (en utilisant $f'(x)$). Montrez que $0 \\in f(]0, 1[)$.",
+          "questionNumber": "4"
+        }
+      ]
+    },
+    {
+      "id": "exo_fonction_reciproque_continuite_03",
+      "title": "Fonction réciproque et continuité",
+      "statement": "Soit $f$ la fonction définie sur $D_{f}=[1, +\\infty[$ par : $f(x) = \\sqrt{x-1} + 2$.",
+      "sub_questions": [
+        {
+          "text": "Justifier que $f$ est continue sur $D$.",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Calculer $f'(x)$ pour $x > 1$ et étudier le signe de $f'(x)$. En déduire le sens de variation de $f$.",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Déterminer l'image de $D$ par la fonction $f$.",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Justifier que $f$ admet une fonction réciproque $f^{-1}$ définie sur $I_{f}$. Quel est le domaine de définition de $f^{-1}$ ?",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Déterminer l'expression de $f^{-1}(x)$ pour tout $x \\in I_{f}$.",
+          "questionNumber": "5",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Vérifier que $f^{-1}$ est continue sur son domaine de définition.",
+          "questionNumber": "6",
+          "sub_sub_questions": [],
+          "images": []
+        }
+      ],
+      "hint": [
+        {
+          "text": "**Continuité** : $f$ est une somme et composition de fonctions usuelles continues sur $D_f$.",
+          "questionNumber": "1"
+        },
+        {
+          "text": "**Monotonie** : La dérivée de $\\sqrt{u}$ est $\\displaystyle \\frac{u'}{2\\sqrt{u}}$. Déduisez le sens de variation (stricte monotonie).",
+          "questionNumber": "2"
+        },
+        {
+          "text": "**Image** : L'image de $D_f$ est $[\\displaystyle f(1), \\lim_{x \\to +\\infty} f(x)[$ car $f$ est strictement croissante.",
+          "questionNumber": "3"
+        },
+        {
+          "text": "**Réciproque** : L'existence de $f^{-1}$ est garantie par la **continuité** et la **stricte monotonie** de $f$. Son domaine est l'intervalle image $f(D_f)$.",
+          "questionNumber": "4"
+        },
+        {
+          "text": "**Expression** : Posez $y = \\sqrt{x-1} + 2$. Isolez $x$ en fonction de $y$. N'oubliez pas que $x = f^{-1}(y)$.",
+          "questionNumber": "5"
+        }
+      ]
+    },
+    {
+      "id": "exo_tvi_point_fixe_04",
+      "title": "Application du TVI à une fonction sur un intervalle borné",
+      "statement": "Soit $k$ la fonction définie sur $[1, 3]$ par : $k(x) = \\displaystyle \\frac{2x + 3}{x + 1}$.",
+      "sub_questions": [
+        {
+          "text": "Justifier que $k$ est continue sur $[1, 3]$. Pourquoi le dénominateur ne pose-t-il pas de problème ?",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Calculer $k(1)$ et $k(3)$. Montrer que pour tout $x \\in [1, 3]$, on a $k(x) \\in [1, 3]$.",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "On pose $\\varphi(x) = k(x) - x$. Calculer $\\varphi(1)$ et $\\varphi(3)$ puis déterminer leurs signes.",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "En utilisant le TVI appliqué à $\\varphi$, montrer que l'équation $k(x) = x$ admet au moins une solution $\\alpha$ dans $[1, 3]$.",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Calculer $k'(x)$ et montrer que $k$ est strictement décroissante sur $[1, 3]$.",
+          "questionNumber": "5",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "En déduire que la fonction $\\varphi$ est strictement décroissante sur $[1, 3]$. Conclure sur l'unicité de la solution $\\alpha$.",
+          "questionNumber": "6",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Résoudre algébriquement l'équation $k(x) = x$ et vérifier que la solution appartient bien à $[1, 3]$.",
+          "questionNumber": "7",
+          "sub_sub_questions": [],
+          "images": []
+        }
+      ],
+      "hint": [
+        {
+          "text": "**Continuité** : $k$ est rationnelle. Elle est continue sur son domaine de définition, ici $\\mathbb{R} \\setminus \\{-1\\}$.",
+          "questionNumber": "1"
+        },
+        {
+          "text": "**Stabilité** : Calculez $k'(x)$ (question 5) pour trouver les variations. L'image de l'intervalle $[1, 3]$ doit être dans $[k(3), k(1)]$.",
+          "questionNumber": "2"
+        },
+        {
+          "text": "**TVI (Existence)** : Appliquez le TVI à $\\varphi(x) = k(x) - x$ sur $[1, 3]$. Les signes opposés de $\\varphi(1)$ et $\\varphi(3)$ garantissent l'existence d'une racine.",
+          "questionNumber": "4"
+        },
+        {
+          "text": "**Unicité (Corollaire du TVI)** : Calculez $\\varphi'(x)$. Son signe garantit la stricte monotonie de $\\varphi$ sur $[1, 3]$, d'où l'unicité de la solution $\\alpha$.",
+          "questionNumber": "6"
+        },
+        {
+          "text": "**Résolution algébrique** : L'équation $\\displaystyle \\frac{2x+3}{x+1} = x$ se ramène à une équation du second degré après avoir multiplié par $(x+1)$.",
+          "questionNumber": "7"
+        }
+      ]
+    }
+  ],
+  "version": "v1.1.0-992590"
+}

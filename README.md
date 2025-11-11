@@ -1,136 +1,79 @@
-# Math-Pedago V2.0 🚀
+# Math-Pedago 🚀
 
-Plateforme éducative ultra-moderne pour l'apprentissage des mathématiques, construite avec les dernières technologies web.
+Plateforme éducative pour l'apprentissage des mathématiques.
 
-## ✨ Stack Technique
+## 📂 Structure du Projet
 
-- **Framework**: Next.js 15 (App Router, Server Components, Turbopack)
-- **UI**: React 19 + TypeScript 5.7
-- **Styling**: Tailwind CSS 4 + shadcn/ui
-- **State Management**: Zustand + TanStack Query
-- **Animations**: Framer Motion
-- **Math Rendering**: KaTeX
-- **Validation**: Zod
-- **Forms**: React Hook Form
+Ce dépôt contient **3 versions complètement séparées** de Math-Pedago :
 
-## 🎯 Fonctionnalités
+### ⭐ Version Next.js (RECOMMANDÉE)
+**📁 Dossier**: [`math-pedago-nextjs/`](./math-pedago-nextjs/)
+- **Technologies**: Next.js 15, React 19, TypeScript 5.7, shadcn/ui
+- **100% autonome et séparée**
+- **Performance optimale** avec architecture moderne
+- 👉 **[Voir la documentation complète](./math-pedago-nextjs/README.md)**
 
-- 📚 **Leçons interactives** avec rendu LaTeX et table des matières
+### 📚 Version Originale (Vite)
+**📁 Dossier**: `Smart chapter v1/`
+- Technologies: Vite + React + TypeScript
+- Application SPA classique
+
+### 💾 Backup
+**📁 Dossier**: `shadcnv1/`
+- Sauvegarde de la version Next.js
+
+---
+
+## 🚀 Démarrage Rapide
+
+### Option 1: Version Next.js (Recommandée) ⭐
+
+```bash
+cd math-pedago-nextjs
+npm install
+npm run dev
+```
+
+**URL**: http://localhost:3000
+
+### Option 2: Version Originale (Vite)
+
+```bash
+cd "Smart chapter v1"
+npm install
+npm run dev
+```
+
+**URL**: http://localhost:5173
+
+---
+
+## 📖 Documentation Complète
+
+📋 **[STRUCTURE.md](./STRUCTURE.md)** - Guide complet de la structure du projet
+
+**Documentation de la version Next.js**:
+- 📖 [README](./math-pedago-nextjs/README.md) - Guide de démarrage
+- 🏗️ [ARCHITECTURE_V2](./math-pedago-nextjs/ARCHITECTURE_V2.md) - Architecture détaillée
+- ⚡ [OPTIMIZATIONS](./math-pedago-nextjs/OPTIMIZATIONS.md) - Optimisations
+
+---
+
+## ✨ Caractéristiques (Version Next.js)
+
+- 📚 **Leçons interactives** avec rendu LaTeX
 - 🧠 **Quiz intelligents** avec feedback instantané
-- ✍️ **Exercices pratiques** avec indices et corrections détaillées
+- ✍️ **Exercices pratiques** avec corrections détaillées
 - 🎥 **Capsules vidéo** YouTube intégrées
 - 📊 **Suivi de progression** avec analytics
 - 🎨 **Mode sombre** natif
-- 📱 **Design responsive** pour tous les appareils
-- ⚡ **Performance optimale** avec Next.js 15
+- 📱 **Design responsive**
+- ⚡ **Performance optimale**
 - ♿ **Accessible** (WCAG 2.1 AA)
 
-## 🚀 Démarrage rapide
+---
 
-### Prérequis
-
-- Node.js >= 20.0.0
-- npm >= 10.0.0
-
-### Installation
-
-```bash
-# Installer les dépendances
-npm install
-
-# Lancer le serveur de développement
-npm run dev
-
-# Ouvrir http://localhost:3000
-```
-
-### Scripts disponibles
-
-```bash
-npm run dev          # Démarrer en mode développement avec Turbopack
-npm run build        # Build de production
-npm run start        # Démarrer le serveur de production
-npm run lint         # Linter le code
-npm run type-check   # Vérifier les types TypeScript
-npm run format       # Formater le code avec Prettier
-npm test             # Lancer les tests unitaires
-npm run test:e2e     # Lancer les tests E2E
-```
-
-## 📁 Structure du projet
-
-```
-src/
-├── app/                    # Next.js App Router
-│   ├── (platform)/        # Groupe de routes plateforme
-│   │   ├── dashboard/
-│   │   ├── lessons/
-│   │   ├── quiz/
-│   │   ├── exercises/
-│   │   ├── videos/
-│   │   ├── progress/
-│   │   └── settings/
-│   ├── layout.tsx
-│   ├── page.tsx
-│   └── globals.css
-│
-├── components/            # Composants réutilisables
-│   ├── ui/               # shadcn/ui components
-│   ├── layouts/          # Layouts (sidebar, header)
-│   └── shared/           # Composants partagés
-│
-├── features/             # Modules par fonctionnalité
-│   ├── lessons/
-│   ├── quiz/
-│   ├── exercises/
-│   ├── videos/
-│   └── progress/
-│
-├── lib/                  # Utilitaires
-│   ├── hooks/
-│   ├── utils/
-│   ├── constants/
-│   └── schemas/
-│
-├── store/               # State management (Zustand)
-│   ├── use-progress-store.ts
-│   ├── use-settings-store.ts
-│   └── use-notification-store.ts
-│
-└── types/               # Types TypeScript globaux
-    └── index.ts
-```
-
-## 🎨 Architecture
-
-Le projet suit une architecture **Feature-Sliced Design** avec:
-
-- ✅ Séparation claire des responsabilités
-- ✅ Modules autonomes par fonctionnalité
-- ✅ State management avec Zustand (léger et performant)
-- ✅ Server Components + Client Components
-- ✅ Type safety avec TypeScript strict
-- ✅ Composants UI accessibles avec Radix UI
-- ✅ Système de design cohérent avec shadcn/ui
-
-## 🔧 Configuration
-
-### Thèmes
-
-Le système de thèmes utilise `next-themes` avec support automatique du mode sombre/clair.
-
-### Variables CSS
-
-Les couleurs et styles sont configurables via CSS variables dans `globals.css`.
-
-## 📊 State Management
-
-- **Zustand** pour l'état global (settings, progress, notifications)
-- **TanStack Query** pour le server state et le caching
-- **React Hook Form** pour les formulaires
-- **localStorage** pour la persistance
-
-## 🎯 Niveaux supportés
+## 🎯 Niveaux Supportés
 
 - TCS - Tronc Commun Scientifique
 - 1BSE - 1ère Bac Sciences Expérimentales
@@ -139,9 +82,34 @@ Les couleurs et styles sont configurables via CSS variables dans `globals.css`.
 - 2BSM - 2ème Bac Sciences Mathématiques
 - 2BECO - 2ème Bac Sciences Économiques
 
+---
+
+## ⚠️ Important
+
+### Versions 100% Séparées
+
+Chaque version est **complètement autonome**:
+- ✅ Zéro dépendance croisée
+- ✅ Dependencies séparées (`node_modules` propres)
+- ✅ Configurations indépendantes
+- ✅ Builds séparés
+
+### Ports Différents
+
+- **Next.js**: http://localhost:3000
+- **Vite**: http://localhost:5173
+
+💡 **Ne confondez pas**: Si vous voyez "Smart Chapter Manager", vous avez lancé la mauvaise version!
+
+---
+
 ## 🤝 Contribution
 
-Les contributions sont les bienvenues! Voir [ARCHITECTURE_V2.md](./ARCHITECTURE_V2.md) pour les détails d'architecture.
+Les contributions sont les bienvenues!
+
+Pour contribuer à la version Next.js, consultez:
+- [ARCHITECTURE_V2.md](./math-pedago-nextjs/ARCHITECTURE_V2.md)
+- [OPTIMIZATIONS.md](./math-pedago-nextjs/OPTIMIZATIONS.md)
 
 ## 📝 License
 

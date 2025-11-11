@@ -1,0 +1,161 @@
+{
+  "header": {
+    "title": "Fonctions Numériques",
+    "subtitle": "Étude Graphique et Applications",
+    "classe": "1ère Bac Sciences Mathématiques",
+    "chapter": "Fonctions"
+  },
+  "sections": [
+    {
+      "title": "Introduction aux Fonctions",
+      "subsections": [
+        {
+          "title": "Définitions de Base",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "Une fonction est une relation entre deux ensembles :",
+              "content": "Soit $E$ et $F$ deux ensembles. Une application $f$ de $E$ vers $F$ est une règle qui associe à **chaque élément** $x \\in E$ **un unique élément** $f(x) \\in F$.\n\nOn note : $$f : E \\rightarrow F$$",
+              "image": {
+                "src": "/1bac_sm/fonctions/pictures/img_def_001.png",
+                "position": "right",
+                "align": "center",
+                "width": "40%",
+                "alt": "Diagramme sagittal d'une fonction",
+                "caption": "Figure 1: Représentation d'une application f : E → F"
+              }
+            },
+            {
+              "type": "example-box",
+              "preamble": "Exemples de fonctions usuelles avec leurs graphes :",
+              "listType": "bullet",
+              "content": [
+                "**Fonction identité :** $f(x) = x$",
+                "**Fonction carré :** $g(x) = x^2$",
+                "**Fonction inverse :** $h(x) = \\frac{1}{x}$ (avec $x \\neq 0$)"
+              ],
+              "image": {
+                "src": "/1bac_sm/fonctions/pictures/img_ex_001.svg",
+                "position": "bottom",
+                "align": "center",
+                "width": "70%",
+                "caption": "Graphes des fonctions identité, carré et inverse"
+              }
+            },
+            {
+              "type": "practice-box",
+              "statement": "**Exercice d'application :** Déterminer l'ensemble de définition des fonctions suivantes :",
+              "content": [
+                "$f(x) = \\frac{x+1}{x-2}$",
+                "$g(x) = \\sqrt{x-3}$",
+                "$h(x) = \\frac{1}{\\sqrt{4-x^2}}$"
+              ],
+              "placeholder": "Pour l'ensemble de définition, pensez aux conditions d'existence..."
+            }
+          ]
+        },
+        {
+          "title": "Variations et Extremums",
+          "elements": [
+            {
+              "type": "p",
+              "content": "L'étude des variations d'une fonction permet de comprendre son comportement global."
+            },
+            {
+              "type": "theorem-box",
+              "content": "Soit $f$ une fonction dérivable sur un intervalle $I$ :\n\n• $f$ est **croissante** sur $I$ si et seulement si $f'(x) \\geq 0$ pour tout $x \\in I$\n\n• $f$ est **décroissante** sur $I$ si et seulement si $f'(x) \\leq 0$ pour tout $x \\in I$",
+              "image": {
+                "src": "/1bac_sm/fonctions/pictures/img_thm_001.png",
+                "position": "top",
+                "align": "center",
+                "width": "60%",
+                "alt": "Graphe montrant fonction croissante et décroissante",
+                "caption": "Lien entre signe de la dérivée et variations"
+              }
+            },
+            {
+              "type": "p",
+              "content": "!> **Attention :** Un maximum local n'est pas nécessairement le maximum global de la fonction !"
+            },
+            {
+              "type": "practice-box",
+              "statement": "**Exercice :** Soit $f(x) = x^3 - 3x + 1$. Observer le graphe ci-contre :",
+              "content": [
+                "Déterminer graphiquement les intervalles de monotonie.",
+                "Identifier les extremums locaux.",
+                "Calculer $f'(x)$ et vérifier vos réponses analytiquement."
+              ],
+              "image": {
+                "src": "/1bac_sm/fonctions/pictures/img_prac_001.svg",
+                "position": "left",
+                "width": "45%",
+                "alt": "Graphe de la fonction cubique",
+                "caption": "Courbe de f(x) = x³ - 3x + 1"
+              }
+            },
+            {
+              "type": "explain-box",
+              "statement": "**Analyse :**\n\nRécapitulez les points clés : lien entre dérivée et variations, identification d'extremums. Vérifiez que vos calculs de dérivée correspondent aux observations graphiques."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Applications Géométriques",
+      "subsections": [
+        {
+          "title": "Tangentes et Asymptotes",
+          "elements": [
+            {
+              "type": "definition-box",
+              "content": "La **tangente** à la courbe de $f$ au point $A(a, f(a))$ est la droite d'équation :\n\n$$y = f'(a)(x - a) + f(a)$$",
+              "image": {
+                "src": "/1bac_sm/fonctions/pictures/img_def_002.png",
+                "position": "right",
+                "width": "40%",
+                "alt": "Tangente à une courbe",
+                "caption": "Tangente au point A"
+              }
+            },
+            {
+              "type": "p",
+              "content": "?> **Astuce de calcul :**\n\nPour tracer rapidement une tangente :\n\n1. Calculez $f'(a)$ (pente)\n\n2. Tracez une droite passant par $A$ avec cette pente"
+            },
+            {
+              "type": "remark-box",
+              "listType": "bullet",
+              "content": [
+                "Une asymptote **verticale** apparaît lorsque $\\lim_{x \\to a} f(x) = \\pm\\infty$",
+                "Une asymptote **horizontale** $y = L$ signifie $\\lim_{x \\to \\pm\\infty} f(x) = L$",
+                "Une asymptote **oblique** $y = ax + b$ vérifie $\\lim_{x \\to \\pm\\infty} [f(x) - (ax + b)] = 0$"
+              ]
+            },
+            {
+              "type": "example-box",
+              "content": "**Fonction rationnelle avec asymptotes :**\n\nSoit $f(x) = \\frac{2x^2 + x - 1}{x - 1}$. Le graphe montre :\n\n• Asymptote verticale en $x = 1$\n\n• Asymptote oblique $y = 2x + 3$",
+              "image": {
+                "src": "/1bac_sm/fonctions/pictures/img_ex_002.svg",
+                "position": "bottom",
+                "align": "center",
+                "width": "65%",
+                "caption": "Asymptotes verticale et oblique"
+              }
+            },
+            {
+              "type": "practice-box",
+              "statement": "**Exercice complet :** Pour $g(x) = \\frac{x^2 - 4}{x + 2}$ :",
+              "content": [
+                "Simplifier l'expression de $g(x)$ (attention au domaine).",
+                "Déterminer les asymptotes éventuelles.",
+                "Calculer l'équation de la tangente en $x = 0$.",
+                "Tracer l'allure de la courbe."
+              ],
+              "placeholder": "Commencez par factoriser le numérateur..."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

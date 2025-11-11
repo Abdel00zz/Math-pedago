@@ -1,0 +1,43 @@
+{
+  "header": {
+    "chapter": "1ère BSE - Mathématiques",
+    "title": "Étude des fonctions",
+    "subtitle": "Dérivation et analyse des variations"
+  },
+  "sections": [
+    {
+      "title": "Limites et continuité",
+      "subsections": [
+        {
+          "title": "Notion de limite",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Limite en un point",
+              "content": "On dit que f(x) tend vers L quand x tend vers a si f(x) se rapproche arbitrairement de L lorsque x se rapproche de a"
+            },
+            {
+              "type": "example",
+              "content": "lim(x→0) (sin x)/x = 1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Dérivabilité",
+      "subsections": [
+        {
+          "title": "Nombre dérivé",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Dérivée en un point",
+              "content": "Le nombre dérivé de f en a est : f'(a) = lim(h→0) [f(a+h) - f(a)]/h"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

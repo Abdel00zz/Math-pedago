@@ -1,0 +1,40 @@
+{
+  "class": "tcs",
+  "chapter": "Calcul vectoriel dans le plan",
+  "sessionDates": [],
+  "videos": [],
+  "quiz": [
+    {
+      "id": "q_tcs_vectoriel_1",
+      "question": "Soient A, B, et C trois points. D'après la relation de Chasles, que vaut $\\vec{AB} + \\vec{BC}$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\vec{CA}$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$\\vec{AC}$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$\\vec{BA}$",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    }
+  ],
+  "exercises": [
+    {
+      "id": "exo_tcs_vectoriel_1",
+      "title": "Coordonnées de vecteurs",
+      "statement": "Dans un repère, on a les points $A(1, 2)$ et $B(-3, 5)$. Quelles sont les coordonnées du vecteur $\\vec{AB}$ ?",
+      "sub_questions": []
+    }
+  ],
+  "version": "v1.1.0-041bdc"
+}

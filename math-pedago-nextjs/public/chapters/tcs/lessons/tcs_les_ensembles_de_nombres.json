@@ -1,0 +1,101 @@
+{
+  "header": {
+    "chapter": "Terminale C - Mathématiques",
+    "title": "Les ensembles de nombres",
+    "subtitle": "ℕ, ℤ, ℚ, ℝ et leurs propriétés"
+  },
+  "sections": [
+    {
+      "title": "L'ensemble des entiers naturels ℕ",
+      "subsections": [
+        {
+          "title": "Définition et propriétés",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Ensemble ℕ",
+              "content": "ℕ = {0, 1, 2, 3, ...} est l'ensemble des entiers naturels. Il est muni des opérations d'addition et de multiplication."
+            },
+            {
+              "type": "property",
+              "title": "Propriétés de ℕ",
+              "content": "ℕ est stable pour l'addition et la multiplication. Il admet un élément neutre pour l'addition (0) et pour la multiplication (1)."
+            },
+            {
+              "type": "theorem",
+              "title": "Principe de récurrence",
+              "content": "Si P(n) est une propriété dépendant de n ∈ ℕ telle que P(0) est vraie et ∀n ∈ ℕ, P(n) ⟹ P(n+1), alors P(n) est vraie pour tout n ∈ ℕ."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "L'ensemble des entiers relatifs ℤ",
+      "subsections": [
+        {
+          "title": "Construction et propriétés",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Ensemble ℤ",
+              "content": "ℤ = {..., -2, -1, 0, 1, 2, ...} est l'ensemble des entiers relatifs. C'est l'extension de ℕ qui permet la soustraction."
+            },
+            {
+              "type": "property",
+              "content": "Tout élément de ℤ admet un opposé : pour tout a ∈ ℤ, il existe -a ∈ ℤ tel que a + (-a) = 0."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "L'ensemble des rationnels ℚ",
+      "subsections": [
+        {
+          "title": "Fractions et nombres rationnels",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Ensemble ℚ",
+              "content": "ℚ = {p/q | p ∈ ℤ, q ∈ ℤ*} est l'ensemble des nombres rationnels. Tout élément de ℚ peut s'écrire comme quotient de deux entiers."
+            },
+            {
+              "type": "property",
+              "title": "Densité de ℚ",
+              "content": "Entre deux rationnels distincts, il existe toujours un autre rationnel. On dit que ℚ est dense."
+            },
+            {
+              "type": "example",
+              "content": "3/4, -2/5, 7 = 7/1 sont des nombres rationnels."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "L'ensemble des réels ℝ",
+      "subsections": [
+        {
+          "title": "Nombres réels et irrationnels",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Ensemble ℝ",
+              "content": "ℝ est l'ensemble des nombres réels. Il contient tous les rationnels et les irrationnels (nombres qui ne peuvent pas s'écrire sous forme de fraction)."
+            },
+            {
+              "type": "example",
+              "content": "√2, π, e sont des nombres irrationnels appartenant à ℝ."
+            },
+            {
+              "type": "property",
+              "title": "Complétude de ℝ",
+              "content": "Toute suite de Cauchy dans ℝ converge dans ℝ. Cette propriété distingue ℝ de ℚ."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

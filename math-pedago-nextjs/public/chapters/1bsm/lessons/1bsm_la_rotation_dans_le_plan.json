@@ -1,0 +1,156 @@
+{
+  "header": {
+    "title": "La Rotation dans le Plan",
+    "subtitle": "Transformations géométriques",
+    "classe": "1ère Bac Sciences Mathématiques",
+    "chapter": "Chapitre 12",
+    "academicYear": "2025-2026"
+  },
+  "sections": [
+    {
+      "title": "Définition de la Rotation",
+      "subsections": [
+        {
+          "title": "Rotation de Centre O et d'Angle θ",
+          "elements": [
+            {
+              "type": "p",
+              "content": "La rotation est une transformation géométrique qui fait tourner tous les points du plan autour d'un point fixe appelé centre, d'un angle donné."
+            },
+            {
+              "type": "definition-box",
+              "preamble": "**Rotation** :",
+              "content": "Soit $O$ un point du plan et $\\theta$ un angle orienté.\n\nLa **rotation** de centre $O$ et d'angle $\\theta$, notée $R_{O,\\theta}$ ou $R(O, \\theta)$, est la transformation qui à tout point $M$ associe le point $M'$ tel que :\n\n$$OM' = OM \\quad \\text{et} \\quad (\\overrightarrow{OM}, \\overrightarrow{OM'}) = \\theta \\pmod{2\\pi}$$"
+            },
+            {
+              "type": "remark-box",
+              "content": "**Propriétés** :\n\nLe point $O$ est invariant par la rotation : $R(O, \\theta)(O) = O$\n\nLa rotation conserve les distances et les angles"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Rotation particulière** :",
+              "content": "La rotation de centre $O$ et d'angle $\\dfrac{\\pi}{2}$ (90°) transforme :\n- Le point $A$ situé à droite de $O$ en un point $A'$ situé au-dessus de $O$\n- Un carré en un carré tourné de 90°\n\nSi $OA = ___r___$, alors $OA' = r$ également."
+            }
+          ]
+        },
+        {
+          "title": "Détermination d'une Rotation",
+          "elements": [
+            {
+              "type": "property-box",
+              "preamble": "**Caractérisation d'une rotation** :",
+              "content": "Une rotation est entièrement déterminée par la donnée de :\n\n**Méthode 1** : Son centre $O$ et son angle $\\theta$\n\n**Méthode 2** : Deux couples de points $(A, A')$ et $(B, B')$ tels que $AA' = BB'$ et les médiatrices de $[AA']$ et $[BB']$ se coupent en un point $O$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Propriétés des Rotations",
+      "subsections": [
+        {
+          "title": "Conservation des Propriétés Géométriques",
+          "elements": [
+            {
+              "type": "property-box",
+              "preamble": "**Propriétés conservées** :",
+              "content": [
+                "**Distances** : $M'N' = MN$ pour tous points $M$, $N$",
+                "**Angles** : Les angles sont conservés en mesure et en sens",
+                "**Alignement** : Si $A$, $B$, $C$ sont alignés, alors $A'$, $B'$, $C'$ sont alignés",
+                "**Orthogonalité** : Si deux droites sont perpendiculaires, leurs images le sont aussi",
+                "**Aire** : L'aire d'une figure est égale à l'aire de son image"
+              ],
+              "listType": "bullet"
+            },
+            {
+              "type": "p",
+              "content": "?> **Conséquence** : La rotation transforme un triangle en un triangle isométrique (de mêmes dimensions), un cercle en un cercle de même rayon, etc."
+            }
+          ]
+        },
+        {
+          "title": "Composition de Rotations",
+          "elements": [
+            {
+              "type": "property-box",
+              "preamble": "**Composition de rotations de même centre** :",
+              "content": "La composée de deux rotations de même centre $O$ et d'angles $\\alpha$ et $\\beta$ est une rotation de centre $O$ et d'angle $\\alpha + \\beta$ :\n\n$$R(O, \\beta) \\circ R(O, \\alpha) = R(O, \\alpha + \\beta)$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Application** :",
+              "content": "Soit $R_1 = R\\left(O, \\dfrac{\\pi}{3}\\right)$ et $R_2 = R\\left(O, \\dfrac{\\pi}{6}\\right)$.\n\n$$R_2 \\circ R_1 = R\\left(O, \\dfrac{\\pi}{3} + \\dfrac{\\pi}{6}\\right) = R\\left(O, \\dfrac{2\\pi + \\pi}{6}\\right) = R\\left(O, \\dfrac{\\pi}{___2___}\\right)$$"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Rotation réciproque** :",
+              "content": "La rotation réciproque de $R(O, \\theta)$ est la rotation $R(O, -\\theta)$ :\n\n$$R(O, -\\theta) \\circ R(O, \\theta) = \\text{Id}$$\n\noù $\\text{Id}$ est la transformation identité."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Écriture Complexe",
+      "subsections": [
+        {
+          "title": "Utilisation des Nombres Complexes",
+          "elements": [
+            {
+              "type": "p",
+              "content": "Dans le plan complexe, les rotations s'expriment de manière très élégante à l'aide des nombres complexes."
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Forme complexe** :",
+              "content": "Dans un repère orthonormé, si on associe à chaque point $M(x; y)$ le nombre complexe $z = x + iy$ :\n\nLa rotation de centre $O$ (origine) et d'angle $\\theta$ transforme le point d'affixe $z$ en le point d'affixe $z'$ tel que :\n\n$$z' = e^{i\\theta} \\cdot z$$\n\noù $e^{i\\theta} = \\cos(\\theta) + i\\sin(\\theta)$"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Rotation de centre quelconque** :",
+              "content": "Pour une rotation de centre $\\Omega$ d'affixe $\\omega$ et d'angle $\\theta$ :\n\n$$z' - \\omega = e^{i\\theta}(z - \\omega)$$\n\nOu encore :\n$$z' = e^{i\\theta}(z - \\omega) + \\omega$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Calcul d'image** :",
+              "content": "Déterminer l'image du point $A$ d'affixe $z_A = 1 + i$ par la rotation de centre $O$ et d'angle $\\dfrac{\\pi}{2}$.\n\n$$z_{A'} = e^{i\\frac{\\pi}{2}} \\cdot z_A = (\\cos\\frac{\\pi}{2} + i\\sin\\frac{\\pi}{2})(1 + i)$$\n\n$$= i(1 + i) = i + i^2 = i - 1 = ___-1 + i___$$\n\nDonc $A'(-1; 1)$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Applications des Rotations",
+      "subsections": [
+        {
+          "title": "Résolution de Problèmes",
+          "elements": [
+            {
+              "type": "practice-box",
+              "statement": "Soit $ABC$ un triangle équilatéral de centre $O$. Déterminer l'image de ce triangle par la rotation $R\\left(O, \\dfrac{2\\pi}{3}\\right)$.",
+              "content": [
+                "Déterminer les images des sommets $A$, $B$, $C$",
+                "Caractériser l'image du triangle"
+              ],
+              "solution": [
+                "Par la rotation $R\\left(O, \\dfrac{2\\pi}{3}\\right)$ :\n- $A$ est transformé en $B$ (car l'angle au centre entre deux sommets consécutifs d'un triangle équilatéral est $\\frac{2\\pi}{3}$)\n- $B$ est transformé en $C$\n- $C$ est transformé en $A$",
+                "L'image du triangle $ABC$ est le triangle $BCA$, qui est le même triangle.\n\nCela montre que le triangle équilatéral est invariant par rotation d'angle $\\frac{2\\pi}{3}$ autour de son centre."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Figures à Symétrie de Rotation",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Symétrie de rotation** :",
+              "content": "Une figure possède une **symétrie de rotation** d'ordre $n$ s'il existe une rotation d'angle $\\dfrac{2\\pi}{n}$ qui laisse la figure invariante.\n\nExemples :\n- Carré : symétrie d'ordre 4 (angle $\\frac{\\pi}{2}$)\n- Triangle équilatéral : symétrie d'ordre 3 (angle $\\frac{2\\pi}{3}$)\n- Hexagone régulier : symétrie d'ordre 6 (angle $\\frac{\\pi}{3}$)"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

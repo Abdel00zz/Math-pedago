@@ -1,0 +1,1000 @@
+{
+  "class": "2bse",
+  "chapter": "Dérivation et étude des fonctions",
+  "sessionDates": [
+    "2025-11-02T01:30:00Z"
+  ],
+  "lessonFile": "lessons/derivation_fonctions_usuelles.json",
+  "videos": [],
+  "quiz": [
+    {
+      "id": "q_mcq_1",
+      "question": "Graphiquement, un 'point anguleux' sur la courbe d'une fonction en $x=a$ signifie que :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "La fonction n'est pas continue en $a$.",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "La fonction n'est pas dérivable en $a$.",
+          "is_correct": true,
+          "explanation": "Un point anguleux indique que la dérivée à gauche et la dérivée à droite en $a$ sont différentes. La fonction n'est donc pas dérivable en ce point."
+        },
+        {
+          "text": "La tangente à la courbe en $a$ est horizontale.",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_mcq_2",
+      "question": "Quelle est la relation correcte entre la dérivabilité et la continuité d'une fonction en un point ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Si une fonction est continue en un point, alors elle est dérivable en ce point.",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Si une fonction est dérivable en un point, alors elle est continue en ce point.",
+          "is_correct": true,
+          "explanation": "C'est une propriété fondamentale du cours. La dérivabilité est une condition plus forte que la continuité."
+        },
+        {
+          "text": "Une fonction est dérivable si et seulement si elle est continue.",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_mcq_3",
+      "question": "Une fonction $f$ est dérivable en $a$ si et seulement si :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Elle est continue en $a$.",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Ses dérivées à droite et à gauche en $a$ existent et sont égales.",
+          "is_correct": true,
+          "explanation": "C'est la définition même de la dérivabilité en un point : $f'_d(a) = f'_g(a) = l$, où $l$ est un nombre réel fini."
+        },
+        {
+          "text": "Sa courbe admet une tangente au point d'abscisse $a$.",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_mcq_4",
+      "question": "Si $f'(a) = 0$, que peut-on interpréter géométriquement ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "La courbe de $f$ admet une tangente verticale au point d'abscisse $a$.",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "La courbe de $f$ admet une tangente horizontale au point d'abscisse $a$.",
+          "is_correct": true,
+          "explanation": "Le nombre dérivé est le coefficient directeur de la tangente. Une pente de 0 signifie que la tangente est horizontale."
+        },
+        {
+          "text": "La fonction $f$ n'est pas définie en $a$.",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_mcq_5",
+      "question": "L'approximation affine d'une fonction $f$ au voisinage de $a$ est donnée par l'équation de :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "La fonction $f$ elle-même.",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "La tangente à la courbe de $f$ au point $a$.",
+          "is_correct": true,
+          "explanation": "L'équation $y = f'(a)(x-a) + f(a)$ est celle de la tangente, qui constitue la meilleure approximation affine de $f$ localement autour de $a$."
+        },
+        {
+          "text": "Une droite passant par l'origine.",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_mcq_6",
+      "question": "Si $\\displaystyle \\lim_{x \\to a^+} \\frac{f(x)-f(a)}{x-a} = +\\infty$, alors la courbe de $f$ admet :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Une demi-tangente horizontale à droite en $a$.",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Un point anguleux en $a$.",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Une demi-tangente verticale dirigée vers le haut à droite en $a$.",
+          "is_correct": true,
+          "explanation": "Une limite infinie du taux d'accroissement se traduit graphiquement par une tangente verticale."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_mcq_7",
+      "question": "Pour que la fonction réciproque $f^{-1}$ soit dérivable en $f(a)$, une condition essentielle sur $f$ est que :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$f(a)$ doit être non nul.",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$f'(a)$ doit être non nul.",
+          "is_correct": true,
+          "explanation": "La formule $(f^{-1})'(f(a)) = 1/f'(a)$ montre que $f'(a)$ ne peut pas être nul, sinon on diviserait par zéro. Géométriquement, cela évite une tangente horizontale sur $f$ qui deviendrait une tangente verticale sur $f^{-1}$."
+        },
+        {
+          "text": "$f$ doit être positive.",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_mcq_8",
+      "question": "Le signe de la fonction dérivée $f'(x)$ sur un intervalle $I$ nous informe sur :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "La position de la courbe de $f$ par rapport à l'axe des abscisses.",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "La monotonie (sens de variation) de la fonction $f$.",
+          "is_correct": true,
+          "explanation": "Si $f' > 0$, $f$ est croissante. Si $f' < 0$, $f$ est décroissante. C'est l'application principale de la dérivation."
+        },
+        {
+          "text": "La concavité de la courbe de $f$.",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_mcq_9",
+      "question": "Si $f$ admet un extremum local en $a$ et est dérivable en $a$, alors :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$f'(a)$ doit être positif.",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$f'(a) = 0$.",
+          "is_correct": true,
+          "explanation": "C'est une condition nécessaire pour un extremum local dans un intervalle ouvert. La tangente à la courbe y est horizontale."
+        },
+        {
+          "text": "$f'(a)$ n'existe pas.",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_mcq_10",
+      "question": "Si $f'(c)=0$, peut-on toujours conclure que $f$ admet un extremum local en $c$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Oui, car la tangente est horizontale.",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Non, il faut aussi que la dérivée $f'$ change de signe en $c$.",
+          "is_correct": true,
+          "explanation": "C'est la condition suffisante. Si $f'$ s'annule SANS changer de signe, il s'agit d'un point d'inflexion à tangente horizontale."
+        },
+        {
+          "text": "Oui, mais seulement si la fonction est un polynôme.",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_mcq_11",
+      "question": "Le signe de la dérivée seconde $f''(x)$ sur un intervalle $I$ nous renseigne sur :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Le sens de variation de $f$.",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "La concavité de la courbe de $f$.",
+          "is_correct": true,
+          "explanation": "Si $f'' > 0$, la fonction est convexe (courbe 'au-dessus' de ses tangentes). Si $f'' < 0$, la fonction est concave (courbe 'en-dessous' de ses tangentes)."
+        },
+        {
+          "text": "L'existence d'asymptotes.",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_mcq_12",
+      "question": "Un point d'inflexion est un point où :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "La fonction dérivée $f'$ s'annule.",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "La courbe traverse sa tangente.",
+          "is_correct": true,
+          "explanation": "C'est la définition géométrique d'un point d'inflexion. La concavité de la courbe change en ce point."
+        },
+        {
+          "text": "La fonction atteint un maximum ou un minimum.",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_mcq_13",
+      "question": "Si $\\displaystyle \\lim_{x \\to +\\infty} f(x) = b$ (où $b$ est un réel), que peut-on dire de la courbe de $f$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Elle admet une asymptote verticale d'équation $x=b$.",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Elle admet une asymptote horizontale d'équation $y=b$.",
+          "is_correct": true,
+          "explanation": "C'est la définition d'une asymptote horizontale au voisinage de $+\\infty$."
+        },
+        {
+          "text": "Elle admet une asymptote oblique.",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_mcq_14",
+      "question": "Pour étudier l'existence d'une asymptote oblique, quelle est la première limite à calculer ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\displaystyle \\lim_{x \\to \\infty} (f(x) - x)$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$\\displaystyle \\lim_{x \\to \\infty} f(x)$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$\\displaystyle \\lim_{x \\to \\infty} \\frac{f(x)}{x}$",
+          "is_correct": true,
+          "explanation": "C'est la première étape cruciale. Si cette limite est un réel fini non nul $a$, on peut alors chercher $b = \\displaystyle \\lim_{x \\to \\infty} (f(x) - ax)$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_mcq_15",
+      "question": "La dérivée de la fonction composée $(g \\circ f)(x)$ est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$g'(x) \\times f'(x)$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$g'(f(x)) \\times f'(x)$",
+          "is_correct": true,
+          "explanation": "C'est la formule de la dérivation en chaîne (chain rule). On dérive la fonction 'extérieure' $g$ et on l'évalue en $f(x)$, puis on multiplie par la dérivée de la fonction 'intérieure' $f$."
+        },
+        {
+          "text": "$g'(f'(x))$",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_mcq_16",
+      "question": "Soit $f$ une fonction dérivable sur $\\mathbb{R}$. Si on sait que $f$ est une fonction paire, que peut-on dire de sa fonction dérivée $f'$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$f'$ est une fonction paire.",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$f'$ est une fonction impaire.",
+          "is_correct": true,
+          "explanation": "Si $f(x)=f(-x)$, en dérivant on obtient $f'(x) = -f'(-x)$ en utilisant la dérivation en chaîne, ce qui est la définition d'une fonction impaire."
+        },
+        {
+          "text": "On ne peut rien en déduire.",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_mcq_17",
+      "question": "La condition $f''(a)=0$ est une condition...",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "suffisante pour avoir un point d'inflexion en $a$.",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "nécessaire pour avoir un point d'inflexion en $a$ (si $f''$ existe).",
+          "is_correct": true,
+          "explanation": "Si $f$ est deux fois dérivable et a un point d'inflexion en $a$, alors il est nécessaire que $f''(a)=0$."
+        },
+        {
+          "text": "nécessaire et suffisante pour avoir un point d'inflexion en $a$.",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_mcq_18",
+      "question": "Quelle information est indispensable pour déterminer l'équation de la tangente à la courbe de $f$ en $a$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Le signe de $f'(a)$ seulement.",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Les valeurs de $f(a)$ et $f'(a)$.",
+          "is_correct": true,
+          "explanation": "L'équation est $y=f'(a)(x-a)+f(a)$. Il nous faut le point de passage $(a, f(a))$ et la pente $f'(a)$."
+        },
+        {
+          "text": "La limite de $f$ en $a$.",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_mcq_19",
+      "question": "Pour la fonction $f(x) = \\sqrt{u(x)}$, sa dérivée existe seulement si :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$u(x)$ est dérivable.",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$u(x)$ est dérivable et $u(x) > 0$.",
+          "is_correct": true,
+          "explanation": "Il faut que $u$ soit dérivable et surtout strictement positive pour que la fonction racine carrée soit elle-même dérivable (sa dérivée étant $\\displaystyle \\frac{1}{2\\sqrt{X}})$."
+        },
+        {
+          "text": "$u(x)$ est positive ou nulle.",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_mcq_20",
+      "question": "La dérivée d'une fonction constante sur un intervalle est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "La fonction nulle.",
+          "is_correct": true,
+          "explanation": "Une fonction constante a un taux de variation nul en tout point. Sa pente est toujours 0."
+        },
+        {
+          "text": "La constante elle-même.",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Indéfinie.",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_mcq_21",
+      "question": "<b>[Type Concours Médecine]</b> Soit $f$ une fonction dérivable telle que $f(2)=3$ et $f'(2)=4$. Soit $f^{-1}$ sa fonction réciproque. Que vaut $(f^{-1})'(3)$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "1/4",
+          "is_correct": true,
+          "explanation": "On utilise la formule $(f^{-1})'(y_0) = 1/f'(x_0)$ avec $y_0=f(x_0)$. Ici $y_0=3$ et $x_0=2$. Donc, $(f^{-1})'(3) = 1/f'(2) = 1/4$."
+        },
+        {
+          "text": "4",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "1/3",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_mcq_22",
+      "question": "<b>[Type Concours ENSA]</b> Soit $f$ une fonction dérivable sur $\\mathbb{R}$. Laquelle de ces affirmations est TOUJOURS vraie ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Si $f'(x) \\ge 0$ sur $\\mathbb{R}$, alors $f$ est strictement croissante sur $\\mathbb{R}$.",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Si $f$ est croissante sur $\\mathbb{R}$, alors $f'(x) \\ge 0$ sur $\\mathbb{R}$.",
+          "is_correct": true,
+          "explanation": "C'est une propriété directe du cours. La pente d'une fonction croissante est toujours positive ou nulle."
+        },
+        {
+          "text": "Si $f$ admet un maximum global en $a$, alors $f''(a) < 0$.",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_mcq_23",
+      "question": "<b>[Type Concours ENSAM]</b> On observe la courbe d'une fonction $f$. Elle possède une tangente verticale en $x=-1$ et un point anguleux en $x=2$. Sur quel ensemble la fonction $f'$ est-elle assurément définie ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\mathbb{R}$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$\\mathbb{R} \\setminus \\{-1, 2\\}$",
+          "is_correct": true,
+          "explanation": "Une tangente verticale et un point anguleux sont des points de non-dérivabilité. La fonction dérivée $f'$ existe donc en dehors de ces points (si la fonction est 'lisse' ailleurs)."
+        },
+        {
+          "text": "$\\mathbb{R} \\setminus \\{2\\}$",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    }
+  ],
+  "exercises": [
+    {
+      "id": "exo_img_3",
+      "title": "Étude d'une fonction polynomiale",
+      "statement": "Soit la fonction définie sur $\\mathbb{R}$ par : $f(x) = x^3 - 3x + 3$. Et $(\\mathscr{C}_f)$ sa courbe dans un repère orthonormé $(O; \\vec{i}, \\vec{j})$.",
+      "sub_questions": [
+        {
+          "text": "Calculer les limites de $f(x)$ en $+\\infty$ et en $-\\infty$.",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Étudier les branches infinies de $(\\mathscr{C}_f)$.",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Étudier les variations de $f$ puis dresser le tableau de variations de $f$.",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Étudier la concavité de $(\\mathscr{C}_f)$ en déterminant ses points d'inflexions s'ils existent.",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Montrer que le point $I(0; 3)$ est un centre de symétrie de $(\\mathscr{C}_f)$.",
+          "questionNumber": "5",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Construire la courbe $(\\mathscr{C}_f)$.",
+          "questionNumber": "6",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Soit $g$ la restriction de $f$ sur l'intervalle $I = ]-\\infty; -1]$.",
+          "questionNumber": "7",
+          "sub_sub_questions": [
+            {
+              "text": "Montrer que $g$ admet une fonction réciproque $g^{-1}$ définie sur un intervalle $J$ à déterminer."
+            },
+            {
+              "text": "Montrer que l'équation $g(x) = 0$ admet une unique solution $\\alpha$ dans $]-3; -2[$."
+            },
+            {
+              "text": "Montrer que $g^{-1}$ est dérivable en 0 puis calculer $(g^{-1})'(0)$."
+            },
+            {
+              "text": "Tracer $(\\mathscr{C}_{g^{-1}})$ dans le même repère."
+            }
+          ],
+          "images": []
+        }
+      ],
+      "hint": [
+        {
+          "text": "**Points d'inflexion et dérivée seconde** : Un point d'inflexion est un point où la courbe traverse sa tangente, ce qui correspond à un changement de concavité. Calculez $f''(x)$ et étudiez son signe.",
+          "questionNumber": "4"
+        },
+        {
+          "text": "**Centre de symétrie** : Pour prouver que le point $I(a, b)$ est un centre de symétrie, il faut vérifier la condition $f(a+x) + f(a-x) = 2b$ pour tout $x$ dans le domaine. Ici, $a=0$ et $b=3$.",
+          "questionNumber": "5"
+        }
+      ]
+    },
+    {
+      "id": "exo_img_1",
+      "title": "Étude d'une fonction rationnelle",
+      "statement": "Soit la fonction numérique $f$ définie par : $$f(x) = \\frac{2x}{x^2 + 1}$$ Et $(\\mathscr{C}_f)$ sa courbe dans un repère orthonormé $(O; \\vec{i}, \\vec{j})$.",
+      "sub_questions": [
+        {
+          "text": "Déterminer $D_f$ puis calculer les limites de $f$ aux bornes de $D_f$.",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Étudier les branches infinies de $(\\mathscr{C}_f)$.",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Montrer que $(\\forall x \\in \\mathbb{R})$, $f'(x) = \\frac{2(1 - x^2)}{(x^2 + 1)^2}$, puis dresser le tableau de variations de $f$.",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Montrer que $(\\forall x \\in \\mathbb{R})$, $f''(x) = \\frac{4x(x^2 - 3)}{(x^2 + 1)^3}$, puis étudier la concavité de $(\\mathscr{C}_f)$.",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Donner une équation de la tangente $(T)$ à $(\\mathscr{C}_f)$ au point O.",
+          "questionNumber": "5",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Construire la courbe $(\\mathscr{C}_f)$.",
+          "questionNumber": "6",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Soit $g$ la restriction de $f$ sur l'intervalle $I = [1; +\\infty[$.",
+          "questionNumber": "7",
+          "sub_sub_questions": [
+            {
+              "text": "Montrer que $g$ admet une fonction réciproque $g^{-1}$ définie sur un intervalle $J$ à déterminer."
+            },
+            {
+              "text": "Montrer que $g^{-1}$ est dérivable en $\\frac{4}{5}$ puis calculer $(g^{-1})'(\\frac{4}{5})$."
+            },
+            {
+              "text": "Tracer la courbe $(\\mathscr{C}_{g^{-1}})$ dans le même repère."
+            }
+          ],
+          "images": []
+        }
+      ],
+      "hint": [
+        {
+          "text": "**Limites d'une fonction rationnelle** : Pour calculer les limites en $+\\infty$ et $-\\infty$, comparez les degrés du numérateur et du dénominateur. La règle des termes de plus haut degré s'applique ici.",
+          "questionNumber": "1"
+        },
+        {
+          "text": "**Formule de la dérivée d'un quotient** : Pour calculer $f'(x)$, utilisez la formule $\\displaystyle \\left(\\frac{u}{v}\\right)' = \\frac{u'v - uv'}{v^2}$ avec $u(x) = 2x$ et $v(x) = x^2 + 1$.",
+          "questionNumber": "3"
+        },
+        {
+          "text": "**Dérivée seconde et concavité** : Pour $f''(x)$, il faut dériver $f'(x)$. C'est une nouvelle application de la règle du quotient. Le signe de $f''(x)$ vous donnera la concavité de la courbe.",
+          "questionNumber": "4"
+        }
+      ]
+    },
+    {
+      "id": "exo_img_4",
+      "title": "Fonction avec racine carrée",
+      "statement": "Soit la fonction numérique définie sur $[0; +\\infty[$ par : $$f(x) = x - 2\\sqrt{x} + 2$$ Et $(\\mathscr{C}_f)$ sa courbe dans un repère orthonormé $(O; \\vec{i}, \\vec{j})$.",
+      "sub_questions": [
+        {
+          "text": "Calculer $\\displaystyle \\lim_{x \\to +\\infty} f(x)$, puis déterminer la branche infinie de $(\\mathscr{C}_f)$.",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Étudier la dérivabilité de $f$ à droite en 0 puis interpréter géométriquement le résultat obtenu.",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Étudier la position relative de $(\\mathscr{C}_f)$ par rapport à la droite d'équation $y = x$.",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Analyse de la dérivée",
+          "questionNumber": "4",
+          "sub_sub_questions": [
+            {
+              "text": "Calculer $f'(x)$ pour tout $x \\in ]0; +\\infty[$."
+            },
+            {
+              "text": "Dresser le tableau de variations de $f$."
+            }
+          ],
+          "images": []
+        },
+        {
+          "text": "Tracer $(\\mathscr{C}_f)$ dans le repère $(O; \\vec{i}, \\vec{j})$.",
+          "questionNumber": "5",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Soit $g$ la restriction de $f$ sur l'intervalle $I = [1; +\\infty[$.",
+          "questionNumber": "6",
+          "sub_sub_questions": [
+            {
+              "text": "Montrer que $g$ admet une fonction réciproque $g^{-1}$ définie sur un intervalle $J$ à déterminer."
+            },
+            {
+              "text": "Calculer $g(4)$ et montrer que $g^{-1}$ est dérivable en 2 puis calculer $(g^{-1})'(2)$."
+            },
+            {
+              "text": "Montrer que pour tout $x \\in J; g^{-1}(x) = (1 + \\sqrt{x-1})^2$."
+            },
+            {
+              "text": "Tracer $(\\mathscr{C}_{g^{-1}})$ dans le même repère."
+            }
+          ],
+          "images": []
+        }
+      ],
+      "hint": [
+        {
+          "text": "**Dérivabilité en un point** : Pour étudier la dérivabilité en $0$, vous devez calculer la limite du taux d'accroissement : $\\displaystyle \\lim_{x \\to 0^+} \\frac{f(x) - f(0)}{x - 0}$. Si la limite est infinie, la courbe admet une demi-tangente verticale.",
+          "questionNumber": "2"
+        },
+        {
+          "text": "**Position relative** : Pour comparer la courbe et la droite, étudiez le signe de la différence $d(x) = f(x) - x$. Si $d(x) > 0$, la courbe est au-dessus de la droite. Si $d(x) < 0$, elle est en dessous.",
+          "questionNumber": "3"
+        }
+      ]
+    },
+    {
+      "id": "exo_img_2",
+      "title": "Fonction avec racine et asymptote",
+      "statement": "Soit $f$ la fonction définie par $f(x) = \\sqrt{x^2 - 1} - x + 1$ et $(\\mathscr{C}_f)$ sa courbe représentative dans un repère orthonormé $(O; \\vec{i}, \\vec{j})$.",
+      "sub_questions": [
+        {
+          "text": "Analyse de la fonction",
+          "questionNumber": "1",
+          "sub_sub_questions": [
+            {
+              "text": "Montrer que $D_f = ]-\\infty; -1] \\cup [1; +\\infty[$."
+            },
+            {
+              "text": "Montrer que $\\displaystyle \\lim_{x \\to +\\infty} f(x) = 1$. Interpréter géométriquement le résultat."
+            },
+            {
+              "text": "Montrer que la courbe $(\\mathscr{C}_f)$ admet une asymptote oblique en $-\\infty$ d'équation $y = -2x + 1$."
+            }
+          ],
+          "images": []
+        },
+        {
+          "text": "Exploitation de la dérivée",
+          "questionNumber": "2",
+          "sub_sub_questions": [
+            {
+              "text": "Calculer les deux limites suivantes puis interpréter le résultat géométriquement : $\\displaystyle \\lim_{x \\to -1^+} \\frac{f(x)-f(-1)}{x+1}$ et $\\displaystyle \\lim_{x \\to 1^+} \\frac{f(x)-f(1)}{x-1}$."
+            },
+            {
+              "text": "Prouver que $f$ est strictement croissante sur $[1, +\\infty[$ et strictement décroissante sur $]-\\infty, -1]$."
+            },
+            {
+              "text": "Donner le tableau de variations de la fonction $f$."
+            },
+            {
+              "text": "Tracer $(\\mathscr{C}_f)$ dans le repère $(O; \\vec{i}, \\vec{j})$."
+            }
+          ],
+          "images": []
+        },
+        {
+          "text": "Étude de la fonction réciproque",
+          "questionNumber": "3",
+          "sub_sub_questions": [
+            {
+              "text": "Montrer que $g$ admet une fonction réciproque $g^{-1}$ définie sur un intervalle $J$ à déterminer, où $g$ est la restriction de $f$ sur $I = [1, +\\infty[$."
+            },
+            {
+              "text": "Dresser le tableau de variations de la fonction $g^{-1}$."
+            },
+            {
+              "text": "Montrer que pour tout $x \\in J$, on a : $g^{-1}(x) = \\frac{-x^2 + 2x - 2}{2(x-1)}$."
+            }
+          ],
+          "images": []
+        }
+      ]
+    },
+    {
+      "id": "exo_img_5",
+      "title": "Étude avec fonction auxiliaire",
+      "statement": "",
+      "sub_questions": [
+        {
+          "text": "Soit $g$ la fonction définie sur $\\mathbb{R}$ par $$g(x) = 1 + \\frac{x}{\\sqrt{x^2+1}}$$",
+          "questionNumber": "1",
+          "sub_sub_questions": [
+            {
+              "text": "Vérifier que pour tout réel $x$ on a : $g'(x) = \\displaystyle \\frac{1}{(x^2+1)\\sqrt{x^2+1}}$."
+            },
+            {
+              "text": "Étudier les variations de $g$ et en déduire que pour tout réel $x : g(x) > 0$."
+            }
+          ],
+          "images": []
+        },
+        {
+          "text": "Soit $f$ la fonction définie sur $\\mathbb{R}$ par $f(x) = x - 1 + \\sqrt{x^2+1}$ et $(\\mathscr{C}_f)$ sa courbe représentative dans un repère orthonormé $(O, \\vec{i}, \\vec{j})$.",
+          "questionNumber": "2",
+          "sub_sub_questions": [
+            {
+              "text": "Calculer $\\displaystyle \\lim_{x \\to +\\infty} f(x)$."
+            },
+            {
+              "text": "Montrer que $\\displaystyle \\lim_{x \\to -\\infty} f(x) = -1$. Interpréter graphiquement le résultat obtenu."
+            },
+            {
+              "text": "Montrer que la droite $(\\Delta)$ d'équation $y = 2x - 1$ est une asymptote à $(\\mathscr{C}_f)$ au voisinage de $+\\infty$."
+            }
+          ],
+          "images": []
+        },
+        {
+          "text": "Lien entre $f$ et $g$",
+          "questionNumber": "3",
+          "sub_sub_questions": [
+            {
+              "text": "Vérifier que pour tout réel $x$ on a : $f'(x) = g(x)$."
+            },
+            {
+              "text": "Dresser le tableau de variation de $f$."
+            }
+          ],
+          "images": []
+        },
+        {
+          "text": "Tracer $(\\Delta)$ et $(\\mathscr{C}_f)$ dans le repère $(O, \\vec{i}, \\vec{j})$.",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Étude de la fonction réciproque",
+          "questionNumber": "5",
+          "sub_sub_questions": [
+            {
+              "text": "Montrer que $f$ admet une fonction réciproque $f^{-1}$ définie sur un intervalle $J$ que l'on déterminera."
+            },
+            {
+              "text": "Calculer $(f^{-1})'(\\sqrt{2})$."
+            },
+            {
+              "text": "Tracer $(\\mathscr{C}_{f^{-1}})$ la courbe représentative de $f^{-1}$ dans le même repère."
+            }
+          ],
+          "images": []
+        }
+      ]
+    },
+    {
+      "id": "exo_img_6",
+      "title": "Étude avancée d'une fonction rationnelle",
+      "statement": "Considérons la fonction $f$ définie par : $$f(x) = \\frac{2x^3 + 4x^2 + x}{(x+1)^2}$$ Et $(\\mathscr{C}_f)$ sa courbe représentative dans le plan rapporté à un repère orthogonal.",
+      "sub_questions": [
+        {
+          "text": "Déterminer $D_f$.",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Calculer $\\displaystyle \\lim_{x \\to -\\infty} f(x)$ et $\\displaystyle \\lim_{x \\to +\\infty} f(x)$.",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Calculer $\\displaystyle \\lim_{x \\to -1} f(x)$ et interpréter géométriquement le résultat.",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Vérifier que pour tout $x \\in D_f : f(x) = 2x - \\frac{x}{(x+1)^2}$.",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Montrer que la droite $(D)$ d'équation $y = 2x$ est asymptote oblique à $(\\mathscr{C}_f)$ en $-\\infty$ et $+\\infty$.",
+          "questionNumber": "5",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Calculer $f(x) - 2x$ et étudier la position relative de $(\\mathscr{C}_f)$ par rapport à $(D)$.",
+          "questionNumber": "6",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Vérifier que pour tout $x \\in D_f : f'(x) = \\frac{2x^3 + 6x^2 + 7x + 1}{(x+1)^3}$.",
+          "questionNumber": "7",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "En utilisant les informations sur la dérivée $f'$:",
+          "questionNumber": "8",
+          "sub_sub_questions": [
+            {
+              "text": "Montrer que l'équation $f'(x) = 0$ admet une unique solution $\\alpha$ sur $D_f$."
+            },
+            {
+              "text": "Dresser le tableau de variations de $f$ sur $D_f$."
+            }
+          ],
+          "images": []
+        },
+        {
+          "text": "Déterminer l'équation de la tangente $(T)$ au graphe de $f$ au point d'abscisse $-2$.",
+          "questionNumber": "9",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Déterminer l'intersection de $(\\mathscr{C}_f)$ avec l'axe des abscisses.",
+          "questionNumber": "10",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Soit $h$ la restriction de $f$ sur $I = [0, +\\infty[$.",
+          "questionNumber": "11",
+          "sub_sub_questions": [
+            {
+              "text": "Montrer que $h$ admet une fonction réciproque $h^{-1}$ définie sur un domaine $J$ à déterminer."
+            },
+            {
+              "text": "Dresser le tableau de variations de $h^{-1}$."
+            },
+            {
+              "text": "Montrer que la droite $(D')$ d'équation $y = \\frac{1}{2}x$ est asymptote oblique à $(\\mathscr{C}_{h^{-1}})$ en $+\\infty$."
+            }
+          ],
+          "images": []
+        },
+        {
+          "text": "Tracer $(T)$, $(D)$, $(\\mathscr{C}_f)$ et $(\\mathscr{C}_{h^{-1}})$ dans le même repère. (On donne $f(\\alpha) \\approx -0,1$ et $\\alpha \\approx -0,2$).",
+          "questionNumber": "12",
+          "sub_sub_questions": [],
+          "images": []
+        }
+      ],
+      "hint": [
+        {
+          "text": "**Vérification par mise au même dénominateur** : Pour vérifier l'égalité, partez de l'expression $2x - \\frac{x}{(x+1)^2}$ et mettez tout au même dénominateur. Vous devriez retomber sur l'expression initiale de $f(x)$.",
+          "questionNumber": "4"
+        },
+        {
+          "text": "**Asymptote oblique** : Pour montrer que $y=2x$ est une asymptote oblique, il suffit de prouver que $\\displaystyle \\lim_{x \\to \\pm\\infty} [f(x) - 2x] = 0$. La question 4 vous donne directement cette différence !",
+          "questionNumber": "5"
+        },
+        {
+          "text": "**Position relative** : La position de la courbe par rapport à son asymptote dépend du signe de la différence $f(x) - 2x$. Utilisez l'expression de la question 4 pour étudier ce signe facilement.",
+          "questionNumber": "6"
+        }
+      ]
+    }
+  ],
+  "version": "v1.1.0-b2669e"
+}

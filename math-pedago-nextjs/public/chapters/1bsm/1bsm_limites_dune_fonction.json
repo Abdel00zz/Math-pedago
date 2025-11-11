@@ -1,0 +1,687 @@
+{
+  "class": "1bsm",
+  "chapter": "Limites d'une fonction",
+  "sessionDates": [],
+  "lessonFile": "lessons/1bsm_limites_dune_fonction.json",
+  "videos": [],
+  "quiz": [
+    {
+      "id": "q_limites_1",
+      "question": "Quelle est la limite de $f(x) = \\frac{2x^2 - 1}{x^2 + 1}$ quand $x$ tend vers $+\\infty$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$+\\infty$",
+          "is_correct": false,
+          "explanation": "Non, on compare les degrés du numérateur et du dénominateur."
+        },
+        {
+          "text": "0",
+          "is_correct": false,
+          "explanation": "Le numérateur et le dénominateur ont le même degré."
+        },
+        {
+          "text": "2",
+          "is_correct": true,
+          "explanation": "Correct ! On divise par $x^2$ : $\\lim_{x \\to +\\infty} \\frac{2 - \\frac{1}{x^2}}{1 + \\frac{1}{x^2}} = \\frac{2}{1} = 2$."
+        },
+        {
+          "text": "$-1$",
+          "is_correct": false,
+          "explanation": "Vérifiez votre calcul en comparant les coefficients dominants."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_limites_2",
+      "question": "Quelle est la limite de $\\lim_{x \\to +\\infty} (3x^2 + 5x - 1)$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$+\\infty$",
+          "is_correct": true,
+          "explanation": "Exact ! Le terme de plus haut degré $3x^2$ tend vers $+\\infty$."
+        },
+        {
+          "text": "$-\\infty$",
+          "is_correct": false,
+          "explanation": "Le coefficient du terme dominant est positif."
+        },
+        {
+          "text": "0",
+          "is_correct": false,
+          "explanation": "Un polynôme de degré ≥ 1 ne tend pas vers 0 à l'infini."
+        },
+        {
+          "text": "5",
+          "is_correct": false,
+          "explanation": "Les termes non constants ne peuvent pas être négligés."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_limites_3",
+      "question": "Quelle est une forme indéterminée parmi les suivantes ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\frac{\\infty}{\\infty}$",
+          "is_correct": true,
+          "explanation": "Correct ! $\\frac{\\infty}{\\infty}$ est une forme indéterminée qui nécessite une étude approfondie."
+        },
+        {
+          "text": "$\\frac{a}{\\infty}$ où $a \\in \\mathbb{R}$",
+          "is_correct": false,
+          "explanation": "Cette forme n'est pas indéterminée : la limite est 0."
+        },
+        {
+          "text": "$\\frac{\\infty}{a}$ où $a \\neq 0$",
+          "is_correct": false,
+          "explanation": "Cette forme n'est pas indéterminée : la limite est $\\pm\\infty$."
+        },
+        {
+          "text": "$a + \\infty$ où $a \\in \\mathbb{R}$",
+          "is_correct": false,
+          "explanation": "Cette forme n'est pas indéterminée : la limite est $\\infty$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_limites_4",
+      "question": "Parmi les formes suivantes, laquelle est indéterminée ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\infty - \\infty$",
+          "is_correct": true,
+          "explanation": "Exact ! $\\infty - \\infty$ est une forme indéterminée."
+        },
+        {
+          "text": "$\\infty + \\infty$",
+          "is_correct": false,
+          "explanation": "Cette forme n'est pas indéterminée : la limite est $\\infty$."
+        },
+        {
+          "text": "$\\infty \\times \\infty$",
+          "is_correct": false,
+          "explanation": "Cette forme n'est pas indéterminée : la limite est $\\infty$."
+        },
+        {
+          "text": "$0 + \\infty$",
+          "is_correct": false,
+          "explanation": "Cette forme n'est pas indéterminée : la limite est $\\infty$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_limites_5",
+      "question": "Quelle est la limite de $\\lim_{x \\to 0} \\frac{\\sin(x)}{x}$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "1",
+          "is_correct": true,
+          "explanation": "Parfait ! C'est une limite remarquable fondamentale : $\\lim_{x \\to 0} \\frac{\\sin(x)}{x} = 1$."
+        },
+        {
+          "text": "0",
+          "is_correct": false,
+          "explanation": "Cette limite est non nulle."
+        },
+        {
+          "text": "$+\\infty$",
+          "is_correct": false,
+          "explanation": "La limite est finie."
+        },
+        {
+          "text": "n'existe pas",
+          "is_correct": false,
+          "explanation": "La limite existe et vaut 1."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_limites_6",
+      "question": "Une fonction $f$ admet une asymptote verticale d'équation $x = a$ si :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\lim_{x \\to a} f(x) = \\pm\\infty$",
+          "is_correct": true,
+          "explanation": "Exact ! Une asymptote verticale correspond à une limite infinie en un point."
+        },
+        {
+          "text": "$\\lim_{x \\to +\\infty} f(x) = a$",
+          "is_correct": false,
+          "explanation": "Ceci correspond à une asymptote horizontale."
+        },
+        {
+          "text": "$f(a) = 0$",
+          "is_correct": false,
+          "explanation": "La valeur de la fonction en $a$ ne détermine pas l'asymptote."
+        },
+        {
+          "text": "$\\lim_{x \\to a} f(x) = 0$",
+          "is_correct": false,
+          "explanation": "Une limite finie ne donne pas d'asymptote verticale."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_limites_7",
+      "question": "Une fonction $f$ admet une asymptote horizontale d'équation $y = b$ si :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\lim_{x \\to \\pm\\infty} f(x) = b$",
+          "is_correct": true,
+          "explanation": "Correct ! Une asymptote horizontale correspond à une limite finie à l'infini."
+        },
+        {
+          "text": "$\\lim_{x \\to b} f(x) = \\pm\\infty$",
+          "is_correct": false,
+          "explanation": "Ceci correspond à une asymptote verticale."
+        },
+        {
+          "text": "$f(0) = b$",
+          "is_correct": false,
+          "explanation": "La valeur en un point ne détermine pas l'asymptote horizontale."
+        },
+        {
+          "text": "$\\lim_{x \\to b} f(x) = 0$",
+          "is_correct": false,
+          "explanation": "Cette condition ne définit pas une asymptote horizontale."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_limites_8",
+      "question": "Pour une fonction $f$ de la forme $f(x) = ax + b + \\frac{c}{x}$ avec $a \\neq 0$, la droite $y = ax + b$ est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Une asymptote oblique",
+          "is_correct": true,
+          "explanation": "Parfait ! Quand $x \\to \\pm\\infty$, $\\frac{c}{x} \\to 0$ et $f(x) - (ax + b) \\to 0$."
+        },
+        {
+          "text": "Une asymptote horizontale",
+          "is_correct": false,
+          "explanation": "Une asymptote horizontale a une pente nulle ($a = 0$)."
+        },
+        {
+          "text": "Une asymptote verticale",
+          "is_correct": false,
+          "explanation": "Une asymptote verticale est de la forme $x = k$."
+        },
+        {
+          "text": "Pas une asymptote",
+          "is_correct": false,
+          "explanation": "C'est bien une asymptote oblique."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_limites_9",
+      "question": "Une fonction $f$ est continue en $a$ si :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\lim_{x \\to a} f(x) = f(a)$",
+          "is_correct": true,
+          "explanation": "Exact ! C'est la définition de la continuité en un point."
+        },
+        {
+          "text": "$\\lim_{x \\to a} f(x)$ existe",
+          "is_correct": false,
+          "explanation": "Il faut aussi que cette limite soit égale à $f(a)$."
+        },
+        {
+          "text": "$f(a)$ existe",
+          "is_correct": false,
+          "explanation": "L'existence de $f(a)$ ne suffit pas pour la continuité."
+        },
+        {
+          "text": "$\\lim_{x \\to a} f(x) = 0$",
+          "is_correct": false,
+          "explanation": "La limite doit être égale à $f(a)$, pas nécessairement 0."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_limites_10",
+      "question": "Le théorème des valeurs intermédiaires stipule que si $f$ est continue sur $[a, b]$ avec $f(a) \\times f(b) < 0$, alors :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Il existe $c \\in ]a, b[$ tel que $f(c) = 0$",
+          "is_correct": true,
+          "explanation": "Parfait ! C'est le théorème des valeurs intermédiaires (cas particulier de l'annulation)."
+        },
+        {
+          "text": "$f$ est dérivable sur $]a, b[$",
+          "is_correct": false,
+          "explanation": "La continuité n'implique pas la dérivabilité."
+        },
+        {
+          "text": "$f(a) = f(b)$",
+          "is_correct": false,
+          "explanation": "Au contraire, $f(a)$ et $f(b)$ sont de signes opposés."
+        },
+        {
+          "text": "$f$ est strictement monotone",
+          "is_correct": false,
+          "explanation": "Le théorème ne garantit pas la monotonie."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_limites_11",
+      "question": "Quelle est la limite de $\\lim_{x \\to +\\infty} \\frac{5x^3 + 2x}{x^4 - 1}$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "0",
+          "is_correct": true,
+          "explanation": "Correct ! Le degré du dénominateur est supérieur à celui du numérateur, donc la limite est 0."
+        },
+        {
+          "text": "5",
+          "is_correct": false,
+          "explanation": "Ce serait le cas si les degrés étaient égaux."
+        },
+        {
+          "text": "$+\\infty$",
+          "is_correct": false,
+          "explanation": "Le dénominateur croît plus vite que le numérateur."
+        },
+        {
+          "text": "$\\frac{5}{1}$",
+          "is_correct": false,
+          "explanation": "Les degrés ne sont pas égaux."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_limites_12",
+      "question": "Pour lever l'indétermination $\\frac{0}{0}$ dans une limite, on peut :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Factoriser et simplifier",
+          "is_correct": true,
+          "explanation": "Exact ! La factorisation permet souvent de simplifier et lever l'indétermination."
+        },
+        {
+          "text": "Remplacer $0$ par $1$",
+          "is_correct": false,
+          "explanation": "On ne peut pas changer arbitrairement les valeurs."
+        },
+        {
+          "text": "Conclure que la limite est 0",
+          "is_correct": false,
+          "explanation": "$\\frac{0}{0}$ est indéterminé, la limite peut être n'importe quelle valeur."
+        },
+        {
+          "text": "Conclure que la limite n'existe pas",
+          "is_correct": false,
+          "explanation": "La limite peut exister après levée de l'indétermination."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_limites_13",
+      "question": "Quelle est la limite de $\\lim_{x \\to +\\infty} \\frac{x^2 + 3x - 1}{2x^2 - 5}$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\frac{1}{2}$",
+          "is_correct": true,
+          "explanation": "Parfait ! Les degrés sont égaux, la limite est le quotient des coefficients dominants : $\\frac{1}{2}$."
+        },
+        {
+          "text": "0",
+          "is_correct": false,
+          "explanation": "Ce serait le cas si le degré du numérateur était inférieur."
+        },
+        {
+          "text": "$+\\infty$",
+          "is_correct": false,
+          "explanation": "Les degrés sont égaux, la limite est finie."
+        },
+        {
+          "text": "1",
+          "is_correct": false,
+          "explanation": "Vérifiez le quotient des coefficients dominants : $\\frac{1}{2}$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_limites_14",
+      "question": "Si $\\lim_{x \\to a^-} f(x) = L$ et $\\lim_{x \\to a^+} f(x) = M$ avec $L \\neq M$, alors :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\lim_{x \\to a} f(x)$ n'existe pas",
+          "is_correct": true,
+          "explanation": "Exact ! Pour que la limite existe, les limites à gauche et à droite doivent être égales."
+        },
+        {
+          "text": "$\\lim_{x \\to a} f(x) = \\frac{L + M}{2}$",
+          "is_correct": false,
+          "explanation": "La moyenne des limites latérales n'est pas la limite."
+        },
+        {
+          "text": "$\\lim_{x \\to a} f(x) = L$",
+          "is_correct": false,
+          "explanation": "Les deux limites latérales doivent être égales."
+        },
+        {
+          "text": "$f$ est continue en $a$",
+          "is_correct": false,
+          "explanation": "Au contraire, $f$ est discontinue en $a$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_limites_15",
+      "question": "Pour une fonction rationnelle $f(x) = \\frac{P(x)}{Q(x)}$ où $Q(a) = 0$ et $P(a) \\neq 0$, que peut-on dire de la limite en $a$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\lim_{x \\to a} f(x) = \\pm\\infty$",
+          "is_correct": true,
+          "explanation": "Correct ! Il y a une asymptote verticale en $x = a$."
+        },
+        {
+          "text": "$\\lim_{x \\to a} f(x) = 0$",
+          "is_correct": false,
+          "explanation": "Le numérateur est non nul en $a$."
+        },
+        {
+          "text": "$\\lim_{x \\to a} f(x) = \\frac{P(a)}{Q'(a)}$",
+          "is_correct": false,
+          "explanation": "Cette formule n'est pas applicable ici."
+        },
+        {
+          "text": "La limite n'existe pas",
+          "is_correct": false,
+          "explanation": "La limite existe mais est infinie."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_limites_16",
+      "question": "Quelle est la limite de $\\lim_{x \\to 0} \\frac{1 - \\cos(x)}{x^2}$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\frac{1}{2}$",
+          "is_correct": true,
+          "explanation": "Exact ! C'est une limite remarquable : $\\lim_{x \\to 0} \\frac{1 - \\cos(x)}{x^2} = \\frac{1}{2}$."
+        },
+        {
+          "text": "0",
+          "is_correct": false,
+          "explanation": "La limite est non nulle."
+        },
+        {
+          "text": "1",
+          "is_correct": false,
+          "explanation": "Vérifiez la limite remarquable."
+        },
+        {
+          "text": "$+\\infty$",
+          "is_correct": false,
+          "explanation": "La limite est finie."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_limites_17",
+      "question": "Pour étudier $\\lim_{x \\to +\\infty} (\\sqrt{x^2 + x} - x)$, quelle technique est adaptée ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Multiplier par l'expression conjuguée",
+          "is_correct": true,
+          "explanation": "Parfait ! On multiplie par $\\frac{\\sqrt{x^2 + x} + x}{\\sqrt{x^2 + x} + x}$ pour lever l'indétermination $\\infty - \\infty$."
+        },
+        {
+          "text": "Remplacer directement $x$ par $+\\infty$",
+          "is_correct": false,
+          "explanation": "Cela donne une forme indéterminée $\\infty - \\infty$."
+        },
+        {
+          "text": "Développer le carré",
+          "is_correct": false,
+          "explanation": "Ce n'est pas la technique la plus efficace ici."
+        },
+        {
+          "text": "Factoriser par $x$",
+          "is_correct": false,
+          "explanation": "La factorisation seule ne suffit pas."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_limites_18",
+      "question": "Si $f$ est continue sur $[a, b]$ et strictement monotone, combien de solutions a l'équation $f(x) = k$ pour $k \\in ]f(a), f(b)[$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Exactement une solution",
+          "is_correct": true,
+          "explanation": "Correct ! Par le théorème des valeurs intermédiaires et la stricte monotonie."
+        },
+        {
+          "text": "Aucune solution",
+          "is_correct": false,
+          "explanation": "Le théorème des valeurs intermédiaires garantit l'existence."
+        },
+        {
+          "text": "Deux solutions",
+          "is_correct": false,
+          "explanation": "La stricte monotonie garantit l'unicité."
+        },
+        {
+          "text": "Une infinité de solutions",
+          "is_correct": false,
+          "explanation": "La stricte monotonie garantit l'unicité."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_limites_19",
+      "question": "Quelle affirmation sur les limites est FAUSSE ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Si $\\lim_{x \\to a} f(x) = L$ et $\\lim_{x \\to a} g(x) = M$, alors $\\lim_{x \\to a} \\frac{f(x)}{g(x)} = \\frac{L}{M}$ pour tout $M$",
+          "is_correct": true,
+          "explanation": "C'est FAUX ! Il faut $M \\neq 0$ pour que cette propriété soit vraie."
+        },
+        {
+          "text": "Si $\\lim_{x \\to a} f(x) = L$ et $\\lim_{x \\to a} g(x) = M$, alors $\\lim_{x \\to a} (f(x) + g(x)) = L + M$",
+          "is_correct": false,
+          "explanation": "C'est vrai ! La limite d'une somme est la somme des limites."
+        },
+        {
+          "text": "Si $\\lim_{x \\to a} f(x) = L$ et $\\lim_{x \\to a} g(x) = M$, alors $\\lim_{x \\to a} (f(x) \\times g(x)) = L \\times M$",
+          "is_correct": false,
+          "explanation": "C'est vrai ! La limite d'un produit est le produit des limites."
+        },
+        {
+          "text": "Si $f$ est continue en $a$, alors $\\lim_{x \\to a} f(x) = f(a)$",
+          "is_correct": false,
+          "explanation": "C'est vrai ! C'est la définition de la continuité."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_limites_20",
+      "question": "Pour une fonction polynomiale $P(x) = a_nx^n + \\ldots + a_1x + a_0$ avec $a_n > 0$ et $n$ pair, que vaut $\\lim_{x \\to -\\infty} P(x)$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$+\\infty$",
+          "is_correct": true,
+          "explanation": "Exact ! Pour un polynôme de degré pair avec coefficient dominant positif, les limites en $\\pm\\infty$ sont toutes deux $+\\infty$."
+        },
+        {
+          "text": "$-\\infty$",
+          "is_correct": false,
+          "explanation": "Le degré est pair et le coefficient dominant est positif."
+        },
+        {
+          "text": "0",
+          "is_correct": false,
+          "explanation": "Un polynôme de degré ≥ 1 ne tend pas vers 0 à l'infini."
+        },
+        {
+          "text": "$a_0$",
+          "is_correct": false,
+          "explanation": "Le terme constant n'influence pas la limite à l'infini."
+        }
+      ],
+      "steps": []
+    }
+  ],
+  "exercises": [
+    {
+      "id": "exo_limites_1",
+      "title": "Forme indéterminée",
+      "statement": "Calculer la limite suivante : $\\lim_{x\\to 2} \\frac{x^2 - 4}{x - 2}$.",
+      "sub_questions": [
+        {
+          "question": "Identifier la forme indéterminée",
+          "hint": "En remplaçant $x$ par 2, on obtient $\\frac{0}{0}$ qui est une forme indéterminée."
+        },
+        {
+          "question": "Factoriser le numérateur $x^2 - 4$",
+          "hint": "$x^2 - 4 = (x-2)(x+2)$ (identité remarquable $a^2 - b^2$)"
+        },
+        {
+          "question": "Simplifier la fraction",
+          "hint": "$\\frac{(x-2)(x+2)}{x-2} = x + 2$ pour $x \\neq 2$"
+        },
+        {
+          "question": "Calculer la limite",
+          "hint": "$\\lim_{x \\to 2} (x + 2) = 2 + 2 = 4$"
+        }
+      ]
+    },
+    {
+      "id": "exo_limites_2",
+      "title": "Limite à l'infini d'une fonction rationnelle",
+      "statement": "Calculer $\\lim_{x \\to +\\infty} \\frac{3x^3 - 2x^2 + 1}{5x^3 + x - 7}$.",
+      "sub_questions": [
+        {
+          "question": "Identifier les termes de plus haut degré",
+          "hint": "Le plus haut degré est 3 au numérateur ($3x^3$) et au dénominateur ($5x^3$)."
+        },
+        {
+          "question": "Diviser le numérateur et le dénominateur par $x^3$",
+          "hint": "$\\frac{3 - \\frac{2}{x} + \\frac{1}{x^3}}{5 + \\frac{1}{x^2} - \\frac{7}{x^3}}$"
+        },
+        {
+          "question": "Déterminer les limites des termes en $\\frac{1}{x^k}$ quand $x \\to +\\infty$",
+          "hint": "$\\lim_{x \\to +\\infty} \\frac{1}{x^k} = 0$ pour tout $k > 0$"
+        },
+        {
+          "question": "Conclure sur la limite",
+          "hint": "$\\lim_{x \\to +\\infty} \\frac{3x^3 - 2x^2 + 1}{5x^3 + x - 7} = \\frac{3}{5}$"
+        }
+      ]
+    },
+    {
+      "id": "exo_limites_3",
+      "title": "Asymptotes d'une fonction",
+      "statement": "Soit $f(x) = \\frac{2x^2 + 3x - 1}{x - 1}$. Étudier les asymptotes de $f$.",
+      "sub_questions": [
+        {
+          "question": "Étudier l'existence d'une asymptote verticale",
+          "hint": "Le dénominateur s'annule en $x = 1$. Étudier $\\lim_{x \\to 1} f(x)$ : on trouve $\\pm\\infty$, donc $x = 1$ est une asymptote verticale."
+        },
+        {
+          "question": "Effectuer la division euclidienne de $2x^2 + 3x - 1$ par $x - 1$",
+          "hint": "$2x^2 + 3x - 1 = (x - 1)(2x + 5) + 4$"
+        },
+        {
+          "question": "En déduire l'expression de $f(x)$",
+          "hint": "$f(x) = 2x + 5 + \\frac{4}{x-1}$"
+        },
+        {
+          "question": "Identifier l'asymptote oblique",
+          "hint": "Quand $x \\to \\pm\\infty$, $\\frac{4}{x-1} \\to 0$, donc $y = 2x + 5$ est une asymptote oblique."
+        }
+      ]
+    },
+    {
+      "id": "exo_limites_4",
+      "title": "Indétermination $\\infty - \\infty$",
+      "statement": "Calculer $\\lim_{x \\to +\\infty} (\\sqrt{x^2 + 2x} - x)$.",
+      "sub_questions": [
+        {
+          "question": "Identifier la forme indéterminée",
+          "hint": "Quand $x \\to +\\infty$, $\\sqrt{x^2 + 2x} \\to +\\infty$ et $x \\to +\\infty$, donc c'est la forme $\\infty - \\infty$."
+        },
+        {
+          "question": "Multiplier par l'expression conjuguée",
+          "hint": "$(\\sqrt{x^2 + 2x} - x) \\times \\frac{\\sqrt{x^2 + 2x} + x}{\\sqrt{x^2 + 2x} + x} = \\frac{(x^2 + 2x) - x^2}{\\sqrt{x^2 + 2x} + x} = \\frac{2x}{\\sqrt{x^2 + 2x} + x}$"
+        },
+        {
+          "question": "Simplifier l'expression obtenue",
+          "hint": "Diviser par $x$ : $\\frac{2}{\\frac{\\sqrt{x^2 + 2x}}{x} + 1} = \\frac{2}{\\sqrt{1 + \\frac{2}{x}} + 1}$"
+        },
+        {
+          "question": "Calculer la limite",
+          "hint": "Quand $x \\to +\\infty$, $\\frac{2}{x} \\to 0$, donc la limite est $\\frac{2}{\\sqrt{1} + 1} = \\frac{2}{2} = 1$"
+        }
+      ]
+    },
+    {
+      "id": "exo_limites_5",
+      "title": "Théorème des valeurs intermédiaires",
+      "statement": "Soit $f(x) = x^3 - 3x + 1$. Montrer que l'équation $f(x) = 0$ admet au moins une solution dans l'intervalle $[0, 1]$.",
+      "sub_questions": [
+        {
+          "question": "Vérifier que $f$ est continue sur $[0, 1]$",
+          "hint": "$f$ est une fonction polynomiale, donc continue sur $\\mathbb{R}$, et en particulier sur $[0, 1]$."
+        },
+        {
+          "question": "Calculer $f(0)$ et $f(1)$",
+          "hint": "$f(0) = 0 - 0 + 1 = 1$ et $f(1) = 1 - 3 + 1 = -1$"
+        },
+        {
+          "question": "Vérifier que $f(0) \\times f(1) < 0$",
+          "hint": "$f(0) \\times f(1) = 1 \\times (-1) = -1 < 0$. Les valeurs sont de signes opposés."
+        },
+        {
+          "question": "Appliquer le théorème des valeurs intermédiaires",
+          "hint": "$f$ est continue sur $[0, 1]$ et $f(0) \\times f(1) < 0$, donc il existe $c \\in ]0, 1[$ tel que $f(c) = 0$."
+        }
+      ]
+    }
+  ],
+  "version": "v1.1.0-78f85d"
+}

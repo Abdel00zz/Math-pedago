@@ -1,0 +1,153 @@
+{
+  "header": {
+    "chapter": "1ère BSM - Mathématiques",
+    "title": "Logique Mathématique",
+    "subtitle": "Propositions, connecteurs logiques et méthodes de démonstration"
+  },
+  "sections": [
+    {
+      "title": "Propositions et connecteurs logiques",
+      "subsections": [
+        {
+          "title": "Propositions",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Proposition",
+              "content": "Une proposition est un énoncé mathématique qui peut être soit vrai, soit faux, mais pas les deux à la fois"
+            },
+            {
+              "type": "example",
+              "content": "• « 2 + 3 = 5 » est une proposition vraie\n• « Tout nombre premier est impair » est une proposition fausse (2 est premier et pair)"
+            }
+          ]
+        },
+        {
+          "title": "Connecteurs logiques",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Négation",
+              "content": "La négation de P, notée ¬P ou non(P), est vraie si P est fausse, et fausse si P est vraie"
+            },
+            {
+              "type": "definition", 
+              "title": "Conjonction",
+              "content": "P ∧ Q (P et Q) est vraie si P et Q sont toutes deux vraies"
+            },
+            {
+              "type": "definition",
+              "title": "Disjonction",
+              "content": "P ∨ Q (P ou Q) est vraie si au moins une des propositions P ou Q est vraie"
+            },
+            {
+              "type": "definition",
+              "title": "Implication",
+              "content": "P ⟹ Q (P implique Q) est fausse uniquement si P est vraie et Q est fausse"
+            },
+            {
+              "type": "definition",
+              "title": "Équivalence",
+              "content": "P ⟺ Q (P équivaut à Q) est vraie si P et Q ont la même valeur de vérité"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Quantificateurs",
+      "subsections": [
+        {
+          "title": "Quantificateur universel et existentiel",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Quantificateur universel",
+              "content": "∀x ∈ E, P(x) signifie « pour tout x dans E, P(x) est vraie »"
+            },
+            {
+              "type": "definition",
+              "title": "Quantificateur existentiel",
+              "content": "∃x ∈ E, P(x) signifie « il existe au moins un x dans E tel que P(x) soit vraie »"
+            },
+            {
+              "type": "example",
+              "content": "• ∀x ∈ ℝ, x² ≥ 0 (vraie)\n• ∃x ∈ ℝ, x² = 2 (vraie, x = ±√2)"
+            }
+          ]
+        },
+        {
+          "title": "Négation des quantificateurs",
+          "elements": [
+            {
+              "type": "rule",
+              "title": "Lois de De Morgan généralisées",
+              "content": "• ¬(∀x ∈ E, P(x)) ≡ ∃x ∈ E, ¬P(x)\n• ¬(∃x ∈ E, P(x)) ≡ ∀x ∈ E, ¬P(x)"
+            },
+            {
+              "type": "example",
+              "content": "La négation de « Tous les nombres premiers sont impairs » est « Il existe un nombre premier qui n'est pas impair »"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Méthodes de démonstration",
+      "subsections": [
+        {
+          "title": "Démonstration directe",
+          "elements": [
+            {
+              "type": "method",
+              "title": "Démonstration directe",
+              "content": "Pour démontrer P ⟹ Q, on suppose P vraie et on démontre que Q en découle logiquement"
+            },
+            {
+              "type": "example",
+              "content": "Démontrer : « Si n est pair, alors n² est pair »\nPreuve : Si n est pair, alors n = 2k pour un certain k ∈ ℤ. Donc n² = (2k)² = 4k² = 2(2k²), donc n² est pair"
+            }
+          ]
+        },
+        {
+          "title": "Démonstration par contraposée",
+          "elements": [
+            {
+              "type": "method",
+              "title": "Contraposée",
+              "content": "P ⟹ Q est équivalent à ¬Q ⟹ ¬P. On démontre la contraposée quand c'est plus simple"
+            },
+            {
+              "type": "example",
+              "content": "Démontrer : « Si n² est impair, alors n est impair »\nContraposée : « Si n est pair, alors n² est pair » (déjà démontrée)"
+            }
+          ]
+        },
+        {
+          "title": "Démonstration par l'absurde",
+          "elements": [
+            {
+              "type": "method",
+              "title": "Raisonnement par l'absurde",
+              "content": "Pour démontrer P, on suppose ¬P et on dérive une contradiction"
+            },
+            {
+              "type": "example",
+              "content": "Démontrer : « √2 est irrationnel »\nSupposons √2 = p/q avec p, q ∈ ℤ*, pgcd(p,q) = 1...\nOn aboutit à une contradiction, donc √2 est irrationnel"
+            }
+          ]
+        },
+        {
+          "title": "Récurrence",
+          "elements": [
+            {
+              "type": "method",
+              "title": "Principe de récurrence",
+              "content": "Pour démontrer ∀n ∈ ℕ, P(n) :\n1) Vérifier P(0) (initialisation)\n2) Démontrer ∀n ∈ ℕ, P(n) ⟹ P(n+1) (hérédité)"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

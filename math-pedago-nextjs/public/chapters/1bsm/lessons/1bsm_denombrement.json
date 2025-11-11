@@ -1,0 +1,207 @@
+{
+  "header": {
+    "title": "Dénombrement",
+    "subtitle": "Arrangements, combinaisons et permutations",
+    "classe": "1ère Bac Sciences Mathématiques",
+    "chapter": "Chapitre 16",
+    "academicYear": "2025-2026"
+  },
+  "sections": [
+    {
+      "title": "Principes Fondamentaux",
+      "subsections": [
+        {
+          "title": "Principe Additif et Multiplicatif",
+          "elements": [
+            {
+              "type": "p",
+              "content": "Le dénombrement est l'art de compter les éléments d'un ensemble fini. Il repose sur deux principes fondamentaux."
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Principe additif** :",
+              "content": "Si deux ensembles $A$ et $B$ sont **disjoints** (sans élément commun), alors :\n\n$$\\text{Card}(A \\cup B) = \\text{Card}(A) + \\text{Card}(B)$$\n\n**Généralisation** : Pour $n$ ensembles disjoints deux à deux $A_1, A_2, \\ldots, A_n$ :\n$$\\text{Card}(A_1 \\cup A_2 \\cup \\cdots \\cup A_n) = \\text{Card}(A_1) + \\text{Card}(A_2) + \\cdots + \\text{Card}(A_n)$$"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Principe multiplicatif** :",
+              "content": "Si une action $A$ peut être effectuée de $m$ façons différentes, et pour chacune de ces façons, une action $B$ peut être effectuée de $n$ façons différentes, alors la succession des deux actions peut être réalisée de :\n\n$$m \\times n \\text{ façons}$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Choix de menu** :",
+              "content": "Un restaurant propose 4 entrées, 5 plats principaux et 3 desserts.\n\nCombien de menus différents (entrée + plat + dessert) peut-on composer ?\n\nPar le principe multiplicatif : $4 \\times 5 \\times 3 = ___60___ $ menus différents."
+            }
+          ]
+        },
+        {
+          "title": "Factorielle",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Factorielle** :",
+              "content": "Pour tout entier naturel $n \\geq 1$, on définit la **factorielle de $n$**, notée $n!$, par :\n\n$$n! = 1 \\times 2 \\times 3 \\times \\cdots \\times n$$\n\n**Par convention** : $0! = 1$\n\n**Relation de récurrence** : $n! = n \\times (n-1)!$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Calculs de factorielles** :",
+              "content": "Calculer les factorielles suivantes :\n\n$3! = 1 \\times 2 \\times 3 = ___6___$\n\n$5! = 1 \\times 2 \\times 3 \\times 4 \\times 5 = ___120___$\n\n$\\dfrac{6!}{4!} = \\dfrac{6 \\times 5 \\times 4!}{4!} = 6 \\times 5 = ___30___$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Arrangements",
+      "subsections": [
+        {
+          "title": "Arrangements Sans Répétition",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Arrangement** :",
+              "content": "Un **arrangement** de $p$ éléments pris parmi $n$ éléments distincts (avec $p \\leq n$) est un choix **ordonné** de $p$ éléments parmi $n$.\n\nLe nombre d'arrangements de $p$ éléments parmi $n$ est noté $A_n^p$ et vaut :\n\n$$A_n^p = \\dfrac{n!}{(n-p)!} = n(n-1)(n-2)\\cdots(n-p+1)$$"
+            },
+            {
+              "type": "remark-box",
+              "content": "**Différence avec les combinaisons** : Dans un arrangement, **l'ordre compte**. $(A, B)$ est différent de $(B, A)$."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Course de chevaux** :",
+              "content": "Dans une course de 10 chevaux, combien de tiercés (podiums ordonnés de 3 chevaux) sont possibles ?\n\n$$A_{10}^3 = \\dfrac{10!}{(10-3)!} = \\dfrac{10!}{7!} = 10 \\times 9 \\times 8 = ___720___$$\n\nIl y a 720 tiercés possibles."
+            }
+          ]
+        },
+        {
+          "title": "Permutations",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Permutation** :",
+              "content": "Une **permutation** de $n$ éléments est un arrangement de $n$ éléments parmi $n$, c'est-à-dire un rangement ordonné de tous les éléments.\n\nLe nombre de permutations de $n$ éléments est :\n\n$$P_n = A_n^n = n!$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Anagrammes** :",
+              "content": "Combien d'anagrammes (mots en réarrangeant les lettres) peut-on former avec le mot MATH ?\n\nLe mot MATH a 4 lettres distinctes.\n\nNombre d'anagrammes : $4! = ___24___$\n\nExemples : MATH, MTHA, MAHT, AMTH, etc."
+            },
+            {
+              "type": "practice-box",
+              "statement": "De combien de façons peut-on ranger 6 livres sur une étagère ?",
+              "content": [
+                "Identifier le type de problème",
+                "Appliquer la formule appropriée",
+                "Calculer le résultat"
+              ],
+              "solution": [
+                "Il s'agit d'une **permutation** de 6 éléments (ordre important, tous les livres sont rangés).",
+                "Formule : $P_6 = 6!$",
+                "$6! = 1 \\times 2 \\times 3 \\times 4 \\times 5 \\times 6 = 720$ façons"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Combinaisons",
+      "subsections": [
+        {
+          "title": "Combinaisons Sans Répétition",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Combinaison** :",
+              "content": "Une **combinaison** de $p$ éléments parmi $n$ éléments distincts (avec $p \\leq n$) est un choix **non ordonné** de $p$ éléments parmi $n$.\n\nLe nombre de combinaisons de $p$ éléments parmi $n$ est noté $C_n^p$ ou $\\binom{n}{p}$ et vaut :\n\n$$C_n^p = \\binom{n}{p} = \\dfrac{n!}{p!(n-p)!}$$"
+            },
+            {
+              "type": "remark-box",
+              "content": "**Différence avec les arrangements** : Dans une combinaison, **l'ordre ne compte pas**. $\\{A, B\\}$ est identique à $\\{B, A\\}$."
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Propriétés** :",
+              "content": [
+                "$C_n^0 = 1$ (ensemble vide)",
+                "$C_n^n = 1$ (tous les éléments)",
+                "$C_n^1 = n$",
+                "$C_n^p = C_n^{n-p}$ (symétrie)",
+                "$C_n^p = C_{n-1}^{p-1} + C_{n-1}^p$ (formule de Pascal)"
+              ],
+              "listType": "bullet"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Équipe sportive** :",
+              "content": "Parmi 12 joueurs, combien d'équipes de 5 joueurs peut-on former ?\n\n$$C_{12}^5 = \\dfrac{12!}{5! \\times 7!} = \\dfrac{12 \\times 11 \\times 10 \\times 9 \\times 8}{5 \\times 4 \\times 3 \\times 2 \\times 1}$$\n\n$$= \\dfrac{95040}{120} = ___792___$$\n\nOn peut former 792 équipes différentes."
+            }
+          ]
+        },
+        {
+          "title": "Triangle de Pascal",
+          "elements": [
+            {
+              "type": "property-box",
+              "preamble": "**Triangle de Pascal** :",
+              "content": "Le triangle de Pascal est une disposition triangulaire des coefficients binomiaux $C_n^p$ :\n\n```\n              1\n           1     1\n        1     2     1\n     1     3     3     1\n  1     4     6     4     1\n1     5    10    10     5     1\n```\n\nChaque nombre est la somme des deux nombres situés juste au-dessus."
+            },
+            {
+              "type": "p",
+              "content": "?> **Lien avec le binôme** : Les coefficients de la ligne $n$ sont les coefficients du développement de $(a + b)^n$."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Applications et Problèmes",
+      "subsections": [
+        {
+          "title": "Stratégies de Résolution",
+          "elements": [
+            {
+              "type": "p",
+              "content": "Pour résoudre un problème de dénombrement, il faut se poser les bonnes questions :"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Questions clés** :",
+              "content": [
+                "**L'ordre est-il important ?**",
+                "Oui → Arrangement ou Permutation",
+                "Non → Combinaison",
+                "**Prend-on tous les éléments ?**",
+                "Oui ($p = n$) → Permutation",
+                "Non ($p < n$) → Arrangement ou Combinaison",
+                "**Y a-t-il répétition possible ?**",
+                "Oui → Formules avec répétition",
+                "Non → Formules sans répétition"
+              ],
+              "listType": "bullet"
+            }
+          ]
+        },
+        {
+          "title": "Problèmes Variés",
+          "elements": [
+            {
+              "type": "practice-box",
+              "statement": "Résoudre les problèmes suivants :",
+              "content": [
+                "Combien de codes à 4 chiffres peut-on former avec les chiffres 1, 2, 3, 4, 5 sans répétition ?",
+                "Dans une classe de 25 élèves, on veut choisir un délégué et un sous-délégué. Combien de choix possibles ?",
+                "Combien de mains de 5 cartes peut-on distribuer à partir d'un jeu de 52 cartes ?"
+              ],
+              "solution": [
+                "**Arrangement** : L'ordre compte (1234 ≠ 4321), sans répétition, on prend 4 éléments parmi 5.\n\n$$A_5^4 = \\dfrac{5!}{(5-4)!} = \\dfrac{5!}{1!} = 5! = 120$$",
+                "**Arrangement** : L'ordre compte (délégué ≠ sous-délégué), on choisit 2 parmi 25.\n\n$$A_{25}^2 = 25 \\times 24 = 600$$",
+                "**Combinaison** : L'ordre ne compte pas (main de cartes), on choisit 5 cartes parmi 52.\n\n$$C_{52}^5 = \\dfrac{52!}{5! \\times 47!} = \\dfrac{52 \\times 51 \\times 50 \\times 49 \\times 48}{120} = 2~598~960$$"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

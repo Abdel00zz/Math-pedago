@@ -1,0 +1,101 @@
+{
+  "header": {
+    "chapter": "2ème BSE - Mathématiques",
+    "title": "Nombres complexes",
+    "subtitle": "Forme algébrique, géométrique et exponentielle"
+  },
+  "sections": [
+    {
+      "title": "Introduction aux nombres complexes",
+      "subsections": [
+        {
+          "title": "Nécessité des nombres complexes",
+          "elements": [
+            {
+              "type": "motivation",
+              "content": "L'équation x² + 1 = 0 n'a pas de solution dans ℝ. Les nombres complexes permettent de résoudre toute équation polynomiale."
+            },
+            {
+              "type": "definition",
+              "title": "L'unité imaginaire",
+              "content": "On définit le nombre imaginaire i tel que i² = -1. L'ensemble des nombres complexes est ℂ = {a + bi | a, b ∈ ℝ}."
+            }
+          ]
+        },
+        {
+          "title": "Forme algébrique",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Forme algébrique",
+              "content": "Tout nombre complexe z peut s'écrire sous la forme z = a + bi où a et b sont réels. a est la partie réelle Re(z) et b la partie imaginaire Im(z)."
+            },
+            {
+              "type": "example",
+              "content": "z = 3 + 2i a pour partie réelle 3 et partie imaginaire 2."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Opérations sur les complexes",
+      "subsections": [
+        {
+          "title": "Addition et multiplication",
+          "elements": [
+            {
+              "type": "rule",
+              "title": "Addition",
+              "content": "(a + bi) + (c + di) = (a + c) + (b + d)i"
+            },
+            {
+              "type": "rule",
+              "title": "Multiplication",
+              "content": "(a + bi)(c + di) = (ac - bd) + (ad + bc)i"
+            }
+          ]
+        },
+        {
+          "title": "Conjugué et module",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Conjugué",
+              "content": "Le conjugué de z = a + bi est z̄ = a - bi"
+            },
+            {
+              "type": "definition",
+              "title": "Module",
+              "content": "Le module de z = a + bi est |z| = √(a² + b²)"
+            },
+            {
+              "type": "property",
+              "content": "z × z̄ = |z|² = a² + b²"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Représentation géométrique",
+      "subsections": [
+        {
+          "title": "Plan complexe",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Affixe d'un point",
+              "content": "À tout nombre complexe z = a + bi correspond un point M(a, b) dans le plan. z est l'affixe du point M."
+            },
+            {
+              "type": "definition",
+              "title": "Forme trigonométrique",
+              "content": "Pour z ≠ 0, on peut écrire z = r(cos θ + i sin θ) où r = |z| et θ est un argument de z."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

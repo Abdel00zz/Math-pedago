@@ -1,0 +1,35 @@
+{
+  "class": "1bse",
+  "chapter": "Statistiques",
+  "sessionDates": [],
+  "videos": [],
+  "quiz": [
+    {
+      "id": "q1",
+      "question": "Qu'est-ce que la médiane d'une série statistique ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "La valeur la plus fréquente",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "La valeur qui partage la série en deux moitiés de même effectif",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "title": "Calcul de moyenne",
+      "statement": "Calculer la moyenne de la série de notes suivantes : 10, 12, 8, 15, 11.",
+      "sub_questions": []
+    }
+  ],
+  "version": "v1.1.0-59fb73"
+}

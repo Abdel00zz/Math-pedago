@@ -1,0 +1,35 @@
+{
+  "class": "2bsm",
+  "chapter": "Fonctions logarithmiques",
+  "sessionDates": [],
+  "videos": [],
+  "quiz": [
+    {
+      "id": "q1",
+      "question": "Quelle est la dérivée de $\\ln(x)$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$x$",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "$\\frac{1}{x}$",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "title": "Équation",
+      "statement": "Résoudre l'équation $\\ln(x-1) = 2$.",
+      "sub_questions": []
+    }
+  ],
+  "version": "v1.1.0-9f2106"
+}

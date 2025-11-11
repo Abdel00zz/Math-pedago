@@ -1,0 +1,140 @@
+{
+  "header": {
+    "chapter": "2ème BSM - Mathématiques",
+    "title": "Espaces Vectoriels",
+    "subtitle": "Définitions, sous-espaces et applications linéaires"
+  },
+  "sections": [
+    {
+      "title": "Structure d'espace vectoriel",
+      "subsections": [
+        {
+          "title": "Définition",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Espace vectoriel",
+              "content": "Un espace vectoriel E sur un corps 𝕂 (ℝ ou ℂ) est un ensemble muni de deux lois :\n• Addition : E × E → E, (u, v) ↦ u + v\n• Multiplication par un scalaire : 𝕂 × E → E, (λ, u) ↦ λu\nvérifiant 8 axiomes"
+            },
+            {
+              "type": "axioms",
+              "title": "Axiomes",
+              "content": "1) (E, +) est un groupe abélien\n2) λ(μu) = (λμ)u\n3) 1u = u\n4) λ(u + v) = λu + λv\n5) (λ + μ)u = λu + μu"
+            },
+            {
+              "type": "example",
+              "content": "• ℝⁿ avec l'addition et la multiplication par un scalaire usuelles\n• L'ensemble des polynômes ℝ[X]\n• L'ensemble des fonctions continues C([a,b], ℝ)"
+            }
+          ]
+        },
+        {
+          "title": "Propriétés élémentaires",
+          "elements": [
+            {
+              "type": "property",
+              "content": "• 0λ = 0⃗ pour tout λ ∈ 𝕂\n• λ0⃗ = 0⃗ pour tout λ ∈ 𝕂\n• (-1)u = -u\n• Si λu = 0⃗ alors λ = 0 ou u = 0⃗"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Sous-espaces vectoriels",
+      "subsections": [
+        {
+          "title": "Définition et caractérisation",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Sous-espace vectoriel",
+              "content": "Une partie F de E est un sous-espace vectoriel si :\n1) 0⃗ ∈ F\n2) ∀u, v ∈ F, u + v ∈ F\n3) ∀λ ∈ 𝕂, ∀u ∈ F, λu ∈ F"
+            },
+            {
+              "type": "theorem",
+              "title": "Caractérisation",
+              "content": "F est un sev de E ssi F ≠ ∅ et ∀u, v ∈ F, ∀λ, μ ∈ 𝕂 : λu + μv ∈ F"
+            },
+            {
+              "type": "example",
+              "content": "• Dans ℝ³, les plans passant par l'origine sont des sous-espaces\n• L'ensemble des polynômes de degré ≤ n est un sous-espace de ℝ[X]"
+            }
+          ]
+        },
+        {
+          "title": "Opérations sur les sous-espaces",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Intersection",
+              "content": "L'intersection de deux sous-espaces F et G est un sous-espace : F ∩ G"
+            },
+            {
+              "type": "definition",
+              "title": "Somme",
+              "content": "F + G = {u + v | u ∈ F, v ∈ G} est le plus petit sous-espace contenant F et G"
+            },
+            {
+              "type": "definition",
+              "title": "Somme directe",
+              "content": "F ⊕ G signifie F + G avec F ∩ G = {0⃗}. Tout élément de F + G s'écrit de façon unique u + v avec u ∈ F, v ∈ G"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Familles de vecteurs",
+      "subsections": [
+        {
+          "title": "Combinaison linéaire",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Combinaison linéaire",
+              "content": "Une combinaison linéaire de vecteurs u₁, ..., uₙ est un vecteur de la forme λ₁u₁ + ... + λₙuₙ où λᵢ ∈ 𝕂"
+            },
+            {
+              "type": "definition",
+              "title": "Sous-espace engendré",
+              "content": "Vect(u₁, ..., uₙ) = {λ₁u₁ + ... + λₙuₙ | λᵢ ∈ 𝕂} est le sous-espace engendré par les vecteurs"
+            }
+          ]
+        },
+        {
+          "title": "Indépendance linéaire",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Famille libre",
+              "content": "Les vecteurs u₁, ..., uₙ sont linéairement indépendants si :\nλ₁u₁ + ... + λₙuₙ = 0⃗ ⟹ λ₁ = ... = λₙ = 0"
+            },
+            {
+              "type": "definition",
+              "title": "Famille liée",
+              "content": "Une famille qui n'est pas libre est dite liée : il existe des scalaires non tous nuls tels que leur combinaison linéaire soit nulle"
+            }
+          ]
+        },
+        {
+          "title": "Base et dimension",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Base",
+              "content": "Une base de E est une famille libre et génératrice de E"
+            },
+            {
+              "type": "theorem",
+              "title": "Existence et unicité",
+              "content": "Tout espace vectoriel de dimension finie admet une base, et toutes ses bases ont le même nombre d'éléments (la dimension)"
+            },
+            {
+              "type": "example",
+              "content": "La base canonique de ℝⁿ est {e₁, ..., eₙ} où eᵢ = (0,...,0,1,0,...,0) (1 en position i)"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

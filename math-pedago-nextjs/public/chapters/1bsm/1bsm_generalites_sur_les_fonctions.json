@@ -1,0 +1,663 @@
+{
+  "class": "1bsm",
+  "chapter": "Généralités sur les Fonctions",
+  "sessionDates": [
+    "2025-11-10T17:00:00Z",
+    "2025-11-12T17:00:00Z",
+    "2025-11-17T17:00:00Z"
+  ],
+  "lessonFile": "lessons/1bsm_generalites_sur_les_fonctions.json",
+  "videos": [],
+  "quiz": [
+    {
+      "id": "q_def_domaine_1",
+      "question": "Qu'est-ce que l'ensemble de définition $D_f$ d'une fonction $f$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "L'ensemble de toutes les images $y$ possibles de la fonction.",
+          "is_correct": false,
+          "explanation": "Ceci décrit l'ensemble d'arrivée ou l'image, pas le domaine de définition."
+        },
+        {
+          "text": "L'ensemble de tous les éléments $x$ qui ont au plus une image $y$ par $f$.",
+          "is_correct": true,
+          "explanation": "Cette définition est correcte, car elle inclut tous les $x$ pour lesquels $f(x)$ est un nombre réel calculable."
+        },
+        {
+          "text": "L'ensemble des points où la fonction est croissante.",
+          "is_correct": false,
+          "explanation": "Le domaine de définition inclut les intervalles où la fonction est croissante, décroissante ou constante."
+        },
+        {
+          "text": "L'ensemble $\\mathbb{R}$ (tous les nombres réels).",
+          "is_correct": false,
+          "explanation": "Le domaine n'est $\\mathbb{R}$ que pour certaines fonctions (comme les polynômes), mais pas pour toutes (par exemple, les fonctions rationnelles ou les racines)."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_def_paire_1",
+      "question": "Une fonction $f$ est dite **paire** si et seulement si son domaine $D_f$ est symétrique par rapport à 0 et...",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Pour tout $x \\in D_f$, $f(-x) = f(x)$.",
+          "is_correct": true,
+          "explanation": "C'est la condition algébrique correcte pour la parité, impliquant une symétrie par rapport à l'axe des ordonnées."
+        },
+        {
+          "text": "Pour tout $x \\in D_f$, $f(-x) = -f(x)$.",
+          "is_correct": false,
+          "explanation": "Ceci est la définition d'une fonction impaire (symétrie par rapport à l'origine)."
+        },
+        {
+          "text": "Pour tout $x \\in D_f$, $f(x) > 0$.",
+          "is_correct": false,
+          "explanation": "Ceci décrit une fonction positive, ce qui n'a pas de lien direct avec la parité."
+        },
+        {
+          "text": "Pour tout $x \\in D_f$, $f(x+T) = f(x)$.",
+          "is_correct": false,
+          "explanation": "Ceci est la définition d'une fonction périodique."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_def_decroissante_1",
+      "question": "Si pour tous $x_1, x_2$ d'un intervalle $I$ tels que $x_1 < x_2$, on a $f(x_1) \\ge f(x_2)$, on dit que la fonction $f$ est...",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Strictement croissante sur $I$.",
+          "is_correct": false,
+          "explanation": "Strictement croissante impliquerait $f(x_1) < f(x_2)$."
+        },
+        {
+          "text": "Croissante sur $I$.",
+          "is_correct": false,
+          "explanation": "Croissante impliquerait $f(x_1) \\le f(x_2)$. L'inégalité est dans le mauvais sens."
+        },
+        {
+          "text": "Décroissante sur $I$.",
+          "is_correct": true,
+          "explanation": "C'est la définition correcte d'une fonction décroissante (le sens de l'inégalité change ou reste égal)."
+        },
+        {
+          "text": "Constante sur $I$.",
+          "is_correct": false,
+          "explanation": "Constante impliquerait $f(x_1) = f(x_2)$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_def_max_absolu_1",
+      "question": "Si $f(a)$ est une valeur telle que pour tout $x$ dans le domaine $D_f$, $f(x) \\le f(a)$, on dit que $f(a)$ est...",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Une valeur minimale absolue.",
+          "is_correct": false,
+          "explanation": "Une valeur minimale absolue serait $f(a) \\le f(x)$."
+        },
+        {
+          "text": "Une valeur maximale absolue.",
+          "is_correct": true,
+          "explanation": "C'est la définition correcte : $f(a)$ est la plus grande valeur que la fonction puisse prendre sur tout son domaine."
+        },
+        {
+          "text": "Une valeur maximale relative.",
+          "is_correct": false,
+          "explanation": "Cela pourrait être un maximum absolu, mais la définition (valable pour 'tout $x$ dans $D_f$') est celle d'un maximum absolu."
+        },
+        {
+          "text": "L'asymptote de la fonction.",
+          "is_correct": false,
+          "explanation": "Une asymptote est une ligne dont la courbe se rapproche, pas une valeur atteinte."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_domaine_rationnelle_1",
+      "question": "Quel est l'ensemble de définition $D_f$ de la fonction $f(x) = \\frac{2x+5}{x-4}$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\mathbb{R}$",
+          "is_correct": false,
+          "explanation": "La fonction n'est pas définie lorsque le dénominateur est nul."
+        },
+        {
+          "text": "$\\mathbb{R} \\setminus \\{4\\}$",
+          "is_correct": true,
+          "explanation": "La fonction est définie si et seulement si le dénominateur $x-4$ est non nul, c'est-à-dire $x \\neq 4$."
+        },
+        {
+          "text": "$\\mathbb{R} \\setminus \\{-2.5\\}$",
+          "is_correct": false,
+          "explanation": "La racine du numérateur (-2.5) n'est pas une valeur interdite pour le domaine."
+        },
+        {
+          "text": "$]4, +\\infty[$",
+          "is_correct": false,
+          "explanation": "Ceci serait le cas pour $\\sqrt{x-4}$, mais pas pour une fraction."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_parite_polynome_1",
+      "question": "Quelle est la parité de la fonction $f(x) = 5x^3 - x$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Paire",
+          "is_correct": false,
+          "explanation": "Pour être paire, il faudrait $f(-x) = f(x)$. Ici, $f(-x) = 5(-x)^3 - (-x) = -5x^3 + x$, ce qui est différent de $f(x)$."
+        },
+        {
+          "text": "Impaire",
+          "is_correct": true,
+          "explanation": "On calcule $f(-x) = 5(-x)^3 - (-x) = -5x^3 + x$. On voit que $-(5x^3 - x) = -f(x)$. Donc $f(-x) = -f(x)$."
+        },
+        {
+          "text": "Ni paire ni impaire",
+          "is_correct": false,
+          "explanation": "La fonction vérifie la condition $f(-x) = -f(x)$."
+        },
+        {
+          "text": "Paire et impaire",
+          "is_correct": false,
+          "explanation": "Seule la fonction nulle $f(x)=0$ est à la fois paire et impaire."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_taux_accroissement_affine_1",
+      "question": "Calculez le taux d'accroissement $T_f$ de la fonction $f(x) = 2x + 5$ entre deux points distincts $a$ et $b$.",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$T_f = 2$",
+          "is_correct": true,
+          "explanation": "$T_f = \\frac{f(b) - f(a)}{b-a} = \\frac{(2b+5) - (2a+5)}{b-a} = \\frac{2b-2a}{b-a} = \\frac{2(b-a)}{b-a} = 2$."
+        },
+        {
+          "text": "$T_f = 5$",
+          "is_correct": false,
+          "explanation": "5 est l'ordonnée à l'origine, pas le taux d'accroissement (la pente)."
+        },
+        {
+          "text": "$T_f = 2x+5$",
+          "is_correct": false,
+          "explanation": "Le taux d'accroissement d'une fonction affine est un nombre constant, pas une fonction."
+        },
+        {
+          "text": "$T_f = a+b$",
+          "is_correct": false,
+          "explanation": "Ce serait le cas pour $f(x)=x^2$, mais pas pour une fonction affine."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_composition_gof_1",
+      "question": "Soient $f(x) = x+2$ et $g(x) = 3x^2$. Quelle est l'expression de la fonction composée $(g \\circ f)(x)$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$3(x+2)^2$",
+          "is_correct": true,
+          "explanation": "$(g \\circ f)(x) = g(f(x)) = g(x+2) = 3(x+2)^2$."
+        },
+        {
+          "text": "$3x^2 + 2$",
+          "is_correct": false,
+          "explanation": "Ceci est $(f \\circ g)(x) = f(g(x)) = f(3x^2) = 3x^2 + 2$."
+        },
+        {
+          "text": "$(x+2) \\cdot 3x^2$",
+          "is_correct": false,
+          "explanation": "Ceci est le produit $f(x) \\cdot g(x)$, pas la composition."
+        },
+        {
+          "text": "$3x^2 + (x+2)$",
+          "is_correct": false,
+          "explanation": "Ceci est la somme $f(x) + g(x)$, pas la composition."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_parabole_orientation_1",
+      "question": "La courbe d'une fonction $f(x) = ax^2 + bx + c$ est une parabole. Si $a > 0$, que peut-on conclure ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "La parabole est orientée vers le bas et admet un maximum.",
+          "is_correct": false,
+          "explanation": "Si $a > 0$, la parabole est 'ouverte vers le haut' (comme un 'U')."
+        },
+        {
+          "text": "La parabole est orientée vers le haut et admet un minimum.",
+          "is_correct": true,
+          "explanation": "Correct. Si $a > 0$, la parabole 'sourit' et son sommet est le point le plus bas (minimum)."
+        },
+        {
+          "text": "L'axe de symétrie est l'axe des ordonnées $x=0$.",
+          "is_correct": false,
+          "explanation": "L'axe de symétrie est $x = -b/(2a)$, qui n'est $0$ que si $b=0$."
+        },
+        {
+          "text": "La parabole ne coupe jamais l'axe des abscisses.",
+          "is_correct": false,
+          "explanation": "Cela dépend du signe du discriminant $\\Delta$, pas seulement du signe de $a$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_hyperbole_asymptotes_1",
+      "question": "Quelles sont les asymptotes de la fonction homographique $f(x) = \\frac{3x - 1}{x + 2}$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Asymptote verticale $x=2$ et asymptote horizontale $y=3$.",
+          "is_correct": false,
+          "explanation": "L'asymptote verticale est là où le dénominateur s'annule (ici, $x+2=0 \\Rightarrow x=-2$)."
+        },
+        {
+          "text": "Asymptote verticale $x=-2$ et asymptote horizontale $y=3$.",
+          "is_correct": true,
+          "explanation": "Verticale: $x+2=0 \\Rightarrow x=-2$. Horizontale: $y = a/c = 3/1 = 3$. C'est correct."
+        },
+        {
+          "text": "Asymptote verticale $x=3$ et asymptote horizontale $y=-2$.",
+          "is_correct": false,
+          "explanation": "Les rôles et les signes sont inversés."
+        },
+        {
+          "text": "Asymptote verticale $x=-2$ et asymptote horizontale $y=-1/2$.",
+          "is_correct": false,
+          "explanation": "L'asymptote horizontale est le rapport des termes de plus haut degré ($a/c$), pas $b/d$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_domaine_racine_polynome_1",
+      "question": "Quel est l'ensemble de définition $D_f$ de la fonction $f(x) = \\sqrt{x^2 - 4}$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$[-2, 2]$",
+          "is_correct": false,
+          "explanation": "Sur cet intervalle, $x^2-4$ est négatif ou nul (ex: si $x=0$, $0^2-4 = -4$), donc la racine n'est pas définie."
+        },
+        {
+          "text": "$[2, +\\infty[$",
+          "is_correct": false,
+          "explanation": "C'est une partie de la solution, mais $x=-3$ fonctionne aussi, car $(-3)^2 - 4 = 5 \\ge 0$."
+        },
+        {
+          "text": "$\\mathbb{R} \\setminus \\{-2, 2\\}$",
+          "is_correct": false,
+          "explanation": "Ceci serait le domaine de $\\frac{1}{x^2-4}$."
+        },
+        {
+          "text": "$]-\\infty, -2] \\cup [2, +\\infty[$",
+          "is_correct": true,
+          "explanation": "Il faut que le radicande $x^2-4$ soit positif ou nul. C'est un trinôme qui est positif à l'extérieur de ses racines (-2 et 2)."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_hyperbole_monotonie_1",
+      "question": "La fonction $f(x) = \\frac{2x+1}{x-1}$ (de type $\\frac{ax+b}{cx+d}$) a un déterminant $\\Delta = ad-bc$. Comment est sa monotonie ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Strictement croissante, car $\\Delta = -3 < 0$.",
+          "is_correct": false,
+          "explanation": "Lorsque $\\Delta < 0$, la fonction homographique est strictement décroissante sur ses intervalles de définition."
+        },
+        {
+          "text": "Strictement décroissante, car $\\Delta = -3 < 0$.",
+          "is_correct": true,
+          "explanation": "Ici, $a=2, b=1, c=1, d=-1$. $\\Delta = ad-bc = (2)(-1) - (1)(1) = -2 - 1 = -3$. Puisque $\\Delta < 0$, $f$ est strictement décroissante."
+        },
+        {
+          "text": "Strictement croissante, car $\\Delta = 3 > 0$.",
+          "is_correct": false,
+          "explanation": "Le calcul de $\\Delta$ donne $(2)(-1) - (1)(1) = -3$."
+        },
+        {
+          "text": "Change de monotonie en $x=1$.",
+          "is_correct": false,
+          "explanation": "Une fonction homographique ne change jamais de monotonie sur ses intervalles de définition ; elle est soit toujours croissante, soit toujours décroissante."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_composition_monotonie_1",
+      "question": "Si $f$ est une fonction **strictement décroissante** sur un intervalle $I$, et $g$ est une fonction **strictement décroissante** sur l'intervalle $f(I)$, alors la composée $g \\circ f$ est...",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Strictement croissante sur $I$.",
+          "is_correct": true,
+          "explanation": "Si $f$ et $g$ ont le même sens de variation (toutes deux décroissantes), leur composée $g \\circ f$ est croissante."
+        },
+        {
+          "text": "Strictement décroissante sur $I$.",
+          "is_correct": false,
+          "explanation": "La composée est décroissante uniquement si $f$ et $g$ ont des sens de variation opposés."
+        },
+        {
+          "text": "Constante sur $I$.",
+          "is_correct": false,
+          "explanation": "La composée n'est constante que si $f$ ou $g$ est constante."
+        },
+        {
+          "text": "On ne peut pas savoir.",
+          "is_correct": false,
+          "explanation": "La règle de monotonie des fonctions composées permet de le déterminer."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_parabole_sommet_1",
+      "question": "Quel est le sommet (extremum) de la parabole d'équation $f(x) = 2x^2 - 8x + 1$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$S(2, -7)$",
+          "is_correct": true,
+          "explanation": "L'abscisse du sommet est $x_S = -b/(2a) = -(-8)/(2*2) = 8/4 = 2$. L'ordonnée est $f(2) = 2(2)^2 - 8(2) + 1 = 8 - 16 + 1 = -7$."
+        },
+        {
+          "text": "$S(-2, 25)$",
+          "is_correct": false,
+          "explanation": "L'abscisse $x_S = -b/(2a)$, attention aux signes."
+        },
+        {
+          "text": "$S(4, 1)$",
+          "is_correct": false,
+          "explanation": "L'abscisse du sommet est $-b/(2a)$, pas $-b/2$ ou $b/a$."
+        },
+        {
+          "text": "$S(2, 0)$",
+          "is_correct": false,
+          "explanation": "L'ordonnée se calcule en remplaçant $x$ par l'abscisse $x_S = 2$ dans $f(x)$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_fonction_bornee_1",
+      "question": "La fonction $f(x) = 3 + \\sin(x)$ est-elle bornée ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Non, elle tend vers $+\\infty$.",
+          "is_correct": false,
+          "explanation": "La fonction $\\sin(x)$ oscille indéfiniment et ne tend pas vers l'infini."
+        },
+        {
+          "text": "Oui, elle est majorée par 3 mais pas minorée.",
+          "is_correct": false,
+          "explanation": "Elle est majorée, mais elle est aussi minorée. Le minimum de $\\sin(x)$ est -1."
+        },
+        {
+          "text": "Oui, elle est minorée par 3 mais pas majorée.",
+          "is_correct": false,
+          "explanation": "Le maximum de $\\sin(x)$ est 1, donc le maximum de $f(x)$ est $3+1=4$."
+        },
+        {
+          "text": "Oui, elle est majorée par 4 et minorée par 2.",
+          "is_correct": true,
+          "explanation": "On sait que $-1 \\le \\sin(x) \\le 1$. En ajoutant 3 à chaque membre, on obtient $3-1 \\le 3+\\sin(x) \\le 3+1$, donc $2 \\le f(x) \\le 4$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_fonction_periodique_1",
+      "question": "Laquelle de ces fonctions est périodique ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$f(x) = x^2$",
+          "is_correct": false,
+          "explanation": "Cette fonction est une parabole, elle ne se répète pas."
+        },
+        {
+          "text": "$f(x) = \\frac{1}{x}$",
+          "is_correct": false,
+          "explanation": "Cette fonction est une hyperbole, elle ne se répète pas à l'identique."
+        },
+        {
+          "text": "$f(x) = \\tan(x)$",
+          "is_correct": true,
+          "explanation": "La fonction tangente est périodique, de période $T = \\pi$."
+        },
+        {
+          "text": "$f(x) = 2x+1$",
+          "is_correct": false,
+          "explanation": "Cette fonction est une droite, elle est monotone et non périodique."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_domaine_mixte_1",
+      "question": "Quel est l'ensemble de définition $D_f$ de $f(x) = \\frac{\\sqrt{x-2}}{x-5}$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$]5, +\\infty[$",
+          "is_correct": false,
+          "explanation": "Cette solution oublie les valeurs entre 2 et 5 (inclus). Par exemple, $f(2) = \\frac{\\sqrt{0}}{-3} = 0$, donc 2 est dans le domaine."
+        },
+        {
+          "text": "$[2, +\\infty[$",
+          "is_correct": false,
+          "explanation": "Cette solution oublie que $x=5$ annule le dénominateur, ce qui est une valeur interdite."
+        },
+        {
+          "text": "$[2, 5[ \\cup ]5, +\\infty[$",
+          "is_correct": true,
+          "explanation": "Il faut deux conditions : 1) Le radicande $x-2 \\ge 0 \\Rightarrow x \\ge 2$. 2) Le dénominateur $x-5 \\neq 0 \\Rightarrow x \\neq 5$. La combinaison des deux donne cet intervalle."
+        },
+        {
+          "text": "$\\mathbb{R} \\setminus \\{5\\}$",
+          "is_correct": false,
+          "explanation": "Cette solution oublie la contrainte de la racine carrée (par exemple, $x=0$ n'est pas dans le domaine)."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_cubique_monotonie_1",
+      "question": "Si $f(x) = ax^3$ avec $a < 0$ (par exemple $f(x) = -2x^3$). Comment est la fonction $f$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Paire et croissante",
+          "is_correct": false,
+          "explanation": "$f(-x) = a(-x)^3 = -ax^3 = -f(x)$, donc elle est impaire."
+        },
+        {
+          "text": "Impaire et strictement décroissante",
+          "is_correct": true,
+          "explanation": "La fonction est impaire. Comme $a < 0$, si $x < y$, alors $x^3 < y^3$, mais $ax^3 > ay^3$ (le sens change car $a$ est négatif). $f$ est donc décroissante."
+        },
+        {
+          "text": "Impaire et strictement croissante",
+          "is_correct": false,
+          "explanation": "Elle est impaire, mais elle est décroissante car $a$ est négatif."
+        },
+        {
+          "text": "Ni paire ni impaire et décroissante",
+          "is_correct": false,
+          "explanation": "La fonction $ax^3$ est toujours impaire."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_partie_entiere_1",
+      "question": "La fonction 'partie entière' $E(x)$ est définie comme l'unique entier $n$ tel que $n \\le x < n+1$. Que vaut $E(-2.5)$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "-2",
+          "is_correct": false,
+          "explanation": "L'entier $n=-2$ ne vérifie pas la condition, car $-2 \\le -2.5$ est faux."
+        },
+        {
+          "text": "-3",
+          "is_correct": true,
+          "explanation": "L'entier $n=-3$ vérifie la condition $n \\le x < n+1$, car $-3 \\le -2.5 < -2$ (qui est $-3+1$)."
+        },
+        {
+          "text": "-2.5",
+          "is_correct": false,
+          "explanation": "La partie entière doit être un nombre entier."
+        },
+        {
+          "text": "-1",
+          "is_correct": false,
+          "explanation": "L'entier $n=-1$ ne vérifie pas la condition, car $-1 \\le -2.5$ est faux."
+        }
+      ],
+      "steps": []
+    }
+  ],
+  "exercises": [
+    {
+      "id": "exo_fonction_domaine_1",
+      "title": "Détermination de l'ensemble de définition",
+      "statement": "Déterminer l'ensemble de définition de la fonction $f(x) = \\frac{\\sqrt{x+3}}{x^2-9}$.",
+      "sub_questions": [
+        {
+          "question": "Identifier les contraintes liées à la racine carrée.",
+          "hint": "La radicande $x+3$ doit être positif ou nul : $x+3 \\geq 0 \\Rightarrow x \\geq -3$."
+        },
+        {
+          "question": "Identifier les contraintes liées au dénominateur.",
+          "hint": "Le dénominateur ne doit pas s'annuler : $x^2-9 \\neq 0 \\Rightarrow x \\neq -3$ et $x \\neq 3$."
+        },
+        {
+          "question": "Combiner les deux contraintes pour déterminer $D_f$.",
+          "hint": "Il faut $x \\geq -3$ ET $x \\neq -3$ ET $x \\neq 3$, donc $D_f = ]-3, 3[ \\cup ]3, +\\infty[$."
+        }
+      ]
+    },
+    {
+      "id": "exo_fonction_parite_1",
+      "title": "Étude de la parité",
+      "statement": "Étudier la parité de la fonction $f(x) = \\frac{x^3}{x^2+1}$.",
+      "sub_questions": [
+        {
+          "question": "Vérifier que le domaine de définition est symétrique par rapport à 0.",
+          "hint": "$D_f = \\mathbb{R}$ qui est bien symétrique par rapport à 0."
+        },
+        {
+          "question": "Calculer $f(-x)$.",
+          "hint": "$f(-x) = \\frac{(-x)^3}{(-x)^2+1} = \\frac{-x^3}{x^2+1}$"
+        },
+        {
+          "question": "Comparer $f(-x)$ avec $f(x)$ et $-f(x)$.",
+          "hint": "$f(-x) = \\frac{-x^3}{x^2+1} = -\\frac{x^3}{x^2+1} = -f(x)$"
+        },
+        {
+          "question": "Conclure sur la parité de $f$.",
+          "hint": "Comme $f(-x) = -f(x)$, la fonction $f$ est impaire."
+        }
+      ]
+    },
+    {
+      "id": "exo_fonction_monotonie_1",
+      "title": "Sens de variation d'une fonction homographique",
+      "statement": "Soit $f(x) = \\frac{3x-5}{2x+1}$. Déterminer le sens de variation de $f$ sur chacun de ses intervalles de définition.",
+      "sub_questions": [
+        {
+          "question": "Déterminer l'ensemble de définition $D_f$.",
+          "hint": "$D_f = \\mathbb{R} \\setminus \\{-\\frac{1}{2}\\}$"
+        },
+        {
+          "question": "Calculer le déterminant $\\Delta = ad - bc$ avec $f(x) = \\frac{ax+b}{cx+d}$.",
+          "hint": "$a=3, b=-5, c=2, d=1$. Donc $\\Delta = (3)(1) - (-5)(2) = 3 + 10 = 13 > 0$."
+        },
+        {
+          "question": "En déduire le sens de variation de $f$.",
+          "hint": "Comme $\\Delta > 0$, la fonction $f$ est strictement croissante sur $]-\\infty, -\\frac{1}{2}[$ et sur $]-\\frac{1}{2}, +\\infty[$."
+        },
+        {
+          "question": "Déterminer les asymptotes de $f$.",
+          "hint": "Asymptote verticale : $x = -\\frac{1}{2}$. Asymptote horizontale : $y = \\frac{a}{c} = \\frac{3}{2}$."
+        }
+      ]
+    },
+    {
+      "id": "exo_fonction_parabole_1",
+      "title": "Étude complète d'une fonction du second degré",
+      "statement": "Soit $f(x) = -x^2 + 4x - 1$. Étudier cette fonction : domaine, variations, extremum, graphe.",
+      "sub_questions": [
+        {
+          "question": "Déterminer l'ensemble de définition.",
+          "hint": "$D_f = \\mathbb{R}$ (polynôme)"
+        },
+        {
+          "question": "Déterminer les coordonnées du sommet $S$.",
+          "hint": "$x_S = -\\frac{b}{2a} = -\\frac{4}{2(-1)} = 2$. $y_S = f(2) = -(2)^2 + 4(2) - 1 = -4 + 8 - 1 = 3$. Donc $S(2, 3)$."
+        },
+        {
+          "question": "Dresser le tableau de variations de $f$.",
+          "hint": "Comme $a = -1 < 0$, $f$ est croissante sur $]-\\infty, 2]$ et décroissante sur $[2, +\\infty[$. Maximum en $x=2$ : $f(2) = 3$."
+        },
+        {
+          "question": "Résoudre l'équation $f(x) = 0$ en calculant le discriminant.",
+          "hint": "$\\Delta = b^2 - 4ac = 16 - 4(-1)(-1) = 16 - 4 = 12 > 0$. Deux solutions : $x = \\frac{-4 \\pm \\sqrt{12}}{-2} = \\frac{-4 \\pm 2\\sqrt{3}}{-2} = 2 \\mp \\sqrt{3}$."
+        }
+      ]
+    },
+    {
+      "id": "exo_fonction_composition_1",
+      "title": "Composition de fonctions",
+      "statement": "Soient $f(x) = \\frac{1}{x+1}$ et $g(x) = 2x-3$. Déterminer $(f \\circ g)(x)$ et $(g \\circ f)(x)$ avec leurs ensembles de définition respectifs.",
+      "sub_questions": [
+        {
+          "question": "Calculer $(f \\circ g)(x) = f(g(x))$.",
+          "hint": "$(f \\circ g)(x) = f(2x-3) = \\frac{1}{(2x-3)+1} = \\frac{1}{2x-2} = \\frac{1}{2(x-1)}$"
+        },
+        {
+          "question": "Déterminer l'ensemble de définition de $f \\circ g$.",
+          "hint": "Il faut que $g(x) \\in D_f$, c'est-à-dire $2x-3 \\neq -1 \\Rightarrow 2x \\neq 2 \\Rightarrow x \\neq 1$. Donc $D_{f \\circ g} = \\mathbb{R} \\setminus \\{1\\}$."
+        },
+        {
+          "question": "Calculer $(g \\circ f)(x) = g(f(x))$.",
+          "hint": "$(g \\circ f)(x) = g\\left(\\frac{1}{x+1}\\right) = 2 \\cdot \\frac{1}{x+1} - 3 = \\frac{2}{x+1} - 3 = \\frac{2 - 3(x+1)}{x+1} = \\frac{-3x-1}{x+1}$"
+        },
+        {
+          "question": "Déterminer l'ensemble de définition de $g \\circ f$.",
+          "hint": "$D_{g \\circ f} = D_f = \\mathbb{R} \\setminus \\{-1\\}$ (car $g$ est définie sur $\\mathbb{R}$)."
+        },
+        {
+          "question": "Comparer $f \\circ g$ et $g \\circ f$. Sont-elles égales ?",
+          "hint": "Non, $f \\circ g \\neq g \\circ f$. La composition n'est pas commutative."
+        }
+      ]
+    }
+  ],
+  "version": "v1.1.0-817cc1"
+}

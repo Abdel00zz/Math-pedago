@@ -1,0 +1,212 @@
+{
+  "header": {
+    "title": "Étude des Fonctions",
+    "subtitle": "Analyse complète et représentation graphique",
+    "classe": "1ère Bac Sciences Mathématiques",
+    "chapter": "Chapitre 11",
+    "academicYear": "2025-2026"
+  },
+  "sections": [
+    {
+      "title": "Méthodologie d'Étude",
+      "subsections": [
+        {
+          "title": "Plan d'Étude Complet",
+          "elements": [
+            {
+              "type": "p",
+              "content": "L'étude complète d'une fonction suit une méthodologie rigoureuse qui permet d'obtenir toutes les informations nécessaires pour tracer sa courbe représentative."
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Étapes de l'étude** :",
+              "content": [
+                ">> **1. Domaine de définition**",
+                "Déterminer l'ensemble $D_f$ sur lequel $f$ est définie",
+                ">> **2. Symétries**",
+                "Étudier la parité (fonction paire, impaire) ou la périodicité",
+                ">> **3. Limites aux bornes**",
+                "Calculer les limites en $\\pm \\infty$ et aux bornes de $D_f$",
+                ">> **4. Asymptotes**",
+                "Déterminer les asymptotes verticales, horizontales et obliques",
+                ">> **5. Dérivabilité et dérivée**",
+                "Calculer $f'(x)$ et étudier son signe",
+                ">> **6. Tableau de variations**",
+                "Dresser le tableau récapitulatif avec sens de variation et extrema",
+                ">> **7. Tracé de la courbe**",
+                "Représenter graphiquement $f$ avec tous les éléments trouvés"
+              ],
+              "listType": "bullet"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Fonctions de Référence",
+      "subsections": [
+        {
+          "title": "Fonction Trinôme du Second Degré",
+          "elements": [
+            {
+              "type": "p",
+              "content": "La fonction trinôme est une fonction polynôme de degré 2, dont l'étude repose sur la forme canonique et le discriminant."
+            },
+            {
+              "type": "definition-box",
+              "preamble": "**Fonction trinôme** :",
+              "content": "Une fonction trinôme est définie par :\n$$f(x) = ax^2 + bx + c$$\navec $a \\neq 0$, $b$ et $c$ réels.\n\n**Forme canonique** :\n$$f(x) = a\\left[(x - \\alpha)^2 - \\dfrac{\\Delta}{4a^2}\\right]$$\noù $\\alpha = -\\dfrac{b}{2a}$ et $\\Delta = b^2 - 4ac$"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Propriétés du trinôme** :",
+              "content": [
+                "**Domaine de définition** : $D_f = \\mathbb{R}$",
+                "**Dérivée** : $f'(x) = 2ax + b$",
+                "**Sommet de la parabole** : $S\\left(-\\dfrac{b}{2a}; f\\left(-\\dfrac{b}{2a}\\right)\\right)$",
+                "**Axe de symétrie** : $x = -\\dfrac{b}{2a}$",
+                "**Sens de variation** :",
+                "Si $a > 0$ : $f$ décroît sur $]-\\infty; -\\frac{b}{2a}]$ et croît sur $[-\\frac{b}{2a}; +\\infty[$",
+                "Si $a < 0$ : $f$ croît sur $]-\\infty; -\\frac{b}{2a}]$ et décroît sur $[-\\frac{b}{2a}; +\\infty[$"
+              ],
+              "listType": "bullet"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Étude d'un trinôme** :",
+              "content": "Étudier $f(x) = 2x^2 - 8x + 3$.\n\n**Sommet** : $\\alpha = -\\dfrac{-8}{2 \\times 2} = \\dfrac{8}{4} = ___2___$\n\n$f(2) = 2(2)^2 - 8(2) + 3 = 8 - 16 + 3 = ___-5___$\n\nLe sommet est $S(2; -5)$. C'est un **minimum** car $a = 2 > 0$.\n\n**Variations** : $f$ décroît sur $]-\\infty; 2]$ et croît sur $[2; +\\infty[$"
+            }
+          ]
+        },
+        {
+          "title": "Fonction Homographique",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Fonction homographique** :",
+              "content": "Une fonction homographique est définie par :\n$$f(x) = \\dfrac{ax + b}{cx + d}$$\navec $a, b, c, d$ réels et $ad - bc \\neq 0$ (pour que $f$ ne soit pas constante)."
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Propriétés** :",
+              "content": [
+                "**Domaine** : $D_f = \\mathbb{R} \\setminus \\left\\{-\\dfrac{d}{c}\\right\\}$ si $c \\neq 0$",
+                "**Dérivée** : $f'(x) = \\dfrac{ad - bc}{(cx + d)^2}$",
+                "**Monotonie** :",
+                "Si $ad - bc > 0$ : $f$ strictement croissante sur chaque intervalle de $D_f$",
+                "Si $ad - bc < 0$ : $f$ strictement décroissante sur chaque intervalle de $D_f$",
+                "**Asymptotes** :",
+                "Asymptote verticale : $x = -\\dfrac{d}{c}$",
+                "Asymptote horizontale : $y = \\dfrac{a}{c}$"
+              ],
+              "listType": "bullet"
+            },
+            {
+              "type": "practice-box",
+              "statement": "Étudier la fonction $f(x) = \\dfrac{2x + 3}{x - 1}$",
+              "content": [
+                "Déterminer le domaine de définition",
+                "Calculer la dérivée et étudier son signe",
+                "Déterminer les asymptotes",
+                "Dresser le tableau de variations"
+              ],
+              "solution": [
+                "**Domaine** : $D_f = \\mathbb{R} \\setminus \\{1\\}$",
+                "**Dérivée** : $f'(x) = \\dfrac{2(x-1) - (2x+3)}{(x-1)^2} = \\dfrac{2x - 2 - 2x - 3}{(x-1)^2} = \\dfrac{-5}{(x-1)^2}$\n\nComme $(x-1)^2 > 0$ pour tout $x \\neq 1$, on a $f'(x) < 0$ sur $D_f$.\n\n$f$ est strictement décroissante sur $]-\\infty; 1[$ et sur $]1; +\\infty[$",
+                "**Asymptotes** :\n\nVerticale : $x = 1$ (car $\\lim\\limits_{x \\to 1^+} f(x) = +\\infty$ et $\\lim\\limits_{x \\to 1^-} f(x) = -\\infty$)\n\nHorizontale : $y = \\dfrac{2}{1} = 2$ (car $\\lim\\limits_{x \\to \\pm\\infty} f(x) = 2$)",
+                "| $x$ | $-\\infty$ | | $1$ | | $+\\infty$ |\n|-----|-----------|---|-----|---|----------|\n| $f'(x)$ | | $-$ | $\\vert$ | $-$ | |\n| $f(x)$ | $2$ | ↘ | $\\vert$ | ↘ | $2$ |"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Fonction avec Radicaux",
+          "elements": [
+            {
+              "type": "p",
+              "content": "Les fonctions comportant des racines carrées nécessitent une attention particulière pour le domaine de définition et la dérivabilité."
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Fonction racine carrée** :",
+              "content": [
+                "**Fonction** : $f(x) = \\sqrt{x}$",
+                "**Domaine** : $D_f = [0; +\\infty[$",
+                "**Dérivée** : $f'(x) = \\dfrac{1}{2\\sqrt{x}}$ pour $x > 0$",
+                "**Limites** : $\\lim\\limits_{x \\to 0^+} f(x) = 0$ et $\\lim\\limits_{x \\to +\\infty} f(x) = +\\infty$",
+                "**Variations** : $f$ est strictement croissante sur $[0; +\\infty[$"
+              ],
+              "listType": "bullet"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Étude Complète d'une Fonction",
+      "subsections": [
+        {
+          "title": "Exemple Guidé",
+          "elements": [
+            {
+              "type": "practice-box",
+              "statement": "Étudier la fonction $f(x) = x + \\dfrac{4}{x}$ sur son domaine de définition.",
+              "content": [
+                "Domaine de définition",
+                "Parité de la fonction",
+                "Limites et asymptotes",
+                "Dérivée et variations",
+                "Tracé de la courbe"
+              ],
+              "solution": [
+                "**Domaine** : $D_f = \\mathbb{R}^* = ]-\\infty; 0[ \\cup ]0; +\\infty[$",
+                "**Parité** : $f(-x) = -x + \\dfrac{4}{-x} = -x - \\dfrac{4}{x} = -\\left(x + \\dfrac{4}{x}\\right) = -f(x)$\n\nDonc $f$ est **impaire**. On peut limiter l'étude à $]0; +\\infty[$ puis compléter par symétrie.",
+                "**Limites** :\n\n$\\lim\\limits_{x \\to 0^+} f(x) = \\lim\\limits_{x \\to 0^+} \\left(x + \\dfrac{4}{x}\\right) = 0 + (+\\infty) = +\\infty$\n\n$\\lim\\limits_{x \\to +\\infty} f(x) = \\lim\\limits_{x \\to +\\infty} x\\left(1 + \\dfrac{4}{x}\\right) = +\\infty$\n\n**Asymptotes** :\n- Verticale : $x = 0$\n- Oblique : $y = x$ (car $\\lim\\limits_{x \\to +\\infty} [f(x) - x] = \\lim\\limits_{x \\to +\\infty} \\frac{4}{x} = 0$)",
+                "**Dérivée** : $f'(x) = 1 - \\dfrac{4}{x^2} = \\dfrac{x^2 - 4}{x^2}$\n\n$f'(x) = 0$ pour $x^2 = 4$, soit $x = 2$ (sur $]0; +\\infty[$)\n\n**Signe** :\n- Si $0 < x < 2$ : $f'(x) < 0$ (décroissante)\n- Si $x > 2$ : $f'(x) > 0$ (croissante)\n\n**Extremum** : $f(2) = 2 + \\dfrac{4}{2} = 4$ (minimum)\n\n| $x$ | $0$ | | $2$ | | $+\\infty$ |\n|-----|-----|---|-----|---|----------|\n| $f'(x)$ | | $-$ | $0$ | $+$ | |\n| $f(x)$ | $+\\infty$ | ↘ | $4$ | ↗ | $+\\infty$ |",
+                "**Tracé** :\n1. Asymptote verticale $x = 0$\n2. Asymptote oblique $y = x$\n3. Minimum en $(2; 4)$\n4. Courbe décroissante puis croissante sur $]0; +\\infty[$\n5. Symétrie par rapport à l'origine (fonction impaire)"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Résolution Graphique",
+      "subsections": [
+        {
+          "title": "Équations et Inéquations",
+          "elements": [
+            {
+              "type": "p",
+              "content": "La courbe représentative d'une fonction permet de résoudre graphiquement des équations et des inéquations."
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Méthodes graphiques** :",
+              "content": [
+                "**Résoudre $f(x) = k$** : Chercher les abscisses des points d'intersection entre $(C_f)$ et la droite $y = k$",
+                "**Résoudre $f(x) = g(x)$** : Chercher les abscisses des points d'intersection entre $(C_f)$ et $(C_g)$",
+                "**Résoudre $f(x) \\geq k$** : Déterminer les intervalles où $(C_f)$ est au-dessus de la droite $y = k$"
+              ],
+              "listType": "bullet"
+            },
+            {
+              "type": "p",
+              "content": "?> **Précision** : La résolution graphique donne des solutions **approximatives**. Pour des solutions exactes, il faut utiliser des méthodes algébriques."
+            }
+          ]
+        },
+        {
+          "title": "Position Relative de Courbes",
+          "elements": [
+            {
+              "type": "property-box",
+              "preamble": "**Position relative** :",
+              "content": "Pour étudier la position de $(C_f)$ par rapport à $(C_g)$, on étudie le signe de $f(x) - g(x)$ :\n\nSi $f(x) - g(x) > 0$ : $(C_f)$ est au-dessus de $(C_g)$\n\nSi $f(x) - g(x) < 0$ : $(C_f)$ est en-dessous de $(C_g)$\n\nSi $f(x) - g(x) = 0$ : $(C_f)$ et $(C_g)$ se coupent"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
