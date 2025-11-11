@@ -202,6 +202,12 @@
   border-color: #000 !important;
 }
 
+/* Badge in activity boxes: force black text and border so the badge matches the black frame */
+.lesson-box--activity .lesson-box__badge {
+  color: #000 !important;
+  border-color: #000 !important;
+}
+
 /* Définition - Indigo */
 .lesson-box--definition {
   --lesson-accent: #6366F1;
