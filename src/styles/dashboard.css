@@ -1599,85 +1599,40 @@
 
 /* ========================================
    EFFETS POUR SESSIONS PROCHAINES (BLEU)
+   Simple bordure animée, SANS overlay
    ======================================== */
 
-/* Animation pour bordure bleue */
+/* Animation pour bordure bleue simple */
 @keyframes upcomingBorderPulse {
   0%, 100% {
-    border-color: #3b82f6;
+    border-color: rgba(59, 130, 246, 0.6);
     box-shadow:
       0 10px 30px rgba(15, 23, 42, 0.12),
       0 5px 15px rgba(15, 23, 42, 0.08),
-      0 0 0 4px rgba(59, 130, 246, 0.15),
-      0 0 20px rgba(59, 130, 246, 0.3),
-      0 0 40px rgba(59, 130, 246, 0.15),
-      inset 0 1px 0 rgba(255, 255, 255, 0.9),
-      inset 0 0 30px rgba(59, 130, 246, 0.08);
+      0 0 0 3px rgba(59, 130, 246, 0.2),
+      0 0 15px rgba(59, 130, 246, 0.3);
   }
   50% {
-    border-color: #2563eb;
+    border-color: rgba(37, 99, 235, 0.8);
     box-shadow:
       0 15px 40px rgba(15, 23, 42, 0.15),
       0 8px 20px rgba(15, 23, 42, 0.1),
-      0 0 0 5px rgba(37, 99, 235, 0.2),
-      0 0 25px rgba(37, 99, 235, 0.4),
-      0 0 50px rgba(37, 99, 235, 0.2),
-      inset 0 1px 0 rgba(255, 255, 255, 1),
-      inset 0 0 35px rgba(37, 99, 235, 0.1);
+      0 0 0 4px rgba(37, 99, 235, 0.25),
+      0 0 20px rgba(37, 99, 235, 0.4);
   }
 }
 
-/* Appliquer l'effet aux cartes avec session prochaine */
+/* Appliquer bordure bleue animée SEULEMENT */
 .chapter-card-v2.has-upcoming-session .chapter-card-v2__bg {
-  animation: upcomingBorderPulse 3s ease-in-out infinite;
-  border-width: 2.5px;
+  border-width: 2px;
   border-style: solid;
-  position: relative;
-  overflow: visible;
-}
-
-/* Gradient bleu animé pour bordure */
-.chapter-card-v2.has-upcoming-session .chapter-card-v2__bg::before {
-  content: '';
-  position: absolute;
-  top: -2.5px;
-  left: -2.5px;
-  right: -2.5px;
-  bottom: -2.5px;
-  background: linear-gradient(
-    45deg,
-    #3b82f6,
-    #2563eb,
-    #60a5fa,
-    #2563eb,
-    #3b82f6
-  );
-  background-size: 300% 300%;
-  border-radius: inherit;
-  z-index: -1;
-  opacity: 0.5;
-  animation: liveGradientRotate 4s ease infinite;
-  filter: blur(6px);
+  animation: upcomingBorderPulse 3s ease-in-out infinite;
 }
 
 /* État hover pour sessions prochaines */
 .chapter-card-v2.has-upcoming-session:not(.is-disabled):hover .chapter-card-v2__bg {
-  border-color: #2563eb;
   transform: translateY(-2px);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow:
-    0 20px 50px rgba(15, 23, 42, 0.18),
-    0 10px 25px rgba(15, 23, 42, 0.12),
-    0 0 0 6px rgba(37, 99, 235, 0.25),
-    0 0 30px rgba(37, 99, 235, 0.5),
-    0 0 60px rgba(37, 99, 235, 0.25),
-    inset 0 1px 0 rgba(255, 255, 255, 1),
-    inset 0 0 40px rgba(37, 99, 235, 0.1);
-}
-
-.chapter-card-v2.has-upcoming-session:not(.is-disabled):hover .chapter-card-v2__bg::before {
-  opacity: 0.7;
-  filter: blur(8px);
 }
 
 /* Badge LIVE avec effet pulsant supplémentaire */
@@ -1722,7 +1677,7 @@
   pointer-events: none;
 }
 
-/* Badge en haut à droite de la carte */
+/* Badge EN DIRECT en haut à droite (sessions actives SEULEMENT) */
 .chapter-card-v2__live-badge {
   position: absolute;
   top: 12px;
@@ -1738,26 +1693,12 @@
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-}
-
-/* Badge LIVE rouge pour sessions actives */
-.chapter-card-v2__live-badge--active {
   background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
   box-shadow:
     0 4px 12px rgba(220, 38, 38, 0.4),
     0 0 20px rgba(239, 68, 68, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.3);
   animation: liveBadgePulse 2s ease-in-out infinite;
-}
-
-/* Badge bleu pour sessions prochaines */
-.chapter-card-v2__live-badge--upcoming {
-  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
-  box-shadow:
-    0 4px 12px rgba(37, 99, 235, 0.4),
-    0 0 20px rgba(59, 130, 246, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
-  animation: upcomingBadgePulse 3s ease-in-out infinite;
 }
 
 .chapter-card-v2__live-badge-dot {
@@ -1767,6 +1708,11 @@
   background: #fff;
   box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
   animation: liveDotPulse 1.5s ease-in-out infinite;
+}
+
+.chapter-card-v2__live-badge-text {
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 @keyframes liveDotPulse {
@@ -1777,35 +1723,5 @@
   50% {
     opacity: 0.6;
     transform: scale(1.2);
-  }
-}
-
-.chapter-card-v2__live-badge-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
-  animation: liveDotPulse 1.5s ease-in-out infinite;
-}
-
-.chapter-card-v2__live-badge-icon {
-  font-size: 14px;
-  line-height: 1;
-}
-
-.chapter-card-v2__live-badge-text {
-  color: #fff;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-}
-
-@keyframes upcomingBadgePulse {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.03);
-    opacity: 0.95;
   }
 }

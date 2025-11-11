@@ -83,8 +83,10 @@ const DashboardView: React.FC = () => {
         return withSup.replace(/<\/sup>\s*(?=\S)/gi, '</sup>&nbsp;');
     }, []);
 
-    // ✅ OPTIMISATION 4: Catégorisation optimisée avec reduce basée sur les statuts
-    // Trier pour mettre les chapitres avec séances actives en premier
+    // ✅ OPTIMISATION 4: Catégorisation GLOBALE par sessions d'abord, puis par statut
+    // PRIORITÉ 1: Sessions actives EN HAUT
+    // PRIORITÉ 2: Sessions prochaines ENSUITE
+    // PRIORITÉ 3: Reste en dessous
     const categorizedActivities = useMemo((): CategorizedActivities => {
         if (!profile) return { inProgress: [], completed: [], upcoming: [] };
 
@@ -96,15 +98,8 @@ const DashboardView: React.FC = () => {
             .map(id => activities[id])
             .filter(Boolean) as typeof activities[keyof typeof activities][];
 
-        // DEDUPE BY TITLE - certains chapitres (différents id/file) peuvent partager le même titre
-        // Exemple: '1bsm_generalites...' et '1bsm_etude_des_fonctions' utilisent le même titre.
-        // On choisit une représentation unique par titre en priorisant :
-        // 1) celui qui est actif (isActive === true)
-        // 2) ensuite celui qui a une session live
-        // 3) ensuite celui qui a une session à venir
-        // 4) enfin le premier rencontré
+        // DEDUPE BY TITLE
         const dedupedByTitle: { [normalizedTitle: string]: typeof rawActivities[number] } = {};
-
         const normalize = (s: string) => s.trim().toLowerCase();
 
         for (const ch of rawActivities) {
@@ -116,13 +111,13 @@ const DashboardView: React.FC = () => {
 
             const existing = dedupedByTitle[key];
 
-            // If new one is active, prefer it
+            // Prefer active
             if (ch.isActive && !existing.isActive) {
                 dedupedByTitle[key] = ch;
                 continue;
             }
 
-            // Prefer one with live session
+            // Prefer with live session
             const chLive = hasActiveSession(ch.sessionDates || []);
             const exLive = hasActiveSession(existing.sessionDates || []);
             if (chLive && !exLive) {
@@ -130,25 +125,48 @@ const DashboardView: React.FC = () => {
                 continue;
             }
 
-            // Prefer one with upcoming session
+            // Prefer with upcoming session
             const chUpcoming = hasUpcomingSession(ch.sessionDates || []);
             const exUpcoming = hasUpcomingSession(existing.sessionDates || []);
             if (chUpcoming && !exUpcoming) {
                 dedupedByTitle[key] = ch;
                 continue;
             }
-
-            // Otherwise keep existing (first encountered)
         }
 
         const allUserActivities = Object.values(dedupedByTitle);
 
-        const categorized = allUserActivities.reduce<CategorizedActivities>(
+        // NOUVEAU TRI GLOBAL : Sessions d'abord !
+        const sorted = [...allUserActivities].sort((a, b) => {
+            const aLive = hasActiveSession(a.sessionDates || []);
+            const bLive = hasActiveSession(b.sessionDates || []);
+            const aUpcoming = !aLive && hasUpcomingSession(a.sessionDates || []);
+            const bUpcoming = !bLive && hasUpcomingSession(b.sessionDates || []);
+
+            // 1. Sessions actives EN PREMIER
+            if (aLive && !bLive) return -1;
+            if (!aLive && bLive) return 1;
+
+            // 2. Sessions prochaines ENSUITE
+            if (aUpcoming && !bUpcoming) return -1;
+            if (!aUpcoming && bUpcoming) return 1;
+
+            // 3. Même priorité de session, trier par statut
+            const aProgress = progress[a.id];
+            const bProgress = progress[b.id];
+            const aStatus = aProgress?.status || 'a-venir';
+            const bStatus = bProgress?.status || 'a-venir';
+
+            const statusPriority = { 'en-cours': 1, 'a-venir': 2, 'acheve': 3 };
+            return (statusPriority[aStatus] || 2) - (statusPriority[bStatus] || 2);
+        });
+
+        // Catégoriser après le tri global
+        const categorized = sorted.reduce<CategorizedActivities>(
             (acc, chapter) => {
                 const chapterProgress = progress[chapter.id];
                 const status = chapterProgress?.status || 'a-venir';
 
-                // Utiliser le statut pour catégoriser intelligemment
                 if (status === 'acheve') {
                     acc.completed.push(chapter);
                 } else if (status === 'en-cours') {
@@ -161,12 +179,7 @@ const DashboardView: React.FC = () => {
             { inProgress: [], completed: [], upcoming: [] }
         );
 
-        // Trier chaque catégorie pour placer les chapitres avec séances actives en premier
-        return {
-            inProgress: sortChaptersByActiveSession(categorized.inProgress),
-            completed: sortChaptersByActiveSession(categorized.completed),
-            upcoming: sortChaptersByActiveSession(categorized.upcoming),
-        };
+        return categorized;
     }, [activities, progress, profile, chapterOrder]);
 
     // ✅ OPTIMISATION 5: handleChapterSelect avec useCallback

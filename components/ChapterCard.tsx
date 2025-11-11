@@ -219,21 +219,15 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
             aria-disabled={disabled}
             data-status={variant}
         >
-            {/* Badge LIVE pour les sessions actives */}
+            {/* Badge LIVE rouge pour les sessions actives SEULEMENT */}
             {isSessionActive && (
-                <div className="chapter-card-v2__live-badge chapter-card-v2__live-badge--active">
+                <div className="chapter-card-v2__live-badge">
                     <span className="chapter-card-v2__live-badge-dot"></span>
                     <span className="chapter-card-v2__live-badge-text">EN DIRECT</span>
                 </div>
             )}
 
-            {/* Badge PROCHAINEMENT pour les sessions à venir */}
-            {isSessionUpcoming && (
-                <div className="chapter-card-v2__live-badge chapter-card-v2__live-badge--upcoming">
-                    <span className="chapter-card-v2__live-badge-icon">📅</span>
-                    <span className="chapter-card-v2__live-badge-text">PROCHAINEMENT</span>
-                </div>
-            )}
+            {/* Pas de badge pour sessions prochaines, seulement bordure animée */}
 
             {/* Background effects */}
             <div className="chapter-card-v2__bg" aria-hidden="true" />
