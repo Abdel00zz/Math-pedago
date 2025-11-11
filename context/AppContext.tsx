@@ -15,6 +15,9 @@ const initialState: AppState = {
     activitySubView: null,
     isReviewMode: false,
     chapterOrder: [],
+    concoursProgress: {},
+    currentConcoursType: null,
+    currentConcoursId: null,
 };
 
 const appReducer = (state: AppState, action: Action): AppState => {
@@ -31,7 +34,7 @@ const appReducer = (state: AppState, action: Action): AppState => {
 
     switch (action.type) {
         case 'INIT': {
-            const { profile, progress = {}, view, currentChapterId, currentActiveChapterId, activitySubView, chapterOrder, activityVersions } = action.payload;
+            const { profile, progress = {}, view, currentChapterId, currentActiveChapterId, activitySubView, chapterOrder, activityVersions, concoursProgress, currentConcoursType, currentConcoursId } = action.payload;
             const restoredView = profile && profile.classId ? (view || 'dashboard') : 'login';
 
             return {
@@ -44,6 +47,9 @@ const appReducer = (state: AppState, action: Action): AppState => {
                 currentChapterId: currentChapterId || null,
                 currentActiveChapterId: currentActiveChapterId || null,
                 activitySubView: activitySubView || null,
+                concoursProgress: concoursProgress || {},
+                currentConcoursType: currentConcoursType || null,
+                currentConcoursId: currentConcoursId || null,
             };
         }
         
@@ -73,8 +79,10 @@ const appReducer = (state: AppState, action: Action): AppState => {
             return newState;
         }
         
-        case 'LOGIN':
-            return { ...state, profile: action.payload, view: 'dashboard' };
+        case 'LOGIN': {
+            // Ne pas changer la vue ici, LoginView le fera selon la classe sélectionnée
+            return { ...state, profile: action.payload };
+        }
         
         case 'NAVIGATE_QUIZ': {
             if (!state.currentChapterId) return state;

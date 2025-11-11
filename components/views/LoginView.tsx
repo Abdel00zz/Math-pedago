@@ -170,6 +170,14 @@ const LoginView: React.FC = () => {
         setError('');
         const profile: Profile = { name: name.trim(), classId };
         dispatch({ type: 'LOGIN', payload: profile });
+
+        // Rediriger vers la vue concours si la classe sélectionnée est "concours"
+        if (classId === 'concours') {
+            dispatch({
+                type: 'CHANGE_VIEW',
+                payload: { view: 'concours' }
+            });
+        }
     };
 
     return (
