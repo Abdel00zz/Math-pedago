@@ -20,12 +20,12 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 1 : Calcul d'images** :",
+              "preamble": "**Calcul d'images** :",
               "content": "Soit la fonction $g$ définie par $g(x) = x^2 + 4$. Calculer l'image de $5$ par la fonction $g$.\n\n**Solution** :\n$$g(5) = 5^2 + 4 = ___25___ + 4 = ___29___$$\n\nDonc l'image de $5$ par la fonction $g$ est $___29___$."
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 2 : Recherche d'antécédents** :",
+              "preamble": "**Recherche d'antécédents** :",
               "content": "Soit la fonction $f$ définie par $f(x) = 2x - 3$. Déterminer un antécédent de $5$ par la fonction $f$.\n\n**Solution** :\n\nOn cherche $x$ tel que $f(x) = 5$\n$$2x - 3 = 5$$\n$$2x = 5 + 3$$\n$$2x = ___8___$$\n$$x = ___4___$$\n\nDonc l'antécédent de $5$ par $f$ est $___4___$."
             },
             {
@@ -57,17 +57,17 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 3 : Domaines de définition usuels** :",
+              "preamble": "**Domaines de définition usuels** :",
               "content": "- **Fonctions polynômes** : $D_f = \\mathbb{R}$\n\n- **Fonctions trigonométriques** : $\\cos x$ et $\\sin x$ ont pour domaine $\\mathbb{R}$\n\n- **Fonction racine carrée** : $x \\mapsto \\sqrt{x}$ a pour domaine $[0 ; +\\infty[$\n\n- **Fonction inverse** : $x \\mapsto \\dfrac{1}{x}$ a pour domaine $\\mathbb{R}^*$"
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 4 : Détermination d'un ensemble de définition** :",
+              "preamble": "**Détermination d'un ensemble de définition** :",
               "content": "Soit $f$ une fonction définie par $f(x) = \\sqrt{3 - x}$\n\n**Condition d'existence** : Il faut que $3 - x \\geq 0$\n\n$$3 - x \\geq 0 \\Leftrightarrow x \\leq ___3___$$\n\nDonc $D_f = ]-\\infty ; ___3___]$"
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 5 : Fonction rationnelle** :",
+              "preamble": "**Fonction rationnelle** :",
               "content": "Soit $f$ définie par $f(x) = \\dfrac{-2x - 4}{x^2 - 4}$\n\n**Condition** : Le dénominateur doit être non nul\n\n$$x^2 - 4 \\neq 0$$\n$$x^2 \\neq 4$$\n$$x \\neq ___2___ \\text{ et } x \\neq ___-2___$$\n\nDonc $D_f = \\mathbb{R} \\setminus \\{-2 ; 2\\} = ]-\\infty ; -2[ \\cup ]-2 ; 2[ \\cup ]2 ; +\\infty[$"
             },
             {
@@ -115,7 +115,7 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 6 : Démonstration de parité** :",
+              "preamble": "**Démonstration de parité** :",
               "content": "Montrer que la fonction $f$ définie par $f(x) = 3x^2 + 1$ est paire.\n\n**Solution** :\n\n**Étape 1** : L'ensemble de définition de $f$ est $D_f = \\mathbb{R}$\n\nPour tout $x \\in \\mathbb{R}$, on a $-x \\in \\mathbb{R}$\n\n**Étape 2** : Calculons $f(-x)$ :\n$$f(-x) = 3(-x)^2 + 1 = 3x^2 + 1 = ___f(x)___$$\n\nDonc $f(-x) = f(x)$\n\n**Conclusion** : La fonction $f$ est **paire**."
             },
             {
@@ -140,7 +140,7 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 7 : Démonstration d'imparité** :",
+              "preamble": "**Démonstration d'imparité** :",
               "content": "Montrer que la fonction $f$ définie par $f(x) = 3x^3$ est impaire.\n\n**Solution** :\n\n**Étape 1** : $D_f = \\mathbb{R}$, donc pour tout $x \\in \\mathbb{R}$, on a $-x \\in \\mathbb{R}$\n\n**Étape 2** : Calculons $f(-x)$ :\n$$f(-x) = 3(-x)^3 = 3 \\times (___-x^3___) = ___-3x^3___$$\n\nDonc $f(-x) = -3x^3 = ___-f(x)___$\n\n**Conclusion** : La fonction $f$ est **impaire**."
             },
             {
@@ -175,7 +175,7 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 8 : Étude des variations** :",
+              "preamble": "**Étude des variations** :",
               "content": "Soit $f$ la fonction définie sur $\\mathbb{R}$ par $f(x) = -4x + 1$. Étudier le sens de variations de $f$ sur $\\mathbb{R}$.\n\n**Solution** :\n\nSoient $a, b \\in \\mathbb{R}$ tels que $a > b$\n\n$$a > b$$\n$$-4a < ___-4b___$$\n$$-4a + 1 < ___-4b + 1___$$\n$$f(a) < f(b)$$\n\nDonc la fonction $f$ est **strictement décroissante** sur $\\mathbb{R}$."
             }
           ]
@@ -190,7 +190,7 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 9 : Application du taux de variation** :",
+              "preamble": "**Application du taux de variation** :",
               "content": "Soit $f$ la fonction définie sur $\\mathbb{R}$ par $f(x) = x^2$. Étudier les variations de $f$ sur $\\mathbb{R}$.\n\n**Solution** :\n\nSoient $x$ et $y$ deux réels avec $x \\neq y$\n\n$$T = \\dfrac{f(x) - f(y)}{x - y} = \\dfrac{x^2 - y^2}{x - y} = \\dfrac{(x - y)(x + y)}{x - y} = ___x + y___$$\n\n**Cas 1** : Si $x, y \\in [0 ; +\\infty[$, alors $T = x + y \\geq 0$\n\nDonc $f$ est **croissante** sur $[0 ; +\\infty[$\n\n**Cas 2** : Si $x, y \\in ]-\\infty ; 0]$, alors $T = x + y \\leq 0$\n\nDonc $f$ est **décroissante** sur $]-\\infty ; 0]$"
             },
             {
@@ -207,7 +207,7 @@
                 "Soient $x, y \\in \\mathbb{R}$ avec $x \\neq y$\n\n$T = \\dfrac{f(x) - f(y)}{x - y}$\n\n$= \\dfrac{(x^2 - 4x + 1) - (y^2 - 4y + 1)}{x - y}$\n\n$= \\dfrac{x^2 - y^2 - 4x + 4y}{x - y}$\n\n$= \\dfrac{(x - y)(x + y) - 4(x - y)}{x - y}$\n\n$= x + y - 4$",
                 "Sur $[2 ; +\\infty[$ : si $x, y \\geq 2$, alors $x + y \\geq 4$\n\nDonc $T = x + y - 4 \\geq 0$\n\nAinsi $f$ est **croissante** sur $[2 ; +\\infty[$",
                 "Sur $]-\\infty ; 2]$ : si $x, y \\leq 2$, alors $x + y \\leq 4$\n\nDonc $T = x + y - 4 \\leq 0$\n\nAinsi $f$ est **décroissante** sur $]-\\infty ; 2]$",
-                "$f(2) = 4 - 8 + 1 = -3$\n\nTableau de variations :\n\n| $x$ | $-\\infty$ | | $2$ | | $+\\infty$ |\n|-----|-----------|---|-----|---|----------|\n| $f(x)$ | $+\\infty$ | ↘ | $-3$ | ↗ | $+\\infty$ |"
+                "$f(2) = 4 - 8 + 1 = -3$\n\nLa fonction $f$ est décroissante sur $]-\\infty ; 2]$ et croissante sur $[2 ; +\\infty[$"
               ]
             }
           ]
@@ -222,7 +222,7 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 10 : Recherche d'un extremum** :",
+              "preamble": "**Recherche d'un extremum** :",
               "content": "Soit $f$ la fonction définie sur $\\mathbb{R}$ par $f(x) = -4x^2$.\n\nPour tout $x \\in \\mathbb{R}$ :\n$$x^2 \\geq 0$$\n$$-4x^2 \\leq ___0___$$\n$$f(x) \\leq 0$$\n\nDe plus, $f(0) = ___0___$\n\nDonc le nombre $___0___ = f(0)$ est la **valeur maximale** de $f$ sur $\\mathbb{R}$."
             },
             {
@@ -250,7 +250,7 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 11 : Application** :",
+              "preamble": "**Application** :",
               "content": "Soit $f$ une fonction paire décroissante sur $[0 ; +\\infty[$.\n\nAlors $f$ est ___croissante___ sur $]-\\infty ; 0]$\n\nSoit $g$ une fonction impaire croissante sur $[0 ; +\\infty[$.\n\nAlors $g$ est ___croissante___ sur $]-\\infty ; 0]$"
             }
           ]
@@ -265,7 +265,7 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 12 : Opérations sur les fonctions** :",
+              "preamble": "**Opérations sur les fonctions** :",
               "content": "Si $f$ est croissante sur $[1 ; 5]$, alors :\n\n- $f + 3$ est ___croissante___ sur $[1 ; 5]$\n\n- $2f$ est ___croissante___ sur $[1 ; 5]$\n\n- $-3f$ est ___décroissante___ sur $[1 ; 5]$"
             }
           ]
@@ -285,7 +285,7 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 13 : Contre-exemple** :",
+              "preamble": "**Contre-exemple** :",
               "content": "Soient $f$ et $g$ définies par $f(x) = \\sqrt{x^2}$ et $g(x) = x$\n\n**Domaines** : $D_f = D_g = \\mathbb{R}$\n\n**Images** : Pour tout $x \\in \\mathbb{R}$ : $f(x) = \\sqrt{x^2} = |x|$\n\nDonc $f$ et $g$ sont **différentes** car pour $x = -1$ :\n\n$f(-1) = \\sqrt{1} = ___1___$ mais $g(-1) = ___-1___$"
             }
           ]
@@ -377,7 +377,7 @@
                 "Tracer la courbe $(C_f)$"
               ],
               "solution": [
-                "On a : $a = 1 > 0$, $b = -4$ et $c = 3$\n\n$\\dfrac{-b}{2a} = \\dfrac{4}{2} = 2$\n\n$f(2) = 4 - 8 + 3 = -1$\n\nTableau de variations :\n\n| $x$ | $-\\infty$ | | $2$ | | $+\\infty$ |\n|-----|-----------|---|-----|---|----------|\n| $f(x)$ | $+\\infty$ | ↘ | $-1$ | ↗ | $+\\infty$ |",
+                "On a : $a = 1 > 0$, $b = -4$ et $c = 3$\n\n$\\dfrac{-b}{2a} = \\dfrac{4}{2} = 2$\n\n$f(2) = 4 - 8 + 3 = -1$\n\nLa fonction $f$ est décroissante sur $]-\\infty ; 2]$ avec une valeur minimale de $-1$ en $x = 2$, puis croissante sur $[2 ; +\\infty[$",
                 "$(C_f)$ est une **parabole** de sommet $\\Omega(2 ; -1)$ et d'axe de symétrie la droite $x = 2$",
                 "**Avec $(Ox)$** : $f(x) = 0 \\Leftrightarrow x^2 - 4x + 3 = 0$\n\n$\\Delta = 16 - 12 = 4$\n\n$x_1 = \\dfrac{4 + 2}{2} = 3$ et $x_2 = \\dfrac{4 - 2}{2} = 1$\n\nPoints : $A(1 ; 0)$ et $B(3 ; 0)$\n\n**Avec $(Oy)$** : $f(0) = 3$\n\nPoint : $C(0 ; 3)$",
                 "Tracer la parabole passant par les points $A$, $B$, $C$ et $\\Omega$, avec axe de symétrie $x = 2$"
@@ -468,7 +468,7 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 14 : Calcul d'une composée** :",
+              "preamble": "**Calcul d'une composée** :",
               "content": "Soient $f : \\mathbb{R} \\to \\mathbb{R}$, $x \\mapsto x + 5$ et $g : \\mathbb{R} \\to \\mathbb{R}$, $x \\mapsto x^2$\n\n**Calculons** $g \\circ f$ :\n\nPour tout $x \\in \\mathbb{R}$ :\n$$(g \\circ f)(x) = g(f(x)) = g(x + 5) = (x + 5)^2 = ___x^2 + 10x + 25___$$"
             },
             {
@@ -503,12 +503,12 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 15 : Fonction majorée** :",
+              "preamble": "**Fonction majorée** :",
               "content": "Soit $f$ définie sur $\\mathbb{R}^*$ par $f(x) = 1 - \\dfrac{1}{x}$\n\nMontrons que $f$ est majorée par $1$ sur $]0 ; +\\infty[$\n\nPour tout $x > 0$ : $\\dfrac{1}{x} > 0$ donc $-\\dfrac{1}{x} < 0$ donc $1 - \\dfrac{1}{x} < ___1___$\n\nAinsi $f(x) < 1$ pour tout $x \\in ]0 ; +\\infty[$\n\nDonc $f$ est **majorée par $1$** sur $]0 ; +\\infty[$"
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 16 : Fonction minorée** :",
+              "preamble": "**Fonction minorée** :",
               "content": "Soit $g$ définie sur $\\mathbb{R}$ par $g(x) = -2 + \\dfrac{1}{x^2 + 1}$\n\nMontrons que $g$ est minorée par $-2$ sur $\\mathbb{R}$\n\nPour tout $x \\in \\mathbb{R}$ : $x^2 + 1 \\geq 1$ donc $\\dfrac{1}{x^2 + 1} \\leq 1$ et $\\dfrac{1}{x^2 + 1} > ___0___$\n\nDonc $-2 + \\dfrac{1}{x^2 + 1} > ___-2___$\n\nAinsi $g(x) > -2$ pour tout $x \\in \\mathbb{R}$\n\nDonc $g$ est **minorée par $-2$** sur $\\mathbb{R}$"
             },
             {
@@ -530,8 +530,8 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 17 : Détermination d'une image** :",
-              "content": "Soit $f$ une fonction dont le tableau de variations est :\n\n| $x$ | $-4$ | | $-3$ | | $1$ | | $5$ |\n|-----|------|---|------|---|-----|---|-----|\n| $f(x)$ | $2$ | ↘ | $0$ | ↗ | $-1$ | ↘ | $-2$ |\n\n**Déterminons** :\n\n- $f([-3 ; 1])$ : Sur $[-3 ; 1]$, $f$ va de $0$ à $-1$ donc $f([-3 ; 1]) = ___[-1 ; 0]___$\n\n- $f([1 ; 5])$ : Sur $[1 ; 5]$, $f$ va de $-1$ à $-2$ donc $f([1 ; 5]) = ___[-2 ; -1]___$"
+              "preamble": "**Détermination d'une image** :",
+              "content": "Soit $f$ une fonction définie sur $[-4 ; 5]$ telle que :\n\n- $f$ est décroissante sur $[-4 ; -3]$ avec $f(-4) = 2$ et $f(-3) = 0$\n- $f$ est croissante sur $[-3 ; 1]$ avec $f(-3) = 0$ et $f(1) = -1$\n- $f$ est décroissante sur $[1 ; 5]$ avec $f(1) = -1$ et $f(5) = -2$\n\n**Déterminons** :\n\n- $f([-3 ; 1])$ : Sur $[-3 ; 1]$, $f$ est croissante de $0$ à $-1$ donc $f([-3 ; 1]) = ___[-1 ; 0]___$\n\n- $f([1 ; 5])$ : Sur $[1 ; 5]$, $f$ est décroissante de $-1$ à $-2$ donc $f([1 ; 5]) = ___[-2 ; -1]___$"
             }
           ]
         }
@@ -550,7 +550,7 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 18 : Fonctions trigonométriques périodiques** :",
+              "preamble": "**Fonctions trigonométriques périodiques** :",
               "content": "- Les fonctions $x \\mapsto \\sin(x)$ et $x \\mapsto \\cos(x)$ sont périodiques de période $___2\\pi___$\n\n- La fonction $x \\mapsto \\tan(x)$ est périodique de période $___\\pi___$"
             },
             {
@@ -580,7 +580,7 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 19 : Calculs de partie entière** :",
+              "preamble": "**Calculs de partie entière** :",
               "content": "- $E(4,55) = ___4___$\n\n- $E(0,78) = ___0___$\n\n- $E(-0,78) = ___-1___$\n\n- $E(-4,55) = ___-5___$"
             },
             {
