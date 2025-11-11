@@ -551,9 +551,11 @@
           "path": "pictures/1bsm/1bsm-generalites-sur-les-fonctions/img_20251111T125509260Z_test__2_.png",
           "caption": "test (2).png",
           "size": "medium",
+          "custom_width": null,
+          "custom_height": null,
           "position": "center",
           "alignment": "center",
-          "alt": ""
+          "alt": "test (2).png"
         }
       ],
       "sub_questions": [
@@ -840,6 +842,19 @@
       "id": "exo_optimisation_aire_47",
       "title": "Problème d'optimisation géométrique",
       "statement": "Dans le plan rapporté à un repère orthonormé $(O; \\vec{i}; \\vec{j})$, on considère les points $A(3; 1)$ et $M(x; 0)$ où $x$ est un réel tel que $x > 3$. La droite $(AM)$ coupe l'axe des ordonnées au point $M'$. Soit $S(x)$ l'aire du triangle $OMM'$.",
+      "images": [
+        {
+          "id": "img_1762883747264",
+          "path": "pictures/1bsm/1bsm-generalites-sur-les-fonctions/img_20251111T175547194Z_test__3_.png",
+          "caption": "",
+          "size": "medium",
+          "custom_width": null,
+          "custom_height": null,
+          "position": "float-right",
+          "alignment": "right",
+          "alt": "test (3).png"
+        }
+      ],
       "sub_questions": [
         {
           "text": "Montrer que pour tout $x \\in ]3; +\\infty[ : S(x) = \\frac{x^2}{2(x-3)}$.",
@@ -1015,5 +1030,5 @@
       ]
     }
   ],
-  "version": "v1.1.0-d3ebcf"
+  "version": "v1.1.0-ab3128"
 }
