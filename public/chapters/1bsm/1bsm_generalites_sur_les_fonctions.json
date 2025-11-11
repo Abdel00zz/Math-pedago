@@ -842,25 +842,24 @@
       "id": "exo_optimisation_aire_47",
       "title": "Problème d'optimisation géométrique",
       "statement": "Dans le plan rapporté à un repère orthonormé $(O; \\vec{i}; \\vec{j})$, on considère les points $A(3; 1)$ et $M(x; 0)$ où $x$ est un réel tel que $x > 3$. La droite $(AM)$ coupe l'axe des ordonnées au point $M'$. Soit $S(x)$ l'aire du triangle $OMM'$.",
-      "images": [
-        {
-          "id": "img_1762883747264",
-          "path": "pictures/1bsm/1bsm-generalites-sur-les-fonctions/img_20251111T175547194Z_test__3_.png",
-          "caption": "",
-          "size": "medium",
-          "custom_width": null,
-          "custom_height": null,
-          "position": "float-right",
-          "alignment": "right",
-          "alt": "test (3).png"
-        }
-      ],
       "sub_questions": [
         {
           "text": "Montrer que pour tout $x \\in ]3; +\\infty[ : S(x) = \\frac{x^2}{2(x-3)}$.",
           "questionNumber": "1",
           "sub_sub_questions": [],
-          "images": []
+          "images": [
+            {
+              "id": "img_1762886788316",
+              "path": "pictures/1bsm/1bsm-generalites-sur-les-fonctions/img_20251111T184628249Z_test__3_.png",
+              "caption": "test (3).png",
+              "size": "medium",
+              "custom_width": null,
+              "custom_height": null,
+              "position": "float-right",
+              "alignment": "right",
+              "alt": ""
+            }
+          ]
         },
         {
           "text": "Soit $a$ et $b$ deux éléments distincts de l'intervalle $]3; +\\infty[$",
@@ -1030,5 +1029,5 @@
       ]
     }
   ],
-  "version": "v1.1.0-ab3128"
+  "version": "v1.1.0-5de509"
 }
