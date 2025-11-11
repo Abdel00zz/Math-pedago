@@ -42,7 +42,7 @@
 /* Header de la boîte */
 .lesson-box__header {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   gap: clamp(0.6rem, 1.2vw, 0.9rem);
   flex-wrap: wrap;
   margin-bottom: clamp(0.8rem, 1.8vw, 1.35rem);
@@ -133,7 +133,7 @@
 
 .lesson-inline__header {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   gap: clamp(0.5rem, 1vw, 0.75rem);
   flex-wrap: wrap;
   margin-bottom: 0.9rem;

@@ -9,7 +9,7 @@ import {
     type LessonCompletionSummary,
     type LessonProgressEventDetail,
 } from '../utils/lessonProgressHelpers';
-import { hasActiveSession } from '../utils/chapterStatusHelpers';
+import { hasActiveSession, hasUpcomingSession } from '../utils/chapterStatusHelpers';
 
 interface ChapterCardProps {
     chapter: Chapter;
@@ -138,10 +138,14 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
         }
     }, [disabled, onSelect, chapter.id]);
 
-    // Vérifier si le chapitre a une session active
+    // Vérifier si le chapitre a une session active ou prochaine
     const isSessionActive = useMemo(() => {
         return hasActiveSession(chapter.sessionDates || []);
     }, [chapter.sessionDates]);
+
+    const isSessionUpcoming = useMemo(() => {
+        return !isSessionActive && hasUpcomingSession(chapter.sessionDates || []);
+    }, [chapter.sessionDates, isSessionActive]);
 
     // 🎯 Calcul de progression avec coefficients égaux pour leçons, quiz et exercices
     const progressPercentage = useMemo(() => {
@@ -210,16 +214,24 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
         <button
             onClick={handleClick}
             disabled={disabled}
-            className={`chapter-card-v2 ${disabled ? 'is-disabled' : ''} ${isSessionActive ? 'has-active-session' : ''}`}
+            className={`chapter-card-v2 ${disabled ? 'is-disabled' : ''} ${isSessionActive ? 'has-active-session' : ''} ${isSessionUpcoming ? 'has-upcoming-session' : ''}`}
             aria-label={`Accéder au ${chapter.chapter}`}
             aria-disabled={disabled}
             data-status={variant}
         >
             {/* Badge LIVE pour les sessions actives */}
             {isSessionActive && (
-                <div className="chapter-card-v2__live-badge">
+                <div className="chapter-card-v2__live-badge chapter-card-v2__live-badge--active">
                     <span className="chapter-card-v2__live-badge-dot"></span>
-                    <span className="chapter-card-v2__live-badge-text">LIVE</span>
+                    <span className="chapter-card-v2__live-badge-text">EN DIRECT</span>
+                </div>
+            )}
+
+            {/* Badge PROCHAINEMENT pour les sessions à venir */}
+            {isSessionUpcoming && (
+                <div className="chapter-card-v2__live-badge chapter-card-v2__live-badge--upcoming">
+                    <span className="chapter-card-v2__live-badge-icon">📅</span>
+                    <span className="chapter-card-v2__live-badge-text">PROCHAINEMENT</span>
                 </div>
             )}
 
