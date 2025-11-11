@@ -1,0 +1,294 @@
+/* Container */
+.chapter-hub-container,
+.chapter-hub-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.75rem, 3vw, 2.75rem);
+}
+
+.chapter-hub-container {
+  min-height: 100vh;
+}
+
+/* Floating back button - same as lesson view */
+.chapter-hub-back-floating {
+  position: fixed;
+  top: 2rem;
+  left: 2rem;
+  z-index: 1000;
+}
+
+.chapter-hub-header .standard-header__inner {
+  justify-content: center;
+  justify-items: center;
+}
+
+.chapter-hub-header .standard-header__main {
+  align-items: center;
+  text-align: center;
+  justify-self: center;
+}
+
+.chapter-hub-header .standard-header__title,
+.chapter-hub-header .standard-header__subtitle {
+  text-align: center;
+  font-family: 'Roboto', 'Fira Sans', 'Fira Code', system-ui, -apple-system, sans-serif;
+}
+
+.chapter-hub-header .standard-header__aside {
+  justify-content: flex-end;
+}
+
+/* Steps */
+.learning-step {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(66, 85, 255, 0.12);
+  border-radius: var(--radius-xl);
+  padding: clamp(1.5rem, 2.5vw, 2.25rem);
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.06);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+  text-align: left; /* Force left-align for step cards */
+}
+
+.learning-step:hover {
+  border-color: rgba(66, 85, 255, 0.26);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-4px);
+}
+
+.learning-step--disabled,
+.learning-step--disabled:hover {
+  border-color: rgba(148, 163, 184, 0.25);
+  box-shadow: none;
+  transform: none;
+}
+
+.learning-step--disabled {
+  opacity: 0.75;
+}
+
+.learning-step > .flex {
+  gap: clamp(1.25rem, 2.5vw, 2rem);
+}
+
+.learning-step h2 {
+  color: var(--coursera-black);
+  text-align: left; /* Explicit left-align for titles */
+}
+
+.learning-step p {
+  color: var(--coursera-text-light);
+  text-align: left; /* Explicit left-align for descriptions */
+}
+
+/* Buttons */
+.learning-step__button {
+  padding: 0.85rem 1.4rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.learning-step__button--primary {
+  background: linear-gradient(95deg, var(--primary-color) 0%, var(--secondary-color) 95%);
+  color: #ffffff;
+  box-shadow: var(--shadow-sm);
+}
+
+.learning-step__button--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.learning-step__button--secondary {
+  background: rgba(66, 85, 255, 0.08);
+  color: var(--primary-color-strong);
+  border: 1px solid rgba(66, 85, 255, 0.18);
+}
+
+.learning-step__button--secondary:hover {
+  background: rgba(66, 85, 255, 0.18);
+  color: var(--primary-color);
+}
+
+.learning-step__button--disabled {
+  background: rgba(148, 163, 184, 0.15);
+  color: rgba(71, 85, 105, 0.75);
+  cursor: not-allowed;
+}
+
+.learning-step__button:focus-visible {
+  outline: 3px solid rgba(0, 86, 210, 0.25);
+  outline-offset: 2px;
+}
+
+/* Finalisation button */
+.finalization-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+  padding: 1rem 1.5rem;
+  background: linear-gradient(95deg, var(--primary-color) 0%, var(--secondary-color) 95%);
+  color: #ffffff;
+  font-weight: 600;
+  border: none;
+  box-shadow: var(--shadow-md);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.finalization-button:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+
+.finalization-button:disabled {
+  background: rgba(148, 163, 184, 0.3);
+  color: rgba(71, 85, 105, 0.7);
+  box-shadow: none;
+}
+
+.finalization-button__shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 10%, rgba(255, 255, 255, 0.4) 45%, transparent 90%);
+  animation: shimmerSweep 2.3s infinite;
+}
+
+@keyframes shimmerSweep {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Submission confirmation */
+.shadow-glow-success {
+  box-shadow: 0 18px 45px rgba(16, 185, 129, 0.15);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .learning-step {
+    padding: clamp(1.35rem, 2.5vw, 1.75rem);
+  }
+}
+
+@media (max-width: 768px) {
+  .chapter-hub-back-floating {
+    top: 1rem;
+    left: 1rem;
+  }
+  
+  .chapter-hub-container,
+  .chapter-hub-content {
+    gap: clamp(1.5rem, 2.5vw, 2rem);
+  }
+}
+
+@media (max-width: 640px) {
+  .chapter-hub-back-floating {
+    top: 0.85rem;
+    left: 0.85rem;
+  }
+  
+  .learning-step {
+    padding: 1.15rem 0.95rem;
+  }
+
+  .learning-step > .flex {
+    gap: 1rem;
+  }
+
+  .learning-step__button {
+    font-size: 0.875rem;
+    padding: 0.65rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .chapter-hub-back-floating {
+    top: 0.75rem;
+    left: 0.75rem;
+  }
+  
+  .chapter-hub-container,
+  .chapter-hub-content {
+    gap: 1.25rem;
+  }
+  
+  .learning-step {
+    padding: 1rem 0.85rem;
+  }
+}
+
+/* ========================================
+   OPTIMISATIONS MODE LANDSCAPE MOBILE
+   ======================================== */
+@media (max-height: 500px) and (orientation: landscape) {
+  .chapter-hub-container {
+    min-height: auto;
+  }
+
+  .chapter-hub-back-floating {
+    top: 0.5rem;
+    left: 0.5rem;
+  }
+
+  .chapter-hub-container,
+  .chapter-hub-content {
+    gap: 0.75rem;
+  }
+
+  .learning-step {
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+  }
+
+  .learning-step__header {
+    margin-bottom: 0.5rem;
+  }
+
+  .learning-step__title {
+    font-size: 1rem;
+  }
+
+  .learning-step__description {
+    font-size: 0.85rem;
+    line-height: 1.35;
+  }
+
+  .learning-step__meta {
+    gap: 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .learning-step__button {
+    padding: 0.5rem 0.85rem;
+    font-size: 0.8rem;
+  }
+
+  .learning-step > .flex {
+    gap: 0.75rem;
+  }
+
+  /* Exercices en landscape */
+  .exercise-container {
+    padding: 0.5rem;
+  }
+
+  .exercise-question {
+    margin-bottom: 0.6rem;
+  }
+
+  .exercise-field {
+    padding: 0.5rem;
+  }
+
+  .exercise-button {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
+}

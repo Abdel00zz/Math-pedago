@@ -1,0 +1,131 @@
+{
+  "header": {
+    "title": "Vecteurs de l'Espace",
+    "subtitle": "Calcul vectoriel dans l'espace tridimensionnel",
+    "classe": "1ère Bac Sciences Mathématiques",
+    "chapter": "Chapitre 13",
+    "academicYear": "2025-2026"
+  },
+  "sections": [
+    {
+      "title": "Vecteurs dans l'Espace",
+      "subsections": [
+        {
+          "title": "Définition et Opérations",
+          "elements": [
+            {
+              "type": "p",
+              "content": "Les vecteurs de l'espace possèdent les mêmes propriétés que les vecteurs du plan, étendues à trois dimensions."
+            },
+            {
+              "type": "definition-box",
+              "preamble": "**Vecteur de l'espace** :",
+              "content": "Un vecteur de l'espace est défini par :\n- Une **direction** (droite support)\n- Un **sens** (orientation sur cette droite)\n- Une **norme** (longueur)\n\nLe vecteur $\\overrightarrow{AB}$ relie le point $A$ au point $B$."
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Opérations sur les vecteurs** :",
+              "content": [
+                "**Addition** : Relation de Chasles : $\\overrightarrow{AB} + \\overrightarrow{BC} = \\overrightarrow{AC}$",
+                "**Multiplication par un scalaire** : $k\\overrightarrow{u}$ a même direction que $\\overrightarrow{u}$, de norme $|k|\\|\\overrightarrow{u}\\|$",
+                "**Vecteurs colinéaires** : $\\overrightarrow{u}$ et $\\overrightarrow{v}$ sont colinéaires si $\\exists k \\in \\mathbb{R}, \\overrightarrow{v} = k\\overrightarrow{u}$"
+              ],
+              "listType": "bullet"
+            }
+          ]
+        },
+        {
+          "title": "Repérage dans l'Espace",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Repère de l'espace** :",
+              "content": "Un **repère de l'espace** est défini par :\n- Un point $O$ appelé **origine**\n- Trois vecteurs **non coplanaires** $\\vec{i}$, $\\vec{j}$, $\\vec{k}$\n\nOn note : $(O; \\vec{i}, \\vec{j}, \\vec{k})$\n\n**Repère orthonormé** : Si les trois vecteurs sont deux à deux orthogonaux et de norme 1."
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Coordonnées d'un vecteur** :",
+              "content": "Dans un repère $(O; \\vec{i}, \\vec{j}, \\vec{k})$, tout vecteur $\\overrightarrow{u}$ s'écrit de manière unique :\n\n$$\\overrightarrow{u} = x\\vec{i} + y\\vec{j} + z\\vec{k}$$\n\nOn note : $\\overrightarrow{u}\\begin{pmatrix} x \\\\ y \\\\ z \\end{pmatrix}$ où $(x, y, z)$ sont les coordonnées de $\\overrightarrow{u}$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Calcul de coordonnées** :",
+              "content": "Soient $A(1; 2; 3)$ et $B(4; -1; 5)$ dans un repère de l'espace.\n\nLes coordonnées de $\\overrightarrow{AB}$ sont :\n\n$$\\overrightarrow{AB}\\begin{pmatrix} 4 - 1 \\\\ -1 - 2 \\\\ 5 - 3 \\end{pmatrix} = \\begin{pmatrix} ___3___ \\\\ ___-3___ \\\\ ___2___ \\end{pmatrix}$$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Vecteurs Coplanaires",
+      "subsections": [
+        {
+          "title": "Définition et Propriétés",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Vecteurs coplanaires** :",
+              "content": "Trois vecteurs $\\overrightarrow{u}$, $\\overrightarrow{v}$, $\\overrightarrow{w}$ sont **coplanaires** s'il existe un plan contenant des représentants de ces trois vecteurs.\n\nDe manière équivalente : $\\overrightarrow{w}$ est combinaison linéaire de $\\overrightarrow{u}$ et $\\overrightarrow{v}$ :\n$$\\exists (\\alpha, \\beta) \\in \\mathbb{R}^2, \\overrightarrow{w} = \\alpha\\overrightarrow{u} + \\beta\\overrightarrow{v}$$"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Condition de coplanarité** :",
+              "content": "Dans un repère $(O; \\vec{i}, \\vec{j}, \\vec{k})$, les vecteurs $\\overrightarrow{u}\\begin{pmatrix} x \\\\ y \\\\ z \\end{pmatrix}$, $\\overrightarrow{v}\\begin{pmatrix} x' \\\\ y' \\\\ z' \\end{pmatrix}$, $\\overrightarrow{w}\\begin{pmatrix} x'' \\\\ y'' \\\\ z'' \\end{pmatrix}$ sont coplanaires si et seulement si :\n\n$$\\begin{vmatrix} x & x' & x'' \\\\ y & y' & y'' \\\\ z & z' & z'' \\end{vmatrix} = 0$$\n\nC'est-à-dire si le déterminant est nul."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Norme et Distance",
+      "subsections": [
+        {
+          "title": "Norme d'un Vecteur",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Norme dans l'espace** :",
+              "content": "Dans un repère orthonormé $(O; \\vec{i}, \\vec{j}, \\vec{k})$, la norme d'un vecteur $\\overrightarrow{u}\\begin{pmatrix} x \\\\ y \\\\ z \\end{pmatrix}$ est :\n\n$$\\|\\overrightarrow{u}\\| = \\sqrt{x^2 + y^2 + z^2}$$"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Distance entre deux points** :",
+              "content": "La distance entre deux points $A(x_A; y_A; z_A)$ et $B(x_B; y_B; z_B)$ est :\n\n$$AB = \\|\\overrightarrow{AB}\\| = \\sqrt{(x_B - x_A)^2 + (y_B - y_A)^2 + (z_B - z_A)^2}$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Calcul de distance** :",
+              "content": "Calculer la distance entre $A(1; 0; 2)$ et $B(4; 4; -2)$.\n\n$$AB = \\sqrt{(4-1)^2 + (4-0)^2 + (-2-2)^2}$$\n\n$$= \\sqrt{3^2 + 4^2 + (-4)^2} = \\sqrt{9 + 16 + 16} = \\sqrt{___41___}$$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Plans dans l'Espace",
+      "subsections": [
+        {
+          "title": "Détermination d'un Plan",
+          "elements": [
+            {
+              "type": "property-box",
+              "preamble": "**Un plan est déterminé par** :",
+              "content": [
+                "Trois points **non alignés** $A$, $B$, $C$",
+                "Un point $A$ et deux vecteurs **non colinéaires** $\\overrightarrow{u}$, $\\overrightarrow{v}$",
+                "Deux droites **non parallèles**",
+                "Une droite et un point n'appartenant pas à cette droite"
+              ],
+              "listType": "bullet"
+            },
+            {
+              "type": "definition-box",
+              "preamble": "**Représentation paramétrique d'un plan** :",
+              "content": "Un plan passant par $A$ et dirigé par deux vecteurs non colinéaires $\\overrightarrow{u}$ et $\\overrightarrow{v}$ admet la représentation paramétrique :\n\n$$M \\in P \\Leftrightarrow \\overrightarrow{AM} = \\alpha\\overrightarrow{u} + \\beta\\overrightarrow{v}, \\quad (\\alpha, \\beta) \\in \\mathbb{R}^2$$\n\nOu en coordonnées :\n$$\\begin{cases} x = x_A + \\alpha x_u + \\beta x_v \\\\ y = y_A + \\alpha y_u + \\beta y_v \\\\ z = z_A + \\alpha z_u + \\beta z_v \\end{cases}$$"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

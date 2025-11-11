@@ -1,0 +1,92 @@
+{
+  "header": {
+    "chapter": "1ère BSM - Mathématiques",
+    "title": "Ensembles et applications",
+    "subtitle": "Théorie des ensembles et fonctions"
+  },
+  "sections": [
+    {
+      "title": "Théorie des ensembles",
+      "subsections": [
+        {
+          "title": "Ensembles et éléments",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Ensemble",
+              "content": "Un ensemble est une collection d'objets appelés éléments. Si x est un élément de l'ensemble E, on écrit x ∈ E."
+            },
+            {
+              "type": "example",
+              "content": "A = {1, 2, 3, 4, 5} est l'ensemble des cinq premiers entiers naturels non nuls."
+            },
+            {
+              "type": "definition",
+              "title": "Inclusion",
+              "content": "On dit que A est inclus dans B (noté A ⊂ B) si tout élément de A appartient aussi à B."
+            }
+          ]
+        },
+        {
+          "title": "Opérations sur les ensembles",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Union",
+              "content": "L'union de A et B, notée A ∪ B, est l'ensemble des éléments qui appartiennent à A ou à B (ou aux deux)."
+            },
+            {
+              "type": "definition",
+              "title": "Intersection",
+              "content": "L'intersection de A et B, notée A ∩ B, est l'ensemble des éléments qui appartiennent à la fois à A et à B."
+            },
+            {
+              "type": "definition",
+              "title": "Complémentaire",
+              "content": "Le complémentaire de A dans un ensemble de référence E, noté A^c ou Ā, est l'ensemble des éléments de E qui n'appartiennent pas à A."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Applications entre ensembles",
+      "subsections": [
+        {
+          "title": "Notion d'application",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Application",
+              "content": "Une application f de E vers F est une relation qui associe à chaque élément x de E un unique élément f(x) de F. On note f : E → F."
+            },
+            {
+              "type": "example",
+              "content": "f : ℝ → ℝ définie par f(x) = x² est une application de ℝ dans ℝ."
+            }
+          ]
+        },
+        {
+          "title": "Types d'applications",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Application injective",
+              "content": "Une application f : E → F est injective si pour tous x₁, x₂ ∈ E : f(x₁) = f(x₂) ⟹ x₁ = x₂"
+            },
+            {
+              "type": "definition",
+              "title": "Application surjective",
+              "content": "Une application f : E → F est surjective si pour tout y ∈ F, il existe x ∈ E tel que f(x) = y"
+            },
+            {
+              "type": "definition",
+              "title": "Application bijective",
+              "content": "Une application est bijective si elle est à la fois injective et surjective"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

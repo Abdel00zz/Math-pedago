@@ -1,0 +1,220 @@
+{
+  "header": {
+    "title": "La Dérivation",
+    "subtitle": "Nombre dérivé et fonction dérivée",
+    "classe": "1ère Bac Sciences Mathématiques",
+    "chapter": "Chapitre 10",
+    "academicYear": "2025-2026"
+  },
+  "sections": [
+    {
+      "title": "Nombre Dérivé",
+      "subsections": [
+        {
+          "title": "Taux d'Accroissement",
+          "elements": [
+            {
+              "type": "p",
+              "content": "Le taux d'accroissement mesure la variation moyenne d'une fonction entre deux points. Il permet d'introduire la notion de dérivée."
+            },
+            {
+              "type": "definition-box",
+              "preamble": "**Taux d'accroissement** :",
+              "content": "Soit $f$ une fonction définie sur un intervalle $I$ et $a \\in I$.\n\nPour tout $h \\neq 0$ tel que $a + h \\in I$, le **taux d'accroissement** de $f$ entre $a$ et $a + h$ est :\n\n$$\\tau_h = \\dfrac{f(a + h) - f(a)}{h}$$\n\nOu de manière équivalente, pour $x \\neq a$ dans $I$ :\n$$\\tau = \\dfrac{f(x) - f(a)}{x - a}$$"
+            },
+            {
+              "type": "p",
+              "content": "?> **Interprétation géométrique** : Le taux d'accroissement représente la pente de la droite passant par les points $A(a; f(a))$ et $B(a+h; f(a+h))$ de la courbe."
+            }
+          ]
+        },
+        {
+          "title": "Définition du Nombre Dérivé",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Nombre dérivé** :",
+              "content": "Soit $f$ une fonction définie sur un intervalle $I$ et $a \\in I$.\n\nOn dit que $f$ est **dérivable en $a$** si le taux d'accroissement admet une limite finie quand $h$ tend vers $0$ :\n\n$$\\lim_{h \\to 0} \\dfrac{f(a + h) - f(a)}{h} = L$$\n\nCette limite $L$ est appelée **nombre dérivé** de $f$ en $a$, noté $f'(a)$."
+            },
+            {
+              "type": "remark-box",
+              "content": "**Notations** : On utilise diverses notations pour le nombre dérivé : $f'(a)$, $\\dfrac{df}{dx}(a)$, ou $(Df)(a)$."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Calcul par définition** :",
+              "content": "Calculer la dérivée de $f(x) = x^2$ en $a = 3$ par définition.\n\n$$f'(3) = \\lim_{h \\to 0} \\dfrac{f(3 + h) - f(3)}{h}$$\n\n$$= \\lim_{h \\to 0} \\dfrac{(3 + h)^2 - 9}{h}$$\n\n$$= \\lim_{h \\to 0} \\dfrac{9 + 6h + h^2 - 9}{h}$$\n\n$$= \\lim_{h \\to 0} \\dfrac{6h + h^2}{h} = \\lim_{h \\to 0} (6 + h) = ___6___$$\n\nDonc $f'(3) = 6$"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Interprétation géométrique** :",
+              "content": "Si $f$ est dérivable en $a$, alors la courbe de $f$ admet une **tangente** au point $A(a; f(a))$.\n\nL'équation de cette tangente est :\n$$y = f'(a)(x - a) + f(a)$$\n\nLe coefficient directeur de cette tangente est $f'(a)$."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Fonction Dérivée",
+      "subsections": [
+        {
+          "title": "Définition",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Fonction dérivée** :",
+              "content": "Soit $f$ une fonction définie sur un intervalle $I$.\n\nSi $f$ est dérivable en tout point de $I$, on définit la **fonction dérivée** de $f$, notée $f'$, par :\n\n$$f' : I \\to \\mathbb{R}$$\n$$x \\mapsto f'(x)$$\n\nOù $f'(x)$ est le nombre dérivé de $f$ en $x$."
+            }
+          ]
+        },
+        {
+          "title": "Dérivées des Fonctions Usuelles",
+          "elements": [
+            {
+              "type": "property-box",
+              "preamble": "**Tableau des dérivées** :",
+              "content": [
+                ">> **Fonctions de base**",
+                "$(c)' = 0$ où $c$ est une constante",
+                "$(x)' = 1$",
+                "$(x^n)' = nx^{n-1}$ pour $n \\in \\mathbb{N}^*$",
+                "$\\left(\\dfrac{1}{x}\\right)' = -\\dfrac{1}{x^2}$ pour $x \\neq 0$",
+                "$\\left(\\sqrt{x}\\right)' = \\dfrac{1}{2\\sqrt{x}}$ pour $x > 0$",
+                ">> **Fonctions trigonométriques**",
+                "$(\\sin x)' = \\cos x$",
+                "$(\\cos x)' = -\\sin x$",
+                "$(\\tan x)' = 1 + \\tan^2 x = \\dfrac{1}{\\cos^2 x}$ pour $x \\neq \\dfrac{\\pi}{2} + k\\pi$"
+              ],
+              "listType": "bullet"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Applications directes** :",
+              "content": "Calculer les dérivées suivantes :\n\n1. $f(x) = x^5$ → $f'(x) = ___5x^4___$\n\n2. $f(x) = \\dfrac{1}{x^3}$ → $f(x) = x^{-3}$ → $f'(x) = -3x^{-4} = ___-\\dfrac{3}{x^4}___$\n\n3. $f(x) = \\sqrt{x}$ → $f'(x) = ___\\dfrac{1}{2\\sqrt{x}}___$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Opérations sur les Dérivées",
+      "subsections": [
+        {
+          "title": "Règles de Calcul",
+          "elements": [
+            {
+              "type": "property-box",
+              "preamble": "**Linéarité de la dérivation** :",
+              "content": [
+                ">> **Somme** :",
+                "$(u + v)' = u' + v'$",
+                ">> **Produit par un scalaire** :",
+                "$(ku)' = ku'$ où $k$ est une constante",
+                ">> **Produit** :",
+                "$(uv)' = u'v + uv'$",
+                ">> **Quotient** :",
+                "$\\left(\\dfrac{u}{v}\\right)' = \\dfrac{u'v - uv'}{v^2}$ pour $v \\neq 0$"
+              ],
+              "listType": "bullet"
+            },
+            {
+              "type": "p",
+              "content": "?> **Mnémotechnique pour le produit** : \"La dérivée du premier **fois** le second **plus** le premier **fois** la dérivée du second\"."
+            },
+            {
+              "type": "practice-box",
+              "statement": "Calculer les dérivées des fonctions suivantes :",
+              "content": [
+                "$f(x) = (3x^2 + 1)(x - 2)$",
+                "$g(x) = \\dfrac{x^2 + 1}{x - 3}$",
+                "$h(x) = x^2 \\sin x$"
+              ],
+              "solution": [
+                "**Méthode** : $(uv)' = u'v + uv'$\n\nPosons $u = 3x^2 + 1$ et $v = x - 2$\n\n$u' = 6x$ et $v' = 1$\n\n$f'(x) = 6x(x - 2) + (3x^2 + 1) \\times 1$\n\n$= 6x^2 - 12x + 3x^2 + 1 = 9x^2 - 12x + 1$",
+                "**Méthode** : $\\left(\\dfrac{u}{v}\\right)' = \\dfrac{u'v - uv'}{v^2}$\n\nPosons $u = x^2 + 1$ et $v = x - 3$\n\n$u' = 2x$ et $v' = 1$\n\n$g'(x) = \\dfrac{2x(x - 3) - (x^2 + 1) \\times 1}{(x - 3)^2}$\n\n$= \\dfrac{2x^2 - 6x - x^2 - 1}{(x - 3)^2} = \\dfrac{x^2 - 6x - 1}{(x - 3)^2}$",
+                "**Méthode** : $(uv)' = u'v + uv'$\n\nPosons $u = x^2$ et $v = \\sin x$\n\n$u' = 2x$ et $v' = \\cos x$\n\n$h'(x) = 2x \\sin x + x^2 \\cos x$"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Dérivée d'une Fonction Composée",
+          "elements": [
+            {
+              "type": "property-box",
+              "preamble": "**Règle de la chaîne** :",
+              "content": "Si $u$ est dérivable en $x$ et $v$ est dérivable en $u(x)$, alors la fonction composée $v \\circ u$ est dérivable en $x$ et :\n\n$$(v \\circ u)'(x) = v'(u(x)) \\times u'(x)$$\n\nOu avec la notation $f = v \\circ u$ :\n$$f'(x) = u'(x) \\times v'(u(x))$$"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Formules utiles** :",
+              "content": [
+                "$(u^n)' = nu'u^{n-1}$ pour $n \\in \\mathbb{N}^*$",
+                "$\\left(\\dfrac{1}{u}\\right)' = -\\dfrac{u'}{u^2}$ pour $u \\neq 0$",
+                "$(\\sqrt{u})' = \\dfrac{u'}{2\\sqrt{u}}$ pour $u > 0$",
+                "$(\\sin u)' = u' \\cos u$",
+                "$(\\cos u)' = -u' \\sin u$"
+              ],
+              "listType": "bullet"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Fonction composée** :",
+              "content": "Calculer la dérivée de $f(x) = (2x + 1)^3$.\n\nPosons $u(x) = 2x + 1$ et $v(t) = t^3$\n\nAlors $f = v \\circ u$\n\n$u'(x) = ___2___$ et $v'(t) = 3t^2$\n\n$f'(x) = u'(x) \\times v'(u(x)) = 2 \\times 3(2x + 1)^2 = ___6(2x + 1)^2___$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Applications de la Dérivée",
+      "subsections": [
+        {
+          "title": "Sens de Variation",
+          "elements": [
+            {
+              "type": "theorem-box",
+              "preamble": "**Théorème fondamental** :",
+              "content": "Soit $f$ une fonction dérivable sur un intervalle $I$.\n\n**Croissance** : $f$ est croissante sur $I$ si et seulement si $f'(x) \\geq 0$ pour tout $x \\in I$\n\n**Décroissance** : $f$ est décroissante sur $I$ si et seulement si $f'(x) \\leq 0$ pour tout $x \\in I$\n\n**Constance** : $f$ est constante sur $I$ si et seulement si $f'(x) = 0$ pour tout $x \\in I$"
+            },
+            {
+              "type": "p",
+              "content": "?> **Méthode** : Pour étudier les variations d'une fonction, on calcule sa dérivée, on étudie son signe, puis on dresse le tableau de variations."
+            }
+          ]
+        },
+        {
+          "title": "Extrema Locaux",
+          "elements": [
+            {
+              "type": "property-box",
+              "preamble": "**Condition nécessaire** :",
+              "content": "Si $f$ est dérivable en $a$ et admet un extremum local en $a$, alors :\n$$f'(a) = 0$$\n\n**Attention** : La réciproque est fausse. $f'(a) = 0$ ne garantit pas l'existence d'un extremum."
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Condition suffisante** :",
+              "content": "Si $f'$ change de signe en $a$ :\n\n**Maximum local** : Si $f'$ passe du positif au négatif en $a$, alors $f$ admet un maximum local en $a$\n\n**Minimum local** : Si $f'$ passe du négatif au positif en $a$, alors $f$ admet un minimum local en $a$"
+            },
+            {
+              "type": "practice-box",
+              "statement": "Étudier les variations de $f(x) = x^3 - 3x + 1$ et déterminer ses extrema.",
+              "content": [
+                "Calculer $f'(x)$",
+                "Étudier le signe de $f'(x)$",
+                "Dresser le tableau de variations",
+                "Déterminer les extrema"
+              ],
+              "solution": [
+                "$f'(x) = 3x^2 - 3 = 3(x^2 - 1) = 3(x - 1)(x + 1)$",
+                "$f'(x) = 0$ pour $x = -1$ ou $x = 1$\n\nTableau de signes :\n- Si $x < -1$ : $f'(x) > 0$ (croissante)\n- Si $-1 < x < 1$ : $f'(x) < 0$ (décroissante)\n- Si $x > 1$ : $f'(x) > 0$ (croissante)",
+                "| $x$ | $-\\infty$ | | $-1$ | | $1$ | | $+\\infty$ |\n|-----|-----------|---|------|---|-----|---|----------|\n| $f'(x)$ | | $+$ | $0$ | $-$ | $0$ | $+$ | |\n| $f(x)$ | $-\\infty$ | ↗ | $3$ | ↘ | $-1$ | ↗ | $+\\infty$ |",
+                "$f$ admet un **maximum local** en $x = -1$ avec $f(-1) = (-1)^3 - 3(-1) + 1 = 3$\n\n$f$ admet un **minimum local** en $x = 1$ avec $f(1) = 1 - 3 + 1 = -1$"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

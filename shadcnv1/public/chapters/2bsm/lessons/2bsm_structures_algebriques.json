@@ -1,0 +1,128 @@
+{
+  "header": {
+    "chapter": "2ème BSM - Mathématiques",
+    "title": "Structures algébriques",
+    "subtitle": "Groupes, anneaux et corps"
+  },
+  "sections": [
+    {
+      "title": "Lois de composition interne",
+      "subsections": [
+        {
+          "title": "Définition et propriétés",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Loi de composition interne",
+              "content": "Une loi de composition interne sur un ensemble E est une application de E × E dans E. On la note souvent ⋆."
+            },
+            {
+              "type": "example",
+              "content": "L'addition et la multiplication sur ℤ sont des lois de composition internes."
+            },
+            {
+              "type": "definition",
+              "title": "Associativité",
+              "content": "Une loi ⋆ est associative si pour tous x, y, z ∈ E : (x ⋆ y) ⋆ z = x ⋆ (y ⋆ z)"
+            },
+            {
+              "type": "definition",
+              "title": "Commutativité",
+              "content": "Une loi ⋆ est commutative si pour tous x, y ∈ E : x ⋆ y = y ⋆ x"
+            },
+            {
+              "type": "definition",
+              "title": "Élément neutre",
+              "content": "Un élément e ∈ E est neutre pour ⋆ si pour tout x ∈ E : e ⋆ x = x ⋆ e = x"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Structure de groupe",
+      "subsections": [
+        {
+          "title": "Définition d'un groupe",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Groupe",
+              "content": "Un groupe (G, ⋆) est un ensemble G muni d'une loi ⋆ associative, possédant un élément neutre, et tel que tout élément admette un symétrique."
+            },
+            {
+              "type": "example",
+              "content": "(ℤ, +) est un groupe abélien (commutatif). L'élément neutre est 0 et le symétrique de a est -a."
+            },
+            {
+              "type": "definition",
+              "title": "Groupe abélien",
+              "content": "Un groupe est dit abélien (ou commutatif) si sa loi est commutative."
+            }
+          ]
+        },
+        {
+          "title": "Sous-groupes",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Sous-groupe",
+              "content": "Soit (G, ⋆) un groupe. Une partie H ⊂ G est un sous-groupe si H est stable pour ⋆, contient l'élément neutre et le symétrique de chaque élément."
+            },
+            {
+              "type": "example",
+              "content": "(2ℤ, +) est un sous-groupe de (ℤ, +) : l'ensemble des entiers pairs."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Structure d'anneau",
+      "subsections": [
+        {
+          "title": "Définition d'un anneau",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Anneau",
+              "content": "Un anneau (A, +, ×) est un ensemble A muni de deux lois + et × tel que (A, +) soit un groupe abélien, × soit associative et distributive sur +."
+            },
+            {
+              "type": "example",
+              "content": "(ℤ, +, ×) est un anneau commutatif unitaire."
+            },
+            {
+              "type": "definition",
+              "title": "Anneau intègre",
+              "content": "Un anneau commutatif unitaire sans diviseur de zéro (ab = 0 ⟹ a = 0 ou b = 0) est dit intègre."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Structure de corps",
+      "subsections": [
+        {
+          "title": "Définition d'un corps",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Corps",
+              "content": "Un corps est un anneau commutatif unitaire dans lequel tout élément non nul est inversible."
+            },
+            {
+              "type": "example",
+              "content": "(ℚ, +, ×), (ℝ, +, ×) et (ℂ, +, ×) sont des corps."
+            },
+            {
+              "type": "property",
+              "content": "Dans un corps, on peut effectuer les quatre opérations : addition, soustraction, multiplication et division (par un élément non nul)."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

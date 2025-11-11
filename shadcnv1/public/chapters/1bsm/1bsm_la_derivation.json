@@ -1,0 +1,587 @@
+{
+  "class": "1bsm",
+  "chapter": "La dérivation",
+  "sessionDates": [],
+  "lessonFile": "lessons/1bsm_la_derivation.json",
+  "videos": [],
+  "quiz": [
+    {
+      "id": "q_derivation_1",
+      "question": "Quelle est la dérivée de la fonction $f(x) = 3x^4 - 5x + 1$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$12x^3 - 5$",
+          "is_correct": true,
+          "explanation": "Correct ! On utilise la formule $(x^n)' = nx^{n-1}$ : $(3x^4)' = 12x^3$, $(-5x)' = -5$, $(1)' = 0$. Donc $f'(x) = 12x^3 - 5$."
+        },
+        {
+          "text": "$12x^3$",
+          "is_correct": false,
+          "explanation": "Non. Vous avez oublié de dériver le terme $-5x$."
+        },
+        {
+          "text": "$4x^3 - 5$",
+          "is_correct": false,
+          "explanation": "Non. La dérivée de $3x^4$ est $3 \\times 4x^3 = 12x^3$, pas $4x^3$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_derivation_2",
+      "question": "Quelle est la dérivée de $f(x) = (2x+1)^3$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$6(2x+1)^2$",
+          "is_correct": true,
+          "explanation": "Exact ! On utilise la dérivée d'une fonction composée : $(u^n)' = nu' \\times u^{n-1}$. Ici $u=2x+1$, $u'=2$, donc $f'(x) = 3 \\times 2 \\times (2x+1)^2 = 6(2x+1)^2$."
+        },
+        {
+          "text": "$3(2x+1)^2$",
+          "is_correct": false,
+          "explanation": "Non. Vous avez oublié de multiplier par la dérivée de $2x+1$, qui est 2."
+        },
+        {
+          "text": "$2(2x+1)^2$",
+          "is_correct": false,
+          "explanation": "Non. La formule est $(u^n)' = n \\times u' \\times u^{n-1}$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_derivation_3",
+      "question": "Une fonction est dérivable en $a$ si :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Elle admet un nombre dérivé fini en $a$",
+          "is_correct": true,
+          "explanation": "Exact ! Une fonction est dérivable en $a$ si la limite $\\lim_{h \\to 0} \\frac{f(a+h) - f(a)}{h}$ existe et est finie."
+        },
+        {
+          "text": "Elle est continue en $a$",
+          "is_correct": false,
+          "explanation": "Non. La continuité est nécessaire mais pas suffisante pour la dérivabilité. Par exemple, $f(x)=|x|$ est continue en 0 mais pas dérivable."
+        },
+        {
+          "text": "Elle a un extremum en $a$",
+          "is_correct": false,
+          "explanation": "Non. Avoir un extremum n'est ni nécessaire ni suffisant pour être dérivable."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_derivation_4",
+      "question": "Quelle est la dérivée de $f(x) = \\sqrt{x}$ pour $x > 0$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\frac{1}{2\\sqrt{x}}$",
+          "is_correct": true,
+          "explanation": "Correct ! $\\sqrt{x} = x^{1/2}$, donc $(x^{1/2})' = \\frac{1}{2}x^{-1/2} = \\frac{1}{2x^{1/2}} = \\frac{1}{2\\sqrt{x}}$."
+        },
+        {
+          "text": "$2\\sqrt{x}$",
+          "is_correct": false,
+          "explanation": "Non. Utilisez la formule $(x^n)' = nx^{n-1}$ avec $n=\\frac{1}{2}$."
+        },
+        {
+          "text": "$\\frac{1}{\\sqrt{x}}$",
+          "is_correct": false,
+          "explanation": "Non. Vous avez oublié le coefficient $\\frac{1}{2}$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_derivation_5",
+      "question": "Si $f$ est dérivable sur $\\mathbb{R}$ et $f'(x) > 0$ pour tout $x$, alors $f$ est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Strictement croissante",
+          "is_correct": true,
+          "explanation": "Exact ! Si la dérivée est strictement positive sur un intervalle, la fonction est strictement croissante sur cet intervalle."
+        },
+        {
+          "text": "Strictement décroissante",
+          "is_correct": false,
+          "explanation": "Non. Une dérivée positive indique une fonction croissante."
+        },
+        {
+          "text": "Constante",
+          "is_correct": false,
+          "explanation": "Non. Une fonction constante a une dérivée nulle, pas positive."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_derivation_6",
+      "question": "Quelle est la dérivée de $f(x) = \\frac{1}{x}$ pour $x \\neq 0$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$-\\frac{1}{x^2}$",
+          "is_correct": true,
+          "explanation": "Correct ! $\\frac{1}{x} = x^{-1}$, donc $(x^{-1})' = -1 \\times x^{-2} = -\\frac{1}{x^2}$."
+        },
+        {
+          "text": "$\\frac{1}{x^2}$",
+          "is_correct": false,
+          "explanation": "Non. Attention au signe : $(x^{-1})' = -x^{-2}$."
+        },
+        {
+          "text": "$-\\frac{1}{x}$",
+          "is_correct": false,
+          "explanation": "Non. Utilisez la formule $(x^n)' = nx^{n-1}$ avec $n=-1$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_derivation_7",
+      "question": "L'équation de la tangente à la courbe de $f$ au point d'abscisse $a$ est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$y = f'(a)(x-a) + f(a)$",
+          "is_correct": true,
+          "explanation": "Exact ! C'est la formule de l'équation de la tangente : $y = f'(a)(x-a) + f(a)$ où $f'(a)$ est la pente et $(a, f(a))$ est le point de tangence."
+        },
+        {
+          "text": "$y = f(a)(x-a) + f'(a)$",
+          "is_correct": false,
+          "explanation": "Non. La pente est $f'(a)$, pas $f(a)$."
+        },
+        {
+          "text": "$y = f'(a)x + f(a)$",
+          "is_correct": false,
+          "explanation": "Non. Il faut $(x-a)$ et non $x$ dans la formule."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_derivation_8",
+      "question": "Quelle est la dérivée de $f(x) = e^{2x}$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$2e^{2x}$",
+          "is_correct": true,
+          "explanation": "Correct ! En utilisant $(e^{u})' = u'e^{u}$ avec $u=2x$ et $u'=2$, on obtient $f'(x) = 2e^{2x}$."
+        },
+        {
+          "text": "$e^{2x}$",
+          "is_correct": false,
+          "explanation": "Non. Vous avez oublié la dérivée de $2x$. La bonne réponse est $2e^{2x}$."
+        },
+        {
+          "text": "$2xe^{2x-1}$",
+          "is_correct": false,
+          "explanation": "Non. Utilisez la formule $(e^u)' = u'e^u$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_derivation_9",
+      "question": "Si $f$ admet un extremum local en $a$ et si $f$ est dérivable en $a$, alors :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$f'(a) = 0$",
+          "is_correct": true,
+          "explanation": "Exact ! C'est une condition nécessaire : si $f$ a un extremum local en $a$ et est dérivable en $a$, alors $f'(a) = 0$ (la tangente est horizontale)."
+        },
+        {
+          "text": "$f'(a) > 0$",
+          "is_correct": false,
+          "explanation": "Non. Au point d'extremum, la dérivée s'annule."
+        },
+        {
+          "text": "$f'(a)$ n'existe pas",
+          "is_correct": false,
+          "explanation": "Non. L'énoncé précise que $f$ est dérivable en $a$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_derivation_10",
+      "question": "Quelle est la dérivée de $f(x) = \\ln(x)$ pour $x > 0$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\frac{1}{x}$",
+          "is_correct": true,
+          "explanation": "Exact ! C'est une formule classique : $(\\ln(x))' = \\frac{1}{x}$ pour $x > 0$."
+        },
+        {
+          "text": "$\\ln(x)$",
+          "is_correct": false,
+          "explanation": "Non. La dérivée de $\\ln(x)$ n'est pas elle-même."
+        },
+        {
+          "text": "$x$",
+          "is_correct": false,
+          "explanation": "Non. La dérivée du logarithme népérien est $\\frac{1}{x}$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_derivation_11",
+      "question": "Quelle est la dérivée de $f(x) = \\sin(x)$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\cos(x)$",
+          "is_correct": true,
+          "explanation": "Exact ! La dérivée de $\\sin(x)$ est $\\cos(x)$."
+        },
+        {
+          "text": "$-\\cos(x)$",
+          "is_correct": false,
+          "explanation": "Non. C'est la dérivée de $\\cos(x)$ qui est $-\\sin(x)$."
+        },
+        {
+          "text": "$\\sin(x)$",
+          "is_correct": false,
+          "explanation": "Non. La fonction sinus n'est pas sa propre dérivée."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_derivation_12",
+      "question": "Quelle est la dérivée de $f(x) = \\cos(x)$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$-\\sin(x)$",
+          "is_correct": true,
+          "explanation": "Exact ! La dérivée de $\\cos(x)$ est $-\\sin(x)$."
+        },
+        {
+          "text": "$\\sin(x)$",
+          "is_correct": false,
+          "explanation": "Non. Attention au signe : $(\\cos(x))' = -\\sin(x)$."
+        },
+        {
+          "text": "$\\cos(x)$",
+          "is_correct": false,
+          "explanation": "Non. La fonction cosinus n'est pas sa propre dérivée."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_derivation_13",
+      "question": "Quelle est la dérivée de $f(x) = (u \\times v)(x)$ où $u$ et $v$ sont dérivables ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$u'v + uv'$",
+          "is_correct": true,
+          "explanation": "Correct ! C'est la formule de dérivation d'un produit : $(uv)' = u'v + uv'$."
+        },
+        {
+          "text": "$u'v'$",
+          "is_correct": false,
+          "explanation": "Non. La dérivée d'un produit n'est pas le produit des dérivées."
+        },
+        {
+          "text": "$u'v - uv'$",
+          "is_correct": false,
+          "explanation": "Non. C'est un $+$ et non un $-$ dans la formule."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_derivation_14",
+      "question": "Quelle est la dérivée de $f(x) = \\frac{u(x)}{v(x)}$ où $u$ et $v$ sont dérivables et $v \\neq 0$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\frac{u'v - uv'}{v^2}$",
+          "is_correct": true,
+          "explanation": "Exact ! C'est la formule de dérivation d'un quotient : $\\left(\\frac{u}{v}\\right)' = \\frac{u'v - uv'}{v^2}$."
+        },
+        {
+          "text": "$\\frac{u'v + uv'}{v^2}$",
+          "is_correct": false,
+          "explanation": "Non. C'est un $-$ et non un $+$ au numérateur."
+        },
+        {
+          "text": "$\\frac{u'}{v'}$",
+          "is_correct": false,
+          "explanation": "Non. La dérivée d'un quotient n'est pas le quotient des dérivées."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_derivation_15",
+      "question": "La fonction $f(x) = |x|$ est-elle dérivable en $x=0$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Non",
+          "is_correct": true,
+          "explanation": "Exact ! La fonction valeur absolue n'est pas dérivable en 0 car elle présente un 'point anguleux'. Les dérivées à gauche et à droite sont différentes."
+        },
+        {
+          "text": "Oui, et $f'(0) = 0$",
+          "is_correct": false,
+          "explanation": "Non. La fonction n'est pas dérivable en 0."
+        },
+        {
+          "text": "Oui, et $f'(0) = 1$",
+          "is_correct": false,
+          "explanation": "Non. La fonction n'est pas dérivable en 0."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_derivation_16",
+      "question": "Quelle est la dérivée de $f(x) = \\ln(2x+1)$ pour $x > -\\frac{1}{2}$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\frac{2}{2x+1}$",
+          "is_correct": true,
+          "explanation": "Exact ! En utilisant $(\\ln(u))' = \\frac{u'}{u}$ avec $u=2x+1$ et $u'=2$, on obtient $f'(x) = \\frac{2}{2x+1}$."
+        },
+        {
+          "text": "$\\frac{1}{2x+1}$",
+          "is_correct": false,
+          "explanation": "Non. Vous avez oublié la dérivée de $2x+1$."
+        },
+        {
+          "text": "$\\frac{1}{x}$",
+          "is_correct": false,
+          "explanation": "Non. Utilisez la formule $(\\ln(u))' = \\frac{u'}{u}$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_derivation_17",
+      "question": "Si $f'(a) = 0$ et $f''(a) > 0$, alors $f$ admet en $a$ un :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Minimum local",
+          "is_correct": true,
+          "explanation": "Exact ! Si la dérivée première s'annule et la dérivée seconde est strictement positive, la fonction admet un minimum local."
+        },
+        {
+          "text": "Maximum local",
+          "is_correct": false,
+          "explanation": "Non. Un maximum local correspondrait à $f''(a) < 0$."
+        },
+        {
+          "text": "Point d'inflexion",
+          "is_correct": false,
+          "explanation": "Non. Un point d'inflexion correspondrait à un changement de concavité."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_derivation_18",
+      "question": "Quelle est la dérivée seconde de $f(x) = x^3$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$6x$",
+          "is_correct": true,
+          "explanation": "Exact ! $f'(x) = 3x^2$, donc $f''(x) = (3x^2)' = 6x$."
+        },
+        {
+          "text": "$3x^2$",
+          "is_correct": false,
+          "explanation": "Non. C'est la dérivée première, pas la seconde."
+        },
+        {
+          "text": "$6$",
+          "is_correct": false,
+          "explanation": "Non. La dérivée seconde de $x^3$ est $6x$, pas une constante."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_derivation_19",
+      "question": "Pour quelle(s) valeur(s) de $n$ la fonction $f(x) = x^n$ est-elle dérivable en $x=0$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$n \\geq 1$",
+          "is_correct": true,
+          "explanation": "Exact ! Pour $n \\geq 1$, $f(x) = x^n$ est dérivable en 0. Pour $0 < n < 1$, elle n'est pas dérivable en 0 (tangente verticale)."
+        },
+        {
+          "text": "Pour tout $n > 0$",
+          "is_correct": false,
+          "explanation": "Non. Par exemple, $f(x) = \\sqrt{x} = x^{1/2}$ n'est pas dérivable en 0."
+        },
+        {
+          "text": "Pour tout $n$",
+          "is_correct": false,
+          "explanation": "Non. Pour $n < 1$, la fonction peut ne pas être dérivable en 0."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_derivation_20",
+      "question": "Quelle est la dérivée de $f(x) = x \\cdot e^x$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$(1+x)e^x$",
+          "is_correct": true,
+          "explanation": "Exact ! En utilisant la formule du produit $(uv)' = u'v + uv'$ avec $u=x$ et $v=e^x$, on a : $f'(x) = 1 \\cdot e^x + x \\cdot e^x = e^x + xe^x = (1+x)e^x$."
+        },
+        {
+          "text": "$e^x$",
+          "is_correct": false,
+          "explanation": "Non. Utilisez la formule de dérivation d'un produit."
+        },
+        {
+          "text": "$xe^x$",
+          "is_correct": false,
+          "explanation": "Non. C'est la fonction elle-même, pas sa dérivée."
+        }
+      ],
+      "steps": []
+    }
+  ],
+  "exercises": [
+    {
+      "id": "exo_derivation_1",
+      "title": "Équation de la tangente",
+      "statement": "Soit la fonction $g(x) = x^2 + 2x - 3$. Déterminer l'équation de la tangente à la courbe de $g$ au point d'abscisse $x_0 = 1$.",
+      "sub_questions": [
+        {
+          "question": "Calculer $g(1)$.",
+          "hint": "$g(1) = 1^2 + 2(1) - 3 = 1 + 2 - 3 = 0$"
+        },
+        {
+          "question": "Calculer $g'(x)$.",
+          "hint": "$g'(x) = 2x + 2$"
+        },
+        {
+          "question": "Calculer $g'(1)$.",
+          "hint": "$g'(1) = 2(1) + 2 = 4$"
+        },
+        {
+          "question": "Écrire l'équation de la tangente.",
+          "hint": "$y = g'(1)(x-1) + g(1) = 4(x-1) + 0 = 4x - 4$"
+        }
+      ]
+    },
+    {
+      "id": "exo_derivation_2",
+      "title": "Étude de variations",
+      "statement": "Étudier les variations de la fonction $f(x) = x^3 - 3x + 1$ sur $\\mathbb{R}$.",
+      "sub_questions": [
+        {
+          "question": "Calculer $f'(x)$.",
+          "hint": "$f'(x) = 3x^2 - 3$"
+        },
+        {
+          "question": "Résoudre $f'(x) = 0$.",
+          "hint": "$3x^2 - 3 = 0 \\Rightarrow x^2 = 1 \\Rightarrow x = -1$ ou $x = 1$"
+        },
+        {
+          "question": "Étudier le signe de $f'(x)$.",
+          "hint": "$f'(x) = 3(x^2-1) = 3(x-1)(x+1)$. Positif sur $]-\\infty, -1[ \\cup ]1, +\\infty[$, négatif sur $]-1, 1[$."
+        },
+        {
+          "question": "Dresser le tableau de variations.",
+          "hint": "$f$ croissante sur $]-\\infty, -1]$, décroissante sur $[-1, 1]$, croissante sur $[1, +\\infty[$. Maximum local en $x=-1$ : $f(-1)=3$. Minimum local en $x=1$ : $f(1)=-1$."
+        }
+      ]
+    },
+    {
+      "id": "exo_derivation_3",
+      "title": "Dérivée d'une fonction composée",
+      "statement": "Calculer la dérivée de $h(x) = \\sqrt{3x^2 + 2x + 1}$ pour les valeurs de $x$ où elle est définie.",
+      "sub_questions": [
+        {
+          "question": "Identifier la forme de la fonction composée.",
+          "hint": "$h(x) = \\sqrt{u(x)}$ avec $u(x) = 3x^2 + 2x + 1$"
+        },
+        {
+          "question": "Rappeler la formule $(\\sqrt{u})' = \\frac{u'}{2\\sqrt{u}}$.",
+          "hint": "C'est une application de $(u^n)' = nu'u^{n-1}$ avec $n = \\frac{1}{2}$"
+        },
+        {
+          "question": "Calculer $u'(x)$.",
+          "hint": "$u'(x) = 6x + 2$"
+        },
+        {
+          "question": "Appliquer la formule pour obtenir $h'(x)$.",
+          "hint": "$h'(x) = \\frac{6x+2}{2\\sqrt{3x^2+2x+1}} = \\frac{3x+1}{\\sqrt{3x^2+2x+1}}$"
+        }
+      ]
+    },
+    {
+      "id": "exo_derivation_4",
+      "title": "Dérivée d'un quotient",
+      "statement": "Soit $f(x) = \\frac{x^2+1}{x-2}$ pour $x \\neq 2$. Calculer $f'(x)$ et étudier son signe.",
+      "sub_questions": [
+        {
+          "question": "Appliquer la formule de dérivation d'un quotient.",
+          "hint": "$\\left(\\frac{u}{v}\\right)' = \\frac{u'v - uv'}{v^2}$"
+        },
+        {
+          "question": "Identifier $u$, $v$, $u'$ et $v'$.",
+          "hint": "$u = x^2+1$, $u' = 2x$, $v = x-2$, $v' = 1$"
+        },
+        {
+          "question": "Calculer $f'(x)$ et simplifier.",
+          "hint": "$f'(x) = \\frac{2x(x-2) - (x^2+1)(1)}{(x-2)^2} = \\frac{2x^2-4x-x^2-1}{(x-2)^2} = \\frac{x^2-4x-1}{(x-2)^2}$"
+        },
+        {
+          "question": "Étudier le signe de $f'(x)$.",
+          "hint": "Le dénominateur $(x-2)^2 > 0$. Le signe dépend de $x^2-4x-1$. $\\Delta = 16+4 = 20$. Racines : $x = \\frac{4 \\pm \\sqrt{20}}{2} = 2 \\pm \\sqrt{5}$. Positif hors de $[2-\\sqrt{5}, 2+\\sqrt{5}]$."
+        }
+      ]
+    },
+    {
+      "id": "exo_derivation_5",
+      "title": "Application : optimisation",
+      "statement": "On veut construire une boîte rectangulaire sans couvercle de volume $V = 32$ m³. La base est un carré de côté $x$ et la hauteur est $h$. Déterminer les dimensions qui minimisent la surface totale de matériau utilisé.",
+      "sub_questions": [
+        {
+          "question": "Exprimer $h$ en fonction de $x$ en utilisant la contrainte de volume.",
+          "hint": "$V = x^2 h = 32$, donc $h = \\frac{32}{x^2}$"
+        },
+        {
+          "question": "Exprimer la surface totale $S(x)$ en fonction de $x$ seul.",
+          "hint": "$S = x^2 + 4xh = x^2 + 4x \\cdot \\frac{32}{x^2} = x^2 + \\frac{128}{x}$"
+        },
+        {
+          "question": "Calculer $S'(x)$ et résoudre $S'(x) = 0$.",
+          "hint": "$S'(x) = 2x - \\frac{128}{x^2} = 0 \\Rightarrow 2x^3 = 128 \\Rightarrow x^3 = 64 \\Rightarrow x = 4$"
+        },
+        {
+          "question": "Vérifier qu'il s'agit d'un minimum et donner les dimensions optimales.",
+          "hint": "$S''(x) = 2 + \\frac{256}{x^3}$. $S''(4) = 2 + 4 = 6 > 0$ : c'est un minimum. Dimensions : $x = 4$ m, $h = \\frac{32}{16} = 2$ m."
+        }
+      ]
+    }
+  ],
+  "version": "v1.1.0-b84985"
+}

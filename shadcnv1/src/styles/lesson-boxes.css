@@ -1,0 +1,331 @@
+/* ========================================
+   LESSON BOXES - Boîtes de contenu
+   PERFORMANCE OPTIMIZED
+   ======================================== */
+
+/* Layout principal */
+.lesson-experience {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.lesson-experience__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.lesson-experience__readable {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* ========================================
+   BOÎTES PRINCIPALES (Théorème, Définition, etc.)
+   Style unifié avec bordure colorée
+   ======================================== */
+.lesson-box {
+  position: relative;
+  padding: clamp(1.1rem, 2.2vw, 1.65rem);
+  border-radius: 12px;
+  background: #FFFFFF;
+  border: 2px solid var(--lesson-accent);
+  overflow: hidden;
+  margin-bottom: clamp(1rem, 2vw, 1.5rem);
+}
+
+.lesson-box::after {
+  display: none;
+}
+
+/* Header de la boîte */
+.lesson-box__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: clamp(0.8rem, 1.8vw, 1.35rem);
+  position: relative;
+  z-index: 2;
+}
+
+/* Badge (type de boîte) */
+.lesson-box__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--lesson-accent);
+  border: 1px solid var(--lesson-accent);
+}
+
+/* Bouton d'action */
+.lesson-box__action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.3rem;
+  height: 2.3rem;
+  border-radius: 6px;
+  background: #FFFFFF;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  cursor: pointer;
+}
+
+.lesson-box__action:hover {
+  border-color: var(--lesson-accent);
+  background: rgba(148, 163, 184, 0.05);
+}
+
+.lesson-box__action svg {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+/* Préambule (introduction de la boîte) */
+.lesson-box__preamble {
+  margin-bottom: clamp(0.75rem, 1.6vw, 1.2rem);
+  position: relative;
+  z-index: 2;
+  font-size: clamp(0.93rem, 1.6vw, 1.02rem);
+  line-height: 1.65;
+  color: var(--text-color);
+}
+
+/* Corps de la boîte */
+.lesson-box__body {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.65rem, 1.2vw, 1rem);
+}
+
+/* ========================================
+   BOÎTES INLINE (Exemple, Remarque)
+   Style unifié avec bordure colorée
+   ======================================== */
+.lesson-inline {
+  position: relative;
+  padding: clamp(0.95rem, 1.8vw, 1.4rem);
+  border-radius: 12px;
+  background: #FFFFFF;
+  border: 2px solid var(--lesson-inline-accent);
+  margin-bottom: clamp(0.8rem, 1.6vw, 1.2rem);
+}
+
+.lesson-inline__header {
+  margin-bottom: 0.9rem;
+}
+
+.lesson-inline__badge {
+  display: inline-block;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--lesson-inline-accent);
+  border: 1px solid var(--lesson-inline-accent);
+}
+
+.lesson-inline__content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.lesson-inline__preamble {
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
+  line-height: 1.6;
+  color: var(--text-color);
+}
+
+.lesson-inline__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+/* ========================================
+   PALETTE DE COULEURS COHÉRENTE
+   Palette harmonieuse pour différencier les types
+   ======================================== */
+
+/* Théorème - Bleu profond */
+.lesson-box--theorem {
+  --lesson-accent: #3B82F6;
+}
+
+/* Définition - Indigo */
+.lesson-box--definition {
+  --lesson-accent: #6366F1;
+}
+
+/* Proposition - Vert émeraude */
+.lesson-box--proposition {
+  --lesson-accent: #10B981;
+}
+
+/* Propriété - Ambre */
+.lesson-box--property {
+  --lesson-accent: #F59E0B;
+}
+
+/* Corollaire - Cyan */
+.lesson-box--corollary {
+  --lesson-accent: #06B6D4;
+}
+
+/* Lemme - Violet */
+.lesson-box--lemma {
+  --lesson-accent: #8B5CF6;
+}
+
+/* Exemple - Violet clair */
+.lesson-inline--example {
+  --lesson-inline-accent: #8B5CF6;
+}
+
+/* Remarque - Vert menthe */
+.lesson-inline--remark {
+  --lesson-inline-accent: #10B981;
+}
+
+/* Méthode - Orange */
+.lesson-inline--method {
+  --lesson-inline-accent: #F97316;
+}
+
+/* Attention - Rouge doux */
+.lesson-inline--warning {
+  --lesson-inline-accent: #EF4444;
+}
+
+/* Note - Bleu ciel */
+.lesson-inline--note {
+  --lesson-inline-accent: #3B82F6;
+}
+
+/* ========================================
+   RESPONSIVE - MOBILE OPTIMIZED
+   ======================================== */
+@media (max-width: 768px) {
+  .lesson-box {
+    padding: 1rem 1.2rem;
+    margin-bottom: 1.1rem;
+    border-radius: 10px;
+  }
+
+  .lesson-box__badge {
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    padding: 0.4rem 0.85rem;
+  }
+
+  .lesson-box__action {
+    width: 2.3rem;
+    height: 2.3rem;
+  }
+
+  .lesson-box__preamble {
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+
+  .lesson-box__body {
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+
+  .lesson-inline {
+    padding: 0.9rem 1rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .lesson-box {
+    padding: 0.95rem 1.05rem;
+    margin-bottom: 1rem;
+  }
+
+  .lesson-box__header {
+    margin-bottom: 0.9rem;
+  }
+
+  .lesson-box__preamble {
+    font-size: 0.9rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .lesson-box__body {
+    font-size: 0.9rem;
+  }
+
+  .lesson-inline {
+    padding: 0.85rem 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .lesson-box {
+    padding: 0.9rem;
+    margin-bottom: 0.9rem;
+    border-radius: 8px;
+    border-width: 1.5px;
+  }
+
+  .lesson-box__header {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .lesson-box__badge {
+    font-size: 0.64rem;
+    padding: 0.35rem 0.7rem;
+    letter-spacing: 0.1em;
+  }
+
+  .lesson-box__action {
+    width: 2rem;
+    height: 2rem;
+    margin-left: auto;
+  }
+
+  .lesson-box__action svg {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .lesson-box__preamble {
+    font-size: 0.88rem;
+    line-height: 1.55;
+    margin-bottom: 0.75rem;
+  }
+
+  .lesson-box__body {
+    font-size: 0.88rem;
+    line-height: 1.55;
+  }
+
+  .lesson-inline {
+    padding: 0.75rem 0.85rem;
+    border-radius: 8px;
+  }
+
+  .lesson-inline__badge {
+    font-size: 0.64rem;
+    padding: 0.3rem 0.65rem;
+  }
+}

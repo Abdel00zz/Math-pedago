@@ -1,0 +1,451 @@
+{
+  "header": {
+    "title": "Logique mathématique",
+    "subtitle": "Raisonnement et démonstration",
+    "chapter": "Chapitre 1",
+    "classe": "1ère Bac Sciences Mathématiques",
+    "academicYear": "2025-2026"
+  },
+  "sections": [
+    {
+      "title": "Propositions et valeurs de vérité",
+      "subsections": [
+        {
+          "title": "Notion de proposition",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Proposition** :",
+              "content": "Une **proposition** est un énoncé mathématique qui possède une **valeur de vérité** unique : il est soit **Vrai (V)**, soit **Faux (F)**, mais jamais les deux à la fois.\n\nUne proposition doit être :\n- **Non ambiguë** : sa signification est claire\n- **Vérifiable** : on peut déterminer si elle est vraie ou fausse"
+            },
+            {
+              "type": "example-box",
+              "preamble": "Exemples de propositions :",
+              "listType": "bullet",
+              "content": [
+                "\"$2 + 3 = 5$\" est une proposition ___vraie___",
+                "\"$\\pi$ est un nombre rationnel\" est une proposition ___fausse___",
+                "\"Pour tout nombre réel $x$, on a $x^2 \\geq 0$\" est une proposition ___vraie___"
+              ]
+            },
+            {
+              "type": "remark-box",
+              "preamble": "**Attention** : Ne sont PAS des propositions :",
+              "listType": "bullet",
+              "content": [
+                "Les questions : \"Quel est le résultat de $2+3$ ?\"",
+                "Les ordres : \"Calculez $\\sqrt{2}$\"",
+                "Les phrases avec variables non quantifiées : \"$x > 5$\" (car dépend de $x$)",
+                "Les énoncés d'opinion : \"Les mathématiques sont belles\""
+              ]
+            },
+            {
+              "type": "practice-box",
+              "statement": "Pour chacun des énoncés suivants, indiquez s'il s'agit d'une proposition. Si oui, précisez sa valeur de vérité.",
+              "listType": "numbered",
+              "content": [
+                "$7$ est un nombre premier",
+                "Résolvez l'équation $x^2 - 4 = 0$",
+                "Il existe un nombre réel $x$ tel que $x^2 = -1$",
+                "$n$ est pair",
+                "Pour tout entier $n$, si $n$ est pair, alors $n^2$ est pair"
+              ],
+              "solution": [
+                "**Proposition vraie** - 7 est un nombre premier (il n'est divisible que par 1 et lui-même)",
+                "**Pas une proposition** - C'est un ordre/impératif, pas un énoncé qui peut être vrai ou faux",
+                "**Proposition fausse** - Aucun nombre réel élevé au carré ne donne un nombre négatif (le carré est toujours ≥ 0)",
+                "**Pas une proposition** - L'énoncé dépend de la valeur de $n$ qui n'est pas quantifiée. Sans préciser \"pour tout $n$\" ou \"il existe $n$\", ce n'est pas une proposition complète",
+                "**Proposition vraie** - C'est une propriété mathématique valide : $n = 2k \\Rightarrow n^2 = 4k^2 = 2(2k^2)$, donc $n^2$ est pair"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Négation d'une proposition",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Négation** :",
+              "content": "Soit $P$ une proposition. La **négation** de $P$, notée $\\overline{P}$ ou $\\neg P$ ou $non(P)$, est la proposition qui est :\n- **Vraie** si $P$ est **fausse**\n- **Fausse** si $P$ est **vraie**\n\n**Table de vérité** :\n\n| $P$ | $\\overline{P}$ |\n|-----|----------------|\n| V   | F              |\n| F   | V              |"
+            },
+            {
+              "type": "example-box",
+              "preamble": "Négations de propositions :",
+              "listType": "bullet",
+              "content": [
+                "$P$ : \"$5$ est un nombre pair\" → $\\overline{P}$ : ___\"$5$ n'est pas un nombre pair\"___ (ou \"$5$ est impair\")",
+                "$Q$ : \"$\\sqrt{2}$ est rationnel\" → $\\overline{Q}$ : ___\"$\\sqrt{2}$ n'est pas rationnel\"___ (ou \"$\\sqrt{2}$ est irrationnel\")",
+                "$R$ : \"Tous les nombres premiers sont impairs\" → $\\overline{R}$ : ___\"Il existe au moins un nombre premier qui est pair\"___"
+              ]
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Propriété importante** : Double négation",
+              "content": "Pour toute proposition $P$ :\n$$\\overline{(\\overline{P})} = P$$\n\nAutrement dit, la négation de la négation redonne la proposition initiale."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Connecteurs logiques",
+      "subsections": [
+        {
+          "title": "La conjonction (ET logique)",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Conjonction** :",
+              "content": "Soient $P$ et $Q$ deux propositions. La **conjonction** de $P$ et $Q$, notée $P \\land Q$ (ou $P$ ET $Q$), est la proposition qui est :\n- **Vraie** si $P$ ET $Q$ sont **toutes les deux vraies**\n- **Fausse** dans tous les autres cas\n\n**Table de vérité** :\n\n| $P$ | $Q$ | $P \\land Q$ |\n|-----|-----|-------------|\n| V   | V   | V           |\n| V   | F   | F           |\n| F   | V   | F           |\n| F   | F   | F           |"
+            },
+            {
+              "type": "example-box",
+              "preamble": "Exemples de conjonction :",
+              "listType": "bullet",
+              "content": [
+                "$P$ : \"$6$ est pair\" ET $Q$ : \"$6$ est divisible par $3$\" → $P \\land Q$ est **vraie**",
+                "$P$ : \"$7$ est pair\" ET $Q$ : \"$7$ est premier\" → $P \\land Q$ est **fausse** (car $P$ est fausse)",
+                "$P$ : \"$x > 0$\" ET $Q$ : \"$x < 10$\" → $P \\land Q$ signifie \"$0 < x < 10$\""
+              ]
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Propriétés de la conjonction** :",
+              "listType": "bullet",
+              "content": [
+                "**Commutativité** : $P \\land Q = Q \\land P$",
+                "**Associativité** : $(P \\land Q) \\land R = P \\land (Q \\land R)$",
+                "**Élément neutre** : $P \\land V = P$ (où $V$ est toujours vraie)",
+                "**Élément absorbant** : $P \\land F = F$ (où $F$ est toujours fausse)"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "La disjonction (OU logique)",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Disjonction** :",
+              "content": "Soient $P$ et $Q$ deux propositions. La **disjonction** de $P$ et $Q$, notée $P \\lor Q$ (ou $P$ OU $Q$), est la proposition qui est :\n- **Vraie** si **au moins une** des deux propositions est vraie\n- **Fausse** si $P$ ET $Q$ sont **toutes les deux fausses**\n\n**Table de vérité** :\n\n| $P$ | $Q$ | $P \\lor Q$ |\n|-----|-----|------------|\n| V   | V   | V          |\n| V   | F   | V          |\n| F   | V   | V          |\n| F   | F   | F          |"
+            },
+            {
+              "type": "remark-box",
+              "content": "!> **Attention** : Le OU logique ($\\lor$) est **inclusif**. $P \\lor Q$ est vraie même quand $P$ ET $Q$ sont toutes deux vraies. C'est différent du \"ou\" exclusif du langage courant."
+            },
+            {
+              "type": "example-box",
+              "preamble": "Exemples de disjonction :",
+              "listType": "bullet",
+              "content": [
+                "$P$ : \"$4$ est pair\" OU $Q$ : \"$4$ est premier\" → $P \\lor Q$ est **vraie** (car $P$ est vraie)",
+                "$P$ : \"$9$ est pair\" OU $Q$ : \"$9$ est premier\" → $P \\lor Q$ est **fausse** (les deux sont fausses)",
+                "$P$ : \"$n$ est divisible par $2$\" OU $Q$ : \"$n$ est divisible par $3$\" → $P \\lor Q$ signifie \"$n$ est divisible par $2$ ou par $3$ (ou les deux)\""
+              ]
+            },
+            {
+              "type": "practice-box",
+              "statement": "Déterminez la valeur de vérité des propositions suivantes :",
+              "listType": "numbered",
+              "content": [
+                "\"$5 > 3$\" ET \"$5 < 10$\"",
+                "\"$\\pi$ est rationnel\" OU \"$\\pi > 3$\"",
+                "\"$0$ est positif\" ET \"$0$ est négatif\"",
+                "\"$2$ est pair\" OU \"$2$ est impair\""
+              ],
+              "solution": [
+                "**Vraie** - Les deux propositions sont vraies ($5 > 3$ est vrai ET $5 < 10$ est vrai), donc $P \\land Q$ est vrai",
+                "**Vraie** - La deuxième proposition est vraie ($\\pi \\approx 3.14159 > 3$). Pour le OU logique, il suffit qu'au moins une proposition soit vraie",
+                "**Fausse** - 0 n'est ni strictement positif ni strictement négatif. Les deux propositions sont fausses, donc $P \\land Q$ est faux",
+                "**Vraie** - La première proposition est vraie (2 est pair). Pour le OU logique, il suffit qu'au moins une proposition soit vraie"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "L'implication",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Implication** :",
+              "content": "Soient $P$ et $Q$ deux propositions. L'**implication** \"$P$ implique $Q$\", notée $P \\Rightarrow Q$ (ou \"si $P$ alors $Q$\"), est la proposition qui est :\n- **Fausse** uniquement si $P$ est vraie et $Q$ est fausse\n- **Vraie** dans tous les autres cas\n\n**Table de vérité** :\n\n| $P$ | $Q$ | $P \\Rightarrow Q$ |\n|-----|-----|-----------------|\n| V   | V   | V               |\n| V   | F   | F               |\n| F   | V   | V               |\n| F   | F   | V               |\n\nOn dit que :\n- $P$ est l'**hypothèse** ou la **condition**\n- $Q$ est la **conclusion** ou la **conséquence**"
+            },
+            {
+              "type": "remark-box",
+              "preamble": "**Interprétation importante** :",
+              "content": "!> Une implication $P \\Rightarrow Q$ est **toujours vraie** quand l'hypothèse $P$ est **fausse**, quelle que soit la conclusion $Q$. C'est le principe de la **vacuité** : une propriété est vraie pour tous les éléments d'un ensemble vide."
+            },
+            {
+              "type": "example-box",
+              "preamble": "Exemples d'implication :",
+              "listType": "bullet",
+              "content": [
+                "\"Si $n$ est divisible par $4$, alors $n$ est pair\" → **Vraie** (toujours valide)",
+                "\"Si $n$ est pair, alors $n$ est divisible par $4$\" → **Fausse** (contre-exemple : $n=6$)",
+                "\"Si $x > 5$, alors $x > 3$\" → **Vraie** (la conclusion découle de l'hypothèse)",
+                "\"Si $0 > 1$, alors $\\pi$ est rationnel\" → **Vraie** (hypothèse fausse, donc implication vraie)"
+              ]
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Propriété fondamentale** : Contraposée",
+              "content": "Pour toutes propositions $P$ et $Q$ :\n$$P \\Rightarrow Q \\equiv \\overline{Q} \\Rightarrow \\overline{P}$$\n\nAutrement dit, une implication est **équivalente à sa contraposée**.\n\n**Exemple** : \"Si $n^2$ est pair, alors $n$ est pair\" est équivalent à \"Si $n$ est impair, alors $n^2$ est impair\""
+            }
+          ]
+        },
+        {
+          "title": "L'équivalence",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Équivalence** :",
+              "content": "Soient $P$ et $Q$ deux propositions. L'**équivalence** \"$P$ équivaut à $Q$\", notée $P \\Leftrightarrow Q$ (ou \"$P$ si et seulement si $Q$\"), est la proposition qui est :\n- **Vraie** si $P$ et $Q$ ont la **même valeur de vérité**\n- **Fausse** si $P$ et $Q$ ont des **valeurs différentes**\n\n**Table de vérité** :\n\n| $P$ | $Q$ | $P \\Leftrightarrow Q$ |\n|-----|-----|--------------------|\n| V   | V   | V                  |\n| V   | F   | F                  |\n| F   | V   | F                  |\n| F   | F   | V                  |\n\n**Équivalence logique** :\n$$P \\Leftrightarrow Q \\equiv (P \\Rightarrow Q) \\land (Q \\Rightarrow P)$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "Exemples d'équivalence :",
+              "listType": "bullet",
+              "content": [
+                "\"$n$ est pair $\\Leftrightarrow$ $n$ est divisible par $2$\" → **Vraie**",
+                "\"$x^2 = 4$ $\\Leftrightarrow$ $x = 2$\" → **Fausse** (car $x$ peut être $-2$)",
+                "\"$x^2 = 4$ $\\Leftrightarrow$ $x = 2$ ou $x = -2$\" → **Vraie**",
+                "\"Triangle rectangle $\\Leftrightarrow$ Théorème de Pythagore\" → **Vraie**"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Lois de De Morgan et tables de vérité",
+      "subsections": [
+        {
+          "title": "Lois de De Morgan",
+          "elements": [
+            {
+              "type": "theorem-box",
+              "preamble": "**Lois de De Morgan** :",
+              "content": "Pour toutes propositions $P$ et $Q$ :\n\n1. $\\overline{P \\land Q} \\equiv \\overline{P} \\lor \\overline{Q}$\n\n   La négation d'une **conjonction** est la **disjonction des négations**\n\n2. $\\overline{P \\lor Q} \\equiv \\overline{P} \\land \\overline{Q}$\n\n   La négation d'une **disjonction** est la **conjonction des négations**"
+            },
+            {
+              "type": "example-box",
+              "preamble": "Application des lois de De Morgan :",
+              "listType": "bullet",
+              "content": [
+                "Négation de \"$x > 0$ ET $x < 10$\" → \"$x \\leq 0$ OU $x \\geq 10$\"",
+                "Négation de \"$n$ est pair OU $n$ est premier\" → \"$n$ est impair ET $n$ n'est pas premier\"",
+                "Négation de \"Il pleut ET il fait froid\" → \"Il ne pleut pas OU il ne fait pas froid\""
+              ]
+            },
+            {
+              "type": "practice-box",
+              "statement": "Écrivez la négation des propositions suivantes en utilisant les lois de De Morgan :",
+              "listType": "numbered",
+              "content": [
+                "$P \\land Q \\land R$",
+                "\"$x \\geq 5$ ET $x \\leq 10$\"",
+                "\"$n$ est divisible par $2$ OU $n$ est divisible par $3$\"",
+                "\"$x \\in \\mathbb{R}$ ET $x^2 \\geq 0$\""
+              ],
+              "solution": [
+                "**Négation** : $\\overline{P} \\lor \\overline{Q} \\lor \\overline{R}$\n\nLa négation d'une conjonction multiple est la disjonction des négations de chaque terme.",
+                "**Négation** : \"$x < 5$ OU $x > 10$\"\n\nLa négation de $(x \\geq 5) \\land (x \\leq 10)$ est $(x < 5) \\lor (x > 10)$. C'est l'ensemble complémentaire de l'intervalle $[5, 10]$.",
+                "**Négation** : \"$n$ n'est pas divisible par $2$ ET $n$ n'est pas divisible par $3$\"\n\nLa négation d'un OU est le ET des négations : $\\overline{(2|n) \\lor (3|n)} = \\overline{(2|n)} \\land \\overline{(3|n)}$",
+                "**Négation** : \"$x \\notin \\mathbb{R}$ OU $x^2 < 0$\"\n\nCette négation donne une proposition toujours fausse car :\n- Si $x \\in \\mathbb{R}$, alors $x^2 \\geq 0$ toujours\n- Donc la proposition originale est toujours vraie pour tout réel"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Tables de vérité complexes",
+          "elements": [
+            {
+              "type": "p",
+              "content": "Une **table de vérité** permet de déterminer systématiquement la valeur de vérité d'une proposition composée en fonction des valeurs de vérité de ses composantes."
+            },
+            {
+              "type": "example-box",
+              "preamble": "Table de vérité de $(P \\land Q) \\Rightarrow R$ :",
+              "content": "| $P$ | $Q$ | $R$ | $P \\land Q$ | $(P \\land Q) \\Rightarrow R$ |\n|-----|-----|-----|-------------|-----------------------------|\n| V   | V   | V   | V           | V                           |\n| V   | V   | F   | V           | F                           |\n| V   | F   | V   | F           | V                           |\n| V   | F   | F   | F           | V                           |\n| F   | V   | V   | F           | V                           |\n| F   | V   | F   | F           | V                           |\n| F   | F   | V   | F           | V                           |\n| F   | F   | F   | F           | V                           |"
+            },
+            {
+              "type": "practice-box",
+              "statement": "Construisez la table de vérité complète de la proposition : $(P \\Rightarrow Q) \\land (Q \\Rightarrow P)$",
+              "content": [
+                "Combien de lignes aura votre table ?",
+                "Vérifiez que cette proposition est équivalente à $P \\Leftrightarrow Q$"
+              ],
+              "solution": [
+                "**Nombre de lignes** : La table aura **4 lignes** car nous avons 2 propositions ($P$ et $Q$), donc $2^2 = 4$ combinaisons possibles.",
+                "**Table de vérité complète** :\n\n| $P$ | $Q$ | $P \\Rightarrow Q$ | $Q \\Rightarrow P$ | $(P \\Rightarrow Q) \\land (Q \\Rightarrow P)$ |\n|-----|-----|------------------|------------------|------------------------------------------|\n| V   | V   | V                | V                | V                                        |\n| V   | F   | F                | V                | F                                        |\n| F   | V   | V                | F                | F                                        |\n| F   | F   | V                | V                | V                                        |",
+                "**Vérification** : La dernière colonne $(P \\Rightarrow Q) \\land (Q \\Rightarrow P)$ est **identique** à la table de vérité de $P \\Leftrightarrow Q$ :\n- Vraie quand $P$ et $Q$ ont la même valeur (V,V ou F,F)\n- Fausse quand $P$ et $Q$ ont des valeurs différentes\n\nCela confirme que $(P \\Rightarrow Q) \\land (Q \\Rightarrow P) \\equiv P \\Leftrightarrow Q$ ✓"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Quantificateurs",
+      "subsections": [
+        {
+          "title": "Quantificateur universel",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Quantificateur universel $\\forall$** (\"pour tout\") :",
+              "content": "Soit $P(x)$ une propriété dépendant d'une variable $x$ dans un ensemble $E$.\n\nLa proposition \"$\\forall x \\in E, P(x)$\" (\"pour tout $x$ dans $E$, $P(x)$ est vraie\") est :\n- **Vraie** si $P(x)$ est vraie **pour tous** les éléments de $E$\n- **Fausse** s'il existe **au moins un** élément de $E$ pour lequel $P(x)$ est fausse"
+            },
+            {
+              "type": "example-box",
+              "preamble": "Exemples avec quantificateur universel :",
+              "listType": "bullet",
+              "content": [
+                "$\\forall x \\in \\mathbb{R}, x^2 \\geq 0$ → **Vraie** (le carré de tout réel est positif)",
+                "$\\forall n \\in \\mathbb{N}, n^2 \\geq n$ → **Fausse** (contre-exemple : $n = 0$ car $0 < 0$ est faux)",
+                "$\\forall x \\in \\mathbb{R}, x + 1 > x$ → **Vraie** (toujours vérifiée)"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Quantificateur existentiel",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Quantificateur existentiel $\\exists$** (\"il existe\") :",
+              "content": "Soit $P(x)$ une propriété dépendant d'une variable $x$ dans un ensemble $E$.\n\nLa proposition \"$\\exists x \\in E, P(x)$\" (\"il existe $x$ dans $E$ tel que $P(x)$ est vraie\") est :\n- **Vraie** s'il existe **au moins un** élément de $E$ pour lequel $P(x)$ est vraie\n- **Fausse** si $P(x)$ est fausse **pour tous** les éléments de $E$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "Exemples avec quantificateur existentiel :",
+              "listType": "bullet",
+              "content": [
+                "$\\exists x \\in \\mathbb{R}, x^2 = 4$ → **Vraie** (exemple : $x = 2$ ou $x = -2$)",
+                "$\\exists n \\in \\mathbb{N}, n + 2 = n$ → **Fausse** (impossible pour tout entier naturel)",
+                "$\\exists x \\in \\mathbb{R}, x^2 < 0$ → **Fausse** (aucun réel ne vérifie cela)"
+              ]
+            },
+            {
+              "type": "remark-box",
+              "preamble": "**Notation** : Existence et unicité",
+              "content": "Le symbole $\\exists !$ signifie \"il existe **un unique**\" élément vérifiant la propriété.\n\n**Exemple** : $\\exists ! x \\in \\mathbb{R}, x + 3 = 5$ signifie \"il existe un unique réel $x$ tel que $x + 3 = 5$\" (c'est $x = 2$)"
+            }
+          ]
+        },
+        {
+          "title": "Négation des quantificateurs",
+          "elements": [
+            {
+              "type": "theorem-box",
+              "preamble": "**Négation des propositions quantifiées** :",
+              "content": "Pour toute propriété $P(x)$ définie sur un ensemble $E$ :\n\n1. $\\overline{(\\forall x \\in E, P(x))} \\equiv \\exists x \\in E, \\overline{P(x)}$\n\n   \"Il est faux que pour tout $x$, $P(x)$ est vraie\" $\\equiv$ \"Il existe $x$ tel que $P(x)$ est fausse\"\n\n2. $\\overline{(\\exists x \\in E, P(x))} \\equiv \\forall x \\in E, \\overline{P(x)}$\n\n   \"Il n'existe aucun $x$ tel que $P(x)$ est vraie\" $\\equiv$ \"Pour tout $x$, $P(x)$ est fausse\""
+            },
+            {
+              "type": "example-box",
+              "preamble": "Négations de propositions quantifiées :",
+              "listType": "bullet",
+              "content": [
+                "Négation de \"$\\forall x \\in \\mathbb{R}, x^2 \\geq 0$\" → \"$\\exists x \\in \\mathbb{R}, x^2 < 0$\"",
+                "Négation de \"$\\exists n \\in \\mathbb{N}, n^2 = 3$\" → \"$\\forall n \\in \\mathbb{N}, n^2 \\neq 3$\"",
+                "Négation de \"Tous les étudiants ont réussi\" → \"Il existe au moins un étudiant qui n'a pas réussi\""
+              ]
+            },
+            {
+              "type": "practice-box",
+              "statement": "Écrivez la négation des propositions suivantes :",
+              "listType": "numbered",
+              "content": [
+                "$\\forall x \\in \\mathbb{R}, x^2 - 3x + 2 \\geq 0$",
+                "$\\exists n \\in \\mathbb{Z}, n^2 + n + 1 = 0$",
+                "$\\forall x \\in \\mathbb{R}, \\exists y \\in \\mathbb{R}, x + y = 0$",
+                "$\\exists x \\in \\mathbb{R}, \\forall y \\in \\mathbb{R}, x \\cdot y = y$"
+              ],
+              "solution": [
+                "**Négation** : $\\exists x \\in \\mathbb{R}, x^2 - 3x + 2 < 0$\n\nLa négation de $\\forall$ devient $\\exists$ et on nie le prédicat : $\\geq 0$ devient $< 0$",
+                "**Négation** : $\\forall n \\in \\mathbb{Z}, n^2 + n + 1 \\neq 0$\n\nLa négation de $\\exists$ devient $\\forall$ et on nie le prédicat : $= 0$ devient $\\neq 0$",
+                "**Négation** : $\\exists x \\in \\mathbb{R}, \\forall y \\in \\mathbb{R}, x + y \\neq 0$\n\nPour les quantificateurs multiples : $\\overline{\\forall \\exists} = \\exists \\forall$ et on nie le prédicat final",
+                "**Négation** : $\\forall x \\in \\mathbb{R}, \\exists y \\in \\mathbb{R}, x \\cdot y \\neq y$\n\nPour les quantificateurs multiples : $\\overline{\\exists \\forall} = \\forall \\exists$ et on nie le prédicat final"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Méthodes de démonstration",
+      "subsections": [
+        {
+          "title": "Raisonnement direct",
+          "elements": [
+            {
+              "type": "p",
+              "content": "Le **raisonnement direct** consiste à partir de l'hypothèse et à appliquer une suite d'implications logiques pour arriver à la conclusion."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Démonstration directe** : \"Si $n$ est pair, alors $n^2$ est pair\"",
+              "content": "**Preuve** :\n- **Hypothèse** : $n$ est pair\n- Donc il existe $k \\in \\mathbb{Z}$ tel que $n = 2k$\n- Alors $n^2 = (2k)^2 = 4k^2 = 2(2k^2)$\n- Posons $k' = 2k^2 \\in \\mathbb{Z}$\n- Donc $n^2 = 2k'$, ce qui signifie que $n^2$ est pair\n- **Conclusion** : $n^2$ est pair ✓"
+            }
+          ]
+        },
+        {
+          "title": "Raisonnement par contraposée",
+          "elements": [
+            {
+              "type": "p",
+              "content": "Pour démontrer $P \\Rightarrow Q$, on peut démontrer sa contraposée $\\overline{Q} \\Rightarrow \\overline{P}$, qui est logiquement équivalente."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Démonstration par contraposée** : \"Si $n^2$ est pair, alors $n$ est pair\"",
+              "content": "**Preuve** : On démontre la contraposée \"Si $n$ est impair, alors $n^2$ est impair\"\n- **Hypothèse** : $n$ est impair\n- Donc il existe $k \\in \\mathbb{Z}$ tel que $n = 2k + 1$\n- Alors $n^2 = (2k+1)^2 = 4k^2 + 4k + 1 = 2(2k^2 + 2k) + 1$\n- Posons $k' = 2k^2 + 2k \\in \\mathbb{Z}$\n- Donc $n^2 = 2k' + 1$, ce qui signifie que $n^2$ est impair\n- **Conclusion** : La contraposée est vraie, donc $n^2$ pair $\\Rightarrow$ $n$ pair ✓"
+            }
+          ]
+        },
+        {
+          "title": "Raisonnement par l'absurde",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Raisonnement par l'absurde** :",
+              "content": "Pour démontrer qu'une proposition $P$ est vraie, on suppose que $P$ est **fausse** (c'est-à-dire on suppose $\\overline{P}$) et on aboutit à une **contradiction**. Cela prouve que $\\overline{P}$ est impossible, donc $P$ est vraie."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Démonstration par l'absurde** : \"$\\sqrt{2}$ est irrationnel\"",
+              "content": "**Preuve** :\n- **Hypothèse absurde** : Supposons que $\\sqrt{2}$ est **rationnel**\n- Alors il existe $p, q \\in \\mathbb{Z}$ avec $q \\neq 0$ et $\\gcd(p,q) = 1$ tels que $\\sqrt{2} = \\frac{p}{q}$\n- En élevant au carré : $2 = \\frac{p^2}{q^2}$, donc $p^2 = 2q^2$\n- Donc $p^2$ est pair, ce qui implique que $p$ est pair (d'après le théorème précédent)\n- Donc $p = 2k$ pour un certain $k \\in \\mathbb{Z}$\n- Alors $p^2 = 4k^2 = 2q^2$, donc $q^2 = 2k^2$\n- Donc $q^2$ est pair, ce qui implique que $q$ est pair\n- **Contradiction** : $p$ et $q$ sont tous deux pairs, donc $\\gcd(p,q) \\geq 2$, ce qui contredit $\\gcd(p,q) = 1$\n- **Conclusion** : L'hypothèse est fausse, donc $\\sqrt{2}$ est irrationnel ✓"
+            }
+          ]
+        },
+        {
+          "title": "Raisonnement par récurrence",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Principe de récurrence** :",
+              "content": "Pour démontrer qu'une propriété $P(n)$ est vraie pour tout $n \\in \\mathbb{N}$ (ou $n \\geq n_0$), on procède en **3 étapes** :\n\n1. **Initialisation** : Vérifier que $P(n_0)$ est vraie\n\n2. **Hérédité** : Montrer que pour tout $k \\geq n_0$, si $P(k)$ est vraie (hypothèse de récurrence), alors $P(k+1)$ est vraie\n\n3. **Conclusion** : Par le principe de récurrence, $P(n)$ est vraie pour tout $n \\geq n_0$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Démonstration par récurrence** : \"Pour tout $n \\in \\mathbb{N}^*$, $1 + 2 + 3 + \\ldots + n = \\frac{n(n+1)}{2}$\"",
+              "content": "**Preuve** : Notons $P(n)$ la propriété \"$1 + 2 + \\ldots + n = \\frac{n(n+1)}{2}$\"\n\n**1. Initialisation** ($n = 1$) :\n- Côté gauche : $1$\n- Côté droit : $\\frac{1 \\times 2}{2} = 1$ ✓\n- Donc $P(1)$ est vraie\n\n**2. Hérédité** : Supposons $P(k)$ vraie pour un certain $k \\geq 1$\n- Hypothèse : $1 + 2 + \\ldots + k = \\frac{k(k+1)}{2}$\n- Montrons $P(k+1)$ :\n$$\\begin{align}\n1 + 2 + \\ldots + k + (k+1) &= \\frac{k(k+1)}{2} + (k+1) \\\\\n&= \\frac{k(k+1) + 2(k+1)}{2} \\\\\n&= \\frac{(k+1)(k+2)}{2} \\\\\n&= \\frac{(k+1)((k+1)+1)}{2}\n\\end{align}$$\n- Donc $P(k+1)$ est vraie\n\n**3. Conclusion** : Par récurrence, $P(n)$ est vraie pour tout $n \\in \\mathbb{N}^*$ ✓"
+            },
+            {
+              "type": "practice-box",
+              "statement": "Démontrez par récurrence que pour tout $n \\in \\mathbb{N}^*$ : $$1^2 + 2^2 + 3^2 + \\ldots + n^2 = \\frac{n(n+1)(2n+1)}{6}$$",
+              "solution": [
+                "**Initialisation** ($n=1$) :\n\nVérifions pour $n = 1$ :\n- Côté gauche : $1^2 = 1$\n- Côté droit : $\\frac{1 \\times 2 \\times 3}{6} = \\frac{6}{6} = 1$\n\nDonc $P(1)$ est vraie ✓",
+                "**Hérédité** : Supposons que la formule est vraie pour un rang $k \\geq 1$ fixé.\n\n**Hypothèse de récurrence** : $1^2 + 2^2 + \\ldots + k^2 = \\frac{k(k+1)(2k+1)}{6}$\n\n**Montrons $P(k+1)$** :",
+                "Calculons $1^2 + 2^2 + \\ldots + k^2 + (k+1)^2$ :\n\n$$\\begin{align}\n1^2 + \\ldots + k^2 + (k+1)^2 &= \\frac{k(k+1)(2k+1)}{6} + (k+1)^2 \\quad \\text{(par HR)}\\\\\n&= \\frac{k(k+1)(2k+1) + 6(k+1)^2}{6}\\\\\n&= \\frac{(k+1)[k(2k+1) + 6(k+1)]}{6}\\\\\n&= \\frac{(k+1)(2k^2 + k + 6k + 6)}{6}\\\\\n&= \\frac{(k+1)(2k^2 + 7k + 6)}{6}\n\\end{align}$$",
+                "Factorisons $2k^2 + 7k + 6$ :\n\n$2k^2 + 7k + 6 = (k+2)(2k+3)$\n\nDonc :\n$$\\frac{(k+1)(2k^2 + 7k + 6)}{6} = \\frac{(k+1)(k+2)(2k+3)}{6}$$",
+                "Or, $(k+1) + 1 = k+2$ et $2(k+1) + 1 = 2k+3$\n\nDonc :\n$$\\frac{(k+1)(k+2)(2k+3)}{6} = \\frac{(k+1)((k+1)+1)(2(k+1)+1)}{6}$$\n\nCeci est exactement la formule pour $n = k+1$ ✓",
+                "**Conclusion** : Par le principe de récurrence, la formule est vraie pour tout $n \\in \\mathbb{N}^*$ ✓"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

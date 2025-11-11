@@ -1,0 +1,126 @@
+{
+  "header": {
+    "chapter": "1ère BSE - Mathématiques",
+    "title": "Le Produit Scalaire dans le Plan",
+    "subtitle": "Définitions, propriétés et applications"
+  },
+  "sections": [
+    {
+      "title": "Définitions du produit scalaire",
+      "subsections": [
+        {
+          "title": "Définition géométrique",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Produit scalaire",
+              "content": "Le produit scalaire de deux vecteurs u⃗ et v⃗ est le nombre réel : u⃗ · v⃗ = ||u⃗|| × ||v⃗|| × cos(u⃗, v⃗)"
+            },
+            {
+              "type": "convention",
+              "content": "Si u⃗ = 0⃗ ou v⃗ = 0⃗, alors u⃗ · v⃗ = 0"
+            },
+            {
+              "type": "example",
+              "content": "Si ||u⃗|| = 3, ||v⃗|| = 2 et l'angle entre u⃗ et v⃗ est 60°, alors u⃗ · v⃗ = 3 × 2 × cos(60°) = 3"
+            }
+          ]
+        },
+        {
+          "title": "Définition analytique",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Coordonnées",
+              "content": "Dans un repère orthonormé, si u⃗(x; y) et v⃗(x'; y'), alors u⃗ · v⃗ = xx' + yy'"
+            },
+            {
+              "type": "example",
+              "content": "u⃗(2; 3) et v⃗(1; -2) ⟹ u⃗ · v⃗ = 2×1 + 3×(-2) = -4"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Propriétés du produit scalaire",
+      "subsections": [
+        {
+          "title": "Propriétés algébriques",
+          "elements": [
+            {
+              "type": "property",
+              "title": "Commutativité",
+              "content": "u⃗ · v⃗ = v⃗ · u⃗"
+            },
+            {
+              "type": "property",
+              "title": "Bilinéarité",
+              "content": "u⃗ · (v⃗ + w⃗) = u⃗ · v⃗ + u⃗ · w⃗ et (αu⃗) · v⃗ = α(u⃗ · v⃗)"
+            },
+            {
+              "type": "property",
+              "title": "Carré scalaire",
+              "content": "u⃗ · u⃗ = ||u⃗||² (toujours positif ou nul)"
+            }
+          ]
+        },
+        {
+          "title": "Interprétation géométrique",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Projection orthogonale",
+              "content": "u⃗ · v⃗ = ||u⃗|| × proj_u⃗(v⃗) où proj_u⃗(v⃗) est la projection de v⃗ sur la direction de u⃗"
+            },
+            {
+              "type": "property",
+              "title": "Orthogonalité",
+              "content": "u⃗ ⊥ v⃗ ⟺ u⃗ · v⃗ = 0"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Applications du produit scalaire",
+      "subsections": [
+        {
+          "title": "Calculs de longueurs et angles",
+          "elements": [
+            {
+              "type": "formula",
+              "title": "Norme d'un vecteur",
+              "content": "||u⃗|| = √(u⃗ · u⃗)"
+            },
+            {
+              "type": "formula",
+              "title": "Angle entre deux vecteurs",
+              "content": "cos(u⃗, v⃗) = (u⃗ · v⃗)/(||u⃗|| × ||v⃗||)"
+            },
+            {
+              "type": "formula",
+              "title": "Distance entre deux points",
+              "content": "AB = ||AB⃗|| = √[(xB - xA)² + (yB - yA)²]"
+            }
+          ]
+        },
+        {
+          "title": "Équations de droites et cercles",
+          "elements": [
+            {
+              "type": "method",
+              "title": "Équation normale d'une droite",
+              "content": "Une droite passant par A et de vecteur normal n⃗ a pour équation : AM⃗ · n⃗ = 0"
+            },
+            {
+              "type": "method",
+              "title": "Équation d'un cercle",
+              "content": "Un cercle de centre Ω et de rayon R a pour équation : ΩM⃗ · ΩM⃗ = R²"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,165 @@
+{
+  "header": {
+    "title": "Le Produit Scalaire dans l'Espace",
+    "subtitle": "Extension aux trois dimensions",
+    "classe": "1ère Bac Sciences Mathématiques",
+    "chapter": "Chapitre 15",
+    "academicYear": "2025-2026"
+  },
+  "sections": [
+    {
+      "title": "Définition du Produit Scalaire",
+      "subsections": [
+        {
+          "title": "Extension au Cas de l'Espace",
+          "elements": [
+            {
+              "type": "p",
+              "content": "Le produit scalaire dans l'espace conserve toutes les propriétés du produit scalaire dans le plan, avec une dimension supplémentaire."
+            },
+            {
+              "type": "definition-box",
+              "preamble": "**Produit scalaire dans un repère orthonormé** :",
+              "content": "Dans un repère orthonormé $(O; \\vec{i}, \\vec{j}, \\vec{k})$, soient :\n$$\\overrightarrow{u}\\begin{pmatrix} x \\\\ y \\\\ z \\end{pmatrix} \\quad \\text{et} \\quad \\overrightarrow{v}\\begin{pmatrix} x' \\\\ y' \\\\ z' \\end{pmatrix}$$\n\nLe produit scalaire de $\\overrightarrow{u}$ et $\\overrightarrow{v}$ est :\n$$\\overrightarrow{u} \\cdot \\overrightarrow{v} = xx' + yy' + zz'$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Calcul direct** :",
+              "content": "Calculer le produit scalaire de $\\overrightarrow{u}\\begin{pmatrix} 2 \\\\ -1 \\\\ 3 \\end{pmatrix}$ et $\\overrightarrow{v}\\begin{pmatrix} 1 \\\\ 4 \\\\ -2 \\end{pmatrix}$.\n\n$$\\overrightarrow{u} \\cdot \\overrightarrow{v} = 2 \\times 1 + (-1) \\times 4 + 3 \\times (-2)$$\n\n$$= 2 - 4 - 6 = ___-8___$$"
+            }
+          ]
+        },
+        {
+          "title": "Définitions Équivalentes",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Définition géométrique** :",
+              "content": "Pour deux vecteurs non nuls $\\overrightarrow{u}$ et $\\overrightarrow{v}$, et $\\theta$ l'angle entre ces vecteurs :\n\n$$\\overrightarrow{u} \\cdot \\overrightarrow{v} = \\|\\overrightarrow{u}\\| \\times \\|\\overrightarrow{v}\\| \\times \\cos(\\theta)$$\n\navec $0 \\leq \\theta \\leq \\pi$"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Norme d'un vecteur** :",
+              "content": "La norme d'un vecteur $\\overrightarrow{u}\\begin{pmatrix} x \\\\ y \\\\ z \\end{pmatrix}$ est :\n\n$$\\|\\overrightarrow{u}\\| = \\sqrt{\\overrightarrow{u} \\cdot \\overrightarrow{u}} = \\sqrt{x^2 + y^2 + z^2}$$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Propriétés du Produit Scalaire",
+      "subsections": [
+        {
+          "title": "Propriétés Algébriques",
+          "elements": [
+            {
+              "type": "property-box",
+              "preamble": "**Propriétés fondamentales** :",
+              "content": [
+                ">> **Commutativité** :",
+                "$\\overrightarrow{u} \\cdot \\overrightarrow{v} = \\overrightarrow{v} \\cdot \\overrightarrow{u}$",
+                ">> **Bilinéarité** :",
+                "$\\overrightarrow{u} \\cdot (\\overrightarrow{v} + \\overrightarrow{w}) = \\overrightarrow{u} \\cdot \\overrightarrow{v} + \\overrightarrow{u} \\cdot \\overrightarrow{w}$",
+                "$(\\lambda\\overrightarrow{u}) \\cdot \\overrightarrow{v} = \\lambda(\\overrightarrow{u} \\cdot \\overrightarrow{v})$",
+                ">> **Positivité** :",
+                "$\\overrightarrow{u} \\cdot \\overrightarrow{u} \\geq 0$ et $\\overrightarrow{u} \\cdot \\overrightarrow{u} = 0 \\Leftrightarrow \\overrightarrow{u} = \\overrightarrow{0}$"
+              ],
+              "listType": "bullet"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Orthogonalité",
+      "subsections": [
+        {
+          "title": "Vecteurs Orthogonaux",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Vecteurs orthogonaux** :",
+              "content": "Deux vecteurs $\\overrightarrow{u}$ et $\\overrightarrow{v}$ sont **orthogonaux** si et seulement si :\n\n$$\\overrightarrow{u} \\cdot \\overrightarrow{v} = 0$$\n\nOn note : $\\overrightarrow{u} \\perp \\overrightarrow{v}$"
+            },
+            {
+              "type": "practice-box",
+              "statement": "Déterminer si les vecteurs $\\overrightarrow{u}\\begin{pmatrix} 2 \\\\ 3 \\\\ -1 \\end{pmatrix}$ et $\\overrightarrow{v}\\begin{pmatrix} 1 \\\\ -2 \\\\ 4 \\end{pmatrix}$ sont orthogonaux.",
+              "content": [
+                "Calculer le produit scalaire",
+                "Conclure"
+              ],
+              "solution": [
+                "$$\\overrightarrow{u} \\cdot \\overrightarrow{v} = 2 \\times 1 + 3 \\times (-2) + (-1) \\times 4$$\n$$= 2 - 6 - 4 = -8$$",
+                "Comme $\\overrightarrow{u} \\cdot \\overrightarrow{v} = -8 \\neq 0$, les vecteurs ne sont **pas orthogonaux**."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Droites et Plans Perpendiculaires",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Droites perpendiculaires** :",
+              "content": "Deux droites $D$ et $D'$ de vecteurs directeurs respectifs $\\overrightarrow{u}$ et $\\overrightarrow{v}$ sont **perpendiculaires** si :\n\n$$\\overrightarrow{u} \\cdot \\overrightarrow{v} = 0$$"
+            },
+            {
+              "type": "definition-box",
+              "preamble": "**Droite perpendiculaire à un plan** :",
+              "content": "Une droite $D$ de vecteur directeur $\\overrightarrow{u}$ est **perpendiculaire** à un plan $P$ si $\\overrightarrow{u}$ est orthogonal à tous les vecteurs du plan.\n\nEn pratique : $\\overrightarrow{u}$ est colinéaire au vecteur normal $\\overrightarrow{n}$ du plan."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Vecteur normal** :",
+              "content": "Le plan $P : 2x - 3y + z - 5 = 0$ admet pour vecteur normal :\n\n$$\\overrightarrow{n}\\begin{pmatrix} ___2___ \\\\ ___-3___ \\\\ ___1___ \\end{pmatrix}$$\n\nToute droite perpendiculaire à $P$ a un vecteur directeur colinéaire à $\\overrightarrow{n}$."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Applications Géométriques",
+      "subsections": [
+        {
+          "title": "Distance d'un Point à un Plan",
+          "elements": [
+            {
+              "type": "property-box",
+              "preamble": "**Distance point-plan** :",
+              "content": "La distance d'un point $A(x_A; y_A; z_A)$ au plan $P : ax + by + cz + d = 0$ est donnée par :\n\n$$d(A, P) = \\dfrac{|ax_A + by_A + cz_A + d|}{\\sqrt{a^2 + b^2 + c^2}}$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Calcul de distance** :",
+              "content": "Calculer la distance du point $A(1; 2; 3)$ au plan $P : 2x - y + 2z - 6 = 0$.\n\n$$d(A, P) = \\dfrac{|2(1) - 2 + 2(3) - 6|}{\\sqrt{2^2 + (-1)^2 + 2^2}}$$\n\n$$= \\dfrac{|2 - 2 + 6 - 6|}{\\sqrt{4 + 1 + 4}} = \\dfrac{|0|}{\\sqrt{9}} = \\dfrac{0}{___3___} = ___0___$$\n\nLe point $A$ appartient au plan $P$."
+            }
+          ]
+        },
+        {
+          "title": "Angle entre Deux Vecteurs",
+          "elements": [
+            {
+              "type": "property-box",
+              "preamble": "**Calcul d'angle** :",
+              "content": "L'angle $\\theta$ entre deux vecteurs non nuls $\\overrightarrow{u}$ et $\\overrightarrow{v}$ est donné par :\n\n$$\\cos(\\theta) = \\dfrac{\\overrightarrow{u} \\cdot \\overrightarrow{v}}{\\|\\overrightarrow{u}\\| \\times \\|\\overrightarrow{v}\\|}$$\n\navec $0 \\leq \\theta \\leq \\pi$"
+            },
+            {
+              "type": "practice-box",
+              "statement": "Calculer l'angle entre $\\overrightarrow{u}\\begin{pmatrix} 1 \\\\ 0 \\\\ 1 \\end{pmatrix}$ et $\\overrightarrow{v}\\begin{pmatrix} 0 \\\\ 1 \\\\ 1 \\end{pmatrix}$.",
+              "content": [
+                "Calculer le produit scalaire",
+                "Calculer les normes",
+                "Déterminer l'angle"
+              ],
+              "solution": [
+                "$$\\overrightarrow{u} \\cdot \\overrightarrow{v} = 1 \\times 0 + 0 \\times 1 + 1 \\times 1 = 1$$",
+                "$$\\|\\overrightarrow{u}\\| = \\sqrt{1^2 + 0^2 + 1^2} = \\sqrt{2}$$\n$$\\|\\overrightarrow{v}\\| = \\sqrt{0^2 + 1^2 + 1^2} = \\sqrt{2}$$",
+                "$$\\cos(\\theta) = \\dfrac{1}{\\sqrt{2} \\times \\sqrt{2}} = \\dfrac{1}{2}$$\n\nDonc $\\theta = \\arccos\\left(\\dfrac{1}{2}\\right) = \\dfrac{\\pi}{3}$ (60°)"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

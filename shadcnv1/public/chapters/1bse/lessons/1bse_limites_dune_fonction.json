@@ -1,0 +1,125 @@
+{
+  "header": {
+    "chapter": "1ère BSE - Mathématiques",
+    "title": "Limites d'une Fonction",
+    "subtitle": "Limites finies et infinies, continuité"
+  },
+  "sections": [
+    {
+      "title": "Notion de limite",
+      "subsections": [
+        {
+          "title": "Limite en un point",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Limite finie en un point",
+              "content": "On dit que f(x) tend vers L quand x tend vers a si f(x) peut être rendu arbitrairement proche de L en prenant x suffisamment proche de a"
+            },
+            {
+              "type": "notation",
+              "content": "On note : lim(x→a) f(x) = L"
+            },
+            {
+              "type": "example",
+              "content": "lim(x→2) (x² - 1) = 3"
+            }
+          ]
+        },
+        {
+          "title": "Limite à l'infini",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Limite à l'infini",
+              "content": "lim(x→+∞) f(x) = L signifie que f(x) se rapproche de L quand x devient arbitrairement grand"
+            },
+            {
+              "type": "example",
+              "content": "lim(x→+∞) 1/x = 0"
+            }
+          ]
+        },
+        {
+          "title": "Limite infinie",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Limite infinie",
+              "content": "lim(x→a) f(x) = +∞ signifie que f(x) devient arbitrairement grand quand x s'approche de a"
+            },
+            {
+              "type": "example",
+              "content": "lim(x→0⁺) 1/x = +∞"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Opérations sur les limites",
+      "subsections": [
+        {
+          "title": "Limites et opérations",
+          "elements": [
+            {
+              "type": "theorem",
+              "title": "Somme",
+              "content": "Si lim f = L et lim g = L', alors lim(f + g) = L + L'"
+            },
+            {
+              "type": "theorem",
+              "title": "Produit", 
+              "content": "Si lim f = L et lim g = L', alors lim(f × g) = L × L'"
+            },
+            {
+              "type": "theorem",
+              "title": "Quotient",
+              "content": "Si lim f = L et lim g = L' ≠ 0, alors lim(f/g) = L/L'"
+            }
+          ]
+        },
+        {
+          "title": "Formes indéterminées",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Formes indéterminées",
+              "content": "Les expressions ∞ - ∞, 0/0, ∞/∞, 0 × ∞ sont des formes indéterminées nécessitant une étude particulière"
+            },
+            {
+              "type": "method",
+              "title": "Lever une indétermination",
+              "content": "On peut factoriser, utiliser les croissances comparées, ou faire des changements de variables"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Continuité",
+      "subsections": [
+        {
+          "title": "Fonction continue",
+          "elements": [
+            {
+              "type": "definition",
+              "title": "Continuité en un point",
+              "content": "f est continue en a si lim(x→a) f(x) = f(a)"
+            },
+            {
+              "type": "definition",
+              "title": "Continuité sur un intervalle",
+              "content": "f est continue sur I si elle est continue en tout point de I"
+            },
+            {
+              "type": "theorem",
+              "title": "Théorème des valeurs intermédiaires",
+              "content": "Si f est continue sur [a,b] et k ∈ [f(a), f(b)], alors ∃c ∈ [a,b] tel que f(c) = k"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

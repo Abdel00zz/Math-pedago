@@ -1,0 +1,15 @@
+export const ROUTES = {
+  HOME: '/',
+  DASHBOARD: '/dashboard',
+  LESSONS: '/lessons',
+  LESSON: (slug: string) => `/lessons/${slug}`,
+  QUIZ: '/quiz',
+  QUIZ_DETAIL: (id: string) => `/quiz/${id}`,
+  EXERCISES: '/exercises',
+  EXERCISE_DETAIL: (id: string) => `/exercises/${id}`,
+  VIDEOS: '/videos',
+  VIDEO_DETAIL: (id: string) => `/videos/${id}`,
+  PROGRESS: '/progress',
+  SETTINGS: '/settings',
+  ABOUT: '/about',
+} as const

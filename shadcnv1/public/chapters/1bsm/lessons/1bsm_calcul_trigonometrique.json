@@ -1,0 +1,204 @@
+{
+  "header": {
+    "title": "Calcul Trigonométrique",
+    "subtitle": "Fonctions trigonométriques et identités",
+    "classe": "1ère Bac Sciences Mathématiques",
+    "chapter": "Chapitre 7",
+    "academicYear": "2025-2026"
+  },
+  "sections": [
+    {
+      "title": "Rappels et Compléments",
+      "subsections": [
+        {
+          "title": "Cercle Trigonométrique",
+          "elements": [
+            {
+              "type": "p",
+              "content": "Le cercle trigonométrique est un cercle de rayon 1 centré à l'origine d'un repère orthonormé. Il permet de définir les fonctions trigonométriques pour tout angle réel."
+            },
+            {
+              "type": "definition-box",
+              "preamble": "**Cercle trigonométrique** :",
+              "content": "Le **cercle trigonométrique** est le cercle de centre $O$ et de rayon $1$ dans un repère orthonormé $(O; \\vec{i}, \\vec{j})$.\n\nPour tout nombre réel $x$, il existe un unique point $M$ sur ce cercle tel que $(\\widehat{\\vec{i}, \\overrightarrow{OM}}) = x$ (en radians).\n\nLes coordonnées de $M$ sont : $M(\\cos(x); \\sin(x))$"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Propriété fondamentale** :",
+              "content": "Pour tout réel $x$ :\n$$\\cos^2(x) + \\sin^2(x) = 1$$\n\nCette identité découle du fait que $M$ est sur le cercle de rayon 1."
+            }
+          ]
+        },
+        {
+          "title": "Angles Associés",
+          "elements": [
+            {
+              "type": "property-box",
+              "preamble": "**Formules des angles associés** :",
+              "content": [
+                ">> **Opposé ($-x$)** :",
+                "$\\cos(-x) = \\cos(x)$ et $\\sin(-x) = -\\sin(x)$",
+                "$\\tan(-x) = -\\tan(x)$",
+                ">> **Supplémentaire ($\\pi - x$)** :",
+                "$\\cos(\\pi - x) = -\\cos(x)$ et $\\sin(\\pi - x) = \\sin(x)$",
+                ">> **Complémentaire ($\\frac{\\pi}{2} - x$)** :",
+                "$\\cos\\left(\\frac{\\pi}{2} - x\\right) = \\sin(x)$ et $\\sin\\left(\\frac{\\pi}{2} - x\\right) = \\cos(x)$",
+                ">> **Décalage de $\\pi$ ($\\pi + x$)** :",
+                "$\\cos(\\pi + x) = -\\cos(x)$ et $\\sin(\\pi + x) = -\\sin(x)$",
+                ">> **Décalage de $\\frac{\\pi}{2}$ ($\\frac{\\pi}{2} + x$)** :",
+                "$\\cos\\left(\\frac{\\pi}{2} + x\\right) = -\\sin(x)$ et $\\sin\\left(\\frac{\\pi}{2} + x\\right) = \\cos(x)$"
+              ],
+              "listType": "bullet"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Calculs avec angles associés** :",
+              "content": "Calculer $\\cos\\left(\\frac{5\\pi}{6}\\right)$ et $\\sin\\left(\\frac{5\\pi}{6}\\right)$.\n\nOn remarque que $\\frac{5\\pi}{6} = \\pi - \\frac{\\pi}{6}$\n\nDonc :\n$$\\cos\\left(\\frac{5\\pi}{6}\\right) = \\cos\\left(\\pi - \\frac{\\pi}{6}\\right) = -\\cos\\left(\\frac{\\pi}{6}\\right) = ___-\\frac{\\sqrt{3}}{2}___$$\n\n$$\\sin\\left(\\frac{5\\pi}{6}\\right) = \\sin\\left(\\pi - \\frac{\\pi}{6}\\right) = \\sin\\left(\\frac{\\pi}{6}\\right) = ___\\frac{1}{2}___$$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Formules d'Addition",
+      "subsections": [
+        {
+          "title": "Formules de Base",
+          "elements": [
+            {
+              "type": "property-box",
+              "preamble": "**Formules d'addition** :",
+              "content": [
+                ">> **Cosinus** :",
+                "$\\cos(a + b) = \\cos(a)\\cos(b) - \\sin(a)\\sin(b)$",
+                "$\\cos(a - b) = \\cos(a)\\cos(b) + \\sin(a)\\sin(b)$",
+                ">> **Sinus** :",
+                "$\\sin(a + b) = \\sin(a)\\cos(b) + \\cos(a)\\sin(b)$",
+                "$\\sin(a - b) = \\sin(a)\\cos(b) - \\cos(a)\\sin(b)$",
+                ">> **Tangente** :",
+                "$\\tan(a + b) = \\dfrac{\\tan(a) + \\tan(b)}{1 - \\tan(a)\\tan(b)}$",
+                "$\\tan(a - b) = \\dfrac{\\tan(a) - \\tan(b)}{1 + \\tan(a)\\tan(b)}$"
+              ],
+              "listType": "bullet"
+            },
+            {
+              "type": "p",
+              "content": "?> **Astuce mnémotechnique** : Pour le cosinus, on a un **produit de cosinus** moins un **produit de sinus**. Pour le sinus, on a une **somme de produits croisés**."
+            }
+          ]
+        },
+        {
+          "title": "Formules de Duplication",
+          "elements": [
+            {
+              "type": "property-box",
+              "preamble": "**Formules de duplication (angle double)** :",
+              "content": [
+                ">> **Cosinus** :",
+                "$\\cos(2x) = \\cos^2(x) - \\sin^2(x)$",
+                "$\\cos(2x) = 2\\cos^2(x) - 1$",
+                "$\\cos(2x) = 1 - 2\\sin^2(x)$",
+                ">> **Sinus** :",
+                "$\\sin(2x) = 2\\sin(x)\\cos(x)$",
+                ">> **Tangente** :",
+                "$\\tan(2x) = \\dfrac{2\\tan(x)}{1 - \\tan^2(x)}$"
+              ],
+              "listType": "bullet"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Calcul avec duplication** :",
+              "content": "Sachant que $\\cos(x) = \\frac{3}{5}$ avec $x \\in \\left[0; \\frac{\\pi}{2}\\right]$, calculer $\\cos(2x)$ et $\\sin(2x)$.\n\nD'abord, calculons $\\sin(x)$ :\n$$\\sin^2(x) = 1 - \\cos^2(x) = 1 - \\frac{9}{25} = ___\\frac{16}{25}___$$\n\nComme $x \\in \\left[0; \\frac{\\pi}{2}\\right]$, on a $\\sin(x) \\geq 0$, donc $\\sin(x) = \\frac{4}{5}$\n\nEnsuite :\n$$\\cos(2x) = \\cos^2(x) - \\sin^2(x) = \\frac{9}{25} - \\frac{16}{25} = ___-\\frac{7}{25}___$$\n\n$$\\sin(2x) = 2\\sin(x)\\cos(x) = 2 \\times \\frac{4}{5} \\times \\frac{3}{5} = ___\\frac{24}{25}___$$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Formules de Transformation",
+      "subsections": [
+        {
+          "title": "Transformation de Produits en Sommes",
+          "elements": [
+            {
+              "type": "property-box",
+              "preamble": "**Formules de transformation** :",
+              "content": [
+                ">> **Produit de cosinus** :",
+                "$\\cos(a)\\cos(b) = \\dfrac{1}{2}\\left[\\cos(a-b) + \\cos(a+b)\\right]$",
+                ">> **Produit de sinus** :",
+                "$\\sin(a)\\sin(b) = \\dfrac{1}{2}\\left[\\cos(a-b) - \\cos(a+b)\\right]$",
+                ">> **Produit sinus-cosinus** :",
+                "$\\sin(a)\\cos(b) = \\dfrac{1}{2}\\left[\\sin(a+b) + \\sin(a-b)\\right]$"
+              ],
+              "listType": "bullet"
+            }
+          ]
+        },
+        {
+          "title": "Transformation de Sommes en Produits",
+          "elements": [
+            {
+              "type": "property-box",
+              "preamble": "**Formules de linéarisation** :",
+              "content": [
+                ">> **Somme de cosinus** :",
+                "$\\cos(p) + \\cos(q) = 2\\cos\\left(\\dfrac{p+q}{2}\\right)\\cos\\left(\\dfrac{p-q}{2}\\right)$",
+                ">> **Différence de cosinus** :",
+                "$\\cos(p) - \\cos(q) = -2\\sin\\left(\\dfrac{p+q}{2}\\right)\\sin\\left(\\dfrac{p-q}{2}\\right)$",
+                ">> **Somme de sinus** :",
+                "$\\sin(p) + \\sin(q) = 2\\sin\\left(\\dfrac{p+q}{2}\\right)\\cos\\left(\\dfrac{p-q}{2}\\right)$",
+                ">> **Différence de sinus** :",
+                "$\\sin(p) - \\sin(q) = 2\\cos\\left(\\dfrac{p+q}{2}\\right)\\sin\\left(\\dfrac{p-q}{2}\\right)$"
+              ],
+              "listType": "bullet"
+            },
+            {
+              "type": "p",
+              "content": "?> **Méthode** : Pour retrouver ces formules, on pose $p = a + b$ et $q = a - b$, puis on exprime $a$ et $b$ en fonction de $p$ et $q$."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Équations Trigonométriques",
+      "subsections": [
+        {
+          "title": "Équations de Base",
+          "elements": [
+            {
+              "type": "property-box",
+              "preamble": "**Résolution d'équations** :",
+              "content": [
+                ">> **Équation $\\cos(x) = a$** :",
+                "Si $|a| > 1$ : pas de solution",
+                "Si $|a| \\leq 1$ : $x = \\pm \\arccos(a) + 2k\\pi$, $k \\in \\mathbb{Z}$",
+                ">> **Équation $\\sin(x) = a$** :",
+                "Si $|a| > 1$ : pas de solution",
+                "Si $|a| \\leq 1$ : $x = \\arcsin(a) + 2k\\pi$ ou $x = \\pi - \\arcsin(a) + 2k\\pi$, $k \\in \\mathbb{Z}$",
+                ">> **Équation $\\tan(x) = a$** :",
+                "$x = \\arctan(a) + k\\pi$, $k \\in \\mathbb{Z}$"
+              ],
+              "listType": "bullet"
+            },
+            {
+              "type": "practice-box",
+              "statement": "Résoudre dans $\\mathbb{R}$ les équations suivantes :",
+              "content": [
+                "$\\cos(x) = \\frac{1}{2}$",
+                "$\\sin(2x) = \\frac{\\sqrt{2}}{2}$",
+                "$2\\cos^2(x) - 1 = 0$"
+              ],
+              "solution": [
+                "$\\cos(x) = \\frac{1}{2} = \\cos\\left(\\frac{\\pi}{3}\\right)$\n\nDonc : $x = \\frac{\\pi}{3} + 2k\\pi$ ou $x = -\\frac{\\pi}{3} + 2k\\pi$, $k \\in \\mathbb{Z}$\n\nOu : $x \\in \\left\\{\\frac{\\pi}{3} + 2k\\pi, -\\frac{\\pi}{3} + 2k\\pi \\mid k \\in \\mathbb{Z}\\right\\}$",
+                "$\\sin(2x) = \\frac{\\sqrt{2}}{2} = \\sin\\left(\\frac{\\pi}{4}\\right)$\n\nDonc : $2x = \\frac{\\pi}{4} + 2k\\pi$ ou $2x = \\pi - \\frac{\\pi}{4} + 2k\\pi = \\frac{3\\pi}{4} + 2k\\pi$\n\nD'où : $x = \\frac{\\pi}{8} + k\\pi$ ou $x = \\frac{3\\pi}{8} + k\\pi$, $k \\in \\mathbb{Z}$",
+                "$2\\cos^2(x) - 1 = 0$\n\nOn reconnaît : $\\cos(2x) = 2\\cos^2(x) - 1$\n\nDonc : $\\cos(2x) = 0$\n\n$2x = \\frac{\\pi}{2} + k\\pi$, $k \\in \\mathbb{Z}$\n\n$x = \\frac{\\pi}{4} + \\frac{k\\pi}{2}$, $k \\in \\mathbb{Z}$"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

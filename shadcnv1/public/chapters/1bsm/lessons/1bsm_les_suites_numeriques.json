@@ -1,0 +1,218 @@
+{
+  "header": {
+    "title": "Les Suites Numériques",
+    "subtitle": "Définitions, types et propriétés",
+    "classe": "1ère Bac Sciences Mathématiques",
+    "chapter": "Chapitre 8",
+    "academicYear": "2025-2026"
+  },
+  "sections": [
+    {
+      "title": "Généralités sur les Suites",
+      "subsections": [
+        {
+          "title": "Définition d'une Suite",
+          "elements": [
+            {
+              "type": "p",
+              "content": "Une suite numérique est une fonction définie sur l'ensemble des entiers naturels et à valeurs dans les réels. Elle représente une succession ordonnée de nombres."
+            },
+            {
+              "type": "definition-box",
+              "preamble": "**Suite numérique** :",
+              "content": "Une **suite numérique** est une application :\n$$u : \\mathbb{N} \\to \\mathbb{R}$$\n$$n \\mapsto u(n) = u_n$$\n\nOn note la suite $(u_n)$ ou $(u_n)_{n \\in \\mathbb{N}}$.\n\nLe nombre $u_n$ est appelé le **terme général** ou **terme de rang $n$** de la suite."
+            },
+            {
+              "type": "remark-box",
+              "content": "Une suite peut être définie de plusieurs manières : par une formule explicite ($u_n = f(n)$), par récurrence ($u_{n+1} = f(u_n)$), ou par une propriété caractéristique."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemples de suites** :",
+              "content": "1. **Suite définie explicitement** : $u_n = 2n + 1$\n   - $u_0 = ___1___$, $u_1 = 3$, $u_2 = 5$, $u_3 = 7$...\n\n2. **Suite définie par récurrence** : $\\begin{cases} u_0 = 1 \\\\ u_{n+1} = 2u_n + 3 \\end{cases}$\n   - $u_0 = 1$, $u_1 = 2 \\times 1 + 3 = ___5___$, $u_2 = 2 \\times 5 + 3 = ___13___$"
+            }
+          ]
+        },
+        {
+          "title": "Sens de Variation",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Monotonie d'une suite** :",
+              "content": "Soit $(u_n)$ une suite numérique.\n\n**Croissante** : $\\forall n \\in \\mathbb{N}, u_{n+1} \\geq u_n$\n\n**Strictement croissante** : $\\forall n \\in \\mathbb{N}, u_{n+1} > u_n$\n\n**Décroissante** : $\\forall n \\in \\mathbb{N}, u_{n+1} \\leq u_n$\n\n**Strictement décroissante** : $\\forall n \\in \\mathbb{N}, u_{n+1} < u_n$\n\n**Constante** : $\\forall n \\in \\mathbb{N}, u_{n+1} = u_n$"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Méthodes d'étude de la monotonie** :",
+              "content": [
+                "**Méthode 1** : Étudier le signe de $u_{n+1} - u_n$",
+                "Si $u_{n+1} - u_n \\geq 0$ pour tout $n$, la suite est croissante",
+                "**Méthode 2** : Étudier le rapport $\\dfrac{u_{n+1}}{u_n}$ (si $u_n > 0$)",
+                "Si $\\dfrac{u_{n+1}}{u_n} \\geq 1$ pour tout $n$, la suite est croissante",
+                "**Méthode 3** : Utiliser les variations de la fonction associée",
+                "Si $u_n = f(n)$ et $f$ est croissante, alors $(u_n)$ est croissante"
+              ],
+              "listType": "bullet"
+            },
+            {
+              "type": "practice-box",
+              "statement": "Étudier la monotonie de la suite $(u_n)$ définie par $u_n = n^2 - 5n + 1$.",
+              "content": [
+                "Calculer $u_{n+1} - u_n$",
+                "Étudier le signe de cette différence",
+                "Conclure sur la monotonie"
+              ],
+              "solution": [
+                "$u_{n+1} - u_n = (n+1)^2 - 5(n+1) + 1 - (n^2 - 5n + 1)$\n\n$= n^2 + 2n + 1 - 5n - 5 + 1 - n^2 + 5n - 1$\n\n$= 2n - 4$",
+                "$u_{n+1} - u_n = 2n - 4 = 2(n - 2)$\n\nCe signe dépend de $n$ :\n- Si $n < 2$ : $u_{n+1} - u_n < 0$ (suite décroissante)\n- Si $n > 2$ : $u_{n+1} - u_n > 0$ (suite croissante)\n- Si $n = 2$ : $u_{n+1} - u_n = 0$",
+                "La suite $(u_n)$ est **décroissante** sur $\\{0, 1, 2\\}$ et **croissante** à partir du rang $n = 2$."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Suites Bornées",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Suite majorée, minorée, bornée** :",
+              "content": "Soit $(u_n)$ une suite numérique.\n\n**Majorée** : $\\exists M \\in \\mathbb{R}, \\forall n \\in \\mathbb{N}, u_n \\leq M$\n\n**Minorée** : $\\exists m \\in \\mathbb{R}, \\forall n \\in \\mathbb{N}, u_n \\geq m$\n\n**Bornée** : La suite est à la fois majorée et minorée.\n\nC'est-à-dire : $\\exists m, M \\in \\mathbb{R}, \\forall n \\in \\mathbb{N}, m \\leq u_n \\leq M$"
+            },
+            {
+              "type": "p",
+              "content": "!> **Attention** : Une suite bornée n'est pas nécessairement convergente. Par exemple, $u_n = (-1)^n$ est bornée mais divergente."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Suites Arithmétiques",
+      "subsections": [
+        {
+          "title": "Définition et Propriétés",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Suite arithmétique** :",
+              "content": "Une suite $(u_n)$ est **arithmétique** s'il existe un nombre réel $r$ appelé **raison** tel que :\n$$\\forall n \\in \\mathbb{N}, u_{n+1} = u_n + r$$\n\nOu de manière équivalente :\n$$u_{n+1} - u_n = r$$"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Terme général** :",
+              "content": "Si $(u_n)$ est une suite arithmétique de premier terme $u_0$ et de raison $r$, alors :\n$$u_n = u_0 + nr$$\n\nPour le terme de rang $n$ à partir du terme de rang $p$ :\n$$u_n = u_p + (n-p)r$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Calcul de termes** :",
+              "content": "Soit $(u_n)$ une suite arithmétique telle que $u_0 = 3$ et $r = 2$.\n\nCalculons quelques termes :\n- $u_1 = u_0 + r = 3 + 2 = ___5___$\n- $u_2 = u_0 + 2r = 3 + 4 = ___7___$\n- $u_{10} = u_0 + 10r = 3 + 20 = ___23___$"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Somme des termes** :",
+              "content": "La somme des $n$ premiers termes d'une suite arithmétique est :\n$$S_n = u_0 + u_1 + \\cdots + u_{n-1} = \\dfrac{n(u_0 + u_{n-1})}{2}$$\n\nOu encore :\n$$S_n = \\dfrac{\\text{nombre de termes} \\times (\\text{premier terme} + \\text{dernier terme})}{2}$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Somme arithmétique** :",
+              "content": "Calculer la somme $S = 1 + 2 + 3 + \\cdots + 100$.\n\nC'est la somme d'une suite arithmétique avec $u_0 = 1$, $u_{99} = 100$, et $n = 100$ termes.\n\n$$S = \\dfrac{100 \\times (1 + 100)}{2} = \\dfrac{100 \\times 101}{2} = ___5050___$$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Suites Géométriques",
+      "subsections": [
+        {
+          "title": "Définition et Propriétés",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Suite géométrique** :",
+              "content": "Une suite $(u_n)$ est **géométrique** s'il existe un nombre réel $q$ non nul appelé **raison** tel que :\n$$\\forall n \\in \\mathbb{N}, u_{n+1} = q \\cdot u_n$$\n\nOu de manière équivalente (si $u_n \\neq 0$) :\n$$\\dfrac{u_{n+1}}{u_n} = q$$"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Terme général** :",
+              "content": "Si $(u_n)$ est une suite géométrique de premier terme $u_0 \\neq 0$ et de raison $q \\neq 0$, alors :\n$$u_n = u_0 \\cdot q^n$$\n\nPour le terme de rang $n$ à partir du terme de rang $p$ :\n$$u_n = u_p \\cdot q^{n-p}$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Calcul de termes** :",
+              "content": "Soit $(u_n)$ une suite géométrique telle que $u_0 = 2$ et $q = 3$.\n\nCalculons quelques termes :\n- $u_1 = u_0 \\times q = 2 \\times 3 = ___6___$\n- $u_2 = u_0 \\times q^2 = 2 \\times 9 = ___18___$\n- $u_3 = u_0 \\times q^3 = 2 \\times 27 = ___54___$"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Somme des termes** :",
+              "content": "La somme des $n$ premiers termes d'une suite géométrique de raison $q \\neq 1$ est :\n$$S_n = u_0 + u_1 + \\cdots + u_{n-1} = u_0 \\cdot \\dfrac{1 - q^n}{1 - q}$$\n\nSi $q = 1$, alors $S_n = n \\cdot u_0$"
+            },
+            {
+              "type": "practice-box",
+              "statement": "Calculer la somme $S = 1 + 2 + 4 + 8 + \\cdots + 2^{10}$.",
+              "content": [
+                "Identifier la nature de la suite",
+                "Déterminer le nombre de termes",
+                "Appliquer la formule de la somme"
+              ],
+              "solution": [
+                "C'est une suite géométrique de premier terme $u_0 = 1$ et de raison $q = 2$.",
+                "Le dernier terme est $2^{10}$, qui correspond à $u_{10}$. Il y a donc $n = 11$ termes (de $u_0$ à $u_{10}$).",
+                "$S = u_0 \\cdot \\dfrac{1 - q^{11}}{1 - q} = 1 \\cdot \\dfrac{1 - 2^{11}}{1 - 2} = \\dfrac{1 - 2048}{-1} = 2048 - 1 = 2047$"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Comportement Limite",
+          "elements": [
+            {
+              "type": "property-box",
+              "preamble": "**Limite d'une suite géométrique** :",
+              "content": [
+                "Si $|q| < 1$ : $\\lim\\limits_{n \\to +\\infty} q^n = 0$",
+                "Si $q = 1$ : $\\lim\\limits_{n \\to +\\infty} q^n = 1$",
+                "Si $q > 1$ : $\\lim\\limits_{n \\to +\\infty} q^n = +\\infty$",
+                "Si $q \\leq -1$ : $(q^n)$ diverge (oscille)"
+              ],
+              "listType": "bullet"
+            },
+            {
+              "type": "p",
+              "content": "?> **Somme infinie** : Si $|q| < 1$, la somme d'une suite géométrique infinie converge vers $\\dfrac{u_0}{1-q}$."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Raisonnement par Récurrence",
+      "subsections": [
+        {
+          "title": "Principe du Raisonnement",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Raisonnement par récurrence** :",
+              "content": "Pour démontrer qu'une propriété $P(n)$ est vraie pour tout $n \\geq n_0$, on procède en trois étapes :\n\n**Initialisation** : Vérifier que $P(n_0)$ est vraie\n\n**Hérédité** : Montrer que si $P(n)$ est vraie pour un certain $n \\geq n_0$, alors $P(n+1)$ est vraie\n\n**Conclusion** : Conclure que $P(n)$ est vraie pour tout $n \\geq n_0$"
+            },
+            {
+              "type": "practice-box",
+              "statement": "Démontrer par récurrence que pour tout $n \\geq 1$ : $\\displaystyle \\sum_{k=1}^{n} k = \\dfrac{n(n+1)}{2}$",
+              "content": [
+                "Initialisation : Vérifier pour $n = 1$",
+                "Hérédité : Supposer vraie pour $n$ et démontrer pour $n+1$",
+                "Conclusion"
+              ],
+              "solution": [
+                "**Initialisation** : Pour $n = 1$ :\n\nMembre de gauche : $\\sum_{k=1}^{1} k = 1$\n\nMembre de droite : $\\dfrac{1(1+1)}{2} = \\dfrac{2}{2} = 1$\n\nLa propriété est vraie pour $n = 1$ ✓",
+                "**Hérédité** : Supposons la propriété vraie pour un certain $n \\geq 1$, c'est-à-dire :\n$$\\sum_{k=1}^{n} k = \\dfrac{n(n+1)}{2}$$\n\nMontrons qu'elle est vraie pour $n+1$ :\n\n$$\\sum_{k=1}^{n+1} k = \\left(\\sum_{k=1}^{n} k\\right) + (n+1)$$\n\n$$= \\dfrac{n(n+1)}{2} + (n+1)$$ (par hypothèse de récurrence)\n\n$$= \\dfrac{n(n+1) + 2(n+1)}{2} = \\dfrac{(n+1)(n+2)}{2}$$\n\nC'est bien la formule attendue pour $n+1$ ✓",
+                "**Conclusion** : Par le principe de récurrence, la propriété est vraie pour tout $n \\geq 1$."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

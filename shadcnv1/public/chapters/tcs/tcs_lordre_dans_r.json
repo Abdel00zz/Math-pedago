@@ -1,0 +1,40 @@
+{
+  "class": "tcs",
+  "chapter": "L'ordre dans ℝ",
+  "sessionDates": [],
+  "videos": [],
+  "quiz": [
+    {
+      "id": "q_tcs_ordre_1",
+      "question": "L'intervalle $[2, 5[$ est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "Ouvert",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Fermé",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "Semi-ouvert",
+          "is_correct": false,
+          "explanation": null
+        }
+      ],
+      "steps": []
+    }
+  ],
+  "exercises": [
+    {
+      "id": "exo_tcs_ordre_1",
+      "title": "Valeur absolue",
+      "statement": "Résoudre dans $\\mathbb{R}$ l'inéquation $|x - 3| \\le 2$.",
+      "sub_questions": []
+    }
+  ],
+  "version": "v1.1.0-3e0a74"
+}

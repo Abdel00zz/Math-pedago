@@ -1,0 +1,35 @@
+{
+  "class": "1bse",
+  "chapter": "Limites d'une fonction",
+  "sessionDates": [],
+  "videos": [],
+  "quiz": [
+    {
+      "id": "q1",
+      "question": "Que vaut $\\lim_{x\\to 0} \\frac{\\sin x}{x}$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "0",
+          "is_correct": false,
+          "explanation": null
+        },
+        {
+          "text": "1",
+          "is_correct": false,
+          "explanation": "C'est une limite de référence en trigonométrie."
+        }
+      ],
+      "steps": []
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "title": "Asymptote",
+      "statement": "Déterminer la limite en $+\\infty$ de $f(x) = \\sqrt{x^2+1}-x$.",
+      "sub_questions": []
+    }
+  ],
+  "version": "v1.1.0-16f67e"
+}
