@@ -233,7 +233,7 @@ const HelpModal: React.FC<HelpModalProps> = ({ isOpen, onClose }) => {
             title="Guide d'Utilisation"
             titleClassName="text-2xl font-bold text-foreground"
             hideHeaderBorder={false}
-            className="sm:max-w-3xl landscape:max-w-[85vw] landscape:max-h-[90vh]"
+            className="sm:max-w-4xl md:max-w-5xl landscape:max-w-[90vw] landscape:max-h-[90vh]"
         >
             <div className="p-2">
                 {/* Tabs */}

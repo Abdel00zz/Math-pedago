@@ -331,7 +331,7 @@ const DashboardView: React.FC = () => {
                                 )}
                                 {upcoming.length > 0 && (
                                     <ChapterSection
-                                        title="📚 Chapitres disponibles"
+                                        title="Chapitres disponibles"
                                         chapters={upcoming}
                                         progress={progress}
                                         onSelect={handleChapterSelect}
