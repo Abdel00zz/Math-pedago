@@ -329,7 +329,74 @@ const Exercises: React.FC<ExercisesProps> = ({ onAllCompleted }) => {
                             <div className="math-render exercise-text font-sans leading-relaxed">
                                 <MathContent content={formatText(exercise.statement)} inline={false} />
                             </div>
-                            
+
+                            {/* Si une seule question, l'intégrer directement dans l'énoncé */}
+                            {exercise.sub_questions && exercise.sub_questions.length === 1 && (() => {
+                                const singleQuestion = exercise.sub_questions[0];
+                                const sqImages = organizeImages(singleQuestion.images);
+
+                                return (
+                                    <>
+                                        {/* Images en position top pour la question unique */}
+                                        {sqImages.top.length > 0 && (
+                                            <div className="mt-4 mb-4 space-y-4">
+                                                {sqImages.top.map((img, imgIndex) => renderImage(img, imgIndex))}
+                                            </div>
+                                        )}
+
+                                        <div className="mt-4 font-medium text-black">
+                                            <MathContent content={formatText(singleQuestion.text)} className="text-sm sm:text-base" inline={true} />
+                                        </div>
+
+                                        {/* Images de contenu pour la question unique */}
+                                        {sqImages.content.length > 0 && (
+                                            <div className="my-4 space-y-4 clear-both">
+                                                {sqImages.content.map((img, imgIndex) => renderImage(img, imgIndex))}
+                                            </div>
+                                        )}
+
+                                        {/* Sub-sub-questions si elles existent */}
+                                        {singleQuestion.sub_sub_questions && singleQuestion.sub_sub_questions.length > 0 && (
+                                            <ol
+                                                className="list-none pl-0 mt-2 space-y-2"
+                                                style={{
+                                                    counterReset: 'subsub-counter',
+                                                    marginLeft: '1.5rem'
+                                                }}
+                                            >
+                                                {singleQuestion.sub_sub_questions.map((ssq, ssqIndex) => (
+                                                    <li
+                                                        key={ssqIndex}
+                                                        className="relative pl-8 text-sm sm:text-base leading-relaxed text-black"
+                                                        style={{
+                                                            counterIncrement: 'subsub-counter',
+                                                            textAlign: 'left'
+                                                        }}
+                                                    >
+                                                        <span
+                                                            className="absolute left-0 top-0 font-medium text-black"
+                                                            style={{
+                                                                content: 'counter(subsub-counter, lower-alpha) ". "',
+                                                            }}
+                                                        >
+                                                            {String.fromCharCode(97 + ssqIndex)}.
+                                                        </span>
+                                                        <MathContent content={formatText(ssq.text)} className="text-sm sm:text-base" inline={true} />
+                                                    </li>
+                                                ))}
+                                            </ol>
+                                        )}
+
+                                        {/* Images en position bottom pour la question unique */}
+                                        {sqImages.bottom.length > 0 && (
+                                            <div className="mt-4 space-y-4 clear-both">
+                                                {sqImages.bottom.map((img, imgIndex) => renderImage(img, imgIndex))}
+                                            </div>
+                                        )}
+                                    </>
+                                );
+                            })()}
+
                             {/* Images dans le contenu (center/float-left/float-right/inline) */}
                             {organizedImages.content.length > 0 && (
                                 <div className="my-6 space-y-4 clear-both">
@@ -337,8 +404,9 @@ const Exercises: React.FC<ExercisesProps> = ({ onAllCompleted }) => {
                                 </div>
                             )}
                         </div>
-                        
-                        {exercise.sub_questions && renderSubQuestions(exercise.sub_questions)}
+
+                        {/* Afficher les questions numérotées seulement s'il y en a plus d'une */}
+                        {exercise.sub_questions && exercise.sub_questions.length > 1 && renderSubQuestions(exercise.sub_questions)}
                         
                         {/* Images en position bottom */}
                         {organizedImages.bottom.length > 0 && (

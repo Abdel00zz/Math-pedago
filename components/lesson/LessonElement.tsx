@@ -176,7 +176,7 @@ const InfoBox: React.FC<{ element: ElementType; showAnswers?: boolean }> = ({ el
                 <div className="lesson-inline__content">
                     {infoElement.preamble && (
                         <div className="lesson-inline__preamble">
-                            {parseContent(infoElement.preamble, false, effectiveShowAnswers)}
+                            {parseContent(infoElement.preamble.replace(/\s*:+\s*$/, ''), false, effectiveShowAnswers)}
                         </div>
                     )}
                     {infoElement.content && (
@@ -199,7 +199,7 @@ const InfoBox: React.FC<{ element: ElementType; showAnswers?: boolean }> = ({ el
                 {infoElement.image && <LessonImage config={infoElement.image} />}
                 {infoElement.preamble && (
                     <div className="lesson-box__preamble">
-                        {parseContent(infoElement.preamble, false, effectiveShowAnswers)}
+                        {parseContent(infoElement.preamble.replace(/\s*:+\s*$/, ''), false, effectiveShowAnswers)}
                     </div>
                 )}
                 
