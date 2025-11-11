@@ -48,7 +48,27 @@ Vous devriez voir:
 - **Page d'accueil**: Design moderne avec shadcn/ui
 - **Menu**: Dashboard, Leçons, Quiz, Exercices, Vidéos
 
+## ⚠️ Utilisateurs Windows
+
+Si vous voyez l'erreur **"path length exceeds max length"**:
+
+👉 **[Consultez le guide WINDOWS_PATH_FIX.md](./WINDOWS_PATH_FIX.md)**
+
+**Solution rapide**: Déplacez le projet vers `C:\Projects\Math-pedago\` (chemin court)
+
+---
+
 ## 🔧 Autres Commandes
+
+```bash
+# Développement (sans Turbopack - recommandé pour Windows)
+npm run dev
+
+# Développement (avec Turbopack - nécessite chemin court)
+npm run dev:turbo
+```
+
+### Toutes les commandes
 
 ```bash
 # Build de production

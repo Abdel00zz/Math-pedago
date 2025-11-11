@@ -4,7 +4,8 @@
   "description": "Plateforme éducative de mathématiques ultra-moderne avec architecture dynamique",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbo",
+    "dev": "next dev",
+    "dev:turbo": "next dev --turbo",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
