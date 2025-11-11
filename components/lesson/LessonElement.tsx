@@ -171,14 +171,17 @@ const InfoBox: React.FC<{ element: ElementType; showAnswers?: boolean }> = ({ el
             <div className={`lesson-inline lesson-inline--${infoElement.type === 'example-box' ? 'example' : 'remark'}`} style={inlineStyle}>
                 <header className="lesson-inline__header">
                     <span className="lesson-inline__badge">{config.label}</span>
+                    {infoElement.preamble && (
+                        <>
+                            <span className="lesson-inline__divider">|</span>
+                            <span className="lesson-inline__title">
+                                {parseContent(infoElement.preamble.replace(/\s*:+\s*$/, ''), false, effectiveShowAnswers)}
+                            </span>
+                        </>
+                    )}
                 </header>
                 {infoElement.image && <LessonImage config={infoElement.image} />}
                 <div className="lesson-inline__content">
-                    {infoElement.preamble && (
-                        <div className="lesson-inline__preamble">
-                            {parseContent(infoElement.preamble, false, effectiveShowAnswers)}
-                        </div>
-                    )}
                     {infoElement.content && (
                         <div className="lesson-inline__body">
                             {parseContent(infoElement.content, isNumbered, effectiveShowAnswers)}
@@ -195,14 +198,17 @@ const InfoBox: React.FC<{ element: ElementType; showAnswers?: boolean }> = ({ el
             <div className="lesson-box" style={boxStyle}>
                 <header className="lesson-box__header">
                     <span className="lesson-box__badge">{config.label} {boxNumber}</span>
+                    {infoElement.preamble && (
+                        <>
+                            <span className="lesson-box__divider">|</span>
+                            <span className="lesson-box__title">
+                                {parseContent(infoElement.preamble.replace(/\s*:+\s*$/, ''), false, effectiveShowAnswers)}
+                            </span>
+                        </>
+                    )}
                 </header>
                 {infoElement.image && <LessonImage config={infoElement.image} />}
-                {infoElement.preamble && (
-                    <div className="lesson-box__preamble">
-                        {parseContent(infoElement.preamble, false, effectiveShowAnswers)}
-                    </div>
-                )}
-                
+
                 {infoElement.content && (
                     <div className="lesson-box__body">
                         {parseContent(infoElement.content, isNumbered, effectiveShowAnswers)}

@@ -1597,6 +1597,44 @@
   filter: blur(12px);
 }
 
+/* ========================================
+   EFFETS POUR SESSIONS PROCHAINES (BLEU)
+   Simple bordure animée, SANS overlay
+   ======================================== */
+
+/* Animation pour bordure bleue simple */
+@keyframes upcomingBorderPulse {
+  0%, 100% {
+    border-color: rgba(59, 130, 246, 0.6);
+    box-shadow:
+      0 10px 30px rgba(15, 23, 42, 0.12),
+      0 5px 15px rgba(15, 23, 42, 0.08),
+      0 0 0 3px rgba(59, 130, 246, 0.2),
+      0 0 15px rgba(59, 130, 246, 0.3);
+  }
+  50% {
+    border-color: rgba(37, 99, 235, 0.8);
+    box-shadow:
+      0 15px 40px rgba(15, 23, 42, 0.15),
+      0 8px 20px rgba(15, 23, 42, 0.1),
+      0 0 0 4px rgba(37, 99, 235, 0.25),
+      0 0 20px rgba(37, 99, 235, 0.4);
+  }
+}
+
+/* Appliquer bordure bleue animée SEULEMENT */
+.chapter-card-v2.has-upcoming-session .chapter-card-v2__bg {
+  border-width: 2px;
+  border-style: solid;
+  animation: upcomingBorderPulse 3s ease-in-out infinite;
+}
+
+/* État hover pour sessions prochaines */
+.chapter-card-v2.has-upcoming-session:not(.is-disabled):hover .chapter-card-v2__bg {
+  transform: translateY(-2px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 /* Badge LIVE avec effet pulsant supplémentaire */
 .chapter-card-v2.has-active-session .chapter-card-v2__status-content {
   animation: liveBadgePulse 2s ease-in-out infinite;
@@ -1637,4 +1675,53 @@
   animation: liveShine 3s ease-in-out infinite;
   animation-delay: 1s;
   pointer-events: none;
+}
+
+/* Badge EN DIRECT en haut à droite (sessions actives SEULEMENT) */
+.chapter-card-v2__live-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  pointer-events: none;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+  box-shadow:
+    0 4px 12px rgba(220, 38, 38, 0.4),
+    0 0 20px rgba(239, 68, 68, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  animation: liveBadgePulse 2s ease-in-out infinite;
+}
+
+.chapter-card-v2__live-badge-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+  animation: liveDotPulse 1.5s ease-in-out infinite;
+}
+
+.chapter-card-v2__live-badge-text {
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes liveDotPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.2);
+  }
 }

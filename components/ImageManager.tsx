@@ -135,7 +135,7 @@ export const ImageManager: React.FC<ImageManagerProps> = ({ images: initialImage
                             <button onClick={handleImportClick} disabled={isUploading} className="inline-flex items-center gap-1 px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded hover:bg-blue-200 disabled:opacity-50">
                                 <UploadCloudIcon className="!text-base"/> {isUploading ? 'Uploading...' : 'Import'}
                             </button>
-                            <input type="file" ref={fileInputRef} onChange={handleFileChange} className="hidden" accept="image/png, image/jpeg, image/svg+xml" />
+                            <input type="file" ref={fileInputRef} onChange={handleFileChange} className="hidden" accept="image/png, image/jpeg, image/svg+xml, image/gif" />
                         </div>
                         <ul>
                             {images.map((img, index) => (

@@ -4,7 +4,16 @@ import { parseChapterFile } from './utils/parser';
 import { calculateContentVersion } from './utils/versioning';
 import { ChapterTable } from './components/ChapterTable';
 import { ChapterEditor } from './components/ChapterEditor';
-import { BookOpenIcon, UploadCloudIcon, SaveIcon, RefreshIcon, InformationCircleIcon, HomeIcon } from './components/icons';
+import {
+    BookOpenIcon,
+    UploadCloudIcon,
+    SaveIcon,
+    RefreshIcon,
+    InformationCircleIcon,
+    HomeIcon,
+    XCircleIcon,
+    LayoutIcon
+} from './components/icons';
 
 // Type definitions for the File System Access API
 // This avoids needing to install a separate @types package
@@ -328,30 +337,82 @@ const App: React.FC = () => {
     };
 
     const InitialScreen = () => (
-         <div className="flex flex-col items-center justify-center min-h-screen bg-slate-100">
-            <div className="text-center p-8 bg-white shadow-xl rounded-lg max-w-lg">
-                <BookOpenIcon className="mx-auto !text-6xl text-blue-500" />
-                <h1 className="text-3xl font-bold text-slate-800 mt-4">Smart Chapter Manager</h1>
-                <p className="text-slate-600 mt-2">
-                    Please select your project's root directory to load and edit files directly.
+        <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+            <div className="text-center p-12 bg-white shadow-2xl rounded-2xl max-w-2xl animate-fade-in">
+                {/* Logo/Icon */}
+                <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl shadow-xl mb-6">
+                    <BookOpenIcon className="w-14 h-14 text-white" />
+                </div>
+
+                {/* Title */}
+                <h1 className="text-4xl font-bold text-gray-900 mb-3">
+                    Smart Chapter Manager
+                </h1>
+                <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+                    Éditeur moderne et puissant pour gérer vos chapitres pédagogiques.<br />
+                    Sélectionnez le répertoire de votre projet pour commencer.
                 </p>
-                <div className="mt-6">
-                    <button onClick={handleOpenDirectory} disabled={isLoading || !isApiSupported} className="cursor-pointer inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition-colors disabled:bg-slate-400 disabled:cursor-not-allowed">
-                        <UploadCloudIcon className="!text-2xl" />
-                        {isLoading ? 'Loading Project...' : 'Open Project Directory'}
+
+                {/* Button */}
+                <div className="mb-6">
+                    <button
+                        onClick={handleOpenDirectory}
+                        disabled={isLoading || !isApiSupported}
+                        className="btn btn-primary btn-lg shadow-xl hover:shadow-2xl"
+                    >
+                        <UploadCloudIcon className="w-6 h-6" />
+                        {isLoading ? 'Chargement du projet...' : 'Ouvrir le Répertoire du Projet'}
                     </button>
                 </div>
-                 {!isApiSupported && (
-                    <div className="mt-4 p-3 bg-yellow-100 text-yellow-800 border border-yellow-300 rounded-md text-sm flex items-center gap-2">
-                        <InformationCircleIcon className="!text-xl"/>
-                        Your browser doesn't support direct file editing. Please use a recent version of Chrome or Edge.
+
+                {/* Browser support warning */}
+                {!isApiSupported && (
+                    <div className="mt-6 p-4 bg-warning-50 text-warning-800 border-2 border-warning-300 rounded-xl text-sm flex items-start gap-3">
+                        <InformationCircleIcon className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                        <div className="text-left">
+                            <div className="font-semibold mb-1">Navigateur non supporté</div>
+                            <div>Votre navigateur ne supporte pas l'édition directe de fichiers. Veuillez utiliser une version récente de Chrome ou Edge.</div>
+                        </div>
                     </div>
                 )}
-                 {error && (
-                    <div className="mt-4 p-3 bg-red-100 text-red-800 border border-red-300 rounded-md text-sm text-left">
-                        {error}
+
+                {/* Error message */}
+                {error && (
+                    <div className="mt-6 p-4 bg-danger-50 text-danger-800 border-2 border-danger-300 rounded-xl text-sm text-left">
+                        <div className="font-semibold mb-2 flex items-center gap-2">
+                            <XCircleIcon className="w-5 h-5" />
+                            Erreur
+                        </div>
+                        <div className="text-danger-700">{error}</div>
                     </div>
                 )}
+
+                {/* Features */}
+                <div className="mt-10 pt-8 border-t border-gray-200">
+                    <div className="grid grid-cols-3 gap-6 text-center">
+                        <div>
+                            <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-3">
+                                <LayoutIcon className="w-6 h-6 text-blue-600" />
+                            </div>
+                            <div className="text-sm font-semibold text-gray-900">Interface Moderne</div>
+                            <div className="text-xs text-gray-600 mt-1">Design aéré et intuitif</div>
+                        </div>
+                        <div>
+                            <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mx-auto mb-3">
+                                <BookOpenIcon className="w-6 h-6 text-green-600" />
+                            </div>
+                            <div className="text-sm font-semibold text-gray-900">Arbre d'Édition</div>
+                            <div className="text-xs text-gray-600 mt-1">Navigation hiérarchique</div>
+                        </div>
+                        <div>
+                            <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mx-auto mb-3">
+                                <SaveIcon className="w-6 h-6 text-purple-600" />
+                            </div>
+                            <div className="text-sm font-semibold text-gray-900">Sauvegarde Directe</div>
+                            <div className="text-xs text-gray-600 mt-1">Édition en temps réel</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     );
@@ -361,40 +422,70 @@ const App: React.FC = () => {
     }
 
     return (
-        <div className="min-h-screen bg-slate-100">
-            <header className="bg-white shadow-sm sticky top-0 z-10">
-                <div className="container mx-auto px-4 py-3 flex justify-between items-center">
-                    <div className="flex items-center gap-3">
-                         <BookOpenIcon className="!text-3xl text-blue-600"/>
+        <div className="min-h-screen bg-gray-50">
+            {/* Header moderne et aéré */}
+            <header className="bg-white shadow-md sticky top-0 z-10">
+                <div className="container mx-auto px-6 py-4 flex justify-between items-center">
+                    <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
+                            <BookOpenIcon className="w-7 h-7 text-white" />
+                        </div>
                         <div>
-                            <h1 className="text-xl font-bold text-slate-800">Smart Chapter Manager</h1>
-                            <p className="text-sm text-slate-500">{projectPath || 'Project loaded'}</p>
+                            <h1 className="text-2xl font-bold text-gray-900">Smart Chapter Manager</h1>
+                            <p className="text-sm text-gray-600 flex items-center gap-2 mt-0.5">
+                                <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                                {projectPath || 'Projet chargé'}
+                            </p>
                         </div>
                     </div>
-                    <div className="flex items-center gap-2">
-                         <button onClick={handleGoHome} className="cursor-pointer inline-flex items-center gap-2 px-4 py-2 bg-slate-200 text-slate-700 font-semibold rounded-md hover:bg-slate-300 transition-colors text-sm">
-                            <HomeIcon className="!text-xl"/> Home
+                    <div className="flex items-center gap-3">
+                        <button
+                            onClick={handleGoHome}
+                            className="btn btn-secondary"
+                            title="Retour à la sélection de projet"
+                        >
+                            <HomeIcon className="w-5 h-5" />
+                            Accueil
                         </button>
-                         <button onClick={handleReload} disabled={isLoading} className="cursor-pointer inline-flex items-center gap-2 px-4 py-2 bg-slate-200 text-slate-700 font-semibold rounded-md hover:bg-slate-300 transition-colors text-sm disabled:opacity-50">
-                            <RefreshIcon className="!text-xl"/> Reload
+                        <button
+                            onClick={handleReload}
+                            disabled={isLoading}
+                            className="btn btn-secondary"
+                            title="Recharger le projet"
+                        >
+                            <RefreshIcon className="w-5 h-5" />
+                            Actualiser
                         </button>
-                        <button onClick={handleSaveAll} disabled={isLoading} className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white font-semibold rounded-md shadow-sm hover:bg-blue-700 transition-colors text-sm disabled:opacity-50">
-                           {isLoading ? <span className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span> : <SaveIcon className="!text-xl"/>}
-                           {isLoading ? 'Saving...' : 'Save All Changes'}
+                        <button
+                            onClick={handleSaveAll}
+                            disabled={isLoading}
+                            className="btn btn-primary shadow-lg"
+                            title="Sauvegarder toutes les modifications"
+                        >
+                            {isLoading ? (
+                                <span className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                            ) : (
+                                <SaveIcon className="w-5 h-5" />
+                            )}
+                            {isLoading ? 'Sauvegarde...' : 'Tout Sauvegarder'}
                         </button>
                     </div>
                 </div>
-                 <div className="border-b border-slate-200">
-                    <nav className="container mx-auto px-4 flex space-x-4">
+
+                {/* Onglets des classes */}
+                <div className="border-t border-gray-200 bg-gray-50">
+                    <nav className="container mx-auto px-6 flex gap-2 overflow-x-auto">
                         {CLASSES_DATA.map(classData => (
                             <button
                                 key={classData.value}
                                 onClick={() => setActiveTab(classData.value)}
-                                className={`px-3 py-3 text-sm font-medium border-b-2 transition-colors ${
-                                    activeTab === classData.value
-                                        ? 'border-blue-500 text-blue-600'
-                                        : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300'
-                                }`}
+                                className={`
+                                    px-5 py-3 text-sm font-semibold whitespace-nowrap border-b-3 transition-all
+                                    ${activeTab === classData.value
+                                        ? 'border-blue-500 text-blue-600 bg-blue-50'
+                                        : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-white'
+                                    }
+                                `}
                             >
                                 {classData.label}
                             </button>
@@ -402,7 +493,9 @@ const App: React.FC = () => {
                     </nav>
                 </div>
             </header>
-            <main className="container mx-auto p-4">
+
+            {/* Contenu principal */}
+            <main className="container mx-auto p-6">
                 {editingChapter ? (
                     <ChapterEditor
                         chapter={editingChapter}
@@ -411,11 +504,13 @@ const App: React.FC = () => {
                         dirHandle={dirHandleRef.current}
                     />
                 ) : (
-                    <ChapterTable
-                        chapters={getChaptersByClass(activeTab)}
-                        onEditChapter={setEditingChapter}
-                        onUpdateActive={updateChapterActive}
-                    />
+                    <div className="animate-fade-in">
+                        <ChapterTable
+                            chapters={getChaptersByClass(activeTab)}
+                            onEditChapter={setEditingChapter}
+                            onUpdateActive={updateChapterActive}
+                        />
+                    </div>
                 )}
             </main>
         </div>

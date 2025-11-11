@@ -67,6 +67,7 @@ const OrientationModal: React.FC<OrientationModalProps> = ({ isOpen, onClose, cl
         [sections]
     );
 
+    // Optimisation: Reset seulement quand on change de section ET que le chapitre ouvert n'existe pas dans la nouvelle section
     useEffect(() => {
         if (activeSection === 'all') {
             return;
@@ -78,9 +79,12 @@ const OrientationModal: React.FC<OrientationModalProps> = ({ isOpen, onClose, cl
             return;
         }
 
-        const existsInSection = current.some(chapter => chapter.id === openChapterId);
-        if (!existsInSection) {
-            setOpenChapterId(current[0].id);
+        // Ne reset que si un chapitre est ouvert ET qu'il n'existe pas dans la section active
+        if (openChapterId !== null) {
+            const existsInSection = current.some(chapter => chapter.id === openChapterId);
+            if (!existsInSection) {
+                setOpenChapterId(null); // Fermer au lieu d'ouvrir automatiquement le premier
+            }
         }
     }, [activeSection, sections, openChapterId]);
 
@@ -105,7 +109,7 @@ const OrientationModal: React.FC<OrientationModalProps> = ({ isOpen, onClose, cl
             title="Programme d'Orientation"
             titleClassName="text-2xl font-bold text-foreground"
             hideHeaderBorder={true}
-            className="sm:max-w-5xl landscape:max-w-[90vw] landscape:max-h-[90vh]"
+            className="sm:max-w-6xl md:max-w-7xl landscape:max-w-[95vw] landscape:max-h-[90vh]"
         >
             <div className="pt-2 pb-6 px-2 max-h-[85vh] landscape:max-h-[80vh] overflow-y-auto space-y-8 text-foreground">
                 {/* Header avec background SVG */}

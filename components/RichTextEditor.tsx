@@ -434,8 +434,9 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
                 {/* Aide rapide */}
                 <div className="mt-2 pt-2 border-t border-gray-300">
                     <details className="text-xs text-gray-600">
-                        <summary className="cursor-pointer hover:text-gray-800 font-medium">
-                            📚 Aide rapide
+                        <summary className="cursor-pointer hover:text-gray-800 font-medium flex items-center gap-1.5">
+                            <span className="material-symbols-outlined text-sm">help</span>
+                            Aide rapide
                         </summary>
                         <div className="mt-2 space-y-1 bg-white rounded p-2 border border-gray-200">
                             <div><code className="bg-gray-100 px-1 rounded">**gras**</code> → <strong>gras</strong></div>
