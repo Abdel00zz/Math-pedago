@@ -43,7 +43,8 @@
 .lesson-box__header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: clamp(0.6rem, 1.2vw, 0.9rem);
+  flex-wrap: wrap;
   margin-bottom: clamp(0.8rem, 1.8vw, 1.35rem);
   position: relative;
   z-index: 2;
@@ -63,6 +64,26 @@
   background: transparent;
   color: var(--lesson-accent);
   border: 1px solid var(--lesson-accent);
+  flex-shrink: 0;
+}
+
+/* Séparateur entre badge et titre */
+.lesson-box__divider {
+  color: var(--lesson-accent);
+  opacity: 0.4;
+  font-weight: 300;
+  font-size: clamp(0.9rem, 1.6vw, 1.1rem);
+  flex-shrink: 0;
+}
+
+/* Titre à côté du badge */
+.lesson-box__title {
+  font-size: clamp(0.88rem, 1.5vw, 0.98rem);
+  font-weight: 600;
+  color: var(--lesson-accent);
+  line-height: 1.4;
+  flex: 1;
+  min-width: 0;
 }
 
 /* Bouton d'action */
@@ -88,16 +109,6 @@
   height: 1.15rem;
 }
 
-/* Préambule (introduction de la boîte) */
-.lesson-box__preamble {
-  margin-bottom: clamp(0.75rem, 1.6vw, 1.2rem);
-  position: relative;
-  z-index: 2;
-  font-size: clamp(0.93rem, 1.6vw, 1.02rem);
-  line-height: 1.65;
-  color: var(--text-color);
-}
-
 /* Corps de la boîte */
 .lesson-box__body {
   position: relative;
@@ -121,11 +132,16 @@
 }
 
 .lesson-inline__header {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.5rem, 1vw, 0.75rem);
+  flex-wrap: wrap;
   margin-bottom: 0.9rem;
 }
 
 .lesson-inline__badge {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   padding: 0.3rem 0.75rem;
   font-size: 0.68rem;
   font-weight: 600;
@@ -135,18 +151,32 @@
   background: transparent;
   color: var(--lesson-inline-accent);
   border: 1px solid var(--lesson-inline-accent);
+  flex-shrink: 0;
+}
+
+/* Séparateur pour inline boxes */
+.lesson-inline__divider {
+  color: var(--lesson-inline-accent);
+  opacity: 0.4;
+  font-weight: 300;
+  font-size: clamp(0.85rem, 1.4vw, 1rem);
+  flex-shrink: 0;
+}
+
+/* Titre pour inline boxes */
+.lesson-inline__title {
+  font-size: clamp(0.85rem, 1.4vw, 0.95rem);
+  font-weight: 600;
+  color: var(--lesson-inline-accent);
+  line-height: 1.4;
+  flex: 1;
+  min-width: 0;
 }
 
 .lesson-inline__content {
   display: flex;
   flex-direction: column;
   gap: 0.65rem;
-}
-
-.lesson-inline__preamble {
-  font-size: clamp(0.9rem, 1.5vw, 1rem);
-  line-height: 1.6;
-  color: var(--text-color);
 }
 
 .lesson-inline__body {
@@ -236,9 +266,8 @@
     height: 2.3rem;
   }
 
-  .lesson-box__preamble {
-    font-size: 0.92rem;
-    line-height: 1.6;
+  .lesson-box__title {
+    font-size: 0.85rem;
   }
 
   .lesson-box__body {
@@ -261,9 +290,8 @@
     margin-bottom: 0.9rem;
   }
 
-  .lesson-box__preamble {
-    font-size: 0.9rem;
-    margin-bottom: 0.85rem;
+  .lesson-box__title {
+    font-size: 0.82rem;
   }
 
   .lesson-box__body {
@@ -308,10 +336,16 @@
     height: 1rem;
   }
 
-  .lesson-box__preamble {
-    font-size: 0.88rem;
-    line-height: 1.55;
-    margin-bottom: 0.75rem;
+  .lesson-box__title {
+    font-size: 0.8rem;
+  }
+
+  .lesson-box__divider {
+    font-size: 0.85rem;
+  }
+
+  .lesson-inline__title {
+    font-size: 0.78rem;
   }
 
   .lesson-box__body {
