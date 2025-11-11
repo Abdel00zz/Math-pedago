@@ -108,21 +108,21 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({
         setItems([...initialItems]);
     }, [initialItems, isReviewMode, isSubmitted]);
 
-    // --- REVIEW/SUBMITTED MODE ---
+    // --- REVIEW/SUBMITTED MODE - Optimisé pour mobile ---
     if (isReviewMode || isSubmitted) {
         return (
-            <div className="bg-surface p-6 sm:p-8 rounded-2xl border border-border coursera-shadow-card animate-fadeIn quiz-content">
-                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 px-6 py-4 rounded-xl mb-6 coursera-shadow-soft">
-                    <h3 className="quiz-question-text font-title leading-relaxed font-semibold text-coursera-black">
+            <div className="bg-surface p-4 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl border border-border coursera-shadow-card animate-fadeIn quiz-content">
+                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 px-4 py-3 sm:px-6 sm:py-4 rounded-lg sm:rounded-xl mb-4 sm:mb-6 coursera-shadow-soft">
+                    <h3 className="quiz-question-text font-title leading-relaxed font-semibold text-coursera-black text-base sm:text-lg md:text-xl">
                         <FormattedText text={question.question} />
                     </h3>
-                </div>                <div className="space-y-8">
+                </div>                <div className="space-y-6 sm:space-y-8">
                     <div>
-                        <h4 className="text-lg font-semibold text-text mb-3">Votre réponse :</h4>
-                        <ul className="space-y-3">
+                        <h4 className="text-base sm:text-lg font-semibold text-text mb-2 sm:mb-3">Votre réponse :</h4>
+                        <ul className="space-y-2 sm:space-y-3">
                             {(userAnswer && userAnswer.length > 0) ? userAnswer.map((item, index) => {
                                 const isCorrect = correctOrder[index] === item;
-                                const stepClass = `flex items-start gap-4 p-4 rounded-xl border-2 transition-all ${
+                                const stepClass = `flex items-start gap-2 sm:gap-3 md:gap-4 p-3 sm:p-4 rounded-lg sm:rounded-xl border-2 transition-all ${
                                     isCorrect
                                         ? 'bg-green-50 border-green-500 shadow-[0_4px_12px_rgba(34,197,94,0.15)]'
                                         : 'bg-red-50 border-red-400 shadow-[0_4px_12px_rgba(239,68,68,0.15)]'
@@ -132,30 +132,30 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({
 
                                 return (
                                     <li key={index} className={stepClass}>
-                                        <span className="font-bold text-lg text-[#1a1a1a] min-w-[24px]">{index + 1}.</span>
-                                        <div className="flex-1 text-[#1a1a1a] text-[20px] sm:text-[21px] leading-relaxed flex items-center">
+                                        <span className="font-bold text-base sm:text-lg text-[#1a1a1a] min-w-[20px] sm:min-w-[24px]">{index + 1}.</span>
+                                        <div className="flex-1 text-[#1a1a1a] text-sm sm:text-base md:text-lg leading-relaxed flex items-center">
                                             <FormattedText text={item} />
                                         </div>
-                                        <span className={`material-symbols-outlined !text-2xl ${iconClass}`}>
+                                        <span className={`material-symbols-outlined !text-xl sm:!text-2xl ${iconClass} flex-shrink-0`}>
                                             {icon}
                                         </span>
                                     </li>
                                 );
                             }) : (
-                                <li className="text-text-secondary italic p-4 text-center">
+                                <li className="text-text-secondary italic p-3 sm:p-4 text-center text-sm sm:text-base">
                                     Vous n'avez pas répondu à cette question.
                                 </li>
                             )}
                         </ul>
                     </div>
 
-                    <div className="pt-6 border-t border-border">
-                        <h4 className="text-lg font-semibold text-text mb-3">Réponse correcte :</h4>
-                        <ul className="space-y-3">
+                    <div className="pt-4 sm:pt-6 border-t border-border">
+                        <h4 className="text-base sm:text-lg font-semibold text-text mb-2 sm:mb-3">Réponse correcte :</h4>
+                        <ul className="space-y-2 sm:space-y-3">
                             {correctOrder.map((item, index) => (
-                                <li key={index} className="flex items-start gap-4 p-4 rounded-xl bg-surface border-2 border-primary/30">
-                                    <span className="font-bold text-primary text-lg min-w-[24px]">{index + 1}.</span>
-                                    <div className="flex-1 text-text text-[20px] sm:text-[21px] leading-relaxed flex items-center">
+                                <li key={index} className="flex items-start gap-2 sm:gap-3 md:gap-4 p-3 sm:p-4 rounded-lg sm:rounded-xl bg-surface border-2 border-primary/30">
+                                    <span className="font-bold text-primary text-base sm:text-lg min-w-[20px] sm:min-w-[24px]">{index + 1}.</span>
+                                    <div className="flex-1 text-text text-sm sm:text-base md:text-lg leading-relaxed flex items-center">
                                         <FormattedText text={item} />
                                     </div>
                                 </li>
@@ -167,7 +167,7 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({
         );
     }
 
-    // --- ACTIVE MODE - MINIMALIST DESIGN ---
+    // --- ACTIVE MODE - MINIMALIST DESIGN - Optimisé pour mobile ---
     return (
         <>
             <style>{`
@@ -181,19 +181,19 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({
                 }
             `}</style>
 
-        <div className="bg-surface p-6 sm:p-8 rounded-2xl border border-border coursera-shadow-card animate-fadeIn quiz-content">
-            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 px-6 py-4 rounded-xl mb-6 coursera-shadow-soft">
-                <h3 className="quiz-question-text font-title leading-relaxed font-semibold text-coursera-black">
+        <div className="bg-surface p-4 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl border border-border coursera-shadow-card animate-fadeIn quiz-content">
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 px-4 py-3 sm:px-6 sm:py-4 rounded-lg sm:rounded-xl mb-4 sm:mb-6 coursera-shadow-soft">
+                <h3 className="quiz-question-text font-title leading-relaxed font-semibold text-coursera-black text-base sm:text-lg md:text-xl">
                     <FormattedText text={question.question} />
                 </h3>
-            </div>                <div className="text-center mb-6">
-                    <p className="text-[15px] text-text-secondary leading-relaxed">
+            </div>                <div className="text-center mb-4 sm:mb-6">
+                    <p className="text-xs sm:text-sm md:text-[15px] text-text-secondary leading-relaxed">
                         Cliquez sur les flèches pour réorganiser
                     </p>
                 </div>
 
                 <div className="max-w-3xl mx-auto">
-                    <ul className="space-y-3">
+                    <ul className="space-y-2 sm:space-y-3">
                         {items.map((item, index) => (
                             <li
                                 key={item}
@@ -201,36 +201,36 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({
                                     animatingIndex === index ? 'animating' : ''
                                 }`}
                             >
-                                <div className="flex items-center gap-4">
+                                <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
                                     {/* Carte d'élément */}
-                                    <div className="flex-1 flex items-center gap-4 p-4 sm:p-5 rounded-xl border border-border bg-surface/50 hover:bg-surface transition-all duration-200 hover:border-primary/30">
+                                    <div className="flex-1 flex items-center gap-2 sm:gap-3 md:gap-4 p-3 sm:p-4 md:p-5 rounded-lg sm:rounded-xl border border-border bg-surface/50 hover:bg-surface transition-all duration-200 hover:border-primary/30 touch-manipulation">
                                         {/* Petit numéro doux */}
-                                        <div className="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                                            <span className="font-medium text-sm sm:text-base text-primary">
+                                        <div className="flex-shrink-0 w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                                            <span className="font-medium text-xs sm:text-sm md:text-base text-primary">
                                                 {index + 1}
                                             </span>
                                         </div>
 
                                         {/* Texte */}
-                                        <div className="flex-1 text-text text-[20px] sm:text-[21px] leading-relaxed flex items-center">
+                                        <div className="flex-1 text-text text-sm sm:text-base md:text-lg leading-relaxed flex items-center">
                                             <FormattedText text={item} />
                                         </div>
                                     </div>
 
-                                    {/* Flèches minimalistes - À DROITE */}
-                                    <div className="flex flex-col gap-1 flex-shrink-0">
+                                    {/* Flèches minimalistes - À DROITE - Optimisé pour touch */}
+                                    <div className="flex flex-col gap-0.5 sm:gap-1 flex-shrink-0">
                                         <button
                                             type="button"
                                             onClick={() => moveUp(index)}
                                             disabled={index === 0}
-                                            className={`p-1.5 transition-all duration-200 ${
+                                            className={`p-2 sm:p-2.5 transition-all duration-200 rounded-lg touch-manipulation ${
                                                 index === 0
                                                     ? 'text-text-disabled/40 cursor-not-allowed'
-                                                    : 'text-text-secondary hover:text-primary active:scale-90 hover:scale-110'
+                                                    : 'text-text-secondary hover:text-primary active:scale-90 hover:scale-110 hover:bg-primary/10'
                                             }`}
                                             aria-label="Déplacer vers le haut"
                                         >
-                                            <span className="material-symbols-outlined !text-xl sm:!text-2xl">
+                                            <span className="material-symbols-outlined !text-lg sm:!text-xl md:!text-2xl">
                                                 arrow_upward
                                             </span>
                                         </button>
@@ -239,14 +239,14 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({
                                             type="button"
                                             onClick={() => moveDown(index)}
                                             disabled={index === items.length - 1}
-                                            className={`p-1.5 transition-all duration-200 ${
+                                            className={`p-2 sm:p-2.5 transition-all duration-200 rounded-lg touch-manipulation ${
                                                 index === items.length - 1
                                                     ? 'text-text-disabled/40 cursor-not-allowed'
-                                                    : 'text-text-secondary hover:text-primary active:scale-90 hover:scale-110'
+                                                    : 'text-text-secondary hover:text-primary active:scale-90 hover:scale-110 hover:bg-primary/10'
                                             }`}
                                             aria-label="Déplacer vers le bas"
                                         >
-                                            <span className="material-symbols-outlined !text-xl sm:!text-2xl">
+                                            <span className="material-symbols-outlined !text-lg sm:!text-xl md:!text-2xl">
                                                 arrow_downward
                                             </span>
                                         </button>
@@ -257,13 +257,13 @@ const OrderingQuestion: React.FC<OrderingQuestionProps> = ({
                     </ul>
                 </div>
 
-                <div className="text-center mt-8">
+                <div className="text-center mt-6 sm:mt-8">
                     <button
                         type="button"
                         onClick={handleReset}
-                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-text-secondary hover:text-primary transition-all text-sm font-medium hover:scale-105 active:scale-95"
+                        className="inline-flex items-center gap-1.5 sm:gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg text-text-secondary hover:text-primary transition-all text-xs sm:text-sm font-medium hover:scale-105 active:scale-95 touch-manipulation hover:bg-primary/10"
                     >
-                        <span className="material-symbols-outlined !text-lg">refresh</span>
+                        <span className="material-symbols-outlined !text-base sm:!text-lg">refresh</span>
                         Réinitialiser
                     </button>
                 </div>
