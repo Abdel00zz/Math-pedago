@@ -5,69 +5,69 @@
   "theme": "Les nombres complexes",
   "resume": {
     "title": "Les nombres complexes - L'essentiel",
-    "introduction": "Les nombres complexes sont essentiels pour résoudre des équations qui n'ont pas de solutions dans ℝ. Ce chapitre est crucial pour le concours de médecine.",
+    "introduction": "Les nombres complexes sont essentiels pour résoudre des équations qui n'ont pas de solutions dans $\\mathbb{R}$. Ce chapitre est crucial pour le concours de médecine.",
     "sections": [
       {
         "type": "definitions",
-        "title": "📚 Définitions clés à retenir par cœur",
+        "title": "Définitions clés à retenir par cœur",
         "items": [
-          "**Unité imaginaire** : i² = -1",
-          "**Forme algébrique** : z = a + ib où a, b ∈ ℝ",
-          "**Partie réelle** : Re(z) = a",
-          "**Partie imaginaire** : Im(z) = b",
-          "**Conjugué** : z̄ = a - ib",
-          "**Module** : |z| = √(a² + b²)",
-          "**Argument** : arg(z) = θ tel que z = |z|(cos θ + i sin θ)"
+          "**Unité imaginaire** : $i^2 = -1$",
+          "**Forme algébrique** : $z = a + ib$ où $a, b \\in \\mathbb{R}$",
+          "**Partie réelle** : $\\text{Re}(z) = a$",
+          "**Partie imaginaire** : $\\text{Im}(z) = b$",
+          "**Conjugué** : $\\overline{z} = a - ib$",
+          "**Module** : $|z| = \\sqrt{a^2 + b^2}$",
+          "**Argument** : $\\arg(z) = \\theta$ tel que $z = |z|(\\cos \\theta + i \\sin \\theta)$"
         ]
       },
       {
         "type": "formules",
-        "title": "🔢 Formules essentielles",
+        "title": "Formules essentielles",
         "items": [
-          "**Addition** : (a + ib) + (c + id) = (a+c) + i(b+d)",
-          "**Multiplication** : (a + ib)(c + id) = (ac - bd) + i(ad + bc)",
-          "**Division** : z/z' = (zz̄')/(z'z̄')",
-          "**Module du produit** : |zz'| = |z| × |z'|",
-          "**Module du quotient** : |z/z'| = |z| / |z'|",
-          "**Argument du produit** : arg(zz') = arg(z) + arg(z') [2π]",
-          "**Formule d'Euler** : e^(iθ) = cos θ + i sin θ",
-          "**Formule de Moivre** : (cos θ + i sin θ)ⁿ = cos(nθ) + i sin(nθ)"
+          "**Addition** : $(a + ib) + (c + id) = (a+c) + i(b+d)$",
+          "**Multiplication** : $(a + ib)(c + id) = (ac - bd) + i(ad + bc)$",
+          "**Division** : $\\frac{z}{z'} = \\frac{z\\overline{z'}}{z'\\overline{z'}}$",
+          "**Module du produit** : $|zz'| = |z| \\times |z'|$",
+          "**Module du quotient** : $|\\frac{z}{z'}| = \\frac{|z|}{|z'|}$",
+          "**Argument du produit** : $\\arg(zz') = \\arg(z) + \\arg(z')$ [modulo $2\\pi$]",
+          "**Formule d'Euler** : $e^{i\\theta} = \\cos \\theta + i \\sin \\theta$",
+          "**Formule de Moivre** : $(\\cos \\theta + i \\sin \\theta)^n = \\cos(n\\theta) + i \\sin(n\\theta)$"
         ]
       },
       {
         "type": "methodes",
-        "title": "💡 Méthodes et astuces",
+        "title": "Méthodes et astuces",
         "items": [
-          "**Pour calculer un module** : Toujours utiliser |z|² = zz̄ pour simplifier",
+          "**Pour calculer un module** : Toujours utiliser $|z|^2 = z\\overline{z}$ pour simplifier",
           "**Pour résoudre une équation** : Passer par la forme algébrique et égaliser parties réelles et imaginaires",
-          "**Pour trouver un argument** : Utiliser tan θ = b/a en faisant attention au quadrant",
-          "**Pour simplifier i^n** : Se rappeler que i⁴ = 1, donc calculer n mod 4",
-          "**Racines n-ièmes** : Utiliser la forme exponentielle et diviser l'argument par n",
-          "**Équations du second degré** : Δ < 0 ⟹ solutions complexes conjuguées"
+          "**Pour trouver un argument** : Utiliser $\\tan \\theta = \\frac{b}{a}$ en faisant attention au quadrant",
+          "**Pour simplifier** $i^n$ : Se rappeler que $i^4 = 1$, donc calculer $n \\text{ mod } 4$",
+          "**Racines n-ièmes** : Utiliser la forme exponentielle et diviser l'argument par $n$",
+          "**Équations du second degré** : $\\Delta < 0 \\Rightarrow$ solutions complexes conjuguées"
         ]
       },
       {
         "type": "pieges",
-        "title": "⚠️ Pièges à éviter absolument",
+        "title": "Pièges à éviter absolument",
         "items": [
-          "❌ **ATTENTION** : |z + z'| ≠ |z| + |z'| en général (inégalité triangulaire)",
-          "❌ **FAUX** : arg(z + z') ≠ arg(z) + arg(z')",
-          "❌ **ERREUR** : (z̄)² ≠ z̄²  → Bien conjuguer après avoir élevé au carré",
-          "❌ **PIÈGE** : Ne pas confondre module et valeur absolue de la partie réelle",
-          "❌ **DANGER** : L'argument n'est défini qu'à 2π près",
-          "❌ **ATTENTION** : Pour z = 0, l'argument n'est pas défini"
+          "**ATTENTION** : $|z + z'| \\neq |z| + |z'|$ en général (inégalité triangulaire)",
+          "**FAUX** : $\\arg(z + z') \\neq \\arg(z) + \\arg(z')$",
+          "**ERREUR** : $(\\overline{z})^2 \\neq \\overline{z^2}$ → Bien conjuguer après avoir élevé au carré",
+          "**PIÈGE** : Ne pas confondre module et valeur absolue de la partie réelle",
+          "**DANGER** : L'argument n'est défini qu'à $2\\pi$ près",
+          "**ATTENTION** : Pour $z = 0$, l'argument n'est pas défini"
         ]
       },
       {
         "type": "reflexion",
-        "title": "🧠 Points de réflexion importants",
+        "title": "Points de réflexion importants",
         "items": [
-          "**Interprétation géométrique** : z représente un point dans le plan complexe",
+          "**Interprétation géométrique** : $z$ représente un point dans le plan complexe",
           "**Le module** mesure la distance à l'origine",
           "**L'argument** mesure l'angle avec l'axe réel",
-          "**Les transformations** : multiplication par e^(iθ) = rotation d'angle θ",
+          "**Les transformations** : multiplication par $e^{i\\theta}$ = rotation d'angle $\\theta$",
           "**Multiplication par un réel positif** = homothétie",
-          "**Ensemble de points** : |z - a| = r représente un cercle de centre a et rayon r"
+          "**Ensemble de points** : $|z - a| = r$ représente un cercle de centre $a$ et rayon $r$"
         ]
       }
     ]
@@ -76,88 +76,88 @@
     {
       "id": "q1",
       "theme": "Les nombres complexes",
-      "question": "Calculer (1 + i)⁴",
+      "question": "Calculer $(1 + i)^4$",
       "type": "mcq",
       "options": [
         { "id": "a", "text": "-4", "isCorrect": true },
         { "id": "b", "text": "4", "isCorrect": false },
-        { "id": "c", "text": "4i", "isCorrect": false },
-        { "id": "d", "text": "-4i", "isCorrect": false }
+        { "id": "c", "text": "$4i$", "isCorrect": false },
+        { "id": "d", "text": "$-4i$", "isCorrect": false }
       ],
-      "explanation": "Méthode : (1+i)² = 1 + 2i + i² = 1 + 2i - 1 = 2i. Donc (1+i)⁴ = (2i)² = 4i² = -4",
+      "explanation": "Méthode : $(1+i)^2 = 1 + 2i + i^2 = 1 + 2i - 1 = 2i$. Donc $(1+i)^4 = (2i)^2 = 4i^2 = -4$",
       "hints": [
-        "Commence par calculer (1+i)²",
-        "Rappelle-toi que i² = -1",
+        "Commence par calculer $(1+i)^2$",
+        "Rappelle-toi que $i^2 = -1$",
         "Tu peux aussi utiliser la forme exponentielle"
       ]
     },
     {
       "id": "q2",
       "theme": "Les nombres complexes",
-      "question": "Si z = 3 + 4i, quel est le module de z ?",
+      "question": "Si $z = 3 + 4i$, quel est le module de $z$ ?",
       "type": "mcq",
       "options": [
         { "id": "a", "text": "5", "isCorrect": true },
         { "id": "b", "text": "7", "isCorrect": false },
         { "id": "c", "text": "25", "isCorrect": false },
-        { "id": "d", "text": "√7", "isCorrect": false }
+        { "id": "d", "text": "$\\sqrt{7}$", "isCorrect": false }
       ],
-      "explanation": "|z| = √(3² + 4²) = √(9 + 16) = √25 = 5. C'est le fameux triangle 3-4-5 !",
+      "explanation": "$|z| = \\sqrt{3^2 + 4^2} = \\sqrt{9 + 16} = \\sqrt{25} = 5$. C'est le fameux triangle 3-4-5 !",
       "hints": [
-        "Utilise la formule |z| = √(a² + b²)",
+        "Utilise la formule $|z| = \\sqrt{a^2 + b^2}$",
         "Pense au théorème de Pythagore"
       ]
     },
     {
       "id": "q3",
       "theme": "Les nombres complexes",
-      "question": "Quelle est la forme exponentielle de z = 1 + i ?",
+      "question": "Quelle est la forme exponentielle de $z = 1 + i$ ?",
       "type": "mcq",
       "options": [
-        { "id": "a", "text": "√2 e^(iπ/4)", "isCorrect": true },
-        { "id": "b", "text": "2 e^(iπ/4)", "isCorrect": false },
-        { "id": "c", "text": "√2 e^(iπ/2)", "isCorrect": false },
-        { "id": "d", "text": "e^(iπ/4)", "isCorrect": false }
+        { "id": "a", "text": "$\\sqrt{2} e^{i\\pi/4}$", "isCorrect": true },
+        { "id": "b", "text": "$2 e^{i\\pi/4}$", "isCorrect": false },
+        { "id": "c", "text": "$\\sqrt{2} e^{i\\pi/2}$", "isCorrect": false },
+        { "id": "d", "text": "$e^{i\\pi/4}$", "isCorrect": false }
       ],
-      "explanation": "|z| = √(1² + 1²) = √2 et arg(z) = arctan(1/1) = π/4 (car z est dans le premier quadrant). Donc z = √2 e^(iπ/4)",
+      "explanation": "$|z| = \\sqrt{1^2 + 1^2} = \\sqrt{2}$ et $\\arg(z) = \\arctan(1/1) = \\pi/4$ (car $z$ est dans le premier quadrant). Donc $z = \\sqrt{2} e^{i\\pi/4}$",
       "hints": [
         "Calcule d'abord le module",
         "Puis trouve l'argument",
-        "z = |z| e^(i arg(z))"
+        "$z = |z| e^{i \\arg(z)}$"
       ]
     },
     {
       "id": "q4",
       "theme": "Les nombres complexes",
-      "question": "Si z̄ désigne le conjugué de z, que vaut z + z̄ pour z = 3 + 2i ?",
+      "question": "Si $\\overline{z}$ désigne le conjugué de $z$, que vaut $z + \\overline{z}$ pour $z = 3 + 2i$ ?",
       "type": "mcq",
       "options": [
         { "id": "a", "text": "6", "isCorrect": true },
-        { "id": "b", "text": "4i", "isCorrect": false },
-        { "id": "c", "text": "6 + 4i", "isCorrect": false },
+        { "id": "b", "text": "$4i$", "isCorrect": false },
+        { "id": "c", "text": "$6 + 4i$", "isCorrect": false },
         { "id": "d", "text": "0", "isCorrect": false }
       ],
-      "explanation": "z̄ = 3 - 2i, donc z + z̄ = (3 + 2i) + (3 - 2i) = 6. Note importante : z + z̄ = 2Re(z)",
+      "explanation": "$\\overline{z} = 3 - 2i$, donc $z + \\overline{z} = (3 + 2i) + (3 - 2i) = 6$. Note importante : $z + \\overline{z} = 2\\text{Re}(z)$",
       "hints": [
-        "Le conjugué de a + ib est a - ib",
+        "Le conjugué de $a + ib$ est $a - ib$",
         "Les parties imaginaires vont s'annuler"
       ]
     },
     {
       "id": "q5",
       "theme": "Les nombres complexes",
-      "question": "Résoudre dans ℂ : z² + 2z + 5 = 0",
+      "question": "Résoudre dans $\\mathbb{C}$ : $z^2 + 2z + 5 = 0$",
       "type": "mcq",
       "options": [
-        { "id": "a", "text": "z = -1 ± 2i", "isCorrect": true },
-        { "id": "b", "text": "z = 1 ± 2i", "isCorrect": false },
-        { "id": "c", "text": "z = -1 ± i", "isCorrect": false },
+        { "id": "a", "text": "$z = -1 \\pm 2i$", "isCorrect": true },
+        { "id": "b", "text": "$z = 1 \\pm 2i$", "isCorrect": false },
+        { "id": "c", "text": "$z = -1 \\pm i$", "isCorrect": false },
         { "id": "d", "text": "Pas de solution", "isCorrect": false }
       ],
-      "explanation": "Δ = 4 - 20 = -16 < 0. δ = √(-16) = 4i. Solutions : z = (-2 ± 4i)/2 = -1 ± 2i",
+      "explanation": "$\\Delta = 4 - 20 = -16 < 0$. $\\delta = \\sqrt{-16} = 4i$. Solutions : $z = \\frac{-2 \\pm 4i}{2} = -1 \\pm 2i$",
       "hints": [
         "Calcule le discriminant",
-        "Si Δ < 0, pose δ² = -Δ",
+        "Si $\\Delta < 0$, pose $\\delta^2 = -\\Delta$",
         "Les solutions sont conjuguées"
       ]
     }

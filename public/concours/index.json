@@ -4,8 +4,8 @@
       "id": "medecine",
       "name": "Médecine",
       "description": "Préparation au concours de médecine",
-      "icon": "🏥",
-      "color": "from-blue-500 to-cyan-500",
+      "icon": "",
+      "color": "",
       "examens": [
         {
           "annee": "2024",
@@ -33,8 +33,8 @@
       "id": "ensa",
       "name": "ENSA",
       "description": "Préparation au concours de l'École Nationale des Sciences Appliquées",
-      "icon": "🏗️",
-      "color": "from-green-500 to-emerald-500",
+      "icon": "",
+      "color": "",
       "examens": [
         {
           "annee": "2024",
@@ -52,8 +52,8 @@
       "id": "ensam",
       "name": "ENSAM",
       "description": "Préparation au concours de l'École Nationale Supérieure d'Arts et Métiers",
-      "icon": "⚙️",
-      "color": "from-orange-500 to-red-500",
+      "icon": "",
+      "color": "",
       "examens": [
         {
           "annee": "2024",

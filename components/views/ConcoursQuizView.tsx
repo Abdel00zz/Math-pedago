@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { useAppState } from '../../context/AppContext';
+import { useAppDispatch } from '../../context/AppContext';
 import StandardHeader from '../StandardHeader';
 import MCQQuestion from '../quiz/MCQQuestion';
 import OrderingQuestion from '../quiz/OrderingQuestion';
@@ -7,7 +7,7 @@ import FormattedText from '../FormattedText';
 import type { ConcoursData, ConcoursQuestion } from '../../types';
 
 const ConcoursQuizView: React.FC = () => {
-    const { dispatch } = useAppState();
+    const dispatch = useAppDispatch();
     const [concoursData, setConcoursData] = useState<ConcoursData | null>(null);
     const [loading, setLoading] = useState(true);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
