@@ -573,20 +573,28 @@
       "statement": "Déterminer une équation cartésienne de la droite (D) passant par le point $A(1, 2)$ et de vecteur normal $\\vec{n}(3, -1)$.",
       "sub_questions": [
         {
-          "question": "Rappeler la forme générale d'une équation de droite avec un vecteur normal $\\vec{n}(a, b)$ passant par un point $A(x_0, y_0)$",
-          "hint": "L'équation est de la forme : $a(x - x_0) + b(y - y_0) = 0$"
+          "text": "",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Appliquer la formule avec les valeurs données",
-          "hint": "Remplacer $a = 3$, $b = -1$, $x_0 = 1$, $y_0 = 2$"
+          "text": "",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Développer et simplifier l'équation obtenue",
-          "hint": "Distribuer et regrouper les termes constants"
+          "text": "",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Donner l'équation sous la forme $ax + by + c = 0$",
-          "hint": "La réponse devrait être : $3x - y - 1 = 0$"
+          "text": "",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     },
@@ -596,20 +604,28 @@
       "statement": "Dans un repère orthonormé $(O; \\vec{i}, \\vec{j})$, on considère les vecteurs $\\vec{u}(4, -2)$, $\\vec{v}(1, k)$ et $\\vec{w}(-3, 6)$.",
       "sub_questions": [
         {
-          "question": "Calculer $\\vec{u} \\cdot \\vec{w}$",
-          "hint": "$\\vec{u} \\cdot \\vec{w} = x_u \\times x_w + y_u \\times y_w$"
+          "text": "",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Que peut-on en déduire sur la position relative de $\\vec{u}$ et $\\vec{w}$ ?",
-          "hint": "Si le produit scalaire est nul, les vecteurs sont orthogonaux"
+          "text": "",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Déterminer la valeur de $k$ pour que $\\vec{u}$ et $\\vec{v}$ soient orthogonaux",
-          "hint": "$\\vec{u} \\perp \\vec{v}$ équivaut à $\\vec{u} \\cdot \\vec{v} = 0$, donc $4 \\times 1 + (-2) \\times k = 0$"
+          "text": "",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Pour $k = 2$, calculer $\\|\\vec{v}\\|$",
-          "hint": "$\\|\\vec{v}\\| = \\sqrt{x_v^2 + y_v^2}$"
+          "text": "",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     },
@@ -619,20 +635,28 @@
       "statement": "Soit $\\vec{u}(1, \\sqrt{3})$ et $\\vec{v}(\\sqrt{3}, 1)$ deux vecteurs dans un repère orthonormé.",
       "sub_questions": [
         {
-          "question": "Calculer $\\vec{u} \\cdot \\vec{v}$",
-          "hint": "$\\vec{u} \\cdot \\vec{v} = 1 \\times \\sqrt{3} + \\sqrt{3} \\times 1 = 2\\sqrt{3}$"
+          "text": "",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Calculer $\\|\\vec{u}\\|$ et $\\|\\vec{v}\\|$",
-          "hint": "$\\|\\vec{u}\\| = \\sqrt{1^2 + (\\sqrt{3})^2} = \\sqrt{1 + 3} = 2$"
+          "text": "",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "En déduire $\\cos(\\vec{u}, \\vec{v})$",
-          "hint": "$\\cos(\\vec{u}, \\vec{v}) = \\frac{\\vec{u} \\cdot \\vec{v}}{\\|\\vec{u}\\| \\times \\|\\vec{v}\\|}$"
+          "text": "",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Déterminer la mesure de l'angle $(\\vec{u}, \\vec{v})$ en radians",
-          "hint": "Chercher l'angle dont le cosinus vaut $\\frac{\\sqrt{3}}{2}$. Penser aux angles remarquables."
+          "text": "",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     },
@@ -642,20 +666,28 @@
       "statement": "Dans un triangle $ABC$, on donne : $AB = 5$ cm, $AC = 7$ cm et $\\widehat{BAC} = 60°$.",
       "sub_questions": [
         {
-          "question": "Rappeler la formule du théorème d'Al-Kashi",
-          "hint": "$BC^2 = AB^2 + AC^2 - 2 \\cdot AB \\cdot AC \\cdot \\cos(\\widehat{BAC})$"
+          "text": "",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Calculer $\\cos(60°)$",
-          "hint": "$\\cos(60°) = \\frac{1}{2}$"
+          "text": "",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Appliquer le théorème d'Al-Kashi pour calculer $BC^2$",
-          "hint": "Remplacer les valeurs : $BC^2 = 5^2 + 7^2 - 2 \\times 5 \\times 7 \\times \\frac{1}{2}$"
+          "text": "",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "En déduire la longueur $BC$",
-          "hint": "Prendre la racine carrée du résultat obtenu"
+          "text": "",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     },
@@ -665,27 +697,37 @@
       "statement": "Dans un triangle $ABC$, on donne : $AB = 8$ cm, $AC = 6$ cm et $BC = 10$ cm. Soit $I$ le milieu de $[BC]$.",
       "sub_questions": [
         {
-          "question": "Rappeler le théorème de la médiane",
-          "hint": "$AB^2 + AC^2 = 2(AI^2 + BI^2)$"
+          "text": "",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Calculer $BI$ (la moitié de $BC$)",
-          "hint": "$I$ est le milieu de $[BC]$, donc $BI = \\frac{BC}{2}$"
+          "text": "",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Utiliser le théorème de la médiane pour trouver $AI^2$",
-          "hint": "$AI^2 = \\frac{AB^2 + AC^2}{2} - BI^2$"
+          "text": "",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "En déduire la longueur de la médiane $AI$",
-          "hint": "Prendre la racine carrée de $AI^2$"
+          "text": "",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Vérifier que le triangle est rectangle et préciser en quel sommet",
-          "hint": "Vérifier si $AB^2 + AC^2 = BC^2$ (théorème de Pythagore)"
+          "text": "",
+          "questionNumber": "5",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     }
   ],
-  "version": "v1.1.0-6a8023"
+  "version": "v1.1.0-86ec76"
 }

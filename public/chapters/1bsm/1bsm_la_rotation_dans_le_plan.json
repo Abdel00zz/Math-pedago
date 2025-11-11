@@ -473,16 +473,22 @@
       "statement": "Dans le plan muni d'un repère orthonormé, on considère le point $A(2,0)$. Déterminer les coordonnées du point $A'$ image de A par la rotation de centre O et d'angle $\\frac{\\pi}{2}$.",
       "sub_questions": [
         {
-          "question": "Rappeler la formule de rotation de centre $O$ et d'angle $\\frac{\\pi}{2}$.",
-          "hint": "Pour une rotation de $\\frac{\\pi}{2}$, $(x, y) \\rightarrow (-y, x)$."
+          "text": "",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Appliquer cette formule au point $A(2, 0)$.",
-          "hint": "Remplacez $x = 2$ et $y = 0$ dans la formule."
+          "text": "",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Vérifier que $OA = OA'$.",
-          "hint": "Calculez les distances en utilisant $d = \\sqrt{x^2 + y^2}$."
+          "text": "",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     },
@@ -492,16 +498,22 @@
       "statement": "Soit $R_1$ la rotation de centre $O$ et d'angle $\\frac{\\pi}{3}$ et $R_2$ la rotation de centre $O$ et d'angle $\\frac{\\pi}{6}$.",
       "sub_questions": [
         {
-          "question": "Déterminer la nature et les éléments caractéristiques de $R_1 \\circ R_2$.",
-          "hint": "La composée de deux rotations de même centre est une rotation de ce centre. Additionnez les angles."
+          "text": "",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Que représente géométriquement $R_1 \\circ R_1^{-1}$ ?",
-          "hint": "C'est l'application identité."
+          "text": "",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Exprimer $R_1^{-1}$ en fonction de l'angle.",
-          "hint": "La rotation réciproque a pour angle l'opposé : $R_1^{-1} = R_{O, -\\frac{\\pi}{3}}$."
+          "text": "",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     },
@@ -511,20 +523,28 @@
       "statement": "Une rotation transforme $A(1, 0)$ en $A'(0, 1)$ et $B(2, 0)$ en $B'(0, 2)$. Déterminer le centre et l'angle de cette rotation.",
       "sub_questions": [
         {
-          "question": "Déterminer l'équation de la médiatrice de $[AA']$.",
-          "hint": "La médiatrice passe par le milieu de $[AA']$ et est perpendiculaire à $(AA')$."
+          "text": "",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Déterminer l'équation de la médiatrice de $[BB']$.",
-          "hint": "Utilisez la même méthode."
+          "text": "",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "En déduire le centre $O$ de la rotation.",
-          "hint": "Le centre est à l'intersection des deux médiatrices."
+          "text": "",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Calculer l'angle $\\theta$ de la rotation en utilisant $\\widehat{AOA'}$.",
-          "hint": "Utilisez les vecteurs $\\vec{OA}$ et $\\vec{OA'}$ et l'angle orienté."
+          "text": "",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     },
@@ -534,16 +554,22 @@
       "statement": "On considère le cercle $\\mathcal{C}$ de centre $I(1, 2)$ et de rayon $r = 3$. Soit $R$ la rotation de centre $O(0, 0)$ et d'angle $\\frac{\\pi}{2}$.",
       "sub_questions": [
         {
-          "question": "Déterminer les coordonnées de $I'$, image de $I$ par $R$.",
-          "hint": "Appliquez la formule $(x, y) \\rightarrow (-y, x)$."
+          "text": "",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Quel est le rayon du cercle $\\mathcal{C}'$, image de $\\mathcal{C}$ par $R$ ?",
-          "hint": "Les rotations conservent les distances, donc le rayon reste le même."
+          "text": "",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Écrire l'équation cartésienne du cercle $\\mathcal{C}'$.",
-          "hint": "$(x - x_{I'})^2 + (y - y_{I'})^2 = r^2$."
+          "text": "",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     },
@@ -553,23 +579,31 @@
       "statement": "Soit un triangle équilatéral $ABC$ de côté $a$. On note $O$ le centre du cercle circonscrit à $ABC$.",
       "sub_questions": [
         {
-          "question": "Quelle rotation de centre $O$ transforme $A$ en $B$ ?",
-          "hint": "L'angle au centre est $\\frac{2\\pi}{3}$ (un tiers de tour)."
+          "text": "",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Déterminer l'image du triangle $ABC$ par la rotation $R_{O, \\frac{2\\pi}{3}}$.",
-          "hint": "$A \\rightarrow B$, $B \\rightarrow C$, $C \\rightarrow A$."
+          "text": "",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Montrer que le triangle $ABC$ est globalement invariant par $R_{O, \\frac{2\\pi}{3}}$.",
-          "hint": "L'ensemble des points du triangle reste le même, même si chaque sommet se déplace."
+          "text": "",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Combien de rotations distinctes (incluant l'identité) laissent le triangle globalement invariant ?",
-          "hint": "Il y en a 3 : $R_{O, 0}$, $R_{O, \\frac{2\\pi}{3}}$, $R_{O, \\frac{4\\pi}{3}}$."
+          "text": "",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     }
   ],
-  "version": "v1.1.0-f60e07"
+  "version": "v1.1.0-8cb6a4"
 }

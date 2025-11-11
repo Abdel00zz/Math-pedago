@@ -473,20 +473,28 @@
       "statement": "Déterminer l'équation cartésienne du plan (P) passant par le point $A(1,1,1)$ et de vecteur normal $\\vec{n}(2, 1, -3)$.",
       "sub_questions": [
         {
-          "question": "Rappeler la forme générale d'une équation de plan avec un vecteur normal.",
-          "hint": "Si $\\vec{n}(a, b, c)$ est un vecteur normal, l'équation est $ax + by + cz + d = 0$."
+          "text": "",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Écrire l'équation avec les coordonnées du vecteur normal.",
-          "hint": "$2x + y - 3z + d = 0$"
+          "text": "",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Utiliser le point $A(1,1,1)$ pour déterminer $d$.",
-          "hint": "$2(1) + 1 - 3(1) + d = 0 \\Rightarrow 2 + 1 - 3 + d = 0 \\Rightarrow d = 0$"
+          "text": "",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Donner l'équation finale.",
-          "hint": "$2x + y - 3z = 0$"
+          "text": "",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     },
@@ -496,16 +504,22 @@
       "statement": "Déterminer la valeur de $k$ pour que les vecteurs $\\vec{u}(2, k, -1)$ et $\\vec{v}(1, 2, 3)$ soient orthogonaux.",
       "sub_questions": [
         {
-          "question": "Rappeler la condition d'orthogonalité.",
-          "hint": "$\\vec{u} \\cdot \\vec{v} = 0$"
+          "text": "",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Calculer le produit scalaire en fonction de $k$.",
-          "hint": "$\\vec{u} \\cdot \\vec{v} = 2(1) + k(2) + (-1)(3) = 2 + 2k - 3 = 2k - 1$"
+          "text": "",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Résoudre l'équation $2k - 1 = 0$.",
-          "hint": "$k = \\frac{1}{2}$"
+          "text": "",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     },
@@ -515,20 +529,28 @@
       "statement": "Calculer l'angle entre les vecteurs $\\vec{u}(1, 2, 2)$ et $\\vec{v}(2, -1, 2)$.",
       "sub_questions": [
         {
-          "question": "Calculer $\\vec{u} \\cdot \\vec{v}$.",
-          "hint": "$\\vec{u} \\cdot \\vec{v} = 1(2) + 2(-1) + 2(2) = 2 - 2 + 4 = 4$"
+          "text": "",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Calculer $||\\vec{u}||$ et $||\\vec{v}||$.",
-          "hint": "$||\\vec{u}|| = \\sqrt{1^2 + 2^2 + 2^2} = \\sqrt{9} = 3$, $||\\vec{v}|| = \\sqrt{2^2 + (-1)^2 + 2^2} = \\sqrt{9} = 3$"
+          "text": "",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Utiliser la formule $\\cos(\\theta) = \\frac{\\vec{u} \\cdot \\vec{v}}{||\\vec{u}|| \\times ||\\vec{v}||}$.",
-          "hint": "$\\cos(\\theta) = \\frac{4}{3 \\times 3} = \\frac{4}{9}$"
+          "text": "",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "En déduire $\\theta$.",
-          "hint": "$\\theta = \\arccos\\left(\\frac{4}{9}\\right) \\approx 63.6°$"
+          "text": "",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     },
@@ -538,20 +560,28 @@
       "statement": "Calculer la distance du point $M(1, 2, 3)$ au plan $P: 2x - y + 2z - 3 = 0$.",
       "sub_questions": [
         {
-          "question": "Rappeler la formule de la distance d'un point à un plan.",
-          "hint": "$d = \\frac{|ax_0 + by_0 + cz_0 + d|}{\\sqrt{a^2 + b^2 + c^2}}$"
+          "text": "",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Identifier les coefficients $a, b, c, d$ et les coordonnées de $M$.",
-          "hint": "$a=2, b=-1, c=2, d=-3$; $M(1, 2, 3)$"
+          "text": "",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Calculer le numérateur.",
-          "hint": "$|2(1) - 2 + 2(3) - 3| = |2 - 2 + 6 - 3| = |3| = 3$"
+          "text": "",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Calculer le dénominateur et la distance.",
-          "hint": "$\\sqrt{2^2 + (-1)^2 + 2^2} = \\sqrt{9} = 3$. Donc $d = \\frac{3}{3} = 1$."
+          "text": "",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     },
@@ -561,23 +591,31 @@
       "statement": "Étudier la position relative des plans $P_1: x + 2y - z + 1 = 0$ et $P_2: 2x - y + 3z - 2 = 0$.",
       "sub_questions": [
         {
-          "question": "Identifier les vecteurs normaux $\\vec{n_1}$ et $\\vec{n_2}$.",
-          "hint": "$\\vec{n_1}(1, 2, -1)$ et $\\vec{n_2}(2, -1, 3)$"
+          "text": "",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Vérifier si les vecteurs normaux sont colinéaires.",
-          "hint": "$\\frac{1}{2} \\neq \\frac{2}{-1}$. Non, ils ne sont pas colinéaires, donc les plans ne sont pas parallèles."
+          "text": "",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Calculer $\\vec{n_1} \\cdot \\vec{n_2}$ pour vérifier s'ils sont perpendiculaires.",
-          "hint": "$\\vec{n_1} \\cdot \\vec{n_2} = 1(2) + 2(-1) + (-1)(3) = 2 - 2 - 3 = -3 \\neq 0$"
+          "text": "",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Conclure.",
-          "hint": "Les plans ne sont ni parallèles ni perpendiculaires. Ils sont sécants selon une droite, formant un angle non droit."
+          "text": "",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     }
   ],
-  "version": "v1.1.0-c43709"
+  "version": "v1.1.0-915e73"
 }

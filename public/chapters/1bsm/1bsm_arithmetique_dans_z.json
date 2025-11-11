@@ -472,16 +472,22 @@
       "statement": "Effectuer la division euclidienne de 157 par 12. Donner le quotient et le reste.",
       "sub_questions": [
         {
-          "question": "Rappeler la forme de la division euclidienne.",
-          "hint": "$a = bq + r$ avec $0 \\leq r < b$"
+          "text": "",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Trouver le plus grand multiple de 12 qui ne dépasse pas 157.",
-          "hint": "$12 \\times 13 = 156$"
+          "text": "",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "En déduire le quotient et le reste.",
-          "hint": "$157 = 12 \\times 13 + 1$, donc $q = 13$ et $r = 1$"
+          "text": "",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     },
@@ -491,20 +497,28 @@
       "statement": "Calculer le PGCD de 252 et 105 en utilisant l'algorithme d'Euclide.",
       "sub_questions": [
         {
-          "question": "Effectuer la division euclidienne de 252 par 105.",
-          "hint": "$252 = 105 \\times 2 + 42$"
+          "text": "",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Continuer avec 105 et 42.",
-          "hint": "$105 = 42 \\times 2 + 21$"
+          "text": "",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Continuer jusqu'à obtenir un reste nul.",
-          "hint": "$42 = 21 \\times 2 + 0$. Le PGCD est le dernier reste non nul : 21."
+          "text": "",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Vérifier en décomposant 252 et 105 en facteurs premiers.",
-          "hint": "$252 = 2^2 \\times 3^2 \\times 7$ et $105 = 3 \\times 5 \\times 7$. PGCD = $3 \\times 7 = 21$."
+          "text": "",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     },
@@ -514,20 +528,28 @@
       "statement": "On sait que $\\text{PGCD}(15, 28) = 1$. Trouver des entiers $u$ et $v$ tels que $15u + 28v = 1$.",
       "sub_questions": [
         {
-          "question": "Utiliser l'algorithme d'Euclide étendu en partant de $28 = 15 \\times 1 + 13$.",
-          "hint": "Exprimer le reste en fonction de 28 et 15 : $13 = 28 - 15 \\times 1$"
+          "text": "",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Continuer : $15 = 13 \\times 1 + 2$.",
-          "hint": "$2 = 15 - 13 \\times 1 = 15 - (28 - 15 \\times 1) = 2 \\times 15 - 28$"
+          "text": "",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Continuer : $13 = 2 \\times 6 + 1$.",
-          "hint": "$1 = 13 - 2 \\times 6 = (28 - 15) - 6(2 \\times 15 - 28) = 7 \\times 28 - 13 \\times 15$"
+          "text": "",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "En déduire $u$ et $v$.",
-          "hint": "$u = -13$ et $v = 7$ (ou $15 \\times (-13) + 28 \\times 7 = -195 + 196 = 1$)"
+          "text": "",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     },
@@ -537,16 +559,22 @@
       "statement": "Calculer le reste de la division de $2^{10}$ par 7.",
       "sub_questions": [
         {
-          "question": "Calculer $2^1, 2^2, 2^3 \\pmod{7}$ pour identifier un motif.",
-          "hint": "$2^1 \\equiv 2$, $2^2 \\equiv 4$, $2^3 \\equiv 8 \\equiv 1 \\pmod{7}$"
+          "text": "",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Utiliser la périodicité : $2^3 \\equiv 1 \\pmod{7}$.",
-          "hint": "$2^{10} = 2^{3 \\times 3 + 1} = (2^3)^3 \\times 2^1$"
+          "text": "",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Calculer $2^{10} \\pmod{7}$.",
-          "hint": "$(2^3)^3 \\times 2 \\equiv 1^3 \\times 2 \\equiv 2 \\pmod{7}$"
+          "text": "",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     },
@@ -556,23 +584,31 @@
       "statement": "Soit $n = 2^3 \\times 3^2 \\times 5$. Déterminer le nombre de diviseurs positifs de $n$ et calculer $\\text{PGCD}(n, 450)$.",
       "sub_questions": [
         {
-          "question": "Rappeler la formule du nombre de diviseurs d'un nombre décomposé en facteurs premiers.",
-          "hint": "Si $n = p_1^{a_1} \\times p_2^{a_2} \\times \\cdots \\times p_k^{a_k}$, le nombre de diviseurs est $(a_1+1)(a_2+1)\\cdots(a_k+1)$"
+          "text": "",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Calculer le nombre de diviseurs de $n = 2^3 \\times 3^2 \\times 5$.",
-          "hint": "$(3+1)(2+1)(1+1) = 4 \\times 3 \\times 2 = 24$ diviseurs"
+          "text": "",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Décomposer 450 en facteurs premiers.",
-          "hint": "$450 = 2 \\times 225 = 2 \\times 9 \\times 25 = 2 \\times 3^2 \\times 5^2$"
+          "text": "",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Calculer $\\text{PGCD}(2^3 \\times 3^2 \\times 5, 2 \\times 3^2 \\times 5^2)$.",
-          "hint": "On prend les facteurs communs avec les plus petits exposants : $2^1 \\times 3^2 \\times 5^1 = 2 \\times 9 \\times 5 = 90$"
+          "text": "",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     }
   ],
-  "version": "v1.1.0-c11a85"
+  "version": "v1.1.0-78c4bb"
 }

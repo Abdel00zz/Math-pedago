@@ -473,16 +473,22 @@
       "statement": "Calculer le nombre de façons de choisir un comité de 3 personnes parmi un groupe de 8 personnes. Autrement dit, calculer $C_8^3$.",
       "sub_questions": [
         {
-          "question": "Rappeler la formule de $C_n^p$.",
-          "hint": "$C_n^p = \\frac{n!}{p!(n-p)!}$"
+          "text": "",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Appliquer la formule pour calculer $C_8^3$.",
-          "hint": "$C_8^3 = \\frac{8!}{3!5!} = \\frac{8 \\times 7 \\times 6}{3 \\times 2 \\times 1}$"
+          "text": "",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Simplifier et donner le résultat final.",
-          "hint": "Le résultat est 56."
+          "text": "",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     },
@@ -492,20 +498,28 @@
       "statement": "Combien peut-on former d'anagrammes avec les lettres du mot \"MISSISSIPPI\" ?",
       "sub_questions": [
         {
-          "question": "Compter le nombre total de lettres et identifier les répétitions.",
-          "hint": "11 lettres : M(1), I(4), S(4), P(2)"
+          "text": "",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Rappeler la formule des permutations avec répétitions.",
-          "hint": "Si on a $n$ objets avec $n_1, n_2, \\ldots, n_k$ objets identiques, le nombre de permutations est $\\frac{n!}{n_1! n_2! \\cdots n_k!}$"
+          "text": "",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Appliquer la formule.",
-          "hint": "$\\frac{11!}{1! \\times 4! \\times 4! \\times 2!}$"
+          "text": "",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Calculer le résultat.",
-          "hint": "Le résultat est $\\frac{39916800}{1152} = 34650$"
+          "text": "",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     },
@@ -515,16 +529,22 @@
       "statement": "Dans une urne contenant 10 boules numérotées de 1 à 10, on tire successivement 4 boules sans remise. Combien y a-t-il de résultats possibles si l'ordre de tirage compte ?",
       "sub_questions": [
         {
-          "question": "Identifier l'outil de dénombrement approprié.",
-          "hint": "C'est un arrangement car l'ordre compte et il n'y a pas de remise."
+          "text": "",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Rappeler la formule de $A_n^p$.",
-          "hint": "$A_n^p = \\frac{n!}{(n-p)!}$"
+          "text": "",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Calculer $A_{10}^4$.",
-          "hint": "$A_{10}^4 = \\frac{10!}{6!} = 10 \\times 9 \\times 8 \\times 7 = 5040$"
+          "text": "",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     },
@@ -534,20 +554,28 @@
       "statement": "Développer $(x+2)^4$ en utilisant la formule du binôme de Newton.",
       "sub_questions": [
         {
-          "question": "Rappeler la formule du binôme de Newton.",
-          "hint": "$(a+b)^n = \\sum_{k=0}^{n} C_n^k a^{n-k} b^k$"
+          "text": "",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Identifier $a$, $b$ et $n$ dans $(x+2)^4$.",
-          "hint": "$a = x$, $b = 2$, $n = 4$"
+          "text": "",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Calculer les coefficients binomiaux $C_4^0, C_4^1, C_4^2, C_4^3, C_4^4$.",
-          "hint": "$1, 4, 6, 4, 1$ (ligne 4 du triangle de Pascal)"
+          "text": "",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Écrire le développement complet.",
-          "hint": "$(x+2)^4 = C_4^0 x^4 + C_4^1 x^3 \\cdot 2 + C_4^2 x^2 \\cdot 4 + C_4^3 x \\cdot 8 + C_4^4 \\cdot 16 = x^4 + 8x^3 + 24x^2 + 32x + 16$"
+          "text": "",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     },
@@ -557,23 +585,31 @@
       "statement": "On dispose de 5 boules rouges identiques et 3 boules bleues identiques. De combien de façons peut-on les ranger en ligne ?",
       "sub_questions": [
         {
-          "question": "Compter le nombre total de boules.",
-          "hint": "$5 + 3 = 8$ boules"
+          "text": "",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Identifier le problème comme une permutation avec répétitions.",
-          "hint": "5 boules rouges identiques et 3 boules bleues identiques"
+          "text": "",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Appliquer la formule des permutations avec répétitions.",
-          "hint": "$\\frac{8!}{5!3!}$"
+          "text": "",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Simplifier et reconnaître qu'il s'agit aussi d'une combinaison.",
-          "hint": "$\\frac{8!}{5!3!} = C_8^3 = C_8^5 = 56$. Choisir les 3 positions pour les bleues équivaut à arranger toutes les boules."
+          "text": "",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     }
   ],
-  "version": "v1.1.0-46b101"
+  "version": "v1.1.0-47538d"
 }

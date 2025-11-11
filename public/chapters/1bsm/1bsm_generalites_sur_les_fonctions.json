@@ -538,42 +538,54 @@
         }
       ],
       "steps": []
-     }
+    }
   ],
   "exercises": [
     {
       "id": "exo_analyse_graphique_cf_cg",
       "title": "Analyse graphique des fonctions f et g",
       "statement": "Soient $C_f$ et $C_g$ les courbes représentatives des fonctions $f$ (bleu) et $g$ (rouge) définies sur $[-3; 5]$.",
-      "sub_questions": [
+      "images": [
         {
-          "text": "Résoudre graphiquement l'équation $f(x) = g(x)$."
-        },
-        {
-          "text": "Résoudre graphiquement l'inéquation $f(x) > g(x)$."
-        },
-        {
-          "text": "Faire les tableaux de signes des fonctions $f$ et $g$."
-        },
-        {
-          "text": "Déterminer $f([-3; 0])$ et $f([1; 4])$."
-        },
-        {
-          "text": "Déterminer $g([-3; 0])$ et $g([1; 4])$."
+          "id": "img_1762865709324",
+          "path": "pictures/1bsm/1bsm-generalites-sur-les-fonctions/img_20251111T125509260Z_test__2_.png",
+          "caption": "test (2).png",
+          "size": "medium",
+          "position": "center",
+          "alignment": "center",
+          "alt": ""
         }
       ],
-      "hint": [
+      "sub_questions": [
         {
-          "text": "**Équation $f(x) = g(x)$** : Cherchez les **abscisses** des points d'intersection entre la courbe $C_f$ (bleue) et la courbe $C_g$ (rouge). L'un d'eux est à $x=-2$, l'autre à $x=1$."
+          "text": "Résoudre graphiquement l'équation $f(x) = g(x)$.",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "text": "**Inéquation $f(x) > g(x)$** : Cherchez l'intervalle d'abscisses où la courbe $C_f$ (bleue) est strictement **au-dessus** de la courbe $C_g$ (rouge)."
+          "text": "Résoudre graphiquement l'inéquation $f(x) > g(x)$.",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "text": "**Tableau de signes** : Cherchez les abscisses où la courbe coupe l'axe des abscisses ($y=0$). La fonction est positive là où la courbe est au-dessus de l'axe des $x$."
+          "text": "Faire les tableaux de signes des fonctions $f$ et $g$.",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "text": "**Détermination de l'image $f([a; b])$** : Trouvez la valeur minimale et la valeur maximale de $f(x)$ lorsque $x$ est dans l'intervalle $[a; b]$. L'image est l'intervalle $[f_{min}, f_{max}]$. Par exemple, pour $f([-3; 0])$, le minimum est atteint en $x=-1$."
+          "text": "Déterminer $f([-3; 0])$ et $f([1; 4])$.",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Déterminer $g([-3; 0])$ et $g([1; 4])$.",
+          "questionNumber": "5",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     },
@@ -583,13 +595,20 @@
       "statement": "Soient $f$ et $g$ deux fonctions numériques de variables réelles définies par : $f(x) = x^2 - 3x$ et $g(x) = \\frac{3-x}{x+2}$",
       "sub_questions": [
         {
-          "text": "Montrer que $f(x) = \\left(x - \\frac{3}{2}\\right)^2 - \\frac{9}{4}$ et $g(x) = -1 + \\frac{5}{x+2}$."
+          "text": "Montrer que $f(x) = \\left(x - \\frac{3}{2}\\right)^2 - \\frac{9}{4}$ et $g(x) = -1 + \\frac{5}{x+2}$.",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "text": "Donner le tableau de variations de $f$ et $g$."
+          "text": "Donner le tableau de variations de $f$ et $g$.",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
           "text": "Résolution de $f(x) = g(x)$",
+          "questionNumber": "3",
           "sub_sub_questions": [
             {
               "text": "Résoudre dans $\\mathbb{R}$ l'équation $f(x) = g(x)$."
@@ -597,10 +616,12 @@
             {
               "text": "En déduire les points d'intersection de $C_f$ et $C_g$."
             }
-          ]
+          ],
+          "images": []
         },
         {
           "text": "Points d'intersection avec les axes",
+          "questionNumber": "4",
           "sub_sub_questions": [
             {
               "text": "Déterminer les points d'intersection de $C_f$ avec l'axe d'abscisse."
@@ -608,24 +629,20 @@
             {
               "text": "Déterminer les points d'intersection de $C_g$ avec l'axe d'ordonnée."
             }
-          ]
+          ],
+          "images": []
         },
         {
-          "text": "Tracer $C_f$ et $C_g$ dans un repère orthonormale $(O; \\vec{i}; \\vec{j})$."
+          "text": "Tracer $C_f$ et $C_g$ dans un repère orthonormale $(O; \\vec{i}; \\vec{j})$.",
+          "questionNumber": "5",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "text": "Résoudre graphiquement l'inégalité $f(x) \\ge g(x)$."
-        }
-      ],
-      "hint": [
-        {
-          "text": "**Forme canonique (f)** : Pour $f(x) = x^2 - 3x$, utilisez l'identité remarquable en complétant le carré. Le terme à ajouter/soustraire est $(3/2)^2$."
-        },
-        {
-          "text": "**Forme réduite (g)** : Pour $g(x)$, effectuez la division euclidienne ou manipulez le numérateur : $3-x = -(x+2) + 5$."
-        },
-        {
-          "text": "**Équation** : L'équation $f(x)=g(x)$ mène à une équation polynomiale de degré 3 (pensez à $x^3 - x^2 - 5x + 6 = 0$ après simplification). Cherchez une **racine évidente**."
+          "text": "Résoudre graphiquement l'inégalité $f(x) \\ge g(x)$.",
+          "questionNumber": "6",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     },
@@ -635,16 +652,26 @@
       "statement": "Soit $f$ une fonction de variable réel définie par : $f(x) = x + \\frac{1}{x}$",
       "sub_questions": [
         {
-          "text": "Déterminer $D_f$."
+          "text": "Déterminer $D_f$.",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "text": "Montrer que $f$ est impaire."
+          "text": "Montrer que $f$ est impaire.",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "text": "Calculer pour tout réels $x$ et $y$ de $\\mathbb{R}^*$, $f(x) - f(y)$. Puis en déduire les variations de $f$ sur l'intervalles $[1, +\\infty[$ et $]0, 1]$."
+          "text": "Calculer pour tout réels $x$ et $y$ de $\\mathbb{R}^*$, $f(x) - f(y)$. Puis en déduire les variations de $f$ sur l'intervalles $[1, +\\infty[$ et $]0, 1]$.",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
           "text": "Valeur minimale sur $]0, +\\infty[$",
+          "questionNumber": "4",
           "sub_sub_questions": [
             {
               "text": "Montrer que ($\\forall x \\in ]0, +\\infty[) : f(x) \\ge 2$."
@@ -652,10 +679,12 @@
             {
               "text": "En déduire que $f$ admet une valeur minimale sur l'intervalle $]0, +\\infty[$."
             }
-          ]
+          ],
+          "images": []
         },
         {
           "text": "Considérant la fonction $g$ définie par : $g(x) = \\frac{x^2 + 4x + 4}{x+3}$",
+          "questionNumber": "5",
           "sub_sub_questions": [
             {
               "text": "Montrer que : $g(x) = f(x+3) - 2$."
@@ -663,18 +692,8 @@
             {
               "text": "En déduire la monotonie de $g$ sur l'intervalle $[-2, +\\infty[$."
             }
-          ]
-        }
-      ],
-      "hint": [
-        {
-          "text": "**Taux d'accroissement** : Calculez $f(x) - f(y)$. Vous devriez trouver $f(x) - f(y) = (x-y) \\frac{xy-1}{xy}$. Le signe des variations dépend alors du signe de $xy-1$."
-        },
-        {
-          "text": "**Minorant** : Pour montrer $f(x) \\ge 2$, étudiez le signe de $f(x) - 2$. Mettez tout sur le dénominateur $x$ et cherchez l'identité remarquable $(x-1)^2$ au numérateur."
-        },
-        {
-          "text": "**Monotonie de g** : La fonction $g$ est une composition. L'intervalle $[-2, +\\infty[$ pour $x$ correspond à $[1, +\\infty[$ pour la variable $X=x+3$ de $f(X)$."
+          ],
+          "images": []
         }
       ]
     },
@@ -684,19 +703,32 @@
       "statement": "On considère les fonctions numériques $f$ et $g$ définies par : $f(x) = \\sqrt{x+4}$ et $g(x) = \\frac{2}{x+1}$.\nOn note $(C_f)$ et $(C_g)$ les courbes représentatives de $f$ et $g$ respectivement dans un repère orthonormé $(O; \\vec{i}; \\vec{j})$.",
       "sub_questions": [
         {
-          "text": "Déterminer $D_f$ et $D_g$, ensembles de définition respectifs des fonctions $f$ et $g$."
+          "text": "Déterminer $D_f$ et $D_g$, ensembles de définition respectifs des fonctions $f$ et $g$.",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "text": "Montrer que $A(0; 2)$ est un point d'intersection des courbes $(C_f)$ et $(C_g)$."
+          "text": "Montrer que $A(0; 2)$ est un point d'intersection des courbes $(C_f)$ et $(C_g)$.",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "text": "Construire les courbes $(C_f)$ et $(C_g)$ dans le même repère $(O; \\vec{i}; \\vec{j})$."
+          "text": "Construire les courbes $(C_f)$ et $(C_g)$ dans le même repère $(O; \\vec{i}; \\vec{j})$.",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "text": "Résoudre graphiquement l'inéquation : $f(x) \\ge g(x)$."
+          "text": "Résoudre graphiquement l'inéquation : $f(x) \\ge g(x)$.",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
           "text": "On considère la fonction $h$ définie par : $h(x) = \\sqrt{\\frac{4x+6}{x+1}}$",
+          "questionNumber": "5",
           "sub_sub_questions": [
             {
               "text": "Déterminer $D_h$, ensemble de définition de la fonction $h$."
@@ -704,15 +736,8 @@
             {
               "text": "Étudier les variations de la fonction $h$ sur l'intervalle $]-\\infty; -\\frac{3}{2}]$."
             }
-          ]
-        }
-      ],
-      "hint": [
-        {
-          "text": "**Domaine de h** : Il faut que le quotient $\\frac{4x+6}{x+1}$ soit positif ou nul. Faites un tableau de signes."
-        },
-        {
-          "text": "**Variations de h** : Décomposez $h = k \\circ j$ où $j(x) = \\frac{4x+6}{x+1}$ et $k(x) = \\sqrt{x}$. Trouvez la forme réduite de $j(x)$ (pensez à $4 + \\frac{2}{x+1}$) pour déterminer sa monotonie."
+          ],
+          "images": []
         }
       ]
     },
@@ -722,19 +747,32 @@
       "statement": "Soit $f$ et $g$ les fonctions numériques définies par : $f(x) = -\\frac{1}{2}x^2 + 2x - 1$ et $g(x) = \\frac{2x-1}{x+1}$.\nOn note $(C_f)$ la courbe représentative de la fonction $f$ dans un repère orthonormé $(O; \\vec{i}; \\vec{j})$.",
       "sub_questions": [
         {
-          "text": "Dresser les tableaux de variations des fonctions $f$ et $g$."
+          "text": "Dresser les tableaux de variations des fonctions $f$ et $g$.",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "text": "Montrer que 1 est la valeur maximale absolue de la fonction $f$."
+          "text": "Montrer que 1 est la valeur maximale absolue de la fonction $f$.",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "text": "Construire la courbe $(C_f)$."
+          "text": "Construire la courbe $(C_f)$.",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "text": "Déterminer graphiquement : $f(\\mathbb{R}^*)$ ; $f([0; 2])$ ; $f([2; 4[)$ ; $f([4; +\\infty[)$."
+          "text": "Déterminer graphiquement : $f(\\mathbb{R}^*)$ ; $f([0; 2])$ ; $f([2; 4[)$ ; $f([4; +\\infty[)$.",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
           "text": "Soit $h$ la fonction numérique définie par : $h(x) = g \\circ f(x)$",
+          "questionNumber": "5",
           "sub_sub_questions": [
             {
               "text": "Déterminer $D_h$, l'ensemble de définition de la fonction $h$."
@@ -745,18 +783,8 @@
             {
               "text": "Étudier la monotonie de $h$ sur chacun des intervalles $\\mathbb{R}^*_-$, $]0; 2]$, $[2; 4[$ et $[4; +\\infty[$, puis dresser le tableau de variations de la fonction $h$."
             }
-          ]
-        }
-      ],
-      "hint": [
-        {
-          "text": "**Variations de g** : Utilisez la forme réduite $g(x) = 2 - \\frac{3}{x+1}$. Elle est du type $k/X$ où $k<0$, donc elle est croissante sur ses intervalles de définition."
-        },
-        {
-          "text": "**Domaine de h** : $D_h$ est l'ensemble des $x$ tels que $f(x) \\neq -1$. Résolvez $f(x) = -1$."
-        },
-        {
-          "text": "**Monotonie de h** : Les variations de $h = g \\circ f$ dépendent des variations de $f$ et $g$. L'étude se fait sur les intervalles où $f$ est monotone."
+          ],
+          "images": []
         }
       ]
     },
@@ -766,13 +794,20 @@
       "statement": "Soit $f$ la fonction numérique définie par : $f(x) = x - 2\\sqrt{x-2} + 1$.",
       "sub_questions": [
         {
-          "text": "Déterminer $D_f$, l'ensemble de définition de la fonction $f$."
+          "text": "Déterminer $D_f$, l'ensemble de définition de la fonction $f$.",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "text": "Montrer que la fonction $f$ est minorée par le nombre 2."
+          "text": "Montrer que la fonction $f$ est minorée par le nombre 2.",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
           "text": "Soit $h$ la fonction numérique définie par : $h(x) = \\sqrt{x-2}$",
+          "questionNumber": "3",
           "sub_sub_questions": [
             {
               "text": "Dresser le tableau de variations de la fonction $h$ puis tracer la courbe $(C_h)$ dans un repère orthonormé."
@@ -780,10 +815,12 @@
             {
               "text": "Déterminer $h([2; 3])$ et $h([3; +\\infty[)$."
             }
-          ]
+          ],
+          "images": []
         },
         {
           "text": "Composition de fonctions",
+          "questionNumber": "4",
           "sub_sub_questions": [
             {
               "text": "Déterminer un polynôme du second degré $g$ tel que : ($\\forall x \\in D_f$) $f(x) = g \\circ h(x)$."
@@ -794,18 +831,8 @@
             {
               "text": "Dresser le tableau de variations de la fonction $\\frac{1}{f}$."
             }
-          ]
-        }
-      ],
-      "hint": [
-        {
-          "text": "**Minorant** : Pour montrer $f(x) \\ge 2$, analysez $f(x) - 2$. Vous devriez retrouver la forme carrée $(\\sqrt{x-2} - 1)^2$."
-        },
-        {
-          "text": "**Composition (g o h)** : Posez $X = h(x) = \\sqrt{x-2}$. Alors $X^2 = x-2$, donc $x = X^2+2$. Remplacez dans $f(x)$ pour trouver $g(X)$."
-        },
-        {
-          "text": "**Variations de f** : $f = g \\circ h$. Les variations de $f$ sont obtenues en composant les variations de $h$ et les variations de $g$ sur l'image de $h$."
+          ],
+          "images": []
         }
       ]
     },
@@ -815,10 +842,14 @@
       "statement": "Dans le plan rapporté à un repère orthonormé $(O; \\vec{i}; \\vec{j})$, on considère les points $A(3; 1)$ et $M(x; 0)$ où $x$ est un réel tel que $x > 3$. La droite $(AM)$ coupe l'axe des ordonnées au point $M'$. Soit $S(x)$ l'aire du triangle $OMM'$.",
       "sub_questions": [
         {
-          "text": "Montrer que pour tout $x \\in ]3; +\\infty[ : S(x) = \\frac{x^2}{2(x-3)}$."
+          "text": "Montrer que pour tout $x \\in ]3; +\\infty[ : S(x) = \\frac{x^2}{2(x-3)}$.",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
           "text": "Soit $a$ et $b$ deux éléments distincts de l'intervalle $]3; +\\infty[$",
+          "questionNumber": "2",
           "sub_sub_questions": [
             {
               "text": "Montrer que : $\\frac{S(a) - S(b)}{a - b} = \\frac{1}{2}\\left(1 - \\frac{9}{(a-3)(b-3)}\\right)$."
@@ -826,21 +857,14 @@
             {
               "text": "En déduire la monotonie de la fonction $S$ sur chacun des intervalles $]3; 6]$ et $[6; +\\infty[$ puis dresser le tableau de variations de $S$."
             }
-          ]
+          ],
+          "images": []
         },
         {
-          "text": "Déterminer la position du point $M$ pour que l'aire du triangle $OMM'$ soit minimale et déterminer cette aire dans ce cas."
-        }
-      ],
-      "hint": [
-        {
-          "text": "**Fonction aire $S(x)$** : L'aire est $S(x) = \\frac{1}{2} \\times OM \\times OM'$. Le point $M'$ a pour ordonnée $y_{M'}$ qui est l'ordonnée à l'origine de la droite $(AM)$. L'équation de $(AM)$ est $y - 0 = \\frac{1-0}{3-x}(X - x)$."
-        },
-        {
-          "text": "**Taux d'accroissement** : Pour faciliter le calcul de $\\frac{S(a) - S(b)}{a - b}$, utilisez la décomposition polynomiale de $S(x)$ : $S(x) = \\frac{1}{2} \\left(x+3 + \\frac{9}{x-3}\\right)$."
-        },
-        {
-          "text": "**Minimum** : Le minimum de l'aire est atteint lorsque la fonction $S$ change de sens de variation, ce qui se produit en $x=6$."
+          "text": "Déterminer la position du point $M$ pour que l'aire du triangle $OMM'$ soit minimale et déterminer cette aire dans ce cas.",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     },
@@ -851,6 +875,7 @@
       "sub_questions": [
         {
           "text": "Partie I : Étude de f",
+          "questionNumber": "1",
           "sub_sub_questions": [
             {
               "text": "Étudier la parité de la fonction $f$."
@@ -867,10 +892,12 @@
             {
               "text": "Montrer que : $f(\\mathbb{R}) = [-2; 2]$."
             }
-          ]
+          ],
+          "images": []
         },
         {
           "text": "Partie II : Étude de h\nSoit $g$ et $h$ les fonctions numériques définies sur $\\mathbb{R}^+$ par : $g(x) = \\sqrt{x}$ et $h(x) = \\frac{4\\sqrt{x}}{1+x}$",
+          "questionNumber": "2",
           "sub_sub_questions": [
             {
               "text": "Représenter la fonction $g$ dans un repère orthonormé $(O; \\vec{i}; \\vec{j})$."
@@ -887,18 +914,8 @@
             {
               "text": "d) Dresser le tableau de variations de la fonction $h$."
             }
-          ]
-        }
-      ],
-      "hint": [
-        {
-          "text": "**Bornage de f** : Pour montrer $|f(x)| \\le 2$, utilisez l'identité remarquable $2x^2 - 4x + 2 = 2(x-1)^2$ et $2x^2 + 4x + 2 = 2(x+1)^2$."
-        },
-        {
-          "text": "**Bornage de h** : Posez $u = \\sqrt{x}$. L'expression $h(x)$ devient $f(u)$. Réutilisez le résultat du bornage de $f$ (attention, l'indice dans l'image mentionne $1/2$, ce qui semble être une erreur dans l'énoncé si on se base sur le bornage de $f(x)$)."
-        },
-        {
-          "text": "**Monotonie de h** : La fonction $h = f \\circ g$ est la composition de $\\sqrt{x}$ (croissante) avec $f(u)$ (dont les variations dépendent de l'intervalle). L'étude se fait en regardant la monotonie de $f$ pour $u \\in [0, 1]$ et $u \\in [1, +\\infty[$."
+          ],
+          "images": []
         }
       ]
     },
@@ -908,16 +925,26 @@
       "statement": "Soit $f$ la fonction numérique définie par : $f(x) = 1 + \\sqrt{x - 4E\\left(\\frac{x}{4}\\right)}$.\nOn note $(C_f)$ la courbe représentative de la fonction $f$ dans un repère orthonormé $(O; \\vec{i}; \\vec{j})$.",
       "sub_questions": [
         {
-          "text": "Montrer que l'ensemble de définition de la fonction $f$ est : $D_f = \\mathbb{R}$."
+          "text": "Montrer que l'ensemble de définition de la fonction $f$ est : $D_f = \\mathbb{R}$.",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "text": "Montrer que le nombre 4 est une période de la fonction $f$."
+          "text": "Montrer que le nombre 4 est une période de la fonction $f$.",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "text": "Montrer que : ($\\forall x \\in \\mathbb{R}$) $1 \\le f(x) < 3$."
+          "text": "Montrer que : ($\\forall x \\in \\mathbb{R}$) $1 \\le f(x) < 3$.",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
           "text": "Étude et tracé sur un intervalle",
+          "questionNumber": "4",
           "sub_sub_questions": [
             {
               "text": "Vérifier que pour tout $x \\in [0; 4[ : f(x) = 1 + \\sqrt{x}$."
@@ -925,18 +952,8 @@
             {
               "text": "Tracer la courbe $(C_f)$ sur l'intervalle $[-4; 8[$."
             }
-          ]
-        }
-      ],
-      "hint": [
-        {
-          "text": "**Domaine $D_f$** : Utilisez la propriété de la partie entière : $E(X) \\le X < E(X) + 1$. Appliquez-la à $X = \\frac{x}{4}$ pour montrer que l'argument de la racine carrée est toujours positif."
-        },
-        {
-          "text": "**Périodicité** : Pour montrer $f(x+4) = f(x)$, utilisez la propriété $E(Y+k) = E(Y) + k$ pour $k$ entier. Pensez à $\\frac{x+4}{4} = \\frac{x}{4} + 1$."
-        },
-        {
-          "text": "**Encadrement** : Réutilisez l'encadrement $0 \\le X - E(X) < 1$ pour trouver les bornes de $f(x)$."
+          ],
+          "images": []
         }
       ]
     },
@@ -947,6 +964,7 @@
       "sub_questions": [
         {
           "text": "Partie I : Propriétés des réels (Densité)",
+          "questionNumber": "1",
           "sub_sub_questions": [
             {
               "text": "Soit $a, b \\in \\mathbb{R}$ avec $a > b$. On pose $n = 1 + E\\left(\\frac{1}{a-b}\\right)$ et $m = E(nb)$. Vérifier que $n \\in \\mathbb{N}^*$ et $\\frac{1+m}{n} \\in \\mathbb{Q}$."
@@ -963,10 +981,12 @@
             {
               "text": "On pose : $\\omega = \\frac{\\sqrt{2}}{p} + x$. Montrer que $\\omega$ est irrationnel et que $\\beta < \\omega < \\alpha$."
             }
-          ]
+          ],
+          "images": []
         },
         {
           "text": "Partie II : Équation fonctionnelle (Cauchy)",
+          "questionNumber": "2",
           "sub_sub_questions": [
             {
               "text": "Calculer $f(0)$ puis déterminer les deux valeurs possibles de $f(1)$."
@@ -989,18 +1009,11 @@
             {
               "text": "Montrer que pour tout $x \\in \\mathbb{R} : f(x) = x$ (Indication : On pourra utiliser la partie I)."
             }
-          ]
-        }
-      ],
-      "hint": [
-        {
-          "text": "**Partie I (Densité)** : L'objectif est de montrer la **densité des rationnels** (un rationnel entre deux réels) et la **densité des irrationnels** (un irrationnel entre deux réels). Utilisez la propriété $E(X) \\le X < E(X) + 1$."
-        },
-        {
-          "text": "**Partie II (Équation de Cauchy)** : \n* **$f(0)$ et $f(1)$** : Utilisez l'additivité $f(a+b)=f(a)+f(b)$ et la multiplicativité $f(ab)=f(a)f(b)$ avec des valeurs simples.\n* **$f(x)=x$ sur $\\mathbb{Q}$** : Démontrez par récurrence sur $\\mathbb{N}$, puis étendez à $\\mathbb{Z}$ (en utilisant $f(0)$ et $f(-x)$), puis à $\\mathbb{Q}$ (en écrivant $x=p/q$ et utilisant la multiplicativité).\n* **$f(x)=x$ sur $\\mathbb{R}$** : La croissance de $f$ s'obtient en utilisant $f(x^2) = f(x)^2 \\ge 0$. La densité des rationnels permet de conclure : encadrez $x$ par deux rationnels $r_1 < x < r_2$, puis utilisez la croissance de $f$."
+          ],
+          "images": []
         }
       ]
     }
   ],
-  "version": "v1.1.0-817cc1"
+  "version": "v1.1.0-d3ebcf"
 }

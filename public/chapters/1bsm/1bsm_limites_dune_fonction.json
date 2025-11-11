@@ -573,20 +573,28 @@
       "statement": "Calculer la limite suivante : $\\lim_{x\\to 2} \\frac{x^2 - 4}{x - 2}$.",
       "sub_questions": [
         {
-          "question": "Identifier la forme indéterminée",
-          "hint": "En remplaçant $x$ par 2, on obtient $\\frac{0}{0}$ qui est une forme indéterminée."
+          "text": "",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Factoriser le numérateur $x^2 - 4$",
-          "hint": "$x^2 - 4 = (x-2)(x+2)$ (identité remarquable $a^2 - b^2$)"
+          "text": "",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Simplifier la fraction",
-          "hint": "$\\frac{(x-2)(x+2)}{x-2} = x + 2$ pour $x \\neq 2$"
+          "text": "",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Calculer la limite",
-          "hint": "$\\lim_{x \\to 2} (x + 2) = 2 + 2 = 4$"
+          "text": "",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     },
@@ -596,20 +604,28 @@
       "statement": "Calculer $\\lim_{x \\to +\\infty} \\frac{3x^3 - 2x^2 + 1}{5x^3 + x - 7}$.",
       "sub_questions": [
         {
-          "question": "Identifier les termes de plus haut degré",
-          "hint": "Le plus haut degré est 3 au numérateur ($3x^3$) et au dénominateur ($5x^3$)."
+          "text": "",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Diviser le numérateur et le dénominateur par $x^3$",
-          "hint": "$\\frac{3 - \\frac{2}{x} + \\frac{1}{x^3}}{5 + \\frac{1}{x^2} - \\frac{7}{x^3}}$"
+          "text": "",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Déterminer les limites des termes en $\\frac{1}{x^k}$ quand $x \\to +\\infty$",
-          "hint": "$\\lim_{x \\to +\\infty} \\frac{1}{x^k} = 0$ pour tout $k > 0$"
+          "text": "",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Conclure sur la limite",
-          "hint": "$\\lim_{x \\to +\\infty} \\frac{3x^3 - 2x^2 + 1}{5x^3 + x - 7} = \\frac{3}{5}$"
+          "text": "",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     },
@@ -619,20 +635,28 @@
       "statement": "Soit $f(x) = \\frac{2x^2 + 3x - 1}{x - 1}$. Étudier les asymptotes de $f$.",
       "sub_questions": [
         {
-          "question": "Étudier l'existence d'une asymptote verticale",
-          "hint": "Le dénominateur s'annule en $x = 1$. Étudier $\\lim_{x \\to 1} f(x)$ : on trouve $\\pm\\infty$, donc $x = 1$ est une asymptote verticale."
+          "text": "",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Effectuer la division euclidienne de $2x^2 + 3x - 1$ par $x - 1$",
-          "hint": "$2x^2 + 3x - 1 = (x - 1)(2x + 5) + 4$"
+          "text": "",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "En déduire l'expression de $f(x)$",
-          "hint": "$f(x) = 2x + 5 + \\frac{4}{x-1}$"
+          "text": "",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Identifier l'asymptote oblique",
-          "hint": "Quand $x \\to \\pm\\infty$, $\\frac{4}{x-1} \\to 0$, donc $y = 2x + 5$ est une asymptote oblique."
+          "text": "",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     },
@@ -642,20 +666,28 @@
       "statement": "Calculer $\\lim_{x \\to +\\infty} (\\sqrt{x^2 + 2x} - x)$.",
       "sub_questions": [
         {
-          "question": "Identifier la forme indéterminée",
-          "hint": "Quand $x \\to +\\infty$, $\\sqrt{x^2 + 2x} \\to +\\infty$ et $x \\to +\\infty$, donc c'est la forme $\\infty - \\infty$."
+          "text": "",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Multiplier par l'expression conjuguée",
-          "hint": "$(\\sqrt{x^2 + 2x} - x) \\times \\frac{\\sqrt{x^2 + 2x} + x}{\\sqrt{x^2 + 2x} + x} = \\frac{(x^2 + 2x) - x^2}{\\sqrt{x^2 + 2x} + x} = \\frac{2x}{\\sqrt{x^2 + 2x} + x}$"
+          "text": "",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Simplifier l'expression obtenue",
-          "hint": "Diviser par $x$ : $\\frac{2}{\\frac{\\sqrt{x^2 + 2x}}{x} + 1} = \\frac{2}{\\sqrt{1 + \\frac{2}{x}} + 1}$"
+          "text": "",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Calculer la limite",
-          "hint": "Quand $x \\to +\\infty$, $\\frac{2}{x} \\to 0$, donc la limite est $\\frac{2}{\\sqrt{1} + 1} = \\frac{2}{2} = 1$"
+          "text": "",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     },
@@ -665,23 +697,31 @@
       "statement": "Soit $f(x) = x^3 - 3x + 1$. Montrer que l'équation $f(x) = 0$ admet au moins une solution dans l'intervalle $[0, 1]$.",
       "sub_questions": [
         {
-          "question": "Vérifier que $f$ est continue sur $[0, 1]$",
-          "hint": "$f$ est une fonction polynomiale, donc continue sur $\\mathbb{R}$, et en particulier sur $[0, 1]$."
+          "text": "",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Calculer $f(0)$ et $f(1)$",
-          "hint": "$f(0) = 0 - 0 + 1 = 1$ et $f(1) = 1 - 3 + 1 = -1$"
+          "text": "",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Vérifier que $f(0) \\times f(1) < 0$",
-          "hint": "$f(0) \\times f(1) = 1 \\times (-1) = -1 < 0$. Les valeurs sont de signes opposés."
+          "text": "",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Appliquer le théorème des valeurs intermédiaires",
-          "hint": "$f$ est continue sur $[0, 1]$ et $f(0) \\times f(1) < 0$, donc il existe $c \\in ]0, 1[$ tel que $f(c) = 0$."
+          "text": "",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     }
   ],
-  "version": "v1.1.0-78f85d"
+  "version": "v1.1.0-f6b96f"
 }

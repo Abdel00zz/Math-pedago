@@ -473,12 +473,16 @@
       "statement": "Donner une représentation paramétrique de la droite (D) passant par le point $A(1,0,2)$ et dirigée par le vecteur $\\vec{u}(2, -1, 1)$.",
       "sub_questions": [
         {
-          "question": "Rappeler la forme d'une représentation paramétrique.",
-          "hint": "$\\begin{cases} x = x_A + t \\cdot u_x \\\\ y = y_A + t \\cdot u_y \\\\ z = z_A + t \\cdot u_z \\end{cases}$ avec $t \\in \\mathbb{R}$"
+          "text": "",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Écrire la représentation paramétrique de (D).",
-          "hint": "$\\begin{cases} x = 1 + 2t \\\\ y = 0 - t \\\\ z = 2 + t \\end{cases}$ avec $t \\in \\mathbb{R}$"
+          "text": "",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     },
@@ -488,20 +492,28 @@
       "statement": "Déterminer l'équation cartésienne du plan $P$ passant par $A(1, 2, 3)$ et de vecteur normal $\\vec{n}(2, -1, 4)$.",
       "sub_questions": [
         {
-          "question": "Rappeler la forme générale d'une équation de plan.",
-          "hint": "$ax + by + cz + d = 0$ où $(a, b, c)$ sont les coordonnées du vecteur normal."
+          "text": "",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Écrire l'équation avec les coordonnées de $\\vec{n}$.",
-          "hint": "$2x - y + 4z + d = 0$"
+          "text": "",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Utiliser le point $A$ pour déterminer $d$.",
-          "hint": "$2(1) - 2 + 4(3) + d = 0 \\Rightarrow 2 - 2 + 12 + d = 0 \\Rightarrow d = -12$"
+          "text": "",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Donner l'équation finale du plan.",
-          "hint": "$2x - y + 4z - 12 = 0$"
+          "text": "",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     },
@@ -511,16 +523,22 @@
       "statement": "Calculer la distance entre les points $M(2, -1, 5)$ et $N(-1, 3, 1)$.",
       "sub_questions": [
         {
-          "question": "Rappeler la formule de la distance.",
-          "hint": "$MN = \\sqrt{(x_N-x_M)^2 + (y_N-y_M)^2 + (z_N-z_M)^2}$"
+          "text": "",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Calculer les différences de coordonnées.",
-          "hint": "$x_N - x_M = -1 - 2 = -3$, $y_N - y_M = 3 - (-1) = 4$, $z_N - z_M = 1 - 5 = -4$"
+          "text": "",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Calculer la distance.",
-          "hint": "$MN = \\sqrt{(-3)^2 + 4^2 + (-4)^2} = \\sqrt{9 + 16 + 16} = \\sqrt{41}$"
+          "text": "",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     },
@@ -530,16 +548,22 @@
       "statement": "Les points $A(1,0,0)$, $B(0,1,0)$, $C(0,0,1)$ et $D(1,1,1)$ sont-ils coplanaires ?",
       "sub_questions": [
         {
-          "question": "Calculer les vecteurs $\\vec{AB}$, $\\vec{AC}$ et $\\vec{AD}$.",
-          "hint": "$\\vec{AB}(-1,1,0)$, $\\vec{AC}(-1,0,1)$, $\\vec{AD}(0,1,1)$"
+          "text": "",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Vérifier s'il existe $\\alpha$ et $\\beta$ tels que $\\vec{AD} = \\alpha\\vec{AB} + \\beta\\vec{AC}$.",
-          "hint": "$(0,1,1) = \\alpha(-1,1,0) + \\beta(-1,0,1)$. En résolvant: $\\alpha = 1, \\beta = 1$."
+          "text": "",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Conclure sur la coplanarité.",
-          "hint": "Oui, car $\\vec{AD} = \\vec{AB} + \\vec{AC}$. Les 4 points sont coplanaires."
+          "text": "",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     },
@@ -549,23 +573,31 @@
       "statement": "Étudier la position relative des droites $D_1: \\begin{cases} x = 1 + t \\\\ y = 2t \\\\ z = -1 + t \\end{cases}$ et $D_2: \\begin{cases} x = 2 + s \\\\ y = 1 + 2s \\\\ z = 3s \\end{cases}$",
       "sub_questions": [
         {
-          "question": "Identifier les vecteurs directeurs de $D_1$ et $D_2$.",
-          "hint": "$\\vec{u_1}(1, 2, 1)$ pour $D_1$ et $\\vec{u_2}(1, 2, 3)$ pour $D_2$"
+          "text": "",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Vérifier si les vecteurs directeurs sont colinéaires.",
-          "hint": "Non, car $\\frac{1}{1} = \\frac{2}{2} \\neq \\frac{1}{3}$. Ils ne sont pas colinéaires."
+          "text": "",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Chercher un éventuel point d'intersection en résolvant le système.",
-          "hint": "$1+t = 2+s$, $2t = 1+2s$, $-1+t = 3s$. De la 3ème: $t = 1+3s$. En substituant dans la 1ère: $1+(1+3s) = 2+s \\Rightarrow s = -1$, $t = -2$. Vérification dans la 2ème: $2(-2) = 1+2(-1) \\Rightarrow -4 = -1$. Faux!"
+          "text": "",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Conclure.",
-          "hint": "Les droites ne sont ni parallèles ni sécantes. Elles sont non coplanaires (gauches)."
+          "text": "",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     }
   ],
-  "version": "v1.1.0-2c2516"
+  "version": "v1.1.0-af6cba"
 }

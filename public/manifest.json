@@ -152,85 +152,85 @@
       "id": "1bsm-generalites-sur-les-fonctions",
       "file": "1bsm/1bsm_generalites_sur_les_fonctions.json",
       "isActive": true,
-      "version": "v1.1.0-817cc1"
+      "version": "v1.1.0-d3ebcf"
     },
     {
       "id": "1bsm-le-barycentre-dans-le-plan",
       "file": "1bsm/1bsm_le_barycentre_dans_le_plan.json",
       "isActive": true,
-      "version": "v1.1.0-1da49c"
+      "version": "v1.1.0-b01773"
     },
     {
       "id": "1bsm-le-produit-scalaire-dans-le-plan",
       "file": "1bsm/1bsm_le_produit_scalaire_dans_le_plan.json",
       "isActive": true,
-      "version": "v1.1.0-6a8023"
+      "version": "v1.1.0-86ec76"
     },
     {
       "id": "1bsm-calcul-trigonometrique",
       "file": "1bsm/1bsm_calcul_trigonometrique.json",
       "isActive": true,
-      "version": "v1.1.0-1a39ea"
+      "version": "v1.1.0-aee707"
     },
     {
       "id": "1bsm-les-suites-numeriques",
       "file": "1bsm/1bsm_les_suites_numeriques.json",
       "isActive": true,
-      "version": "v1.1.0-997c89"
+      "version": "v1.1.0-13f3b0"
     },
     {
       "id": "1bsm-limites-dune-fonction",
       "file": "1bsm/1bsm_limites_dune_fonction.json",
       "isActive": true,
-      "version": "v1.1.0-78f85d"
+      "version": "v1.1.0-f6b96f"
     },
     {
       "id": "1bsm-la-rotation-dans-le-plan",
       "file": "1bsm/1bsm_la_rotation_dans_le_plan.json",
       "isActive": false,
-      "version": "v1.1.0-f60e07"
+      "version": "v1.1.0-8cb6a4"
     },
     {
       "id": "1bsm-la-derivation",
       "file": "1bsm/1bsm_la_derivation.json",
       "isActive": false,
-      "version": "v1.1.0-b84985"
+      "version": "v1.1.0-f41aef"
     },
     {
       "id": "1bsm-etude-des-fonctions",
       "file": "1bsm/1bsm_etude_des_fonctions.json",
       "isActive": false,
-      "version": "v1.1.0-817cc1"
+      "version": "v1.1.0-4653c8"
     },
     {
       "id": "1bsm-vecteurs-de-lespace",
       "file": "1bsm/1bsm_vecteurs_de_lespace.json",
       "isActive": false,
-      "version": "v1.1.0-95966f"
+      "version": "v1.1.0-59773a"
     },
     {
       "id": "1bsm-geometrie-dans-lespace",
       "file": "1bsm/1bsm_geometrie_dans_lespace.json",
       "isActive": false,
-      "version": "v1.1.0-2c2516"
+      "version": "v1.1.0-af6cba"
     },
     {
       "id": "1bsm-denombrement",
       "file": "1bsm/1bsm_denombrement.json",
       "isActive": false,
-      "version": "v1.1.0-46b101"
+      "version": "v1.1.0-47538d"
     },
     {
       "id": "1bsm-le-produit-scalaire-dans-lespace",
       "file": "1bsm/1bsm_le_produit_scalaire_dans_lespace.json",
       "isActive": false,
-      "version": "v1.1.0-c43709"
+      "version": "v1.1.0-915e73"
     },
     {
       "id": "1bsm-arithmetique-dans-z",
       "file": "1bsm/1bsm_arithmetique_dans_z.json",
       "isActive": false,
-      "version": "v1.1.0-c11a85"
+      "version": "v1.1.0-78c4bb"
     }
   ],
   "2bse": [

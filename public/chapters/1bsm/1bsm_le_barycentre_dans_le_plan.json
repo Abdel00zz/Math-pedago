@@ -573,12 +573,16 @@
       "statement": "Soit un triangle ABC. Construire le point G, barycentre de $(A, 1)$, $(B, 2)$ et $(C, -1)$.",
       "sub_questions": [
         {
-          "question": "Vérifier que G existe",
-          "hint": "Calculer la somme des coefficients"
+          "text": "",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Utiliser l'associativité pour construire G",
-          "hint": "Calculer d'abord $I = bar\\{(A,1);(B,2)\\}$ puis $G = bar\\{(I,3);(C,-1)\\}$"
+          "text": "",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     },
@@ -588,16 +592,22 @@
       "statement": "Dans un repère orthonormé, on donne $A(2; 1)$, $B(-1; 3)$ et $C(4; -2)$. Déterminer les coordonnées de $G = bar\\{(A, 2); (B, 1); (C, 3)\\}$.",
       "sub_questions": [
         {
-          "question": "Calculer $x_G$ en utilisant la formule du barycentre",
-          "hint": "$x_G = \\frac{\\alpha x_A + \\beta x_B + \\gamma x_C}{\\alpha + \\beta + \\gamma}$"
+          "text": "",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Calculer $y_G$ de la même manière",
-          "hint": "Appliquer la même formule pour les ordonnées"
+          "text": "",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Vérifier le résultat graphiquement",
-          "hint": "Placer les points et vérifier que G est bien positionné"
+          "text": "",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     },
@@ -607,12 +617,16 @@
       "statement": "Soit ABC un triangle et G le point défini par $\\vec{AG} = \\frac{1}{3}\\vec{AB} + \\frac{1}{2}\\vec{AC}$.",
       "sub_questions": [
         {
-          "question": "Exprimer $\\vec{AG}$ en fonction de $\\vec{AB}$ et $\\vec{AC}$ sous forme de barycentre",
-          "hint": "Chercher $\\alpha$, $\\beta$, $\\gamma$ tels que $\\alpha\\vec{GA} + \\beta\\vec{GB} + \\gamma\\vec{GC} = \\vec{0}$"
+          "text": "",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "En déduire que G est le barycentre de $(A, \\alpha)$, $(B, \\beta)$, $(C, \\gamma)$ et déterminer $\\alpha$, $\\beta$, $\\gamma$",
-          "hint": "Utiliser $\\vec{AG} = \\frac{\\beta\\vec{AB} + \\gamma\\vec{AC}}{\\alpha + \\beta + \\gamma}$"
+          "text": "",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     },
@@ -622,16 +636,22 @@
       "statement": "Dans le plan rapporté à un repère orthonormé, on donne deux points $A(1; 0)$ et $B(5; 0)$. Déterminer l'ensemble des points M du plan tels que $\\|\\vec{MA} + 2\\vec{MB}\\| = 6$.",
       "sub_questions": [
         {
-          "question": "Déterminer le point $G = bar\\{(A, 1); (B, 2)\\}$",
-          "hint": "Calculer les coordonnées de G"
+          "text": "",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Transformer la relation $\\|\\vec{MA} + 2\\vec{MB}\\| = 6$ en utilisant G",
-          "hint": "$\\vec{MA} + 2\\vec{MB} = 3\\vec{MG}$"
+          "text": "",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "En déduire la nature et les caractéristiques de l'ensemble cherché",
-          "hint": "C'est un cercle de centre G"
+          "text": "",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     },
@@ -641,19 +661,25 @@
       "statement": "Soit ABC un triangle. On note I, J, K les milieux respectifs des côtés [BC], [CA], [AB]. Montrer que les médianes (AI), (BJ) et (CK) sont concourantes en un point G appelé centre de gravité du triangle.",
       "sub_questions": [
         {
-          "question": "Exprimer I comme barycentre de B et C",
-          "hint": "$I = bar\\{(B,1);(C,1)\\}$"
+          "text": "",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Montrer que le centre de gravité $G = bar\\{(A,1);(B,1);(C,1)\\}$ appartient à la médiane (AI)",
-          "hint": "Utiliser l'associativité : $G = bar\\{(A,1);(I,2)\\}$"
+          "text": "",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Montrer que $\\vec{AG} = \\frac{2}{3}\\vec{AI}$",
-          "hint": "Utiliser la formule du barycentre"
+          "text": "",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     }
   ],
-  "version": "v1.1.0-1da49c"
+  "version": "v1.1.0-b01773"
 }

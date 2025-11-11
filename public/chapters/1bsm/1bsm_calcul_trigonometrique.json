@@ -573,20 +573,28 @@
       "statement": "Résoudre dans $\\mathbb{R}$ l'équation suivante : $2\\cos(x) - 1 = 0$.",
       "sub_questions": [
         {
-          "question": "Isoler $\\cos(x)$ dans l'équation",
-          "hint": "$\\cos(x) = \\frac{1}{2}$"
+          "text": "",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Identifier l'angle de référence dans $[0, 2\\pi]$ tel que $\\cos(\\alpha) = \\frac{1}{2}$",
-          "hint": "$\\alpha = \\frac{\\pi}{3}$"
+          "text": "",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Trouver toutes les solutions dans $[0, 2\\pi]$",
-          "hint": "Le cosinus est positif dans les quadrants 1 et 4, donc $x = \\frac{\\pi}{3}$ ou $x = 2\\pi - \\frac{\\pi}{3} = \\frac{5\\pi}{3}$"
+          "text": "",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Donner l'ensemble de toutes les solutions dans $\\mathbb{R}$",
-          "hint": "Ajouter la périodicité : $x = \\frac{\\pi}{3} + 2k\\pi$ ou $x = \\frac{5\\pi}{3} + 2k\\pi$, où $k \\in \\mathbb{Z}$"
+          "text": "",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     },
@@ -596,20 +604,28 @@
       "statement": "Sans calculatrice, calculer les valeurs exactes suivantes en utilisant les formules des angles associés.",
       "sub_questions": [
         {
-          "question": "Calculer $\\cos(\\frac{5\\pi}{6})$",
-          "hint": "$\\frac{5\\pi}{6} = \\pi - \\frac{\\pi}{6}$, donc $\\cos(\\frac{5\\pi}{6}) = -\\cos(\\frac{\\pi}{6}) = -\\frac{\\sqrt{3}}{2}$"
+          "text": "",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Calculer $\\sin(\\frac{7\\pi}{4})$",
-          "hint": "$\\frac{7\\pi}{4} = 2\\pi - \\frac{\\pi}{4}$, donc $\\sin(\\frac{7\\pi}{4}) = -\\sin(\\frac{\\pi}{4}) = -\\frac{\\sqrt{2}}{2}$"
+          "text": "",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Calculer $\\cos(-\\frac{\\pi}{3})$",
-          "hint": "La fonction cosinus est paire : $\\cos(-\\frac{\\pi}{3}) = \\cos(\\frac{\\pi}{3}) = \\frac{1}{2}$"
+          "text": "",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Calculer $\\sin(\\frac{11\\pi}{6})$",
-          "hint": "$\\frac{11\\pi}{6} = 2\\pi - \\frac{\\pi}{6}$, donc $\\sin(\\frac{11\\pi}{6}) = -\\sin(\\frac{\\pi}{6}) = -\\frac{1}{2}$"
+          "text": "",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     },
@@ -619,20 +635,28 @@
       "statement": "En utilisant les formules d'addition, calculer les valeurs exactes de $\\cos(\\frac{\\pi}{12})$ et $\\sin(\\frac{\\pi}{12})$.",
       "sub_questions": [
         {
-          "question": "Écrire $\\frac{\\pi}{12}$ comme différence de deux angles remarquables",
-          "hint": "$\\frac{\\pi}{12} = \\frac{\\pi}{3} - \\frac{\\pi}{4}$"
+          "text": "",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Appliquer la formule $\\cos(a - b) = \\cos(a)\\cos(b) + \\sin(a)\\sin(b)$",
-          "hint": "$\\cos(\\frac{\\pi}{12}) = \\cos(\\frac{\\pi}{3})\\cos(\\frac{\\pi}{4}) + \\sin(\\frac{\\pi}{3})\\sin(\\frac{\\pi}{4})$"
+          "text": "",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Calculer $\\cos(\\frac{\\pi}{12})$ avec les valeurs remarquables",
-          "hint": "$\\cos(\\frac{\\pi}{12}) = \\frac{1}{2} \\times \\frac{\\sqrt{2}}{2} + \\frac{\\sqrt{3}}{2} \\times \\frac{\\sqrt{2}}{2} = \\frac{\\sqrt{2} + \\sqrt{6}}{4}$"
+          "text": "",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Calculer de même $\\sin(\\frac{\\pi}{12})$ en utilisant $\\sin(a - b)$",
-          "hint": "$\\sin(\\frac{\\pi}{12}) = \\sin(\\frac{\\pi}{3})\\cos(\\frac{\\pi}{4}) - \\cos(\\frac{\\pi}{3})\\sin(\\frac{\\pi}{4}) = \\frac{\\sqrt{6} - \\sqrt{2}}{4}$"
+          "text": "",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     },
@@ -642,20 +666,28 @@
       "statement": "Soit $x$ un réel tel que $\\sin(x) = \\frac{3}{5}$ avec $x \\in [0, \\frac{\\pi}{2}]$.",
       "sub_questions": [
         {
-          "question": "Calculer $\\cos(x)$",
-          "hint": "Utiliser $\\cos^2(x) + \\sin^2(x) = 1$, donc $\\cos^2(x) = 1 - \\frac{9}{25} = \\frac{16}{25}$. Comme $x \\in [0, \\frac{\\pi}{2}]$, $\\cos(x) = \\frac{4}{5}$"
+          "text": "",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Calculer $\\sin(2x)$ en utilisant la formule de duplication",
-          "hint": "$\\sin(2x) = 2\\sin(x)\\cos(x) = 2 \\times \\frac{3}{5} \\times \\frac{4}{5} = \\frac{24}{25}$"
+          "text": "",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Calculer $\\cos(2x)$ en utilisant la formule de duplication",
-          "hint": "$\\cos(2x) = \\cos^2(x) - \\sin^2(x) = \\frac{16}{25} - \\frac{9}{25} = \\frac{7}{25}$"
+          "text": "",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Vérifier l'identité fondamentale pour l'angle $2x$",
-          "hint": "$\\sin^2(2x) + \\cos^2(2x) = (\\frac{24}{25})^2 + (\\frac{7}{25})^2 = \\frac{576 + 49}{625} = \\frac{625}{625} = 1$ ✓"
+          "text": "",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     },
@@ -665,27 +697,37 @@
       "statement": "Résoudre dans $[0, 2\\pi]$ l'équation : $\\cos(2x) + \\sin(x) = 0$.",
       "sub_questions": [
         {
-          "question": "Remplacer $\\cos(2x)$ par son expression en fonction de $\\sin(x)$",
-          "hint": "$\\cos(2x) = 1 - 2\\sin^2(x)$, donc l'équation devient $1 - 2\\sin^2(x) + \\sin(x) = 0$"
+          "text": "",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Poser $X = \\sin(x)$ et écrire l'équation du second degré",
-          "hint": "$-2X^2 + X + 1 = 0$ ou $2X^2 - X - 1 = 0$"
+          "text": "",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Résoudre l'équation du second degré et trouver les valeurs de $X$",
-          "hint": "$\\Delta = 1 + 8 = 9$, donc $X = \\frac{1 \\pm 3}{4}$. On obtient $X = 1$ ou $X = -\\frac{1}{2}$"
+          "text": "",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Pour $\\sin(x) = 1$, trouver les solutions dans $[0, 2\\pi]$",
-          "hint": "$x = \\frac{\\pi}{2}$"
+          "text": "",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
         },
         {
-          "question": "Pour $\\sin(x) = -\\frac{1}{2}$, trouver les solutions dans $[0, 2\\pi]$",
-          "hint": "$x = \\frac{7\\pi}{6}$ et $x = \\frac{11\\pi}{6}$"
+          "text": "",
+          "questionNumber": "5",
+          "sub_sub_questions": [],
+          "images": []
         }
       ]
     }
   ],
-  "version": "v1.1.0-1a39ea"
+  "version": "v1.1.0-aee707"
 }
