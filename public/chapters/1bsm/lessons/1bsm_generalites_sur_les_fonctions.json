@@ -1,0 +1,606 @@
+{
+  "header": {
+    "title": "Généralités sur les Fonctions",
+    "subtitle": "Fonctions numériques d'une variable réelle",
+    "classe": "1ère Bac Sciences Mathématiques",
+    "chapter": "Chapitre 3",
+    "academicYear": "2025-2026"
+  },
+  "sections": [
+    {
+      "title": "Fonctions Numériques d'une Variable Réelle",
+      "subsections": [
+        {
+          "title": "Notion de Fonction",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Fonction numérique** :",
+              "content": "Toute relation $f$ qui associe à chaque élément $x$ de $\\mathbb{R}$ **au plus un élément** $y$ de $\\mathbb{R}$ est dite une fonction numérique à variable réelle $x$.\n\n**Notation** : $f : \\mathbb{R} \\to \\mathbb{R}$\n$$x \\mapsto f(x) = y$$\n\n**Vocabulaire** :\n- L'élément $x$ est appelé **antécédent**\n- L'élément $y$ est appelé **image** de $x$ par $f$, noté $f(x)$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Calcul d'images** :",
+              "content": "Soit la fonction $g$ définie par $g(x) = x^2 + 4$. Calculer l'image de $5$ par la fonction $g$.\n\n**Solution** :\n$$g(5) = 5^2 + 4 = ___25___ + 4 = ___29___$$\n\nDonc l'image de $5$ par la fonction $g$ est $___29___$."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Recherche d'antécédents** :",
+              "content": "Soit la fonction $f$ définie par $f(x) = 2x - 3$. Déterminer un antécédent de $5$ par la fonction $f$.\n\n**Solution** :\n\nOn cherche $x$ tel que $f(x) = 5$\n$$2x - 3 = 5$$\n$$2x = 5 + 3$$\n$$2x = ___8___$$\n$$x = ___4___$$\n\nDonc l'antécédent de $5$ par $f$ est $___4___$."
+            },
+            {
+              "type": "practice-box",
+              "statement": "Soit la fonction $h$ définie par $h(x) = 3x^2 - 2x + 1$",
+              "content": [
+                "Calculer $h(0)$, $h(1)$ et $h(-2)$",
+                "Déterminer les antécédents de $1$ par $h$"
+              ],
+              "solution": [
+                "$h(0) = 3(0)^2 - 2(0) + 1 = 1$\n\n$h(1) = 3(1)^2 - 2(1) + 1 = 3 - 2 + 1 = 2$\n\n$h(-2) = 3(-2)^2 - 2(-2) + 1 = 3(4) + 4 + 1 = 12 + 4 + 1 = 17$",
+                "On cherche $x$ tel que $h(x) = 1$ :\n\n$3x^2 - 2x + 1 = 1$\n\n$3x^2 - 2x = 0$\n\n$x(3x - 2) = 0$\n\nDonc $x = 0$ ou $x = \\dfrac{2}{3}$\n\nLes antécédents de $1$ sont $0$ et $\\dfrac{2}{3}$"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Ensemble de Définition",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Ensemble de définition** :",
+              "content": "L'ensemble de définition d'une fonction $f$ est l'ensemble des éléments ayant une image par $f$. On le note $D_f$ ou $\\mathcal{D}_f$."
+            },
+            {
+              "type": "remark-box",
+              "preamble": "**Remarque importante** :",
+              "content": "L'ensemble de définition $D_f$ est toujours un intervalle ou une réunion d'intervalles."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Domaines de définition usuels** :",
+              "content": "- **Fonctions polynômes** : $D_f = \\mathbb{R}$\n\n- **Fonctions trigonométriques** : $\\cos x$ et $\\sin x$ ont pour domaine $\\mathbb{R}$\n\n- **Fonction racine carrée** : $x \\mapsto \\sqrt{x}$ a pour domaine $[0 ; +\\infty[$\n\n- **Fonction inverse** : $x \\mapsto \\dfrac{1}{x}$ a pour domaine $\\mathbb{R}^*$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Détermination d'un ensemble de définition** :",
+              "content": "Soit $f$ une fonction définie par $f(x) = \\sqrt{3 - x}$\n\n**Condition d'existence** : Il faut que $3 - x \\geq 0$\n\n$$3 - x \\geq 0 \\Leftrightarrow x \\leq ___3___$$\n\nDonc $D_f = ]-\\infty ; ___3___]$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Fonction rationnelle** :",
+              "content": "Soit $f$ définie par $f(x) = \\dfrac{-2x - 4}{x^2 - 4}$\n\n**Condition** : Le dénominateur doit être non nul\n\n$$x^2 - 4 \\neq 0$$\n$$x^2 \\neq 4$$\n$$x \\neq ___2___ \\text{ et } x \\neq ___-2___$$\n\nDonc $D_f = \\mathbb{R} \\setminus \\{-2 ; 2\\} = ]-\\infty ; -2[ \\cup ]-2 ; 2[ \\cup ]2 ; +\\infty[$"
+            },
+            {
+              "type": "practice-box",
+              "statement": "Déterminer $D_f$ l'ensemble de définition des fonctions suivantes :",
+              "listType": "numbered",
+              "content": [
+                "$f(x) = x^3 - 3x + 2$",
+                "$f(x) = \\dfrac{-2x - 4}{8 - 4x}$",
+                "$f(x) = \\dfrac{x + 4}{x^2 - 4}$",
+                "$f(x) = \\sqrt{6 - 2x}$",
+                "$f(x) = \\sqrt{x^2 + x + 2}$",
+                "$f(x) = \\sqrt{x^2 - 5x}$",
+                "$f(x) = \\dfrac{2x - 4}{|8 - 4x| - 1}$"
+              ],
+              "solution": [
+                "$f$ est une fonction polynôme donc $D_f = \\mathbb{R}$",
+                "$8 - 4x \\neq 0 \\Leftrightarrow x \\neq 2$\n\nDonc $D_f = \\mathbb{R} \\setminus \\{2\\}$",
+                "$x^2 - 4 \\neq 0 \\Leftrightarrow x \\neq \\pm 2$\n\nDonc $D_f = \\mathbb{R} \\setminus \\{-2 ; 2\\}$",
+                "$6 - 2x \\geq 0 \\Leftrightarrow x \\leq 3$\n\nDonc $D_f = ]-\\infty ; 3]$",
+                "$\\Delta = 1 - 8 = -7 < 0$ et le coefficient de $x^2$ est positif\n\nDonc $x^2 + x + 2 > 0$ pour tout $x \\in \\mathbb{R}$\n\nAinsi $D_f = \\mathbb{R}$",
+                "$x^2 - 5x \\geq 0 \\Leftrightarrow x(x - 5) \\geq 0$\n\nTableau de signes : solution pour $x \\in ]-\\infty ; 0] \\cup [5 ; +\\infty[$\n\nDonc $D_f = ]-\\infty ; 0] \\cup [5 ; +\\infty[$",
+                "Deux conditions :\n\n- $|8 - 4x| - 1 \\neq 0 \\Leftrightarrow |8 - 4x| \\neq 1$\n\n$8 - 4x \\neq 1$ et $8 - 4x \\neq -1$\n\n$x \\neq \\dfrac{7}{4}$ et $x \\neq \\dfrac{9}{4}$\n\nDonc $D_f = \\mathbb{R} \\setminus \\{\\frac{7}{4} ; \\frac{9}{4}\\}$"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Parité d'une Fonction",
+      "subsections": [
+        {
+          "title": "Fonction Paire",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Fonction paire** :",
+              "content": "Soit $f$ une fonction définie sur $D_f$.\n\nOn dit que $f$ est **paire** si et seulement si :\n\n$$\\begin{cases}\n\\text{Pour tout } x \\in D_f : -x \\in D_f\\\\\n\\text{Pour tout } x \\in D_f : f(-x) = f(x)\n\\end{cases}$$"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Interprétation géométrique** :",
+              "content": "Dans un repère orthonormé, la courbe d'une fonction paire est **symétrique par rapport à l'axe des ordonnées** (l'axe $(Oy)$)."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Démonstration de parité** :",
+              "content": "Montrer que la fonction $f$ définie par $f(x) = 3x^2 + 1$ est paire.\n\n**Solution** :\n\n**Étape 1** : L'ensemble de définition de $f$ est $D_f = \\mathbb{R}$\n\nPour tout $x \\in \\mathbb{R}$, on a $-x \\in \\mathbb{R}$\n\n**Étape 2** : Calculons $f(-x)$ :\n$$f(-x) = 3(-x)^2 + 1 = 3x^2 + 1 = ___f(x)___$$\n\nDonc $f(-x) = f(x)$\n\n**Conclusion** : La fonction $f$ est **paire**."
+            },
+            {
+              "type": "remark-box",
+              "preamble": "**Astuce** :",
+              "content": "Si $f$ est paire, on peut réduire son étude à $\\mathbb{R}^+ \\cap D_f$, puis utiliser la symétrie pour compléter."
+            }
+          ]
+        },
+        {
+          "title": "Fonction Impaire",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Fonction impaire** :",
+              "content": "Soit $f$ une fonction définie sur $D_f$.\n\nOn dit que $f$ est **impaire** si et seulement si :\n\n$$\\begin{cases}\n\\text{Pour tout } x \\in D_f : -x \\in D_f\\\\\n\\text{Pour tout } x \\in D_f : f(-x) = -f(x)\n\\end{cases}$$"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Interprétation géométrique** :",
+              "content": "Dans un repère orthonormé, la courbe d'une fonction impaire est **symétrique par rapport à l'origine** $O$ du repère."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Démonstration d'imparité** :",
+              "content": "Montrer que la fonction $f$ définie par $f(x) = 3x^3$ est impaire.\n\n**Solution** :\n\n**Étape 1** : $D_f = \\mathbb{R}$, donc pour tout $x \\in \\mathbb{R}$, on a $-x \\in \\mathbb{R}$\n\n**Étape 2** : Calculons $f(-x)$ :\n$$f(-x) = 3(-x)^3 = 3 \\times (___-x^3___) = ___-3x^3___$$\n\nDonc $f(-x) = -3x^3 = ___-f(x)___$\n\n**Conclusion** : La fonction $f$ est **impaire**."
+            },
+            {
+              "type": "practice-box",
+              "statement": "Déterminer l'ensemble de définition puis étudier la parité des fonctions suivantes :",
+              "listType": "numbered",
+              "content": [
+                "$f(x) = x^2 + 2$",
+                "$f(x) = \\dfrac{2x^2}{x^2 + 1}$",
+                "$f(x) = \\dfrac{x}{x^2 - 4}$"
+              ],
+              "solution": [
+                "**Ensemble de définition** : $f$ est polynôme donc $D_f = \\mathbb{R}$\n\n**Parité** : Soit $x \\in \\mathbb{R}$, on a $-x \\in \\mathbb{R}$ et :\n\n$f(-x) = (-x)^2 + 2 = x^2 + 2 = f(x)$\n\nDonc la fonction $f$ est **paire**",
+                "**Ensemble de définition** : $x^2 + 1 \\neq 0$\n\nPour tout $x \\in \\mathbb{R}$ : $x^2 \\geq 0$ donc $x^2 + 1 \\geq 1 > 0$\n\nDonc $D_f = \\mathbb{R}$\n\n**Parité** : Soit $x \\in \\mathbb{R}$, on a :\n\n$f(-x) = \\dfrac{2(-x)^2}{(-x)^2 + 1} = \\dfrac{2x^2}{x^2 + 1} = f(x)$\n\nDonc la fonction $f$ est **paire**",
+                "**Ensemble de définition** : $x^2 - 4 \\neq 0 \\Leftrightarrow x \\neq \\pm 2$\n\nDonc $D_f = \\mathbb{R} \\setminus \\{-2 ; 2\\}$\n\n**Parité** : Soit $x \\in D_f$, alors $-x \\in D_f$ et :\n\n$f(-x) = \\dfrac{-x}{(-x)^2 - 4} = \\dfrac{-x}{x^2 - 4} = -\\dfrac{x}{x^2 - 4} = -f(x)$\n\nDonc la fonction $f$ est **impaire**"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Sens de Variations d'une Fonction",
+      "subsections": [
+        {
+          "title": "Définitions",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Monotonie d'une fonction** :",
+              "content": "Soit $f$ une fonction définie sur un intervalle $I$.\n\n**Fonction croissante** : $f$ est croissante sur $I$ si :\n$$\\text{Pour tout } a, b \\in I : a > b \\Rightarrow f(a) \\geq f(b)$$\n\n**Fonction décroissante** : $f$ est décroissante sur $I$ si :\n$$\\text{Pour tout } a, b \\in I : a > b \\Rightarrow f(a) \\leq f(b)$$\n\n**Fonction constante** : $f$ est constante sur $I$ si :\n$$\\text{Pour tout } a, b \\in I : a \\neq b \\Rightarrow f(a) = f(b)$$\n\n**Fonction monotone** : Une fonction est monotone sur $I$ si elle est croissante ou décroissante sur $I$."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Étude des variations** :",
+              "content": "Soit $f$ la fonction définie sur $\\mathbb{R}$ par $f(x) = -4x + 1$. Étudier le sens de variations de $f$ sur $\\mathbb{R}$.\n\n**Solution** :\n\nSoient $a, b \\in \\mathbb{R}$ tels que $a > b$\n\n$$a > b$$\n$$-4a < ___-4b___$$\n$$-4a + 1 < ___-4b + 1___$$\n$$f(a) < f(b)$$\n\nDonc la fonction $f$ est **strictement décroissante** sur $\\mathbb{R}$."
+            }
+          ]
+        },
+        {
+          "title": "Taux de Variation",
+          "elements": [
+            {
+              "type": "remark-box",
+              "preamble": "**Méthode du taux de variation** :",
+              "content": "Pour étudier les variations d'une fonction sur un intervalle $I$, on calcule le **taux de variations** :\n\n$$T = \\dfrac{f(x) - f(y)}{x - y} \\text{ avec } x \\neq y$$\n\n- Si $T > 0$, alors $f$ est strictement croissante\n- Si $T < 0$, alors $f$ est strictement décroissante\n- Si $T = 0$ pour tout $x$ et $y$ de $I$, alors $f$ est constante"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Application du taux de variation** :",
+              "content": "Soit $f$ la fonction définie sur $\\mathbb{R}$ par $f(x) = x^2$. Étudier les variations de $f$ sur $\\mathbb{R}$.\n\n**Solution** :\n\nSoient $x$ et $y$ deux réels avec $x \\neq y$\n\n$$T = \\dfrac{f(x) - f(y)}{x - y} = \\dfrac{x^2 - y^2}{x - y} = \\dfrac{(x - y)(x + y)}{x - y} = ___x + y___$$\n\n**Cas 1** : Si $x, y \\in [0 ; +\\infty[$, alors $T = x + y \\geq 0$\n\nDonc $f$ est **croissante** sur $[0 ; +\\infty[$\n\n**Cas 2** : Si $x, y \\in ]-\\infty ; 0]$, alors $T = x + y \\leq 0$\n\nDonc $f$ est **décroissante** sur $]-\\infty ; 0]$"
+            },
+            {
+              "type": "practice-box",
+              "statement": "Soit $f$ la fonction définie sur $\\mathbb{R}$ par $f(x) = x^2 - 4x + 1$",
+              "listType": "numbered",
+              "content": [
+                "Calculer le taux de variation de $f$ sur $\\mathbb{R}$",
+                "Étudier le sens de variation de $f$ sur $[2 ; +\\infty[$",
+                "Étudier le sens de variation de $f$ sur $]-\\infty ; 2]$",
+                "Dresser le tableau de variations de $f$ sur $\\mathbb{R}$"
+              ],
+              "solution": [
+                "Soient $x, y \\in \\mathbb{R}$ avec $x \\neq y$\n\n$T = \\dfrac{f(x) - f(y)}{x - y}$\n\n$= \\dfrac{(x^2 - 4x + 1) - (y^2 - 4y + 1)}{x - y}$\n\n$= \\dfrac{x^2 - y^2 - 4x + 4y}{x - y}$\n\n$= \\dfrac{(x - y)(x + y) - 4(x - y)}{x - y}$\n\n$= x + y - 4$",
+                "Sur $[2 ; +\\infty[$ : si $x, y \\geq 2$, alors $x + y \\geq 4$\n\nDonc $T = x + y - 4 \\geq 0$\n\nAinsi $f$ est **croissante** sur $[2 ; +\\infty[$",
+                "Sur $]-\\infty ; 2]$ : si $x, y \\leq 2$, alors $x + y \\leq 4$\n\nDonc $T = x + y - 4 \\leq 0$\n\nAinsi $f$ est **décroissante** sur $]-\\infty ; 2]$",
+                "$f(2) = 4 - 8 + 1 = -3$\n\nLa fonction $f$ est décroissante sur $]-\\infty ; 2]$ et croissante sur $[2 ; +\\infty[$"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Extremums d'une Fonction",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Extremums** :",
+              "content": "Soient $f$ une fonction définie sur $D_f$ et $a$ un réel tel que $a \\in D_f$.\n\n**Valeur minimale** : On dit que $f(a)$ est une valeur minimale de $f$ sur $D_f$ si :\n$$\\text{Pour tout } x \\in D_f : f(a) \\leq f(x)$$\n\n**Valeur maximale** : On dit que $f(a)$ est une valeur maximale de $f$ sur $D_f$ si :\n$$\\text{Pour tout } x \\in D_f : f(x) \\leq f(a)$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Recherche d'un extremum** :",
+              "content": "Soit $f$ la fonction définie sur $\\mathbb{R}$ par $f(x) = -4x^2$.\n\nPour tout $x \\in \\mathbb{R}$ :\n$$x^2 \\geq 0$$\n$$-4x^2 \\leq ___0___$$\n$$f(x) \\leq 0$$\n\nDe plus, $f(0) = ___0___$\n\nDonc le nombre $___0___ = f(0)$ est la **valeur maximale** de $f$ sur $\\mathbb{R}$."
+            },
+            {
+              "type": "practice-box",
+              "statement": "Déterminer les extremums des fonctions suivantes :",
+              "listType": "numbered",
+              "content": [
+                "Soit $f$ définie sur $\\mathbb{R}$ par $f(x) = x^2 - 4x + 1$. Montrer que $f(-3)$ est le minimum de $f$ sur $\\mathbb{R}$",
+                "Soit $g$ définie sur $\\mathbb{R}$ par $g(x) = \\dfrac{x^2}{1 + x^4}$. Montrer que $g$ admet un maximum en $1$ sur $\\mathbb{R}$"
+              ],
+              "solution": [
+                "D'après l'exercice précédent, $f$ admet un minimum en $x = 2$\n\nCalculons $f(2)$ :\n\n$f(2) = 4 - 8 + 1 = -3$\n\nPour tout $x \\in \\mathbb{R}$, on a $f(x) \\geq -3 = f(2)$\n\nDonc $f(-3)$ n'est pas le minimum. **Erreur dans l'énoncé**. Le minimum est $f(2) = -3$",
+                "Pour $x = 1$ : $g(1) = \\dfrac{1}{1 + 1} = \\dfrac{1}{2}$\n\nPour tout $x \\in \\mathbb{R}$ :\n\n$g(x) = \\dfrac{x^2}{1 + x^4}$\n\nÉtudions le signe de $g(1) - g(x)$ :\n\n$\\dfrac{1}{2} - \\dfrac{x^2}{1 + x^4} = \\dfrac{1 + x^4 - 2x^2}{2(1 + x^4)} = \\dfrac{(x^2 - 1)^2}{2(1 + x^4)} \\geq 0$\n\nDonc pour tout $x \\in \\mathbb{R}$, $g(x) \\leq g(1)$\n\nAinsi $g$ admet un **maximum** en $1$"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Monotonie et Parité",
+          "elements": [
+            {
+              "type": "property-box",
+              "preamble": "**Relation entre monotonie et parité** :",
+              "content": "Soit $f$ une fonction définie sur $D_f = I \\cup J$ avec $I$ et $J$ des intervalles symétriques par rapport à zéro.\n\n**Si $f$ est paire** : Le sens de variations de $f$ sont **opposés** sur $I$ et $J$\n\n**Si $f$ est impaire** : Le sens de variations de $f$ sont les **mêmes** sur $I$ et $J$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Application** :",
+              "content": "Soit $f$ une fonction paire décroissante sur $[0 ; +\\infty[$.\n\nAlors $f$ est ___croissante___ sur $]-\\infty ; 0]$\n\nSoit $g$ une fonction impaire croissante sur $[0 ; +\\infty[$.\n\nAlors $g$ est ___croissante___ sur $]-\\infty ; 0]$"
+            }
+          ]
+        },
+        {
+          "title": "Monotonie de f + k et λf",
+          "elements": [
+            {
+              "type": "property-box",
+              "preamble": "**Opérations sur les fonctions** :",
+              "content": "Soit $f$ une fonction définie sur $I$ et $\\lambda$ un réel.\n\n- Les fonctions $f$ et $f + k$ ont le **même sens de variations** sur $I$\n\n- Si $\\lambda > 0$, alors $f$ et $\\lambda f$ ont le **même sens de variations** sur $I$\n\n- Si $\\lambda < 0$, alors $f$ et $\\lambda f$ ont des **sens de variations contraires** sur $I$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Opérations sur les fonctions** :",
+              "content": "Si $f$ est croissante sur $[1 ; 5]$, alors :\n\n- $f + 3$ est ___croissante___ sur $[1 ; 5]$\n\n- $2f$ est ___croissante___ sur $[1 ; 5]$\n\n- $-3f$ est ___décroissante___ sur $[1 ; 5]$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Comparaison de Deux Fonctions",
+      "subsections": [
+        {
+          "title": "Égalité de Deux Fonctions",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Égalité de fonctions** :",
+              "content": "Soient $f$ et $g$ deux fonctions définies respectivement sur $D_f$ et $D_g$.\n\nOn dit que $f$ est égale à $g$ si et seulement si :\n\n- $D_f = D_g$\n- Pour tout $x \\in D = D_f = D_g$, on a $f(x) = g(x)$\n\n**Interprétation géométrique** : La courbe de $f$ est confondue avec la courbe de $g$ sur $D$."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Contre-exemple** :",
+              "content": "Soient $f$ et $g$ définies par $f(x) = \\sqrt{x^2}$ et $g(x) = x$\n\n**Domaines** : $D_f = D_g = \\mathbb{R}$\n\n**Images** : Pour tout $x \\in \\mathbb{R}$ : $f(x) = \\sqrt{x^2} = |x|$\n\nDonc $f$ et $g$ sont **différentes** car pour $x = -1$ :\n\n$f(-1) = \\sqrt{1} = ___1___$ mais $g(-1) = ___-1___$"
+            }
+          ]
+        },
+        {
+          "title": "Comparaison et Interprétation Géométrique",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Fonction positive et négative** :",
+              "content": "Soient $f$ et $g$ deux fonctions définies sur $D$.\n\n**Fonction positive** : $f$ est positive sur $D$ si :\n$$\\text{Pour tout } x \\in D : f(x) \\geq 0$$\n\n**Interprétation** : La courbe $(C_f)$ est au-dessus de l'axe $(Ox)$ sur $D$\n\n**Fonction négative** : $f$ est négative sur $D$ si :\n$$\\text{Pour tout } x \\in D : f(x) \\leq 0$$\n\n**Interprétation** : La courbe $(C_f)$ est en dessous de l'axe $(Ox)$ sur $D$"
+            },
+            {
+              "type": "definition-box",
+              "preamble": "**Comparaison de deux fonctions** :",
+              "content": "On dit que $f$ est **supérieure** à $g$ sur $D$ si :\n$$\\text{Pour tout } x \\in D : f(x) \\geq g(x)$$\n\n**Interprétation géométrique** : La courbe $(C_f)$ est au-dessus de la courbe $(C_g)$ sur $D$"
+            },
+            {
+              "type": "remark-box",
+              "preamble": "**Position relative de deux courbes** :",
+              "content": "Étudier la position relative de deux courbes $(C_f)$ et $(C_g)$ sur $D$ revient à **étudier le signe** de la différence :\n$$f(x) - g(x) \\text{ pour tout } x \\in D$$\n\n- Si $f(x) - g(x) \\geq 0$, alors $(C_f)$ est au-dessus de $(C_g)$ sur $D$\n- Si $f(x) - g(x) \\leq 0$, alors $(C_f)$ est en dessous de $(C_g)$ sur $D$"
+            }
+          ]
+        },
+        {
+          "title": "Résolution Graphique d'Équations et Inéquations",
+          "elements": [
+            {
+              "type": "remark-box",
+              "preamble": "**Rappel** :",
+              "content": "**Équation $f(x) = k$** : Les solutions sont les abscisses des points d'intersection de $(C_f)$ avec la droite d'équation $y = k$\n\n**Équation $f(x) = g(x)$** : Les solutions sont les abscisses des points d'intersection des courbes $(C_f)$ et $(C_g)$\n\n**Inéquation $f(x) \\leq k$** : Les solutions correspondent aux valeurs de $x$ pour lesquelles $(C_f)$ est en dessous de la droite $y = k$"
+            },
+            {
+              "type": "practice-box",
+              "statement": "On considère les courbes $(C_f)$ et $(C_g)$ de deux fonctions $f$ et $g$ définies sur $]0 ; +\\infty[$. D'après le graphique :",
+              "listType": "numbered",
+              "content": [
+                "Résoudre graphiquement $f(x) = 0$",
+                "Résoudre graphiquement $f(x) = 3$",
+                "Résoudre graphiquement $g(x) = f(x)$",
+                "Résoudre graphiquement $f(x) < 3$",
+                "Résoudre graphiquement $f(x) < g(x)$"
+              ],
+              "solution": [
+                "La courbe $(C_f)$ coupe l'axe $(Ox)$ en un point d'abscisse $2$\n\nDonc $S = \\{2\\}$",
+                "La courbe $(C_f)$ coupe la droite $y = 3$ en deux points d'abscisses $1$ et $4$\n\nDonc $S = \\{1 ; 4\\}$",
+                "Les courbes $(C_f)$ et $(C_g)$ se coupent en un point d'abscisse $3$\n\nDonc $S = \\{3\\}$",
+                "$(C_f)$ est en dessous de la droite $y = 3$ sur l'intervalle $]1 ; 4[$\n\nDonc $S = ]1 ; 4[$",
+                "$(C_f)$ est en dessous de $(C_g)$ sur l'intervalle $]0 ; 3[$\n\nDonc $S = ]0 ; 3[$"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Étude des Fonctions Usuelles",
+      "subsections": [
+        {
+          "title": "Fonction Polynôme du Second Degré",
+          "elements": [
+            {
+              "type": "p",
+              "content": "Soit $f$ la fonction définie sur $\\mathbb{R}$ par $f(x) = ax^2 + bx + c$ avec $a \\in \\mathbb{R}^*$ et $b, c \\in \\mathbb{R}$."
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Sens de variations** :",
+              "content": "**Si $a > 0$** : $f$ est décroissante sur $]-\\infty ; \\dfrac{-b}{2a}]$ et croissante sur $[\\dfrac{-b}{2a} ; +\\infty[$\n\n**Si $a < 0$** : $f$ est croissante sur $]-\\infty ; \\dfrac{-b}{2a}]$ et décroissante sur $[\\dfrac{-b}{2a} ; +\\infty[$"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Nature de la courbe** :",
+              "content": "La courbe $(C_f)$ de $f$ est une **parabole** de sommet $\\Omega\\left(\\dfrac{-b}{2a} ; f\\left(\\dfrac{-b}{2a}\\right)\\right)$ et d'axe de symétrie la droite d'équation $x = \\dfrac{-b}{2a}$"
+            },
+            {
+              "type": "remark-box",
+              "preamble": "**Forme canonique** :",
+              "content": "La forme canonique de $f$ est :\n\n$$f(x) = a\\left(x + \\dfrac{b}{2a}\\right)^2 - \\dfrac{b^2 - 4ac}{4a}$$\n\nEn posant $\\alpha = \\dfrac{-b}{2a}$ et $\\beta = -\\dfrac{\\Delta}{4a} = f\\left(\\dfrac{-b}{2a}\\right)$\n\nOn obtient : $f(x) = a(x - \\alpha)^2 + \\beta$\n\nLa courbe $(C_f)$ est obtenue par **translation** de vecteur $\\vec{u}(\\alpha ; \\beta)$ de la courbe de $x \\mapsto ax^2$"
+            },
+            {
+              "type": "practice-box",
+              "statement": "Soit $f$ la fonction définie sur $\\mathbb{R}$ par $f(x) = x^2 - 4x + 3$",
+              "listType": "numbered",
+              "content": [
+                "Dresser le tableau de variations de $f$",
+                "Déterminer la nature de $(C_f)$",
+                "Déterminer les points d'intersection de $(C_f)$ avec les axes du repère",
+                "Tracer la courbe $(C_f)$"
+              ],
+              "solution": [
+                "On a : $a = 1 > 0$, $b = -4$ et $c = 3$\n\n$\\dfrac{-b}{2a} = \\dfrac{4}{2} = 2$\n\n$f(2) = 4 - 8 + 3 = -1$\n\nLa fonction $f$ est décroissante sur $]-\\infty ; 2]$ avec une valeur minimale de $-1$ en $x = 2$, puis croissante sur $[2 ; +\\infty[$",
+                "$(C_f)$ est une **parabole** de sommet $\\Omega(2 ; -1)$ et d'axe de symétrie la droite $x = 2$",
+                "**Avec $(Ox)$** : $f(x) = 0 \\Leftrightarrow x^2 - 4x + 3 = 0$\n\n$\\Delta = 16 - 12 = 4$\n\n$x_1 = \\dfrac{4 + 2}{2} = 3$ et $x_2 = \\dfrac{4 - 2}{2} = 1$\n\nPoints : $A(1 ; 0)$ et $B(3 ; 0)$\n\n**Avec $(Oy)$** : $f(0) = 3$\n\nPoint : $C(0 ; 3)$",
+                "Tracer la parabole passant par les points $A$, $B$, $C$ et $\\Omega$, avec axe de symétrie $x = 2$"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Fonction Homographique",
+          "elements": [
+            {
+              "type": "p",
+              "content": "Soit $f$ la fonction définie par $f(x) = \\dfrac{ax + b}{cx + d}$ avec $a, b, d \\in \\mathbb{R}$ et $c \\in \\mathbb{R}^*$"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Ensemble de définition** :",
+              "content": "$$D_f = ]-\\infty ; \\dfrac{-d}{c}[ \\cup ]\\dfrac{-d}{c} ; +\\infty[$$"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Sens de variations** :",
+              "content": "On pose $\\Delta = \\begin{vmatrix} a & b \\\\ c & d \\end{vmatrix} = ad - bc$\n\n**Si $\\Delta > 0$** : $f$ est strictement croissante sur $D_f$\n\n**Si $\\Delta < 0$** : $f$ est strictement décroissante sur $D_f$"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Nature de la courbe** :",
+              "content": "La courbe $(C_f)$ est une **hyperbole** de centre $\\Omega\\left(\\dfrac{-d}{c} ; \\dfrac{a}{c}\\right)$ et d'asymptotes les droites $(D)$ et $(D')$ d'équations :\n\n$$x = \\dfrac{-d}{c} \\quad \\text{et} \\quad y = \\dfrac{a}{c}$$"
+            },
+            {
+              "type": "remark-box",
+              "preamble": "**Forme simplifiée** :",
+              "content": "On peut écrire : $f(x) = \\dfrac{ax + b}{cx + d} = \\beta + \\dfrac{k}{x - \\alpha}$\n\nLa courbe $(C_f)$ est obtenue par **translation** de vecteur $\\vec{u}(\\alpha ; \\beta)$ de la courbe de $x \\mapsto \\dfrac{k}{x}$"
+            },
+            {
+              "type": "practice-box",
+              "statement": "Soit $g$ définie par $g(x) = \\dfrac{x + 2}{x + 1}$",
+              "listType": "numbered",
+              "content": [
+                "Déterminer $D_g$",
+                "Dresser le tableau de variations de $g$",
+                "Déterminer la nature de $(C_g)$",
+                "Déterminer les points d'intersection de $(C_g)$ avec les axes",
+                "Tracer $(C_g)$"
+              ],
+              "solution": [
+                "$x + 1 \\neq 0 \\Leftrightarrow x \\neq -1$\n\nDonc $D_g = \\mathbb{R} \\setminus \\{-1\\} = ]-\\infty ; -1[ \\cup ]-1 ; +\\infty[$",
+                "$\\Delta = \\begin{vmatrix} 1 & 2 \\\\ 1 & 1 \\end{vmatrix} = 1 - 2 = -1 < 0$\n\nDonc $g$ est strictement décroissante sur chaque intervalle de $D_g$",
+                "$(C_g)$ est une **hyperbole** de centre $\\Omega(-1 ; 1)$ et d'asymptotes $x = -1$ et $y = 1$",
+                "**Avec $(Ox)$** : $g(x) = 0 \\Leftrightarrow x + 2 = 0 \\Leftrightarrow x = -2$\n\nPoint : $A(-2 ; 0)$\n\n**Avec $(Oy)$** : $g(0) = \\dfrac{2}{1} = 2$\n\nPoint : $B(0 ; 2)$",
+                "Tracer l'hyperbole avec centre $\\Omega(-1 ; 1)$, asymptotes $x = -1$ et $y = 1$, passant par $A$ et $B$"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Fonction Cube et Fonction Racine Carrée",
+          "elements": [
+            {
+              "type": "property-box",
+              "preamble": "**Fonction cube** : $f(x) = ax^3$ avec $a \\in \\mathbb{R}^*$",
+              "content": "**Domaine** : $D_f = \\mathbb{R}$\n\n**Si $a > 0$** : $f$ est strictement croissante sur $\\mathbb{R}$\n\n**Si $a < 0$** : $f$ est strictement décroissante sur $\\mathbb{R}$\n\n**Parité** : La fonction $f$ est **impaire**"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Fonction racine carrée** : $f(x) = \\sqrt{x + a}$",
+              "content": "**Domaine** : $D_f = [-a ; +\\infty[$\n\n**Variations** : $f$ est strictement croissante sur $D_f$\n\n**Courbe** : La courbe de $f$ est déduite de celle de $x \\mapsto \\sqrt{x}$ par translation de vecteur $-a\\vec{i}$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Fonctions Composées et Bornées",
+      "subsections": [
+        {
+          "title": "Composée de Deux Fonctions",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Fonction composée** :",
+              "content": "Soient $f$ et $g$ deux fonctions définies respectivement sur $I$ et $J$ telles que $f(I) \\subset J$.\n\nLa **composée** des fonctions $f$ et $g$, notée $g \\circ f$, est la fonction définie sur $I$ par :\n$$\\text{Pour tout } x \\in I : (g \\circ f)(x) = g(f(x))$$"
+            },
+            {
+              "type": "remark-box",
+              "preamble": "**Remarques importantes** :",
+              "content": "- $D_{g \\circ f} = \\{x \\in \\mathbb{R} / x \\in D_f \\text{ et } f(x) \\in D_g\\}$\n\n- En général, $g \\circ f \\neq f \\circ g$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Calcul d'une composée** :",
+              "content": "Soient $f : \\mathbb{R} \\to \\mathbb{R}$, $x \\mapsto x + 5$ et $g : \\mathbb{R} \\to \\mathbb{R}$, $x \\mapsto x^2$\n\n**Calculons** $g \\circ f$ :\n\nPour tout $x \\in \\mathbb{R}$ :\n$$(g \\circ f)(x) = g(f(x)) = g(x + 5) = (x + 5)^2 = ___x^2 + 10x + 25___$$"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Monotonie de $g \\circ f$** :",
+              "content": "- Si $f$ et $g$ ont le **même sens de variations**, alors $g \\circ f$ est **croissante**\n\n- Si $f$ et $g$ ont des **sens de variations contraires**, alors $g \\circ f$ est **décroissante**"
+            },
+            {
+              "type": "practice-box",
+              "statement": "Soient $f$ et $g$ définies par $f(x) = x^2 + 1$ et $g(x) = \\dfrac{3x}{x - 1}$",
+              "listType": "numbered",
+              "content": [
+                "Déterminer l'ensemble de définition de $f$, $g$, $g \\circ f$ et $f \\circ g$",
+                "Déterminer $(g \\circ f)(x)$ pour tout $x \\in D_{g \\circ f}$",
+                "Déterminer $(f \\circ g)(x)$ pour tout $x \\in D_{f \\circ g}$"
+              ],
+              "solution": [
+                "$D_f = \\mathbb{R}$\n\n$D_g = \\mathbb{R} \\setminus \\{1\\}$\n\n$D_{g \\circ f} = \\{x \\in \\mathbb{R} / x \\in D_f \\text{ et } f(x) \\in D_g\\}$\n\nPour tout $x \\in \\mathbb{R}$ : $f(x) = x^2 + 1 \\geq 1$, donc $f(x) \\neq 1$ sauf si $x = 0$\n\nDonc $D_{g \\circ f} = \\mathbb{R} \\setminus \\{0\\}$\n\n$D_{f \\circ g} = \\{x \\in \\mathbb{R} / x \\in D_g \\text{ et } g(x) \\in D_f\\} = D_g = \\mathbb{R} \\setminus \\{1\\}$",
+                "$(g \\circ f)(x) = g(f(x)) = g(x^2 + 1) = \\dfrac{3(x^2 + 1)}{(x^2 + 1) - 1} = \\dfrac{3(x^2 + 1)}{x^2} = \\dfrac{3x^2 + 3}{x^2}$",
+                "$(f \\circ g)(x) = f(g(x)) = f\\left(\\dfrac{3x}{x - 1}\\right) = \\left(\\dfrac{3x}{x - 1}\\right)^2 + 1 = \\dfrac{9x^2}{(x - 1)^2} + 1 = \\dfrac{9x^2 + (x - 1)^2}{(x - 1)^2}$"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Fonctions Majorées, Minorées et Bornées",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Fonction majorée, minorée, bornée** :",
+              "content": "Soit $f$ une fonction définie sur un intervalle $I$.\n\n**Fonction majorée** : $f$ est majorée par le réel $M$ sur $I$ si :\n$$\\text{Pour tout } x \\in I : f(x) \\leq M$$\n\n**Fonction minorée** : $f$ est minorée par le réel $m$ sur $I$ si :\n$$\\text{Pour tout } x \\in I : f(x) \\geq m$$\n\n**Fonction bornée** : $f$ est bornée si elle est à la fois majorée et minorée sur $I$ :\n$$\\exists m, M \\in \\mathbb{R} : \\text{Pour tout } x \\in I : m \\leq f(x) \\leq M$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Fonction majorée** :",
+              "content": "Soit $f$ définie sur $\\mathbb{R}^*$ par $f(x) = 1 - \\dfrac{1}{x}$\n\nMontrons que $f$ est majorée par $1$ sur $]0 ; +\\infty[$\n\nPour tout $x > 0$ : $\\dfrac{1}{x} > 0$ donc $-\\dfrac{1}{x} < 0$ donc $1 - \\dfrac{1}{x} < ___1___$\n\nAinsi $f(x) < 1$ pour tout $x \\in ]0 ; +\\infty[$\n\nDonc $f$ est **majorée par $1$** sur $]0 ; +\\infty[$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Fonction minorée** :",
+              "content": "Soit $g$ définie sur $\\mathbb{R}$ par $g(x) = -2 + \\dfrac{1}{x^2 + 1}$\n\nMontrons que $g$ est minorée par $-2$ sur $\\mathbb{R}$\n\nPour tout $x \\in \\mathbb{R}$ : $x^2 + 1 \\geq 1$ donc $\\dfrac{1}{x^2 + 1} \\leq 1$ et $\\dfrac{1}{x^2 + 1} > ___0___$\n\nDonc $-2 + \\dfrac{1}{x^2 + 1} > ___-2___$\n\nAinsi $g(x) > -2$ pour tout $x \\in \\mathbb{R}$\n\nDonc $g$ est **minorée par $-2$** sur $\\mathbb{R}$"
+            },
+            {
+              "type": "practice-box",
+              "statement": "Soit $h$ définie sur $\\mathbb{R}$ par $h(x) = 2\\sin x + \\cos x$. Montrer que $h$ est bornée.",
+              "solution": [
+                "On sait que pour tout $x \\in \\mathbb{R}$ : $-1 \\leq \\sin x \\leq 1$ et $-1 \\leq \\cos x \\leq 1$\n\nDonc : $-2 \\leq 2\\sin x \\leq 2$\n\nPar addition : $-2 - 1 \\leq 2\\sin x + \\cos x \\leq 2 + 1$\n\nAinsi : $-3 \\leq h(x) \\leq 3$\n\nDonc $h$ est **bornée** sur $\\mathbb{R}$ (minorée par $-3$ et majorée par $3$)"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Image d'un Intervalle par une Fonction",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Image d'un intervalle** :",
+              "content": "Soit $f$ une fonction définie sur un intervalle $I$.\n\nL'**image de $I$ par $f$** est l'ensemble des images des éléments de $I$ par $f$ :\n$$f(I) = \\{f(x) / x \\in I\\}$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Détermination d'une image** :",
+              "content": "Soit $f$ une fonction définie sur $[-4 ; 5]$ telle que :\n\n- $f$ est décroissante sur $[-4 ; -3]$ avec $f(-4) = 2$ et $f(-3) = 0$\n- $f$ est croissante sur $[-3 ; 1]$ avec $f(-3) = 0$ et $f(1) = -1$\n- $f$ est décroissante sur $[1 ; 5]$ avec $f(1) = -1$ et $f(5) = -2$\n\n**Déterminons** :\n\n- $f([-3 ; 1])$ : Sur $[-3 ; 1]$, $f$ est croissante de $0$ à $-1$ donc $f([-3 ; 1]) = ___[-1 ; 0]___$\n\n- $f([1 ; 5])$ : Sur $[1 ; 5]$, $f$ est décroissante de $-1$ à $-2$ donc $f([1 ; 5]) = ___[-2 ; -1]___$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Fonctions Périodiques et Partie Entière",
+      "subsections": [
+        {
+          "title": "Fonction Périodique",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Fonction périodique** :",
+              "content": "Soit $T \\in \\mathbb{R}^{+*}$.\n\nOn dit que $f$ est **périodique** sur $D$ de période $T$ si et seulement si :\n\n$$\\begin{cases}\n\\text{Pour tout } x \\in D : (x \\in D \\Leftrightarrow x + T \\in D)\\\\\n\\text{Pour tout } x \\in D : f(x + T) = f(x)\n\\end{cases}$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Fonctions trigonométriques périodiques** :",
+              "content": "- Les fonctions $x \\mapsto \\sin(x)$ et $x \\mapsto \\cos(x)$ sont périodiques de période $___2\\pi___$\n\n- La fonction $x \\mapsto \\tan(x)$ est périodique de période $___\\pi___$"
+            },
+            {
+              "type": "remark-box",
+              "preamble": "**Remarques importantes** :",
+              "content": "- Si $f$ est périodique de période $T$, on peut **réduire l'étude** de $f$ à un intervalle d'amplitude $T$\n\n- On peut représenter la courbe de $f$ sur $[x_0 ; x_0 + T]$, puis obtenir toute la courbe par **translations** de vecteur $nT\\vec{i}$ avec $n \\in \\mathbb{Z}$"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Propriété** :",
+              "content": "Si $f$ est périodique de période $T$, alors pour tout $x \\in D$ et pour tout $n \\in \\mathbb{Z}$ :\n$$f(x + nT) = f(x)$$"
+            }
+          ]
+        },
+        {
+          "title": "Fonction Partie Entière",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Partie entière** :",
+              "content": "Soit $x \\in \\mathbb{R}$.\n\nL'**entier relatif** $p$ tel que $p \\leq x < p + 1$ s'appelle la **partie entière** du réel $x$. On le note $E(x)$ ou $[x]$.\n\nDonc : $$\\text{Pour tout } x \\in \\mathbb{R} : E(x) \\leq x < E(x) + 1$$"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Propriétés de la partie entière** :",
+              "content": "- Pour tout $x \\in I = [p ; p + 1[$, on a $E(x) = p$\n\n- $x \\in \\mathbb{Z} \\Leftrightarrow E(x) = x$\n\n- Pour tout $x \\in \\mathbb{R}$ et $p \\in \\mathbb{Z}$ : $E(x + p) = E(x) + p$\n\n- Pour tout $x \\in \\mathbb{R}$ : $x - 1 < E(x) \\leq x$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Calculs de partie entière** :",
+              "content": "- $E(4,55) = ___4___$\n\n- $E(0,78) = ___0___$\n\n- $E(-0,78) = ___-1___$\n\n- $E(-4,55) = ___-5___$"
+            },
+            {
+              "type": "practice-box",
+              "statement": "Soit $f$ la fonction définie sur $\\mathbb{R}$ par $f(x) = x - E(x)$",
+              "listType": "numbered",
+              "content": [
+                "Montrer que pour tout $x \\in \\mathbb{R}$ : $0 \\leq f(x) < 1$",
+                "Montrer que $f$ est périodique de période $T = 1$",
+                "Déterminer l'expression de $f(x)$ sur $[0 ; 1[$ puis tracer $(C_f)$"
+              ],
+              "solution": [
+                "Soit $x \\in \\mathbb{R}$\n\nOn a : $E(x) \\leq x < E(x) + 1$\n\nDonc : $x - E(x) \\geq 0$ et $x - E(x) < 1$\n\nAinsi : $0 \\leq f(x) < 1$",
+                "Soit $x \\in \\mathbb{R}$\n\n$f(x + 1) = (x + 1) - E(x + 1)$\n\n$= x + 1 - (E(x) + 1)$ (propriété)\n\n$= x - E(x) = f(x)$\n\nDonc $f$ est périodique de période $1$",
+                "Soit $x \\in [0 ; 1[$, alors $E(x) = 0$\n\nDonc $f(x) = x - 0 = x$\n\nLa fonction $f$ est périodique de période $1$, donc on répète le motif $y = x$ sur chaque intervalle $[n ; n+1[$"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

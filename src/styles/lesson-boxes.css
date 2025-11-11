@@ -96,6 +96,8 @@
   border-radius: 6px;
   background: #FFFFFF;
   border: 1px solid rgba(148, 163, 184, 0.3);
+  /* move the action button to the far right of the header */
+  margin-left: auto;
   cursor: pointer;
 }
 
@@ -193,6 +195,11 @@
 /* Théorème - Bleu profond */
 .lesson-box--theorem {
   --lesson-accent: #3B82F6;
+}
+
+/* Activity boxes: force a black border for the activity/frame boxes */
+.lesson-box--activity {
+  border-color: #000 !important;
 }
 
 /* Définition - Indigo */
