@@ -305,26 +305,37 @@ const DashboardView: React.FC = () => {
 
                 {hasAnyActivity ? (
                     <div className="dashboard-section-stack">
-                        <ChapterSection
-                            title="🎯 Votre apprentissage en cours"
-                            chapters={inProgress}
-                            progress={progress}
-                            onSelect={handleChapterSelect}
-                        />
-                        <ChapterSection
-                            title="Chapitres disponibles"
-                            chapters={upcoming}
-                            progress={progress}
-                            onSelect={handleChapterSelect}
-                            variant="upcoming"
-                        />
-                        <ChapterSection
-                            title="✅ Chapitres réussis"
-                            chapters={completed}
-                            progress={progress}
-                            onSelect={handleChapterSelect}
-                            icon="✓"
-                        />
+                        {/* Regrouper "En cours" et "Disponibles" pour une meilleure organisation pédagogique */}
+                        {(inProgress.length > 0 || upcoming.length > 0) && (
+                            <>
+                                {inProgress.length > 0 && (
+                                    <ChapterSection
+                                        title="🎯 Votre apprentissage en cours"
+                                        chapters={inProgress}
+                                        progress={progress}
+                                        onSelect={handleChapterSelect}
+                                    />
+                                )}
+                                {upcoming.length > 0 && (
+                                    <ChapterSection
+                                        title="📚 Chapitres disponibles"
+                                        chapters={upcoming}
+                                        progress={progress}
+                                        onSelect={handleChapterSelect}
+                                        variant="upcoming"
+                                    />
+                                )}
+                            </>
+                        )}
+                        {completed.length > 0 && (
+                            <ChapterSection
+                                title="✅ Chapitres réussis"
+                                chapters={completed}
+                                progress={progress}
+                                onSelect={handleChapterSelect}
+                                icon="✓"
+                            />
+                        )}
                     </div>
                 ) : (
                     <div className="dashboard-empty-card">

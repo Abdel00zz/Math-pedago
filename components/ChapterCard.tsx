@@ -215,6 +215,14 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
             aria-disabled={disabled}
             data-status={variant}
         >
+            {/* Badge LIVE pour les sessions actives */}
+            {isSessionActive && (
+                <div className="chapter-card-v2__live-badge">
+                    <span className="chapter-card-v2__live-badge-dot"></span>
+                    <span className="chapter-card-v2__live-badge-text">LIVE</span>
+                </div>
+            )}
+
             {/* Background effects */}
             <div className="chapter-card-v2__bg" aria-hidden="true" />
 
