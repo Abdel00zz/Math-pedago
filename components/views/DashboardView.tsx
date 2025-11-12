@@ -185,13 +185,29 @@ const DashboardView: React.FC = () => {
     // ✅ OPTIMISATION 5: handleChapterSelect avec useCallback
     const handleChapterSelect = useCallback((chapterId: string) => {
         const chapter = activities[chapterId];
-        if (chapter && (chapter.isActive || progress[chapterId]?.isWorkSubmitted)) {
+
+        // 🔓 RÈGLE IMPORTANTE : Un chapitre est accessible si :
+        // 1. Il est marqué comme actif (isActive: true)
+        // 2. Le travail a été soumis (permet de réviser)
+        // 3. Il a une session active (LIVE en ce moment)
+        // 4. Il a une session à venir (prochainement)
+        const hasSessions = Array.isArray(chapter?.sessionDates) && chapter.sessionDates.length > 0;
+        const isSessionActive = hasSessions && hasActiveSession(chapter.sessionDates);
+        const isSessionUpcoming = hasSessions && hasUpcomingSession(chapter.sessionDates);
+        const isAccessible = chapter && (
+            chapter.isActive ||
+            progress[chapterId]?.isWorkSubmitted ||
+            isSessionActive ||
+            isSessionUpcoming
+        );
+
+        if (isAccessible) {
             // If the chapter had an update flag, mark it as seen and remove related UI notifications
             if (progress[chapterId]?.hasUpdate) {
                 dispatch({ type: 'MARK_UPDATE_SEEN', payload: { chapterId } });
-                addNotification('Nouveau contenu', 'info', { 
-                    message: `<strong>${chapter.chapter}</strong> a été mis à jour`, 
-                    duration: 3000 
+                addNotification('Nouveau contenu', 'info', {
+                    message: `<strong>${chapter.chapter}</strong> a été mis à jour`,
+                    duration: 3000
                 });
             }
 
