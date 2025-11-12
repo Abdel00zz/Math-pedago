@@ -78,37 +78,18 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
 
     // Vérifier si le chapitre a une session active ou prochaine (DOIT être avant getStatusInfo)
     const isSessionActive = useMemo(() => {
-        const result = hasActiveSession(chapter.sessionDates || []);
-        console.log(`🔴 [${chapter.chapter}] Session active?`, {
-            sessionDates: chapter.sessionDates,
-            isActive: result,
-            now: new Date().toISOString()
-        });
-        return result;
-    }, [chapter.sessionDates, chapter.chapter]);
+        return hasActiveSession(chapter.sessionDates || []);
+    }, [chapter.sessionDates]);
 
     const isSessionUpcoming = useMemo(() => {
-        const result = !isSessionActive && hasUpcomingSession(chapter.sessionDates || []);
-        console.log(`🔵 [${chapter.chapter}] Session à venir?`, {
-            isUpcoming: result,
-            isSessionActive
-        });
-        return result;
-    }, [chapter.sessionDates, isSessionActive, chapter.chapter]);
+        return !isSessionActive && hasUpcomingSession(chapter.sessionDates || []);
+    }, [chapter.sessionDates, isSessionActive]);
 
     const getStatusInfo = useCallback((): StatusInfo => {
         const status = progress?.status || 'a-venir';
 
-        console.log(`📊 [${chapter.chapter}] getStatusInfo appelé:`, {
-            isSessionActive,
-            isSessionUpcoming,
-            status,
-            chapterIsActive: chapter.isActive
-        });
-
         // 🔴 PRIORITÉ 1 : Sessions actives - TOUJOURS accessible même si chapitre verrouillé
         if (isSessionActive) {
-            console.log(`✅ [${chapter.chapter}] Retour: Séance Direct (disabled: false)`);
             return {
                 text: 'Séance Direct',
                 icon: 'radio_button_checked',
@@ -160,8 +141,11 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
                 };
             case 'a-venir':
             default:
-                // Vérifier si le chapitre est verrouillé
-                if (!chapter.isActive) {
+                // 🔓 RÈGLE IMPORTANTE : Si un chapitre a des sessions (même terminées), il reste accessible
+                const hasSessions = Array.isArray(chapter.sessionDates) && chapter.sessionDates.length > 0;
+
+                // Vérifier si le chapitre est verrouillé (SAUF s'il a des sessions)
+                if (!chapter.isActive && !hasSessions) {
                     return {
                         text: 'Bientôt',
                         icon: 'lock',
@@ -178,27 +162,15 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
                     color: '#3b82f6',
                 };
         }
-    }, [chapter.isActive, progress, isSessionActive, isSessionUpcoming]);
+    }, [chapter.isActive, chapter.sessionDates, progress, isSessionActive, isSessionUpcoming, chapter.chapter]);
 
     const { text, icon, variant, disabled, color } = getStatusInfo();
 
-    console.log(`🎯 [${chapter.chapter}] État final de la carte:`, {
-        text,
-        variant,
-        disabled,
-        isSessionActive,
-        color
-    });
-
     const handleClick = useCallback(() => {
-        console.log(`🖱️ [${chapter.chapter}] Clic détecté! disabled=${disabled}`);
         if (!disabled) {
-            console.log(`✅ [${chapter.chapter}] Navigation vers le chapitre...`);
             onSelect(chapter.id);
-        } else {
-            console.log(`❌ [${chapter.chapter}] Clic bloqué car carte désactivée`);
         }
-    }, [disabled, onSelect, chapter.id, chapter.chapter]);
+    }, [disabled, onSelect, chapter.id]);
 
     // 🎯 Calcul de progression avec coefficients égaux pour leçons, quiz et exercices
     const progressPercentage = useMemo(() => {
