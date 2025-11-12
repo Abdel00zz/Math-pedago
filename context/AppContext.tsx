@@ -4,6 +4,7 @@ import { DB_KEY } from '../constants';
 import { useNotification } from './NotificationContext';
 import { isChapterCompleted, determineInitialStatus } from '../utils/chapterStatusHelpers';
 import { pushNavigationState, replaceNavigationState, getCurrentNavigationState, parseURL } from '../utils/browserNavigation';
+import { storageService, STORAGE_KEYS } from '../services/StorageService';
 
 const initialState: AppState = {
     view: 'login',
@@ -763,18 +764,34 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 
     // Effect 1: Load initial state from localStorage. Runs only once.
     useEffect(() => {
+        // 🔧 NOUVEAU: Exécuter migration et nettoyage au démarrage
+        console.log('[AppContext] Initialisation du StorageService...');
+        storageService.migrate();
+        const cleaned = storageService.cleanup();
+        console.log(`[AppContext] ${cleaned} entrées nettoyées`);
+
         let savedData: Partial<AppState> = {};
         try {
-            const rawData = localStorage.getItem(DB_KEY);
-            if (rawData) {
-                const parsedData = JSON.parse(rawData);
-                if (typeof parsedData === 'object' && parsedData !== null) {
-                    savedData = parsedData;
+            // Essayer d'abord la nouvelle clé
+            const newData = storageService.get(STORAGE_KEYS.APP_STATE);
+            if (newData) {
+                savedData = newData;
+                console.log('[AppContext] Données chargées depuis nouvelle clé');
+            } else {
+                // Fallback vers l'ancienne clé si la nouvelle n'existe pas
+                const rawData = localStorage.getItem(DB_KEY);
+                if (rawData) {
+                    const parsedData = JSON.parse(rawData);
+                    if (typeof parsedData === 'object' && parsedData !== null) {
+                        savedData = parsedData;
+                        console.log('[AppContext] Données chargées depuis ancienne clé');
+                    }
                 }
             }
         } catch (error) {
-            console.error("Failed to load or parse data from localStorage, resetting.", error);
+            console.error("[AppContext] Échec chargement localStorage, réinitialisation.", error);
             localStorage.removeItem(DB_KEY);
+            storageService.remove(STORAGE_KEYS.APP_STATE);
         }
         dispatch({ type: 'INIT', payload: savedData });
     }, []);

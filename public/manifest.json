@@ -152,7 +152,7 @@
       "id": "1bsm-generalites-sur-les-fonctions",
       "file": "1bsm/1bsm_generalites_sur_les_fonctions.json",
       "isActive": true,
-      "version": "v1.1.0-5de509"
+      "version": "v1.1.0-6c2961"
     },
     {
       "id": "1bsm-le-barycentre-dans-le-plan",
@@ -200,7 +200,7 @@
       "id": "1bsm-etude-des-fonctions",
       "file": "1bsm/1bsm_etude_des_fonctions.json",
       "isActive": false,
-      "version": "v1.1.0-4653c8"
+      "version": "v1.1.0-cd1469"
     },
     {
       "id": "1bsm-vecteurs-de-lespace",

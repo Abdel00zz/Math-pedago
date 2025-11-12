@@ -5,6 +5,7 @@ import { HighlightableContent } from '../lesson/HighlightableContent';
 import { LessonNavigator } from '../lesson/LessonNavigator';
 import { LessonProgressProvider } from '../../context/LessonProgressContext';
 import { LESSON_PROGRESS_REFRESH_EVENT } from '../../utils/lessonProgressHelpers';
+import { storageService } from '../../services/StorageService';
 import type { LessonContent } from '../../types';
 
 const LessonView: React.FC = () => {
@@ -37,7 +38,7 @@ const LessonView: React.FC = () => {
         dispatch({ type: 'CHANGE_VIEW', payload: { view: 'work-plan' } });
     }, [dispatch]);
 
-    // Charger la leçon (inline ou depuis fichier)
+    // Charger la leçon (inline ou depuis fichier) avec cache intelligent
     useEffect(() => {
         const loadLesson = async () => {
             if (!chapter) {
@@ -56,16 +57,39 @@ const LessonView: React.FC = () => {
                     return;
                 }
 
-                // Sinon, charger depuis le fichier lessonFile
+                // Sinon, charger depuis le fichier lessonFile avec cache
                 if (chapter.lessonFile) {
-                    const lessonPath = `/chapters/${chapter.class}/${chapter.lessonFile}`;
+                    const chapterId = chapter.id;
+                    const chapterVersion = chapter.version || '1.0.0';
+
+                    // 🚀 OPTIMISATION: Vérifier le cache d'abord
+                    const cachedLesson = storageService.getCachedLesson(chapterId, chapterVersion);
+                    if (cachedLesson) {
+                        console.log(`✅ Leçon "${chapter.chapter}" chargée depuis le cache (v${chapterVersion})`);
+                        const lesson = cachedLesson.lesson || cachedLesson;
+                        setLesson(lesson);
+                        setIsLoading(false);
+                        return;
+                    }
+
+                    // Cache manquant ou version différente → fetch depuis le serveur
+                    console.log(`🌐 Chargement leçon "${chapter.chapter}" depuis le serveur (v${chapterVersion})`);
+
+                    // ⚡ IMPORTANT: Ajouter cacheBuster pour forcer rechargement
+                    const cacheBuster = `?t=${Date.now()}`;
+                    const lessonPath = `/chapters/${chapter.class}/${chapter.lessonFile}${cacheBuster}`;
                     const response = await fetch(lessonPath);
-                    
+
                     if (!response.ok) {
                         throw new Error(`Impossible de charger la leçon depuis ${lessonPath}`);
                     }
-                    
+
                     const lessonData = await response.json();
+
+                    // 💾 Mettre en cache pour les prochaines fois
+                    storageService.cacheLessonContent(chapterId, lessonData, chapterVersion);
+                    console.log(`💾 Leçon "${chapter.chapter}" mise en cache (v${chapterVersion})`);
+
                     // Extraire la propriété 'lesson' du JSON si elle existe
                     const lesson = lessonData.lesson || lessonData;
                     setLesson(lesson);

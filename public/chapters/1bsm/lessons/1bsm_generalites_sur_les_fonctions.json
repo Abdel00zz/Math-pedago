@@ -16,7 +16,17 @@
             {
               "type": "definition-box",
               "preamble": "**Fonction numérique** :",
-              "content": "Toute relation $f$ qui associe à chaque élément $x$ de $\\mathbb{R}$ **au plus un élément** $y$ de $\\mathbb{R}$ est dite une fonction numérique à variable réelle $x$.\n\n**Notation** : $f : \\mathbb{R} \\to \\mathbb{R}$\n$$x \\mapsto f(x) = y$$\n\n**Vocabulaire** :\n- L'élément $x$ est appelé **antécédent**\n- L'élément $y$ est appelé **image** de $x$ par $f$, noté $f(x)$"
+              "content": [
+                ">>Toute relation $f$ qui associe à chaque élément $x$ de $\\mathbb{R}$ **au plus un élément** $y$ de >>$\\mathbb{R}$ est dite une fonction numérique à variable réelle $x$.",
+                "",
+                ">>**Notation** : $f : \\mathbb{R} \\to \\mathbb{R}$",
+                ">>$$x \\mapsto f(x) = y$$",
+                "",
+                ">>**Vocabulaire** :",
+                "L'élément $x$ est appelé **antécédent**.",
+                " L'élément $y$ est appelé **image** de $x$ par $f$, noté $f(x)$."
+              ],
+              "listType": "bullet"
             },
             {
               "type": "example-box",
@@ -58,7 +68,16 @@
             {
               "type": "example-box",
               "preamble": "**Domaines de définition usuels** :",
-              "content": "- **Fonctions polynômes** : $D_f = \\mathbb{R}$\n\n- **Fonctions trigonométriques** : $\\cos x$ et $\\sin x$ ont pour domaine $\\mathbb{R}$\n\n- **Fonction racine carrée** : $x \\mapsto \\sqrt{x}$ a pour domaine $[0 ; +\\infty[$\n\n- **Fonction inverse** : $x \\mapsto \\dfrac{1}{x}$ a pour domaine $\\mathbb{R}^*$"
+              "content": [
+                " **Fonctions polynômes** : $D_f = \\mathbb{R}$",
+                "",
+                "**Fonctions trigonométriques** : $\\cos x$ et $\\sin x$ ont pour domaine $\\mathbb{R}$",
+                "",
+                "**Fonction racine carrée** : $x \\mapsto \\sqrt{x}$ a pour domaine $[0 ; +\\infty[$",
+                "",
+                "**Fonction inverse** : $x \\mapsto \\dfrac{1}{x}$ a pour domaine $\\mathbb{R}^*$"
+              ],
+              "listType": "bullet"
             },
             {
               "type": "example-box",
@@ -186,7 +205,16 @@
             {
               "type": "remark-box",
               "preamble": "**Méthode du taux de variation** :",
-              "content": "Pour étudier les variations d'une fonction sur un intervalle $I$, on calcule le **taux de variations** :\n\n$$T = \\dfrac{f(x) - f(y)}{x - y} \\text{ avec } x \\neq y$$\n\n- Si $T > 0$, alors $f$ est strictement croissante\n- Si $T < 0$, alors $f$ est strictement décroissante\n- Si $T = 0$ pour tout $x$ et $y$ de $I$, alors $f$ est constante"
+              "content": [
+                ">>Pour étudier les variations d'une fonction sur un intervalle $I$, on calcule le **taux de variations** :",
+                "",
+                ">>$$T = \\dfrac{f(x) - f(y)}{x - y} \\text{ avec } x \\neq y$$",
+                "",
+                "Si $T > 0$, alors $f$ est strictement croissante",
+                "Si $T < 0$, alors $f$ est strictement décroissante",
+                "Si $T = 0$ pour tout $x$ et $y$ de $I$, alors $f$ est constante"
+              ],
+              "listType": "bullet"
             },
             {
               "type": "example-box",
@@ -261,12 +289,30 @@
             {
               "type": "property-box",
               "preamble": "**Opérations sur les fonctions** :",
-              "content": "Soit $f$ une fonction définie sur $I$ et $\\lambda$ un réel.\n\n- Les fonctions $f$ et $f + k$ ont le **même sens de variations** sur $I$\n\n- Si $\\lambda > 0$, alors $f$ et $\\lambda f$ ont le **même sens de variations** sur $I$\n\n- Si $\\lambda < 0$, alors $f$ et $\\lambda f$ ont des **sens de variations contraires** sur $I$"
+              "content": [
+                ">> Soit $f$ une fonction définie sur $I$ et $\\lambda$ un réel.",
+                "",
+                "Les fonctions $f$ et $f + k$ ont le **même sens de variations** sur $I$",
+                "",
+                "Si $\\lambda > 0$, alors $f$ et $\\lambda f$ ont le **même sens de variations** sur $I$",
+                "",
+                "Si $\\lambda < 0$, alors $f$ et $\\lambda f$ ont des **sens de variations contraires** sur $I$"
+              ],
+              "listType": "bullet"
             },
             {
               "type": "example-box",
               "preamble": "**Opérations sur les fonctions** :",
-              "content": "Si $f$ est croissante sur $[1 ; 5]$, alors :\n\n- $f + 3$ est ___croissante___ sur $[1 ; 5]$\n\n- $2f$ est ___croissante___ sur $[1 ; 5]$\n\n- $-3f$ est ___décroissante___ sur $[1 ; 5]$"
+              "content": [
+                "Si $f$ est croissante sur $[1 ; 5]$, alors :",
+                "",
+                "$f + 3$ est ___croissante___ sur $[1 ; 5]$",
+                "",
+                "$2f$ est ___croissante___ sur $[1 ; 5]$",
+                "",
+                "$-3f$ est ___décroissante___ sur $[1 ; 5]$"
+              ],
+              "listType": "bullet"
             }
           ]
         }
@@ -306,7 +352,14 @@
             {
               "type": "remark-box",
               "preamble": "**Position relative de deux courbes** :",
-              "content": "Étudier la position relative de deux courbes $(C_f)$ et $(C_g)$ sur $D$ revient à **étudier le signe** de la différence :\n$$f(x) - g(x) \\text{ pour tout } x \\in D$$\n\n- Si $f(x) - g(x) \\geq 0$, alors $(C_f)$ est au-dessus de $(C_g)$ sur $D$\n- Si $f(x) - g(x) \\leq 0$, alors $(C_f)$ est en dessous de $(C_g)$ sur $D$"
+              "content": [
+                ">>Étudier la position relative de deux courbes $(C_f)$ et $(C_g)$ sur $D$ revient à **étudier le signe** de la différence :",
+                ">>$$f(x) - g(x) \\text{ pour tout } x \\in D$$",
+                "",
+                "Si $f(x) - g(x) \\geq 0$, alors $(C_f)$ est au-dessus de $(C_g)$ sur $D$",
+                "Si $f(x) - g(x) \\leq 0$, alors $(C_f)$ est en dessous de $(C_g)$ sur $D$"
+              ],
+              "listType": "bullet"
             }
           ]
         },
@@ -464,7 +517,10 @@
             {
               "type": "remark-box",
               "preamble": "**Remarques importantes** :",
-              "content": "- $D_{g \\circ f} = \\{x \\in \\mathbb{R} / x \\in D_f \\text{ et } f(x) \\in D_g\\}$\n\n- En général, $g \\circ f \\neq f \\circ g$"
+              "content": [
+                "$D_{g \\circ f} = \\{x \\in \\mathbb{R} / x \\in D_f \\text{ et } f(x) \\in D_g\\}$,",
+                "en général, $g \\circ f \\neq f \\circ g$"
+              ]
             },
             {
               "type": "example-box",
@@ -474,7 +530,11 @@
             {
               "type": "property-box",
               "preamble": "**Monotonie de $g \\circ f$** :",
-              "content": "- Si $f$ et $g$ ont le **même sens de variations**, alors $g \\circ f$ est **croissante**\n\n- Si $f$ et $g$ ont des **sens de variations contraires**, alors $g \\circ f$ est **décroissante**"
+              "content": [
+                "Si $f$ et $g$ ont le **même sens de variations**, alors $g \\circ f$ est **croissante**",
+                "Si $f$ et $g$ ont des **sens de variations contraires**, alors $g \\circ f$ est **décroissante**"
+              ],
+              "listType": "bullet"
             },
             {
               "type": "practice-box",
@@ -531,7 +591,15 @@
             {
               "type": "example-box",
               "preamble": "**Détermination d'une image** :",
-              "content": "Soit $f$ une fonction définie sur $[-4 ; 5]$ telle que :\n\n- $f$ est décroissante sur $[-4 ; -3]$ avec $f(-4) = 2$ et $f(-3) = 0$\n- $f$ est croissante sur $[-3 ; 1]$ avec $f(-3) = 0$ et $f(1) = -1$\n- $f$ est décroissante sur $[1 ; 5]$ avec $f(1) = -1$ et $f(5) = -2$\n\n**Déterminons** :\n\n- $f([-3 ; 1])$ : Sur $[-3 ; 1]$, $f$ est croissante de $0$ à $-1$ donc $f([-3 ; 1]) = ___[-1 ; 0]___$\n\n- $f([1 ; 5])$ : Sur $[1 ; 5]$, $f$ est décroissante de $-1$ à $-2$ donc $f([1 ; 5]) = ___[-2 ; -1]___$"
+              "content": [
+                ">>Soit $f$ une fonction définie sur $[-4 ; 5]$  telle que $f$ est décroissante sur $[-4 ; -3]$ avec  $f(-4) = 2$ et $f(-3) = 0$",
+                ">> $f$ est croissante sur  $[-3 ; 1]$ avec $f(-3) = 0$ et $f(1) = -1$",
+                ">>$f$ est décroissante sur $[1 ; 5]$ avec $f(1) = -1$ et $f(5) = -2$",
+                ">> **Déterminons** :",
+                "$f([-3 ; 1])$ : Sur $[-3 ; 1]$, $f$ est croissante de $0$ à $-1$ donc $f([-3 ; 1]) = ___[-1 ; 0]___$",
+                "$f([1 ; 5])$ : Sur $[1 ; 5]$, $f$ est décroissante de $-1$ à $-2$ donc $f([1 ; 5]) = ___[-2 ; -1]___$"
+              ],
+              "listType": "bullet"
             }
           ]
         }

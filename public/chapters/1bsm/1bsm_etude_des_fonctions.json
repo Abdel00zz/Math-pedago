@@ -1,11 +1,7 @@
 {
   "class": "1bsm",
-  "chapter": "Généralités sur les Fonctions",
-  "sessionDates": [
-    "2025-11-10T17:00:00Z",
-    "2025-11-12T17:00:00Z",
-    "2025-11-17T17:00:00Z"
-  ],
+  "chapter": "Etude des fonctions",
+  "sessionDates": [],
   "lessonFile": "lessons/1bsm_etude_des_fonctions.json",
   "videos": [],
   "quiz": [
@@ -699,5 +695,5 @@
       ]
     }
   ],
-  "version": "v1.1.0-4653c8"
+  "version": "v1.1.0-cd1469"
 }
