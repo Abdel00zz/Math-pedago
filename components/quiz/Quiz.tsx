@@ -349,7 +349,7 @@ const Quiz: React.FC = () => {
                 >
                     <span className="material-symbols-outlined text-base">chevron_left</span>
                 </button>
-                <div key={windowStart} className="flex items-center gap-2 sm:gap-3 overflow-x-auto max-w-full px-1">
+                <div key={windowStart} className="flex items-center gap-2 sm:gap-3 px-2 py-3">
                     {navigationWindow.map(({ id, globalIndex }) => {
                         const isAnswered = !!answers[id];
                         const isCurrent = globalIndex === currentQuestionIndex;
