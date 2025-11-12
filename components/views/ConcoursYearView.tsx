@@ -9,15 +9,21 @@ const ConcoursYearView: React.FC = () => {
     const [concoursInfo, setConcoursInfo] = useState<ConcoursInfo | null>(null);
     const [yearData, setYearData] = useState<ConcoursExamen | null>(null);
     const [loading, setLoading] = useState(true);
+    const [totalQuestions, setTotalQuestions] = useState(0);
 
     useEffect(() => {
-        const concoursType = state.currentConcoursType || sessionStorage.getItem('currentConcoursType');
-        const year = state.currentConcoursYear || sessionStorage.getItem('currentConcoursYear');
+        const concoursType = state.currentConcoursType || localStorage.getItem('currentConcoursType');
+        const year = state.currentConcoursYear || localStorage.getItem('currentConcoursYear');
 
         if (!concoursType || !year) {
             dispatch({ type: 'CHANGE_VIEW', payload: { view: 'concours' } });
             return;
         }
+
+        // Sauvegarder dans localStorage
+        localStorage.setItem('currentConcoursType', concoursType);
+        localStorage.setItem('currentConcoursYear', year);
+        localStorage.setItem('concoursNavigationMode', 'year');
 
         fetch('/concours/index.json')
             .then(res => res.json())
@@ -26,7 +32,19 @@ const ConcoursYearView: React.FC = () => {
                 if (concours) {
                     setConcoursInfo(concours);
                     const examData = concours.examens.find(e => e.annee === year);
-                    setYearData(examData || null);
+                    if (examData) {
+                        setYearData(examData);
+
+                        // Charger tous les fichiers pour compter les questions
+                        Promise.all(
+                            examData.fichiers.map(fichier =>
+                                fetch(fichier.file).then(r => r.json())
+                            )
+                        ).then(allData => {
+                            const total = allData.reduce((sum, data) => sum + (data.quiz?.length || 0), 0);
+                            setTotalQuestions(total);
+                        });
+                    }
                 }
                 setLoading(false);
             })
@@ -37,9 +55,9 @@ const ConcoursYearView: React.FC = () => {
     }, [dispatch, state.currentConcoursType, state.currentConcoursYear]);
 
     const handleThemeClick = (concoursId: string, file: string, theme: string) => {
-        sessionStorage.setItem('currentConcoursId', concoursId);
-        sessionStorage.setItem('currentConcoursFile', file);
-        sessionStorage.setItem('currentConcoursTheme', theme);
+        localStorage.setItem('currentConcoursId', concoursId);
+        localStorage.setItem('currentConcoursFile', file);
+        localStorage.setItem('currentConcoursTheme', theme);
         dispatch({
             type: 'CHANGE_VIEW',
             payload: {
@@ -51,8 +69,23 @@ const ConcoursYearView: React.FC = () => {
         });
     };
 
-    const handleBackClick = () => {
-        window.history.back();
+    const handleStartGlobalQuiz = () => {
+        if (!yearData) return;
+
+        // Stocker tous les fichiers de l'année pour le quiz global
+        const allFiles = yearData.fichiers.map(f => f.file);
+        localStorage.setItem('concoursQuizFiles', JSON.stringify(allFiles));
+        localStorage.setItem('concoursQuizMode', 'year');
+        localStorage.setItem('concoursQuizYear', yearData.annee);
+
+        dispatch({
+            type: 'CHANGE_VIEW',
+            payload: {
+                view: 'concours-quiz',
+                concoursMode: 'year',
+                concoursYear: yearData.annee
+            }
+        });
     };
 
     if (loading) {
@@ -96,7 +129,7 @@ const ConcoursYearView: React.FC = () => {
                 </svg>
             </div>
 
-            <StandardHeader onBack={handleBackClick} title={`Concours ${concoursInfo.name} ${yearData.annee}`} />
+            <StandardHeader title={`Concours ${concoursInfo.name} ${yearData.annee}`} />
 
             <div className="relative z-10 max-w-6xl mx-auto px-6 py-12">
                 <div className="mb-12">
@@ -104,8 +137,40 @@ const ConcoursYearView: React.FC = () => {
                         Concours {concoursInfo.name} {yearData.annee}
                     </h1>
                     <p className="text-base text-white/90 font-light drop-shadow">
-                        {yearData.fichiers.length} {yearData.fichiers.length > 1 ? 'thèmes disponibles' : 'thème disponible'}
+                        {yearData.fichiers.length} {yearData.fichiers.length > 1 ? 'chapitres disponibles' : 'chapitre disponible'}
                     </p>
+                </div>
+
+                {/* Bouton Quiz Global - En haut */}
+                <div className="mb-12">
+                    <button
+                        onClick={handleStartGlobalQuiz}
+                        className="group w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white p-8 rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 hover:-translate-y-1"
+                    >
+                        <div className="flex items-center justify-between">
+                            <div className="text-left">
+                                <div className="flex items-center gap-3 mb-2">
+                                    <span className="material-symbols-outlined !text-4xl">quiz</span>
+                                    <h2 className="text-3xl font-light">
+                                        Quiz Complet {yearData.annee}
+                                    </h2>
+                                </div>
+                                <p className="text-white/90 text-sm font-light">
+                                    {totalQuestions} questions couvrant tous les chapitres de cette année
+                                </p>
+                            </div>
+                            <span className="material-symbols-outlined !text-5xl group-hover:translate-x-2 transition-transform">
+                                arrow_forward
+                            </span>
+                        </div>
+                    </button>
+                </div>
+
+                {/* Chapitres/Thèmes */}
+                <div className="mb-8">
+                    <h2 className="text-2xl font-light text-white mb-6 tracking-tight drop-shadow">
+                        Réviser par chapitre
+                    </h2>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -121,13 +186,13 @@ const ConcoursYearView: React.FC = () => {
                                         {fichier.theme}
                                     </h3>
                                     <div className="inline-block px-3 py-1 bg-indigo-50 text-xs text-indigo-700 font-light rounded-lg">
-                                        Concours {yearData.annee}
+                                        Résumé pédagogique
                                     </div>
                                 </div>
                             </div>
 
                             <div className="mt-6 flex items-center gap-2 text-indigo-600 font-medium text-sm group-hover:translate-x-2 transition-transform">
-                                Voir le résumé et le quiz
+                                Voir le résumé
                                 <span className="material-symbols-outlined !text-lg">arrow_forward</span>
                             </div>
                         </button>
@@ -135,11 +200,19 @@ const ConcoursYearView: React.FC = () => {
                 </div>
 
                 <div className="mt-20 bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-8">
-                    <p className="text-sm text-gray-700 font-light">
-                        Pour chaque thème, commencez par lire attentivement le résumé pédagogique.
-                        Il contient les formules essentielles, les pièges à éviter et les astuces qui vous
-                        aideront à réussir le quiz.
-                    </p>
+                    <div className="flex items-start gap-4">
+                        <span className="material-symbols-outlined text-indigo-600 !text-3xl">lightbulb</span>
+                        <div>
+                            <h3 className="text-lg font-medium text-gray-900 mb-2">Stratégie de révision</h3>
+                            <p className="text-sm text-gray-700 font-light leading-relaxed">
+                                <strong>1. Révisez chaque chapitre :</strong> Lisez attentivement les résumés pédagogiques
+                                qui contiennent les formules essentielles et les pièges à éviter.
+                                <br /><br />
+                                <strong>2. Testez vos connaissances :</strong> Une fois tous les chapitres révisés,
+                                lancez le quiz complet pour évaluer votre maîtrise globale du concours {yearData.annee}.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

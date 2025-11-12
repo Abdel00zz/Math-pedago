@@ -21,22 +21,68 @@ const ConcoursQuizView: React.FC = () => {
     const timerRef = useRef<number | null>(null);
 
     useEffect(() => {
-        const concoursFile = sessionStorage.getItem('currentConcoursFile');
-        if (!concoursFile) {
-            dispatch({ type: 'CHANGE_VIEW', payload: { view: 'concours' } });
-            return;
-        }
+        const quizMode = localStorage.getItem('concoursQuizMode');
 
-        fetch(concoursFile)
-            .then(res => res.json())
-            .then((data: ConcoursData) => {
-                setConcoursData(data);
-                setLoading(false);
-            })
-            .catch(err => {
-                console.error('Erreur lors du chargement du concours:', err);
-                setLoading(false);
-            });
+        if (quizMode === 'year') {
+            // Mode année : charger plusieurs fichiers et agréger les questions
+            const filesJson = localStorage.getItem('concoursQuizFiles');
+            const quizYear = localStorage.getItem('concoursQuizYear');
+            const concoursType = localStorage.getItem('currentConcoursType');
+
+            if (!filesJson) {
+                dispatch({ type: 'CHANGE_VIEW', payload: { view: 'concours' } });
+                return;
+            }
+
+            const files: string[] = JSON.parse(filesJson);
+
+            // Charger tous les fichiers en parallèle
+            Promise.all(files.map(file => fetch(file).then(r => r.json())))
+                .then((allData: ConcoursData[]) => {
+                    // Agréger toutes les questions
+                    const allQuestions: ConcoursQuestion[] = [];
+                    allData.forEach(data => {
+                        if (data.quiz) {
+                            allQuestions.push(...data.quiz);
+                        }
+                    });
+
+                    // Créer un objet ConcoursData agrégé
+                    const aggregatedData: ConcoursData = {
+                        id: `quiz-global-${quizYear}`,
+                        concours: allData[0]?.concours || concoursType || 'Concours',
+                        annee: quizYear || '',
+                        theme: `Quiz complet ${quizYear}`,
+                        resume: allData[0]?.resume || { title: '', introduction: '', sections: [] },
+                        quiz: allQuestions
+                    };
+
+                    setConcoursData(aggregatedData);
+                    setLoading(false);
+                })
+                .catch(err => {
+                    console.error('Erreur lors du chargement des quiz:', err);
+                    setLoading(false);
+                });
+        } else {
+            // Mode thème : charger un seul fichier
+            const concoursFile = localStorage.getItem('currentConcoursFile');
+            if (!concoursFile) {
+                dispatch({ type: 'CHANGE_VIEW', payload: { view: 'concours' } });
+                return;
+            }
+
+            fetch(concoursFile)
+                .then(res => res.json())
+                .then((data: ConcoursData) => {
+                    setConcoursData(data);
+                    setLoading(false);
+                })
+                .catch(err => {
+                    console.error('Erreur lors du chargement du concours:', err);
+                    setLoading(false);
+                });
+        }
     }, [dispatch]);
 
     useEffect(() => {
@@ -52,15 +98,6 @@ const ConcoursQuizView: React.FC = () => {
             }
         };
     }, [isFinished]);
-
-    const handleBackClick = () => {
-        const confirmLeave = window.confirm(
-            'Êtes-vous sûr de vouloir quitter le quiz ? Votre progression ne sera pas sauvegardée.'
-        );
-        if (confirmLeave) {
-            dispatch({ type: 'CHANGE_VIEW', payload: { view: 'concours-resume' } });
-        }
-    };
 
     const handleAnswerChange = (questionId: string, answer: string | string[]) => {
         setAnswers(prev => ({ ...prev, [questionId]: answer }));
@@ -135,10 +172,6 @@ const ConcoursQuizView: React.FC = () => {
         setCurrentHintIndex(0);
     };
 
-    const handleBackToResume = () => {
-        dispatch({ type: 'CHANGE_VIEW', payload: { view: 'concours-resume' } });
-    };
-
     const formattedTime = useMemo(() => {
         const minutes = Math.floor(timeSpent / 60).toString().padStart(2, '0');
         const seconds = (timeSpent % 60).toString().padStart(2, '0');
@@ -172,7 +205,7 @@ const ConcoursQuizView: React.FC = () => {
     if (isFinished) {
         return (
             <div className="min-h-screen bg-white">
-                <StandardHeader onBack={handleBackToResume} title="Résultats du quiz" />
+                <StandardHeader title="Résultats du quiz" />
 
                 <div className="max-w-3xl mx-auto px-6 py-12">
                     <div className="border border-gray-200 p-12 text-center">
@@ -220,7 +253,7 @@ const ConcoursQuizView: React.FC = () => {
 
     return (
         <div className="min-h-screen bg-white">
-            <StandardHeader onBack={handleBackClick} title={`Quiz - ${concoursData.theme}`} />
+            <StandardHeader title={`Quiz - ${concoursData.theme}`} />
 
             <div className="max-w-4xl mx-auto px-6 py-12 font-sans">
                 {/* Progress */}

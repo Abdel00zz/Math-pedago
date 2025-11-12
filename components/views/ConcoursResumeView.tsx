@@ -11,9 +11,14 @@ const ConcoursResumeView: React.FC = () => {
     const [confirmed, setConfirmed] = useState(false);
     const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
     const [checkedItems, setCheckedItems] = useState<Set<string>>(new Set());
+    const [navigationMode, setNavigationMode] = useState<'theme' | 'year' | null>(null);
 
     useEffect(() => {
-        const concoursFile = sessionStorage.getItem('currentConcoursFile');
+        const concoursFile = localStorage.getItem('currentConcoursFile');
+        const mode = localStorage.getItem('concoursNavigationMode') as 'theme' | 'year' | null;
+
+        setNavigationMode(mode);
+
         if (!concoursFile) {
             dispatch({ type: 'CHANGE_VIEW', payload: { view: 'concours' } });
             return;
@@ -30,10 +35,6 @@ const ConcoursResumeView: React.FC = () => {
                 setLoading(false);
             });
     }, [dispatch]);
-
-    const handleBackClick = () => {
-        window.history.back();
-    };
 
     const handleStartQuiz = () => {
         if (!confirmed) {
@@ -115,7 +116,7 @@ const ConcoursResumeView: React.FC = () => {
                 </svg>
             </div>
 
-            <StandardHeader onBack={handleBackClick} title="Résumé du thème" />
+            <StandardHeader title="Résumé du thème" />
 
             <div className="relative z-10 max-w-6xl mx-auto px-6 py-12">
                 {/* En-tête */}
@@ -231,8 +232,8 @@ const ConcoursResumeView: React.FC = () => {
                     </button>
                 </div>
 
-                {/* Section de confirmation */}
-                {isLastSection && (
+                {/* Section de confirmation - Uniquement en mode thème */}
+                {isLastSection && navigationMode === 'theme' && (
                     <div className="mt-16 bg-white/95 backdrop-blur-sm rounded-2xl shadow-lg p-8">
                         {!confirmed ? (
                             <div>
@@ -266,6 +267,24 @@ const ConcoursResumeView: React.FC = () => {
                                 </button>
                             </div>
                         )}
+                    </div>
+                )}
+
+                {/* Message informatif en mode année */}
+                {isLastSection && navigationMode === 'year' && (
+                    <div className="mt-16 bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl shadow-lg p-8 border border-indigo-100">
+                        <div className="flex items-start gap-4">
+                            <span className="material-symbols-outlined text-indigo-600 !text-3xl">info</span>
+                            <div>
+                                <h3 className="text-lg font-medium text-gray-900 mb-2">Résumé terminé</h3>
+                                <p className="text-sm text-gray-700 font-light leading-relaxed">
+                                    Vous avez terminé ce chapitre ! Le quiz complet de l'année {concoursData.annee} est disponible
+                                    dans la vue principale de l'année. Il regroupe toutes les questions de tous les chapitres.
+                                    <br /><br />
+                                    Utilisez le bouton retour de votre navigateur pour revenir à la liste des chapitres et accéder au quiz global.
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 )}
             </div>

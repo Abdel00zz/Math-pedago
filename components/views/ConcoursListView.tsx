@@ -22,8 +22,8 @@ const ConcoursListView: React.FC = () => {
     const [themes, setThemes] = useState<{ [theme: string]: any[] }>({});
 
     useEffect(() => {
-        const concoursType = state.currentConcoursType || sessionStorage.getItem('currentConcoursType');
-        const savedMode = state.concoursNavigationMode;
+        const concoursType = state.currentConcoursType || localStorage.getItem('currentConcoursType');
+        const savedMode = state.concoursNavigationMode || localStorage.getItem('concoursNavigationMode') as 'annee' | 'theme' | null;
 
         if (savedMode) {
             setFilterMode(savedMode);
@@ -33,6 +33,9 @@ const ConcoursListView: React.FC = () => {
             dispatch({ type: 'CHANGE_VIEW', payload: { view: 'concours' } });
             return;
         }
+
+        // Sauvegarder dans localStorage
+        localStorage.setItem('currentConcoursType', concoursType);
 
         fetch('/concours/index.json')
             .then(res => res.json())
@@ -60,7 +63,8 @@ const ConcoursListView: React.FC = () => {
     }, [dispatch, state.currentConcoursType, state.concoursNavigationMode]);
 
     const handleYearClick = (annee: string) => {
-        sessionStorage.setItem('currentConcoursYear', annee);
+        localStorage.setItem('currentConcoursYear', annee);
+        localStorage.setItem('concoursNavigationMode', 'year');
         dispatch({
             type: 'CHANGE_VIEW',
             payload: {
@@ -73,11 +77,14 @@ const ConcoursListView: React.FC = () => {
 
     const handleThemeClick = (theme: string, fichiers: any[]) => {
         // En mode thème, on navigue directement vers le résumé agrégé
-        sessionStorage.setItem('currentConcoursTheme', theme);
-        // On utilise le premier fichier comme référence, mais le résumé sera agrégé
+        localStorage.setItem('currentConcoursTheme', theme);
+        localStorage.setItem('concoursNavigationMode', 'theme');
+        // Stocker tous les fichiers du thème pour agrégation
+        localStorage.setItem('concoursThemeFiles', JSON.stringify(fichiers.map(f => ({ ...f }))));
+        // On utilise le premier fichier comme référence
         const firstFile = fichiers[0];
-        sessionStorage.setItem('currentConcoursId', firstFile.id);
-        sessionStorage.setItem('currentConcoursFile', firstFile.file);
+        localStorage.setItem('currentConcoursId', firstFile.id);
+        localStorage.setItem('currentConcoursFile', firstFile.file);
 
         dispatch({
             type: 'CHANGE_VIEW',
@@ -89,12 +96,9 @@ const ConcoursListView: React.FC = () => {
         });
     };
 
-    const handleBackClick = () => {
-        window.history.back();
-    };
-
     const handleModeChange = (mode: 'annee' | 'theme') => {
         setFilterMode(mode);
+        localStorage.setItem('concoursNavigationMode', mode);
         dispatch({
             type: 'CHANGE_VIEW',
             payload: {
@@ -145,7 +149,7 @@ const ConcoursListView: React.FC = () => {
                 </svg>
             </div>
 
-            <StandardHeader onBack={handleBackClick} title={`Concours ${concoursInfo.name}`} />
+            <StandardHeader title={`Concours ${concoursInfo.name}`} />
 
             <div className="relative z-10 max-w-6xl mx-auto px-6 py-12">
                 <div className="mb-12">
