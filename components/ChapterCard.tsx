@@ -76,6 +76,15 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
         };
     }, [lessonId]);
 
+    // Vérifier si le chapitre a une session active ou prochaine (DOIT être avant getStatusInfo)
+    const isSessionActive = useMemo(() => {
+        return hasActiveSession(chapter.sessionDates || []);
+    }, [chapter.sessionDates]);
+
+    const isSessionUpcoming = useMemo(() => {
+        return !isSessionActive && hasUpcomingSession(chapter.sessionDates || []);
+    }, [chapter.sessionDates, isSessionActive]);
+
     const getStatusInfo = useCallback((): StatusInfo => {
         const status = progress?.status || 'a-venir';
 
@@ -159,15 +168,6 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
             onSelect(chapter.id);
         }
     }, [disabled, onSelect, chapter.id]);
-
-    // Vérifier si le chapitre a une session active ou prochaine
-    const isSessionActive = useMemo(() => {
-        return hasActiveSession(chapter.sessionDates || []);
-    }, [chapter.sessionDates]);
-
-    const isSessionUpcoming = useMemo(() => {
-        return !isSessionActive && hasUpcomingSession(chapter.sessionDates || []);
-    }, [chapter.sessionDates, isSessionActive]);
 
     // 🎯 Calcul de progression avec coefficients égaux pour leçons, quiz et exercices
     const progressPercentage = useMemo(() => {
