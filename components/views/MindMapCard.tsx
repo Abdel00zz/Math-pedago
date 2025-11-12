@@ -120,8 +120,8 @@ const MindMapCard: React.FC<MindMapCardProps> = ({ theme }) => {
                             <div className="text-xs text-gray-700 font-semibold mb-3">Dérivabilité</div>
                             <div className="space-y-2 text-sm">
                                 <div><FormattedText text="$f'(x) = \\lim_{h \\to 0} \\frac{f(x+h)-f(x)}{h}$" /></div>
-                                <div className="text-xs text-gray-600">• $f'(x) > 0$ : croissante</div>
-                                <div className="text-xs text-gray-600">• $f'(x) < 0$ : décroissante</div>
+                                <div className="text-xs text-gray-600"><FormattedText text="• $f'(x) > 0$ : croissante" /></div>
+                                <div className="text-xs text-gray-600"><FormattedText text="• $f'(x) < 0$ : décroissante" /></div>
                             </div>
                         </div>
                         <div className="bg-white rounded-lg shadow p-4 border-t-2 border-amber-400">
