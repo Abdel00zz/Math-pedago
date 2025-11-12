@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useAppDispatch } from '../../context/AppContext';
 import StandardHeader from '../StandardHeader';
 import FormattedText from '../FormattedText';
+import MindMapCard from './MindMapCard';
 import type { ConcoursData, ConcoursResumeSection } from '../../types';
 
 const ConcoursResumeView: React.FC = () => {
@@ -9,6 +10,7 @@ const ConcoursResumeView: React.FC = () => {
     const [concoursData, setConcoursData] = useState<ConcoursData | null>(null);
     const [loading, setLoading] = useState(true);
     const [confirmed, setConfirmed] = useState(false);
+    const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
 
     useEffect(() => {
         const concoursFile = sessionStorage.getItem('currentConcoursFile');
@@ -102,209 +104,210 @@ const ConcoursResumeView: React.FC = () => {
         );
     }
 
+    const currentSection = concoursData.resume.sections[currentSectionIndex];
+    const totalSections = concoursData.resume.sections.length;
+    const isFirstSection = currentSectionIndex === 0;
+    const isLastSection = currentSectionIndex === totalSections - 1;
+    const style = getSectionStyle(currentSection.type);
+
+    const goToNextSection = () => {
+        if (!isLastSection) {
+            setCurrentSectionIndex(prev => prev + 1);
+        }
+    };
+
+    const goToPreviousSection = () => {
+        if (!isFirstSection) {
+            setCurrentSectionIndex(prev => prev - 1);
+        }
+    };
+
     return (
-        <div className="min-h-screen bg-white">
+        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
             <StandardHeader onBack={handleBackClick} title="Résumé du thème" />
 
-            <div className="max-w-4xl mx-auto px-6 py-12">
-                {/* Header */}
-                <div className="mb-12 pb-8">
-                    <div className="bg-gradient-to-r from-gray-900 to-gray-700 rounded-2xl shadow-xl p-8 text-white animate-fadeIn">
-                        <div className="flex items-center gap-2 text-xs text-gray-300 mb-4 font-medium tracking-wider uppercase">
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
+                {/* En-tête minimaliste */}
+                <div className="mb-8">
+                    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                        <div className="flex items-center gap-2 text-xs text-gray-500 mb-3 font-medium uppercase tracking-wide">
                             <span className="material-symbols-outlined text-sm">school</span>
                             {concoursData.concours} · {concoursData.annee}
                         </div>
-                        <h1 className="text-4xl md:text-5xl font-bold mb-5 tracking-tight leading-tight">
+                        <h1 className="text-3xl font-bold text-gray-900 mb-3">
                             {concoursData.resume.title}
                         </h1>
-                        <div className="text-lg text-gray-200 leading-relaxed bg-white/10 rounded-lg p-4 backdrop-blur-sm">
+                        <div className="text-sm text-gray-600 leading-relaxed">
                             <FormattedText text={concoursData.resume.introduction} />
                         </div>
                     </div>
                 </div>
 
-                {/* Sections */}
-                <div className="space-y-8 mb-16">
-                    {concoursData.resume.sections.map((section: ConcoursResumeSection, index: number) => {
-                        const style = getSectionStyle(section.type);
-
-                        return (
-                            <div
-                                key={index}
-                                className="animate-slideInUp bg-white rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden"
-                                style={{ animationDelay: `${index * 100}ms` }}
-                            >
-                                {/* Section Header with Icon */}
-                                <div className={`${style.bg} px-6 py-4 flex items-center gap-3`}>
-                                    <div className={`${style.iconBg} rounded-full p-2 flex items-center justify-center`}>
-                                        <span className={`material-symbols-outlined ${style.title} text-2xl`}>
-                                            {style.icon}
-                                        </span>
-                                    </div>
-                                    <h2 className={`text-xl font-semibold ${style.title}`}>
-                                        {section.title}
-                                    </h2>
-                                </div>
-
-                                {/* Section Content */}
-                                <div className="px-6 py-5 space-y-4">
-                                    {section.items.map((item: string, itemIndex: number) => {
-                                        // Détection de type d'item pour styling spécial
-                                        const isWarning = item.includes('ATTENTION') || item.includes('DANGER') || item.includes('PIÈGE');
-                                        const isFormula = item.includes('=') || item.includes('→');
-                                        const isMethod = item.includes('Pour') || item.includes('Utiliser');
-
-                                        let itemStyle = 'bg-gray-50 rounded-lg p-4 hover:bg-gray-100 transition-colors duration-200';
-
-                                        if (isWarning) {
-                                            itemStyle = `${style.bg} border-2 border-${section.type === 'pieges' ? 'red' : 'gray'}-300 rounded-lg p-4 shadow-sm`;
-                                        } else if (isFormula) {
-                                            itemStyle = 'bg-gradient-to-r from-gray-50 to-gray-100 rounded-lg p-4 border border-gray-200 font-medium';
-                                        } else if (isMethod) {
-                                            itemStyle = 'bg-white border-l-4 border-green-400 pl-5 py-3 rounded-r-lg';
-                                        }
-
-                                        return (
-                                            <div
-                                                key={itemIndex}
-                                                className={`text-base text-gray-800 leading-relaxed ${itemStyle} animate-fadeIn`}
-                                                style={{ animationDelay: `${(index * 100) + (itemIndex * 50)}ms` }}
-                                            >
-                                                {isMethod && (
-                                                    <span className="inline-block mr-2 text-green-500 font-bold">→</span>
-                                                )}
-                                                {isWarning && (
-                                                    <span className="inline-block mr-2">⚠️</span>
-                                                )}
-                                                <FormattedText text={item} />
-                                            </div>
-                                        );
-                                    })}
-                                </div>
-                            </div>
-                        );
-                    })}
+                {/* Indicateur de progression */}
+                <div className="mb-6">
+                    <div className="flex items-center justify-between mb-2">
+                        <span className="text-xs font-medium text-gray-600">
+                            Section {currentSectionIndex + 1} sur {totalSections}
+                        </span>
+                        <span className="text-xs text-gray-500">
+                            {Math.round(((currentSectionIndex + 1) / totalSections) * 100)}% complété
+                        </span>
+                    </div>
+                    <div className="h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                        <div
+                            className="h-full bg-gradient-to-r from-blue-500 to-indigo-500 transition-all duration-500 ease-out"
+                            style={{ width: `${((currentSectionIndex + 1) / totalSections) * 100}%` }}
+                        />
+                    </div>
                 </div>
 
-                {/* Carte mentale (si c'est un thème qui le nécessite) */}
-                {concoursData.theme.toLowerCase().includes('complexe') && (
-                    <div className="mb-16 bg-gradient-to-br from-blue-50 via-purple-50 to-indigo-50 rounded-2xl shadow-lg p-8 animate-fadeIn">
-                        <div className="flex items-center justify-center gap-3 mb-8">
-                            <span className="material-symbols-outlined text-indigo-600 text-3xl">account_tree</span>
-                            <h3 className="text-2xl font-semibold text-gray-900">
-                                Carte mentale : Les nombres complexes
-                            </h3>
-                        </div>
-                        <div className="flex flex-col items-center space-y-6">
-                            {/* Forme algébrique */}
-                            <div className="bg-white border-3 border-blue-500 rounded-xl shadow-md px-8 py-4 text-center transform hover:scale-105 transition-transform duration-300">
-                                <div className="text-xs text-blue-600 font-semibold mb-2 uppercase tracking-wider">Forme algébrique</div>
-                                <span className="text-blue-700 font-semibold text-lg">
-                                    <FormattedText text="$z = a + ib$" />
+                {/* Navigation par points */}
+                <div className="flex items-center justify-center gap-2 mb-6">
+                    {concoursData.resume.sections.map((_, index) => (
+                        <button
+                            key={index}
+                            onClick={() => setCurrentSectionIndex(index)}
+                            className={`h-2 rounded-full transition-all duration-300 ${
+                                index === currentSectionIndex
+                                    ? 'w-8 bg-blue-600'
+                                    : 'w-2 bg-gray-300 hover:bg-gray-400'
+                            }`}
+                            aria-label={`Aller à la section ${index + 1}`}
+                        />
+                    ))}
+                </div>
+
+                {/* Section actuelle - Design minimaliste */}
+                <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden mb-6 animate-fadeIn">
+                    {/* En-tête de section */}
+                    <div className={`${style.bg} px-6 py-4 border-b border-gray-200`}>
+                        <div className="flex items-center gap-3">
+                            <div className={`${style.iconBg} rounded-lg p-2`}>
+                                <span className={`material-symbols-outlined ${style.title} text-xl`}>
+                                    {style.icon}
                                 </span>
                             </div>
-
-                            {/* Flèche */}
-                            <div className="text-gray-400 text-3xl animate-bounce">↓</div>
-
-                            {/* Propriétés */}
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl">
-                                <div className="bg-white rounded-xl shadow-md p-5 text-center transform hover:scale-105 hover:shadow-xl transition-all duration-300 border-t-4 border-blue-400">
-                                    <div className="flex items-center justify-center mb-3">
-                                        <span className="material-symbols-outlined text-blue-500 text-2xl mr-2">straighten</span>
-                                        <div className="text-sm text-gray-700 font-semibold">Module</div>
-                                    </div>
-                                    <div className="text-base text-gray-800 font-medium">
-                                        <FormattedText text="$|z| = \\sqrt{a^2 + b^2}$" />
-                                    </div>
-                                </div>
-                                <div className="bg-white rounded-xl shadow-md p-5 text-center transform hover:scale-105 hover:shadow-xl transition-all duration-300 border-t-4 border-purple-400">
-                                    <div className="flex items-center justify-center mb-3">
-                                        <span className="material-symbols-outlined text-purple-500 text-2xl mr-2">rotate_right</span>
-                                        <div className="text-sm text-gray-700 font-semibold">Argument</div>
-                                    </div>
-                                    <div className="text-base text-gray-800 font-medium">
-                                        <FormattedText text="$\\arg(z) = \\theta$" />
-                                    </div>
-                                </div>
-                                <div className="bg-white rounded-xl shadow-md p-5 text-center transform hover:scale-105 hover:shadow-xl transition-all duration-300 border-t-4 border-indigo-400">
-                                    <div className="flex items-center justify-center mb-3">
-                                        <span className="material-symbols-outlined text-indigo-500 text-2xl mr-2">swap_vert</span>
-                                        <div className="text-sm text-gray-700 font-semibold">Conjugué</div>
-                                    </div>
-                                    <div className="text-base text-gray-800 font-medium">
-                                        <FormattedText text="$\\overline{z} = a - ib$" />
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Flèche */}
-                            <div className="text-gray-400 text-3xl animate-bounce" style={{ animationDelay: '150ms' }}>↓</div>
-
-                            {/* Forme exponentielle */}
-                            <div className="bg-white border-3 border-purple-500 rounded-xl shadow-md px-8 py-4 text-center transform hover:scale-105 transition-transform duration-300">
-                                <div className="text-xs text-purple-600 font-semibold mb-2 uppercase tracking-wider">Forme exponentielle</div>
-                                <span className="text-purple-700 font-semibold text-lg">
-                                    <FormattedText text="$z = |z| e^{i\\theta}$" />
-                                </span>
-                            </div>
+                            <h2 className={`text-lg font-semibold ${style.title}`}>
+                                {currentSection.title}
+                            </h2>
                         </div>
                     </div>
-                )}
 
-                {/* Confirmation */}
-                <div className="mt-8">
-                    {!confirmed ? (
-                        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl shadow-md p-8 animate-fadeIn">
-                            <div className="flex items-start gap-4 mb-6">
-                                <span className="material-symbols-outlined text-blue-600 text-4xl">quiz</span>
-                                <div>
-                                    <h3 className="text-2xl font-semibold text-gray-900 mb-3">
-                                        Avez-vous terminé de réviser ce thème ?
-                                    </h3>
-                                    <p className="text-base text-gray-700 leading-relaxed">
-                                        Assurez-vous d'avoir bien compris les <span className="font-semibold text-blue-700">définitions</span>,
-                                        <span className="font-semibold text-purple-700"> formules</span> et
-                                        <span className="font-semibold text-green-700"> méthodes</span> avant de commencer le quiz.
-                                    </p>
+                    {/* Contenu de section - minimaliste */}
+                    <div className="px-6 py-6 space-y-3">
+                        {currentSection.items.map((item: string, itemIndex: number) => {
+                            const isWarning = item.includes('ATTENTION') || item.includes('DANGER') || item.includes('PIÈGE');
+                            const isFormula = item.includes('=') || item.includes('→');
+                            const isMethod = item.includes('Pour') || item.includes('Utiliser');
+
+                            let itemStyle = 'bg-gray-50 rounded-lg p-4 border border-gray-100';
+
+                            if (isWarning) {
+                                itemStyle = `${style.bg} border border-red-200 rounded-lg p-4`;
+                            } else if (isFormula) {
+                                itemStyle = 'bg-gradient-to-r from-gray-50 to-gray-100 rounded-lg p-4 border border-gray-200';
+                            } else if (isMethod) {
+                                itemStyle = 'bg-white border-l-3 border-green-500 pl-4 py-3 rounded-r-lg';
+                            }
+
+                            return (
+                                <div
+                                    key={itemIndex}
+                                    className={`text-sm text-gray-700 leading-relaxed ${itemStyle}`}
+                                >
+                                    {isMethod && (
+                                        <span className="inline-block mr-2 text-green-600 font-semibold">→</span>
+                                    )}
+                                    {isWarning && (
+                                        <span className="inline-block mr-2">⚠️</span>
+                                    )}
+                                    <FormattedText text={item} />
                                 </div>
-                            </div>
-                            <button
-                                onClick={handleStartQuiz}
-                                className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-4 rounded-xl text-base font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105 flex items-center gap-2"
-                            >
-                                <span className="material-symbols-outlined">check_circle</span>
-                                J'ai terminé la révision
-                            </button>
-                        </div>
-                    ) : (
-                        <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl shadow-md p-8 animate-fadeIn border-2 border-green-200">
-                            <div className="flex items-start gap-4 mb-6">
-                                <span className="material-symbols-outlined text-green-600 text-4xl">verified</span>
-                                <div>
-                                    <h3 className="text-2xl font-semibold text-green-900 mb-3 flex items-center gap-2">
-                                        Vous êtes prêt ! 🎯
-                                    </h3>
-                                    <p className="text-base text-gray-700 leading-relaxed mb-4">
-                                        Le quiz contient <span className="font-bold text-green-700">{concoursData.quiz.length} questions</span>.
-                                        Prenez votre temps et n'hésitez pas à utiliser les indices si nécessaire.
-                                    </p>
-                                    <div className="flex items-center gap-2 text-sm text-gray-600 bg-white rounded-lg p-3 border border-green-200">
-                                        <span className="material-symbols-outlined text-amber-500 text-xl">tips_and_updates</span>
-                                        <span>Conseil : Lisez bien chaque question avant de répondre</span>
+                            );
+                        })}
+                    </div>
+                </div>
+
+                {/* Carte mentale */}
+                <MindMapCard theme={concoursData.theme} />
+
+                {/* Navigation - Minimaliste */}
+                <div className="flex items-center justify-between gap-4 mb-8">
+                    <button
+                        onClick={goToPreviousSection}
+                        disabled={isFirstSection}
+                        className={`flex items-center gap-2 px-4 py-2.5 rounded-lg font-medium text-sm transition-all ${
+                            isFirstSection
+                                ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                                : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400 shadow-sm'
+                        }`}
+                    >
+                        <span className="material-symbols-outlined text-lg">arrow_back</span>
+                        Précédent
+                    </button>
+
+                    <button
+                        onClick={goToNextSection}
+                        disabled={isLastSection}
+                        className={`flex items-center gap-2 px-4 py-2.5 rounded-lg font-medium text-sm transition-all ${
+                            isLastSection
+                                ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                                : 'bg-blue-600 text-white hover:bg-blue-700 shadow-sm'
+                        }`}
+                    >
+                        Suivant
+                        <span className="material-symbols-outlined text-lg">arrow_forward</span>
+                    </button>
+                </div>
+
+                {/* Section de confirmation - Version minimaliste */}
+                {isLastSection && (
+                    <div className="mt-8 animate-fadeIn">
+                        {!confirmed ? (
+                            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                                <div className="flex items-start gap-4 mb-4">
+                                    <span className="material-symbols-outlined text-blue-600 text-3xl">quiz</span>
+                                    <div>
+                                        <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                                            Avez-vous terminé de réviser ce thème ?
+                                        </h3>
+                                        <p className="text-sm text-gray-600 leading-relaxed mb-4">
+                                            Assurez-vous d'avoir bien compris toutes les sections avant de commencer le quiz.
+                                        </p>
+                                        <button
+                                            onClick={handleStartQuiz}
+                                            className="bg-blue-600 text-white px-6 py-2.5 rounded-lg text-sm font-semibold hover:bg-blue-700 transition-colors flex items-center gap-2 shadow-sm"
+                                        >
+                                            <span className="material-symbols-outlined text-lg">check_circle</span>
+                                            J'ai terminé la révision
+                                        </button>
                                     </div>
                                 </div>
                             </div>
-                            <button
-                                onClick={handleStartQuiz}
-                                className="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-8 py-4 rounded-xl text-base font-semibold hover:from-green-700 hover:to-emerald-700 transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105 flex items-center gap-2 animate-pulse"
-                            >
-                                <span className="material-symbols-outlined">play_arrow</span>
-                                Commencer le quiz
-                            </button>
-                        </div>
-                    )}
-                </div>
+                        ) : (
+                            <div className="bg-green-50 rounded-lg border border-green-200 p-6">
+                                <div className="flex items-start gap-4">
+                                    <span className="material-symbols-outlined text-green-600 text-3xl">verified</span>
+                                    <div>
+                                        <h3 className="text-lg font-semibold text-green-900 mb-2">
+                                            Vous êtes prêt ! 🎯
+                                        </h3>
+                                        <p className="text-sm text-gray-700 mb-4">
+                                            Le quiz contient <span className="font-bold text-green-700">{concoursData.quiz.length} questions</span>.
+                                        </p>
+                                        <button
+                                            onClick={handleStartQuiz}
+                                            className="bg-green-600 text-white px-6 py-2.5 rounded-lg text-sm font-semibold hover:bg-green-700 transition-colors flex items-center gap-2 shadow-sm"
+                                        >
+                                            <span className="material-symbols-outlined text-lg">play_arrow</span>
+                                            Commencer le quiz
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                )}
             </div>
         </div>
     );
