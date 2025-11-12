@@ -47,10 +47,12 @@ const ConcoursResumeView: React.FC = () => {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-white flex items-center justify-center">
+            <div className="min-h-screen relative overflow-hidden flex items-center justify-center" style={{
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            }}>
                 <div className="text-center">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto mb-4"></div>
-                    <p className="text-gray-600 text-sm">Chargement...</p>
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
+                    <p className="text-white text-sm">Chargement...</p>
                 </div>
             </div>
         );
@@ -58,8 +60,10 @@ const ConcoursResumeView: React.FC = () => {
 
     if (!concoursData) {
         return (
-            <div className="min-h-screen bg-white flex items-center justify-center">
-                <p className="text-gray-600">Concours introuvable</p>
+            <div className="min-h-screen relative overflow-hidden flex items-center justify-center" style={{
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            }}>
+                <p className="text-white">Concours introuvable</p>
             </div>
         );
     }
@@ -94,43 +98,59 @@ const ConcoursResumeView: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-white concours-math-red">
+        <div className="min-h-screen relative overflow-hidden concours-math-red" style={{
+            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        }}>
+            {/* SVG Pattern Background */}
+            <div className="absolute inset-0 opacity-10">
+                <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <pattern id="concours-resume-pattern" width="60" height="60" patternUnits="userSpaceOnUse">
+                            <circle cx="30" cy="30" r="2" fill="white" opacity="0.4"/>
+                            <circle cx="0" cy="0" r="2" fill="white" opacity="0.3"/>
+                            <circle cx="60" cy="60" r="2" fill="white" opacity="0.3"/>
+                        </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#concours-resume-pattern)" />
+                </svg>
+            </div>
+
             <StandardHeader onBack={handleBackClick} title="Résumé du thème" />
 
-            <div className="max-w-6xl mx-auto px-6 py-12">
+            <div className="relative z-10 max-w-6xl mx-auto px-6 py-12">
                 {/* En-tête */}
                 <div className="mb-16">
-                    <div className="text-xs text-gray-500 mb-4 font-light tracking-wider uppercase">
+                    <div className="text-xs text-white/70 mb-4 font-light tracking-wider uppercase drop-shadow">
                         {concoursData.concours} · {concoursData.annee}
                     </div>
-                    <h1 className="text-4xl font-light text-gray-900 mb-4 tracking-tight">
+                    <h1 className="text-4xl font-light text-white mb-4 tracking-tight drop-shadow-lg">
                         {concoursData.resume.title}
                     </h1>
-                    <p className="text-base text-gray-600 font-light leading-relaxed max-w-3xl">
+                    <p className="text-base text-white/90 font-light leading-relaxed max-w-3xl drop-shadow">
                         <FormattedText text={concoursData.resume.introduction} />
                     </p>
                 </div>
 
                 {/* Progression avec badge et barre */}
-                <div className="mb-12">
+                <div className="mb-12 bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-6">
                     <div className="flex items-center justify-between mb-4">
-                        <div className="inline-block px-3 py-1 bg-gray-100 text-xs text-gray-600 font-light">
+                        <div className="inline-block px-3 py-1 bg-indigo-100 text-xs text-indigo-700 font-light rounded-lg">
                             Section {currentSectionIndex + 1} / {totalSections}
                         </div>
-                        <div className="text-xs text-gray-500 font-light">
+                        <div className="text-xs text-gray-600 font-light">
                             {checkedItems.size} / {currentSection.items.length} validés
                         </div>
                     </div>
-                    <div className="h-2 bg-gray-100 overflow-hidden">
+                    <div className="h-2 bg-gray-100 overflow-hidden rounded-full">
                         <div
-                            className="h-full bg-green-600 transition-all duration-500"
+                            className="h-full bg-gradient-to-r from-green-500 to-emerald-500 transition-all duration-500 rounded-full"
                             style={{ width: `${currentSection.items.length > 0 ? (checkedItems.size / currentSection.items.length) * 100 : 0}%` }}
                         />
                     </div>
                 </div>
 
                 {/* Section actuelle */}
-                <div className="mb-12">
+                <div className="mb-12 bg-white/95 backdrop-blur-sm rounded-2xl shadow-lg p-8">
                     {/* En-tête de section */}
                     <div className="mb-8">
                         <h2 className="text-2xl font-light text-gray-900">
@@ -148,9 +168,9 @@ const ConcoursResumeView: React.FC = () => {
                             return (
                                 <div
                                     key={itemIndex}
-                                    className={`border border-gray-200 transition-colors ${
-                                        isWarning ? 'border-l-2 border-l-red-500' : ''
-                                    } ${isChecked ? 'bg-gray-50' : 'bg-white'}`}
+                                    className={`bg-white rounded-xl shadow-sm hover:shadow transition-all ${
+                                        isWarning ? 'border-l-4 border-l-red-400' : ''
+                                    } ${isChecked ? 'bg-gradient-to-br from-green-50 to-emerald-50' : ''}`}
                                 >
                                     <div className="p-6">
                                         <div className="flex gap-4 items-start">
@@ -189,10 +209,10 @@ const ConcoursResumeView: React.FC = () => {
                     <button
                         onClick={goToPreviousSection}
                         disabled={isFirstSection}
-                        className={`px-6 py-3 border text-sm font-light transition-colors ${
+                        className={`px-6 py-3 text-sm font-light transition-all rounded-xl ${
                             isFirstSection
-                                ? 'border-gray-200 text-gray-400 cursor-not-allowed'
-                                : 'border-gray-200 text-gray-900 hover:border-gray-900'
+                                ? 'bg-white/60 text-gray-400 cursor-not-allowed'
+                                : 'bg-white text-gray-900 hover:shadow-lg hover:-translate-x-1'
                         }`}
                     >
                         ← Précédent
@@ -201,10 +221,10 @@ const ConcoursResumeView: React.FC = () => {
                     <button
                         onClick={goToNextSection}
                         disabled={isLastSection}
-                        className={`px-6 py-3 border text-sm font-light transition-colors ${
+                        className={`px-6 py-3 text-sm font-light transition-all rounded-xl ${
                             isLastSection
-                                ? 'border-gray-200 text-gray-400 cursor-not-allowed'
-                                : 'border-gray-900 bg-gray-900 text-white hover:bg-gray-700 hover:border-gray-700'
+                                ? 'bg-white/60 text-gray-400 cursor-not-allowed'
+                                : 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:shadow-lg hover:translate-x-1'
                         }`}
                     >
                         Suivant →
@@ -213,7 +233,7 @@ const ConcoursResumeView: React.FC = () => {
 
                 {/* Section de confirmation */}
                 {isLastSection && (
-                    <div className="mt-16">
+                    <div className="mt-16 bg-white/95 backdrop-blur-sm rounded-2xl shadow-lg p-8">
                         {!confirmed ? (
                             <div>
                                 <h3 className="text-lg font-light text-gray-900 mb-4">
@@ -224,7 +244,7 @@ const ConcoursResumeView: React.FC = () => {
                                 </p>
                                 <button
                                     onClick={handleStartQuiz}
-                                    className="px-8 py-3 border border-gray-900 bg-gray-900 text-white text-sm font-light hover:bg-gray-700 hover:border-gray-700 transition-colors"
+                                    className="px-8 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-sm font-light hover:shadow-lg transition-all rounded-xl"
                                 >
                                     J'ai terminé la révision
                                 </button>
@@ -239,9 +259,10 @@ const ConcoursResumeView: React.FC = () => {
                                 </p>
                                 <button
                                     onClick={handleStartQuiz}
-                                    className="px-8 py-3 border border-gray-900 bg-gray-900 text-white text-sm font-light hover:bg-gray-700 hover:border-gray-700 transition-colors"
+                                    className="px-8 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-sm font-light hover:shadow-lg transition-all rounded-xl inline-flex items-center gap-2"
                                 >
-                                    Commencer le quiz →
+                                    Commencer le quiz
+                                    <span className="material-symbols-outlined !text-lg">arrow_forward</span>
                                 </button>
                             </div>
                         )}

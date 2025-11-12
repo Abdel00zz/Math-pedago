@@ -50,14 +50,30 @@ const ConcoursView: React.FC = () => {
     }
 
     return (
-        <div className="min-h-screen bg-white">
+        <div className="min-h-screen relative overflow-hidden" style={{
+            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        }}>
+            {/* SVG Pattern Background */}
+            <div className="absolute inset-0 opacity-10">
+                <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <pattern id="concours-pattern" width="60" height="60" patternUnits="userSpaceOnUse">
+                            <circle cx="30" cy="30" r="2" fill="white" opacity="0.4"/>
+                            <circle cx="0" cy="0" r="2" fill="white" opacity="0.3"/>
+                            <circle cx="60" cy="60" r="2" fill="white" opacity="0.3"/>
+                        </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#concours-pattern)" />
+                </svg>
+            </div>
+
             <StandardHeader onBack={handleBackClick} title="Préparation Concours" />
 
             {/* Bouton Aide */}
             <div className="absolute top-4 sm:top-6 right-4 sm:right-6 z-50">
                 <button
                     onClick={() => setHelpModalOpen(true)}
-                    className="inline-flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center border border-gray-200 bg-white text-gray-900 transition-all duration-200 hover:border-gray-900 focus:outline-none"
+                    className="inline-flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center bg-white/90 backdrop-blur-sm text-indigo-600 transition-all duration-200 hover:bg-white hover:shadow-lg focus:outline-none rounded-xl"
                     aria-label="Aide"
                     type="button"
                 >
@@ -65,12 +81,12 @@ const ConcoursView: React.FC = () => {
                 </button>
             </div>
 
-            <div className="max-w-6xl mx-auto px-6 py-12">
+            <div className="relative z-10 max-w-6xl mx-auto px-6 py-12">
                 <div className="mb-16">
-                    <h1 className="text-4xl font-light text-gray-900 mb-4 tracking-tight">
+                    <h1 className="text-4xl font-light text-white mb-4 tracking-tight drop-shadow-lg">
                         Préparation aux Concours
                     </h1>
-                    <p className="text-lg text-gray-600 font-light max-w-2xl">
+                    <p className="text-lg text-white/90 font-light max-w-2xl drop-shadow">
                         Entraînez-vous avec des sujets de concours organisés par thème.
                         Chaque thème comprend un résumé complet et des quiz pour valider vos connaissances.
                     </p>
@@ -81,7 +97,7 @@ const ConcoursView: React.FC = () => {
                         <button
                             key={concours.id}
                             onClick={() => handleConcoursClick(concours.id)}
-                            className="group text-left bg-white border border-gray-200 hover:border-gray-900 transition-all duration-300 p-8 rounded-none"
+                            className="group text-left bg-white/95 backdrop-blur-sm hover:bg-white transition-all duration-300 p-8 rounded-2xl shadow-lg hover:shadow-2xl hover:-translate-y-1"
                         >
                             <h2 className="text-2xl font-light text-gray-900 mb-3 group-hover:text-gray-600 transition-colors">
                                 {concours.name}
@@ -99,12 +115,12 @@ const ConcoursView: React.FC = () => {
                                 </div>
                             </div>
 
-                            <div className="mt-6 pt-6 border-t border-gray-100">
+                            <div className="mt-6 pt-6">
                                 <div className="flex flex-wrap gap-2">
                                     {concours.examens.map(exam => (
                                         <span
                                             key={exam.annee}
-                                            className="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-light"
+                                            className="px-3 py-1 bg-indigo-50 text-indigo-700 text-xs font-light rounded-lg"
                                         >
                                             {exam.annee}
                                         </span>
@@ -112,16 +128,17 @@ const ConcoursView: React.FC = () => {
                                 </div>
                             </div>
 
-                            <div className="mt-6 text-sm text-gray-900 group-hover:translate-x-2 transition-transform inline-block">
-                                Accéder →
+                            <div className="mt-6 text-sm text-indigo-600 font-medium group-hover:translate-x-2 transition-transform inline-flex items-center gap-2">
+                                Accéder
+                                <span className="material-symbols-outlined !text-lg">arrow_forward</span>
                             </div>
                         </button>
                     ))}
                 </div>
 
-                <div className="mt-20 border-t border-gray-200 pt-12">
+                <div className="mt-20 bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-8">
                     <h3 className="text-lg font-light text-gray-900 mb-6">Comment utiliser cette plateforme</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-gray-600 font-light">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-gray-700 font-light">
                         <div>
                             <span className="font-normal">1.</span> Choisissez votre concours
                         </div>
