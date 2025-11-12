@@ -79,7 +79,29 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
     const getStatusInfo = useCallback((): StatusInfo => {
         const status = progress?.status || 'a-venir';
 
-        // Prioriser les mises à jour
+        // 🔴 PRIORITÉ 1 : Sessions actives - TOUJOURS accessible même si chapitre verrouillé
+        if (isSessionActive) {
+            return {
+                text: 'Séance Direct',
+                icon: 'radio_button_checked',
+                disabled: false, // Jamais désactivé pendant une session !
+                variant: 'progress',
+                color: '#667eea',
+            };
+        }
+
+        // 🔵 PRIORITÉ 2 : Sessions à venir - TOUJOURS accessible
+        if (isSessionUpcoming) {
+            return {
+                text: 'Séance prochaine',
+                icon: 'schedule',
+                disabled: false, // Accessible pour préparer la session
+                variant: 'upcoming',
+                color: '#3b82f6',
+            };
+        }
+
+        // PRIORITÉ 3 : Mises à jour
         if (progress?.hasUpdate) {
             return {
                 text: 'Mis à jour',
@@ -128,7 +150,7 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
                     color: '#3b82f6',
                 };
         }
-    }, [chapter.isActive, progress]);
+    }, [chapter.isActive, progress, isSessionActive, isSessionUpcoming]);
 
     const { text, icon, variant, disabled, color } = getStatusInfo();
 
@@ -213,13 +235,13 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
     return (
         <button
             onClick={handleClick}
-            disabled={disabled && !isSessionActive}
-            className={`chapter-card-v2 ${disabled && !isSessionActive ? 'is-disabled' : ''} ${isSessionActive ? 'has-active-session' : ''} ${isSessionUpcoming ? 'has-upcoming-session' : ''}`}
+            disabled={disabled}
+            className={`chapter-card-v2 ${disabled ? 'is-disabled' : ''} ${isSessionActive ? 'has-active-session' : ''} ${isSessionUpcoming ? 'has-upcoming-session' : ''}`}
             aria-label={`Accéder au ${chapter.chapter}`}
-            aria-disabled={disabled && !isSessionActive}
+            aria-disabled={disabled}
             data-status={variant}
         >
-            {/* Suppression du badge rouge "EN DIRECT" - remplacé par bordure animée subtile */}
+            {/* Cartes avec sessions toujours accessibles - gérées par getStatusInfo() */}
 
             {/* Background effects */}
             <div className="chapter-card-v2__bg" aria-hidden="true" />
