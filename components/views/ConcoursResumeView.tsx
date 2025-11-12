@@ -168,26 +168,36 @@ const ConcoursResumeView: React.FC = () => {
                         </h3>
                         <div className="flex flex-col items-center space-y-6">
                             <div className="border-2 border-blue-500 bg-blue-50 px-6 py-3 text-center">
-                                <span className="text-blue-700 font-medium">$z = a + ib$</span>
+                                <span className="text-blue-700 font-medium">
+                                    <FormattedText text="$z = a + ib$" />
+                                </span>
                             </div>
                             <div className="text-gray-400 text-2xl">↓</div>
                             <div className="grid grid-cols-3 gap-6 w-full">
                                 <div className="border border-gray-300 p-4 text-center">
                                     <div className="text-xs text-gray-500 mb-2">Module</div>
-                                    <div className="text-sm">$|z| = \sqrt{a^2 + b^2}$</div>
+                                    <div className="text-sm">
+                                        <FormattedText text="$|z| = \\sqrt{a^2 + b^2}$" />
+                                    </div>
                                 </div>
                                 <div className="border border-gray-300 p-4 text-center">
                                     <div className="text-xs text-gray-500 mb-2">Argument</div>
-                                    <div className="text-sm">$\arg(z) = \theta$</div>
+                                    <div className="text-sm">
+                                        <FormattedText text="$\\arg(z) = \\theta$" />
+                                    </div>
                                 </div>
                                 <div className="border border-gray-300 p-4 text-center">
                                     <div className="text-xs text-gray-500 mb-2">Conjugué</div>
-                                    <div className="text-sm">$\overline{z} = a - ib$</div>
+                                    <div className="text-sm">
+                                        <FormattedText text="$\\overline{z} = a - ib$" />
+                                    </div>
                                 </div>
                             </div>
                             <div className="text-gray-400 text-2xl">↓</div>
                             <div className="border-2 border-purple-500 bg-purple-50 px-6 py-3 text-center">
-                                <span className="text-purple-700 font-medium">$z = |z| e^{i\theta}$</span>
+                                <span className="text-purple-700 font-medium">
+                                    <FormattedText text="$z = |z| e^{i\\theta}$" />
+                                </span>
                             </div>
                         </div>
                     </div>
