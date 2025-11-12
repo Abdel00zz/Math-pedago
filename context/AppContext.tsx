@@ -19,6 +19,9 @@ const initialState: AppState = {
     concoursProgress: {},
     currentConcoursType: null,
     currentConcoursId: null,
+    concoursNavigationMode: null,
+    currentConcoursYear: null,
+    currentConcoursTheme: null,
 };
 
 const appReducer = (state: AppState, action: Action): AppState => {
@@ -35,7 +38,22 @@ const appReducer = (state: AppState, action: Action): AppState => {
 
     switch (action.type) {
         case 'INIT': {
-            const { profile, progress = {}, view, currentChapterId, currentActiveChapterId, activitySubView, chapterOrder, activityVersions, concoursProgress, currentConcoursType, currentConcoursId } = action.payload;
+            const {
+                profile,
+                progress = {},
+                view,
+                currentChapterId,
+                currentActiveChapterId,
+                activitySubView,
+                chapterOrder,
+                activityVersions,
+                concoursProgress,
+                currentConcoursType,
+                currentConcoursId,
+                concoursNavigationMode,
+                currentConcoursYear,
+                currentConcoursTheme
+            } = action.payload;
             const restoredView = profile && profile.classId ? (view || 'dashboard') : 'login';
 
             return {
@@ -51,22 +69,44 @@ const appReducer = (state: AppState, action: Action): AppState => {
                 concoursProgress: concoursProgress || {},
                 currentConcoursType: currentConcoursType || null,
                 currentConcoursId: currentConcoursId || null,
+                concoursNavigationMode: concoursNavigationMode || null,
+                currentConcoursYear: currentConcoursYear || null,
+                currentConcoursTheme: currentConcoursTheme || null,
             };
         }
         
         case 'CHANGE_VIEW': {
-            const { view, chapterId, subView, review, fromHistory, concoursType, concoursId } = action.payload;
+            const {
+                view,
+                chapterId,
+                subView,
+                review,
+                fromHistory,
+                concoursType,
+                concoursId,
+                concoursYear,
+                concoursTheme,
+                concoursMode
+            } = action.payload;
 
-            // Mettre à jour currentConcoursType et currentConcoursId depuis sessionStorage si non fournis
+            // Mettre à jour les champs concours depuis payload ou garder les valeurs actuelles
             let finalConcoursType = concoursType !== undefined ? concoursType : state.currentConcoursType;
             let finalConcoursId = concoursId !== undefined ? concoursId : state.currentConcoursId;
+            let finalConcoursYear = concoursYear !== undefined ? concoursYear : state.currentConcoursYear;
+            let finalConcoursTheme = concoursTheme !== undefined ? concoursTheme : state.currentConcoursTheme;
+            let finalConcoursMode = concoursMode !== undefined ? concoursMode : state.concoursNavigationMode;
 
-            // Si on navigue vers une vue concours, lire depuis sessionStorage
-            if (view === 'concours-list' && !finalConcoursType && typeof window !== 'undefined') {
-                finalConcoursType = sessionStorage.getItem('currentConcoursType');
-            }
-            if ((view === 'concours-resume' || view === 'concours-quiz') && !finalConcoursId && typeof window !== 'undefined') {
-                finalConcoursId = sessionStorage.getItem('currentConcoursFile');
+            // Si on navigue vers une vue concours, lire depuis sessionStorage si non fournis
+            if (typeof window !== 'undefined') {
+                if (view === 'concours-list' && !finalConcoursType) {
+                    finalConcoursType = sessionStorage.getItem('currentConcoursType');
+                }
+                if ((view === 'concours-resume' || view === 'concours-quiz') && !finalConcoursId) {
+                    finalConcoursId = sessionStorage.getItem('currentConcoursFile');
+                }
+                if (view === 'concours-year' && !finalConcoursYear) {
+                    finalConcoursYear = sessionStorage.getItem('currentConcoursYear');
+                }
             }
 
             let newState: AppState = {
@@ -77,6 +117,9 @@ const appReducer = (state: AppState, action: Action): AppState => {
                 isReviewMode: review ?? false,
                 currentConcoursType: finalConcoursType,
                 currentConcoursId: finalConcoursId,
+                currentConcoursYear: finalConcoursYear,
+                currentConcoursTheme: finalConcoursTheme,
+                concoursNavigationMode: finalConcoursMode,
             };
 
             const targetChapterId = chapterId !== undefined ? chapterId : state.currentChapterId;
@@ -100,7 +143,10 @@ const appReducer = (state: AppState, action: Action): AppState => {
                     subView: newState.activitySubView,
                     review: newState.isReviewMode,
                     concoursType: newState.currentConcoursType,
-                    concoursId: newState.currentConcoursId
+                    concoursId: newState.currentConcoursId,
+                    concoursYear: newState.currentConcoursYear,
+                    concoursTheme: newState.currentConcoursTheme,
+                    concoursMode: newState.concoursNavigationMode
                 };
                 pushNavigationState(navState);
             }
@@ -949,6 +995,12 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
                 if (navState.concoursId) {
                     sessionStorage.setItem('currentConcoursFile', navState.concoursId);
                 }
+                if (navState.concoursYear) {
+                    sessionStorage.setItem('currentConcoursYear', navState.concoursYear);
+                }
+                if (navState.concoursTheme) {
+                    sessionStorage.setItem('currentConcoursTheme', navState.concoursTheme);
+                }
 
                 // Dispatcher le changement de vue avec le flag fromHistory
                 dispatch({
@@ -958,6 +1010,11 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
                         chapterId: navState.chapterId || null,
                         subView: navState.subView || null,
                         review: navState.review || false,
+                        concoursType: navState.concoursType || null,
+                        concoursId: navState.concoursId || null,
+                        concoursYear: navState.concoursYear || null,
+                        concoursTheme: navState.concoursTheme || null,
+                        concoursMode: navState.concoursMode || null,
                         fromHistory: true // Important: évite la boucle infinie
                     }
                 });
@@ -975,14 +1032,17 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
                 subView: state.activitySubView,
                 review: state.isReviewMode,
                 concoursType: state.currentConcoursType,
-                concoursId: state.currentConcoursId
+                concoursId: state.currentConcoursId,
+                concoursYear: state.currentConcoursYear,
+                concoursTheme: state.currentConcoursTheme,
+                concoursMode: state.concoursNavigationMode
             });
         }
 
         return () => {
             window.removeEventListener('popstate', handlePopState);
         };
-    }, [dispatch, state.view, state.currentChapterId, state.activitySubView, state.isReviewMode, state.currentConcoursType, state.currentConcoursId]);
+    }, [dispatch, state.view, state.currentChapterId, state.activitySubView, state.isReviewMode, state.currentConcoursType, state.currentConcoursId, state.currentConcoursYear, state.currentConcoursTheme, state.concoursNavigationMode]);
 
     return (
         <AppStateContext.Provider value={state}>

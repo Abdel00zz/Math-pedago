@@ -219,7 +219,7 @@ export interface ChapterProgress {
 }
 
 export interface AppState {
-    view: 'login' | 'dashboard' | 'work-plan' | 'activity' | 'concours' | 'concours-list' | 'concours-resume' | 'concours-quiz';
+    view: 'login' | 'dashboard' | 'work-plan' | 'activity' | 'concours' | 'concours-list' | 'concours-year' | 'concours-resume' | 'concours-quiz';
     profile: Profile | null;
     activities: { [chapterId: string]: Chapter };
     activityVersions: { [chapterId: string]: string }; // To track versions for update notifications
@@ -233,6 +233,9 @@ export interface AppState {
     concoursProgress: ConcoursProgress;
     currentConcoursType: string | null; // "medecine", "ensa", "ensam"
     currentConcoursId: string | null; // ex: "medecine-2024-nombres-complexes"
+    concoursNavigationMode: 'theme' | 'year' | null; // Mode de navigation: par thème ou par année
+    currentConcoursYear: string | null; // Année sélectionnée en mode "par année"
+    currentConcoursTheme: string | null; // Thème sélectionné (utilisé dans les deux modes)
 }
 
 // Types for the specific JSON export structure
@@ -371,7 +374,18 @@ export interface ConcoursProgress {
 
 export type Action =
     | { type: 'INIT'; payload: Partial<AppState> }
-    | { type: 'CHANGE_VIEW'; payload: { view: AppState['view']; chapterId?: string; subView?: AppState['activitySubView']; review?: boolean } }
+    | { type: 'CHANGE_VIEW'; payload: {
+        view: AppState['view'];
+        chapterId?: string;
+        subView?: AppState['activitySubView'];
+        review?: boolean;
+        concoursType?: string | null;
+        concoursId?: string | null;
+        concoursYear?: string | null;
+        concoursTheme?: string | null;
+        concoursMode?: 'theme' | 'year' | null;
+        fromHistory?: boolean;
+    } }
     | { type: 'LOGIN'; payload: Profile }
     | { type: 'NAVIGATE_QUIZ'; payload: number }
     | { type: 'UPDATE_QUIZ_ANSWER'; payload: { qId: string; answer: string | string[] } }

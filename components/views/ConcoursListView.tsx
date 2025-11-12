@@ -1,17 +1,34 @@
 import React, { useEffect, useState } from 'react';
-import { useAppDispatch } from '../../context/AppContext';
+import { useAppDispatch, useAppState } from '../../context/AppContext';
 import StandardHeader from '../StandardHeader';
 import type { ConcoursIndex, ConcoursInfo, ConcoursExamen } from '../../types';
 
+interface ThemeGroup {
+    theme: string;
+    fichiers: Array<{
+        id: string;
+        file: string;
+        annee: string;
+        theme: string;
+    }>;
+}
+
 const ConcoursListView: React.FC = () => {
     const dispatch = useAppDispatch();
+    const state = useAppState();
     const [concoursInfo, setConcoursInfo] = useState<ConcoursInfo | null>(null);
     const [loading, setLoading] = useState(true);
     const [filterMode, setFilterMode] = useState<'annee' | 'theme'>('annee');
     const [themes, setThemes] = useState<{ [theme: string]: any[] }>({});
 
     useEffect(() => {
-        const concoursType = sessionStorage.getItem('currentConcoursType');
+        const concoursType = state.currentConcoursType || sessionStorage.getItem('currentConcoursType');
+        const savedMode = state.concoursNavigationMode;
+
+        if (savedMode) {
+            setFilterMode(savedMode);
+        }
+
         if (!concoursType) {
             dispatch({ type: 'CHANGE_VIEW', payload: { view: 'concours' } });
             return;
@@ -40,16 +57,51 @@ const ConcoursListView: React.FC = () => {
                 console.error('Erreur lors du chargement des concours:', err);
                 setLoading(false);
             });
-    }, [dispatch]);
+    }, [dispatch, state.currentConcoursType, state.concoursNavigationMode]);
 
-    const handleThemeClick = (concoursId: string, file: string) => {
-        sessionStorage.setItem('currentConcoursId', concoursId);
-        sessionStorage.setItem('currentConcoursFile', file);
-        dispatch({ type: 'CHANGE_VIEW', payload: { view: 'concours-resume' } });
+    const handleYearClick = (annee: string) => {
+        sessionStorage.setItem('currentConcoursYear', annee);
+        dispatch({
+            type: 'CHANGE_VIEW',
+            payload: {
+                view: 'concours-year',
+                concoursYear: annee,
+                concoursMode: 'year'
+            }
+        });
+    };
+
+    const handleThemeClick = (theme: string, fichiers: any[]) => {
+        // En mode thème, on navigue directement vers le résumé agrégé
+        sessionStorage.setItem('currentConcoursTheme', theme);
+        // On utilise le premier fichier comme référence, mais le résumé sera agrégé
+        const firstFile = fichiers[0];
+        sessionStorage.setItem('currentConcoursId', firstFile.id);
+        sessionStorage.setItem('currentConcoursFile', firstFile.file);
+
+        dispatch({
+            type: 'CHANGE_VIEW',
+            payload: {
+                view: 'concours-resume',
+                concoursTheme: theme,
+                concoursMode: 'theme'
+            }
+        });
     };
 
     const handleBackClick = () => {
         window.history.back();
+    };
+
+    const handleModeChange = (mode: 'annee' | 'theme') => {
+        setFilterMode(mode);
+        dispatch({
+            type: 'CHANGE_VIEW',
+            payload: {
+                view: 'concours-list',
+                concoursMode: mode
+            }
+        });
     };
 
     if (loading) {
@@ -107,7 +159,7 @@ const ConcoursListView: React.FC = () => {
 
                 <div className="flex gap-4 mb-12">
                     <button
-                        onClick={() => setFilterMode('annee')}
+                        onClick={() => handleModeChange('annee')}
                         className={`px-6 py-3 text-sm font-light transition-all rounded-xl ${
                             filterMode === 'annee'
                                 ? 'bg-white text-indigo-600 shadow-lg'
@@ -117,7 +169,7 @@ const ConcoursListView: React.FC = () => {
                         Par année
                     </button>
                     <button
-                        onClick={() => setFilterMode('theme')}
+                        onClick={() => handleModeChange('theme')}
                         className={`px-6 py-3 text-sm font-light transition-all rounded-xl ${
                             filterMode === 'theme'
                                 ? 'bg-white text-indigo-600 shadow-lg'
@@ -129,72 +181,87 @@ const ConcoursListView: React.FC = () => {
                 </div>
 
                 {filterMode === 'annee' ? (
-                    <div className="space-y-12">
-                        {concoursInfo.examens.map((exam: ConcoursExamen) => (
-                            <div key={exam.annee} className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-8">
-                                <h2 className="text-2xl font-light text-gray-900 mb-6">
-                                    Année {exam.annee}
-                                </h2>
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                    {exam.fichiers.map(fichier => (
-                                        <button
-                                            key={fichier.id}
-                                            onClick={() => handleThemeClick(fichier.id, fichier.file)}
-                                            className="group text-left bg-white hover:bg-gradient-to-br hover:from-indigo-50 hover:to-purple-50 transition-all p-6 rounded-xl shadow hover:shadow-lg"
-                                        >
-                                            <h3 className="text-base font-normal text-gray-900 mb-2 group-hover:text-gray-600 transition-colors">
-                                                {fichier.theme}
-                                            </h3>
-                                            <div className="text-xs text-indigo-600 font-light">
-                                                Quiz disponible
+                    <div className="space-y-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {concoursInfo.examens.map((exam: ConcoursExamen) => {
+                                const quizCount = exam.fichiers.length;
+                                return (
+                                    <button
+                                        key={exam.annee}
+                                        onClick={() => handleYearClick(exam.annee)}
+                                        className="group text-left bg-white/90 backdrop-blur-sm hover:bg-white transition-all p-8 rounded-2xl shadow-lg hover:shadow-2xl hover:-translate-y-1"
+                                    >
+                                        <div className="mb-6">
+                                            <div className="text-5xl font-light text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors">
+                                                {exam.annee}
                                             </div>
-                                            <div className="mt-4 text-sm text-indigo-600 font-medium group-hover:translate-x-2 transition-transform inline-flex items-center gap-2">
-                                                Commencer
-                                                <span className="material-symbols-outlined !text-lg">arrow_forward</span>
+                                            <div className="inline-block px-3 py-1 bg-indigo-50 text-xs text-indigo-700 font-light rounded-lg">
+                                                {quizCount} {quizCount > 1 ? 'quiz disponibles' : 'quiz disponible'}
                                             </div>
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-                        ))}
+                                        </div>
+
+                                        <div className="flex items-center gap-2 text-indigo-600 font-medium text-sm group-hover:translate-x-2 transition-transform">
+                                            Voir les thèmes
+                                            <span className="material-symbols-outlined !text-lg">arrow_forward</span>
+                                        </div>
+                                    </button>
+                                );
+                            })}
+                        </div>
                     </div>
                 ) : (
-                    <div className="space-y-12">
-                        {Object.entries(themes).map(([theme, fichiers]: [string, any[]]) => (
-                            <div key={theme} className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-8">
-                                <h2 className="text-2xl font-light text-gray-900 mb-6">
-                                    {theme}
-                                </h2>
-                                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                                    {fichiers.map(fichier => (
-                                        <button
-                                            key={fichier.id}
-                                            onClick={() => handleThemeClick(fichier.id, fichier.file)}
-                                            className="group text-center bg-white hover:bg-gradient-to-br hover:from-indigo-50 hover:to-purple-50 transition-all p-6 rounded-xl shadow hover:shadow-lg"
-                                        >
-                                            <div className="text-3xl font-light text-gray-900 mb-2 group-hover:text-gray-600 transition-colors">
-                                                {fichier.annee}
+                    <div className="space-y-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {Object.entries(themes).map(([theme, fichiers]: [string, any[]]) => {
+                                const quizCount = fichiers.length;
+                                const years = fichiers.map(f => f.annee).sort().reverse();
+                                return (
+                                    <button
+                                        key={theme}
+                                        onClick={() => handleThemeClick(theme, fichiers)}
+                                        className="group text-left bg-white/90 backdrop-blur-sm hover:bg-white transition-all p-8 rounded-2xl shadow-lg hover:shadow-2xl hover:-translate-y-1"
+                                    >
+                                        <div className="mb-6">
+                                            <h3 className="text-2xl font-light text-gray-900 mb-3 group-hover:text-indigo-600 transition-colors">
+                                                {theme}
+                                            </h3>
+                                            <div className="flex flex-wrap gap-2 mb-3">
+                                                {years.map(year => (
+                                                    <span key={year} className="inline-block px-2 py-1 bg-purple-50 text-xs text-purple-700 font-light rounded">
+                                                        {year}
+                                                    </span>
+                                                ))}
                                             </div>
-                                            <div className="text-xs text-indigo-600 font-light">
-                                                Concours {concoursInfo.name}
+                                            <div className="inline-block px-3 py-1 bg-indigo-50 text-xs text-indigo-700 font-light rounded-lg">
+                                                {quizCount} {quizCount > 1 ? 'quiz disponibles' : 'quiz disponible'}
                                             </div>
-                                            <div className="mt-4 text-sm text-indigo-600 font-medium inline-flex items-center justify-center gap-2">
-                                                Commencer
-                                                <span className="material-symbols-outlined !text-lg">arrow_forward</span>
-                                            </div>
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-                        ))}
+                                        </div>
+
+                                        <div className="flex items-center gap-2 text-indigo-600 font-medium text-sm group-hover:translate-x-2 transition-transform">
+                                            Voir le résumé et tous les quiz
+                                            <span className="material-symbols-outlined !text-lg">arrow_forward</span>
+                                        </div>
+                                    </button>
+                                );
+                            })}
+                        </div>
                     </div>
                 )}
 
                 <div className="mt-20 bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-8">
                     <p className="text-sm text-gray-700 font-light">
-                        Pour chaque thème, commencez par lire attentivement le résumé pédagogique.
-                        Il contient les formules essentielles, les pièges à éviter et les astuces qui vous
-                        aideront à réussir le quiz.
+                        {filterMode === 'annee' ? (
+                            <>
+                                <strong>Navigation par année :</strong> Choisissez une année pour voir tous les thèmes
+                                de ce concours. Chaque thème contient un résumé pédagogique et un quiz.
+                            </>
+                        ) : (
+                            <>
+                                <strong>Navigation par thème :</strong> Choisissez un thème pour accéder à un résumé
+                                complet regroupant les points essentiels de toutes les années, ainsi que tous les quiz
+                                disponibles sur ce thème.
+                            </>
+                        )}
                     </p>
                 </div>
             </div>

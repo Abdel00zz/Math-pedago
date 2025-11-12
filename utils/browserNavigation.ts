@@ -12,13 +12,16 @@ export interface NavigationState {
     review?: boolean;
     concoursType?: string | null;
     concoursId?: string | null;
+    concoursYear?: string | null;
+    concoursTheme?: string | null;
+    concoursMode?: 'theme' | 'year' | null;
 }
 
 /**
  * Construit l'URL correspondant à un état de navigation
  */
 export function buildURL(navState: NavigationState): string {
-    const { view, chapterId, subView, review, concoursType, concoursId } = navState;
+    const { view, chapterId, subView, review, concoursType, concoursId, concoursYear, concoursMode } = navState;
 
     switch (view) {
         case 'login':
@@ -39,7 +42,17 @@ export function buildURL(navState: NavigationState): string {
             return '/concours';
 
         case 'concours-list':
-            return concoursType ? `/concours/${concoursType}` : '/concours';
+            if (concoursType) {
+                const modeParam = concoursMode ? `?mode=${concoursMode}` : '';
+                return `/concours/${concoursType}${modeParam}`;
+            }
+            return '/concours';
+
+        case 'concours-year':
+            if (concoursType && concoursYear) {
+                return `/concours/${concoursType}/${concoursYear}`;
+            }
+            return '/concours';
 
         case 'concours-resume':
             return concoursId ? `/concours/resume/${concoursId}` : '/concours';
@@ -86,15 +99,6 @@ export function parseURL(url: string): NavigationState | null {
         return { view: 'concours' };
     }
 
-    // Liste des concours /concours/:type
-    const concoursListMatch = path.match(/^\/concours\/([^\/]+)$/);
-    if (concoursListMatch && !path.includes('/resume/') && !path.includes('/quiz/')) {
-        return {
-            view: 'concours-list',
-            concoursType: concoursListMatch[1]
-        };
-    }
-
     // Résumé concours /concours/resume/:id
     const resumeMatch = path.match(/^\/concours\/resume\/(.+)$/);
     if (resumeMatch) {
@@ -113,6 +117,27 @@ export function parseURL(url: string): NavigationState | null {
         };
     }
 
+    // Année de concours /concours/:type/:year (4 chiffres)
+    const yearMatch = path.match(/^\/concours\/([^\/]+)\/(\d{4})$/);
+    if (yearMatch) {
+        return {
+            view: 'concours-year',
+            concoursType: yearMatch[1],
+            concoursYear: yearMatch[2]
+        };
+    }
+
+    // Liste des concours /concours/:type
+    const concoursListMatch = path.match(/^\/concours\/([^\/]+)$/);
+    if (concoursListMatch) {
+        const mode = params.get('mode') as 'theme' | 'year' | null;
+        return {
+            view: 'concours-list',
+            concoursType: concoursListMatch[1],
+            concoursMode: mode
+        };
+    }
+
     return null;
 }
 
@@ -126,7 +151,10 @@ export function extractNavigationState(state: AppState): NavigationState {
         subView: state.activitySubView,
         review: state.isReviewMode,
         concoursType: state.currentConcoursType,
-        concoursId: state.currentConcoursId
+        concoursId: state.currentConcoursId,
+        concoursYear: state.currentConcoursYear,
+        concoursTheme: state.currentConcoursTheme,
+        concoursMode: state.concoursNavigationMode
     };
 }
 
