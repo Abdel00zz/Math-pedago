@@ -144,7 +144,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ name, setName, classId, setClassI
                 className="mt-6 w-full rounded-2xl bg-slate-900 px-4 py-3 text-base font-semibold tracking-[0.12em] text-white shadow-[0_18px_40px_rgba(15,23,42,0.18)] transition-transform duration-200 hover:-translate-y-[1px] hover:shadow-[0_20px_44px_rgba(15,23,42,0.22)] focus:outline-none focus:ring-2 focus:ring-slate-900/15 active:scale-[0.99]"
                 style={{ fontFamily: "'Space Grotesk', 'Manrope', 'Segoe UI', sans-serif" }}
             >
-                {mode === 'concours' ? 'Accéder aux concours' : hasPreloadedName ? 'Accéder à mon espace' : 'Commencer'}
+                {mode === 'concours' ? 'Accéder aux concours' : 'Accéder à mon espace'}
             </button>
         </form>
     );
@@ -161,10 +161,17 @@ const LoginView: React.FC = () => {
     const [mode, setMode] = useState<'school' | 'concours'>(
         state.profile?.classId === 'concours' ? 'concours' : 'school'
     );
+
+    // Initialiser classId avec la première classe scolaire non-concours
+    const getDefaultSchoolClass = () => {
+        const firstSchoolClass = CLASS_OPTIONS.find(opt => opt.value !== 'concours');
+        return firstSchoolClass?.value || 'tcs';
+    };
+
     const [classId, setClassId] = useState(
         state.profile?.classId && state.profile.classId !== 'concours'
             ? state.profile.classId
-            : CLASS_OPTIONS[0]?.value || ''
+            : getDefaultSchoolClass()
     );
     const [error, setError] = useState('');
 
@@ -212,11 +219,17 @@ const LoginView: React.FC = () => {
         const profile: Profile = { name: name.trim(), classId: finalClassId };
         dispatch({ type: 'LOGIN', payload: profile });
 
-        // Rediriger vers la vue concours si le mode est concours
+        // Rediriger selon le mode
         if (mode === 'concours') {
             dispatch({
                 type: 'CHANGE_VIEW',
                 payload: { view: 'concours' }
+            });
+        } else {
+            // Mode classe scolaire : rediriger vers le dashboard
+            dispatch({
+                type: 'CHANGE_VIEW',
+                payload: { view: 'dashboard' }
             });
         }
     };
@@ -226,41 +239,43 @@ const LoginView: React.FC = () => {
             <div className="w-full max-w-lg rounded-3xl border border-slate-200/70 bg-white/90 p-8 shadow-[0_28px_70px_rgba(15,23,42,0.12)] backdrop-blur-xl sm:p-12">
                 <LoginHeader />
 
-                {/* Toggle Mode avec design pill */}
-                <div className="mb-8 flex justify-center">
-                    <div className="inline-flex rounded-full bg-slate-100/80 p-1 shadow-inner">
-                        <button
-                            type="button"
-                            onClick={() => handleModeChange('school')}
-                            className={`relative rounded-full px-6 py-2.5 text-sm font-semibold transition-all duration-300 ${
-                                mode === 'school'
-                                    ? 'bg-white text-slate-900 shadow-md'
-                                    : 'text-slate-500 hover:text-slate-700'
-                            }`}
-                            style={{ fontFamily: "'Space Grotesk', 'Manrope', 'Segoe UI', sans-serif" }}
-                        >
-                            <span className="relative z-10 flex items-center gap-2">
-                                <span className="material-symbols-outlined !text-lg">school</span>
-                                Classe scolaire
-                            </span>
-                        </button>
-                        <button
-                            type="button"
-                            onClick={() => handleModeChange('concours')}
-                            className={`relative rounded-full px-6 py-2.5 text-sm font-semibold transition-all duration-300 ${
-                                mode === 'concours'
-                                    ? 'bg-white text-slate-900 shadow-md'
-                                    : 'text-slate-500 hover:text-slate-700'
-                            }`}
-                            style={{ fontFamily: "'Space Grotesk', 'Manrope', 'Segoe UI', sans-serif" }}
-                        >
-                            <span className="relative z-10 flex items-center gap-2">
-                                <span className="material-symbols-outlined !text-lg">emoji_events</span>
-                                Préparation concours
-                            </span>
-                        </button>
+                {/* Toggle Mode avec design pill - UNIQUEMENT pour les nouveaux utilisateurs */}
+                {!hasPreloadedName && (
+                    <div className="mb-8 flex justify-center">
+                        <div className="inline-flex rounded-full bg-slate-100/80 p-1 shadow-inner">
+                            <button
+                                type="button"
+                                onClick={() => handleModeChange('school')}
+                                className={`relative rounded-full px-6 py-2.5 text-sm font-semibold transition-all duration-300 ${
+                                    mode === 'school'
+                                        ? 'bg-white text-slate-900 shadow-md'
+                                        : 'text-slate-500 hover:text-slate-700'
+                                }`}
+                                style={{ fontFamily: "'Space Grotesk', 'Manrope', 'Segoe UI', sans-serif" }}
+                            >
+                                <span className="relative z-10 flex items-center gap-2">
+                                    <span className="material-symbols-outlined !text-lg">school</span>
+                                    Classe scolaire
+                                </span>
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => handleModeChange('concours')}
+                                className={`relative rounded-full px-6 py-2.5 text-sm font-semibold transition-all duration-300 ${
+                                    mode === 'concours'
+                                        ? 'bg-white text-slate-900 shadow-md'
+                                        : 'text-slate-500 hover:text-slate-700'
+                                }`}
+                                style={{ fontFamily: "'Space Grotesk', 'Manrope', 'Segoe UI', sans-serif" }}
+                            >
+                                <span className="relative z-10 flex items-center gap-2">
+                                    <span className="material-symbols-outlined !text-lg">emoji_events</span>
+                                    Préparation concours
+                                </span>
+                            </button>
+                        </div>
                     </div>
-                </div>
+                )}
 
                 <WelcomeMessage hasPreloadedName={hasPreloadedName} name={name} mode={mode} />
                 <LoginForm
