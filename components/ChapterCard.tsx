@@ -213,21 +213,13 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
     return (
         <button
             onClick={handleClick}
-            disabled={disabled}
-            className={`chapter-card-v2 ${disabled ? 'is-disabled' : ''} ${isSessionActive ? 'has-active-session' : ''} ${isSessionUpcoming ? 'has-upcoming-session' : ''}`}
+            disabled={disabled && !isSessionActive}
+            className={`chapter-card-v2 ${disabled && !isSessionActive ? 'is-disabled' : ''} ${isSessionActive ? 'has-active-session' : ''} ${isSessionUpcoming ? 'has-upcoming-session' : ''}`}
             aria-label={`Accéder au ${chapter.chapter}`}
-            aria-disabled={disabled}
+            aria-disabled={disabled && !isSessionActive}
             data-status={variant}
         >
-            {/* Badge LIVE rouge pour les sessions actives SEULEMENT */}
-            {isSessionActive && (
-                <div className="chapter-card-v2__live-badge">
-                    <span className="chapter-card-v2__live-badge-dot"></span>
-                    <span className="chapter-card-v2__live-badge-text">EN DIRECT</span>
-                </div>
-            )}
-
-            {/* Pas de badge pour sessions prochaines, seulement bordure animée */}
+            {/* Suppression du badge rouge "EN DIRECT" - remplacé par bordure animée subtile */}
 
             {/* Background effects */}
             <div className="chapter-card-v2__bg" aria-hidden="true" />
@@ -266,7 +258,16 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
                 <div className="chapter-card-v2__content">
                     <div className="chapter-card-v2__header">
                         <span className="chapter-card-v2__eyebrow">
-                            {progress?.isWorkSubmitted ? 'Chapitre maîtrisé' : chapter.isActive ? 'Chapitre ouvert' : 'Bientôt disponible'}
+                            {progress?.isWorkSubmitted
+                                ? 'Chapitre maîtrisé'
+                                : isSessionActive
+                                    ? '🔵 Séance en direct'
+                                    : isSessionUpcoming
+                                        ? 'Séance prochainement'
+                                        : chapter.isActive
+                                            ? 'Chapitre ouvert'
+                                            : 'Bientôt disponible'
+                            }
                         </span>
                         <h3 className="chapter-card-v2__title">{chapter.chapter}</h3>
                     </div>
