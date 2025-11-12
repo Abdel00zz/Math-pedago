@@ -49,7 +49,7 @@ const ConcoursListView: React.FC = () => {
     };
 
     const handleBackClick = () => {
-        dispatch({ type: 'CHANGE_VIEW', payload: { view: 'concours' } });
+        window.history.back();
     };
 
     if (loading) {

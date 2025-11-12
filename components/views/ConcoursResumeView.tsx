@@ -32,7 +32,7 @@ const ConcoursResumeView: React.FC = () => {
     }, [dispatch]);
 
     const handleBackClick = () => {
-        dispatch({ type: 'CHANGE_VIEW', payload: { view: 'concours-list' } });
+        window.history.back();
     };
 
     const handleStartQuiz = () => {
