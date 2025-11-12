@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useAppDispatch } from '../../context/AppContext';
 import StandardHeader from '../StandardHeader';
 import FormattedText from '../FormattedText';
-import MindMapCard from './MindMapCard';
 import type { ConcoursData, ConcoursResumeSection } from '../../types';
 
 const ConcoursResumeView: React.FC = () => {
@@ -11,6 +10,9 @@ const ConcoursResumeView: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const [confirmed, setConfirmed] = useState(false);
     const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
+    const [revealedItems, setRevealedItems] = useState<Set<string>>(new Set());
+    const [checkedItems, setCheckedItems] = useState<Set<string>>(new Set());
+    const [revisionMode, setRevisionMode] = useState(false);
 
     useEffect(() => {
         const concoursFile = sessionStorage.getItem('currentConcoursFile');
@@ -122,6 +124,39 @@ const ConcoursResumeView: React.FC = () => {
         }
     };
 
+    const toggleItemReveal = (itemId: string) => {
+        setRevealedItems(prev => {
+            const newSet = new Set(prev);
+            if (newSet.has(itemId)) {
+                newSet.delete(itemId);
+            } else {
+                newSet.add(itemId);
+            }
+            return newSet;
+        });
+    };
+
+    const toggleItemCheck = (itemId: string) => {
+        setCheckedItems(prev => {
+            const newSet = new Set(prev);
+            if (newSet.has(itemId)) {
+                newSet.delete(itemId);
+            } else {
+                newSet.add(itemId);
+            }
+            return newSet;
+        });
+    };
+
+    const revealAllItems = () => {
+        const allItemIds = currentSection.items.map((_, idx) => `${currentSectionIndex}-${idx}`);
+        setRevealedItems(new Set(allItemIds));
+    };
+
+    const hideAllItems = () => {
+        setRevealedItems(new Set());
+    };
+
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
             <StandardHeader onBack={handleBackClick} title="Résumé du thème" />
@@ -177,59 +212,152 @@ const ConcoursResumeView: React.FC = () => {
                     ))}
                 </div>
 
-                {/* Section actuelle - Design minimaliste */}
+                {/* Barre d'outils interactive */}
+                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-4 flex items-center justify-between flex-wrap gap-3">
+                    <div className="flex items-center gap-2">
+                        <button
+                            onClick={() => setRevisionMode(!revisionMode)}
+                            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                                revisionMode
+                                    ? 'bg-indigo-600 text-white shadow-md'
+                                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                            }`}
+                        >
+                            <span className="material-symbols-outlined text-lg">
+                                {revisionMode ? 'visibility_off' : 'visibility'}
+                            </span>
+                            Mode révision {revisionMode ? 'ON' : 'OFF'}
+                        </button>
+                        {revisionMode && (
+                            <>
+                                <button
+                                    onClick={revealAllItems}
+                                    className="px-3 py-2 text-xs bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors"
+                                >
+                                    Tout révéler
+                                </button>
+                                <button
+                                    onClick={hideAllItems}
+                                    className="px-3 py-2 text-xs bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+                                >
+                                    Tout masquer
+                                </button>
+                            </>
+                        )}
+                    </div>
+                    <div className="flex items-center gap-2 text-xs text-gray-600">
+                        <span className="material-symbols-outlined text-sm">info</span>
+                        {revisionMode ? 'Cliquez sur les cartes pour révéler le contenu' : 'Mode lecture active'}
+                    </div>
+                </div>
+
+                {/* Section actuelle - Design interactif */}
                 <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden mb-6 animate-fadeIn">
                     {/* En-tête de section */}
                     <div className={`${style.bg} px-6 py-4 border-b border-gray-200`}>
-                        <div className="flex items-center gap-3">
-                            <div className={`${style.iconBg} rounded-lg p-2`}>
-                                <span className={`material-symbols-outlined ${style.title} text-xl`}>
-                                    {style.icon}
-                                </span>
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                                <div className={`${style.iconBg} rounded-lg p-2 animate-pulse`}>
+                                    <span className={`material-symbols-outlined ${style.title} text-xl`}>
+                                        {style.icon}
+                                    </span>
+                                </div>
+                                <h2 className={`text-lg font-semibold ${style.title}`}>
+                                    {currentSection.title}
+                                </h2>
                             </div>
-                            <h2 className={`text-lg font-semibold ${style.title}`}>
-                                {currentSection.title}
-                            </h2>
+                            <div className="text-xs text-gray-600 bg-white px-3 py-1 rounded-full">
+                                {checkedItems.size} / {currentSection.items.length} compris
+                            </div>
                         </div>
                     </div>
 
-                    {/* Contenu de section - minimaliste */}
+                    {/* Contenu de section - interactif */}
                     <div className="px-6 py-6 space-y-3">
                         {currentSection.items.map((item: string, itemIndex: number) => {
+                            const itemId = `${currentSectionIndex}-${itemIndex}`;
+                            const isRevealed = revealedItems.has(itemId);
+                            const isChecked = checkedItems.has(itemId);
                             const isWarning = item.includes('ATTENTION') || item.includes('DANGER') || item.includes('PIÈGE');
                             const isFormula = item.includes('=') || item.includes('→');
                             const isMethod = item.includes('Pour') || item.includes('Utiliser');
 
-                            let itemStyle = 'bg-gray-50 rounded-lg p-4 border border-gray-100';
+                            let baseStyle = 'bg-gray-50 rounded-lg border border-gray-100';
+                            let hoverStyle = 'hover:shadow-md hover:scale-[1.02]';
 
                             if (isWarning) {
-                                itemStyle = `${style.bg} border border-red-200 rounded-lg p-4`;
+                                baseStyle = `${style.bg} border border-red-200 rounded-lg`;
+                                hoverStyle = 'hover:shadow-lg hover:scale-[1.02] hover:border-red-300';
                             } else if (isFormula) {
-                                itemStyle = 'bg-gradient-to-r from-gray-50 to-gray-100 rounded-lg p-4 border border-gray-200';
+                                baseStyle = 'bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg border border-blue-200';
+                                hoverStyle = 'hover:shadow-lg hover:scale-[1.02] hover:from-blue-100 hover:to-purple-100';
                             } else if (isMethod) {
-                                itemStyle = 'bg-white border-l-3 border-green-500 pl-4 py-3 rounded-r-lg';
+                                baseStyle = 'bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg border-l-4 border-green-500';
+                                hoverStyle = 'hover:shadow-md hover:scale-[1.02] hover:from-green-100 hover:to-emerald-100';
                             }
 
                             return (
                                 <div
                                     key={itemIndex}
-                                    className={`text-sm text-gray-700 leading-relaxed ${itemStyle}`}
+                                    className={`relative p-4 text-sm text-gray-700 leading-relaxed transition-all duration-300 cursor-pointer ${baseStyle} ${hoverStyle} ${
+                                        isChecked ? 'ring-2 ring-green-500 ring-offset-2' : ''
+                                    }`}
+                                    onClick={() => revisionMode && toggleItemReveal(itemId)}
                                 >
-                                    {isMethod && (
-                                        <span className="inline-block mr-2 text-green-600 font-semibold">→</span>
+                                    {/* Badge de type */}
+                                    <div className="absolute top-2 right-2 flex items-center gap-2">
+                                        {isWarning && (
+                                            <span className="text-lg animate-bounce">⚠️</span>
+                                        )}
+                                        {isFormula && (
+                                            <span className="material-symbols-outlined text-purple-600 text-lg">calculate</span>
+                                        )}
+                                        {isMethod && (
+                                            <span className="material-symbols-outlined text-green-600 text-lg">lightbulb</span>
+                                        )}
+                                        <button
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                toggleItemCheck(itemId);
+                                            }}
+                                            className={`p-1 rounded-full transition-all ${
+                                                isChecked
+                                                    ? 'bg-green-500 text-white scale-110'
+                                                    : 'bg-gray-200 text-gray-400 hover:bg-gray-300'
+                                            }`}
+                                        >
+                                            <span className="material-symbols-outlined text-sm">
+                                                {isChecked ? 'check_circle' : 'radio_button_unchecked'}
+                                            </span>
+                                        </button>
+                                    </div>
+
+                                    {/* Contenu */}
+                                    {revisionMode && !isRevealed ? (
+                                        <div className="flex items-center justify-center py-8 text-gray-400">
+                                            <div className="text-center">
+                                                <span className="material-symbols-outlined text-4xl mb-2 animate-pulse">touch_app</span>
+                                                <p className="text-xs">Cliquez pour révéler</p>
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <div className={`pr-16 ${revisionMode && isRevealed ? 'animate-fadeIn' : ''}`}>
+                                            {isMethod && (
+                                                <span className="inline-block mr-2 text-green-600 font-bold text-lg">→</span>
+                                            )}
+                                            <FormattedText text={item} />
+                                        </div>
                                     )}
-                                    {isWarning && (
-                                        <span className="inline-block mr-2">⚠️</span>
+
+                                    {/* Indicateur de progression */}
+                                    {revisionMode && isRevealed && (
+                                        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-indigo-500 animate-slideInUp" />
                                     )}
-                                    <FormattedText text={item} />
                                 </div>
                             );
                         })}
                     </div>
                 </div>
-
-                {/* Carte mentale */}
-                <MindMapCard theme={concoursData.theme} />
 
                 {/* Navigation - Minimaliste */}
                 <div className="flex items-center justify-between gap-4 mb-8">
