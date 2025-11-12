@@ -94,7 +94,7 @@ const ConcoursResumeView: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-white">
+        <div className="min-h-screen bg-white concours-math-red">
             <StandardHeader onBack={handleBackClick} title="Résumé du thème" />
 
             <div className="max-w-6xl mx-auto px-6 py-12">
@@ -111,11 +111,21 @@ const ConcoursResumeView: React.FC = () => {
                     </p>
                 </div>
 
-                {/* Progression simple */}
-                <div className="mb-8 pb-6 border-b border-gray-200">
-                    <div className="flex items-center justify-between text-xs text-gray-500 font-light">
-                        <span>Section {currentSectionIndex + 1} / {totalSections}</span>
-                        <span>{checkedItems.size} / {currentSection.items.length} validés</span>
+                {/* Progression avec badge et barre */}
+                <div className="mb-12">
+                    <div className="flex items-center justify-between mb-4">
+                        <div className="inline-block px-3 py-1 bg-gray-100 text-xs text-gray-600 font-light">
+                            Section {currentSectionIndex + 1} / {totalSections}
+                        </div>
+                        <div className="text-xs text-gray-500 font-light">
+                            {checkedItems.size} / {currentSection.items.length} validés
+                        </div>
+                    </div>
+                    <div className="h-2 bg-gray-100 overflow-hidden">
+                        <div
+                            className="h-full bg-green-600 transition-all duration-500"
+                            style={{ width: `${currentSection.items.length > 0 ? (checkedItems.size / currentSection.items.length) * 100 : 0}%` }}
+                        />
                     </div>
                 </div>
 
@@ -123,10 +133,9 @@ const ConcoursResumeView: React.FC = () => {
                 <div className="mb-12">
                     {/* En-tête de section */}
                     <div className="mb-8">
-                        <h2 className="text-2xl font-light text-gray-900 mb-2">
+                        <h2 className="text-2xl font-light text-gray-900">
                             {currentSection.title}
                         </h2>
-                        <div className="h-px bg-gray-200"></div>
                     </div>
 
                     {/* Liste des items */}
@@ -144,28 +153,28 @@ const ConcoursResumeView: React.FC = () => {
                                     } ${isChecked ? 'bg-gray-50' : 'bg-white'}`}
                                 >
                                     <div className="p-6">
-                                        <div className="flex gap-4">
-                                            {/* Checkbox simple */}
-                                            <div className="flex-shrink-0 pt-1">
+                                        <div className="flex gap-4 items-start">
+                                            {/* Contenu */}
+                                            <div className="flex-1 text-sm text-gray-700 font-light leading-relaxed">
+                                                <FormattedText text={item} />
+                                            </div>
+
+                                            {/* Checkbox rond à droite */}
+                                            <div className="flex-shrink-0">
                                                 <button
                                                     onClick={() => toggleItemCheck(itemId)}
-                                                    className={`w-5 h-5 border-2 transition-colors ${
+                                                    className={`w-6 h-6 rounded-full border-2 transition-all flex items-center justify-center ${
                                                         isChecked
-                                                            ? 'bg-gray-900 border-gray-900'
+                                                            ? 'bg-green-600 border-green-600'
                                                             : 'border-gray-300 hover:border-gray-500'
                                                     }`}
                                                 >
                                                     {isChecked && (
-                                                        <svg className="w-full h-full text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                            <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth={3} d="M5 13l4 4L19 7" />
+                                                        <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                                                         </svg>
                                                     )}
                                                 </button>
-                                            </div>
-
-                                            {/* Contenu */}
-                                            <div className="flex-1 text-sm text-gray-700 font-light leading-relaxed">
-                                                <FormattedText text={item} />
                                             </div>
                                         </div>
                                     </div>
@@ -176,7 +185,7 @@ const ConcoursResumeView: React.FC = () => {
                 </div>
 
                 {/* Navigation */}
-                <div className="flex items-center justify-between border-t border-gray-200 pt-8">
+                <div className="flex items-center justify-between mt-8">
                     <button
                         onClick={goToPreviousSection}
                         disabled={isFirstSection}
@@ -204,7 +213,7 @@ const ConcoursResumeView: React.FC = () => {
 
                 {/* Section de confirmation */}
                 {isLastSection && (
-                    <div className="mt-16 pt-12 border-t border-gray-200">
+                    <div className="mt-16">
                         {!confirmed ? (
                             <div>
                                 <h3 className="text-lg font-light text-gray-900 mb-4">
