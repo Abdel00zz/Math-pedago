@@ -25,7 +25,7 @@ const LoginHeader: React.FC = () => (
     </div>
 );
 
-const WelcomeMessage: React.FC<{ hasPreloadedName: boolean; name: string }> = ({ hasPreloadedName, name }) => (
+const WelcomeMessage: React.FC<{ hasPreloadedName: boolean; name: string; mode: 'school' | 'concours' }> = ({ hasPreloadedName, name, mode }) => (
     <div className="mb-10 text-center">
         {hasPreloadedName ? (
             <>
@@ -36,7 +36,9 @@ const WelcomeMessage: React.FC<{ hasPreloadedName: boolean; name: string }> = ({
                     Bon retour, <span className="text-slate-600 font-medium">{name}</span> !
                 </h2>
                 <p className="mt-3 text-sm text-slate-500">
-                    Vérifiez votre classe pour poursuivre sans perdre votre progression.
+                    {mode === 'concours'
+                        ? 'Préparez vos concours avec des ressources ciblées et des entraînements.'
+                        : 'Vérifiez votre classe pour poursuivre sans perdre votre progression.'}
                 </p>
             </>
         ) : (
@@ -45,10 +47,12 @@ const WelcomeMessage: React.FC<{ hasPreloadedName: boolean; name: string }> = ({
                     className="text-2xl font-semibold text-slate-900 sm:text-[1.7rem]"
                     style={{ fontFamily: "'Space Grotesk', 'Manrope', 'Segoe UI', sans-serif" }}
                 >
-                    Bienvenue
+                    {mode === 'concours' ? 'Préparez vos concours' : 'Bienvenue'}
                 </h2>
                 <p className="mt-3 text-sm text-slate-500">
-                    Complétez les informations ci-dessous pour démarrer votre parcours d'apprentissage.
+                    {mode === 'concours'
+                        ? 'Accédez à des résumés et quiz spécifiques pour Médecine, ENSAM et ENSA.'
+                        : 'Complétez les informations ci-dessous pour démarrer votre parcours d\'apprentissage.'}
                 </p>
             </>
         )}
@@ -63,81 +67,88 @@ interface LoginFormProps {
     error: string;
     handleSubmit: (e: FormEvent) => void;
     hasPreloadedName: boolean;
+    mode: 'school' | 'concours';
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({ name, setName, classId, setClassId, error, handleSubmit, hasPreloadedName }) => (
-    <form onSubmit={handleSubmit} className="space-y-7">
-        <div className="space-y-2">
-            <label
-                htmlFor="name"
-                className="block text-[0.7rem] font-semibold uppercase tracking-[0.28em] text-slate-500"
-            >
-                Nom complet
-            </label>
-            <div className="relative">
-                <span className="material-symbols-outlined pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
-                    drive_file_rename_outline
-                </span>
-                <input
-                    id="name"
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className={`w-full rounded-2xl border border-slate-200 bg-white px-12 py-3 text-base text-slate-900 shadow-sm transition-all duration-200 focus:border-slate-900/30 focus:outline-none focus:ring-2 focus:ring-slate-900/10 placeholder:text-slate-400 ${
-                        hasPreloadedName ? 'cursor-not-allowed bg-slate-50 text-slate-500' : ''
-                    }`}
-                    placeholder="Votre nom et prénom"
-                    required
-                    readOnly={hasPreloadedName}
-                    style={{ fontFamily: "'Manrope', 'Segoe UI', sans-serif" }}
-                />
-            </div>
-        </div>
+const LoginForm: React.FC<LoginFormProps> = ({ name, setName, classId, setClassId, error, handleSubmit, hasPreloadedName, mode }) => {
+    const schoolClassOptions = CLASS_OPTIONS.filter(opt => opt.value !== 'concours');
 
-        <div className="space-y-2">
-            <label
-                htmlFor="classId"
-                className="block text-[0.7rem] font-semibold uppercase tracking-[0.28em] text-slate-500"
-            >
-                Votre classe
-            </label>
-            <div className="relative">
-                <span className="material-symbols-outlined pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
-                    account_balance
-                </span>
-                <select
-                    id="classId"
-                    value={classId}
-                    onChange={(e) => setClassId(e.target.value)}
-                    className="w-full appearance-none rounded-2xl border border-slate-200 bg-white px-12 py-3 text-base text-slate-900 shadow-sm transition-all duration-200 focus:border-slate-900/30 focus:outline-none focus:ring-2 focus:ring-slate-900/10"
-                    required
-                    style={{ fontFamily: "'Roboto Slab', 'Roboto', serif" }}
+    return (
+        <form onSubmit={handleSubmit} className="space-y-7">
+            <div className="space-y-2">
+                <label
+                    htmlFor="name"
+                    className="block text-[0.7rem] font-semibold uppercase tracking-[0.28em] text-slate-500"
                 >
-                    {CLASS_OPTIONS.map(option => (
-                        <option key={option.value} value={option.value} style={{ fontFamily: "'Roboto Slab', 'Roboto', serif" }}>
-                            {option.label}
-                        </option>
-                    ))}
-                </select>
-                <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-slate-400">
-                    <span className="material-symbols-outlined">unfold_more</span>
+                    Nom complet
+                </label>
+                <div className="relative">
+                    <span className="material-symbols-outlined pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+                        drive_file_rename_outline
+                    </span>
+                    <input
+                        id="name"
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        className={`w-full rounded-2xl border border-slate-200 bg-white px-12 py-3 text-base text-slate-900 shadow-sm transition-all duration-200 focus:border-slate-900/30 focus:outline-none focus:ring-2 focus:ring-slate-900/10 placeholder:text-slate-400 ${
+                            hasPreloadedName ? 'cursor-not-allowed bg-slate-50 text-slate-500' : ''
+                        }`}
+                        placeholder="Votre nom et prénom"
+                        required
+                        readOnly={hasPreloadedName}
+                        style={{ fontFamily: "'Manrope', 'Segoe UI', sans-serif" }}
+                    />
                 </div>
             </div>
-        </div>
 
-        {error && (
-            <p className="text-center text-sm font-medium text-rose-500">{error}</p>
-        )}
+            {mode === 'school' && (
+                <div className="space-y-2">
+                    <label
+                        htmlFor="classId"
+                        className="block text-[0.7rem] font-semibold uppercase tracking-[0.28em] text-slate-500"
+                    >
+                        Votre classe
+                    </label>
+                    <div className="relative">
+                        <span className="material-symbols-outlined pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+                            account_balance
+                        </span>
+                        <select
+                            id="classId"
+                            value={classId}
+                            onChange={(e) => setClassId(e.target.value)}
+                            className="w-full appearance-none rounded-2xl border border-slate-200 bg-white px-12 py-3 text-base text-slate-900 shadow-sm transition-all duration-200 focus:border-slate-900/30 focus:outline-none focus:ring-2 focus:ring-slate-900/10"
+                            required
+                            style={{ fontFamily: "'Roboto Slab', 'Roboto', serif" }}
+                        >
+                            {schoolClassOptions.map(option => (
+                                <option key={option.value} value={option.value} style={{ fontFamily: "'Roboto Slab', 'Roboto', serif" }}>
+                                    {option.label}
+                                </option>
+                            ))}
+                        </select>
+                        <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-slate-400">
+                            <span className="material-symbols-outlined">unfold_more</span>
+                        </div>
+                    </div>
+                </div>
+            )}
 
-        <button
-            type="submit"
-            className="mt-6 w-full rounded-2xl bg-slate-900 px-4 py-3 text-base font-semibold tracking-[0.12em] text-white shadow-[0_18px_40px_rgba(15,23,42,0.18)] transition-transform duration-200 hover:-translate-y-[1px] hover:shadow-[0_20px_44px_rgba(15,23,42,0.22)] focus:outline-none focus:ring-2 focus:ring-slate-900/15 active:scale-[0.99]"
-            style={{ fontFamily: "'Space Grotesk', 'Manrope', 'Segoe UI', sans-serif" }}
-        >
-            {hasPreloadedName ? 'Accéder à mon espace' : 'Commencer'}
-        </button>
-    </form>
-);
+            {error && (
+                <p className="text-center text-sm font-medium text-rose-500">{error}</p>
+            )}
+
+            <button
+                type="submit"
+                className="mt-6 w-full rounded-2xl bg-slate-900 px-4 py-3 text-base font-semibold tracking-[0.12em] text-white shadow-[0_18px_40px_rgba(15,23,42,0.18)] transition-transform duration-200 hover:-translate-y-[1px] hover:shadow-[0_20px_44px_rgba(15,23,42,0.22)] focus:outline-none focus:ring-2 focus:ring-slate-900/15 active:scale-[0.99]"
+                style={{ fontFamily: "'Space Grotesk', 'Manrope', 'Segoe UI', sans-serif" }}
+            >
+                {mode === 'concours' ? 'Accéder aux concours' : hasPreloadedName ? 'Accéder à mon espace' : 'Commencer'}
+            </button>
+        </form>
+    );
+};
 
 
 // --- Composant principal ---
@@ -145,17 +156,42 @@ const LoginForm: React.FC<LoginFormProps> = ({ name, setName, classId, setClassI
 const LoginView: React.FC = () => {
     const state = useAppState();
     const dispatch = useAppDispatch();
-    
+
     const [name, setName] = useState(state.profile?.name || '');
-    const [classId, setClassId] = useState(state.profile?.classId || CLASS_OPTIONS[0]?.value || '');
+    const [mode, setMode] = useState<'school' | 'concours'>(
+        state.profile?.classId === 'concours' ? 'concours' : 'school'
+    );
+    const [classId, setClassId] = useState(
+        state.profile?.classId && state.profile.classId !== 'concours'
+            ? state.profile.classId
+            : CLASS_OPTIONS[0]?.value || ''
+    );
     const [error, setError] = useState('');
 
     useEffect(() => {
         if (state.profile?.name) setName(state.profile.name);
-        if (state.profile?.classId) setClassId(state.profile.classId);
+        if (state.profile?.classId) {
+            if (state.profile.classId === 'concours') {
+                setMode('concours');
+            } else {
+                setMode('school');
+                setClassId(state.profile.classId);
+            }
+        }
     }, [state.profile]);
 
     const hasPreloadedName = !!state.profile?.name;
+
+    const handleModeChange = (newMode: 'school' | 'concours') => {
+        setMode(newMode);
+        if (newMode === 'school') {
+            // Retour au mode scolaire : réinitialiser sur une classe non-concours
+            const firstSchoolClass = CLASS_OPTIONS.find(opt => opt.value !== 'concours');
+            setClassId(firstSchoolClass?.value || '');
+        } else {
+            // Mode concours : on assignera 'concours' au submit
+        }
+    };
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
@@ -163,16 +199,21 @@ const LoginView: React.FC = () => {
             setError('Veuillez entrer votre nom complet.');
             return;
         }
-        if (!classId) {
+
+        // Déterminer le classId final selon le mode
+        const finalClassId = mode === 'concours' ? 'concours' : classId;
+
+        if (!finalClassId) {
             setError('Veuillez sélectionner votre classe.');
             return;
         }
+
         setError('');
-        const profile: Profile = { name: name.trim(), classId };
+        const profile: Profile = { name: name.trim(), classId: finalClassId };
         dispatch({ type: 'LOGIN', payload: profile });
 
-        // Rediriger vers la vue concours si la classe sélectionnée est "concours"
-        if (classId === 'concours') {
+        // Rediriger vers la vue concours si le mode est concours
+        if (mode === 'concours') {
             dispatch({
                 type: 'CHANGE_VIEW',
                 payload: { view: 'concours' }
@@ -184,7 +225,44 @@ const LoginView: React.FC = () => {
         <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-[#eef2ff] via-[#f7f9ff] to-white px-4 py-10 sm:px-6">
             <div className="w-full max-w-lg rounded-3xl border border-slate-200/70 bg-white/90 p-8 shadow-[0_28px_70px_rgba(15,23,42,0.12)] backdrop-blur-xl sm:p-12">
                 <LoginHeader />
-                <WelcomeMessage hasPreloadedName={hasPreloadedName} name={name} />
+
+                {/* Toggle Mode avec design pill */}
+                <div className="mb-8 flex justify-center">
+                    <div className="inline-flex rounded-full bg-slate-100/80 p-1 shadow-inner">
+                        <button
+                            type="button"
+                            onClick={() => handleModeChange('school')}
+                            className={`relative rounded-full px-6 py-2.5 text-sm font-semibold transition-all duration-300 ${
+                                mode === 'school'
+                                    ? 'bg-white text-slate-900 shadow-md'
+                                    : 'text-slate-500 hover:text-slate-700'
+                            }`}
+                            style={{ fontFamily: "'Space Grotesk', 'Manrope', 'Segoe UI', sans-serif" }}
+                        >
+                            <span className="relative z-10 flex items-center gap-2">
+                                <span className="material-symbols-outlined !text-lg">school</span>
+                                Classe scolaire
+                            </span>
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => handleModeChange('concours')}
+                            className={`relative rounded-full px-6 py-2.5 text-sm font-semibold transition-all duration-300 ${
+                                mode === 'concours'
+                                    ? 'bg-white text-slate-900 shadow-md'
+                                    : 'text-slate-500 hover:text-slate-700'
+                            }`}
+                            style={{ fontFamily: "'Space Grotesk', 'Manrope', 'Segoe UI', sans-serif" }}
+                        >
+                            <span className="relative z-10 flex items-center gap-2">
+                                <span className="material-symbols-outlined !text-lg">emoji_events</span>
+                                Préparation concours
+                            </span>
+                        </button>
+                    </div>
+                </div>
+
+                <WelcomeMessage hasPreloadedName={hasPreloadedName} name={name} mode={mode} />
                 <LoginForm
                     name={name}
                     setName={setName}
@@ -193,6 +271,7 @@ const LoginView: React.FC = () => {
                     error={error}
                     handleSubmit={handleSubmit}
                     hasPreloadedName={hasPreloadedName}
+                    mode={mode}
                 />
             </div>
         </div>
