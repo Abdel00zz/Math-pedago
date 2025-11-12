@@ -65,14 +65,14 @@ const MathContent: React.FC<MathContentProps> = ({ content, className = '', inli
         let cancelled = false;
         let timeoutId: number | null = null;
         let retryCount = 0;
-        const MAX_RETRIES = 50;
+        const MAX_RETRIES = 100; // Augmenté pour donner plus de temps
 
         const el = containerRef.current;
         if (!el) return;
 
         // Traiter le Markdown en protégeant les expressions LaTeX
         const processedContent = processMarkdown(content);
-        
+
         logDebug('Content update:', {
             raw: content,
             processed: processedContent,
@@ -101,11 +101,14 @@ const MathContent: React.FC<MathContentProps> = ({ content, className = '', inli
             if (!window.MathJax) {
                 retryCount++;
                 if (retryCount < MAX_RETRIES) {
-                    logDebug('MathJax not ready, retrying...');
-                    timeoutId = window.setTimeout(typeset, 100);
+                    logDebug('MathJax not ready, retrying in', retryCount < 10 ? 100 : 200, 'ms...');
+                    // Délai progressif : 100ms pour les 10 premiers essais, puis 200ms
+                    const delay = retryCount < 10 ? 100 : 200;
+                    timeoutId = window.setTimeout(typeset, delay);
                 } else {
                     console.error('❌ MathJax NON DISPONIBLE après', MAX_RETRIES, 'tentatives');
                     console.error('❌ Vérifiez que le script MathJax est bien chargé dans index.html');
+                    console.error('❌ Contenu non rendu:', containerRef.current?.textContent);
                 }
                 return;
             }
@@ -155,7 +158,7 @@ const MathContent: React.FC<MathContentProps> = ({ content, className = '', inli
                     logDebug('Starting MathJax typesetting...');
                     await window.MathJax.typesetPromise([containerRef.current]);
                     logDebug('✅ MathJax typesetting complete!');
-                    
+
                     // 🔍 DIAGNOSTIC 4: Contenu après rendu
                     logDebug('Content after typesetting:', {
                         html: containerRef.current.innerHTML,
@@ -164,6 +167,7 @@ const MathContent: React.FC<MathContentProps> = ({ content, className = '', inli
                     });
                 } else {
                     console.error('❌ window.MathJax.typesetPromise n\'existe pas');
+                    console.error('Structure MathJax:', Object.keys(window.MathJax || {}));
                 }
             } catch (error) {
                 console.error('❌ MathJax rendering error:', error);
@@ -172,16 +176,17 @@ const MathContent: React.FC<MathContentProps> = ({ content, className = '', inli
                     stack: (error as Error).stack,
                     content: containerRef.current?.innerHTML
                 });
-                // Réessayer une fois en cas d'erreur
-                if (retryCount < 2) {
+                // Réessayer jusqu'à 3 fois en cas d'erreur
+                if (retryCount < 3) {
                     retryCount++;
-                    timeoutId = window.setTimeout(typeset, 200);
+                    logDebug(`Retrying after error (attempt ${retryCount}/3)...`);
+                    timeoutId = window.setTimeout(typeset, 300);
                 }
             }
         };
 
-        // Démarrer le rendu avec un petit délai pour laisser MathJax se charger
-        timeoutId = window.setTimeout(typeset, 50);
+        // Démarrer le rendu avec un délai initial plus long pour laisser MathJax se charger
+        timeoutId = window.setTimeout(typeset, 100);
 
         return () => {
             cancelled = true;

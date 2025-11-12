@@ -4,6 +4,7 @@ export interface Profile {
 }
 
 export interface Option {
+    id?: string; // Optionnel, pour les concours
     text: string;
     isCorrect: boolean;
     explanation?: string;
@@ -218,7 +219,7 @@ export interface ChapterProgress {
 }
 
 export interface AppState {
-    view: 'login' | 'dashboard' | 'work-plan' | 'activity';
+    view: 'login' | 'dashboard' | 'work-plan' | 'activity' | 'concours' | 'concours-list' | 'concours-year' | 'concours-resume' | 'concours-quiz';
     profile: Profile | null;
     activities: { [chapterId: string]: Chapter };
     activityVersions: { [chapterId: string]: string }; // To track versions for update notifications
@@ -228,6 +229,13 @@ export interface AppState {
     activitySubView: 'videos' | 'quiz' | 'exercises' | 'lesson' | null; // Ajout de 'lesson'
     isReviewMode: boolean;
     chapterOrder: string[];
+    // Concours
+    concoursProgress: ConcoursProgress;
+    currentConcoursType: string | null; // "medecine", "ensa", "ensam"
+    currentConcoursId: string | null; // ex: "medecine-2024-nombres-complexes"
+    concoursNavigationMode: 'theme' | 'year' | null; // Mode de navigation: par thème ou par année
+    currentConcoursYear: string | null; // Année sélectionnée en mode "par année"
+    currentConcoursTheme: string | null; // Thème sélectionné (utilisé dans les deux modes)
 }
 
 // Types for the specific JSON export structure
@@ -292,10 +300,92 @@ export interface ToastNotification {
     };
 }
 
+// ============================================================================
+// TYPES POUR LES CONCOURS
+// ============================================================================
+
+export interface ConcoursResumeSection {
+    type: 'definitions' | 'formules' | 'methodes' | 'pieges' | 'reflexion' | 'astuces';
+    title: string;
+    items: string[];
+}
+
+export interface ConcoursResume {
+    title: string;
+    introduction: string;
+    sections: ConcoursResumeSection[];
+}
+
+export interface ConcoursQuestion extends Question {
+    theme: string; // Référence au thème du concours
+}
+
+export interface ConcoursData {
+    id: string;
+    concours: string; // "Médecine", "ENSA", "ENSAM"
+    annee: string;
+    theme: string;
+    resume: ConcoursResume;
+    quiz: ConcoursQuestion[];
+}
+
+export interface ConcoursExamen {
+    annee: string;
+    fichiers: {
+        id: string;
+        theme: string;
+        file: string;
+    }[];
+}
+
+export interface ConcoursInfo {
+    id: string;
+    name: string;
+    description: string;
+    icon: string;
+    color: string;
+    examens: ConcoursExamen[];
+}
+
+export interface ConcoursIndex {
+    concours: ConcoursInfo[];
+}
+
+export interface ConcoursQuizProgress {
+    answers: { [qId: string]: string | string[] };
+    currentQuestionIndex: number;
+    duration: number;
+    hintsUsed: number;
+    score?: number;
+    completed: boolean;
+}
+
+export interface ConcoursProgress {
+    [concoursId: string]: { // ex: "medecine-2024-nombres-complexes"
+        resumeRead: boolean; // L'utilisateur a lu et confirmé le résumé
+        quiz: ConcoursQuizProgress;
+    };
+}
+
+// ============================================================================
+// FIN TYPES CONCOURS
+// ============================================================================
+
 
 export type Action =
     | { type: 'INIT'; payload: Partial<AppState> }
-    | { type: 'CHANGE_VIEW'; payload: { view: AppState['view']; chapterId?: string; subView?: AppState['activitySubView']; review?: boolean } }
+    | { type: 'CHANGE_VIEW'; payload: {
+        view: AppState['view'];
+        chapterId?: string;
+        subView?: AppState['activitySubView'];
+        review?: boolean;
+        concoursType?: string | null;
+        concoursId?: string | null;
+        concoursYear?: string | null;
+        concoursTheme?: string | null;
+        concoursMode?: 'theme' | 'year' | null;
+        fromHistory?: boolean;
+    } }
     | { type: 'LOGIN'; payload: Profile }
     | { type: 'NAVIGATE_QUIZ'; payload: number }
     | { type: 'UPDATE_QUIZ_ANSWER'; payload: { qId: string; answer: string | string[] } }

@@ -1,0 +1,286 @@
+{
+  "titre": "Guide de création de concours",
+  "version": "1.0",
+  "description": "Ce guide explique comment créer un fichier JSON de concours pour la plateforme Math-pedago",
+
+  "structure_generale": {
+    "description": "Chaque fichier de concours doit contenir les champs suivants",
+    "champs_obligatoires": {
+      "id": "Identifiant unique du concours (ex: medecine-2024-nombres-complexes)",
+      "concours": "Nom du concours (Médecine, ENSA, ENSAM)",
+      "annee": "Année du concours (format: \"2024\")",
+      "theme": "Thème mathématique du concours",
+      "resume": "Objet contenant le résumé pédagogique",
+      "quiz": "Tableau des questions du quiz"
+    }
+  },
+
+  "resume_pedagogique": {
+    "description": "Le résumé contient l'essentiel du thème à réviser",
+    "structure": {
+      "title": "Titre du résumé (ex: Les nombres complexes - L'essentiel)",
+      "introduction": "Texte d'introduction avec support de la syntaxe KaTeX ($...$)",
+      "sections": "Tableau de sections thématiques"
+    },
+    "types_de_sections": {
+      "definitions": {
+        "description": "Définitions clés à retenir par cœur",
+        "couleur": "Bleu",
+        "exemple": "**Unité imaginaire** : $i^2 = -1$"
+      },
+      "formules": {
+        "description": "Formules essentielles",
+        "couleur": "Violet",
+        "exemple": "**Addition** : $(a + ib) + (c + id) = (a+c) + i(b+d)$"
+      },
+      "methodes": {
+        "description": "Méthodes et astuces",
+        "couleur": "Vert",
+        "exemple": "**Pour calculer un module** : Toujours utiliser $|z|^2 = z\\overline{z}$"
+      },
+      "pieges": {
+        "description": "Pièges à éviter absolument",
+        "couleur": "Rouge",
+        "style_special": "Items contenant ATTENTION, DANGER, PIÈGE auront un cadre coloré",
+        "exemple": "**ATTENTION** : $|z + z'| \\neq |z| + |z'|$ en général"
+      },
+      "reflexion": {
+        "description": "Points de réflexion importants",
+        "couleur": "Indigo",
+        "exemple": "**Le module** mesure la distance à l'origine"
+      },
+      "astuces": {
+        "description": "Astuces supplémentaires",
+        "couleur": "Ambre",
+        "exemple": "**Astuce** : Pour simplifier $i^n$, calculer $n \\text{ mod } 4$"
+      }
+    }
+  },
+
+  "syntaxe_katex": {
+    "description": "Toutes les formules mathématiques doivent utiliser la syntaxe KaTeX entre $ $",
+    "exemples": {
+      "inline": "Texte avec formule $x^2 + y^2 = r^2$ dans la phrase",
+      "fractions": "$\\frac{a}{b}$ ou $\\frac{numerateur}{denominateur}$",
+      "racines": "$\\sqrt{x}$ ou $\\sqrt[n]{x}$",
+      "exposants": "$x^2$, $e^{i\\theta}$",
+      "indices": "$a_n$, $x_1$",
+      "symboles_grecs": "$\\alpha$, $\\beta$, $\\theta$, $\\pi$",
+      "ensembles": "$\\mathbb{R}$, $\\mathbb{C}$, $\\mathbb{N}$",
+      "fonctions": "$\\sin x$, $\\cos x$, $\\ln x$, $\\exp x$",
+      "operateurs": "$\\times$, $\\div$, $\\pm$, $\\neq$, $\\leq$, $\\geq$",
+      "fleches": "$\\Rightarrow$, $\\Leftrightarrow$, $\\to$",
+      "sommes_produits": "$\\sum_{i=1}^{n}$, $\\prod_{i=1}^{n}$",
+      "limites": "$\\lim_{x \\to 0}$",
+      "integrales": "$\\int_{a}^{b}$",
+      "derivees": "$\\frac{d}{dx}$, $f'(x)$",
+      "vecteurs": "$\\vec{v}$, $\\overrightarrow{AB}$",
+      "conjugue": "$\\overline{z}$",
+      "valeur_absolue": "$|x|$",
+      "accolades": "$\\{$, $\\}$"
+    },
+    "conseils": [
+      "Toujours échapper les backslashes : \\\\",
+      "Utiliser $...$ pour les formules inline",
+      "Combiner avec le markdown : **texte en gras** : $formule$"
+    ]
+  },
+
+  "format_quiz": {
+    "description": "Format des questions du quiz",
+    "structure_question": {
+      "id": "Identifiant unique (ex: q1, q2, ...)",
+      "theme": "Référence au thème (même que le thème du concours)",
+      "question": "Énoncé de la question (support KaTeX)",
+      "type": "mcq ou ordering",
+      "options": "Pour MCQ: tableau d'options",
+      "steps": "Pour ordering: tableau d'étapes à ordonner",
+      "explanation": "Explication de la réponse correcte",
+      "hints": "Tableau d'indices progressifs"
+    },
+    "format_option_mcq": {
+      "id": "Identifiant de l'option (a, b, c, d)",
+      "text": "Texte de l'option (support KaTeX)",
+      "isCorrect": "true ou false"
+    }
+  },
+
+  "cartes_mentales": {
+    "description": "Les cartes mentales sont générées automatiquement pour certains thèmes",
+    "themes_supportes": [
+      "nombres complexes: affiche forme algébrique → module, argument, conjugué → forme exponentielle"
+    ],
+    "ajout_personnalise": "Pour ajouter une carte mentale personnalisée, modifier ConcoursResumeView.tsx"
+  },
+
+  "exemple_complet": {
+    "id": "exemple-2024-theme",
+    "concours": "Exemple",
+    "annee": "2024",
+    "theme": "Exemple de thème",
+    "resume": {
+      "title": "Exemple de thème - L'essentiel",
+      "introduction": "Introduction avec support de formules $x^2 + y^2 = r^2$. Ce thème est essentiel.",
+      "sections": [
+        {
+          "type": "definitions",
+          "title": "Définitions clés à retenir par cœur",
+          "items": [
+            "**Définition 1** : Explication avec $formule_1$",
+            "**Définition 2** : Explication avec $formule_2$"
+          ]
+        },
+        {
+          "type": "formules",
+          "title": "Formules essentielles",
+          "items": [
+            "**Formule importante** : $(a + b)^2 = a^2 + 2ab + b^2$",
+            "**Théorème** : $\\sum_{i=1}^{n} i = \\frac{n(n+1)}{2}$"
+          ]
+        },
+        {
+          "type": "methodes",
+          "title": "Méthodes et astuces",
+          "items": [
+            "**Pour résoudre** : Utiliser la méthode de substitution",
+            "**Pour simplifier** : Factoriser d'abord"
+          ]
+        },
+        {
+          "type": "pieges",
+          "title": "Pièges à éviter absolument",
+          "items": [
+            "**ATTENTION** : $(a + b)^2 \\neq a^2 + b^2$",
+            "**DANGER** : Ne pas oublier le domaine de définition",
+            "**PIÈGE** : Vérifier les cas limites"
+          ]
+        }
+      ]
+    },
+    "quiz": [
+      {
+        "id": "q1",
+        "theme": "Exemple de thème",
+        "question": "Calculer $(2 + 3)^2$",
+        "type": "mcq",
+        "options": [
+          { "id": "a", "text": "25", "isCorrect": true },
+          { "id": "b", "text": "13", "isCorrect": false },
+          { "id": "c", "text": "$2^2 + 3^2 = 13$", "isCorrect": false },
+          { "id": "d", "text": "10", "isCorrect": false }
+        ],
+        "explanation": "$(2+3)^2 = 5^2 = 25$. Attention à ne pas confondre avec $2^2 + 3^2 = 13$.",
+        "hints": [
+          "Calcule d'abord $2 + 3$",
+          "Puis élève le résultat au carré",
+          "Rappelle-toi que $(a+b)^2 \\neq a^2 + b^2$"
+        ]
+      },
+      {
+        "id": "q2",
+        "theme": "Exemple de thème",
+        "question": "Ordonner les étapes pour résoudre $ax^2 + bx + c = 0$",
+        "type": "ordering",
+        "steps": [
+          "Calculer le discriminant $\\Delta = b^2 - 4ac$",
+          "Vérifier le signe de $\\Delta$",
+          "Appliquer la formule $x = \\frac{-b \\pm \\sqrt{\\Delta}}{2a}$",
+          "Conclure sur le nombre de solutions"
+        ],
+        "explanation": "Pour résoudre une équation du second degré, on commence par calculer le discriminant.",
+        "hints": [
+          "La première étape est toujours le discriminant",
+          "Le signe de $\\Delta$ détermine le nombre de solutions"
+        ]
+      }
+    ]
+  },
+
+  "bonnes_pratiques": [
+    "Utiliser des titres clairs et explicites",
+    "Toujours tester les formules KaTeX avant de commit",
+    "Inclure des exemples concrets dans les méthodes",
+    "Varier les types de pièges (calcul, théorie, cas limites)",
+    "Fournir 2-3 indices progressifs par question",
+    "Rédiger des explications pédagogiques détaillées",
+    "Utiliser le gras (**) pour les mots-clés importants",
+    "Éviter les emojis dans le contenu (sauf dans le guide)",
+    "Tester le quiz avant publication",
+    "Maintenir une cohérence dans le niveau de difficulté"
+  ],
+
+  "mise_a_jour_index": {
+    "description": "Après avoir créé un nouveau fichier de concours, mettre à jour /public/concours/index.json",
+    "structure_index": {
+      "concours": "Tableau des concours disponibles",
+      "champs_concours": {
+        "id": "Identifiant du concours (medecine, ensa, ensam)",
+        "name": "Nom affiché",
+        "description": "Description courte",
+        "icon": "Vide (pas d'emojis)",
+        "color": "Vide (couleurs gérées par le style)",
+        "examens": "Tableau des années disponibles"
+      }
+    }
+  },
+
+  "architecture_intelligente": {
+    "description": "Le système de concours utilise deux modes de navigation bi-modaux",
+    "mode_par_annee": {
+      "description": "Navigation par année d'examen",
+      "flux": [
+        "1. ConcoursListView → Cartes 'Concours 2024 - X quiz'",
+        "2. ConcoursYearView → Liste des chapitres + BOUTON QUIZ GLOBAL",
+        "3a. Clic sur chapitre → ConcoursResumeView (résumé seul, sans quiz)",
+        "3b. Clic sur Quiz Global → ConcoursQuizView (toutes les questions de l'année)"
+      ],
+      "quiz_global": {
+        "description": "Le quiz global agrège TOUTES les questions de tous les chapitres d'une année",
+        "implementation": "localStorage stocke 'concoursQuizFiles' (liste de fichiers) et 'concoursQuizMode=year'",
+        "exemple": "Concours Médecine 2024 → 15 questions (5 nombres complexes + 10 autres thèmes)"
+      }
+    },
+    "mode_par_theme": {
+      "description": "Navigation par thème mathématique",
+      "flux": [
+        "1. ConcoursListView → Cartes par thème (toutes années)",
+        "2. ConcoursResumeView → Résumé agrégé intelligent + BOUTON QUIZ",
+        "3. ConcoursQuizView → Questions du thème de toutes les années"
+      ],
+      "agregation": {
+        "description": "Le résumé fusionne intelligemment les sections de toutes les années",
+        "implementation": "localStorage stocke 'concoursThemeFiles' (tous les fichiers du thème)",
+        "exemple": "Thème 'Nombres complexes' → Résumé 2024 + 2023 + 2022 fusionnés"
+      }
+    },
+    "stockage_intelligent": {
+      "description": "Utilisation de localStorage pour persistance (remplace sessionStorage)",
+      "cles_principales": {
+        "currentConcoursType": "Type de concours (medecine, ensa, ensam)",
+        "currentConcoursYear": "Année sélectionnée (mode année)",
+        "currentConcoursTheme": "Thème sélectionné (mode thème)",
+        "concoursNavigationMode": "Mode actif: 'year' ou 'theme'",
+        "currentConcoursFile": "Fichier JSON du concours actuel",
+        "concoursQuizFiles": "JSON array des fichiers pour quiz global (mode année)",
+        "concoursThemeFiles": "JSON array des fichiers du thème (mode thème)",
+        "concoursQuizMode": "Mode du quiz: 'year' ou 'theme'"
+      },
+      "avantages": [
+        "Persistance entre sessions",
+        "Navigation navigateur (retour/avancer) fonctionnelle",
+        "Pas de boutons retour manuels nécessaires",
+        "Flexibilité pour agrégation intelligente"
+      ]
+    }
+  },
+
+  "navigation_navigateur": {
+    "description": "Le système synchronise avec l'historique du navigateur",
+    "fonctionnement": [
+      "Les boutons retour/avancer du navigateur fonctionnent automatiquement",
+      "Pas de boutons 'retourner' manuels dans l'interface",
+      "URLs propres: /concours/medecine/2024, /concours/resume/...",
+      "État préservé dans localStorage pour restauration"
+    ]
+  }
+}

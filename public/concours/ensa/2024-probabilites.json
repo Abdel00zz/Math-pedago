@@ -1,0 +1,70 @@
+{
+  "id": "ensa-2024-probabilites",
+  "concours": "ENSA",
+  "annee": "2024",
+  "theme": "Probabilités",
+  "resume": {
+    "title": "Probabilités - L'essentiel",
+    "introduction": "Les probabilités sont essentielles pour le concours ENSA. Maîtrisez les formules et les méthodes de calcul.",
+    "sections": [
+      {
+        "type": "definitions",
+        "title": "📚 Définitions clés à retenir par cœur",
+        "items": [
+          "**Probabilité** : P(A) = nombre de cas favorables / nombre de cas possibles",
+          "**Événements incompatibles** : A ∩ B = ∅",
+          "**Événements indépendants** : P(A ∩ B) = P(A) × P(B)",
+          "**Probabilité conditionnelle** : P(A|B) = P(A ∩ B) / P(B)",
+          "**Formule des probabilités totales** : P(A) = Σ P(A|Bᵢ) × P(Bᵢ)"
+        ]
+      },
+      {
+        "type": "formules",
+        "title": "🔢 Formules essentielles",
+        "items": [
+          "**P(A ∪ B)** = P(A) + P(B) - P(A ∩ B)",
+          "**P(Ā)** = 1 - P(A)",
+          "**Formule de Bayes** : P(A|B) = P(B|A) × P(A) / P(B)",
+          "**Loi binomiale** : P(X = k) = C(n,k) × pᵏ × (1-p)ⁿ⁻ᵏ"
+        ]
+      },
+      {
+        "type": "methodes",
+        "title": "💡 Méthodes et astuces",
+        "items": [
+          "**Dessiner un arbre** de probabilités pour visualiser",
+          "**Tableau à double entrée** pour les situations à deux variables",
+          "**Diagramme de Venn** pour les unions et intersections"
+        ]
+      },
+      {
+        "type": "pieges",
+        "title": "⚠️ Pièges à éviter absolument",
+        "items": [
+          "❌ Indépendant ≠ Incompatible",
+          "❌ P(A|B) ≠ P(B|A) en général",
+          "❌ Toujours vérifier que Σ P(Ωᵢ) = 1"
+        ]
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "id": "q1",
+      "theme": "Probabilités",
+      "question": "On lance deux dés. Quelle est la probabilité d'obtenir une somme égale à 7 ?",
+      "type": "mcq",
+      "options": [
+        { "id": "a", "text": "1/6", "isCorrect": true },
+        { "id": "b", "text": "1/12", "isCorrect": false },
+        { "id": "c", "text": "1/36", "isCorrect": false },
+        { "id": "d", "text": "7/36", "isCorrect": false }
+      ],
+      "explanation": "Cas favorables : (1,6), (2,5), (3,4), (4,3), (5,2), (6,1) = 6 cas. Total = 36. P = 6/36 = 1/6",
+      "hints": [
+        "Liste tous les couples possibles",
+        "Compte ceux qui donnent une somme de 7"
+      ]
+    }
+  ]
+}

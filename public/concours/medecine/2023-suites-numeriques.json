@@ -1,0 +1,73 @@
+{
+  "id": "medecine-2023-suites-numeriques",
+  "concours": "Médecine",
+  "annee": "2023",
+  "theme": "Suites numériques",
+  "resume": {
+    "title": "Suites numériques - L'essentiel",
+    "introduction": "Les suites numériques sont fondamentales en mathématiques. Ce chapitre teste votre capacité à reconnaître les types de suites et à calculer leurs limites.",
+    "sections": [
+      {
+        "type": "definitions",
+        "title": "📚 Définitions clés à retenir par cœur",
+        "items": [
+          "**Suite arithmétique** : uₙ₊₁ = uₙ + r (r : raison)",
+          "**Suite géométrique** : uₙ₊₁ = uₙ × q (q : raison)",
+          "**Terme général arithmétique** : uₙ = u₀ + nr",
+          "**Terme général géométrique** : uₙ = u₀ × qⁿ",
+          "**Somme arithmétique** : Sₙ = (n+1)(u₀ + uₙ)/2",
+          "**Somme géométrique** : Sₙ = u₀(1 - qⁿ⁺¹)/(1 - q) si q ≠ 1"
+        ]
+      },
+      {
+        "type": "formules",
+        "title": "🔢 Formules essentielles",
+        "items": [
+          "**Limite d'une suite géométrique** : Si |q| < 1 alors lim qⁿ = 0",
+          "**Monotonie** : uₙ₊₁ - uₙ > 0 ⟹ suite croissante",
+          "**Convergence** : Suite bornée et monotone ⟹ convergente",
+          "**Théorème des gendarmes** : vₙ ≤ uₙ ≤ wₙ et lim vₙ = lim wₙ = L ⟹ lim uₙ = L"
+        ]
+      },
+      {
+        "type": "methodes",
+        "title": "💡 Méthodes et astuces",
+        "items": [
+          "**Reconnaître une suite arithmétique** : Vérifier si uₙ₊₁ - uₙ est constant",
+          "**Reconnaître une suite géométrique** : Vérifier si uₙ₊₁/uₙ est constant",
+          "**Pour étudier la monotonie** : Calculer uₙ₊₁ - uₙ ou uₙ₊₁/uₙ",
+          "**Pour calculer une limite** : Factoriser par le terme dominant"
+        ]
+      },
+      {
+        "type": "pieges",
+        "title": "⚠️ Pièges à éviter absolument",
+        "items": [
+          "❌ Ne pas confondre n et uₙ",
+          "❌ Attention aux indices : u₀ ou u₁ comme premier terme ?",
+          "❌ Pour une suite géométrique, q peut être négatif",
+          "❌ Une suite peut être ni croissante ni décroissante"
+        ]
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "id": "q1",
+      "theme": "Suites numériques",
+      "question": "Soit (uₙ) une suite arithmétique avec u₃ = 7 et u₇ = 15. Quelle est la raison ?",
+      "type": "mcq",
+      "options": [
+        { "id": "a", "text": "2", "isCorrect": true },
+        { "id": "b", "text": "4", "isCorrect": false },
+        { "id": "c", "text": "8", "isCorrect": false },
+        { "id": "d", "text": "1", "isCorrect": false }
+      ],
+      "explanation": "u₇ = u₃ + 4r donc 15 = 7 + 4r, d'où r = 2",
+      "hints": [
+        "Utilise uₙ = uₘ + (n-m)r",
+        "Il y a 4 termes entre u₃ et u₇"
+      ]
+    }
+  ]
+}

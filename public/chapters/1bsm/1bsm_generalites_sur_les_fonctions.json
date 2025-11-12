@@ -2,7 +2,7 @@
   "class": "1bsm",
   "chapter": "Généralités sur les Fonctions",
   "sessionDates": [
-    "2025-11-12T12:00:00Z"
+    "2025-11-12T19:00:00Z"
   ],
   "lessonFile": "lessons/1bsm_generalites_sur_les_fonctions.json",
   "videos": [],
@@ -1029,5 +1029,5 @@
       ]
     }
   ],
-  "version": "v1.1.0-c8c09b"
+  "version": "v1.1.0-5de509"
 }

@@ -1492,38 +1492,26 @@
    ACTIVE SESSION BLINKING BORDER EFFECT - ENHANCED 🔴✨
    ============================================================================ */
 
-/* Animation principale : effet de pulsation avec glow néon */
+/* Animation de pulsation subtile et élégante pour sessions actives */
 @keyframes activeBorderPulse {
   0%, 100% {
-    border-color: #ef4444;
+    border-color: rgba(102, 126, 234, 0.5);
     box-shadow:
-      /* Ombre principale de la carte */
       0 10px 30px rgba(15, 23, 42, 0.12),
       0 5px 15px rgba(15, 23, 42, 0.08),
-      /* Glow rouge externe - effet néon */
-      0 0 0 0 rgba(239, 68, 68, 0),
-      0 0 20px rgba(239, 68, 68, 0.3),
-      0 0 40px rgba(239, 68, 68, 0.15),
-      /* Highlight interne blanc */
-      inset 0 1px 0 rgba(255, 255, 255, 0.95),
-      /* Glow interne subtil */
-      inset 0 0 30px rgba(239, 68, 68, 0.05);
+      0 0 0 2px rgba(102, 126, 234, 0.15),
+      0 0 15px rgba(102, 126, 234, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.8);
   }
   50% {
-    border-color: #dc2626;
+    border-color: rgba(118, 75, 162, 0.6);
     box-shadow:
-      /* Ombre principale renforcée */
       0 12px 35px rgba(15, 23, 42, 0.15),
       0 6px 18px rgba(15, 23, 42, 0.1),
-      /* Glow rouge externe - INTENSIFIÉ */
-      0 0 0 6px rgba(239, 68, 68, 0.25),
-      0 0 30px rgba(239, 68, 68, 0.5),
-      0 0 60px rgba(239, 68, 68, 0.25),
-      0 0 90px rgba(239, 68, 68, 0.1),
-      /* Highlight interne */
-      inset 0 1px 0 rgba(255, 255, 255, 1),
-      /* Glow interne rouge */
-      inset 0 0 40px rgba(239, 68, 68, 0.1);
+      0 0 0 3px rgba(118, 75, 162, 0.2),
+      0 0 20px rgba(118, 75, 162, 0.3),
+      0 0 40px rgba(118, 75, 162, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9);
   }
 }
 
@@ -1540,61 +1528,53 @@
   }
 }
 
-/* Appliquer l'effet de clignotement aux cartes avec session active */
+/* Sessions actives - Bordure animée élégante avec gradient indigo/violet/bleu */
 .chapter-card-v2.has-active-session .chapter-card-v2__bg {
-  animation: activeBorderPulse 2s ease-in-out infinite;
-  border-width: 3px;
+  animation: activeBorderPulse 3s ease-in-out infinite;
+  border-width: 2px;
   border-style: solid;
   position: relative;
   overflow: visible;
 }
 
-/* Pseudo-élément pour créer un effet de gradient animé sur la bordure */
+/* Gradient élégant sur la bordure - Plus subtil et professionnel */
 .chapter-card-v2.has-active-session .chapter-card-v2__bg::before {
   content: '';
   position: absolute;
-  top: -3px;
-  left: -3px;
-  right: -3px;
-  bottom: -3px;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
   background: linear-gradient(
-    45deg,
-    #ef4444,
-    #dc2626,
-    #f97316,
-    #dc2626,
-    #ef4444
+    120deg,
+    #667eea,
+    #764ba2,
+    #3b82f6,
+    #667eea
   );
-  background-size: 300% 300%;
+  background-size: 200% 200%;
   border-radius: inherit;
   z-index: -1;
-  opacity: 0.6;
-  animation: liveGradientRotate 3s ease infinite;
-  filter: blur(8px);
+  opacity: 0.4;
+  animation: liveGradientRotate 4s ease infinite;
+  filter: blur(6px);
 }
 
-/* État hover - effet encore plus intense */
+/* État hover - Effet subtil et élégant */
 .chapter-card-v2.has-active-session:not(.is-disabled):hover .chapter-card-v2__bg {
-  border-color: #dc2626;
   transform: translateY(-2px);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow:
-    /* Ombre principale agrandie */
-    0 20px 50px rgba(15, 23, 42, 0.18),
-    0 10px 25px rgba(15, 23, 42, 0.12),
-    /* Glow rouge MAXIMAL */
-    0 0 0 8px rgba(239, 68, 68, 0.3),
-    0 0 40px rgba(239, 68, 68, 0.6),
-    0 0 80px rgba(239, 68, 68, 0.3),
-    0 0 120px rgba(239, 68, 68, 0.15),
-    /* Highlights */
-    inset 0 1px 0 rgba(255, 255, 255, 1),
-    inset 0 0 50px rgba(239, 68, 68, 0.12);
+    0 15px 40px rgba(15, 23, 42, 0.15),
+    0 8px 20px rgba(15, 23, 42, 0.1),
+    0 0 0 4px rgba(102, 126, 234, 0.2),
+    0 0 25px rgba(102, 126, 234, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 .chapter-card-v2.has-active-session:not(.is-disabled):hover .chapter-card-v2__bg::before {
-  opacity: 0.8;
-  filter: blur(12px);
+  opacity: 0.6;
+  filter: blur(8px);
 }
 
 /* ========================================
@@ -1635,17 +1615,19 @@
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Badge LIVE avec effet pulsant supplémentaire */
+/* Effet pulsant subtil pour le statut des sessions actives */
 .chapter-card-v2.has-active-session .chapter-card-v2__status-content {
-  animation: liveBadgePulse 2s ease-in-out infinite;
+  animation: statusPulse 3s ease-in-out infinite;
 }
 
-@keyframes liveBadgePulse {
+@keyframes statusPulse {
   0%, 100% {
     transform: scale(1);
+    opacity: 1;
   }
   50% {
-    transform: scale(1.05);
+    transform: scale(1.03);
+    opacity: 0.9;
   }
 }
 
@@ -1677,51 +1659,4 @@
   pointer-events: none;
 }
 
-/* Badge EN DIRECT en haut à droite (sessions actives SEULEMENT) */
-.chapter-card-v2__live-badge {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  z-index: 10;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
-  border-radius: 20px;
-  pointer-events: none;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
-  box-shadow:
-    0 4px 12px rgba(220, 38, 38, 0.4),
-    0 0 20px rgba(239, 68, 68, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
-  animation: liveBadgePulse 2s ease-in-out infinite;
-}
-
-.chapter-card-v2__live-badge-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
-  animation: liveDotPulse 1.5s ease-in-out infinite;
-}
-
-.chapter-card-v2__live-badge-text {
-  color: #fff;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-}
-
-@keyframes liveDotPulse {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.6;
-    transform: scale(1.2);
-  }
-}
+/* ✨ Badge "EN DIRECT" supprimé - Remplacé par bordure animée élégante ✨ */

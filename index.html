@@ -259,17 +259,32 @@
             fill: var(--math-text-color) !important;
         }
 
-        .bg-white, .bg-gray-100, .bg-blue-50, .bg-green-50, .bg-red-50 {
+        .bg-white, .bg-gray-100, .bg-blue-50, .bg-green-50, .bg-red-50, .bg-purple-50,
+        .bg-amber-50, .bg-indigo-50, .bg-red-50, .bg-gray-50 {
             --math-text-color: #0F172A;
         }
-        
-        .text-white {
+
+        .text-white, .bg-gray-900, .bg-gray-800, .bg-gray-700,
+        [class*="from-gray-9"], [class*="to-gray-7"] {
             --math-text-color: #FFFFFF;
+        }
+
+        /* S'assurer que les formules mathématiques héritent de la bonne couleur sur les arrière-plans colorés */
+        .bg-gradient-to-r mjx-container svg g[fill],
+        .bg-gradient-to-br mjx-container svg g[fill] {
+            fill: currentColor !important;
         }
 
         /* Quiz specific math rendering */
         .bg-black mjx-container svg g[fill] {
             fill: #FFFFFF !important;
+        }
+
+        /* Page-scoped math coloring for concours */
+        .concours-math-red mjx-container svg g[fill],
+        .concours-math-red mjx-container svg g[stroke] {
+            fill: #DC2626 !important;
+            stroke: #DC2626 !important;
         }
 
         /* ===== ALIGNEMENT PARFAIT - TOUS LES CONTEXTES ===== */

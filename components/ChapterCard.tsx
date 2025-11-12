@@ -76,10 +76,41 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
         };
     }, [lessonId]);
 
+    // Vérifier si le chapitre a une session active ou prochaine (DOIT être avant getStatusInfo)
+    const isSessionActive = useMemo(() => {
+        return hasActiveSession(chapter.sessionDates || []);
+    }, [chapter.sessionDates]);
+
+    const isSessionUpcoming = useMemo(() => {
+        return !isSessionActive && hasUpcomingSession(chapter.sessionDates || []);
+    }, [chapter.sessionDates, isSessionActive]);
+
     const getStatusInfo = useCallback((): StatusInfo => {
         const status = progress?.status || 'a-venir';
 
-        // Prioriser les mises à jour
+        // 🔴 PRIORITÉ 1 : Sessions actives - TOUJOURS accessible même si chapitre verrouillé
+        if (isSessionActive) {
+            return {
+                text: 'Séance Direct',
+                icon: 'radio_button_checked',
+                disabled: false, // Jamais désactivé pendant une session !
+                variant: 'progress',
+                color: '#667eea',
+            };
+        }
+
+        // 🔵 PRIORITÉ 2 : Sessions à venir - TOUJOURS accessible
+        if (isSessionUpcoming) {
+            return {
+                text: 'Séance prochaine',
+                icon: 'schedule',
+                disabled: false, // Accessible pour préparer la session
+                variant: 'upcoming',
+                color: '#3b82f6',
+            };
+        }
+
+        // PRIORITÉ 3 : Mises à jour
         if (progress?.hasUpdate) {
             return {
                 text: 'Mis à jour',
@@ -110,8 +141,11 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
                 };
             case 'a-venir':
             default:
-                // Vérifier si le chapitre est verrouillé
-                if (!chapter.isActive) {
+                // 🔓 RÈGLE IMPORTANTE : Si un chapitre a des sessions (même terminées), il reste accessible
+                const hasSessions = Array.isArray(chapter.sessionDates) && chapter.sessionDates.length > 0;
+
+                // Vérifier si le chapitre est verrouillé (SAUF s'il a des sessions)
+                if (!chapter.isActive && !hasSessions) {
                     return {
                         text: 'Bientôt',
                         icon: 'lock',
@@ -128,7 +162,7 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
                     color: '#3b82f6',
                 };
         }
-    }, [chapter.isActive, progress]);
+    }, [chapter.isActive, chapter.sessionDates, progress, isSessionActive, isSessionUpcoming, chapter.chapter]);
 
     const { text, icon, variant, disabled, color } = getStatusInfo();
 
@@ -137,15 +171,6 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
             onSelect(chapter.id);
         }
     }, [disabled, onSelect, chapter.id]);
-
-    // Vérifier si le chapitre a une session active ou prochaine
-    const isSessionActive = useMemo(() => {
-        return hasActiveSession(chapter.sessionDates || []);
-    }, [chapter.sessionDates]);
-
-    const isSessionUpcoming = useMemo(() => {
-        return !isSessionActive && hasUpcomingSession(chapter.sessionDates || []);
-    }, [chapter.sessionDates, isSessionActive]);
 
     // 🎯 Calcul de progression avec coefficients égaux pour leçons, quiz et exercices
     const progressPercentage = useMemo(() => {
@@ -219,15 +244,7 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
             aria-disabled={disabled}
             data-status={variant}
         >
-            {/* Badge LIVE rouge pour les sessions actives SEULEMENT */}
-            {isSessionActive && (
-                <div className="chapter-card-v2__live-badge">
-                    <span className="chapter-card-v2__live-badge-dot"></span>
-                    <span className="chapter-card-v2__live-badge-text">EN DIRECT</span>
-                </div>
-            )}
-
-            {/* Pas de badge pour sessions prochaines, seulement bordure animée */}
+            {/* Cartes avec sessions toujours accessibles - gérées par getStatusInfo() */}
 
             {/* Background effects */}
             <div className="chapter-card-v2__bg" aria-hidden="true" />
@@ -266,7 +283,16 @@ const ChapterCard: React.FC<ChapterCardProps> = React.memo(({ chapter, progress,
                 <div className="chapter-card-v2__content">
                     <div className="chapter-card-v2__header">
                         <span className="chapter-card-v2__eyebrow">
-                            {progress?.isWorkSubmitted ? 'Chapitre maîtrisé' : chapter.isActive ? 'Chapitre ouvert' : 'Bientôt disponible'}
+                            {progress?.isWorkSubmitted
+                                ? 'Chapitre maîtrisé'
+                                : isSessionActive
+                                    ? '🔵 Séance en direct'
+                                    : isSessionUpcoming
+                                        ? 'Séance prochainement'
+                                        : chapter.isActive
+                                            ? 'Chapitre ouvert'
+                                            : 'Bientôt disponible'
+                            }
                         </span>
                         <h3 className="chapter-card-v2__title">{chapter.chapter}</h3>
                     </div>

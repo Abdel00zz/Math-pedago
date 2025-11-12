@@ -1,0 +1,74 @@
+{
+  "id": "ensam-2024-fonctions",
+  "concours": "ENSAM",
+  "annee": "2024",
+  "theme": "Les fonctions",
+  "resume": {
+    "title": "Les fonctions - L'essentiel",
+    "introduction": "L'étude des fonctions est au cœur du concours ENSAM. Maîtrisez la dérivation, les variations et les limites.",
+    "sections": [
+      {
+        "type": "definitions",
+        "title": "📚 Définitions clés à retenir par cœur",
+        "items": [
+          "**Dérivée** : f'(x) = lim[h→0] (f(x+h) - f(x))/h",
+          "**Fonction croissante** : x₁ < x₂ ⟹ f(x₁) ≤ f(x₂)",
+          "**Maximum local** : f(a) ≥ f(x) pour tout x dans un voisinage de a",
+          "**Point d'inflexion** : f'' change de signe"
+        ]
+      },
+      {
+        "type": "formules",
+        "title": "🔢 Formules essentielles de dérivation",
+        "items": [
+          "(xⁿ)' = n × xⁿ⁻¹",
+          "(eˣ)' = eˣ",
+          "(ln x)' = 1/x",
+          "(sin x)' = cos x",
+          "(cos x)' = -sin x",
+          "(uv)' = u'v + uv'",
+          "(u/v)' = (u'v - uv')/v²",
+          "(u∘v)' = v' × u'∘v"
+        ]
+      },
+      {
+        "type": "methodes",
+        "title": "💡 Méthodes et astuces",
+        "items": [
+          "**Tableau de variation** : Étudier le signe de f'(x)",
+          "**Asymptotes** : Calculer les limites aux bornes du domaine",
+          "**Pour résoudre f(x) = 0** : Utiliser le théorème des valeurs intermédiaires"
+        ]
+      },
+      {
+        "type": "pieges",
+        "title": "⚠️ Pièges à éviter absolument",
+        "items": [
+          "❌ f'(x) = 0 ⟹ extremum (FAUX : peut être un point d'inflexion)",
+          "❌ Ne pas oublier le domaine de définition",
+          "❌ (fg)' ≠ f'g' : utiliser la formule du produit"
+        ]
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "id": "q1",
+      "theme": "Les fonctions",
+      "question": "Quelle est la dérivée de f(x) = x² × eˣ ?",
+      "type": "mcq",
+      "options": [
+        { "id": "a", "text": "(2x + x²)eˣ", "isCorrect": true },
+        { "id": "b", "text": "2x × eˣ", "isCorrect": false },
+        { "id": "c", "text": "x² × eˣ", "isCorrect": false },
+        { "id": "d", "text": "2xeˣ + x²", "isCorrect": false }
+      ],
+      "explanation": "Utiliser (uv)' = u'v + uv' : f'(x) = 2x × eˣ + x² × eˣ = (2x + x²)eˣ",
+      "hints": [
+        "Utilise la formule du produit",
+        "u = x² donc u' = 2x",
+        "v = eˣ donc v' = eˣ"
+      ]
+    }
+  ]
+}

@@ -4,6 +4,11 @@ import LoginView from './components/views/LoginView';
 import DashboardView from './components/views/DashboardView';
 import ChapterHubView from './components/views/ChapterHubView';
 import ActivityView from './components/views/ActivityView';
+import ConcoursView from './components/views/ConcoursView';
+import ConcoursListView from './components/views/ConcoursListView';
+import ConcoursYearView from './components/views/ConcoursYearView';
+import ConcoursResumeView from './components/views/ConcoursResumeView';
+import ConcoursQuizView from './components/views/ConcoursQuizView';
 import { Notifications } from './components/Notifications';
 import MobileOrientationPrompt from './components/MobileOrientationPrompt';
 
@@ -20,6 +25,16 @@ const App: React.FC = () => {
                 return <ChapterHubView />;
             case 'activity':
                 return <ActivityView />;
+            case 'concours':
+                return <ConcoursView />;
+            case 'concours-list':
+                return <ConcoursListView />;
+            case 'concours-year':
+                return <ConcoursYearView />;
+            case 'concours-resume':
+                return <ConcoursResumeView />;
+            case 'concours-quiz':
+                return <ConcoursQuizView />;
             default:
                 return <LoginView />;
         }

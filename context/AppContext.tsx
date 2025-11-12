@@ -3,6 +3,7 @@ import { AppState, Action, Chapter, Profile, QuizProgress, ChapterProgress, Feed
 import { DB_KEY } from '../constants';
 import { useNotification } from './NotificationContext';
 import { isChapterCompleted, determineInitialStatus } from '../utils/chapterStatusHelpers';
+import { pushNavigationState, replaceNavigationState, getCurrentNavigationState, parseURL } from '../utils/browserNavigation';
 
 const initialState: AppState = {
     view: 'login',
@@ -15,6 +16,12 @@ const initialState: AppState = {
     activitySubView: null,
     isReviewMode: false,
     chapterOrder: [],
+    concoursProgress: {},
+    currentConcoursType: null,
+    currentConcoursId: null,
+    concoursNavigationMode: null,
+    currentConcoursYear: null,
+    currentConcoursTheme: null,
 };
 
 const appReducer = (state: AppState, action: Action): AppState => {
@@ -31,7 +38,22 @@ const appReducer = (state: AppState, action: Action): AppState => {
 
     switch (action.type) {
         case 'INIT': {
-            const { profile, progress = {}, view, currentChapterId, currentActiveChapterId, activitySubView, chapterOrder, activityVersions } = action.payload;
+            const {
+                profile,
+                progress = {},
+                view,
+                currentChapterId,
+                currentActiveChapterId,
+                activitySubView,
+                chapterOrder,
+                activityVersions,
+                concoursProgress,
+                currentConcoursType,
+                currentConcoursId,
+                concoursNavigationMode,
+                currentConcoursYear,
+                currentConcoursTheme
+            } = action.payload;
             const restoredView = profile && profile.classId ? (view || 'dashboard') : 'login';
 
             return {
@@ -44,19 +66,62 @@ const appReducer = (state: AppState, action: Action): AppState => {
                 currentChapterId: currentChapterId || null,
                 currentActiveChapterId: currentActiveChapterId || null,
                 activitySubView: activitySubView || null,
+                concoursProgress: concoursProgress || {},
+                currentConcoursType: currentConcoursType || null,
+                currentConcoursId: currentConcoursId || null,
+                concoursNavigationMode: concoursNavigationMode || null,
+                currentConcoursYear: currentConcoursYear || null,
+                currentConcoursTheme: currentConcoursTheme || null,
             };
         }
         
         case 'CHANGE_VIEW': {
-            const { view, chapterId, subView, review } = action.payload;
+            const {
+                view,
+                chapterId,
+                subView,
+                review,
+                fromHistory,
+                concoursType,
+                concoursId,
+                concoursYear,
+                concoursTheme,
+                concoursMode
+            } = action.payload;
+
+            // Mettre à jour les champs concours depuis payload ou garder les valeurs actuelles
+            let finalConcoursType = concoursType !== undefined ? concoursType : state.currentConcoursType;
+            let finalConcoursId = concoursId !== undefined ? concoursId : state.currentConcoursId;
+            let finalConcoursYear = concoursYear !== undefined ? concoursYear : state.currentConcoursYear;
+            let finalConcoursTheme = concoursTheme !== undefined ? concoursTheme : state.currentConcoursTheme;
+            let finalConcoursMode = concoursMode !== undefined ? concoursMode : state.concoursNavigationMode;
+
+            // Si on navigue vers une vue concours, lire depuis sessionStorage si non fournis
+            if (typeof window !== 'undefined') {
+                if (view === 'concours-list' && !finalConcoursType) {
+                    finalConcoursType = sessionStorage.getItem('currentConcoursType');
+                }
+                if ((view === 'concours-resume' || view === 'concours-quiz') && !finalConcoursId) {
+                    finalConcoursId = sessionStorage.getItem('currentConcoursFile');
+                }
+                if (view === 'concours-year' && !finalConcoursYear) {
+                    finalConcoursYear = sessionStorage.getItem('currentConcoursYear');
+                }
+            }
+
             let newState: AppState = {
                 ...state,
                 view,
                 currentChapterId: chapterId !== undefined ? chapterId : state.currentChapterId,
                 activitySubView: subView !== undefined ? subView : state.activitySubView,
                 isReviewMode: review ?? false,
+                currentConcoursType: finalConcoursType,
+                currentConcoursId: finalConcoursId,
+                currentConcoursYear: finalConcoursYear,
+                currentConcoursTheme: finalConcoursTheme,
+                concoursNavigationMode: finalConcoursMode,
             };
-            
+
             const targetChapterId = chapterId !== undefined ? chapterId : state.currentChapterId;
 
             if (view === 'activity' && subView === 'quiz' && review && targetChapterId && newState.progress[targetChapterId]) {
@@ -69,12 +134,30 @@ const appReducer = (state: AppState, action: Action): AppState => {
                     }
                 };
             }
-        
+
+            // Synchroniser avec l'historique du navigateur (sauf si le changement vient déjà de l'historique)
+            if (!fromHistory && typeof window !== 'undefined') {
+                const navState = {
+                    view,
+                    chapterId: newState.currentChapterId,
+                    subView: newState.activitySubView,
+                    review: newState.isReviewMode,
+                    concoursType: newState.currentConcoursType,
+                    concoursId: newState.currentConcoursId,
+                    concoursYear: newState.currentConcoursYear,
+                    concoursTheme: newState.currentConcoursTheme,
+                    concoursMode: newState.concoursNavigationMode
+                };
+                pushNavigationState(navState);
+            }
+
             return newState;
         }
         
-        case 'LOGIN':
-            return { ...state, profile: action.payload, view: 'dashboard' };
+        case 'LOGIN': {
+            // Ne pas changer la vue ici, LoginView le fera selon la classe sélectionnée
+            return { ...state, profile: action.payload };
+        }
         
         case 'NAVIGATE_QUIZ': {
             if (!state.currentChapterId) return state;
@@ -893,6 +976,73 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         // Run only once when app initializes
         checkPendingSubmissions();
     }, [addNotification]);
+
+    // Effect 5: Gérer les boutons retour/avancer du navigateur
+    useEffect(() => {
+        const handlePopState = (event: PopStateEvent) => {
+            console.log('PopState event triggered:', event.state);
+
+            // Récupérer l'état de navigation depuis l'événement ou l'URL
+            const navState = event.state || getCurrentNavigationState();
+
+            if (navState && navState.view) {
+                console.log('Navigating from history to:', navState);
+
+                // Restaurer les données sessionStorage pour les concours si nécessaire
+                if (navState.concoursType) {
+                    sessionStorage.setItem('currentConcoursType', navState.concoursType);
+                }
+                if (navState.concoursId) {
+                    sessionStorage.setItem('currentConcoursFile', navState.concoursId);
+                }
+                if (navState.concoursYear) {
+                    sessionStorage.setItem('currentConcoursYear', navState.concoursYear);
+                }
+                if (navState.concoursTheme) {
+                    sessionStorage.setItem('currentConcoursTheme', navState.concoursTheme);
+                }
+
+                // Dispatcher le changement de vue avec le flag fromHistory
+                dispatch({
+                    type: 'CHANGE_VIEW',
+                    payload: {
+                        view: navState.view,
+                        chapterId: navState.chapterId || null,
+                        subView: navState.subView || null,
+                        review: navState.review || false,
+                        concoursType: navState.concoursType || null,
+                        concoursId: navState.concoursId || null,
+                        concoursYear: navState.concoursYear || null,
+                        concoursTheme: navState.concoursTheme || null,
+                        concoursMode: navState.concoursMode || null,
+                        fromHistory: true // Important: évite la boucle infinie
+                    }
+                });
+            }
+        };
+
+        // Écouter les événements popstate (retour/avancer du navigateur)
+        window.addEventListener('popstate', handlePopState);
+
+        // Initialiser l'état de l'historique au chargement
+        if (state.view && !window.history.state) {
+            replaceNavigationState({
+                view: state.view,
+                chapterId: state.currentChapterId,
+                subView: state.activitySubView,
+                review: state.isReviewMode,
+                concoursType: state.currentConcoursType,
+                concoursId: state.currentConcoursId,
+                concoursYear: state.currentConcoursYear,
+                concoursTheme: state.currentConcoursTheme,
+                concoursMode: state.concoursNavigationMode
+            });
+        }
+
+        return () => {
+            window.removeEventListener('popstate', handlePopState);
+        };
+    }, [dispatch, state.view, state.currentChapterId, state.activitySubView, state.isReviewMode, state.currentConcoursType, state.currentConcoursId, state.currentConcoursYear, state.currentConcoursTheme, state.concoursNavigationMode]);
 
     return (
         <AppStateContext.Provider value={state}>
