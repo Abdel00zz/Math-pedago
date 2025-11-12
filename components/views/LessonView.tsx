@@ -35,8 +35,12 @@ const LessonView: React.FC = () => {
     }, []);
 
     const handleBack = useCallback(() => {
-        dispatch({ type: 'CHANGE_VIEW', payload: { view: 'work-plan' } });
-    }, [dispatch]);
+        // Utiliser la navigation native du navigateur au lieu de dispatch(CHANGE_VIEW)
+        // pour éviter de pousser deux états dans l'historique
+        if (typeof window !== 'undefined') {
+            window.history.back();
+        }
+    }, []);
 
     // Charger la leçon (inline ou depuis fichier) avec cache intelligent
     useEffect(() => {

@@ -36,10 +36,16 @@ const StandardHeader: React.FC<StandardHeaderProps> = ({
 
   const renderBackButton = (isLesson = false) => {
     if (!onBack) return null;
-    
+
     return (
       <button
-        onClick={onBack}
+        onClick={() => {
+          // Utiliser la navigation native du navigateur au lieu de dispatch(CHANGE_VIEW)
+          // pour éviter de pousser deux états dans l'historique
+          if (typeof window !== 'undefined') {
+            window.history.back();
+          }
+        }}
         className={`standard-header__back-btn ${isLesson ? 'standard-header__back-btn--lesson' : ''}`}
         aria-label={backLabel}
         title={backLabel}
