@@ -6,18 +6,21 @@ import { LessonNavigator } from '../lesson/LessonNavigator';
 import { LessonProgressProvider } from '../../context/LessonProgressContext';
 import { LESSON_PROGRESS_REFRESH_EVENT } from '../../utils/lessonProgressHelpers';
 import { storageService } from '../../services/StorageService';
+import { validateLesson, formatValidationResults, ValidationResult } from '../../utils/jsonValidator';
+import ValidationErrorDisplay from '../ValidationErrorDisplay';
 import type { LessonContent } from '../../types';
 
 const LessonView: React.FC = () => {
     const state = useAppState();
     const dispatch = useAppDispatch();
     const { currentChapterId, activities, progress } = state;
-    
+
     const [startTime] = useState(Date.now());
     const [scrollProgress, setScrollProgress] = useState(0);
     const [lesson, setLesson] = useState<LessonContent | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [validationResult, setValidationResult] = useState<ValidationResult | null>(null);
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const updateTimerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -56,6 +59,23 @@ const LessonView: React.FC = () => {
 
                 // Si la leçon est inline dans le chapitre
                 if (chapter.lesson) {
+                    // Valider la structure de la leçon
+                    const result = validateLesson(chapter.lesson, `inline lesson for ${chapter.id}`);
+
+                    if (!result.valid) {
+                        const errorMessage = `Erreur dans la structure de la leçon:\n\n${formatValidationResults(result)}`;
+                        console.error(errorMessage);
+                        setError(errorMessage);
+                        setValidationResult(result);
+                        setIsLoading(false);
+                        return;
+                    }
+
+                    // Afficher les avertissements s'il y en a
+                    if (result.warnings.length > 0) {
+                        console.warn('Avertissements de validation:', result.warnings);
+                    }
+
                     setLesson(chapter.lesson);
                     setIsLoading(false);
                     return;
@@ -88,9 +108,27 @@ const LessonView: React.FC = () => {
                         throw new Error(`Impossible de charger la leçon depuis ${lessonPath}`);
                     }
 
-                    const lessonData = await response.json();
+                    const jsonText = await response.text();
+                    const lessonData = JSON.parse(jsonText);
 
-                    // 💾 Mettre en cache pour les prochaines fois
+                    // ✅ Valider la structure de la leçon AVANT de l'utiliser
+                    const result = validateLesson(lessonData, lessonPath, jsonText);
+
+                    if (!result.valid) {
+                        const errorMessage = `Erreur dans la structure du fichier ${lessonPath}:\n\n${formatValidationResults(result)}`;
+                        console.error(errorMessage);
+                        setError(errorMessage);
+                        setValidationResult(result);
+                        setIsLoading(false);
+                        return;
+                    }
+
+                    // Afficher les avertissements s'il y en a
+                    if (result.warnings.length > 0) {
+                        console.warn(`⚠️ Avertissements pour ${lessonPath}:`, result.warnings);
+                    }
+
+                    // 💾 Mettre en cache pour les prochaines fois (seulement si valide)
                     storageService.cacheLessonContent(chapterId, lessonData, chapterVersion);
                     console.log(`💾 Leçon "${chapter.chapter}" mise en cache (v${chapterVersion})`);
 
@@ -212,13 +250,30 @@ const LessonView: React.FC = () => {
 
     // Affichage en cas d'erreur
     if (error) {
+        // Si on a un résultat de validation détaillé, utiliser l'affichage structuré
+        if (validationResult && !validationResult.valid) {
+            return (
+                <ValidationErrorDisplay
+                    errors={validationResult.errors}
+                    warnings={validationResult.warnings}
+                    filePath={chapter?.lessonFile || chapter?.id}
+                />
+            );
+        }
+
+        // Sinon, affichage d'erreur simple
         return (
             <div className="flex items-center justify-center min-h-screen">
                 <div className="text-center max-w-md">
                     <span className="material-symbols-outlined !text-6xl text-error mb-4">error</span>
                     <p className="text-text-primary text-xl font-bold mb-2">Erreur de chargement</p>
-                    <p className="text-text-secondary mb-6">{error}</p>
-                    {/* Bouton 'Retour au chapitre' supprimé */}
+                    <p className="text-text-secondary mb-6 whitespace-pre-wrap">{error}</p>
+                    <button
+                        onClick={() => window.history.back()}
+                        className="font-button px-6 py-2 font-semibold text-text bg-gray-200 dark:bg-gray-700 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+                    >
+                        ← Retour
+                    </button>
                 </div>
             </div>
         );

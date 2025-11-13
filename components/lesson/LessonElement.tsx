@@ -103,10 +103,27 @@ const Paragraph: React.FC<{ element: ElementType; path: LessonElementPath; showA
     const { isNodeCompleted } = useLessonProgress();
     const nodeId = useMemo(() => getParagraphNodeIdFromPath(path), [path]);
     const isCompleted = isNodeCompleted(nodeId);
-    const trimmedContent = (textElement.content ?? '').trim();
+
+    // Protection: Vérifier que content est bien une chaîne
+    const content = textElement.content;
+    if (typeof content !== 'string') {
+        console.error('Paragraph element avec content non-string:', { path, content });
+        return (
+            <div className="lesson-paragraph p-4 bg-red-50 dark:bg-red-900/20 border-l-4 border-red-500 rounded">
+                <p className="text-sm text-red-900 dark:text-red-100 font-semibold">
+                    ⚠️ Erreur de structure: Un paragraphe (type: "p") doit avoir un "content" de type chaîne
+                </p>
+                <p className="text-xs text-red-700 dark:text-red-300 mt-2 font-mono">
+                    Chemin: {path.join(' → ')}
+                </p>
+            </div>
+        );
+    }
+
+    const trimmedContent = content.trim();
     const isCallout = trimmedContent.startsWith('!>') || trimmedContent.startsWith('?>');
 
-    const contentNode = parseContent(textElement.content, false, showAnswers);
+    const contentNode = parseContent(content, false, showAnswers);
 
     const paragraphClasses = [
         'lesson-paragraph',
