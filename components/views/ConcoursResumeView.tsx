@@ -87,30 +87,64 @@ const ConcoursResumeView: React.FC = () => {
 
     return (
         <div className="min-h-screen relative overflow-hidden" style={{
-            background: '#f8f9fa',
+            background: 'linear-gradient(135deg, #fafbfc 0%, #f5f6f8 50%, #fafbfc 100%)',
         }}>
-            {/* Seyes (ruled notebook) background pattern */}
+            {/* Modern Seyes background with geometric patterns - High Resolution */}
             <div className="absolute inset-0 pointer-events-none" aria-hidden={true}>
-                <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
                     <defs>
-                        {/* Horizontal lines pattern like a notebook */}
-                        <pattern id="seyes-lines" width="100%" height="32" patternUnits="userSpaceOnUse">
-                            {/* Main line (darker) */}
-                            <line x1="0" y1="31" x2="100%" y2="31" stroke="#d1d5db" strokeWidth="1" opacity="0.4" />
-                            {/* Light guide lines */}
-                            <line x1="0" y1="8" x2="100%" y2="8" stroke="#e5e7eb" strokeWidth="0.5" opacity="0.3" />
-                            <line x1="0" y1="16" x2="100%" y2="16" stroke="#e5e7eb" strokeWidth="0.5" opacity="0.3" />
-                            <line x1="0" y1="24" x2="100%" y2="24" stroke="#e5e7eb" strokeWidth="0.5" opacity="0.3" />
+                        {/* High resolution grid pattern (8px squares) */}
+                        <pattern id="seyes-grid" width="8" height="8" patternUnits="userSpaceOnUse">
+                            {/* Vertical lines */}
+                            <line x1="0" y1="0" x2="0" y2="8" stroke="#e1e4e8" strokeWidth="0.5" opacity="0.35" />
+                            {/* Horizontal lines */}
+                            <line x1="0" y1="0" x2="8" y2="0" stroke="#e1e4e8" strokeWidth="0.5" opacity="0.35" />
                         </pattern>
-                        {/* Vertical margin line (red) */}
-                        <line id="margin-line" x1="80" y1="0" x2="80" y2="100%" stroke="#ef4444" strokeWidth="2" opacity="0.15" />
+
+                        {/* Main horizontal lines (every 32px for text lines) */}
+                        <pattern id="main-lines" width="100%" height="32" patternUnits="userSpaceOnUse">
+                            <line x1="0" y1="31.5" x2="100%" y2="31.5" stroke="#cbd5e0" strokeWidth="1.5" opacity="0.5" strokeLinecap="round" />
+                        </pattern>
+
+                        {/* Geometric accent patterns */}
+                        <pattern id="geo-pattern" width="120" height="120" patternUnits="userSpaceOnUse">
+                            {/* Small triangles */}
+                            <polygon points="60,20 65,28 55,28" fill="#3b82f6" opacity="0.03" />
+                            <polygon points="30,60 35,68 25,68" fill="#ef4444" opacity="0.03" />
+                            <polygon points="90,90 95,98 85,98" fill="#8b5cf6" opacity="0.03" />
+
+                            {/* Circles */}
+                            <circle cx="20" cy="100" r="3" fill="#3b82f6" opacity="0.04" />
+                            <circle cx="100" cy="40" r="2.5" fill="#ef4444" opacity="0.04" />
+
+                            {/* Small squares */}
+                            <rect x="70" y="70" width="4" height="4" fill="#3b82f6" opacity="0.03" transform="rotate(45 72 72)" />
+                            <rect x="110" y="15" width="3" height="3" fill="#8b5cf6" opacity="0.03" transform="rotate(45 111.5 16.5)" />
+                        </pattern>
+
+                        {/* Gradient for depth */}
+                        <linearGradient id="depth-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stopColor="#ffffff" stopOpacity="0.05" />
+                            <stop offset="50%" stopColor="#ffffff" stopOpacity="0" />
+                            <stop offset="100%" stopColor="#f1f3f5" stopOpacity="0.05" />
+                        </linearGradient>
                     </defs>
 
-                    {/* Apply the seyes pattern */}
-                    <rect width="100%" height="100%" fill="url(#seyes-lines)" />
+                    {/* Base grid pattern */}
+                    <rect width="100%" height="100%" fill="url(#seyes-grid)" />
 
-                    {/* Add the margin line */}
-                    <use href="#margin-line" />
+                    {/* Main writing lines */}
+                    <rect width="100%" height="100%" fill="url(#main-lines)" />
+
+                    {/* Geometric decorative pattern */}
+                    <rect width="100%" height="100%" fill="url(#geo-pattern)" />
+
+                    {/* Depth gradient overlay */}
+                    <rect width="100%" height="100%" fill="url(#depth-gradient)" />
+
+                    {/* Left margin line (red, elegant) */}
+                    <line x1="72" y1="0" x2="72" y2="100%" stroke="#ef4444" strokeWidth="2.5" opacity="0.18" strokeLinecap="round" />
+                    <line x1="74" y1="0" x2="74" y2="100%" stroke="#ef4444" strokeWidth="0.5" opacity="0.12" />
                 </svg>
             </div>
 
@@ -151,19 +185,99 @@ const ConcoursResumeView: React.FC = () => {
                             {currentSection.title}
                         </h2>
 
-                        {/* Liste des items sans séparation - tout dans le même bloc */}
+                        {/* Liste des items avec puces chics et modernes */}
                         <div className="space-y-5">
                             {currentSection.items.map((item: string, itemIndex: number) => {
                                 const isWarning = item.includes('ATTENTION') || item.includes('DANGER') || item.includes('PIÈGE');
 
+                                // Choix de la puce selon le type de section
+                                const getBulletIcon = () => {
+                                    if (isWarning) {
+                                        // Triangle d'alerte pour les warnings
+                                        return (
+                                            <svg className="w-5 h-5 flex-shrink-0 mt-0.5" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M10 2L2 17h16L10 2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="currentColor" opacity="0.1" />
+                                                <circle cx="10" cy="13" r="1" fill="currentColor" />
+                                                <line x1="10" y1="8" x2="10" y2="11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                            </svg>
+                                        );
+                                    }
+
+                                    switch (currentSection.type) {
+                                        case 'definitions':
+                                            // Hexagone pour définitions
+                                            return (
+                                                <svg className="w-5 h-5 flex-shrink-0 mt-0.5" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M10 2L16 6V14L10 18L4 14V6L10 2Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" fill="currentColor" opacity="0.15" />
+                                                </svg>
+                                            );
+                                        case 'formules':
+                                            // Étoile pour formules
+                                            return (
+                                                <svg className="w-5 h-5 flex-shrink-0 mt-0.5" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M10 2L11.5 7.5L17 7.5L12.5 11L14 16.5L10 13L6 16.5L7.5 11L3 7.5L8.5 7.5L10 2Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" fill="currentColor" opacity="0.15" />
+                                                </svg>
+                                            );
+                                        case 'methodes':
+                                            // Carré pour méthodes
+                                            return (
+                                                <svg className="w-5 h-5 flex-shrink-0 mt-0.5" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <rect x="4" y="4" width="12" height="12" stroke="currentColor" strokeWidth="2" rx="2" fill="currentColor" opacity="0.15" />
+                                                    <line x1="7" y1="10" x2="13" y2="10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                                                </svg>
+                                            );
+                                        case 'pieges':
+                                            // Lightning bolt pour pièges
+                                            return (
+                                                <svg className="w-5 h-5 flex-shrink-0 mt-0.5" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M11 2L5 11H10L9 18L15 9H10L11 2Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" fill="currentColor" opacity="0.15" />
+                                                </svg>
+                                            );
+                                        case 'reflexion':
+                                            // Ampoule pour réflexion
+                                            return (
+                                                <svg className="w-5 h-5 flex-shrink-0 mt-0.5" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <circle cx="10" cy="8" r="4" stroke="currentColor" strokeWidth="2" fill="currentColor" opacity="0.15" />
+                                                    <path d="M8 12v3h4v-3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                                                    <line x1="7" y1="16" x2="13" y2="16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                                                </svg>
+                                            );
+                                        case 'astuces':
+                                            // Diamant pour astuces
+                                            return (
+                                                <svg className="w-5 h-5 flex-shrink-0 mt-0.5" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M10 2L16 8L10 18L4 8L10 2Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" fill="currentColor" opacity="0.15" />
+                                                    <path d="M4 8h12M10 8v10M7 5l3 3 3-3" stroke="currentColor" strokeWidth="1" opacity="0.5" />
+                                                </svg>
+                                            );
+                                        default:
+                                            // Cercle par défaut
+                                            return (
+                                                <svg className="w-5 h-5 flex-shrink-0 mt-0.5" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <circle cx="10" cy="10" r="6" stroke="currentColor" strokeWidth="2" fill="currentColor" opacity="0.15" />
+                                                </svg>
+                                            );
+                                    }
+                                };
+
                                 return (
                                     <div
                                         key={itemIndex}
-                                        className={`leading-loose ${
+                                        className={`flex gap-4 leading-loose ${
                                             isWarning ? 'text-red-600 font-medium text-base' : 'text-gray-900 text-base'
                                         }`}
                                     >
-                                        <FormattedText text={item} />
+                                        <div className={`${
+                                            isWarning ? 'text-red-600' :
+                                            currentSection.type === 'definitions' || currentSection.type === 'formules' || currentSection.type === 'reflexion'
+                                                ? 'text-blue-600'
+                                                : 'text-gray-900'
+                                        }`}>
+                                            {getBulletIcon()}
+                                        </div>
+                                        <div className="flex-1">
+                                            <FormattedText text={item} />
+                                        </div>
                                     </div>
                                 );
                             })}
