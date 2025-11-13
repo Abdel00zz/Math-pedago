@@ -86,105 +86,100 @@ const ConcoursResumeView: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen relative overflow-hidden concours-math-red" style={{
-            background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+        <div className="min-h-screen relative overflow-hidden" style={{
+            background: '#f8f9fa',
         }}>
-            {/* Modern geometric background with flowing lines and shapes */}
+            {/* Seyes (ruled notebook) background pattern */}
             <div className="absolute inset-0 pointer-events-none" aria-hidden={true}>
                 <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
                     <defs>
-                        <linearGradient id="concoursGradientResume" x1="0%" x2="100%" y1="0%" y2="100%">
-                            <stop offset="0%" stopColor="#ff9a9e" stopOpacity="0.15" />
-                            <stop offset="50%" stopColor="#fecfef" stopOpacity="0.12" />
-                            <stop offset="100%" stopColor="#ffecd2" stopOpacity="0.15" />
-                        </linearGradient>
-                        <filter id="blurSmallResume" x="-50%" y="-50%" width="200%" height="200%">
-                            <feGaussianBlur stdDeviation="60" />
-                        </filter>
-                        <pattern id="concours-wave-resume" width="60" height="60" patternUnits="userSpaceOnUse">
-                            <circle cx="30" cy="30" r="1.5" fill="white" opacity="0.04" />
-                            <path d="M0,30 Q15,20 30,30 T60,30" stroke="white" strokeWidth="0.5" fill="none" opacity="0.03" />
+                        {/* Horizontal lines pattern like a notebook */}
+                        <pattern id="seyes-lines" width="100%" height="32" patternUnits="userSpaceOnUse">
+                            {/* Main line (darker) */}
+                            <line x1="0" y1="31" x2="100%" y2="31" stroke="#d1d5db" strokeWidth="1" opacity="0.4" />
+                            {/* Light guide lines */}
+                            <line x1="0" y1="8" x2="100%" y2="8" stroke="#e5e7eb" strokeWidth="0.5" opacity="0.3" />
+                            <line x1="0" y1="16" x2="100%" y2="16" stroke="#e5e7eb" strokeWidth="0.5" opacity="0.3" />
+                            <line x1="0" y1="24" x2="100%" y2="24" stroke="#e5e7eb" strokeWidth="0.5" opacity="0.3" />
                         </pattern>
+                        {/* Vertical margin line (red) */}
+                        <line id="margin-line" x1="80" y1="0" x2="80" y2="100%" stroke="#ef4444" strokeWidth="2" opacity="0.15" />
                     </defs>
 
-                    <rect width="100%" height="100%" fill="url(#concoursGradientResume)" />
+                    {/* Apply the seyes pattern */}
+                    <rect width="100%" height="100%" fill="url(#seyes-lines)" />
 
-                    <g filter="url(#blurSmallResume)" opacity="0.35">
-                        <circle cx="15%" cy="25%" r="180" fill="#ffd89b" />
-                        <circle cx="85%" cy="15%" r="200" fill="#ff6b95" />
-                        <ellipse cx="50%" cy="80%" rx="300" ry="150" fill="#fa709a" />
-                        <rect x="70%" y="50%" width="250" height="180" rx="90" fill="#fee140" />
-                    </g>
-
-                    <rect width="100%" height="100%" fill="url(#concours-wave-resume)" opacity="0.08" />
-
-                    {/* Flowing curves */}
-                    <path d="M0,100 Q250,50 500,100 T1000,100 L1000,0 L0,0 Z" fill="white" opacity="0.02" />
-                    <path d="M0,200 Q300,150 600,200 T1200,200" stroke="white" strokeWidth="2" fill="none" opacity="0.04" />
+                    {/* Add the margin line */}
+                    <use href="#margin-line" />
                 </svg>
             </div>
 
-            <div className="relative z-10 max-w-6xl mx-auto px-6 py-12">
-                {/* En-tête */}
-                <div className="mb-16">
-                    <div className="text-xs text-white/70 mb-4 font-light tracking-wider uppercase drop-shadow">
+            <div className="relative z-10 max-w-5xl mx-auto px-6 py-12">
+                {/* En-tête minimaliste */}
+                <div className="mb-12">
+                    <div className="text-xs text-gray-500 mb-3 font-medium tracking-wider uppercase">
                         {concoursData.concours} · {concoursData.annee}
                     </div>
-                    <h1 className="text-4xl font-light text-white mb-4 tracking-tight drop-shadow-lg">
+                    <h1 className="text-3xl font-bold text-gray-900 mb-3">
                         {concoursData.resume.title}
                     </h1>
-                    <p className="text-base text-white/90 font-light leading-relaxed max-w-3xl drop-shadow">
+                    <p className="text-base text-gray-700 leading-relaxed max-w-3xl">
                         <FormattedText text={concoursData.resume.introduction} />
                     </p>
                 </div>
 
-                {/* Progression avec badge */}
-                <div className="mb-12 bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-6">
-                    <div className="flex items-center justify-between">
-                        <div className="inline-block px-4 py-2 bg-gradient-to-r from-amber-100 to-yellow-100 text-sm text-amber-800 font-medium rounded-xl">
-                            Section {currentSectionIndex + 1} / {totalSections}
-                        </div>
-                        <div className="text-sm text-gray-700 font-medium">
+                {/* Progression minimaliste */}
+                <div className="mb-6 flex items-center justify-between">
+                    <div className="text-xs text-gray-500 uppercase tracking-wide font-medium">
+                        Section {currentSectionIndex + 1} / {totalSections}
+                    </div>
+                </div>
+
+                {/* Section actuelle - Tout dans un seul cadre style cahier */}
+                <div className="mb-12 bg-white shadow-sm border border-gray-300">
+                    <div className="px-12 py-10">
+                        {/* Titre de la section avec couleur selon le type */}
+                        <h2 className={`text-2xl font-bold mb-8 pb-3 border-b-2 ${
+                            currentSection.type === 'definitions' ? 'text-blue-600 border-blue-600' :
+                            currentSection.type === 'formules' ? 'text-blue-600 border-blue-600' :
+                            currentSection.type === 'methodes' ? 'text-gray-900 border-gray-900' :
+                            currentSection.type === 'pieges' ? 'text-red-600 border-red-600' :
+                            currentSection.type === 'reflexion' ? 'text-blue-600 border-blue-600' :
+                            currentSection.type === 'astuces' ? 'text-gray-900 border-gray-900' :
+                            'text-gray-900 border-gray-900'
+                        }`}>
                             {currentSection.title}
+                        </h2>
+
+                        {/* Liste des items sans séparation - tout dans le même bloc */}
+                        <div className="space-y-5">
+                            {currentSection.items.map((item: string, itemIndex: number) => {
+                                const isWarning = item.includes('ATTENTION') || item.includes('DANGER') || item.includes('PIÈGE');
+
+                                return (
+                                    <div
+                                        key={itemIndex}
+                                        className={`leading-loose ${
+                                            isWarning ? 'text-red-600 font-medium text-base' : 'text-gray-900 text-base'
+                                        }`}
+                                    >
+                                        <FormattedText text={item} />
+                                    </div>
+                                );
+                            })}
                         </div>
                     </div>
                 </div>
 
-                {/* Section actuelle */}
-                <div className="mb-12 space-y-5">
-                    {currentSection.items.map((item: string, itemIndex: number) => {
-                        const isWarning = item.includes('ATTENTION') || item.includes('DANGER') || item.includes('PIÈGE');
-
-                        return (
-                            <div
-                                key={itemIndex}
-                                className={`rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 ${
-                                    isWarning
-                                        ? 'bg-gradient-to-br from-red-50 to-pink-50 border-l-4 border-red-400'
-                                        : 'bg-gradient-to-br from-amber-50 to-yellow-50'
-                                }`}
-                            >
-                                <div className="p-8">
-                                    <div className={`text-base leading-relaxed ${
-                                        isWarning ? 'text-gray-800' : 'text-gray-800'
-                                    }`}>
-                                        <FormattedText text={item} />
-                                    </div>
-                                </div>
-                            </div>
-                        );
-                    })}
-                </div>
-
-                {/* Navigation */}
+                {/* Navigation minimaliste */}
                 <div className="flex items-center justify-between mt-8">
                     <button
                         onClick={goToPreviousSection}
                         disabled={isFirstSection}
-                        className={`px-6 py-3 text-sm font-light transition-all rounded-xl ${
+                        className={`px-6 py-2 text-sm font-medium border transition-all ${
                             isFirstSection
-                                ? 'bg-white/60 text-gray-400 cursor-not-allowed'
-                                : 'bg-white text-gray-900 hover:shadow-lg hover:-translate-x-1'
+                                ? 'border-gray-300 text-gray-400 cursor-not-allowed'
+                                : 'border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white'
                         }`}
                     >
                         ← Précédent
@@ -193,10 +188,10 @@ const ConcoursResumeView: React.FC = () => {
                     <button
                         onClick={goToNextSection}
                         disabled={isLastSection}
-                        className={`px-6 py-3 text-sm font-light transition-all rounded-xl ${
+                        className={`px-6 py-2 text-sm font-medium transition-all ${
                             isLastSection
-                                ? 'bg-white/60 text-gray-400 cursor-not-allowed'
-                                : 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:shadow-lg hover:translate-x-1'
+                                ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                                : 'bg-gray-900 text-white hover:bg-gray-800'
                         }`}
                     >
                         Suivant →
@@ -205,33 +200,33 @@ const ConcoursResumeView: React.FC = () => {
 
                 {/* Section de confirmation - Uniquement en mode thème */}
                 {isLastSection && navigationMode === 'theme' && (
-                    <div className="mt-16 bg-white/95 backdrop-blur-sm rounded-2xl shadow-lg p-8">
+                    <div className="mt-16 bg-white shadow-sm border border-gray-300 p-8">
                         {!confirmed ? (
                             <div>
-                                <h3 className="text-lg font-light text-gray-900 mb-4">
+                                <h3 className="text-lg font-bold text-gray-900 mb-4">
                                     Avez-vous terminé de réviser ce thème ?
                                 </h3>
-                                <p className="text-sm text-gray-600 font-light mb-8 max-w-2xl">
+                                <p className="text-sm text-gray-700 mb-8 max-w-2xl">
                                     Assurez-vous d'avoir bien compris toutes les sections avant de commencer le quiz.
                                 </p>
                                 <button
                                     onClick={handleStartQuiz}
-                                    className="px-8 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-sm font-light hover:shadow-lg transition-all rounded-xl"
+                                    className="px-8 py-3 bg-gray-900 text-white text-sm font-medium hover:bg-gray-800 transition-all"
                                 >
                                     J'ai terminé la révision
                                 </button>
                             </div>
                         ) : (
                             <div>
-                                <h3 className="text-lg font-light text-gray-900 mb-4">
+                                <h3 className="text-lg font-bold text-gray-900 mb-4">
                                     Vous êtes prêt
                                 </h3>
-                                <p className="text-sm text-gray-600 font-light mb-8">
+                                <p className="text-sm text-gray-700 mb-8">
                                     Le quiz contient {concoursData.quiz.length} questions.
                                 </p>
                                 <button
                                     onClick={handleStartQuiz}
-                                    className="px-8 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-sm font-light hover:shadow-lg transition-all rounded-xl inline-flex items-center gap-2"
+                                    className="px-8 py-3 bg-gray-900 text-white text-sm font-medium hover:bg-gray-800 transition-all inline-flex items-center gap-2"
                                 >
                                     Commencer le quiz
                                     <span className="material-symbols-outlined !text-lg">arrow_forward</span>
@@ -243,12 +238,12 @@ const ConcoursResumeView: React.FC = () => {
 
                 {/* Message informatif en mode année */}
                 {isLastSection && navigationMode === 'year' && (
-                    <div className="mt-16 bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl shadow-lg p-8 border border-indigo-100">
+                    <div className="mt-16 bg-white shadow-sm border-l-4 border-blue-600 p-8">
                         <div className="flex items-start gap-4">
-                            <span className="material-symbols-outlined text-indigo-600 !text-3xl">info</span>
+                            <span className="material-symbols-outlined text-blue-600 !text-3xl">info</span>
                             <div>
-                                <h3 className="text-lg font-medium text-gray-900 mb-2">Résumé terminé</h3>
-                                <p className="text-sm text-gray-700 font-light leading-relaxed">
+                                <h3 className="text-lg font-bold text-gray-900 mb-2">Résumé terminé</h3>
+                                <p className="text-sm text-gray-700 leading-relaxed">
                                     Vous avez terminé ce chapitre ! Le quiz complet de l'année {concoursData.annee} est disponible
                                     dans la vue principale de l'année. Il regroupe toutes les questions de tous les chapitres.
                                     <br /><br />
