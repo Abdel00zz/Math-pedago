@@ -5,45 +5,57 @@
   "theme": "Probabilités",
   "resume": {
     "title": "Probabilités - L'essentiel",
-    "introduction": "Les probabilités sont essentielles pour le concours ENSA. Maîtrisez les formules et les méthodes de calcul.",
+    "introduction": "Les probabilités sont essentielles pour le concours ENSA. Maîtrisez les formules et les méthodes de calcul des probabilités, notamment les lois de probabilité et les événements.",
     "sections": [
       {
         "type": "definitions",
-        "title": "📚 Définitions clés à retenir par cœur",
+        "title": "Définitions clés à retenir par cœur",
         "items": [
-          "**Probabilité** : P(A) = nombre de cas favorables / nombre de cas possibles",
-          "**Événements incompatibles** : A ∩ B = ∅",
-          "**Événements indépendants** : P(A ∩ B) = P(A) × P(B)",
-          "**Probabilité conditionnelle** : P(A|B) = P(A ∩ B) / P(B)",
-          "**Formule des probabilités totales** : P(A) = Σ P(A|Bᵢ) × P(Bᵢ)"
+          "**Probabilité** : $\\displaystyle P(A) = \\frac{\\text{nombre de cas favorables}}{\\text{nombre de cas possibles}}$",
+          "**Événements incompatibles** : $A \\cap B = \\emptyset$ (intersection vide)",
+          "**Événements indépendants** : $P(A \\cap B) = P(A) \\times P(B)$",
+          "**Probabilité conditionnelle** : $\\displaystyle P(A|B) = \\frac{P(A \\cap B)}{P(B)}$ avec $P(B) \\neq 0$",
+          "**Formule des probabilités totales** : $\\displaystyle P(A) = \\sum_{i=1}^{n} P(A|B_i) \\times P(B_i)$ où $(B_i)$ est un système complet d'événements"
         ]
       },
       {
         "type": "formules",
-        "title": "🔢 Formules essentielles",
+        "title": "Formules essentielles",
         "items": [
-          "**P(A ∪ B)** = P(A) + P(B) - P(A ∩ B)",
-          "**P(Ā)** = 1 - P(A)",
-          "**Formule de Bayes** : P(A|B) = P(B|A) × P(A) / P(B)",
-          "**Loi binomiale** : P(X = k) = C(n,k) × pᵏ × (1-p)ⁿ⁻ᵏ"
+          "**Addition** : $P(A \\cup B) = P(A) + P(B) - P(A \\cap B)$",
+          "**Complémentaire** : $P(\\overline{A}) = 1 - P(A)$",
+          "**Formule de Bayes** : $\\displaystyle P(A|B) = \\frac{P(B|A) \\times P(A)}{P(B)}$",
+          "**Loi binomiale** : $\\displaystyle P(X = k) = \\binom{n}{k} p^k (1-p)^{n-k}$ où $X \\sim \\mathcal{B}(n, p)$",
+          "**Événements incompatibles** : Si $A \\cap B = \\emptyset$, alors $P(A \\cup B) = P(A) + P(B)$"
         ]
       },
       {
         "type": "methodes",
-        "title": "💡 Méthodes et astuces",
+        "title": "Méthodes et astuces",
         "items": [
-          "**Dessiner un arbre** de probabilités pour visualiser",
-          "**Tableau à double entrée** pour les situations à deux variables",
-          "**Diagramme de Venn** pour les unions et intersections"
+          "**Dessiner un arbre** de probabilités pour visualiser les événements successifs",
+          "**Tableau à double entrée** pour les situations à deux variables aléatoires",
+          "**Diagramme de Venn** pour les unions et intersections d'événements",
+          "**Pour les problèmes de dénombrement** : Utiliser les combinaisons $\\displaystyle \\binom{n}{k} = \\frac{n!}{k!(n-k)!}$"
         ]
       },
       {
         "type": "pieges",
-        "title": "⚠️ Pièges à éviter absolument",
+        "title": "Pièges à éviter absolument",
         "items": [
-          "❌ Indépendant ≠ Incompatible",
-          "❌ P(A|B) ≠ P(B|A) en général",
-          "❌ Toujours vérifier que Σ P(Ωᵢ) = 1"
+          "**ATTENTION** : Indépendant $\\neq$ Incompatible. Deux événements indépendants peuvent avoir une intersection non vide",
+          "**PIÈGE** : $P(A|B) \\neq P(B|A)$ en général",
+          "**DANGER** : Toujours vérifier que $\\displaystyle \\sum_{i=1}^{n} P(\\Omega_i) = 1$ pour un système complet",
+          "**ATTENTION** : $P(A \\cup B) \\neq P(A) + P(B)$ en général (sauf si $A$ et $B$ incompatibles)"
+        ]
+      },
+      {
+        "type": "reflexion",
+        "title": "Points de réflexion importants",
+        "items": [
+          "**Indépendance vs Incompatibilité** : Deux événements incompatibles ($A \\cap B = \\emptyset$) ne sont jamais indépendants (sauf si l'un est de probabilité nulle)",
+          "**Probabilité conditionnelle** : Modifie l'univers de référence",
+          "**Loi binomiale** : Modélise le nombre de succès dans $n$ épreuves indépendantes"
         ]
       }
     ]
@@ -52,18 +64,55 @@
     {
       "id": "q1",
       "theme": "Probabilités",
-      "question": "On lance deux dés. Quelle est la probabilité d'obtenir une somme égale à 7 ?",
+      "question": "On lance deux dés équilibrés. Quelle est la probabilité d'obtenir une somme égale à 7 ?",
       "type": "mcq",
       "options": [
-        { "id": "a", "text": "1/6", "isCorrect": true },
-        { "id": "b", "text": "1/12", "isCorrect": false },
-        { "id": "c", "text": "1/36", "isCorrect": false },
-        { "id": "d", "text": "7/36", "isCorrect": false }
+        { "id": "a", "text": "$\\displaystyle \\frac{1}{6}$", "isCorrect": true },
+        { "id": "b", "text": "$\\displaystyle \\frac{1}{12}$", "isCorrect": false },
+        { "id": "c", "text": "$\\displaystyle \\frac{1}{36}$", "isCorrect": false },
+        { "id": "d", "text": "$\\displaystyle \\frac{7}{36}$", "isCorrect": false }
       ],
-      "explanation": "Cas favorables : (1,6), (2,5), (3,4), (4,3), (5,2), (6,1) = 6 cas. Total = 36. P = 6/36 = 1/6",
+      "explanation": "Les cas favorables pour obtenir une somme de 7 sont : $(1,6)$, $(2,5)$, $(3,4)$, $(4,3)$, $(5,2)$, $(6,1)$, soit 6 cas. Le nombre total de cas possibles est $6 \\times 6 = 36$. Donc $\\displaystyle P(\\text{somme} = 7) = \\frac{6}{36} = \\frac{1}{6}$.",
       "hints": [
-        "Liste tous les couples possibles",
-        "Compte ceux qui donnent une somme de 7"
+        "Liste tous les couples $(a,b)$ tels que $a + b = 7$",
+        "Compte le nombre de cas favorables",
+        "Divise par le nombre total de cas possibles : $36$"
+      ]
+    },
+    {
+      "id": "q2",
+      "theme": "Probabilités",
+      "question": "Dans une urne, il y a 5 boules rouges et 3 boules bleues. On tire deux boules successivement sans remise. Quelle est la probabilité de tirer deux boules rouges ?",
+      "type": "mcq",
+      "options": [
+        { "id": "a", "text": "$\\displaystyle \\frac{5}{14}$", "isCorrect": true },
+        { "id": "b", "text": "$\\displaystyle \\frac{25}{64}$", "isCorrect": false },
+        { "id": "c", "text": "$\\displaystyle \\frac{5}{16}$", "isCorrect": false },
+        { "id": "d", "text": "$\\displaystyle \\frac{10}{28}$", "isCorrect": false }
+      ],
+      "explanation": "Probabilité de tirer une rouge au 1er tirage : $\\displaystyle P(R_1) = \\frac{5}{8}$. Sachant qu'on a tiré une rouge, il reste 4 rouges sur 7 boules : $\\displaystyle P(R_2|R_1) = \\frac{4}{7}$. Donc $\\displaystyle P(R_1 \\cap R_2) = P(R_1) \\times P(R_2|R_1) = \\frac{5}{8} \\times \\frac{4}{7} = \\frac{20}{56} = \\frac{5}{14}$.",
+      "hints": [
+        "Calcule la probabilité du 1er tirage rouge",
+        "Utilise la probabilité conditionnelle pour le 2e tirage",
+        "Multiplie les deux probabilités (tirages successifs)"
+      ]
+    },
+    {
+      "id": "q3",
+      "theme": "Probabilités",
+      "question": "Soit $A$ et $B$ deux événements indépendants tels que $P(A) = 0.6$ et $P(B) = 0.4$. Calculer $P(A \\cup B)$.",
+      "type": "mcq",
+      "options": [
+        { "id": "a", "text": "$0.76$", "isCorrect": true },
+        { "id": "b", "text": "$1.0$", "isCorrect": false },
+        { "id": "c", "text": "$0.24$", "isCorrect": false },
+        { "id": "d", "text": "$0.5$", "isCorrect": false }
+      ],
+      "explanation": "Comme $A$ et $B$ sont indépendants : $P(A \\cap B) = P(A) \\times P(B) = 0.6 \\times 0.4 = 0.24$. Puis $P(A \\cup B) = P(A) + P(B) - P(A \\cap B) = 0.6 + 0.4 - 0.24 = 0.76$.",
+      "hints": [
+        "Utilise l'indépendance : $P(A \\cap B) = P(A) \\times P(B)$",
+        "Applique la formule : $P(A \\cup B) = P(A) + P(B) - P(A \\cap B)$",
+        "Fais attention à ne pas oublier le terme $-P(A \\cap B)$"
       ]
     }
   ]

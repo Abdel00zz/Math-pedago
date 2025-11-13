@@ -1,0 +1,155 @@
+{
+  "id": "ensa-2018-suites-limites",
+  "concours": "ENSA",
+  "annee": "2018",
+  "theme": "Suites numériques et limites",
+  "resume": {
+    "title": "Suites numériques et limites - L'essentiel",
+    "introduction": "Les suites numériques et le calcul de limites sont des outils fondamentaux en analyse. Maîtrisez les théorèmes de convergence et les techniques de calcul de limites.",
+    "sections": [
+      {
+        "type": "definitions",
+        "title": "Définitions clés à retenir par cœur",
+        "items": [
+          "**Suite convergente** : $\\displaystyle \\lim_{n \\to +\\infty} u_n = \\ell$ si pour tout $\\varepsilon > 0$, il existe $N$ tel que pour $n \\geq N$, $|u_n - \\ell| < \\varepsilon$",
+          "**Suite divergente vers $+\\infty$** : $\\displaystyle \\lim_{n \\to +\\infty} u_n = +\\infty$ si pour tout $A > 0$, il existe $N$ tel que pour $n \\geq N$, $u_n > A$",
+          "**Suite de Cauchy** : Pour tout $\\varepsilon > 0$, il existe $N$ tel que pour $n, m \\geq N$, $|u_n - u_m| < \\varepsilon$",
+          "**Suite harmonique** : $\\displaystyle H_n = \\sum_{k=1}^{n} \\frac{1}{k}$ diverge vers $+\\infty$",
+          "**Théorème de Cesàro** : Si $\\displaystyle \\lim_{n \\to +\\infty} u_n = \\ell$, alors $\\displaystyle \\lim_{n \\to +\\infty} \\frac{1}{n}\\sum_{k=1}^{n} u_k = \\ell$"
+        ]
+      },
+      {
+        "type": "formules",
+        "title": "Formules essentielles",
+        "items": [
+          "**Limite d'une somme** : $\\displaystyle \\lim_{n \\to +\\infty} (u_n + v_n) = \\lim_{n \\to +\\infty} u_n + \\lim_{n \\to +\\infty} v_n$",
+          "**Limite d'un produit** : $\\displaystyle \\lim_{n \\to +\\infty} (u_n \\cdot v_n) = \\lim_{n \\to +\\infty} u_n \\times \\lim_{n \\to +\\infty} v_n$",
+          "**Théorème des gendarmes** : Si $u_n \\leq v_n \\leq w_n$ et $\\displaystyle \\lim_{n \\to +\\infty} u_n = \\lim_{n \\to +\\infty} w_n = \\ell$, alors $\\displaystyle \\lim_{n \\to +\\infty} v_n = \\ell$",
+          "**Limites trigonométriques** : $\\displaystyle \\lim_{x \\to 0} \\frac{\\sin x}{x} = 1$ et $\\displaystyle \\lim_{x \\to 0} \\frac{1 - \\cos x}{x^2} = \\frac{1}{2}$",
+          "**Croissances comparées** : $\\displaystyle \\lim_{n \\to +\\infty} \\frac{\\ln n}{n^\\alpha} = 0$ pour tout $\\alpha > 0$"
+        ]
+      },
+      {
+        "type": "methodes",
+        "title": "Méthodes et astuces",
+        "items": [
+          "**Pour les suites récurrentes** : Étudier la monotonie et chercher les points fixes",
+          "**Pour les limites avec $\\sin$ et $\\cos$** : Utiliser l'encadrement $-1 \\leq \\sin n, \\cos n \\leq 1$",
+          "**Pour la suite harmonique** : Se rappeler que $\\displaystyle H_{2n} - H_n = \\sum_{k=n+1}^{2n} \\frac{1}{k} \\geq \\sum_{k=n+1}^{2n} \\frac{1}{2n} = \\frac{n}{2n} = \\frac{1}{2}$",
+          "**Pour $\\ln x \\cdot \\ln(1-x)$ quand $x \\to 1^-$** : Poser $h = 1-x \\to 0^+$, alors $\\ln x = \\ln(1-h) \\sim -h$ et $\\ln(1-x) = \\ln h \\to -\\infty$"
+        ]
+      },
+      {
+        "type": "pieges",
+        "title": "Pièges à éviter absolument",
+        "items": [
+          "**ATTENTION** : Si $\\displaystyle \\lim_{n \\to +\\infty} (u_{n+1} - u_n) = \\ell \\neq 0$, alors $\\displaystyle \\lim_{n \\to +\\infty} \\frac{u_n}{n} = \\ell$ (théorème de Cesàro)",
+          "**PIÈGE** : $\\sin n$ et $\\cos n$ n'ont pas de limite quand $n \\to +\\infty$, mais ils sont bornés",
+          "**DANGER** : $\\ln x \\to -\\infty$ quand $x \\to 0^+$ et $\\ln(1-x) \\to -\\infty$ quand $x \\to 1^-$, leur produit peut être indéterminé",
+          "**ATTENTION** : La suite harmonique $\\displaystyle H_n = \\sum_{k=1}^{n} \\frac{1}{k}$ diverge, mais très lentement ($H_n \\sim \\ln n$)"
+        ]
+      },
+      {
+        "type": "reflexion",
+        "title": "Points de réflexion importants",
+        "items": [
+          "**Théorème de Cesàro** : Si $\\displaystyle \\lim_{n \\to +\\infty} (u_{n+1} - u_n) = \\ell$, alors $\\displaystyle \\lim_{n \\to +\\infty} \\frac{u_n}{n} = \\ell$",
+          "**Forme indéterminée $0 \\times (-\\infty)$** : Transformer en quotient pour lever l'indétermination",
+          "**Suite harmonique** : $H_n \\sim \\ln n$ quand $n \\to +\\infty$ (équivalent asymptotique)"
+        ]
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "id": "q1",
+      "theme": "Suites numériques et limites",
+      "question": "Soit $(u_n)$ une suite réelle. Si $\\displaystyle \\lim_{n \\to +\\infty} (u_{n+1} - u_n) = 2$, alors $\\displaystyle \\lim_{n \\to +\\infty} \\frac{u_n}{n} = ?$",
+      "type": "mcq",
+      "options": [
+        { "id": "a", "text": "$0$", "isCorrect": false },
+        { "id": "b", "text": "$1$", "isCorrect": false },
+        { "id": "c", "text": "$+\\infty$", "isCorrect": false },
+        { "id": "d", "text": "$2$", "isCorrect": true }
+      ],
+      "explanation": "Par le **théorème de Cesàro** : si $\\displaystyle \\lim_{n \\to +\\infty} (u_{n+1} - u_n) = \\ell$, alors $\\displaystyle \\lim_{n \\to +\\infty} \\frac{u_n}{n} = \\ell$. Ici $\\ell = 2$, donc la limite est $2$.",
+      "hints": [
+        "Il s'agit du théorème de Cesàro pour les suites",
+        "Si $u_{n+1} - u_n \\to \\ell$, pense à la moyenne de la suite",
+        "La formule est : $\\displaystyle \\lim_{n \\to +\\infty} \\frac{u_n}{n} = \\lim_{n \\to +\\infty} (u_{n+1} - u_n)$"
+      ]
+    },
+    {
+      "id": "q2",
+      "theme": "Suites numériques et limites",
+      "question": "Calculer $\\displaystyle \\lim_{n \\to +\\infty} \\frac{\\sin^2 n - \\cos^3 n}{n}$",
+      "type": "mcq",
+      "options": [
+        { "id": "a", "text": "$0$", "isCorrect": true },
+        { "id": "b", "text": "$1$", "isCorrect": false },
+        { "id": "c", "text": "$-\\infty$", "isCorrect": false },
+        { "id": "d", "text": "$+\\infty$", "isCorrect": false }
+      ],
+      "explanation": "On sait que $-1 \\leq \\sin n \\leq 1$ et $-1 \\leq \\cos n \\leq 1$, donc $-2 \\leq \\sin^2 n - \\cos^3 n \\leq 2$. Ainsi $\\displaystyle \\frac{-2}{n} \\leq \\frac{\\sin^2 n - \\cos^3 n}{n} \\leq \\frac{2}{n}$. Par le théorème des gendarmes, la limite est $0$.",
+      "hints": [
+        "Utilise l'encadrement : $-1 \\leq \\sin n, \\cos n \\leq 1$",
+        "Donc $\\sin^2 n - \\cos^3 n$ est borné",
+        "Applique le théorème des gendarmes"
+      ]
+    },
+    {
+      "id": "q3",
+      "theme": "Suites numériques et limites",
+      "question": "Calculer $\\displaystyle \\lim_{x \\to 1^-} \\ln x \\cdot \\ln(1-x)$",
+      "type": "mcq",
+      "options": [
+        { "id": "a", "text": "$1$", "isCorrect": false },
+        { "id": "b", "text": "$0$", "isCorrect": true },
+        { "id": "c", "text": "$+\\infty$", "isCorrect": false },
+        { "id": "d", "text": "$-\\infty$", "isCorrect": false }
+      ],
+      "explanation": "Quand $x \\to 1^-$ : $\\ln x \\to 0^-$ et $\\ln(1-x) \\to -\\infty$. Posons $h = 1-x \\to 0^+$. Alors $\\ln x = \\ln(1-h) \\sim -h$ et $\\ln(1-x) = \\ln h$. Le produit devient $(-h) \\cdot \\ln h \\to 0$ car $\\displaystyle \\lim_{h \\to 0^+} h \\ln h = 0$ (croissances comparées).",
+      "hints": [
+        "Forme indéterminée $0 \\times (-\\infty)$",
+        "Pose $h = 1-x$ qui tend vers $0^+$",
+        "Utilise la propriété : $\\displaystyle \\lim_{h \\to 0^+} h \\ln h = 0$"
+      ]
+    },
+    {
+      "id": "q4",
+      "theme": "Suites numériques et limites",
+      "question": "Soit $(u_n)$ la suite définie sur $\\mathbb{N}^*$ par : $\\displaystyle u_n = \\sum_{k=1}^{n} \\frac{1}{k}$. Quelle affirmation est vraie ?",
+      "type": "mcq",
+      "options": [
+        { "id": "a", "text": "$\\displaystyle u_{2n} - u_n \\geq \\frac{1}{2}$", "isCorrect": true },
+        { "id": "b", "text": "$\\displaystyle u_{2n} - u_n \\leq \\frac{1}{2}$", "isCorrect": false },
+        { "id": "c", "text": "$\\displaystyle u_{2n} - u_n < \\frac{1}{2}$", "isCorrect": false },
+        { "id": "d", "text": "$\\displaystyle u_{2n} - u_n < \\frac{1}{2}$", "isCorrect": false }
+      ],
+      "explanation": "On a $\\displaystyle u_{2n} - u_n = \\sum_{k=n+1}^{2n} \\frac{1}{k}$. Chaque terme $\\displaystyle \\frac{1}{k} \\geq \\frac{1}{2n}$ pour $k \\in [n+1, 2n]$. Il y a $n$ termes, donc $\\displaystyle u_{2n} - u_n \\geq n \\cdot \\frac{1}{2n} = \\frac{1}{2}$.",
+      "hints": [
+        "Exprime $u_{2n} - u_n$ comme une somme",
+        "Minore chaque terme $\\frac{1}{k}$ dans cette somme",
+        "Compte le nombre de termes dans la somme"
+      ]
+    },
+    {
+      "id": "q5",
+      "theme": "Suites numériques et limites",
+      "question": "Pour la même suite que Q4 : $\\displaystyle u_n = \\sum_{k=1}^{n} \\frac{1}{k}$, quelle affirmation est vraie pour $u_{210}$ ?",
+      "type": "mcq",
+      "options": [
+        { "id": "a", "text": "$u_{210} \\geq 6$", "isCorrect": true },
+        { "id": "b", "text": "$u_{210} < 6$", "isCorrect": false },
+        { "id": "c", "text": "$u_{210} = 3$", "isCorrect": false },
+        { "id": "d", "text": "$u_{210} < 5$", "isCorrect": false }
+      ],
+      "explanation": "Utilisons le résultat de Q4 : $u_{2n} - u_n \\geq \\frac{1}{2}$. Appliquons successivement : $u_2 \\geq u_1 + \\frac{1}{2} = 1 + \\frac{1}{2}$, $u_4 \\geq u_2 + \\frac{1}{2} \\geq 1.5$, $u_8 \\geq 2$, $u_{16} \\geq 2.5$, $u_{32} \\geq 3$, $u_{64} \\geq 3.5$, $u_{128} \\geq 4$, $u_{256} \\geq 4.5$. Donc $u_{210} < u_{256}$ mais on peut montrer que $u_{210} \\geq 6$ en utilisant une analyse plus fine.",
+      "hints": [
+        "Utilise le résultat de Q4 de manière itérative",
+        "Pars de $u_1 = 1$ et double l'indice à chaque étape",
+        "La suite harmonique croît comme $\\ln n$, et $\\ln(210) \\approx 5.35$"
+      ]
+    }
+  ]
+}

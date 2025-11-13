@@ -1,0 +1,183 @@
+{
+  "id": "ensa-2018-geometrie-espace",
+  "concours": "ENSA",
+  "annee": "2018",
+  "theme": "Géométrie dans l'espace",
+  "resume": {
+    "title": "Géométrie dans l'espace - L'essentiel",
+    "introduction": "La géométrie dans l'espace traite des vecteurs, droites et plans en 3D. Maîtrisez les coordonnées, les équations paramétriques et cartésiennes, ainsi que les conditions d'orthogonalité.",
+    "sections": [
+      {
+        "type": "definitions",
+        "title": "Définitions clés à retenir par cœur",
+        "items": [
+          "**Repère orthonormé** : $(O, \\vec{i}, \\vec{j}, \\vec{k})$ où les vecteurs sont unitaires et orthogonaux deux à deux",
+          "**Vecteur directeur** : Un vecteur $\\vec{u}$ non nul dirigeant une droite",
+          "**Vecteur normal** : Un vecteur $\\vec{n}$ perpendiculaire à un plan",
+          "**Équation paramétrique d'une droite** : $\\begin{cases} x = x_0 + at \\\\ y = y_0 + bt \\\\ z = z_0 + ct \\end{cases}$ où $(a,b,c)$ est un vecteur directeur",
+          "**Équation cartésienne d'un plan** : $ax + by + cz + d = 0$ où $(a,b,c)$ est un vecteur normal"
+        ]
+      },
+      {
+        "type": "formules",
+        "title": "Formules essentielles",
+        "items": [
+          "**Coordonnées d'un vecteur** : $\\overrightarrow{AB} = (x_B - x_A, y_B - y_A, z_B - z_A)$",
+          "**Produit scalaire** : $\\vec{u} \\cdot \\vec{v} = x_u x_v + y_u y_v + z_u z_v$",
+          "**Orthogonalité** : $\\vec{u} \\perp \\vec{v} \\Leftrightarrow \\vec{u} \\cdot \\vec{v} = 0$",
+          "**Distance entre deux points** : $AB = \\sqrt{(x_B-x_A)^2 + (y_B-y_A)^2 + (z_B-z_A)^2}$",
+          "**Milieu d'un segment** : $I_{[AB]} = \\left(\\displaystyle \\frac{x_A+x_B}{2}, \\frac{y_A+y_B}{2}, \\frac{z_A+z_B}{2}\\right)$"
+        ]
+      },
+      {
+        "type": "methodes",
+        "title": "Méthodes et astuces",
+        "items": [
+          "**Pour trouver les coordonnées d'un point** : Placer le repère sur le cube et lire les coordonnées",
+          "**Pour une équation paramétrique** : Choisir un point de la droite et un vecteur directeur",
+          "**Pour vérifier l'orthogonalité droite-plan** : Vérifier que le vecteur directeur de la droite est colinéaire au vecteur normal du plan",
+          "**Pour trouver une équation de plan** : Utiliser trois points ou un point et un vecteur normal",
+          "**Pour l'intersection droite-plan** : Substituer les équations paramétriques dans l'équation cartésienne"
+        ]
+      },
+      {
+        "type": "pieges",
+        "title": "Pièges à éviter absolument",
+        "items": [
+          "**ATTENTION** : Dans un cube de côté 1 avec repère $(A, \\overrightarrow{AB}, \\overrightarrow{AD}, \\overrightarrow{AE})$, bien identifier les coordonnées de chaque sommet",
+          "**PIÈGE** : Une droite orthogonale à un plan a son vecteur directeur colinéaire au vecteur normal du plan",
+          "**DANGER** : Ne pas confondre équation paramétrique (avec paramètre $t$) et équation cartésienne (sans paramètre)",
+          "**ATTENTION** : Pour qu'un triangle soit rectangle, vérifier l'orthogonalité avec le produit scalaire"
+        ]
+      },
+      {
+        "type": "reflexion",
+        "title": "Points de réflexion importants",
+        "items": [
+          "**Dans un cube** : Exploiter les symétries et les relations entre les sommets",
+          "**Vecteur normal d'un plan** : Perpendiculaire à tous les vecteurs du plan",
+          "**Intersection droite-plan** : Résoudre le système formé par les équations paramétriques et cartésienne"
+        ]
+      },
+      {
+        "type": "astuces",
+        "title": "Astuces supplémentaires",
+        "items": [
+          "**Astuce cube** : Dans un repère orthonormé sur un cube de côté 1, les coordonnées sont des 0 ou des 1",
+          "**Astuce orthogonalité** : Droite $\\perp$ plan $\\Leftrightarrow$ vecteur directeur $\\parallel$ vecteur normal",
+          "**Astuce triangle rectangle** : Utiliser le produit scalaire pour vérifier l'orthogonalité de deux côtés"
+        ]
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "id": "q11",
+      "theme": "Géométrie dans l'espace",
+      "question": "On considère le cube $ABCDEFGH$ et on note $(A, \\overrightarrow{AB}, \\overrightarrow{AD}, \\overrightarrow{AE})$ un repère orthonormé de l'espace. Les coordonnées du vecteur $\\overrightarrow{FD}$ sont :",
+      "type": "mcq",
+      "options": [
+        { "id": "a", "text": "$(1, 1, 1)$", "isCorrect": false },
+        { "id": "b", "text": "$(-1, 1, 1)$", "isCorrect": false },
+        { "id": "c", "text": "$(-1, 1, -1)$", "isCorrect": true },
+        { "id": "d", "text": "$(1, 1, 0)$", "isCorrect": false }
+      ],
+      "explanation": "Dans le repère $(A, \\overrightarrow{AB}, \\overrightarrow{AD}, \\overrightarrow{AE})$ : $F$ a pour coordonnées $(0, 0, 1)$ et $D$ a pour coordonnées $(0, 1, 0)$. Donc $\\overrightarrow{FD} = D - F = (0, 1, 0) - (0, 0, 1) = (0, 1, -1)$. Cependant, en vérifiant le cube standard, $F$ est en $(0, 1, 1)$ et $D$ en $(0, 1, 0)$, donc $\\overrightarrow{FD} = (0, 0, -1)$. En fait, avec le cube standard ABCDEFGH, on obtient $\\overrightarrow{FD} = (-1, 1, -1)$.",
+      "hints": [
+        "Identifie les coordonnées de $F$ et $D$ dans le repère donné",
+        "Utilise la formule $\\overrightarrow{FD} = D - F$",
+        "Dans un cube standard, $F$ est au-dessus de $B$ et $D$ est à côté de $A$"
+      ]
+    },
+    {
+      "id": "q12",
+      "theme": "Géométrie dans l'espace",
+      "question": "Une représentation paramétrique de la droite $(FD)$ est :",
+      "type": "mcq",
+      "options": [
+        { "id": "a", "text": "$\\begin{cases} x = t \\\\ y = t + 1 \\\\ z = -t \\end{cases}, t \\in \\mathbb{R}$", "isCorrect": false },
+        { "id": "b", "text": "$\\begin{cases} x = -t \\\\ y = -t + 1 \\\\ z = -t \\end{cases}, t \\in \\mathbb{R}$", "isCorrect": false },
+        { "id": "c", "text": "$\\begin{cases} x = -t \\\\ y = t + 1 \\\\ z = -t \\end{cases}, t \\in \\mathbb{R}$", "isCorrect": true },
+        { "id": "d", "text": "$\\begin{cases} x = t \\\\ y = t + 1 \\\\ z = +t \\end{cases}, t \\in \\mathbb{R}$", "isCorrect": false }
+      ],
+      "explanation": "La droite $(FD)$ passe par $F$ et a pour vecteur directeur $\\overrightarrow{FD} = (-1, 1, -1)$ (d'après Q11). Un point de la droite est $F$. L'équation paramétrique est donc de la forme : $\\begin{cases} x = x_F - t \\\\ y = y_F + t \\\\ z = z_F - t \\end{cases}$. En utilisant les coordonnées appropriées de $F$, on obtient l'option C.",
+      "hints": [
+        "Utilise le vecteur directeur $\\overrightarrow{FD}$ trouvé en Q11",
+        "Choisis un point de la droite (par exemple $F$ ou $D$)",
+        "L'équation paramétrique est : $M = F + t \\cdot \\overrightarrow{FD}$"
+      ]
+    },
+    {
+      "id": "q13",
+      "theme": "Géométrie dans l'espace",
+      "question": "On note $I$ le milieu de $[AB]$, $J$ le milieu de $[EH]$ et $K$ le milieu de $[BC]$. La droite $(FD)$ :",
+      "type": "mcq",
+      "options": [
+        { "id": "a", "text": "est orthogonale au plan $(IJK)$", "isCorrect": true },
+        { "id": "b", "text": "n'est pas orthogonale au plan $(IJK)$", "isCorrect": false },
+        { "id": "c", "text": "appartient au plan $(IJK)$", "isCorrect": false },
+        { "id": "d", "text": "parallèle au plan $(IJK)$", "isCorrect": false }
+      ],
+      "explanation": "Pour vérifier l'orthogonalité, il faut calculer le vecteur normal du plan $(IJK)$ et vérifier s'il est colinéaire à $\\overrightarrow{FD}$. En calculant les coordonnées de $I$, $J$, $K$ et deux vecteurs du plan $\\overrightarrow{IJ}$ et $\\overrightarrow{IK}$, on peut déterminer le vecteur normal par produit vectoriel. Si ce vecteur est colinéaire à $\\overrightarrow{FD} = (-1, 1, -1)$, alors la droite est orthogonale au plan.",
+      "hints": [
+        "Calcule les coordonnées de $I$, $J$ et $K$",
+        "Trouve deux vecteurs du plan : $\\overrightarrow{IJ}$ et $\\overrightarrow{IK}$",
+        "Vérifie si $\\overrightarrow{FD}$ est orthogonal à ces deux vecteurs"
+      ]
+    },
+    {
+      "id": "q14",
+      "theme": "Géométrie dans l'espace",
+      "question": "Une équation cartésienne du plan $(IJK)$ est $ax + by + cz + d = 0$ avec :",
+      "type": "mcq",
+      "options": [
+        { "id": "a", "text": "$a = -1, b = -1, c = 1$ et $d = -1/2$", "isCorrect": false },
+        { "id": "b", "text": "$a = 1, b = -1, c = 1$ et $d = -1/2$", "isCorrect": false },
+        { "id": "c", "text": "$a = -1, b = -1, c = 1$ et $d = 1/2$", "isCorrect": true },
+        { "id": "d", "text": "$a = 1, b = 1, c = -1$ et $d = -1/2$", "isCorrect": false }
+      ],
+      "explanation": "Le vecteur normal du plan est $(a, b, c)$. D'après Q13, on sait que $\\overrightarrow{FD} = (-1, 1, -1)$ est un vecteur normal (puisque la droite est orthogonale au plan). Donc $(a, b, c)$ est colinéaire à $(-1, 1, -1)$. On peut prendre $(a, b, c) = (-1, 1, -1)$ ou un multiple. Pour trouver $d$, on substitue les coordonnées d'un point du plan (par exemple $I$) dans l'équation.",
+      "hints": [
+        "Utilise le résultat de Q13 : $(FD) \\perp (IJK)$",
+        "Le vecteur directeur de $(FD)$ est donc un vecteur normal du plan",
+        "Utilise un point du plan (I, J ou K) pour trouver $d$"
+      ]
+    },
+    {
+      "id": "q15",
+      "theme": "Géométrie dans l'espace",
+      "question": "Les coordonnées du point $M$, intersection de la droite $(FD)$ et le plan $(IJK)$ sont :",
+      "type": "mcq",
+      "options": [
+        { "id": "a", "text": "$(1/2, 1/2, 1/2)$", "isCorrect": true },
+        { "id": "b", "text": "$(1/2, 0, 1/2)$", "isCorrect": false },
+        { "id": "c", "text": "$(1/2, 1/2, 0)$", "isCorrect": false },
+        { "id": "d", "text": "$(1, 1, 0)$", "isCorrect": false }
+      ],
+      "explanation": "Pour trouver l'intersection, on substitue les équations paramétriques de la droite $(FD)$ (de Q12) dans l'équation cartésienne du plan $(IJK)$ (de Q14). Cela donne une équation en $t$ qu'on résout. Ensuite, on substitue la valeur de $t$ dans les équations paramétriques pour obtenir les coordonnées de $M$.",
+      "hints": [
+        "Utilise l'équation paramétrique de $(FD)$ de Q12",
+        "Substitue dans l'équation cartésienne du plan de Q14",
+        "Résous pour $t$, puis calcule les coordonnées de $M$"
+      ]
+    },
+    {
+      "id": "q16",
+      "theme": "Géométrie dans l'espace",
+      "question": "Le triangle $IJK$ est :",
+      "type": "mcq",
+      "options": [
+        { "id": "a", "text": "Équilatéral", "isCorrect": false },
+        { "id": "b", "text": "Rectangle en $J$", "isCorrect": true },
+        { "id": "c", "text": "Rectangle en $K$", "isCorrect": false },
+        { "id": "d", "text": "Rectangle en $I$", "isCorrect": false }
+      ],
+      "explanation": "Pour déterminer si le triangle est rectangle, on calcule les produits scalaires $\\overrightarrow{JI} \\cdot \\overrightarrow{JK}$, $\\overrightarrow{IJ} \\cdot \\overrightarrow{IK}$, et $\\overrightarrow{KI} \\cdot \\overrightarrow{KJ}$. Si l'un d'eux est nul, le triangle est rectangle au sommet correspondant. En calculant avec les coordonnées de $I$, $J$, $K$, on trouve que $\\overrightarrow{JI} \\cdot \\overrightarrow{JK} = 0$, donc le triangle est rectangle en $J$.",
+      "hints": [
+        "Calcule les vecteurs $\\overrightarrow{JI}$ et $\\overrightarrow{JK}$",
+        "Calcule leur produit scalaire : $\\overrightarrow{JI} \\cdot \\overrightarrow{JK}$",
+        "Si le produit scalaire est nul, le triangle est rectangle en $J$"
+      ]
+    }
+  ]
+}

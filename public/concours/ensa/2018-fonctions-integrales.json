@@ -1,0 +1,165 @@
+{
+  "id": "ensa-2018-fonctions-integrales",
+  "concours": "ENSA",
+  "annee": "2018",
+  "theme": "Fonctions et intégrales",
+  "resume": {
+    "title": "Fonctions et intégrales - L'essentiel",
+    "introduction": "Les fonctions trigonométriques, la dérivabilité et le calcul intégral sont au cœur de l'analyse. Maîtrisez les formules de trigonométrie inverse et les techniques d'intégration.",
+    "sections": [
+      {
+        "type": "definitions",
+        "title": "Définitions clés à retenir par cœur",
+        "items": [
+          "**Fonction dérivable en $a$** : $\\displaystyle f'(a) = \\lim_{x \\to a} \\frac{f(x) - f(a)}{x - a}$",
+          "**Fonction continue** : $\\displaystyle \\lim_{x \\to a} f(x) = f(a)$",
+          "**Fonction périodique** : $f(x + T) = f(x)$ pour tout $x$, avec $T$ la période",
+          "**Intégrale définie** : $\\displaystyle \\int_a^b f(x)dx$ représente l'aire sous la courbe",
+          "**Primitive** : $F$ est une primitive de $f$ si $F'(x) = f(x)$"
+        ]
+      },
+      {
+        "type": "formules",
+        "title": "Formules essentielles",
+        "items": [
+          "**Trigonométrie inverse** : Si $\\tan \\theta = x$, alors $\\cos \\theta = \\displaystyle \\frac{1}{\\sqrt{1 + x^2}}$ et $\\sin \\theta = \\displaystyle \\frac{x}{\\sqrt{1 + x^2}}$",
+          "**Formule de dérivation** : $\\displaystyle \\lim_{x \\to a} \\frac{xf(a) - af(x)}{x - a} = f(a) - af'(a)$ (en ajoutant et retranchant $af(a)$)",
+          "**Intégration par parties** : $\\displaystyle \\int u'v = [uv] - \\int uv'$",
+          "**Intégrale de $\\arctan$** : $\\displaystyle \\int \\frac{1}{1 + x^2}dx = \\arctan x + C$",
+          "**Division euclidienne** : Pour intégrer $\\displaystyle \\frac{P(x)}{Q(x)}$ avec $\\deg P \\geq \\deg Q$, faire la division"
+        ]
+      },
+      {
+        "type": "methodes",
+        "title": "Méthodes et astuces",
+        "items": [
+          "**Pour $\\cos(\\arctan x)$** : Dessiner un triangle rectangle avec $\\tan \\theta = x$, puis lire $\\cos \\theta$",
+          "**Pour une équation fonctionnelle $f(2x) = f(x)$** : Tester avec $f$ constante et vérifier la compatibilité avec la continuité",
+          "**Pour simplifier $\\frac{xf(a) - af(x)}{x-a}$** : Ajouter et retrancher $af(a)$ au numérateur",
+          "**Pour $\\int \\frac{x^4}{x^2+1}dx$** : Faire la division euclidienne : $x^4 = (x^2+1)(x^2-1) + 1$",
+          "**Pour $\\int x^2 \\ln(x^2+1)dx$** : Intégration par parties avec $u = \\ln(x^2+1)$ et $v' = x^2$"
+        ]
+      },
+      {
+        "type": "pieges",
+        "title": "Pièges à éviter absolument",
+        "items": [
+          "**ATTENTION** : $\\cos(\\arctan x) \\neq \\displaystyle \\frac{1}{\\sqrt{1-x^2}}$ (confusion avec $\\cos(\\arcsin x)$)",
+          "**PIÈGE** : Si $f(2x) = f(x)$ pour tout $x$ et $f$ continue, alors $f$ est constante (pas périodique !)",
+          "**DANGER** : Ne pas confondre $\\displaystyle \\lim_{x \\to a} \\frac{f(x) - f(a)}{x - a}$ avec d'autres formes de limites",
+          "**ATTENTION** : Pour intégrer une fraction rationnelle, toujours vérifier si le degré du numérateur est supérieur au degré du dénominateur"
+        ]
+      },
+      {
+        "type": "reflexion",
+        "title": "Points de réflexion importants",
+        "items": [
+          "**Triangle rectangle** : Pour $\\tan \\theta = x$, on a un triangle avec côté opposé $x$, adjacent $1$, hypoténuse $\\sqrt{1+x^2}$",
+          "**Équation fonctionnelle** : $f(2x) = f(x)$ implique $f(x) = f(x/2) = f(x/4) = \\ldots = f(0)$ par continuité",
+          "**Intégration par parties** : Bien choisir $u$ et $v'$ pour simplifier le calcul"
+        ]
+      },
+      {
+        "type": "astuces",
+        "title": "Astuces supplémentaires",
+        "items": [
+          "**Astuce trigonométrique** : Toujours penser au triangle rectangle pour visualiser les relations trigonométriques",
+          "**Astuce intégrale** : Si le numérateur a un degré élevé, penser à la division euclidienne",
+          "**Astuce IPP** : Pour $\\ln$, choisir $u = \\ln(...)$ et $v' = $ le reste"
+        ]
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "id": "q6",
+      "theme": "Fonctions et intégrales",
+      "question": "Calculer $\\cos(\\arctan x)$",
+      "type": "mcq",
+      "options": [
+        { "id": "a", "text": "$\\displaystyle \\frac{1}{\\sqrt{1-x^2}}$", "isCorrect": false },
+        { "id": "b", "text": "$\\displaystyle \\frac{1}{\\sqrt{1+x^2}}$", "isCorrect": true },
+        { "id": "c", "text": "$\\displaystyle \\frac{-1}{\\sqrt{1+x^2}}$", "isCorrect": false },
+        { "id": "d", "text": "$\\displaystyle \\frac{-1}{\\sqrt{1-x^2}}$", "isCorrect": false }
+      ],
+      "explanation": "Soit $\\theta = \\arctan x$, donc $\\tan \\theta = x$. Dans un triangle rectangle avec côté opposé $x$ et côté adjacent $1$, l'hypoténuse vaut $\\sqrt{1 + x^2}$. Donc $\\cos \\theta = \\displaystyle \\frac{\\text{adjacent}}{\\text{hypoténuse}} = \\frac{1}{\\sqrt{1+x^2}}$.",
+      "hints": [
+        "Pose $\\theta = \\arctan x$, donc $\\tan \\theta = x$",
+        "Dessine un triangle rectangle avec $\\tan \\theta = \\frac{\\text{opposé}}{\\text{adjacent}} = \\frac{x}{1}$",
+        "Calcule l'hypoténuse avec Pythagore : $\\sqrt{1^2 + x^2}$"
+      ]
+    },
+    {
+      "id": "q7",
+      "theme": "Fonctions et intégrales",
+      "question": "Soit $f : \\mathbb{R} \\to \\mathbb{R}$ une fonction continue en $0$ telle que $\\forall x \\in \\mathbb{R}$, $f(2x) = f(x)$. Alors $f$ est :",
+      "type": "mcq",
+      "options": [
+        { "id": "a", "text": "Constante", "isCorrect": true },
+        { "id": "b", "text": "Strictement croissante", "isCorrect": false },
+        { "id": "c", "text": "Strictement décroissante", "isCorrect": false },
+        { "id": "d", "text": "Périodique de période 2", "isCorrect": false }
+      ],
+      "explanation": "Pour tout $x \\in \\mathbb{R}$, on a $f(x) = f(2x) = f(4x) = \\ldots = f(2^n x)$ pour tout $n \\in \\mathbb{N}$. En faisant tendre $n \\to +\\infty$, $2^n x \\to +\\infty$ ou $0$ (selon le signe de $x$). De même, $f(x) = f(x/2) = f(x/4) = \\ldots \\to f(0)$ par continuité. Donc $f$ est constante.",
+      "hints": [
+        "Applique l'équation fonctionnelle plusieurs fois",
+        "Que se passe-t-il quand tu divises $x$ par 2 plusieurs fois ?",
+        "Utilise la continuité en 0"
+      ]
+    },
+    {
+      "id": "q8",
+      "theme": "Fonctions et intégrales",
+      "question": "Soit $f : \\mathbb{R} \\to \\mathbb{R}$ une fonction dérivable en $a \\in \\mathbb{R}$. Calculer $\\displaystyle \\lim_{x \\to a} \\frac{xf(a) - af(x)}{x - a}$",
+      "type": "mcq",
+      "options": [
+        { "id": "a", "text": "$f'(a)$", "isCorrect": false },
+        { "id": "b", "text": "$f(a) + af'(a)$", "isCorrect": false },
+        { "id": "c", "text": "$f(a) - f'(a)$", "isCorrect": false },
+        { "id": "d", "text": "$f(a) - af'(a)$", "isCorrect": true }
+      ],
+      "explanation": "On réécrit : $\\displaystyle \\frac{xf(a) - af(x)}{x - a} = \\frac{xf(a) - af(a) + af(a) - af(x)}{x - a} = \\frac{f(a)(x-a) - a(f(x) - f(a))}{x - a} = f(a) - a\\frac{f(x) - f(a)}{x - a}$. En passant à la limite quand $x \\to a$, on obtient $f(a) - af'(a)$.",
+      "hints": [
+        "Ajoute et retranche $af(a)$ au numérateur",
+        "Factorise par $(x-a)$ et sépare en deux fractions",
+        "Reconnais la dérivée dans l'une des fractions"
+      ]
+    },
+    {
+      "id": "q9",
+      "theme": "Fonctions et intégrales",
+      "question": "Calculer $\\displaystyle \\int_0^1 \\frac{x^4}{x^2 + 1} dx$",
+      "type": "mcq",
+      "options": [
+        { "id": "a", "text": "$\\displaystyle \\frac{\\pi}{4}$", "isCorrect": false },
+        { "id": "b", "text": "$\\displaystyle \\frac{2}{3}$", "isCorrect": false },
+        { "id": "c", "text": "$\\displaystyle \\frac{\\pi}{4} - \\frac{2}{3}$", "isCorrect": true },
+        { "id": "d", "text": "$\\displaystyle \\frac{\\pi}{4} + \\frac{2}{3}$", "isCorrect": false }
+      ],
+      "explanation": "On effectue la division euclidienne : $x^4 = (x^2 + 1)(x^2 - 1) + 1$, donc $\\displaystyle \\frac{x^4}{x^2+1} = x^2 - 1 + \\frac{1}{x^2+1}$. Ainsi $\\displaystyle \\int_0^1 \\frac{x^4}{x^2+1}dx = \\int_0^1 (x^2 - 1)dx + \\int_0^1 \\frac{1}{x^2+1}dx = \\left[\\frac{x^3}{3} - x\\right]_0^1 + [\\arctan x]_0^1 = \\left(\\frac{1}{3} - 1\\right) + \\frac{\\pi}{4} = -\\frac{2}{3} + \\frac{\\pi}{4}$.",
+      "hints": [
+        "Le degré du numérateur (4) est supérieur au degré du dénominateur (2)",
+        "Effectue la division euclidienne de $x^4$ par $x^2 + 1$",
+        "N'oublie pas que $\\int \\frac{1}{x^2+1}dx = \\arctan x + C$"
+      ]
+    },
+    {
+      "id": "q10",
+      "theme": "Fonctions et intégrales",
+      "question": "Calculer $\\displaystyle \\int_0^{\\sqrt{3}} x^2 \\ln(x^2 + 1) dx$",
+      "type": "mcq",
+      "options": [
+        { "id": "a", "text": "$\\displaystyle \\sqrt{3} \\ln 2 - \\frac{\\pi}{9}$", "isCorrect": false },
+        { "id": "b", "text": "$\\displaystyle \\sqrt{3} \\ln 2 + \\frac{\\pi}{9}$", "isCorrect": false },
+        { "id": "c", "text": "$\\displaystyle 2\\left(\\sqrt{3} \\ln 2 - \\frac{\\pi}{9}\\right)$", "isCorrect": true },
+        { "id": "d", "text": "$\\displaystyle \\sqrt{3} \\ln 2$", "isCorrect": false }
+      ],
+      "explanation": "Intégration par parties avec $u = \\ln(x^2+1)$ et $v' = x^2$. On a $u' = \\displaystyle \\frac{2x}{x^2+1}$ et $v = \\displaystyle \\frac{x^3}{3}$. Donc $\\displaystyle \\int_0^{\\sqrt{3}} x^2 \\ln(x^2+1)dx = \\left[\\frac{x^3}{3}\\ln(x^2+1)\\right]_0^{\\sqrt{3}} - \\int_0^{\\sqrt{3}} \\frac{x^3}{3} \\cdot \\frac{2x}{x^2+1}dx$. Le calcul complet donne $2(\\sqrt{3} \\ln 2 - \\frac{\\pi}{9})$.",
+      "hints": [
+        "Utilise l'intégration par parties",
+        "Choisis $u = \\ln(x^2+1)$ et $v' = x^2$",
+        "Calcule $u'$ et $v$ puis applique la formule IPP"
+      ]
+    }
+  ]
+}
