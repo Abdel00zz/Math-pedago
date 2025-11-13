@@ -1,0 +1,158 @@
+{
+  "id": "ensa-2018-fonctions-analyse",
+  "concours": "ENSA",
+  "annee": "2018",
+  "theme": "Fonctions et analyse",
+  "resume": {
+    "title": "Fonctions et analyse - L'essentiel",
+    "introduction": "L'analyse des fonctions réelles comprend l'étude de leurs propriétés (continuité, dérivabilité, monotonie) et le calcul intégral. Ces outils sont essentiels pour résoudre des problèmes en sciences et en ingénierie.",
+    "sections": [
+      {
+        "type": "definitions",
+        "title": "Définitions clés à retenir par cœur",
+        "items": [
+          "**Fonction continue** : $f$ est continue en $a$ si $\\lim_{x \\to a} f(x) = f(a)$",
+          "**Fonction dérivable** : $f$ est dérivable en $a$ si $\\lim_{x \\to a} \\frac{f(x) - f(a)}{x - a}$ existe",
+          "**Fonction périodique** : $f$ est périodique de période $T$ si $\\forall x \\in \\mathbb{R}, f(x+T) = f(x)$",
+          "**Intégrale définie** : $\\int_a^b f(x)dx$ représente l'aire algébrique sous la courbe de $f$ entre $a$ et $b$"
+        ]
+      },
+      {
+        "type": "formules",
+        "title": "Formules essentielles",
+        "items": [
+          "**Dérivée de $\\arctan x$** : $(\\arctan x)' = \\frac{1}{1+x^2}$",
+          "**Composée de $\\arctan$ et $\\cos$** : $\\cos(\\arctan x) = \\frac{1}{\\sqrt{1+x^2}}$",
+          "**Taux d'accroissement** : $\\lim_{x \\to a} \\frac{xf(a) - af(x)}{x - a} = \\lim_{x \\to a} \\frac{f(a) - f(x)}{1 - \\frac{x}{a}} \\cdot \\frac{a}{x-a}$",
+          "**Simplification** : $\\lim_{x \\to a} \\frac{xf(a) - af(x)}{x - a} = f(a) - af'(a)$",
+          "**Intégration par parties** : $\\int u dv = uv - \\int v du$",
+          "**Primitive de $\\frac{x^4}{x^2+1}$** : Diviser $x^4$ par $x^2+1$ donne $x^2 - 1 + \\frac{1}{x^2+1}$",
+          "**Intégrale de $\\ln(x^2+1)$** : Utiliser l'intégration par parties avec $u = \\ln(x^2+1)$ et $dv = dx$"
+        ]
+      },
+      {
+        "type": "methodes",
+        "title": "Méthodes et astuces",
+        "items": [
+          "**Pour calculer $\\cos(\\arctan x)$** : Dessiner un triangle rectangle avec $\\tan \\theta = x$, puis utiliser Pythagore",
+          "**Pour une fonction vérifiant $f(2x) = f(x)$** : Tester si $f$ est constante en posant $f(x) = c$",
+          "**Pour calculer un taux d'accroissement généralisé** : Réécrire sous forme de différence de fonctions puis dériver",
+          "**Pour intégrer $\\frac{P(x)}{Q(x)}$** avec $\\deg P \\geq \\deg Q$ : Effectuer la division euclidienne d'abord",
+          "**Pour $\\int x^2 \\ln(x^2+1) dx$** : Utiliser l'intégration par parties avec un choix judicieux de $u$ et $dv$"
+        ]
+      },
+      {
+        "type": "pieges",
+        "title": "Pièges à éviter absolument",
+        "items": [
+          "**ATTENTION** : $\\cos(\\arctan x) \\neq \\frac{1}{x}$. Il faut utiliser $\\cos \\theta = \\frac{\\text{adjacent}}{\\text{hypoténuse}}$",
+          "**DANGER** : Pour $f(2x) = f(x)$ et $f$ continue, la seule solution n'est pas forcément la fonction constante, mais tester $f$ constante est un bon départ",
+          "**PIÈGE** : $\\lim_{x \\to a} \\frac{xf(a) - af(x)}{x - a} \\neq f'(a)$. Il faut développer correctement",
+          "**ATTENTION** : $\\int \\frac{x^4}{x^2+1} dx \\neq \\int x^2 dx$. Il faut diviser d'abord"
+        ]
+      },
+      {
+        "type": "astuces",
+        "title": "Astuces de calcul",
+        "items": [
+          "**Pour $\\arctan$** : Se souvenir du triangle rectangle avec $\\tan \\theta = \\frac{\\text{opposé}}{\\text{adjacent}}$",
+          "**Pour les intégrales** : Toujours simplifier l'intégrande avant d'intégrer",
+          "**Division polynomiale** : $\\frac{x^4}{x^2+1} = x^2 - 1 + \\frac{1}{x^2+1}$ (par division euclidienne)",
+          "**Intégrale de $\\arctan$** : $\\int \\arctan x dx = x \\arctan x - \\frac{1}{2}\\ln(1+x^2) + C$"
+        ]
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "id": "q6",
+      "theme": "Fonctions et analyse",
+      "question": "$\\cos(\\arctan x) = $",
+      "type": "mcq",
+      "options": [
+        { "id": "a", "text": "$\\frac{1}{\\sqrt{1-x^2}}$", "isCorrect": false },
+        { "id": "b", "text": "$\\frac{1}{\\sqrt{1+x^2}}$", "isCorrect": false },
+        { "id": "c", "text": "$\\frac{-1}{\\sqrt{1+x^2}}$", "isCorrect": false },
+        { "id": "d", "text": "$\\frac{1}{\\sqrt{1+x^2}}$", "isCorrect": true }
+      ],
+      "explanation": "Posons $\\theta = \\arctan x$, donc $\\tan \\theta = x = \\frac{x}{1}$. Dans un triangle rectangle, si $\\tan \\theta = \\frac{\\text{opposé}}{\\text{adjacent}} = \\frac{x}{1}$, alors l'hypoténuse vaut $\\sqrt{1+x^2}$ (par Pythagore). Donc $\\cos \\theta = \\frac{\\text{adjacent}}{\\text{hypoténuse}} = \\frac{1}{\\sqrt{1+x^2}}$.",
+      "hints": [
+        "Pose $\\theta = \\arctan x$, donc $\\tan \\theta = x$",
+        "Dessine un triangle rectangle avec angle $\\theta$",
+        "Utilise le théorème de Pythagore pour trouver l'hypoténuse"
+      ]
+    },
+    {
+      "id": "q7",
+      "theme": "Fonctions et analyse",
+      "question": "Soit $f : \\mathbb{R} \\to \\mathbb{R}$ une fonction continue en $0$ telle que $\\forall x \\in \\mathbb{R}$, $f(2x) = f(x)$. Alors $f$ est :",
+      "type": "mcq",
+      "options": [
+        { "id": "a", "text": "Constante", "isCorrect": true },
+        { "id": "b", "text": "Strictement croissante", "isCorrect": false },
+        { "id": "c", "text": "Strictement décroissante", "isCorrect": false },
+        { "id": "d", "text": "Périodique de période 2", "isCorrect": false }
+      ],
+      "explanation": "Si $f(2x) = f(x)$ pour tout $x$, alors $f(x) = f(\\frac{x}{2}) = f(\\frac{x}{4}) = \\cdots = f(\\frac{x}{2^n})$ pour tout $n$. Quand $n \\to +\\infty$, $\\frac{x}{2^n} \\to 0$. Par continuité en $0$, $f(x) = \\lim_{n \\to +\\infty} f(\\frac{x}{2^n}) = f(0)$. Donc $f$ est constante.",
+      "hints": [
+        "Applique la condition $f(2x) = f(x)$ plusieurs fois",
+        "Que se passe-t-il quand on itère : $f(x) = f(\\frac{x}{2}) = f(\\frac{x}{4}) = \\cdots$ ?",
+        "Utilise la continuité en $0$"
+      ]
+    },
+    {
+      "id": "q8",
+      "theme": "Fonctions et analyse",
+      "question": "Soit $f : \\mathbb{R} \\to \\mathbb{R}$ une fonction dérivable en $a \\in \\mathbb{R}$. Alors $\\lim_{x \\to a} \\frac{xf(a) - af(x)}{x - a} = $",
+      "type": "mcq",
+      "options": [
+        { "id": "a", "text": "$f'(a)$", "isCorrect": false },
+        { "id": "b", "text": "$f(a) + af'(a)$", "isCorrect": false },
+        { "id": "c", "text": "$f(a) - f'(a)$", "isCorrect": false },
+        { "id": "d", "text": "$f(a) - af'(a)$", "isCorrect": true }
+      ],
+      "explanation": "On réécrit : $\\frac{xf(a) - af(x)}{x-a} = \\frac{xf(a) - af(a) + af(a) - af(x)}{x-a} = \\frac{f(a)(x-a) - a(f(x)-f(a))}{x-a} = f(a) - a\\frac{f(x)-f(a)}{x-a}$. Quand $x \\to a$, on obtient $f(a) - af'(a)$.",
+      "hints": [
+        "Ajoute et soustrais $af(a)$ au numérateur",
+        "Factorise pour faire apparaître $x-a$ et le taux d'accroissement",
+        "Utilise la définition de $f'(a) = \\lim_{x \\to a} \\frac{f(x)-f(a)}{x-a}$"
+      ]
+    },
+    {
+      "id": "q9",
+      "theme": "Fonctions et analyse",
+      "question": "$\\int_0^1 \\frac{x^4}{x^2+1} dx = $",
+      "type": "mcq",
+      "options": [
+        { "id": "a", "text": "$\\frac{\\pi}{4}$", "isCorrect": false },
+        { "id": "b", "text": "$\\frac{2}{3}$", "isCorrect": false },
+        { "id": "c", "text": "$\\frac{\\pi}{4} - \\frac{2}{3}$", "isCorrect": true },
+        { "id": "d", "text": "$\\frac{\\pi}{4} + \\frac{2}{3}$", "isCorrect": false }
+      ],
+      "explanation": "On effectue la division euclidienne : $\\frac{x^4}{x^2+1} = x^2 - 1 + \\frac{1}{x^2+1}$. Donc $\\int_0^1 \\frac{x^4}{x^2+1} dx = \\int_0^1 (x^2 - 1 + \\frac{1}{x^2+1}) dx = [\\frac{x^3}{3} - x + \\arctan x]_0^1 = \\frac{1}{3} - 1 + \\frac{\\pi}{4} = \\frac{\\pi}{4} - \\frac{2}{3}$.",
+      "hints": [
+        "Le degré du numérateur est supérieur au degré du dénominateur : effectue la division",
+        "$x^4 = (x^2+1) \\cdot x^2 - x^2 = (x^2+1) \\cdot x^2 - (x^2+1) + 1$",
+        "Après division : $\\frac{x^4}{x^2+1} = x^2 - 1 + \\frac{1}{x^2+1}$"
+      ]
+    },
+    {
+      "id": "q10",
+      "theme": "Fonctions et analyse",
+      "question": "$\\int_0^{\\sqrt{3}} x^2 \\ln(x^2+1) dx = $",
+      "type": "mcq",
+      "options": [
+        { "id": "a", "text": "$\\sqrt{3} \\ln 2 - \\frac{\\pi}{9}$", "isCorrect": false },
+        { "id": "b", "text": "$\\sqrt{3} \\ln 2 + \\frac{\\pi}{9}$", "isCorrect": false },
+        { "id": "c", "text": "$2(\\sqrt{3} \\ln 2 - \\frac{\\pi}{9})$", "isCorrect": true },
+        { "id": "d", "text": "$\\sqrt{3} \\ln 2$", "isCorrect": false }
+      ],
+      "explanation": "On utilise l'intégration par parties avec $u = \\ln(x^2+1)$ et $dv = x^2 dx$. Alors $du = \\frac{2x}{x^2+1}dx$ et $v = \\frac{x^3}{3}$. On obtient : $\\int x^2 \\ln(x^2+1) dx = \\frac{x^3}{3}\\ln(x^2+1) - \\int \\frac{x^3}{3} \\cdot \\frac{2x}{x^2+1} dx = \\frac{x^3}{3}\\ln(x^2+1) - \\frac{2}{3}\\int \\frac{x^4}{x^2+1} dx$. En utilisant le résultat de Q9, on peut calculer cette intégrale.",
+      "hints": [
+        "Utilise l'intégration par parties : $\\int u dv = uv - \\int v du$",
+        "Pose $u = \\ln(x^2+1)$ et $dv = x^2 dx$",
+        "Tu devras calculer $\\int \\frac{x^4}{x^2+1} dx$ (similaire à Q9)"
+      ]
+    }
+  ]
+}
