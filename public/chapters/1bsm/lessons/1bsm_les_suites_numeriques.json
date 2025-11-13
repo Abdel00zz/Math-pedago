@@ -79,8 +79,9 @@
               "content": "Soit $(u_n)$ une suite numérique.\n\n**Majorée** : $\\exists M \\in \\mathbb{R}, \\forall n \\in \\mathbb{N}, u_n \\leq M$\n\n**Minorée** : $\\exists m \\in \\mathbb{R}, \\forall n \\in \\mathbb{N}, u_n \\geq m$\n\n**Bornée** : La suite est à la fois majorée et minorée.\n\nC'est-à-dire : $\\exists m, M \\in \\mathbb{R}, \\forall n \\in \\mathbb{N}, m \\leq u_n \\leq M$"
             },
             {
-              "type": "p",
-              "content": "!> **Attention** : Une suite bornée n'est pas nécessairement convergente. Par exemple, $u_n = (-1)^n$ est bornée mais divergente."
+              "type": "remark-box",
+              "preamble": "**Remarque** :",
+              "content": "Une suite peut être bornée sans être monotone. Par exemple, $u_n = (-1)^n$ est bornée (entre $-1$ et $1$) mais oscille entre deux valeurs."
             }
           ]
         }
@@ -164,22 +165,23 @@
           ]
         },
         {
-          "title": "Comportement Limite",
+          "title": "Comportement pour Grandes Valeurs de n",
           "elements": [
             {
               "type": "property-box",
-              "preamble": "**Limite d'une suite géométrique** :",
+              "preamble": "**Comportement d'une suite géométrique** :",
               "content": [
-                "Si $|q| < 1$ : $\\lim\\limits_{n \\to +\\infty} q^n = 0$",
-                "Si $q = 1$ : $\\lim\\limits_{n \\to +\\infty} q^n = 1$",
-                "Si $q > 1$ : $\\lim\\limits_{n \\to +\\infty} q^n = +\\infty$",
-                "Si $q \\leq -1$ : $(q^n)$ diverge (oscille)"
+                "Si $|q| < 1$ : Les termes $q^n$ deviennent de plus en plus proches de $0$ quand $n$ augmente",
+                "Si $q = 1$ : Tous les termes sont égaux à $1$",
+                "Si $q > 1$ : Les termes $q^n$ augmentent indéfiniment quand $n$ augmente",
+                "Si $q \\leq -1$ : Les termes $(q^n)$ oscillent (changent de signe)"
               ],
               "listType": "bullet"
             },
             {
-              "type": "p",
-              "content": "?> **Somme infinie** : Si $|q| < 1$, la somme d'une suite géométrique infinie converge vers $\\dfrac{u_0}{1-q}$."
+              "type": "remark-box",
+              "preamble": "**Remarque** :",
+              "content": "Pour $|q| < 1$, plus $n$ est grand, plus $q^n$ est petit. Par exemple, si $q = \\dfrac{1}{2}$, alors $q^{10} = \\dfrac{1}{1024} \\approx 0.001$."
             }
           ]
         }
@@ -244,13 +246,13 @@
                 "Déterminer le point fixe $\\ell$ de la suite",
                 "Poser $v_n = u_n - \\ell$ et montrer que $(v_n)$ est une suite géométrique",
                 "Exprimer $v_n$ puis $u_n$ en fonction de $n$",
-                "Calculer $\\lim\\limits_{n \\to +\\infty} u_n$"
+                "Calculer $u_{10}$ et $u_{20}$. Que remarque-t-on ?"
               ],
               "solution": [
                 "$\\ell = \\dfrac{1}{2}\\ell + 4$\n\n$\\ell - \\dfrac{1}{2}\\ell = 4$\n\n$\\dfrac{1}{2}\\ell = 4$\n\n$\\ell = 8$",
                 "$v_n = u_n - 8$\n\n$v_{n+1} = u_{n+1} - 8 = \\dfrac{1}{2}u_n + 4 - 8 = \\dfrac{1}{2}u_n - 4$\n\n$= \\dfrac{1}{2}(u_n - 8) = \\dfrac{1}{2}v_n$\n\nDonc $(v_n)$ est géométrique de raison $q = \\dfrac{1}{2}$",
                 "$v_0 = u_0 - 8 = 1 - 8 = -7$\n\n$v_n = v_0 \\times q^n = -7 \\times \\left(\\dfrac{1}{2}\\right)^n = -\\dfrac{7}{2^n}$\n\nDonc :\n$u_n = v_n + 8 = -\\dfrac{7}{2^n} + 8 = 8 - \\dfrac{7}{2^n}$",
-                "Comme $\\left|\\dfrac{1}{2}\\right| < 1$, on a $\\lim\\limits_{n \\to +\\infty} \\dfrac{1}{2^n} = 0$\n\nDonc :\n$\\lim\\limits_{n \\to +\\infty} u_n = 8 - 0 = 8$\n\nLa suite converge vers le point fixe $\\ell = 8$"
+                "$u_{10} = 8 - \\dfrac{7}{2^{10}} = 8 - \\dfrac{7}{1024} \\approx 8 - 0.0068 \\approx 7.993$\n\n$u_{20} = 8 - \\dfrac{7}{2^{20}} = 8 - \\dfrac{7}{1048576} \\approx 8 - 0.0000067 \\approx 7.9999933$\n\n**Remarque** : Plus $n$ est grand, plus $u_n$ se rapproche du point fixe $\\ell = 8$. Cela est dû au fait que $\\left|\\dfrac{1}{2}\\right| < 1$, donc $\\dfrac{7}{2^n}$ devient très petit quand $n$ augmente."
               ]
             }
           ]
@@ -299,12 +301,12 @@
               "content": [
                 "Montrer par récurrence que pour tout $n \\in \\mathbb{N}$, $0 < u_n \\leq 2$",
                 "Montrer que la suite est croissante",
-                "En déduire que la suite est convergente et déterminer sa limite"
+                "Calculer $u_1$, $u_2$, $u_3$ et $u_4$. Que remarque-t-on sur ces valeurs ?"
               ],
               "solution": [
                 "**Initialisation** : $u_0 = 2$, donc $0 < u_0 \\leq 2$ ✓\n\n**Hérédité** : Supposons $0 < u_n \\leq 2$\n\nAlors $2 < 2 + u_n \\leq 4$\n\nDonc $\\sqrt{2} < \\sqrt{2 + u_n} \\leq 2$\n\nComme $\\sqrt{2} > 0$, on a $0 < u_{n+1} \\leq 2$ ✓\n\n**Conclusion** : Pour tout $n \\in \\mathbb{N}$, $0 < u_n \\leq 2$",
-                "Étudions $u_{n+1} - u_n$ :\n\n$u_{n+1} - u_n = \\sqrt{2 + u_n} - u_n$\n\nPosons $f(x) = \\sqrt{2 + x} - x$. Étudions $f$ sur $[0; 2]$ :\n\n$f'(x) = \\dfrac{1}{2\\sqrt{2 + x}} - 1 = \\dfrac{1 - 2\\sqrt{2 + x}}{2\\sqrt{2 + x}}$\n\n$f'(x) \\geq 0 \\Leftrightarrow 1 \\geq 2\\sqrt{2 + x} \\Leftrightarrow \\dfrac{1}{4} \\geq 2 + x$ (impossible pour $x \\geq 0$)\n\nMais calculons directement : $u_{n+1}^2 - u_n^2 = 2 + u_n - u_n^2 = 2 - u_n(u_n - 1)$\n\nPour $u_n \\leq 2$, il faut voir si $u_{n+1} > u_n$ ou non.\n\nEn fait, montrons que $u_{n+1} \\geq u_n$ :\n$\\sqrt{2 + u_n} \\geq u_n \\Leftrightarrow 2 + u_n \\geq u_n^2 \\Leftrightarrow u_n^2 - u_n - 2 \\leq 0$\n\n$u_n^2 - u_n - 2 = (u_n - 2)(u_n + 1)$\n\nPour $0 < u_n \\leq 2$, on a $u_n - 2 \\leq 0$ et $u_n + 1 > 0$\n\nDonc $(u_n - 2)(u_n + 1) \\leq 0$ ✓\n\nLa suite est croissante",
-                "La suite est croissante et majorée par $2$, donc elle converge.\n\nSoit $\\ell$ sa limite. Par passage à la limite dans la relation de récurrence :\n\n$\\ell = \\sqrt{2 + \\ell}$\n\n$\\ell^2 = 2 + \\ell$\n\n$\\ell^2 - \\ell - 2 = 0$\n\n$(\\ell - 2)(\\ell + 1) = 0$\n\nDonc $\\ell = 2$ ou $\\ell = -1$\n\nComme $u_n > 0$ pour tout $n$, on a $\\ell \\geq 0$\n\nDonc $\\ell = 2$"
+                "Montrons que $u_{n+1} \\geq u_n$ :\n\n$\\sqrt{2 + u_n} \\geq u_n \\Leftrightarrow 2 + u_n \\geq u_n^2 \\Leftrightarrow u_n^2 - u_n - 2 \\leq 0$\n\n$u_n^2 - u_n - 2 = (u_n - 2)(u_n + 1)$\n\nPour $0 < u_n \\leq 2$, on a $u_n - 2 \\leq 0$ et $u_n + 1 > 0$\n\nDonc $(u_n - 2)(u_n + 1) \\leq 0$ ✓\n\nLa suite est croissante.",
+                "$u_0 = 2$\n\n$u_1 = \\sqrt{2 + 2} = \\sqrt{4} = 2$\n\n$u_2 = \\sqrt{2 + 2} = 2$\n\n$u_3 = \\sqrt{2 + 2} = 2$\n\n$u_4 = \\sqrt{2 + 2} = 2$\n\n**Remarque** : La suite est constante et égale à $2$ pour tout $n$. En effet, si $u_n = 2$, alors $u_{n+1} = \\sqrt{2 + 2} = \\sqrt{4} = 2$. Le nombre $2$ est un point fixe de la fonction $f(x) = \\sqrt{2 + x}$, car $f(2) = 2$."
               ]
             },
             {
