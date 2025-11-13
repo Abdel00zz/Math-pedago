@@ -496,6 +496,91 @@
       ]
     },
     {
+      "title": "Exercices Complémentaires avec Fill-in-Blanks",
+      "subsections": [
+        {
+          "title": "Calculs Progressifs",
+          "elements": [
+            {
+              "type": "example-box",
+              "preamble": "**Calcul guidé avec étapes** :",
+              "content": "Dans un repère orthonormé, soient $\\vec{u}\\begin{pmatrix} -2 \\\\ 5 \\end{pmatrix}$ et $\\vec{v}\\begin{pmatrix} 3 \\\\ 1 \\end{pmatrix}$.\n\n**Étape 1** : Calculons le produit scalaire\n$$\\vec{u} \\cdot \\vec{v} = (-2) \\times 3 + 5 \\times 1 = -6 + 5 = ___-1___$$\n\n**Étape 2** : Calculons les normes\n$$\\|\\vec{u}\\| = \\sqrt{(-2)^2 + 5^2} = \\sqrt{4 + 25} = \\sqrt{___29___}$$\n$$\\|\\vec{v}\\| = \\sqrt{3^2 + 1^2} = \\sqrt{9 + 1} = \\sqrt{___10___}$$\n\n**Étape 3** : Calculons l'angle $\\theta$ entre les vecteurs\n$$\\cos(\\theta) = \\dfrac{\\vec{u} \\cdot \\vec{v}}{\\|\\vec{u}\\| \\times \\|\\vec{v}\\|} = \\dfrac{-1}{\\sqrt{29} \\times \\sqrt{10}} = \\dfrac{___-1___}{\\sqrt{290}}$$\n\nL'angle est obtus car $\\cos(\\theta) < 0$"
+            },
+            {
+              "type": "practice-box",
+              "statement": "On considère un triangle $ABC$ avec $A(1; 1)$, $B(4; 2)$ et $C(3; 5)$ dans un repère orthonormé.",
+              "listType": "numbered",
+              "content": [
+                "Calculer les coordonnées de $\\overrightarrow{AB}$, $\\overrightarrow{AC}$ et $\\overrightarrow{BC}$",
+                "Calculer les longueurs $AB$, $AC$ et $BC$",
+                "Déterminer la nature du triangle $ABC$ (équilatéral, isocèle, rectangle ou quelconque)",
+                "Calculer l'angle $\\widehat{BAC}$ (donner la valeur exacte de son cosinus)",
+                "Calculer l'aire du triangle $ABC$ en utilisant la formule : $\\mathcal{A} = \\dfrac{1}{2} AB \\times AC \\times \\sin(\\widehat{BAC})$"
+              ],
+              "solution": [
+                "$\\overrightarrow{AB}\\begin{pmatrix} 4-1 \\\\ 2-1 \\end{pmatrix} = \\begin{pmatrix} 3 \\\\ 1 \\end{pmatrix}$\n\n$\\overrightarrow{AC}\\begin{pmatrix} 3-1 \\\\ 5-1 \\end{pmatrix} = \\begin{pmatrix} 2 \\\\ 4 \\end{pmatrix}$\n\n$\\overrightarrow{BC}\\begin{pmatrix} 3-4 \\\\ 5-2 \\end{pmatrix} = \\begin{pmatrix} -1 \\\\ 3 \\end{pmatrix}$",
+                "$AB = \\|\\overrightarrow{AB}\\| = \\sqrt{3^2 + 1^2} = \\sqrt{10}$\n\n$AC = \\|\\overrightarrow{AC}\\| = \\sqrt{2^2 + 4^2} = \\sqrt{20} = 2\\sqrt{5}$\n\n$BC = \\|\\overrightarrow{BC}\\| = \\sqrt{(-1)^2 + 3^2} = \\sqrt{10}$",
+                "On remarque que $AB = BC = \\sqrt{10}$, donc le triangle est **isocèle** en $B$.\n\nVérifions s'il est rectangle :\n$AB^2 + BC^2 = 10 + 10 = 20 = AC^2$\n\nDonc le triangle est **rectangle** en $B$ et isocèle.",
+                "$\\cos(\\widehat{BAC}) = \\dfrac{\\overrightarrow{AB} \\cdot \\overrightarrow{AC}}{AB \\times AC}$\n\n$\\overrightarrow{AB} \\cdot \\overrightarrow{AC} = 3 \\times 2 + 1 \\times 4 = 6 + 4 = 10$\n\n$\\cos(\\widehat{BAC}) = \\dfrac{10}{\\sqrt{10} \\times 2\\sqrt{5}} = \\dfrac{10}{2\\sqrt{50}} = \\dfrac{10}{2 \\times 5\\sqrt{2}} = \\dfrac{10}{10\\sqrt{2}} = \\dfrac{1}{\\sqrt{2}} = \\dfrac{\\sqrt{2}}{2}$\n\nDonc $\\widehat{BAC} = 45°$",
+                "Puisque $\\cos(\\widehat{BAC}) = \\dfrac{\\sqrt{2}}{2}$, on a $\\sin(\\widehat{BAC}) = \\dfrac{\\sqrt{2}}{2}$ (car $\\widehat{BAC} = 45°$)\n\n$\\mathcal{A} = \\dfrac{1}{2} \\times \\sqrt{10} \\times 2\\sqrt{5} \\times \\dfrac{\\sqrt{2}}{2}$\n\n$= \\dfrac{1}{2} \\times 2\\sqrt{50} \\times \\dfrac{\\sqrt{2}}{2}$\n\n$= \\dfrac{\\sqrt{50} \\times \\sqrt{2}}{2}$\n\n$= \\dfrac{\\sqrt{100}}{2} = \\dfrac{10}{2} = 5$\n\nOu plus simplement, comme le triangle est rectangle en $B$ :\n$\\mathcal{A} = \\dfrac{1}{2} \\times AB \\times BC = \\dfrac{1}{2} \\times \\sqrt{10} \\times \\sqrt{10} = \\dfrac{10}{2} = 5$"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Applications Avancées",
+          "elements": [
+            {
+              "type": "example-box",
+              "preamble": "**Ensemble de points défini par un produit scalaire** :",
+              "content": "Dans un repère orthonormé, on donne $A(2; 1)$ et $B(6; 3)$.\n\nDéterminons l'ensemble des points $M(x; y)$ tels que $\\overrightarrow{MA} \\cdot \\overrightarrow{MB} = 0$.\n\n**Solution** :\n\nCette condition signifie que $M$ appartient au cercle de diamètre $[AB]$.\n\nLe centre $\\Omega$ est le milieu de $[AB]$ :\n$$\\Omega\\left(\\dfrac{2+6}{2}; \\dfrac{1+3}{2}\\right) = \\Omega(___4___; ___2___)$$\n\nLe rayon est :\n$$r = \\dfrac{AB}{2} = \\dfrac{\\sqrt{(6-2)^2 + (3-1)^2}}{2} = \\dfrac{\\sqrt{16 + 4}}{2} = \\dfrac{\\sqrt{20}}{2} = \\dfrac{2\\sqrt{5}}{2} = \\sqrt{___5___}$$\n\nL'équation du cercle est :\n$$(x - 4)^2 + (y - 2)^2 = 5$$"
+            },
+            {
+              "type": "practice-box",
+              "statement": "Dans un repère orthonormé, on considère les points $A(-1; 2)$, $B(3; 4)$ et on note $I$ le milieu de $[AB]$.",
+              "listType": "numbered",
+              "content": [
+                "Déterminer les coordonnées de $I$",
+                "Montrer que pour tout point $M$ du plan : $\\overrightarrow{MA} \\cdot \\overrightarrow{MB} = MI^2 - \\dfrac{AB^2}{4}$",
+                "En déduire l'ensemble des points $M$ tels que $\\overrightarrow{MA} \\cdot \\overrightarrow{MB} = 0$",
+                "Déterminer l'ensemble des points $M$ tels que $\\overrightarrow{MA} \\cdot \\overrightarrow{MB} = 5$",
+                "Déterminer l'ensemble des points $M$ tels que $\\overrightarrow{MA} \\cdot \\overrightarrow{MB} = -5$"
+              ],
+              "solution": [
+                "$I\\left(\\dfrac{-1+3}{2}; \\dfrac{2+4}{2}\\right) = I(1; 3)$",
+                "Utilisons la relation de Chasles :\n\n$\\overrightarrow{MA} = \\overrightarrow{MI} + \\overrightarrow{IA}$\n$\\overrightarrow{MB} = \\overrightarrow{MI} + \\overrightarrow{IB}$\n\nDonc :\n$\\overrightarrow{MA} \\cdot \\overrightarrow{MB} = (\\overrightarrow{MI} + \\overrightarrow{IA}) \\cdot (\\overrightarrow{MI} + \\overrightarrow{IB})$\n\n$= \\overrightarrow{MI} \\cdot \\overrightarrow{MI} + \\overrightarrow{MI} \\cdot \\overrightarrow{IB} + \\overrightarrow{IA} \\cdot \\overrightarrow{MI} + \\overrightarrow{IA} \\cdot \\overrightarrow{IB}$\n\n$= MI^2 + \\overrightarrow{MI} \\cdot (\\overrightarrow{IB} + \\overrightarrow{IA}) + \\overrightarrow{IA} \\cdot \\overrightarrow{IB}$\n\nComme $I$ est le milieu de $[AB]$, on a $\\overrightarrow{IA} + \\overrightarrow{IB} = \\vec{0}$\n\nDe plus : $\\overrightarrow{IA} \\cdot \\overrightarrow{IB} = -\\overrightarrow{IA} \\cdot \\overrightarrow{IA}$ (car $\\overrightarrow{IB} = -\\overrightarrow{IA}$)\n\n$= -IA^2 = -\\left(\\dfrac{AB}{2}\\right)^2 = -\\dfrac{AB^2}{4}$\n\nDonc : $\\overrightarrow{MA} \\cdot \\overrightarrow{MB} = MI^2 - \\dfrac{AB^2}{4}$",
+                "$\\overrightarrow{MA} \\cdot \\overrightarrow{MB} = 0 \\Leftrightarrow MI^2 = \\dfrac{AB^2}{4}$\n\nCalculons $AB$ : $AB = \\sqrt{(3-(-1))^2 + (4-2)^2} = \\sqrt{16 + 4} = \\sqrt{20} = 2\\sqrt{5}$\n\nDonc $\\dfrac{AB^2}{4} = \\dfrac{20}{4} = 5$\n\nL'ensemble est le cercle de centre $I(1; 3)$ et de rayon $\\sqrt{5}$",
+                "$\\overrightarrow{MA} \\cdot \\overrightarrow{MB} = 5 \\Leftrightarrow MI^2 - 5 = 5 \\Leftrightarrow MI^2 = 10$\n\nL'ensemble est le cercle de centre $I(1; 3)$ et de rayon $\\sqrt{10}$",
+                "$\\overrightarrow{MA} \\cdot \\overrightarrow{MB} = -5 \\Leftrightarrow MI^2 = 5 - 5 = 0 \\Leftrightarrow MI = 0$\n\nL'ensemble est le point $I$ lui-même."
+              ]
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Produit scalaire et parallélogramme** :",
+              "content": "Soit $ABCD$ un parallélogramme de centre $O$. On note $a = AB$ et $b = BC$.\n\nExprimons $\\overrightarrow{AC} \\cdot \\overrightarrow{BD}$ en fonction de $a$ et $b$.\n\n**Solution** :\n\nDans un parallélogramme, les diagonales se coupent en leur milieu. Donc :\n$$\\overrightarrow{AC} = \\overrightarrow{AB} + \\overrightarrow{BC}$$\n$$\\overrightarrow{BD} = \\overrightarrow{BC} + \\overrightarrow{CD} = \\overrightarrow{BC} - \\overrightarrow{AB}$$ (car $\\overrightarrow{CD} = -\\overrightarrow{AB}$)\n\nDonc :\n$$\\overrightarrow{AC} \\cdot \\overrightarrow{BD} = (\\overrightarrow{AB} + \\overrightarrow{BC}) \\cdot (\\overrightarrow{BC} - \\overrightarrow{AB})$$\n\nEn utilisant l'identité $(u + v)(v - u) = v^2 - u^2$ :\n$$\\overrightarrow{AC} \\cdot \\overrightarrow{BD} = \\|\\overrightarrow{BC}\\|^2 - \\|\\overrightarrow{AB}\\|^2 = b^2 - a^2 = ___b^2 - a^2___$$\n\n**Remarque** : Le parallélogramme est un losange si et seulement si $a = b$, c'est-à-dire si et seulement si $\\overrightarrow{AC} \\cdot \\overrightarrow{BD} = ___0___$ (diagonales perpendiculaires)."
+            },
+            {
+              "type": "practice-box",
+              "statement": "Soit $ABCD$ un carré de côté $a$. On note $O$ le centre du carré.",
+              "listType": "numbered",
+              "content": [
+                "Exprimer $\\overrightarrow{AB} \\cdot \\overrightarrow{AC}$ en fonction de $a$",
+                "Calculer $\\overrightarrow{AO} \\cdot \\overrightarrow{AC}$ en fonction de $a$",
+                "Calculer $\\overrightarrow{AC} \\cdot \\overrightarrow{BD}$ et en déduire la nature du carré",
+                "Soit $M$ un point du cercle de centre $O$ et de rayon $\\dfrac{a\\sqrt{2}}{2}$. Calculer $\\overrightarrow{MA} \\cdot \\overrightarrow{MC}$"
+              ],
+              "solution": [
+                "Dans le triangle $ABC$ rectangle en $B$, on a :\n$\\overrightarrow{AB} \\cdot \\overrightarrow{AC} = \\overrightarrow{AB} \\cdot (\\overrightarrow{AB} + \\overrightarrow{BC})$\n\n$= \\overrightarrow{AB} \\cdot \\overrightarrow{AB} + \\overrightarrow{AB} \\cdot \\overrightarrow{BC}$\n\n$= \\|\\overrightarrow{AB}\\|^2 + 0$ (car $\\overrightarrow{AB} \\perp \\overrightarrow{BC}$)\n\n$= a^2$",
+                "Le point $O$ est le milieu de $[AC]$ (diagonales d'un carré se coupent en leur milieu).\n\nDonc $\\overrightarrow{AO} = \\dfrac{1}{2}\\overrightarrow{AC}$\n\n$\\overrightarrow{AO} \\cdot \\overrightarrow{AC} = \\dfrac{1}{2}\\overrightarrow{AC} \\cdot \\overrightarrow{AC} = \\dfrac{1}{2}\\|\\overrightarrow{AC}\\|^2$\n\nDans un carré : $AC = a\\sqrt{2}$\n\nDonc : $\\overrightarrow{AO} \\cdot \\overrightarrow{AC} = \\dfrac{1}{2}(a\\sqrt{2})^2 = \\dfrac{1}{2} \\times 2a^2 = a^2$",
+                "Dans un carré : $\\overrightarrow{AC} = \\overrightarrow{AB} + \\overrightarrow{BC}$ et $\\overrightarrow{BD} = \\overrightarrow{BC} - \\overrightarrow{AB}$ (car $\\overrightarrow{CD} = -\\overrightarrow{AB}$)\n\nDonc :\n$\\overrightarrow{AC} \\cdot \\overrightarrow{BD} = (\\overrightarrow{AB} + \\overrightarrow{BC}) \\cdot (\\overrightarrow{BC} - \\overrightarrow{AB})$\n\n$= \\|\\overrightarrow{BC}\\|^2 - \\|\\overrightarrow{AB}\\|^2 = a^2 - a^2 = 0$\n\nDonc les diagonales $[AC]$ et $[BD]$ sont **perpendiculaires**, ce qui est une propriété caractéristique du carré.",
+                "Comme $M$ est sur le cercle de centre $O$ et de rayon $\\dfrac{a\\sqrt{2}}{2}$, on a $OM = \\dfrac{a\\sqrt{2}}{2}$\n\nUtilisons la formule du milieu : $\\overrightarrow{MA} \\cdot \\overrightarrow{MC} = MO^2 - OA^2$\n\nOr $O$ est le centre du carré, donc $OA = \\dfrac{AC}{2} = \\dfrac{a\\sqrt{2}}{2}$\n\nDonc :\n$\\overrightarrow{MA} \\cdot \\overrightarrow{MC} = \\left(\\dfrac{a\\sqrt{2}}{2}\\right)^2 - \\left(\\dfrac{a\\sqrt{2}}{2}\\right)^2 = 0$\n\nAutrement dit, tous les points du cercle circonscrit au carré vérifient $\\overrightarrow{MA} \\cdot \\overrightarrow{MC} = 0$, donc le cercle de diamètre $[AC]$ est bien le cercle circonscrit au carré."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
       "title": "Synthèse et Exercices d'Approfondissement",
       "subsections": [
         {
