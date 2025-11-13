@@ -564,34 +564,174 @@
         }
       ],
       "steps": []
+    },
+    {
+      "id": "q_pscalaire_plan_21",
+      "question": "Quelle formule permet de développer $(\\vec{u} + \\vec{v})^2$ ?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\|\\vec{u}\\|^2 + 2\\vec{u} \\cdot \\vec{v} + \\|\\vec{v}\\|^2$",
+          "is_correct": true,
+          "explanation": "Correct ! C'est l'identité remarquable pour le carré d'une somme de vecteurs."
+        },
+        {
+          "text": "$\\|\\vec{u}\\|^2 + \\|\\vec{v}\\|^2$",
+          "is_correct": false,
+          "explanation": "Il manque le terme $2\\vec{u} \\cdot \\vec{v}$."
+        },
+        {
+          "text": "$\\|\\vec{u}\\|^2 - 2\\vec{u} \\cdot \\vec{v} + \\|\\vec{v}\\|^2$",
+          "is_correct": false,
+          "explanation": "Attention au signe, c'est un plus pour $(\\vec{u} + \\vec{v})^2$."
+        },
+        {
+          "text": "$2(\\|\\vec{u}\\|^2 + \\|\\vec{v}\\|^2)$",
+          "is_correct": false,
+          "explanation": "Cette formule n'est pas correcte pour développer $(\\vec{u} + \\vec{v})^2$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_pscalaire_plan_22",
+      "question": "Dans un cercle de centre $\\Omega$ et de diamètre $[AB]$, si $M$ est un point du cercle distinct de $A$ et $B$, alors :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\overrightarrow{MA} \\cdot \\overrightarrow{MB} = 0$",
+          "is_correct": true,
+          "explanation": "Exact ! Le triangle $MAB$ est inscrit dans un cercle avec $[AB]$ comme diamètre, donc il est rectangle en $M$."
+        },
+        {
+          "text": "$\\overrightarrow{MA} \\cdot \\overrightarrow{MB} = 1$",
+          "is_correct": false,
+          "explanation": "Le produit scalaire de vecteurs orthogonaux est nul, pas 1."
+        },
+        {
+          "text": "$\\overrightarrow{MA} \\cdot \\overrightarrow{MB} = -1$",
+          "is_correct": false,
+          "explanation": "Non, le produit scalaire est nul car le triangle est rectangle en $M$."
+        },
+        {
+          "text": "$\\overrightarrow{M\\Omega} \\cdot \\overrightarrow{AB} = 0$",
+          "is_correct": false,
+          "explanation": "Cette relation n'est pas toujours vraie pour un point $M$ sur le cercle."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_pscalaire_plan_23",
+      "question": "La distance d'un point $M(x_0, y_0)$ à une droite d'équation $ax + by + c = 0$ est donnée par :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\frac{|ax_0 + by_0 + c|}{\\sqrt{a^2 + b^2}}$",
+          "is_correct": true,
+          "explanation": "Parfait ! C'est la formule de la distance d'un point à une droite."
+        },
+        {
+          "text": "$\\frac{ax_0 + by_0 + c}{a^2 + b^2}$",
+          "is_correct": false,
+          "explanation": "Il faut utiliser la valeur absolue au numérateur et la racine carrée au dénominateur."
+        },
+        {
+          "text": "$|ax_0 + by_0 + c|$",
+          "is_correct": false,
+          "explanation": "Il manque la division par $\\sqrt{a^2 + b^2}$."
+        },
+        {
+          "text": "$\\sqrt{(ax_0)^2 + (by_0)^2}$",
+          "is_correct": false,
+          "explanation": "Cette formule n'est pas correcte pour la distance à une droite."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_pscalaire_plan_24",
+      "question": "Pour un vecteur $\\vec{u}(a, b)$, un vecteur orthogonal à $\\vec{u}$ est :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\vec{v}(-b, a)$",
+          "is_correct": true,
+          "explanation": "Exact ! En permutant les coordonnées et en changeant un signe, on obtient un vecteur orthogonal."
+        },
+        {
+          "text": "$\\vec{v}(a, b)$",
+          "is_correct": false,
+          "explanation": "C'est le même vecteur, pas un vecteur orthogonal."
+        },
+        {
+          "text": "$\\vec{v}(-a, -b)$",
+          "is_correct": false,
+          "explanation": "C'est le vecteur opposé, colinéaire à $\\vec{u}$, pas orthogonal."
+        },
+        {
+          "text": "$\\vec{v}(b, a)$",
+          "is_correct": false,
+          "explanation": "Ce vecteur n'est pas nécessairement orthogonal à $\\vec{u}$."
+        }
+      ],
+      "steps": []
+    },
+    {
+      "id": "q_pscalaire_plan_25",
+      "question": "L'identité de polarisation permet de calculer $\\vec{u} \\cdot \\vec{v}$ en fonction de :",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "$\\frac{1}{2}(\\|\\vec{u} + \\vec{v}\\|^2 - \\|\\vec{u}\\|^2 - \\|\\vec{v}\\|^2)$",
+          "is_correct": true,
+          "explanation": "Correct ! C'est l'identité de polarisation, très utile pour calculer des produits scalaires."
+        },
+        {
+          "text": "$\\frac{1}{2}(\\|\\vec{u}\\|^2 + \\|\\vec{v}\\|^2)$",
+          "is_correct": false,
+          "explanation": "Cette formule ne donne pas le produit scalaire."
+        },
+        {
+          "text": "$\\|\\vec{u} + \\vec{v}\\|^2$",
+          "is_correct": false,
+          "explanation": "Il manque des termes pour obtenir le produit scalaire."
+        },
+        {
+          "text": "$\\frac{1}{2}(\\|\\vec{u} - \\vec{v}\\|^2 - \\|\\vec{u}\\|^2 - \\|\\vec{v}\\|^2)$",
+          "is_correct": false,
+          "explanation": "Ce serait pour $-\\vec{u} \\cdot \\vec{v}$, pas $\\vec{u} \\cdot \\vec{v}$."
+        }
+      ],
+      "steps": []
     }
   ],
   "exercises": [
     {
       "id": "exo_pscalaire_plan_1",
-      "title": "Équation de droite",
-      "statement": "Déterminer une équation cartésienne de la droite (D) passant par le point $A(1, 2)$ et de vecteur normal $\\vec{n}(3, -1)$.",
+      "title": "Calculs de base avec le produit scalaire",
+      "statement": "Dans un repère orthonormé $(O; \\vec{i}, \\vec{j})$, on considère les vecteurs $\\vec{u}(3, -2)$, $\\vec{v}(-1, 4)$ et $\\vec{w}(2, 1)$.",
       "sub_questions": [
         {
-          "text": "",
+          "text": "Calculer $\\vec{u} \\cdot \\vec{v}$, $\\vec{u} \\cdot \\vec{w}$ et $\\vec{v} \\cdot \\vec{w}$",
           "questionNumber": "1",
           "sub_sub_questions": [],
           "images": []
         },
         {
-          "text": "",
+          "text": "Calculer $\\|\\vec{u}\\|$, $\\|\\vec{v}\\|$ et $\\|\\vec{w}\\|$",
           "questionNumber": "2",
           "sub_sub_questions": [],
           "images": []
         },
         {
-          "text": "",
+          "text": "Les vecteurs $\\vec{u}$ et $\\vec{v}$ sont-ils orthogonaux ?",
           "questionNumber": "3",
           "sub_sub_questions": [],
           "images": []
         },
         {
-          "text": "",
+          "text": "Calculer $(\\vec{u} + \\vec{v}) \\cdot \\vec{w}$ de deux façons différentes",
           "questionNumber": "4",
           "sub_sub_questions": [],
           "images": []
@@ -600,29 +740,29 @@
     },
     {
       "id": "exo_pscalaire_plan_2",
-      "title": "Calcul de produit scalaire et orthogonalité",
-      "statement": "Dans un repère orthonormé $(O; \\vec{i}, \\vec{j})$, on considère les vecteurs $\\vec{u}(4, -2)$, $\\vec{v}(1, k)$ et $\\vec{w}(-3, 6)$.",
+      "title": "Détermination de coefficients",
+      "statement": "Dans un repère orthonormé, on donne $\\vec{u}(4, -2)$, $\\vec{v}(1, k)$ et $\\vec{w}(m, 3)$.",
       "sub_questions": [
         {
-          "text": "",
+          "text": "Déterminer $k$ pour que $\\vec{u}$ et $\\vec{v}$ soient orthogonaux",
           "questionNumber": "1",
           "sub_sub_questions": [],
           "images": []
         },
         {
-          "text": "",
+          "text": "Déterminer $m$ pour que $\\vec{v}$ et $\\vec{w}$ soient colinéaires (avec $k = 2$)",
           "questionNumber": "2",
           "sub_sub_questions": [],
           "images": []
         },
         {
-          "text": "",
+          "text": "Vérifier que $\\vec{u}$ et $\\vec{w}(-3, 6)$ sont colinéaires",
           "questionNumber": "3",
           "sub_sub_questions": [],
           "images": []
         },
         {
-          "text": "",
+          "text": "Calculer $\\vec{u} \\cdot \\vec{w}$ avec $\\vec{w}(-3, 6)$ et interpréter géométriquement",
           "questionNumber": "4",
           "sub_sub_questions": [],
           "images": []
@@ -631,29 +771,29 @@
     },
     {
       "id": "exo_pscalaire_plan_3",
-      "title": "Angle entre deux vecteurs",
+      "title": "Calcul d'angles",
       "statement": "Soit $\\vec{u}(1, \\sqrt{3})$ et $\\vec{v}(\\sqrt{3}, 1)$ deux vecteurs dans un repère orthonormé.",
       "sub_questions": [
         {
-          "text": "",
+          "text": "Calculer $\\vec{u} \\cdot \\vec{v}$ en utilisant la définition analytique",
           "questionNumber": "1",
           "sub_sub_questions": [],
           "images": []
         },
         {
-          "text": "",
+          "text": "Calculer $\\|\\vec{u}\\|$ et $\\|\\vec{v}\\|$",
           "questionNumber": "2",
           "sub_sub_questions": [],
           "images": []
         },
         {
-          "text": "",
+          "text": "En déduire $\\cos(\\vec{u}, \\vec{v})$ puis l'angle $\\theta$ entre $\\vec{u}$ et $\\vec{v}$ en radians et en degrés",
           "questionNumber": "3",
           "sub_sub_questions": [],
           "images": []
         },
         {
-          "text": "",
+          "text": "Calculer $\\|\\vec{u} + \\vec{v}\\|$ et $\\|\\vec{u} - \\vec{v}\\|$",
           "questionNumber": "4",
           "sub_sub_questions": [],
           "images": []
@@ -662,29 +802,29 @@
     },
     {
       "id": "exo_pscalaire_plan_4",
-      "title": "Théorème d'Al-Kashi",
+      "title": "Application du théorème d'Al-Kashi",
       "statement": "Dans un triangle $ABC$, on donne : $AB = 5$ cm, $AC = 7$ cm et $\\widehat{BAC} = 60°$.",
       "sub_questions": [
         {
-          "text": "",
+          "text": "Utiliser le théorème d'Al-Kashi pour calculer $BC$",
           "questionNumber": "1",
           "sub_sub_questions": [],
           "images": []
         },
         {
-          "text": "",
+          "text": "Calculer $\\overrightarrow{AB} \\cdot \\overrightarrow{AC}$",
           "questionNumber": "2",
           "sub_sub_questions": [],
           "images": []
         },
         {
-          "text": "",
+          "text": "Vérifier le résultat de la question 1 en utilisant $\\|\\overrightarrow{BC}\\|^2 = \\|\\overrightarrow{AC} - \\overrightarrow{AB}\\|^2$",
           "questionNumber": "3",
           "sub_sub_questions": [],
           "images": []
         },
         {
-          "text": "",
+          "text": "Calculer l'aire du triangle $ABC$ en utilisant la formule $\\mathcal{A} = \\frac{1}{2} \\times AB \\times AC \\times \\sin(\\widehat{BAC})$",
           "questionNumber": "4",
           "sub_sub_questions": [],
           "images": []
@@ -693,36 +833,197 @@
     },
     {
       "id": "exo_pscalaire_plan_5",
-      "title": "Théorème de la médiane",
+      "title": "Théorème de la médiane et triangle",
       "statement": "Dans un triangle $ABC$, on donne : $AB = 8$ cm, $AC = 6$ cm et $BC = 10$ cm. Soit $I$ le milieu de $[BC]$.",
       "sub_questions": [
         {
-          "text": "",
+          "text": "Vérifier que le triangle $ABC$ est rectangle et préciser en quel sommet",
           "questionNumber": "1",
           "sub_sub_questions": [],
           "images": []
         },
         {
-          "text": "",
+          "text": "Utiliser le théorème de la médiane pour calculer $AI$",
           "questionNumber": "2",
           "sub_sub_questions": [],
           "images": []
         },
         {
-          "text": "",
+          "text": "Vérifier ce résultat en utilisant Pythagore dans le triangle $ABI$",
           "questionNumber": "3",
           "sub_sub_questions": [],
           "images": []
         },
         {
-          "text": "",
+          "text": "Calculer $\\overrightarrow{AB} \\cdot \\overrightarrow{AC}$ et vérifier que le produit scalaire confirme l'orthogonalité",
           "questionNumber": "4",
           "sub_sub_questions": [],
           "images": []
         },
         {
-          "text": "",
+          "text": "Calculer l'aire du triangle $ABC$ de deux façons différentes",
           "questionNumber": "5",
+          "sub_sub_questions": [],
+          "images": []
+        }
+      ]
+    },
+    {
+      "id": "exo_pscalaire_plan_6",
+      "title": "Équations de droites et perpendicularité",
+      "statement": "Dans un repère orthonormé, on considère la droite $(D)$ d'équation $2x - 3y + 5 = 0$ et le point $A(1, 2)$.",
+      "sub_questions": [
+        {
+          "text": "Déterminer un vecteur normal $\\vec{n}$ et un vecteur directeur $\\vec{u}$ de la droite $(D)$",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Le point $A$ appartient-il à la droite $(D)$ ?",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Déterminer une équation de la droite $(D')$ passant par $A$ et perpendiculaire à $(D)$",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Calculer la distance du point $A$ à la droite $(D)$ en utilisant la formule du cours",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
+        }
+      ]
+    },
+    {
+      "id": "exo_pscalaire_plan_7",
+      "title": "Cercles et produit scalaire",
+      "statement": "Dans un repère orthonormé, on donne les points $A(1, 3)$ et $B(5, -1)$.",
+      "sub_questions": [
+        {
+          "text": "Déterminer les coordonnées du centre $\\Omega$ et le rayon $r$ du cercle de diamètre $[AB]$",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Écrire l'équation du cercle sous la forme $(x - a)^2 + (y - b)^2 = r^2$ puis sous la forme développée",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Vérifier que le point $C(4, 2)$ appartient ou non à ce cercle de deux façons : en utilisant l'équation et en utilisant le produit scalaire $\\overrightarrow{CA} \\cdot \\overrightarrow{CB}$",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Déterminer les points d'intersection du cercle avec l'axe des abscisses (si ils existent)",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
+        }
+      ]
+    },
+    {
+      "id": "exo_pscalaire_plan_8",
+      "title": "Problème de synthèse",
+      "statement": "Dans un repère orthonormé $(O; \\vec{i}, \\vec{j})$, on considère les points $A(1, 2)$, $B(4, 3)$, $C(3, 6)$ et $D(0, 5)$.",
+      "sub_questions": [
+        {
+          "text": "Calculer les coordonnées des vecteurs $\\overrightarrow{AB}$, $\\overrightarrow{AC}$, $\\overrightarrow{AD}$, $\\overrightarrow{BC}$ et $\\overrightarrow{CD}$",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Calculer $\\overrightarrow{AB} \\cdot \\overrightarrow{AC}$ et en déduire $\\cos(\\widehat{BAC})$. Que vaut l'angle $\\widehat{BAC}$ ?",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Le triangle $ABC$ est-il rectangle ? Si oui, préciser en quel sommet",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Montrer que le quadrilatère $ABCD$ est un parallélogramme. Est-ce un losange ?",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Calculer l'aire du triangle $ABC$ et l'aire du parallélogramme $ABCD$",
+          "questionNumber": "5",
+          "sub_sub_questions": [],
+          "images": []
+        }
+      ]
+    },
+    {
+      "id": "exo_pscalaire_plan_9",
+      "title": "Formules remarquables",
+      "statement": "Soient $\\vec{u}$ et $\\vec{v}$ deux vecteurs du plan tels que $\\|\\vec{u}\\| = 4$, $\\|\\vec{v}\\| = 3$ et l'angle entre $\\vec{u}$ et $\\vec{v}$ est $\\theta = \\frac{\\pi}{3}$.",
+      "sub_questions": [
+        {
+          "text": "Calculer $\\vec{u} \\cdot \\vec{v}$ en utilisant la définition géométrique",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Calculer $\\|\\vec{u} + \\vec{v}\\|$ et $\\|\\vec{u} - \\vec{v}\\|$",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Calculer $\\|2\\vec{u} + 3\\vec{v}\\|$",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Déterminer l'angle entre $\\vec{u} + \\vec{v}$ et $\\vec{u} - \\vec{v}$",
+          "questionNumber": "4",
+          "sub_sub_questions": [],
+          "images": []
+        }
+      ]
+    },
+    {
+      "id": "exo_pscalaire_plan_10",
+      "title": "Projection orthogonale",
+      "statement": "Dans un triangle $ABC$ rectangle en $B$ tel que $AB = 3$ cm et $BC = 4$ cm.",
+      "sub_questions": [
+        {
+          "text": "Calculer $AC$ en utilisant le théorème de Pythagore",
+          "questionNumber": "1",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Calculer $\\overrightarrow{CA} \\cdot \\overrightarrow{CB}$ en utilisant la projection orthogonale",
+          "questionNumber": "2",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Calculer $\\overrightarrow{BA} \\cdot \\overrightarrow{BC}$ et interpréter le résultat",
+          "questionNumber": "3",
+          "sub_sub_questions": [],
+          "images": []
+        },
+        {
+          "text": "Soit $H$ le projeté orthogonal de $B$ sur $(AC)$. Calculer $BH$ (hauteur relative à l'hypoténuse)",
+          "questionNumber": "4",
           "sub_sub_questions": [],
           "images": []
         }
