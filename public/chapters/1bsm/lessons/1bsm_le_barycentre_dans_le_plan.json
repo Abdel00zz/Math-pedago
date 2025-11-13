@@ -11,33 +11,55 @@
       "title": "Introduction au Barycentre",
       "subsections": [
         {
-          "title": "Motivation - Le Levier d'Archimède",
+          "title": "Motivation Physique - Le Levier d'Archimède",
           "elements": [
             {
               "type": "p",
-              "content": "Le barycentre trouve son origine dans la physique, notamment avec le principe du levier découvert par Archimède."
+              "content": "Le barycentre trouve son origine dans la physique, notamment avec le **principe du levier** découvert par Archimède. Ce principe établit qu'un levier est en équilibre lorsque les moments des forces par rapport au point d'appui sont égaux."
+            },
+            {
+              "type": "p",
+              "content": "Considérons un levier portant deux masses $m_A$ et $m_B$. D'après le principe du levier d'Archimède, dans le cas d'équilibre on a :"
+            },
+            {
+              "type": "p",
+              "content": "$$m_A \\times GA = m_B \\times GB$$"
+            },
+            {
+              "type": "p",
+              "content": "Cette relation d'équilibre peut s'écrire sous forme vectorielle :"
+            },
+            {
+              "type": "definition-box",
+              "preamble": "**Barycentre - Approche physique** :",
+              "content": "Le point $G$ défini par la relation vectorielle $m_A\\overrightarrow{GA} + m_B\\overrightarrow{GB} = \\vec{0}$ s'appelle le **barycentre** des points pondérés $(A; m_A)$ et $(B; m_B)$.\n\nCe point représente le **centre de gravité** du système. C'est le point d'équilibre où l'on peut suspendre le système sans qu'il bascule."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Relation vectorielle du barycentre** :",
+              "content": "De la relation $m_A\\overrightarrow{GA} + m_B\\overrightarrow{GB} = \\vec{0}$, on peut déduire :\n\n$$m_A\\overrightarrow{GA} = -m_B\\overrightarrow{GB}$$\n\nEn utilisant la relation de Chasles :\n$$m_A(\\overrightarrow{AG}) \\times (-1) = -m_B(\\overrightarrow{AB} - \\overrightarrow{AG})$$\n$$m_A\\overrightarrow{AG} = m_B\\overrightarrow{AB} - m_B\\overrightarrow{AG}$$\n$$(m_A + m_B)\\overrightarrow{AG} = m_B\\overrightarrow{AB}$$\n\nDonc : $$\\overrightarrow{AG} = \\dfrac{m_B}{m_A + m_B} \\overrightarrow{AB}$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Cas particuliers de position** :",
+              "content": [
+                ">>**Cas 1** : Si $m_A = m_B = 1$",
+                "$$\\overrightarrow{AG} = \\dfrac{1}{1+1} \\overrightarrow{AB} = \\dfrac{1}{2} \\overrightarrow{AB}$$",
+                "Donc $G$ est le **milieu** de $[AB]$.",
+                "",
+                ">>**Cas 2** : Si $m_A = 3$ et $m_B = 5$",
+                "$$\\overrightarrow{AG} = \\dfrac{5}{3+5} \\overrightarrow{AB} = \\dfrac{5}{8} \\overrightarrow{AB}$$",
+                "Donc $G$ se situe sur le segment $[AB]$ aux $\\dfrac{5}{8}$ de la distance de $A$ vers $B$."
+              ],
+              "listType": "bullet"
             },
             {
               "type": "practice-box",
-              "statement": "**Activité découverte** : On considère un levier porte deux masses $m_A$ et $m_B$.",
-              "content": [
-                "Montrer que dans le cas d'équilibre on a $m_A \\times GA = m_B \\times GB$",
-                "Le point $G$ défini par la relation vectorielle $m_A\\overrightarrow{GA} + m_B\\overrightarrow{GB} = \\vec{0}$ s'appelle le **barycentre** des points pondérés (ou massifs) $(A; m_A)$ et $(B; m_B)$",
-                "Montrer que : $\\overrightarrow{AG} = \\dfrac{m_B}{m_A + m_B} \\overrightarrow{AB}$",
-                "En déduire la position du point $G$ tel que $G = bar\\{(A; m_A); (B; m_B)\\}$ dans chacun des cas suivants : a) $m_A = m_B = 1$ ; b) $m_A = 3$ et $m_A = 5$",
-                "Déterminer $m_B$ sachant que $m_A = 2$ et $\\overrightarrow{AG} = \\dfrac{3}{5} \\overrightarrow{AB}$"
-              ],
+              "statement": "Déterminer $m_B$ sachant que $m_A = 2$ et $\\overrightarrow{AG} = \\dfrac{3}{5} \\overrightarrow{AB}$",
+              "content": "Utiliser la formule $\\overrightarrow{AG} = \\dfrac{m_B}{m_A + m_B} \\overrightarrow{AB}$",
               "solution": [
-                "D'après le principe du levier d'Archimède : « Dans le cas d'équilibre on a $m_A \\times GA = m_B \\times GB$ »\n\nCela signifie que les moments des forces par rapport au point d'appui sont égaux.",
-                "Par définition, le barycentre $G$ est le point d'équilibre tel que :\n$$m_A\\overrightarrow{GA} + m_B\\overrightarrow{GB} = \\vec{0}$$\n\nOn note : $G = bar\\{(A; m_A); (B; m_B)\\}$",
-                "De $m_A\\overrightarrow{GA} + m_B\\overrightarrow{GB} = \\vec{0}$, on multiplie par $\\overrightarrow{AB}$ :\n\n$$m_A\\overrightarrow{GA} = -m_B\\overrightarrow{GB}$$\n\nEn utilisant la relation de Chasles :\n$$m_A(\\overrightarrow{AG}) \\times (-1) = -m_B(\\overrightarrow{AB} - \\overrightarrow{AG})$$\n$$m_A\\overrightarrow{AG} = m_B\\overrightarrow{AB} - m_B\\overrightarrow{AG}$$\n$$(m_A + m_B)\\overrightarrow{AG} = m_B\\overrightarrow{AB}$$\n\nDonc : $$\\overrightarrow{AG} = \\dfrac{m_B}{m_A + m_B} \\overrightarrow{AB}$$",
-                "a) Si $m_A = m_B = 1$ : $\\overrightarrow{AG} = \\dfrac{1}{1+1} \\overrightarrow{AB} = \\dfrac{1}{2} \\overrightarrow{AB}$\n\nDonc $G$ est le **milieu** de $[AB]$.\n\nb) Si $m_A = 3$ et $m_B = 5$ : $\\overrightarrow{AG} = \\dfrac{5}{3+5} \\overrightarrow{AB} = \\dfrac{5}{8} \\overrightarrow{AB}$\n\nDonc $G$ se situe sur le segment $[AB]$ aux $\\dfrac{5}{8}$ de la distance de $A$ vers $B$.",
-                "On a : $\\overrightarrow{AG} = \\dfrac{m_B}{m_A + m_B} \\overrightarrow{AB} = \\dfrac{3}{5} \\overrightarrow{AB}$\n\nDonc : $\\dfrac{m_B}{2 + m_B} = \\dfrac{3}{5}$\n\nEn résolvant : $5m_B = 3(2 + m_B)$\n$$5m_B = 6 + 3m_B$$\n$$2m_B = 6$$\n$$m_B = 3$$"
+                "On a : $\\overrightarrow{AG} = \\dfrac{m_B}{m_A + m_B} \\overrightarrow{AB} = \\dfrac{3}{5} \\overrightarrow{AB}$\n\nDonc : $\\dfrac{m_B}{2 + m_B} = \\dfrac{3}{5}$\n\nEn résolvant : $5m_B = 3(2 + m_B)$\n\n$5m_B = 6 + 3m_B$\n\n$2m_B = 6$\n\n$m_B = 3$"
               ]
-            },
-            {
-              "type": "remark-box",
-              "content": "?> **Application physique** : Le barycentre est le **centre de gravité** d'un système de points massifs. C'est le point d'équilibre où l'on peut suspendre le système sans qu'il bascule."
             }
           ]
         }
@@ -61,11 +83,22 @@
             {
               "type": "definition-box",
               "preamble": "**Barycentre de deux points** :",
-              "content": "Soient $(A; \\alpha)$ et $(B; \\beta)$ deux points pondérés du plan tels que $\\alpha + \\beta \\neq 0$.\n\nIl existe un unique point $G$ vérifiant la relation vectorielle :\n$$\\alpha \\overrightarrow{GA} + \\beta \\overrightarrow{GB} = \\vec{0}$$\n\nCe point $G$ est appelé **barycentre** du système de points pondérés $\\{(A, \\alpha); (B, \\beta)\\}$.\n\n**On dit aussi que $G$ est le barycentre du système $\\{(A; \\alpha); (B; \\beta)\\}$**\n\n**Notation** : $G = bar\\{(A, \\alpha); (B, \\beta)\\}$"
+              "content": [
+                ">>Soient $(A; \\alpha)$ et $(B; \\beta)$ deux points pondérés du plan tels que $\\alpha + \\beta \\neq 0$.",
+                "",
+                ">>Il existe un unique point $G$ vérifiant la relation vectorielle :",
+                ">>$$\\alpha \\overrightarrow{GA} + \\beta \\overrightarrow{GB} = \\vec{0}$$",
+                "",
+                ">>Ce point $G$ est appelé **barycentre** du système de points pondérés $\\{(A, \\alpha); (B, \\beta)\\}$.",
+                "",
+                ">>**Notation** : $G = bar\\{(A, \\alpha); (B, \\beta)\\}$"
+              ],
+              "listType": "bullet"
             },
             {
               "type": "remark-box",
-              "content": "**Condition d'existence** : Le barycentre existe si et seulement si la somme des coefficients est **non nulle** : $\\alpha + \\beta \\neq 0$.\n\nSi $\\alpha + \\beta = 0$ avec $\\alpha$ et $\\beta$ non nuls, alors le système $\\{(A; \\alpha); (B; \\beta)\\}$ n'admet pas de barycentre."
+              "preamble": "**Condition d'existence** :",
+              "content": "Le barycentre existe si et seulement si la somme des coefficients est **non nulle** : $\\alpha + \\beta \\neq 0$.\n\nSi $\\alpha + \\beta = 0$ avec $\\alpha$ et $\\beta$ non nuls, alors le système $\\{(A; \\alpha); (B; \\beta)\\}$ n'admet pas de barycentre."
             },
             {
               "type": "property-box",
@@ -74,26 +107,33 @@
             },
             {
               "type": "remark-box",
-              "content": "?> **Interprétation géométrique** :\n\n- Le point le plus proche du barycentre $G$ est celui dont le coefficient à la plus grande valeur absolue.\n- Le barycentre $G$ est sur le segment $[AB]$ si les poids sont de même signe.\n- Le barycentre $G$ est à l'extérieur du segment $[AB]$ si les poids sont de signes contraires."
+              "preamble": "**Interprétation géométrique** :",
+              "content": [
+                ">>**Position relative** :",
+                "Le point le plus proche du barycentre $G$ est celui dont le coefficient à la plus grande valeur absolue.",
+                "Le barycentre $G$ est sur le segment $[AB]$ si les poids sont de même signe.",
+                "Le barycentre $G$ est à l'extérieur du segment $[AB]$ si les poids sont de signes contraires."
+              ],
+              "listType": "bullet"
             },
             {
               "type": "example-box",
               "preamble": "**Cas particuliers importants** :",
-              "listType": "bullet",
               "content": [
                 "**Milieu** : Si $G = bar\\{(A, 1); (B, 1)\\}$, alors $G$ est le milieu de $[AB]$",
                 "**Point confondu** : $bar\\{(A, 1); (B, 0)\\} = A$ et $bar\\{(A, 0); (B, 1)\\} = B$",
-                "**Isobarycentre** : Lorsque tous les coefficients sont égaux, on parle d'isobarycentre des points $A$ et $B$, c'est le milieu de $[AB]$"
-              ]
+                "**Isobarycentre** : Lorsque tous les coefficients sont égaux, on parle d'isobarycentre des points $A$ et $B$"
+              ],
+              "listType": "bullet"
             },
             {
               "type": "example-box",
-              "preamble": "**Application 1** :",
+              "preamble": "**Calcul de position** :",
               "content": "Soit $G$ le barycentre de $\\{(A, 2); (B, 3)\\}$. Exprimer $\\overrightarrow{AG}$ en fonction de $\\overrightarrow{AB}$.\n\nOn a $\\alpha = 2$, $\\beta = 3$, donc $\\alpha + \\beta = ___5___$\n\n$$\\overrightarrow{AG} = \\dfrac{\\beta}{\\alpha + \\beta} \\overrightarrow{AB} = \\dfrac{3}{___5___} \\overrightarrow{AB}$$\n\nDonc $G$ se situe sur le segment $[AB]$ aux $\\dfrac{3}{5}$ de la distance de $A$ vers $B$."
             },
             {
               "type": "example-box",
-              "preamble": "**Application 2 - Coefficients négatifs** :",
+              "preamble": "**Barycentre avec coefficients négatifs** :",
               "content": "Soit $G = bar\\{(A, 5); (B, -3)\\}$. Où se situe le point $G$ ?\n\nOn a $\\alpha + \\beta = 5 + (-3) = ___2___ \\neq 0$, donc $G$ existe.\n\n$$\\overrightarrow{AG} = \\dfrac{-3}{2} \\overrightarrow{AB}$$\n\nLe coefficient est négatif, donc $G$ est à l'**extérieur** du segment $[AB]$, du côté de $A$ (car $\\alpha = 5$ a la plus grande valeur absolue parmi les coefficients positifs)."
             }
           ]
@@ -103,12 +143,19 @@
           "elements": [
             {
               "type": "property-box",
-              "preamble": "**Propriété caractéristique (Relation fondamentale)** :",
+              "preamble": "**Propriété caractéristique** :",
               "content": "Soit $G = bar\\{(A, \\alpha); (B, \\beta)\\}$ avec $\\alpha + \\beta \\neq 0$.\n\nPour tout point $M$ du plan, on a :\n$$\\alpha \\overrightarrow{MA} + \\beta \\overrightarrow{MB} = (\\alpha + \\beta) \\overrightarrow{MG}$$"
             },
             {
               "type": "remark-box",
-              "content": "?> **Astuce de calcul** : Cette formule est très utile pour déterminer la position du barycentre en prenant $M$ égal à un point particulier :\n\n- $M = A$ : donne $\\overrightarrow{AG}$ en fonction de $\\overrightarrow{AB}$\n- $M = B$ : donne $\\overrightarrow{BG}$ en fonction de $\\overrightarrow{BA}$\n- $M = O$ (origine) : donne $\\overrightarrow{OG}$ en fonction de $\\overrightarrow{OA}$ et $\\overrightarrow{OB}$ (utile pour les coordonnées)"
+              "preamble": "**Astuce de calcul** :",
+              "content": [
+                ">>Cette formule est très utile pour déterminer la position du barycentre en prenant $M$ égal à un point particulier :",
+                "$M = A$ : donne $\\overrightarrow{AG}$ en fonction de $\\overrightarrow{AB}$",
+                "$M = B$ : donne $\\overrightarrow{BG}$ en fonction de $\\overrightarrow{BA}$",
+                "$M = O$ (origine) : donne $\\overrightarrow{OG}$ en fonction de $\\overrightarrow{OA}$ et $\\overrightarrow{OB}$ (utile pour les coordonnées)"
+              ],
+              "listType": "bullet"
             },
             {
               "type": "property-box",
@@ -131,7 +178,7 @@
                 "En déduire que le point $G$ vérifiant la relation vectorielle $a\\overrightarrow{GA} + b\\overrightarrow{GB} = \\vec{0}$ est unique et que $G \\in (AB)$"
               ],
               "solution": [
-                "De $a\\overrightarrow{GA} + b\\overrightarrow{GB} = \\vec{0}$, on écrit :\n$$a\\overrightarrow{GA} = -b\\overrightarrow{GB}$$\n\nEn multipliant par $-1$ :\n$$a(\\overrightarrow{AG}) \\times (-1) = -b\\overrightarrow{GB}$$\n$$-a\\overrightarrow{AG} = -b\\overrightarrow{GB}$$\n$$a\\overrightarrow{AG} = b\\overrightarrow{GB}$$\n\nOr $\\overrightarrow{GB} = \\overrightarrow{AB} - \\overrightarrow{AG}$, donc :\n$$a\\overrightarrow{AG} = b(\\overrightarrow{AB} - \\overrightarrow{AG})$$\n$$a\\overrightarrow{AG} = b\\overrightarrow{AB} - b\\overrightarrow{AG}$$\n$$(a + b)\\overrightarrow{AG} = b\\overrightarrow{AB}$$",
+                "De $a\\overrightarrow{GA} + b\\overrightarrow{GB} = \\vec{0}$, on écrit :\n$$a\\overrightarrow{GA} = -b\\overrightarrow{GB}$$\n\nEn multipliant par $-1$ :\n$$a\\overrightarrow{AG} = b\\overrightarrow{GB}$$\n\nOr $\\overrightarrow{GB} = \\overrightarrow{AB} - \\overrightarrow{AG}$, donc :\n$$a\\overrightarrow{AG} = b(\\overrightarrow{AB} - \\overrightarrow{AG})$$\n$$a\\overrightarrow{AG} = b\\overrightarrow{AB} - b\\overrightarrow{AG}$$\n$$(a + b)\\overrightarrow{AG} = b\\overrightarrow{AB}$$",
                 "Si $a + b = 0$ alors $(a + b)\\overrightarrow{AG} = b\\overrightarrow{AB}$ donne :\n$$\\vec{0} = b\\overrightarrow{AB}$$\n\nOr $A$ et $B$ sont distincts donc $\\overrightarrow{AB} \\neq \\vec{0}$.\n\nCela implique $b = 0$, et comme $a + b = 0$, on a aussi $a = 0$.\n\nMais si $a = b = 0$, la relation $a\\overrightarrow{GA} + b\\overrightarrow{GB} = \\vec{0}$ devient $\\vec{0} = \\vec{0}$, vraie pour tout point $G$.\n\nDonc le point $G$ n'est pas unique, on dit qu'il **n'existe pas de barycentre**.",
                 "On a $a\\overrightarrow{GA} + b\\overrightarrow{GB} = \\vec{0}$, donc par la propriété caractéristique avec $M = A$ :\n$$a \\cdot \\vec{0} + b\\overrightarrow{AB} = (a+b)\\overrightarrow{AG}$$\n$$\\overrightarrow{AG} = \\dfrac{b}{a+b} \\overrightarrow{AB}$$\n\nOr on a aussi $\\overrightarrow{AG'} = \\dfrac{b}{a+b} \\overrightarrow{AB}$\n\nDonc $\\overrightarrow{AG} = \\overrightarrow{AG'}$, ce qui implique $G = G'$.",
                 "D'après la question précédente, $\\overrightarrow{AG} = \\dfrac{b}{a+b} \\overrightarrow{AB}$\n\nCela signifie que $\\overrightarrow{AG}$ et $\\overrightarrow{AB}$ sont colinéaires, donc $G \\in (AB)$.\n\nDe plus, cette relation détermine de manière unique la position de $G$ sur la droite $(AB)$, donc le barycentre est unique."
@@ -169,11 +216,22 @@
             {
               "type": "definition-box",
               "preamble": "**Barycentre de trois points** :",
-              "content": "Soient $(A; \\alpha)$, $(B; \\beta)$ et $(C; \\gamma)$ trois points pondérés du plan tels que $\\alpha + \\beta + \\gamma \\neq 0$.\n\nIl existe un unique point $G$ vérifiant la relation vectorielle :\n$$\\alpha \\overrightarrow{GA} + \\beta \\overrightarrow{GB} + \\gamma \\overrightarrow{GC} = \\vec{0}$$\n\nCe point $G$ est appelé **barycentre** du système $\\{(A, \\alpha); (B, \\beta); (C, \\gamma)\\}$.\n\n**Notation** : $G = bar\\{(A, \\alpha); (B, \\beta); (C, \\gamma)\\}$"
+              "content": [
+                ">>Soient $(A; \\alpha)$, $(B; \\beta)$ et $(C; \\gamma)$ trois points pondérés du plan tels que $\\alpha + \\beta + \\gamma \\neq 0$.",
+                "",
+                ">>Il existe un unique point $G$ vérifiant la relation vectorielle :",
+                ">>$$\\alpha \\overrightarrow{GA} + \\beta \\overrightarrow{GB} + \\gamma \\overrightarrow{GC} = \\vec{0}$$",
+                "",
+                ">>Ce point $G$ est appelé **barycentre** du système $\\{(A, \\alpha); (B, \\beta); (C, \\gamma)\\}$.",
+                "",
+                ">>**Notation** : $G = bar\\{(A, \\alpha); (B, \\beta); (C, \\gamma)\\}$"
+              ],
+              "listType": "bullet"
             },
             {
               "type": "remark-box",
-              "content": "!> **Condition d'existence** : Si $\\alpha + \\beta + \\gamma = 0$ alors le système $\\{(A; \\alpha); (B; \\beta); (C; \\gamma)\\}$ n'admet pas de barycentre."
+              "preamble": "**Attention** :",
+              "content": "Si $\\alpha + \\beta + \\gamma = 0$ alors le système $\\{(A; \\alpha); (B; \\beta); (C; \\gamma)\\}$ n'admet pas de barycentre."
             },
             {
               "type": "property-box",
@@ -192,7 +250,8 @@
             },
             {
               "type": "remark-box",
-              "content": "?> **Propriété importante** : Le centre de gravité $G$ d'un triangle $ABC$ divise chaque médiane dans le rapport $\\dfrac{2}{1}$ à partir du sommet.\n\nSi $I$ est le milieu de $[BC]$, alors $\\overrightarrow{AG} = \\dfrac{2}{3} \\overrightarrow{AI}$"
+              "preamble": "**Propriété des médianes** :",
+              "content": "Le centre de gravité $G$ d'un triangle $ABC$ divise chaque médiane dans le rapport $\\dfrac{2}{1}$ à partir du sommet.\n\nSi $I$ est le milieu de $[BC]$, alors $\\overrightarrow{AG} = \\dfrac{2}{3} \\overrightarrow{AI}$"
             },
             {
               "type": "property-box",
@@ -201,7 +260,7 @@
             },
             {
               "type": "practice-box",
-              "statement": "Soit $a$, $b$ et $c$ trois réels. Soit $A$, $B$ et $C$ deux points distincts du plan et $G$ un point tel que $a\\overrightarrow{GA} + b\\overrightarrow{GB} + c\\overrightarrow{GC} = \\vec{0}$",
+              "statement": "Soit $a$, $b$ et $c$ trois réels. Soit $A$, $B$ et $C$ trois points non alignés du plan et $G$ un point tel que $a\\overrightarrow{GA} + b\\overrightarrow{GB} + c\\overrightarrow{GC} = \\vec{0}$",
               "listType": "numbered",
               "content": [
                 "Montrer que $(a + b + c)\\overrightarrow{AG} = b\\overrightarrow{AB} + c\\overrightarrow{AC}$",
@@ -218,9 +277,8 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple : Calcul avec fill-in-blanks** :",
-              "content": "Déterminer deux réels $a$ et $b$ tel que $G = bar\\{(A; a); (B; b)\\}$ dans les cas suivants :\n\n**1)** $2\\overrightarrow{GA} + 3\\overrightarrow{BA} = \\vec{0}$\n\nOn a : $2\\overrightarrow{GA} + 3\\overrightarrow{BA} = \\vec{0}$\n\nSoit : $2\\overrightarrow{GA} + 3(\\overrightarrow{GA} + \\overrightarrow{AB}) = \\vec{0}$\n\nDonc : $2\\overrightarrow{GA} + 3\\overrightarrow{GA} + 3\\overrightarrow{AB} = \\vec{0}$\n\nSoit : $5\\overrightarrow{GA} + 3\\overrightarrow{AB} = \\vec{0}$\n\nOr $\\overrightarrow{AB} = \\overrightarrow{GB} - \\overrightarrow{GA}$, donc :\n\n$5\\overrightarrow{GA} + 3\\overrightarrow{GB} - 3\\overrightarrow{GA} = \\vec{0}$\n\nFinalement : $2\\overrightarrow{GA} + 3\\overrightarrow{GB} = \\vec{0}$\n\nDonc $a = ___2___$ et $b = ___3___$\n\n**2)** $\\overrightarrow{GA} + \\overrightarrow{GB} = 3\\overrightarrow{AB}$\n\nOn a : $\\overrightarrow{GA} + \\overrightarrow{GB} = 3\\overrightarrow{AB}$\n\n$\\overrightarrow{GA} + \\overrightarrow{GB} = 3(\\overrightarrow{GB} - \\overrightarrow{GA})$\n\n$\\overrightarrow{GA} + \\overrightarrow{GB} = 3\\overrightarrow{GB} - 3\\overrightarrow{GA}$\n\n$4\\overrightarrow{GA} - 2\\overrightarrow{GB} = \\vec{0}$\n\nDonc $G = bar\\{(A; 4); (B; -2)\\}$, soit $a = ___4___$ et $b = ___-2___$"
-              ]
+              "preamble": "**Détermination des coefficients** :",
+              "content": "Déterminer deux réels $a$ et $b$ tel que $G = bar\\{(A; a); (B; b)\\}$ dans les cas suivants :\n\n**Cas 1** : $2\\overrightarrow{GA} + 3\\overrightarrow{BA} = \\vec{0}$\n\nOn a : $2\\overrightarrow{GA} + 3\\overrightarrow{BA} = \\vec{0}$\n\nSoit : $2\\overrightarrow{GA} + 3(\\overrightarrow{GA} + \\overrightarrow{AB}) = \\vec{0}$\n\nDonc : $5\\overrightarrow{GA} + 3\\overrightarrow{AB} = \\vec{0}$\n\nOr $\\overrightarrow{AB} = \\overrightarrow{GB} - \\overrightarrow{GA}$, donc :\n\n$5\\overrightarrow{GA} + 3\\overrightarrow{GB} - 3\\overrightarrow{GA} = \\vec{0}$\n\nFinalement : $2\\overrightarrow{GA} + 3\\overrightarrow{GB} = \\vec{0}$\n\nDonc $a = ___2___$ et $b = ___3___$\n\n**Cas 2** : $\\overrightarrow{GA} + \\overrightarrow{GB} = 3\\overrightarrow{AB}$\n\nOn a : $\\overrightarrow{GA} + \\overrightarrow{GB} = 3\\overrightarrow{AB}$\n\n$\\overrightarrow{GA} + \\overrightarrow{GB} = 3(\\overrightarrow{GB} - \\overrightarrow{GA})$\n\n$\\overrightarrow{GA} + \\overrightarrow{GB} = 3\\overrightarrow{GB} - 3\\overrightarrow{GA}$\n\n$4\\overrightarrow{GA} - 2\\overrightarrow{GB} = \\vec{0}$\n\nDonc $G = bar\\{(A; 4); (B; -2)\\}$, soit $a = ___4___$ et $b = ___-2___$"
             }
           ]
         },
@@ -234,11 +292,17 @@
             },
             {
               "type": "remark-box",
-              "content": "?> **Méthode de construction** : Pour construire le barycentre de trois points, on peut :\n\n1. D'abord construire le barycentre de deux d'entre eux\n2. Puis construire le barycentre de ce point intermédiaire avec le troisième point\n\nCette méthode est très utile en pratique !"
+              "preamble": "**Méthode de construction** :",
+              "content": [
+                ">>Pour construire le barycentre de trois points, on peut :",
+                "D'abord construire le barycentre de deux d'entre eux",
+                "Puis construire le barycentre de ce point intermédiaire avec le troisième point"
+              ],
+              "listType": "bullet"
             },
             {
               "type": "example-box",
-              "preamble": "**Application de l'associativité** :",
+              "preamble": "**Construction par associativité** :",
               "content": "Soit $G = bar\\{(A; 2); (B; 3); (C; 1)\\}$. Construire $G$ par associativité.\n\n**Solution** :\n\nOn pose $I = bar\\{(A; 2); (B; 3)\\}$. On a $2 + 3 = ___5___ \\neq 0$, donc $I$ existe.\n\nAlors par associativité :\n$$G = bar\\{(I; 5); (C; 1)\\}$$\n\nCar $5 + 1 = ___6___ \\neq 0$.\n\n**Construction** :\n\n1. D'abord : $\\overrightarrow{AI} = \\dfrac{3}{2+3} \\overrightarrow{AB} = \\dfrac{3}{5} \\overrightarrow{AB}$\n\n2. Puis : $\\overrightarrow{IG} = \\dfrac{1}{5+1} \\overrightarrow{IC} = \\dfrac{1}{6} \\overrightarrow{IC}$"
             },
             {
@@ -252,7 +316,7 @@
               ],
               "solution": [
                 "On a $\\alpha + \\beta + \\gamma = 1 + 2 + (-2) = 1 \\neq 0$, donc $G$ existe.",
-                "**Méthode par associativité** :\n\n**Attention** : On ne peut pas poser $I = bar\\{(B, 2); (C, -2)\\}$ car $2 + (-2) = 0$.\n\nOn pose plutôt $J = bar\\{(A, 1); (B, 2)\\}$. On a $1 + 2 = 3 \\neq 0$, donc $J$ existe.\n\nPar associativité : $G = bar\\{(J, 3); (C, -2)\\}$ car $3 + (-2) = 1 \\neq 0$.\n\n**Construction** :\n\n1. D'abord construire $J$ : $\\overrightarrow{AJ} = \\dfrac{2}{1+2} \\overrightarrow{AB} = \\dfrac{2}{3}\\overrightarrow{AB}$\n\n2. Puis construire $G$ : $\\overrightarrow{JG} = \\dfrac{-2}{3+(-2)} \\overrightarrow{JC} = \\dfrac{-2}{1}\\overrightarrow{JC} = -2\\overrightarrow{JC}$\n\nDonc $G$ est à l'extérieur du segment $[JC]$, du côté opposé à $C$ par rapport à $J$.",
+                "**Méthode par associativité** :\n\nOn ne peut pas poser $I = bar\\{(B, 2); (C, -2)\\}$ car $2 + (-2) = 0$.\n\nOn pose plutôt $J = bar\\{(A, 1); (B, 2)\\}$. On a $1 + 2 = 3 \\neq 0$, donc $J$ existe.\n\nPar associativité : $G = bar\\{(J, 3); (C, -2)\\}$ car $3 + (-2) = 1 \\neq 0$.\n\n**Construction** :\n\n1. D'abord construire $J$ : $\\overrightarrow{AJ} = \\dfrac{2}{1+2} \\overrightarrow{AB} = \\dfrac{2}{3}\\overrightarrow{AB}$\n\n2. Puis construire $G$ : $\\overrightarrow{JG} = \\dfrac{-2}{3+(-2)} \\overrightarrow{JC} = \\dfrac{-2}{1}\\overrightarrow{JC} = -2\\overrightarrow{JC}$\n\nDonc $G$ est à l'extérieur du segment $[JC]$, du côté opposé à $C$ par rapport à $J$.",
                 "En utilisant la propriété caractéristique avec $M = A$ :\n$$1 \\cdot \\vec{0} + 2\\overrightarrow{AB} + (-2)\\overrightarrow{AC} = 1 \\cdot \\overrightarrow{AG}$$\n\nDonc : $$\\overrightarrow{AG} = 2\\overrightarrow{AB} - 2\\overrightarrow{AC} = 2(\\overrightarrow{AB} - \\overrightarrow{AC}) = 2\\overrightarrow{CB}$$"
               ]
             },
@@ -261,14 +325,14 @@
               "statement": "Soit $ABC$ un triangle, $G$ et $H$ les points du plan tels que : $G = bar\\{(A; a); (B; b); (C; c)\\}$ et $H = bar\\{(A; a); (B; b)\\}$ avec $a$, $b$ et $c$ trois réels tels que $a + b + c \\neq 0$ et $a + b \\neq 0$.",
               "listType": "numbered",
               "content": [
-                "a) Vérifier que $a\\overrightarrow{GA} + b\\overrightarrow{GB} = -c\\overrightarrow{GC}$",
-                "b) En utilisant la propriété caractéristique du barycentre sur $H$ montrer que $a\\overrightarrow{GA} + b\\overrightarrow{GB} = (a+b)\\overrightarrow{GH}$",
-                "c) En déduire que $G = bar\\{(H; a+b); (C; c)\\}$ et que $G \\in (CH)$"
+                "Vérifier que $a\\overrightarrow{GA} + b\\overrightarrow{GB} = -c\\overrightarrow{GC}$",
+                "En utilisant la propriété caractéristique du barycentre sur $H$ montrer que $a\\overrightarrow{GA} + b\\overrightarrow{GB} = (a+b)\\overrightarrow{GH}$",
+                "En déduire que $G = bar\\{(H; a+b); (C; c)\\}$ et que $G \\in (CH)$"
               ],
               "solution": [
                 "Par définition de $G$ : $a\\overrightarrow{GA} + b\\overrightarrow{GB} + c\\overrightarrow{GC} = \\vec{0}$\n\nDonc : $a\\overrightarrow{GA} + b\\overrightarrow{GB} = -c\\overrightarrow{GC}$",
-                "Par la propriété caractéristique du barycentre, pour tout point $M \\in (P)$ on a :\n$$a\\overrightarrow{MA} + b\\overrightarrow{MB} = (a+b)\\overrightarrow{MH}$$\n\nEn particulier pour $M = G$ :\n$$a\\overrightarrow{GA} + b\\overrightarrow{GB} = (a+b)\\overrightarrow{GH}$$",
-                "D'après les questions a) et b) :\n$$-c\\overrightarrow{GC} = (a+b)\\overrightarrow{GH}$$\n\nSoit : $$(a+b)\\overrightarrow{GH} + c\\overrightarrow{GC} = \\vec{0}$$\n\nDonc $G = bar\\{(H; a+b); (C; c)\\}$.\n\nDe plus, cette relation montre que $\\overrightarrow{GH}$ et $\\overrightarrow{GC}$ sont liés, donc $G \\in (CH)$.\n\nC'est la **propriété d'associativité** du barycentre !"
+                "Par la propriété caractéristique du barycentre, pour tout point $M$ du plan on a :\n$$a\\overrightarrow{MA} + b\\overrightarrow{MB} = (a+b)\\overrightarrow{MH}$$\n\nEn particulier pour $M = G$ :\n$$a\\overrightarrow{GA} + b\\overrightarrow{GB} = (a+b)\\overrightarrow{GH}$$",
+                "D'après les questions précédentes :\n$$-c\\overrightarrow{GC} = (a+b)\\overrightarrow{GH}$$\n\nSoit : $$(a+b)\\overrightarrow{GH} + c\\overrightarrow{GC} = \\vec{0}$$\n\nDonc $G = bar\\{(H; a+b); (C; c)\\}$.\n\nDe plus, cette relation montre que $\\overrightarrow{GH}$ et $\\overrightarrow{GC}$ sont liés, donc $G \\in (CH)$.\n\nC'est la **propriété d'associativité** du barycentre !"
               ]
             }
           ]
@@ -297,22 +361,22 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 1 : Calcul avec fill-in-blanks** :",
+              "preamble": "**Calcul de coordonnées** :",
               "content": "Dans un repère, on considère $A(1; 2)$, $B(4; -1)$ et $C(-2; 3)$.\n\nDéterminons les coordonnées de $G = bar\\{(A, 2); (B, -1); (C, 3)\\}$.\n\nOn a $\\alpha + \\beta + \\gamma = 2 + (-1) + 3 = ___4___$\n\n$$x_G = \\dfrac{2 \\times 1 + (-1) \\times 4 + 3 \\times (-2)}{4} = \\dfrac{2 - 4 - 6}{4} = \\dfrac{-8}{4} = ___-2___$$\n\n$$y_G = \\dfrac{2 \\times 2 + (-1) \\times (-1) + 3 \\times 3}{4} = \\dfrac{4 + 1 + 9}{4} = \\dfrac{14}{4} = ___\\dfrac{7}{2}___$$\n\nDonc $G\\left(-2; \\dfrac{7}{2}\\right)$"
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 2 : Centre de gravité** :",
+              "preamble": "**Centre de gravité d'un triangle** :",
               "content": "Dans un repère orthonormé, on considère $A(2; 0)$, $B(5; 6)$ et $C(-4; 2)$.\n\nDéterminons les coordonnées du centre de gravité $G$ du triangle $ABC$.\n\nOn sait que $G = bar\\{(A, 1); (B, 1); (C, 1)\\}$\n\nDonc :\n\n$$x_G = \\dfrac{1 \\times 2 + 1 \\times 5 + 1 \\times (-4)}{1+1+1} = \\dfrac{2 + 5 - 4}{3} = \\dfrac{3}{3} = ___1___$$\n\n$$y_G = \\dfrac{1 \\times 0 + 1 \\times 6 + 1 \\times 2}{3} = \\dfrac{0 + 6 + 2}{3} = \\dfrac{8}{3}$$\n\nDonc $G\\left(1; \\dfrac{8}{3}\\right)$"
             },
             {
               "type": "practice-box",
-              "statement": "Dans un repère $(O; \\vec{i}, \\vec{j})$ du plan, on pose $A(x_A; y_A)$ et $B(x_B; y_B)$",
+              "statement": "Dans un repère $(O; \\vec{i}, \\vec{j})$ du plan, on pose $A(x_A; y_A)$ et $B(x_B; y_B)$. Soit $G$ le barycentre de $\\{(A; a); (B; b)\\}$ avec $a + b \\neq 0$.",
               "listType": "numbered",
               "content": [
-                "En déduire que $\\overrightarrow{OG} = \\dfrac{a\\overrightarrow{OA} + b\\overrightarrow{OB}}{a+b}$",
+                "Montrer que $\\overrightarrow{OG} = \\dfrac{a\\overrightarrow{OA} + b\\overrightarrow{OB}}{a+b}$",
                 "Déterminer les coordonnées des vecteurs $a\\overrightarrow{OA}$ et $b\\overrightarrow{OB}$ en fonction de $a$, $b$, $x_A$, $y_A$, $x_B$ et $y_B$",
-                "En déduire les coordonnées de vecteur $\\dfrac{a\\overrightarrow{OA} + b\\overrightarrow{OB}}{a+b}$ en fonction de $a$, $b$, $x_A$, $y_A$, $x_B$ et $y_B$",
+                "En déduire les coordonnées de vecteur $\\dfrac{a\\overrightarrow{OA} + b\\overrightarrow{OB}}{a+b}$",
                 "En déduire que $G\\left(\\dfrac{ax_A + bx_B}{a+b} ; \\dfrac{ay_A + by_B}{a+b}\\right)$"
               ],
               "solution": [
@@ -339,7 +403,13 @@
             {
               "type": "property-box",
               "preamble": "**Méthode générale** :",
-              "content": "Pour déterminer un ensemble de points $M$ vérifiant une relation vectorielle :\n\n1. **Simplifier** la relation en utilisant le barycentre\n2. **Identifier** la nature géométrique de l'ensemble\n3. **Déterminer** les éléments caractéristiques (centre, rayon, etc.)"
+              "content": [
+                ">>Pour déterminer un ensemble de points $M$ vérifiant une relation vectorielle :",
+                "**Simplifier** la relation en utilisant le barycentre",
+                "**Identifier** la nature géométrique de l'ensemble",
+                "**Déterminer** les éléments caractéristiques (centre, rayon, etc.)"
+              ],
+              "listType": "numbered"
             },
             {
               "type": "theorem-box",
@@ -348,16 +418,17 @@
             },
             {
               "type": "remark-box",
-              "content": "?> **Astuce** : Pour déterminer un ensemble de points défini par une relation vectorielle, on utilise toujours la propriété caractéristique du barycentre :\n\n$$\\alpha \\overrightarrow{MA} + \\beta \\overrightarrow{MB} = (\\alpha + \\beta) \\overrightarrow{MG}$$\n\navec $G = bar\\{(A, \\alpha); (B, \\beta)\\}$"
+              "preamble": "**Astuce** :",
+              "content": "Pour déterminer un ensemble de points défini par une relation vectorielle, on utilise toujours la propriété caractéristique du barycentre :\n\n$$\\alpha \\overrightarrow{MA} + \\beta \\overrightarrow{MB} = (\\alpha + \\beta) \\overrightarrow{MG}$$\n\navec $G = bar\\{(A, \\alpha); (B, \\beta)\\}$"
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 1 : Ensemble de points** :",
-              "content": "Soit $A$ et $B$ deux points distincts du plan et $R$ un réel strictement positif.\n\nDéterminons l'ensemble des points $M$ du plan tels que $\\|2\\overrightarrow{MA} + 3\\overrightarrow{MB}\\| = 20$\n\n**Solution** :\n\nSoit $G = bar\\{(A, 2); (B, 3)\\}$. On a $2 + 3 = 5 \\neq 0$, donc $G$ existe.\n\nD'après la propriété caractéristique :\n$$2\\overrightarrow{MA} + 3\\overrightarrow{MB} = (2+3)\\overrightarrow{MG} = 5\\overrightarrow{MG}$$\n\nDonc : $$\\|2\\overrightarrow{MA} + 3\\overrightarrow{MB}\\| = 20 \\Leftrightarrow \\|5\\overrightarrow{MG}\\| = 20$$\n\n$$\\Leftrightarrow 5 \\times MG = 20$$\n\n$$\\Leftrightarrow MG = 4$$\n\nDonc l'ensemble est le **cercle de centre $G$ et de rayon $4$**."
+              "preamble": "**Détermination d'un ensemble de points** :",
+              "content": "Soit $A$ et $B$ deux points distincts du plan.\n\nDéterminons l'ensemble des points $M$ du plan tels que $\\|2\\overrightarrow{MA} + 3\\overrightarrow{MB}\\| = 20$\n\n**Solution** :\n\nSoit $G = bar\\{(A, 2); (B, 3)\\}$. On a $2 + 3 = 5 \\neq 0$, donc $G$ existe.\n\nD'après la propriété caractéristique :\n$$2\\overrightarrow{MA} + 3\\overrightarrow{MB} = (2+3)\\overrightarrow{MG} = 5\\overrightarrow{MG}$$\n\nDonc : $$\\|2\\overrightarrow{MA} + 3\\overrightarrow{MB}\\| = 20 \\Leftrightarrow \\|5\\overrightarrow{MG}\\| = 20$$\n\n$$\\Leftrightarrow 5 \\times MG = 20$$\n\n$$\\Leftrightarrow MG = 4$$\n\nDonc l'ensemble est le **cercle de centre $G$ et de rayon $4$**."
             },
             {
               "type": "practice-box",
-              "statement": "Soit $A$ et $B$ deux point du plan, construire le point $G$ dans chacun des cas suivants :\n\n- $G = bar\\{(A; -5); (B; -1)\\}$ et $AB = 6$\n- $G = bar\\{(A; -1); (B; 6)\\}$ et $AB = 5$\n- $G = bar\\{(A; 5); (B; -1)\\}$ et $AB = 4$\n- $G = bar\\{(A; -8); (B; 5)\\}$ et $AB = 3$",
+              "statement": "Soit $A$ et $B$ deux points du plan, construire le point $G$ dans chacun des cas suivants et calculer la distance $AG$ :\n\n- $G = bar\\{(A; -5); (B; -1)\\}$ et $AB = 6$\n- $G = bar\\{(A; -1); (B; 6)\\}$ et $AB = 5$\n- $G = bar\\{(A; 5); (B; -1)\\}$ et $AB = 4$\n- $G = bar\\{(A; -8); (B; 5)\\}$ et $AB = 3$",
               "listType": "numbered",
               "content": [
                 "Construire les points $G$ dans chaque cas",
@@ -370,14 +441,14 @@
             },
             {
               "type": "practice-box",
-              "statement": "**Exemple détaillé** : Soit $A$ et $B$ deux points distincts du plan et $G$ un point tel que $G = bar\\{(A; 200); (B; 300)\\}$",
+              "statement": "Soit $A$ et $B$ deux points distincts du plan et $G$ un point tel que $G = bar\\{(A; 200); (B; 300)\\}$",
               "listType": "numbered",
               "content": [
                 "Montrer que $G = bar\\{(A; 2); (B; 3)\\}$",
                 "Déterminer l'ensemble des points M du plan dans chacun des cas suivants : a) $\\|2\\overrightarrow{MA} + 3\\overrightarrow{MB}\\| = 0$ ; b) $\\|2\\overrightarrow{MA} + 3\\overrightarrow{MB}\\| = 20$ ; c) $\\|2\\overrightarrow{MA} + 3\\overrightarrow{MB}\\| = \\|3\\overrightarrow{MA} + 2\\overrightarrow{MB}\\|$"
               ],
               "solution": [
-                "D'après la propriété d'homogénéité : en divisant tous les coefficients par $100$, on obtient :\n\n$$G = bar\\{(A; 200); (B; 300)\\} = bar\\left\\{\\left(A; \\dfrac{200}{100}\\right); \\left(B; \\dfrac{300}{100}\\right)\\right\\} = bar\\{(A; 2); (B; 3)\\}$$\n\nC'est-à-dire $G = bar\\{(A; 2); (B; 3)\\}$",
+                "D'après la propriété d'homogénéité : en divisant tous les coefficients par $100$, on obtient :\n\n$$G = bar\\{(A; 200); (B; 300)\\} = bar\\left\\{\\left(A; \\dfrac{200}{100}\\right); \\left(B; \\dfrac{300}{100}\\right)\\right\\} = bar\\{(A; 2); (B; 3)\\}$$",
                 "a) On a $G = bar\\{(A; 2); (B; 3)\\}$ donc d'après la propriété caractéristique :\n\n$$\\text{Pour tout } M \\in (P) \\quad 2\\overrightarrow{MA} + 3\\overrightarrow{MB} = (2+3)\\overrightarrow{MG} = 5\\overrightarrow{MG}$$\n\n**Donc** $\\|2\\overrightarrow{MA} + 3\\overrightarrow{MB}\\| = 0 \\Leftrightarrow \\|5\\overrightarrow{MG}\\| = 0 \\Leftrightarrow MG = 0$\n\nDonc cet ensemble est le **singleton $\\{G\\}$**\n\nb) On a $\\|2\\overrightarrow{MA} + 3\\overrightarrow{MB}\\| = 20 \\Leftrightarrow \\|5\\overrightarrow{MG}\\| = 20 \\Leftrightarrow MG = 4$\n\nDonc cet ensemble est le **cercle de centre $G$ et de rayon $4$**\n\nc) Soit $G' = bar\\{(A; 3); (B; 2)\\}$ donc d'après la propriété caractéristique :\n\n$$\\text{Pour tout } M \\in (P) \\quad 3\\overrightarrow{MA} + 2\\overrightarrow{MB} = (3+2)\\overrightarrow{MG'} = 5\\overrightarrow{MG'}$$\n\n**Donc** $\\|2\\overrightarrow{MA} + 3\\overrightarrow{MB}\\| = \\|3\\overrightarrow{MA} + 2\\overrightarrow{MB}\\|$\n\n$\\Leftrightarrow \\|5\\overrightarrow{MG}\\| = \\|5\\overrightarrow{MG'}\\|$\n\n$\\Leftrightarrow MG = MG'$\n\nDonc cet ensemble est la **médiatrice du segment $[GG']$**"
               ]
             }
@@ -392,31 +463,36 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Concours des droites** :",
+              "preamble": "**Concours de droites** :",
               "content": "Le barycentre permet de montrer que des droites sont concourantes (c'est-à-dire qu'elles passent toutes par un même point).\n\nPar exemple, les **médianes** d'un triangle sont concourantes au centre de gravité $G$ du triangle."
             },
             {
               "type": "practice-box",
-              "statement": "**Application** : Soit $ABC$ un triangle, $G$ et $H$ les points du plan tels que :\n\n$G = bar\\{(A; 1); (B; 2); (C; -1)\\}$ et $H = bar\\{(A; 2); (B; -3); (C; -1)\\}$\n\nMontrer que le quadrilatère $ADHO$ est un parallélogramme, où $D = bar\\{(A; 1); (B; -1); (C; -1)\\}$",
+              "statement": "Soit $ABC$ un triangle. On considère les points suivants : $I$ le milieu de $[BC]$, $G$ le centre de gravité du triangle, et $A'$ tel que $\\overrightarrow{AA'} = \\dfrac{2}{3}\\overrightarrow{AI}$.",
               "listType": "numbered",
               "content": [
-                "Placer les points $D$ et $G$ tel que $D = bar\\{(A; 6); (B; -3); (C; -6)\\}$ et $G = bar\\{(A; 2); (B; -3); (C; -1)\\}$. Construire ces points",
-                "Montrer que $H = bar\\{(A; 2); (B; -1); (C; -2)\\}$",
-                "Montrer vectoriellement que le quadrilatère $ADHO$ est un parallélogramme",
-                "Soit $I$ le milieu de $[AB]$, montrer que les points $H$, $E$ et $G$ sont alignés",
-                "Déterminer l'ensemble des points M du plan tel que $\\|3\\overrightarrow{MA} - 2\\overrightarrow{MB} - 2\\overrightarrow{MC}\\| = \\|5\\overrightarrow{MA} + 2\\overrightarrow{MB} + 2\\overrightarrow{MC}\\|$"
+                "Montrer que $A'$ coïncide avec $G$",
+                "En déduire que $G$ appartient à la médiane $(AI)$",
+                "Montrer que $G$ divise chaque médiane dans le rapport $\\dfrac{2}{1}$ à partir du sommet"
               ],
               "solution": [
-                "Construction géométrique des points $D$ et $G$ en utilisant les formules du barycentre.",
-                "En utilisant l'homogénéité du barycentre, on divise les coefficients par $2$ :\n\n$$H = bar\\{(A; 6); (B; -3); (C; -6)\\} = bar\\left\\{\\left(A; \\dfrac{6}{3}\\right); \\left(B; \\dfrac{-3}{3}\\right); \\left(C; \\dfrac{-6}{3}\\right)\\right\\}$$\n\n$$= bar\\{(A; 2); (B; -1); (C; -2)\\}$$",
-                "Pour montrer que $ADHO$ est un parallélogramme, il suffit de montrer que $\\overrightarrow{AD} = \\overrightarrow{CH}$ (vecteurs égaux).\n\nPar la propriété caractéristique du barycentre, on calcule les vecteurs et on vérifie l'égalité.",
-                "Par associativité du barycentre et en utilisant le fait que $I$ est le milieu de $[AB]$, on peut montrer que $H$, $E$ (milieu) et $G$ sont alignés.",
-                "On utilise la propriété caractéristique pour transformer cette relation en une condition sur les barycentres, puis on identifie l'ensemble comme une médiatrice."
+                "On sait que $G = bar\\{(A; 1); (B; 1); (C; 1)\\}$ et $I = bar\\{(B; 1); (C; 1)\\}$\n\nPar associativité : $G = bar\\{(A; 1); (I; 2)\\}$\n\nDonc : $\\overrightarrow{AG} = \\dfrac{2}{1+2}\\overrightarrow{AI} = \\dfrac{2}{3}\\overrightarrow{AI}$\n\nOr $\\overrightarrow{AA'} = \\dfrac{2}{3}\\overrightarrow{AI}$\n\nDonc $\\overrightarrow{AG} = \\overrightarrow{AA'}$, ce qui implique $A' = G$",
+                "Puisque $G = A'$ et que $\\overrightarrow{AG} = \\dfrac{2}{3}\\overrightarrow{AI}$, les vecteurs $\\overrightarrow{AG}$ et $\\overrightarrow{AI}$ sont colinéaires.\n\nDonc $G \\in (AI)$",
+                "On a montré que $\\overrightarrow{AG} = \\dfrac{2}{3}\\overrightarrow{AI}$\n\nDonc $AG = \\dfrac{2}{3}AI$, ce qui signifie que $AG : GI = 2 : 1$\n\nPar symétrie, cette propriété est vraie pour les trois médianes du triangle."
               ]
             },
             {
               "type": "remark-box",
-              "content": "!> **Important pour les examens** : Le barycentre est un outil fondamental qui revient régulièrement dans les problèmes de géométrie. Il est essentiel de bien maîtriser :\n\n- La définition et la condition d'existence\n- La propriété caractéristique\n- L'associativité\n- Les coordonnées dans un repère\n- Les ensembles de points"
+              "preamble": "**Important pour les examens** :",
+              "content": [
+                ">>Le barycentre est un outil fondamental qui revient régulièrement dans les problèmes de géométrie. Il est essentiel de bien maîtriser :",
+                "La définition et la condition d'existence",
+                "La propriété caractéristique",
+                "L'associativité",
+                "Les coordonnées dans un repère",
+                "Les ensembles de points"
+              ],
+              "listType": "bullet"
             }
           ]
         }
