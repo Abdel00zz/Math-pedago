@@ -1,0 +1,153 @@
+{
+  "id": "ensa-2018-probabilites",
+  "concours": "ENSA",
+  "annee": "2018",
+  "theme": "Probabilités et combinatoire",
+  "resume": {
+    "title": "Probabilités et combinatoire - L'essentiel",
+    "introduction": "Les probabilités permettent de quantifier le hasard et l'incertitude. La combinatoire fournit les outils pour dénombrer les cas possibles dans des expériences aléatoires. Ces deux domaines sont intimement liés.",
+    "sections": [
+      {
+        "type": "definitions",
+        "title": "Définitions clés à retenir par cœur",
+        "items": [
+          "**Combinaison** : $\\binom{n}{p} = \\frac{n!}{p!(n-p)!}$ est le nombre de façons de choisir $p$ objets parmi $n$ sans ordre",
+          "**Probabilité** : $P(A) = \\frac{\\text{nombre de cas favorables}}{\\text{nombre de cas possibles}}$",
+          "**Loi binomiale** : $X \\sim \\mathcal{B}(n, p)$ compte le nombre de succès dans $n$ épreuves indépendantes de probabilité $p$",
+          "**Événement** : Un sous-ensemble de l'ensemble des résultats possibles",
+          "**Événements indépendants** : $P(A \\cap B) = P(A) \\times P(B)$"
+        ]
+      },
+      {
+        "type": "formules",
+        "title": "Formules essentielles",
+        "items": [
+          "**Formule de la loi binomiale** : $P(X = k) = \\binom{n}{k} p^k (1-p)^{n-k}$ pour $k \\in \\{0, 1, ..., n\\}$",
+          "**Nombre de combinaisons** : $\\binom{n}{p}$ désigne le nombre de combinaison de $p$ parmi $n$",
+          "**Propriété des combinaisons** : $\\binom{n}{p} = \\binom{n}{n-p}$",
+          "**Somme des probabilités** : $\\sum_{k=0}^{n} P(X = k) = 1$",
+          "**Complémentaire** : $P(\\overline{A}) = 1 - P(A)$",
+          "**Formule du binôme** : $(a + b)^n = \\sum_{k=0}^{n} \\binom{n}{k} a^k b^{n-k}$",
+          "**Cas particulier** : $\\sum_{k=0}^{n} \\binom{n}{k} p^k (1-p)^{n-k} = (p + (1-p))^n = 1$"
+        ]
+      },
+      {
+        "type": "methodes",
+        "title": "Méthodes et astuces",
+        "items": [
+          "**Pour un QCM** : Si chaque question a 4 réponses et une seule correcte, la probabilité de répondre au hasard correctement est $\\frac{1}{4}$",
+          "**Pour dénombrer les grilles-réponses** : Si on a 20 questions à 4 choix, il y a $4^{20}$ grilles possibles",
+          "**Pour calculer $P(A_0)$** (aucune bonne réponse) : $P(A_0) = (\\frac{3}{4})^{20}$ si on répond au hasard",
+          "**Pour calculer $P(A_n)$** ($n$ bonnes réponses) : $P(A_n) = \\binom{20}{n} (\\frac{1}{4})^n (\\frac{3}{4})^{20-n}$",
+          "**Pour au moins $k$ succès** : $P(X \\geq k) = \\sum_{i=k}^{n} \\binom{n}{i} p^i (1-p)^{n-i}$",
+          "**Pour au plus $k$ succès** : $P(X \\leq k) = \\sum_{i=0}^{k} \\binom{n}{i} p^i (1-p)^{n-i}$"
+        ]
+      },
+      {
+        "type": "pieges",
+        "title": "Pièges à éviter absolument",
+        "items": [
+          "**ATTENTION** : Le nombre de grilles-réponses possibles est $4^{20}$, pas $20^4$ ni $20 \\times 4$",
+          "**DANGER** : Pour calculer $P(A_0)$, c'est $(\\frac{3}{4})^{20}$, pas $\\frac{3^{20}}{4}$",
+          "**PIÈGE** : $P(A_n) \\neq \\binom{20}{n} \\times \\frac{1}{4^{20}}$. Il faut utiliser la formule binomiale complète",
+          "**ATTENTION** : Pour \"au moins 6 fois\", c'est $\\sum_{n=6}^{20}$, pas $\\sum_{n=0}^{6}$",
+          "**DANGER** : Ne confonds pas $\\binom{n}{p}$ (combinaisons) et $n^p$ (arrangements avec répétition)"
+        ]
+      },
+      {
+        "type": "reflexion",
+        "title": "Points de réflexion importants",
+        "items": [
+          "Dans un QCM à réponse unique, si on coche au hasard, on a $\\frac{1}{4}$ de chance d'avoir raison",
+          "La probabilité d'avoir exactement $n$ bonnes réponses suit une loi binomiale $\\mathcal{B}(20, \\frac{1}{4})$",
+          "Plus le nombre de questions est grand, plus il est improbable d'avoir tout faux (ou tout juste) en répondant au hasard",
+          "La somme de toutes les probabilités $P(A_0) + P(A_1) + \\cdots + P(A_{20})$ doit toujours égaler 1"
+        ]
+      },
+      {
+        "type": "astuces",
+        "title": "Astuces de calcul",
+        "items": [
+          "**Calculatrice** : Pour calculer $\\binom{20}{n}$, utilise la fonction nCr (ou C)",
+          "**Simplification** : $(\\frac{3}{4})^{20} = \\frac{3^{20}}{4^{20}}$ peut être approximé avec une calculatrice",
+          "**Astuce** : Pour \"au moins\", utilise parfois le complémentaire : $P(X \\geq k) = 1 - P(X < k) = 1 - P(X \\leq k-1)$",
+          "**Formule du binôme** : Vérifie tes calculs avec $(\\frac{1}{4} + \\frac{3}{4})^{20} = 1$"
+        ]
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "id": "q17",
+      "theme": "Probabilités et combinatoire",
+      "question": "Le QCM du concours ENSA comporte 20 questions, pour chacune desquelles 4 réponses sont proposées et une seule est correcte. Un étudiant décide de remplir la grille-réponses en cochant au hasard une réponse pour chacune des 20 questions. Pour $n \\in \\mathbb{N}$ et $0 \\leq n \\leq 20$, on note $A_n$ l'événement « répondre au hasard exactement $n$ fois correctement ». $\\binom{n}{p}$ désigne le nombre de combinaison de $p$ parmi $n$. Le nombre de grilles-réponses possibles est :",
+      "type": "mcq",
+      "options": [
+        { "id": "a", "text": "$24$", "isCorrect": false },
+        { "id": "b", "text": "$20^4$", "isCorrect": false },
+        { "id": "c", "text": "$80$", "isCorrect": false },
+        { "id": "d", "text": "$4^{20}$", "isCorrect": true }
+      ],
+      "explanation": "Pour chaque question, il y a 4 choix possibles. Comme il y a 20 questions indépendantes, le nombre total de grilles-réponses est $4 \\times 4 \\times \\cdots \\times 4$ (20 fois) = $4^{20}$.",
+      "hints": [
+        "Combien de choix as-tu pour la première question ?",
+        "Combien de choix as-tu pour la deuxième question ?",
+        "Utilise le principe multiplicatif : nombre total = produit des choix"
+      ]
+    },
+    {
+      "id": "q18",
+      "theme": "Probabilités et combinatoire",
+      "question": "La probabilité de ne donner aucune réponse correcte est $P(A_0) = $",
+      "type": "mcq",
+      "options": [
+        { "id": "a", "text": "$\\frac{3^{20}}{4^{20}}$", "isCorrect": true },
+        { "id": "b", "text": "$\\frac{24}{4^{20}}$", "isCorrect": false },
+        { "id": "c", "text": "$\\frac{1}{20^4}$", "isCorrect": false },
+        { "id": "d", "text": "$\\frac{1}{80}$", "isCorrect": false }
+      ],
+      "explanation": "Pour chaque question, la probabilité de se tromper est $\\frac{3}{4}$ (3 mauvaises réponses sur 4). Comme les 20 questions sont indépendantes, $P(A_0) = (\\frac{3}{4})^{20} = \\frac{3^{20}}{4^{20}}$.",
+      "hints": [
+        "Quelle est la probabilité de se tromper à une question ?",
+        "Les questions sont indépendantes : multiplie les probabilités",
+        "$P(A_0) = P(\\text{erreur Q1}) \\times P(\\text{erreur Q2}) \\times \\cdots$"
+      ]
+    },
+    {
+      "id": "q19",
+      "theme": "Probabilités et combinatoire",
+      "question": "La probabilité de donner exactement $n$ bonnes réponses correctes est $P(A_n) = $",
+      "type": "mcq",
+      "options": [
+        { "id": "a", "text": "$\\frac{\\binom{20}{n} 3^n}{4^{20}}$", "isCorrect": false },
+        { "id": "b", "text": "$\\frac{\\binom{20}{n} 3^{20-n}}{4^{20}}$", "isCorrect": true },
+        { "id": "c", "text": "$\\frac{\\binom{20}{3} 3^{20-n}}{20^4}$", "isCorrect": false },
+        { "id": "d", "text": "$\\frac{\\binom{20}{3} 3^n}{80}$", "isCorrect": false }
+      ],
+      "explanation": "C'est une loi binomiale avec $n = 20$ épreuves, $p = \\frac{1}{4}$ (probabilité de succès) et $1-p = \\frac{3}{4}$ (probabilité d'échec). La formule est : $P(A_n) = \\binom{20}{n} (\\frac{1}{4})^n (\\frac{3}{4})^{20-n} = \\binom{20}{n} \\frac{1^n \\cdot 3^{20-n}}{4^{20}} = \\frac{\\binom{20}{n} 3^{20-n}}{4^{20}}$.",
+      "hints": [
+        "C'est une loi binomiale $\\mathcal{B}(20, \\frac{1}{4})$",
+        "La formule est $P(X = k) = \\binom{n}{k} p^k (1-p)^{n-k}$",
+        "Ici $n = 20$, $k$ est le nombre de bonnes réponses, $p = \\frac{1}{4}$"
+      ]
+    },
+    {
+      "id": "q20",
+      "theme": "Probabilités et combinatoire",
+      "question": "La probabilité de répondre au hasard au moins 6 fois correctement est :",
+      "type": "mcq",
+      "options": [
+        { "id": "a", "text": "$\\sum_{n=6}^{20} \\frac{\\binom{20}{n} 3^{20-n}}{4^{20}}$", "isCorrect": true },
+        { "id": "b", "text": "$\\sum_{n=0}^{6} \\frac{\\binom{20}{n} 3^{20-n}}{4^{20}}$", "isCorrect": false },
+        { "id": "c", "text": "$\\sum_{n=6}^{20} \\frac{\\binom{20}{n} 3^{20-n}}{20^4}$", "isCorrect": false },
+        { "id": "d", "text": "$\\sum_{n=0}^{6} \\frac{\\binom{20}{n} 3^{20-n}}{20^4}$", "isCorrect": false }
+      ],
+      "explanation": "\"Au moins 6 fois\" signifie 6, 7, 8, ..., ou 20 bonnes réponses. On somme donc les probabilités de $A_6$ à $A_{20}$ : $P(X \\geq 6) = \\sum_{n=6}^{20} P(A_n) = \\sum_{n=6}^{20} \\frac{\\binom{20}{n} 3^{20-n}}{4^{20}}$.",
+      "hints": [
+        "\"Au moins 6\" signifie $X \\geq 6$, donc $X \\in \\{6, 7, 8, ..., 20\\}$",
+        "Somme les probabilités de tous ces événements",
+        "$P(X \\geq 6) = P(A_6) + P(A_7) + \\cdots + P(A_{20})$"
+      ]
+    }
+  ]
+}

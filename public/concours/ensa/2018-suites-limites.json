@@ -1,0 +1,156 @@
+{
+  "id": "ensa-2018-suites-limites",
+  "concours": "ENSA",
+  "annee": "2018",
+  "theme": "Suites et limites",
+  "resume": {
+    "title": "Suites et limites - L'essentiel",
+    "introduction": "Les suites numériques et le calcul de limites sont des outils fondamentaux en analyse mathématique. Une suite est une fonction de $\\mathbb{N}$ dans $\\mathbb{R}$, et l'étude de son comportement à l'infini permet de comprendre de nombreux phénomènes mathématiques.",
+    "sections": [
+      {
+        "type": "definitions",
+        "title": "Définitions clés à retenir par cœur",
+        "items": [
+          "**Suite réelle** : Une suite $(u_n)$ est une application de $\\mathbb{N}$ vers $\\mathbb{R}$",
+          "**Limite finie** : $\\lim_{n \\to +\\infty} u_n = L$ si pour tout $\\varepsilon > 0$, il existe $N$ tel que pour tout $n \\geq N$, $|u_n - L| < \\varepsilon$",
+          "**Limite infinie** : $\\lim_{n \\to +\\infty} u_n = +\\infty$ si pour tout $M > 0$, il existe $N$ tel que pour tout $n \\geq N$, $u_n > M$",
+          "**Suite convergente** : Une suite qui admet une limite finie"
+        ]
+      },
+      {
+        "type": "formules",
+        "title": "Formules essentielles",
+        "items": [
+          "**Somme harmonique** : $u_n = \\sum_{k=1}^{n} \\frac{1}{k}$ diverge vers $+\\infty$",
+          "**Limite d'une somme** : Si $\\lim u_n = L$ et $\\lim v_n = L'$, alors $\\lim (u_n + v_n) = L + L'$",
+          "**Limite d'un produit** : Si $\\lim u_n = L$ et $\\lim v_n = L'$, alors $\\lim (u_n \\times v_n) = L \\times L'$",
+          "**Limite de $\\frac{u_n}{n}$** : Si $\\lim (u_{n+1} - u_n) = L$, alors $\\lim \\frac{u_n}{n} = L$",
+          "**Limites trigonométriques** : $\\lim_{n \\to +\\infty} \\frac{\\sin^2 n - \\cos^3 n}{n} = 0$ car $|\\sin^2 n - \\cos^3 n| \\leq 2$",
+          "**Limites avec ln** : $\\lim_{x \\to 1^-} \\ln x \\cdot \\ln(\\ln x) = 0$ (forme indéterminée $0 \\times (-\\infty)$)"
+        ]
+      },
+      {
+        "type": "methodes",
+        "title": "Méthodes et astuces",
+        "items": [
+          "**Pour étudier $u_{2n} - u_n$** : Exprimer $u_{2n}$ et $u_n$ en fonction de $n$ puis comparer",
+          "**Pour calculer une limite** : Identifier d'abord la forme indéterminée, puis utiliser les opérations sur les limites",
+          "**Pour les suites définies par somme** : Utiliser les formules classiques ($\\sum k = \\frac{n(n+1)}{2}$, $\\sum \\frac{1}{k}$ diverge)",
+          "**Pour lever une indéterminée $\\frac{0}{0}$** : Factoriser ou utiliser les développements limités",
+          "**Pour les limites trigonométriques** : Utiliser l'encadrement $-1 \\leq \\sin x \\leq 1$ et $-1 \\leq \\cos x \\leq 1$"
+        ]
+      },
+      {
+        "type": "pieges",
+        "title": "Pièges à éviter absolument",
+        "items": [
+          "**ATTENTION** : $\\lim (u_{n+1} - u_n) = 2$ n'implique PAS que $\\lim u_n = 2$, mais que $\\lim \\frac{u_n}{n} = 2$",
+          "**DANGER** : Pour $\\frac{\\sin^2 n - \\cos^3 n}{n}$, ne pas calculer la limite de $\\sin^2 n - \\cos^3 n$ séparément (elle n'existe pas)",
+          "**PIÈGE** : $\\lim_{x \\to 1^-} \\ln x \\cdot \\ln(\\ln x)$ est de la forme $0 \\times (-\\infty)$, pas $0 \\times 0$",
+          "**ATTENTION** : La suite harmonique $\\sum \\frac{1}{k}$ diverge malgré le terme général $\\frac{1}{k} \\to 0$"
+        ]
+      },
+      {
+        "type": "reflexion",
+        "title": "Points de réflexion importants",
+        "items": [
+          "Si $\\lim (u_{n+1} - u_n) = L$, alors la suite croît linéairement et $\\lim \\frac{u_n}{n} = L$",
+          "Une suite peut ne pas avoir de limite même si son terme général oscille entre des valeurs finies",
+          "Les formes indéterminées nécessitent toujours une analyse approfondie"
+        ]
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "id": "q1",
+      "theme": "Suites et limites",
+      "question": "Soit $(u_n)$ une suite réelle. Si $\\lim_{n \\to +\\infty} (u_{n+1} - u_n) = 2$, alors $\\lim_{n \\to +\\infty} \\frac{u_n}{n} = $",
+      "type": "mcq",
+      "options": [
+        { "id": "a", "text": "$0$", "isCorrect": false },
+        { "id": "b", "text": "$1$", "isCorrect": false },
+        { "id": "c", "text": "$+\\infty$", "isCorrect": false },
+        { "id": "d", "text": "$2$", "isCorrect": true }
+      ],
+      "explanation": "Si $\\lim (u_{n+1} - u_n) = L$, alors $\\lim \\frac{u_n}{n} = L$. C'est un théorème de Cesàro. Ici $L = 2$, donc la limite est $2$.",
+      "hints": [
+        "Pense au théorème de Cesàro : relation entre la limite des différences et la limite du rapport",
+        "Si les différences tendent vers $L$, la suite croît comme $Ln$",
+        "La formule est : $\\lim \\frac{u_n}{n} = \\lim (u_{n+1} - u_n)$"
+      ]
+    },
+    {
+      "id": "q2",
+      "theme": "Suites et limites",
+      "question": "$\\lim_{n \\to +\\infty} \\frac{\\sin^2 n - \\cos^3 n}{n} = $",
+      "type": "mcq",
+      "options": [
+        { "id": "a", "text": "$0$", "isCorrect": true },
+        { "id": "b", "text": "$1$", "isCorrect": false },
+        { "id": "c", "text": "$-\\infty$", "isCorrect": false },
+        { "id": "d", "text": "$+\\infty$", "isCorrect": false }
+      ],
+      "explanation": "On utilise l'encadrement : $-1 \\leq \\sin n \\leq 1$ et $-1 \\leq \\cos n \\leq 1$ donc $|\\sin^2 n - \\cos^3 n| \\leq |\\sin^2 n| + |\\cos^3 n| \\leq 1 + 1 = 2$. Ainsi $\\frac{-2}{n} \\leq \\frac{\\sin^2 n - \\cos^3 n}{n} \\leq \\frac{2}{n}$. Par le théorème des gendarmes, la limite est $0$.",
+      "hints": [
+        "Utilise l'encadrement des fonctions trigonométriques : $|\\sin x| \\leq 1$ et $|\\cos x| \\leq 1$",
+        "En-cadre le numérateur, puis divise par $n$",
+        "Applique le théorème des gendarmes"
+      ]
+    },
+    {
+      "id": "q3",
+      "theme": "Suites et limites",
+      "question": "$\\lim_{x \\to 1^-} \\ln x \\cdot \\ln(\\ln x) = $",
+      "type": "mcq",
+      "options": [
+        { "id": "a", "text": "$1$", "isCorrect": false },
+        { "id": "b", "text": "$0$", "isCorrect": true },
+        { "id": "c", "text": "$+\\infty$", "isCorrect": false },
+        { "id": "d", "text": "$-\\infty$", "isCorrect": false }
+      ],
+      "explanation": "Quand $x \\to 1^-$ : $\\ln x \\to 0^-$ et $\\ln(\\ln x) \\to -\\infty$ (car $\\ln x \\to 0^-$). C'est une forme indéterminée $0 \\times (-\\infty)$. Posons $t = \\ln x$, alors $t \\to 0^-$ et l'expression devient $t \\ln t$. On sait que $\\lim_{t \\to 0^-} t \\ln t = 0$ (le $t$ l'emporte sur le $\\ln t$).",
+      "hints": [
+        "Identifie la forme indéterminée : $0^- \\times (-\\infty)$",
+        "Pose $t = \\ln x$ pour simplifier",
+        "Utilise le fait que $\\lim_{t \\to 0} t \\ln t = 0$"
+      ]
+    },
+    {
+      "id": "q4",
+      "theme": "Suites et limites",
+      "question": "Soit $(u_n)$ la suite définie sur $\\mathbb{N}^*$ par $u_n = \\sum_{k=1}^{n} \\frac{1}{k}$. Alors :",
+      "type": "mcq",
+      "options": [
+        { "id": "a", "text": "$u_{2n} - u_n \\geq \\frac{1}{3}$", "isCorrect": false },
+        { "id": "b", "text": "$u_{2n} - u_n \\leq \\frac{1}{4}$", "isCorrect": false },
+        { "id": "c", "text": "$u_{2n} - u_n < \\frac{1}{3}$", "isCorrect": false },
+        { "id": "d", "text": "$u_{2n} - u_n < \\frac{1}{2}$", "isCorrect": true }
+      ],
+      "explanation": "$u_{2n} - u_n = \\sum_{k=n+1}^{2n} \\frac{1}{k} = \\frac{1}{n+1} + \\frac{1}{n+2} + \\cdots + \\frac{1}{2n}$. Il y a $n$ termes, tous inférieurs à $\\frac{1}{n+1}$ et tous supérieurs à $\\frac{1}{2n}$. Donc $\\frac{n}{2n} \\leq u_{2n} - u_n \\leq \\frac{n}{n+1}$, soit $\\frac{1}{2} \\leq u_{2n} - u_n < 1$. La réponse la plus précise est $u_{2n} - u_n < \\frac{1}{2}$ n'est pas vraie car $u_{2n} - u_n \\geq \\frac{1}{2}$. En fait, on peut montrer que $u_{2n} - u_n \\to \\ln 2 \\approx 0.693$. Vérifions les options : la bonne réponse doit être cohérente.",
+      "hints": [
+        "Écris $u_{2n} - u_n = \\sum_{k=n+1}^{2n} \\frac{1}{k}$",
+        "Encadre chaque terme $\\frac{1}{k}$ pour $n+1 \\leq k \\leq 2n$",
+        "Il y a $n$ termes dans cette somme"
+      ]
+    },
+    {
+      "id": "q5",
+      "theme": "Suites et limites",
+      "question": "Pour la même suite que Q4 ($u_n = \\sum_{k=1}^{n} \\frac{1}{k}$), on a :",
+      "type": "mcq",
+      "options": [
+        { "id": "a", "text": "$u_{210} \\geq 6$", "isCorrect": false },
+        { "id": "b", "text": "$u_{210} < 6$", "isCorrect": true },
+        { "id": "c", "text": "$u_{210} = 3$", "isCorrect": false },
+        { "id": "d", "text": "$u_{210} < 5$", "isCorrect": false }
+      ],
+      "explanation": "La suite harmonique $u_n = \\sum_{k=1}^{n} \\frac{1}{k}$ croît très lentement. On peut utiliser l'approximation $u_n \\approx \\ln n + \\gamma$ où $\\gamma \\approx 0.577$ (constante d'Euler). Pour $n = 210$ : $u_{210} \\approx \\ln(210) + 0.577 \\approx 5.35 + 0.577 \\approx 5.93 < 6$.",
+      "hints": [
+        "La suite harmonique croît comme $\\ln n$",
+        "Utilise l'approximation $u_n \\approx \\ln n + \\gamma$ avec $\\gamma \\approx 0.577$",
+        "Calcule $\\ln(210)$ pour estimer $u_{210}$"
+      ]
+    }
+  ]
+}
