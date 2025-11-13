@@ -4,6 +4,7 @@ import { useAppDispatch } from '../../context/AppContext';
 import MCQQuestion from '../quiz/MCQQuestion';
 import OrderingQuestion from '../quiz/OrderingQuestion';
 import FormattedText from '../FormattedText';
+import ConcoursBackground from '../ConcoursBackground';
 import type { ConcoursData, ConcoursQuestion } from '../../types';
 
 const ConcoursQuizView: React.FC = () => {
@@ -19,6 +20,10 @@ const ConcoursQuizView: React.FC = () => {
     const [showHint, setShowHint] = useState(false);
     const [currentHintIndex, setCurrentHintIndex] = useState(0);
     const timerRef = useRef<number | null>(null);
+
+    // Pour l'en-tête
+    const concoursName = localStorage.getItem('currentConcoursType')?.toUpperCase() || 'CONCOURS';
+    const concoursYear = localStorage.getItem('currentConcoursYear') || concoursData?.annee || '';
 
     useEffect(() => {
         const quizMode = localStorage.getItem('concoursQuizMode');
@@ -172,6 +177,10 @@ const ConcoursQuizView: React.FC = () => {
         setCurrentHintIndex(0);
     };
 
+    const handleBackToResume = () => {
+        dispatch({ type: 'CHANGE_VIEW', payload: { view: 'concours-resume' } });
+    };
+
     const formattedTime = useMemo(() => {
         const minutes = Math.floor(timeSpent / 60).toString().padStart(2, '0');
         const seconds = (timeSpent % 60).toString().padStart(2, '0');
@@ -205,35 +214,20 @@ const ConcoursQuizView: React.FC = () => {
     if (isFinished) {
         return (
             <div className="min-h-screen bg-white relative overflow-hidden">
-                {/* Geometric motif background (decorative) */}
-                <div className="absolute inset-0 pointer-events-none" aria-hidden={true}>
-                    <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <linearGradient id="concoursGradientQuiz" x1="0%" x2="100%" y1="0%" y2="100%">
-                                <stop offset="0%" stopColor="#7c5cff" stopOpacity="0.08" />
-                                <stop offset="100%" stopColor="#4fd1c5" stopOpacity="0.08" />
-                            </linearGradient>
-                            <filter id="blurSmallQuiz" x="-20%" y="-20%" width="140%" height="140%">
-                                <feGaussianBlur stdDeviation="36" />
-                            </filter>
-                            <pattern id="concours-hex-quiz" width="48" height="48" patternUnits="userSpaceOnUse">
-                                <path d="M24 0 L36 12 L24 24 L12 12 Z" fill="white" opacity="0.03" />
-                            </pattern>
-                        </defs>
+                <ConcoursBackground variant="resume" />
 
-                        <rect width="100%" height="100%" fill="url(#concoursGradientQuiz)" />
+                <div className="relative z-10 max-w-3xl mx-auto px-6 py-12">
+                    {/* En-tête du quiz */}
+                    <div className="mb-8 flex justify-center">
+                        <div className="inline-block mb-4">
+                            <div className="border border-gray-200 rounded-md px-5 py-3 bg-white inline-flex items-center gap-3 text-center">
+                                <div className="text-sm text-gray-500">Concours</div>
+                                <div className="text-lg font-medium text-gray-900">{concoursName} {concoursYear}</div>
+                            </div>
+                        </div>
+                    </div>
 
-                        <g filter="url(#blurSmallQuiz)" opacity="0.26">
-                            <circle cx="16%" cy="24%" r="140" fill="#ffffff" />
-                            <rect x="62%" y="8%" width="280" height="180" rx="28" fill="#ffffff" />
-                        </g>
-
-                        <rect width="100%" height="100%" fill="url(#concours-hex-quiz)" opacity="0.05" />
-                    </svg>
-                </div>
-
-                <div className="max-w-3xl mx-auto px-6 py-12">
-                    <div className="border border-gray-200 p-12 text-center">
+                    <div className="border border-gray-200 p-12 text-center bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl">
                         <div className="text-6xl font-light text-gray-900 mb-8">{score}%</div>
                         <p className="text-lg text-gray-600 font-light mb-12">
                             {answeredCount} / {totalQuestions} questions répondues
@@ -278,33 +272,15 @@ const ConcoursQuizView: React.FC = () => {
 
     return (
             <div className="min-h-screen bg-white relative overflow-hidden">
-                <div className="absolute inset-0 pointer-events-none" aria-hidden={true}>
-                    <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <linearGradient id="concoursGradientQuiz2" x1="0%" x2="100%" y1="0%" y2="100%">
-                                <stop offset="0%" stopColor="#7c5cff" stopOpacity="0.06" />
-                                <stop offset="100%" stopColor="#4fd1c5" stopOpacity="0.06" />
-                            </linearGradient>
-                            <filter id="blurSmallQuiz2" x="-20%" y="-20%" width="140%" height="140%">
-                                <feGaussianBlur stdDeviation="36" />
-                            </filter>
-                            <pattern id="concours-hex-quiz2" width="48" height="48" patternUnits="userSpaceOnUse">
-                                <path d="M24 0 L36 12 L24 24 L12 12 Z" fill="white" opacity="0.03" />
-                            </pattern>
-                        </defs>
+                <ConcoursBackground variant="resume" />
 
-                        <rect width="100%" height="100%" fill="url(#concoursGradientQuiz2)" />
-
-                        <g filter="url(#blurSmallQuiz2)" opacity="0.24">
-                            <circle cx="16%" cy="24%" r="120" fill="#ffffff" />
-                            <rect x="62%" y="8%" width="240" height="160" rx="28" fill="#ffffff" />
-                        </g>
-
-                        <rect width="100%" height="100%" fill="url(#concours-hex-quiz2)" opacity="0.05" />
-                    </svg>
+                <div className="relative z-10 max-w-4xl mx-auto px-6 py-12 font-sans">
+                {/* En-tête du quiz */}
+                <div className="mb-8 text-center">
+                    <div className="inline-block px-5 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-sm font-medium rounded-full shadow-lg">
+                        Concours {concoursName} {concoursYear}
+                    </div>
                 </div>
-
-                <div className="max-w-4xl mx-auto px-6 py-12 font-sans">
                 {/* Progress */}
                 <div className="flex justify-center gap-2 mb-8">
                     {concoursData.quiz.map((q, index) => (

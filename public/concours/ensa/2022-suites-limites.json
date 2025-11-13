@@ -1,0 +1,88 @@
+{
+  "id": "ensa-2022-suites-limites",
+  "concours": "ENSA",
+  "annee": "2022",
+  "theme": "Suites et limites",
+  "resume": {
+    "title": "Suites et limites - L'essentiel",
+    "introduction": "Les suites numériques et leurs limites sont omniprésentes en mathématiques. Maîtrisez les techniques de calcul de limites et les formes indéterminées.",
+    "sections": [
+      {
+        "type": "definitions",
+        "title": "Définitions clés à retenir par cœur",
+        "items": [
+          "**Limite finie** : $\\displaystyle \\lim_{n \\to +\\infty} u_n = \\ell$ si $u_n$ se rapproche arbitrairement de $\\ell$",
+          "**Limite infinie** : $\\displaystyle \\lim_{n \\to +\\infty} u_n = +\\infty$ si $u_n$ dépasse toute borne",
+          "**Forme indéterminée** : $\\displaystyle \\frac{\\infty}{\\infty}$, $\\displaystyle \\frac{0}{0}$, $\\infty - \\infty$, $0 \\times \\infty$, $1^\\infty$, $0^0$, $\\infty^0$"
+        ]
+      },
+      {
+        "type": "formules",
+        "title": "Formules essentielles",
+        "items": [
+          "**Croissances comparées** : $\\displaystyle \\lim_{n \\to +\\infty} \\frac{n^\\alpha}{e^{\\beta n}} = 0$ pour tout $\\alpha, \\beta > 0$",
+          "**Racine $n$-ième** : $\\displaystyle \\lim_{n \\to +\\infty} \\sqrt[n]{n} = 1$, $\\displaystyle \\lim_{n \\to +\\infty} \\sqrt[n]{n^\\alpha} = 1$",
+          "**Quantité conjuguée** : $a - b = \\displaystyle \\frac{a^2 - b^2}{a + b}$ (utile pour $\\infty - \\infty$)",
+          "**Limite remarquable** : $\\displaystyle \\lim_{x \\to 0} \\frac{e^x - 1}{x} = 1$"
+        ]
+      },
+      {
+        "type": "methodes",
+        "title": "Méthodes et astuces",
+        "items": [
+          "**Pour $\\displaystyle \\lim_{n \\to +\\infty} \\sqrt[n]{n^2}$** : Écrire $\\sqrt[n]{n^2} = (n^2)^{1/n} = n^{2/n}$ et utiliser $\\displaystyle \\lim_{n \\to +\\infty} \\frac{2\\ln n}{n} = 0$",
+          "**Pour $n - \\sqrt{(n+5)(n+7)}$** : Multiplier par la quantité conjuguée",
+          "**Pour factoriser** : $n - \\sqrt{n^2 + an + b} = n\\left(1 - \\sqrt{1 + \\displaystyle \\frac{a}{n} + \\frac{b}{n^2}}\\right)$"
+        ]
+      },
+      {
+        "type": "pieges",
+        "title": "Pièges à éviter absolument",
+        "items": [
+          "**ATTENTION** : $\\sqrt[n]{n^2} \\neq n^{2-n}$, c'est $n^{2/n}$",
+          "**DANGER** : Pour $n - \\sqrt{(n+5)(n+7)}$, ne pas oublier de développer $(n+5)(n+7)$ avant",
+          "**PIÈGE** : La quantité conjuguée s'applique aux racines carrées, pas aux racines d'ordre supérieur",
+          "**ATTENTION** : $\\sqrt{n^2 + 12n + 35} \\neq n + 6$ (erreur fréquente)"
+        ]
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "id": "q6",
+      "theme": "Suites et limites",
+      "question": "Calculer $\\displaystyle \\lim_{n \\to +\\infty} \\sqrt[n]{n^2}$",
+      "type": "mcq",
+      "options": [
+        { "id": "a", "text": "$0$", "isCorrect": false },
+        { "id": "b", "text": "$1$", "isCorrect": true },
+        { "id": "c", "text": "$2$", "isCorrect": false },
+        { "id": "d", "text": "$+\\infty$", "isCorrect": false }
+      ],
+      "explanation": "On a $\\sqrt[n]{n^2} = (n^2)^{1/n} = e^{\\frac{\\ln(n^2)}{n}} = e^{\\frac{2\\ln n}{n}}$. Or $\\displaystyle \\lim_{n \\to +\\infty} \\frac{2\\ln n}{n} = 0$ (croissances comparées). Donc $\\displaystyle \\lim_{n \\to +\\infty} \\sqrt[n]{n^2} = e^0 = 1$.",
+      "hints": [
+        "Écrire $\\sqrt[n]{n^2} = e^{\\frac{\\ln(n^2)}{n}}$",
+        "Simplifier $\\ln(n^2) = 2\\ln n$",
+        "Utiliser les croissances comparées : $\\displaystyle \\lim_{n \\to +\\infty} \\frac{\\ln n}{n} = 0$"
+      ]
+    },
+    {
+      "id": "q7",
+      "theme": "Suites et limites",
+      "question": "Calculer $\\displaystyle \\lim_{n \\to +\\infty} \\left(n - \\sqrt{(n+5)(n+7)}\\right)$",
+      "type": "mcq",
+      "options": [
+        { "id": "a", "text": "$-6$", "isCorrect": true },
+        { "id": "b", "text": "$-12$", "isCorrect": false },
+        { "id": "c", "text": "$0$", "isCorrect": false },
+        { "id": "d", "text": "$+\\infty$", "isCorrect": false }
+      ],
+      "explanation": "On développe $(n+5)(n+7) = n^2 + 12n + 35$. Donc $\\sqrt{(n+5)(n+7)} = \\sqrt{n^2 + 12n + 35}$. On multiplie par la quantité conjuguée : $\\displaystyle n - \\sqrt{n^2 + 12n + 35} = \\frac{n^2 - (n^2 + 12n + 35)}{n + \\sqrt{n^2 + 12n + 35}} = \\frac{-12n - 35}{n + \\sqrt{n^2 + 12n + 35}}$. On factorise par $n$ : $\\displaystyle = \\frac{n(-12 - 35/n)}{n(1 + \\sqrt{1 + 12/n + 35/n^2})} = \\frac{-12 - 35/n}{1 + \\sqrt{1 + 12/n + 35/n^2}}$. Quand $n \\to +\\infty$, le numérateur tend vers $-12$ et le dénominateur vers $1 + 1 = 2$. Donc la limite est $\\displaystyle \\frac{-12}{2} = -6$.",
+      "hints": [
+        "Développer $(n+5)(n+7) = n^2 + 12n + 35$",
+        "Multiplier par la quantité conjuguée $\\displaystyle \\frac{n + \\sqrt{n^2 + 12n + 35}}{n + \\sqrt{n^2 + 12n + 35}}$",
+        "Factoriser par $n$ au numérateur et dénominateur"
+      ]
+    }
+  ]
+}

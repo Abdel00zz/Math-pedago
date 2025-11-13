@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppState } from '../../context/AppContext';
 // StandardHeader removed per concours design change
 import type { ConcoursIndex, ConcoursInfo, ConcoursExamen } from '../../types';
+import ConcoursBackground from '../ConcoursBackground';
 
 const ConcoursYearView: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -115,32 +116,7 @@ const ConcoursYearView: React.FC = () => {
         <div className="min-h-screen relative overflow-hidden" style={{
             background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         }}>
-            {/* Geometric motif background (decorative) */}
-            <div className="absolute inset-0 pointer-events-none" aria-hidden={true}>
-                <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <linearGradient id="concoursGradientYear" x1="0%" x2="100%" y1="0%" y2="100%">
-                            <stop offset="0%" stopColor="#7c5cff" stopOpacity="0.12" />
-                            <stop offset="100%" stopColor="#4fd1c5" stopOpacity="0.12" />
-                        </linearGradient>
-                        <filter id="blurSmallYear" x="-20%" y="-20%" width="140%" height="140%">
-                            <feGaussianBlur stdDeviation="40" />
-                        </filter>
-                        <pattern id="concours-hex-year" width="48" height="48" patternUnits="userSpaceOnUse">
-                            <path d="M24 0 L36 12 L24 24 L12 12 Z" fill="white" opacity="0.03" />
-                        </pattern>
-                    </defs>
-
-                    <rect width="100%" height="100%" fill="url(#concoursGradientYear)" />
-
-                    <g filter="url(#blurSmallYear)" opacity="0.28">
-                        <circle cx="20%" cy="18%" r="140" fill="#ffffff" />
-                        <rect x="58%" y="12%" width="300" height="200" rx="34" fill="#ffffff" />
-                    </g>
-
-                    <rect width="100%" height="100%" fill="url(#concours-hex-year)" opacity="0.06" />
-                </svg>
-            </div>
+            <ConcoursBackground variant="year" />
 
             <div className="relative z-10 max-w-6xl mx-auto px-6 py-12">
                 <div className="mb-12">
@@ -192,10 +168,12 @@ const ConcoursYearView: React.FC = () => {
                             className="group text-left bg-white/90 backdrop-blur-sm hover:bg-white transition-all p-6 rounded-2xl shadow-lg hover:shadow-2xl hover:-translate-y-1"
                         >
                             <div className="flex items-start justify-between mb-4">
-                                <div className="flex-1">
-                                    <h3 className="text-lg font-normal text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors">
-                                        {fichier.theme}
-                                    </h3>
+                                    <div className="flex-1">
+                                    <div className="mb-2 flex justify-center">
+                                        <div className="border border-gray-200 rounded-md px-3 py-1 bg-white text-center">
+                                            <h3 className="text-lg font-medium text-gray-900 m-0">{fichier.theme}</h3>
+                                        </div>
+                                    </div>
                                     <div className="inline-block px-3 py-1 bg-indigo-50 text-xs text-indigo-700 font-light rounded-lg">
                                         Résumé pédagogique
                                     </div>

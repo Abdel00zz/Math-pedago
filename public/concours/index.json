@@ -37,12 +37,77 @@
       "color": "",
       "examens": [
         {
+          "annee": "2025",
+          "fichiers": [
+            {
+              "id": "ensa-2025-nombres-complexes",
+              "theme": "Nombres complexes",
+              "file": "/concours/ensa/2025-nombres-complexes.json"
+            },
+            {
+              "id": "ensa-2025-suites-limites",
+              "theme": "Suites et limites",
+              "file": "/concours/ensa/2025-suites-limites.json"
+            },
+            {
+              "id": "ensa-2025-integrales",
+              "theme": "Calcul intégral",
+              "file": "/concours/ensa/2025-integrales.json"
+            },
+            {
+              "id": "ensa-2025-probabilites",
+              "theme": "Probabilités",
+              "file": "/concours/ensa/2025-probabilites.json"
+            }
+          ]
+        },
+        {
           "annee": "2024",
           "fichiers": [
+            {
+              "id": "ensa-2024-suites-limites",
+              "theme": "Suites et limites",
+              "file": "/concours/ensa/2024-suites-limites.json"
+            },
+            {
+              "id": "ensa-2024-nombres-complexes",
+              "theme": "Nombres complexes",
+              "file": "/concours/ensa/2024-nombres-complexes.json"
+            },
+            {
+              "id": "ensa-2024-integrales",
+              "theme": "Calcul intégral",
+              "file": "/concours/ensa/2024-integrales.json"
+            },
             {
               "id": "ensa-2024-probabilites",
               "theme": "Probabilités",
               "file": "/concours/ensa/2024-probabilites.json"
+            }
+          ]
+        },
+        {
+          "annee": "2022",
+          "fichiers": [
+            {
+              "id": "ensa-2022-suites-limites",
+              "theme": "Suites et limites",
+              "file": "/concours/ensa/2022-suites-limites.json"
+            },
+            {
+              "id": "ensa-2022-nombres-complexes",
+              "theme": "Nombres complexes",
+              "file": "/concours/ensa/2022-nombres-complexes.json"
+            },
+            {
+              "id": "ensa-2022-integrales",
+              "theme": "Calcul intégral",
+              "file": "/concours/ensa/2022-integrales.json"
+            },
+            {
+              "id": "ensa-2022-probabilites",
+              "theme": "Probabilités",
+              "file": "/concours/ensa/2022-probabilites.json"
             }
           ]
         },

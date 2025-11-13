@@ -1,0 +1,88 @@
+{
+  "id": "ensa-2024-integrales",
+  "concours": "ENSA",
+  "annee": "2024",
+  "theme": "Calcul intégral",
+  "resume": {
+    "title": "Calcul intégral - L'essentiel",
+    "introduction": "Le calcul intégral est fondamental pour calculer des aires, des volumes et résoudre des problèmes physiques. Maîtrisez l'intégration par parties et les changements de variable.",
+    "sections": [
+      {
+        "type": "definitions",
+        "title": "Définitions clés à retenir par cœur",
+        "items": [
+          "**Primitive** : $F'(x) = f(x)$",
+          "**Intégrale définie** : $\\displaystyle \\int_a^b f(x)dx = F(b) - F(a)$",
+          "**Intégrale impropre** : $\\displaystyle \\int_a^{+\\infty} f(x)dx = \\lim_{b \\to +\\infty} \\int_a^b f(x)dx$"
+        ]
+      },
+      {
+        "type": "formules",
+        "title": "Formules essentielles",
+        "items": [
+          "**Intégration par parties** : $\\displaystyle \\int u dv = uv - \\int v du$",
+          "**Changement de variable** : $\\displaystyle \\int_a^b f(g(t))g'(t)dt = \\int_{g(a)}^{g(b)} f(x)dx$",
+          "**Primitives usuelles** : $\\displaystyle \\int \\frac{dx}{x} = \\ln|x| + C$, $\\displaystyle \\int e^x dx = e^x + C$",
+          "**Intégrale de $\\ln$** : $\\displaystyle \\int \\ln x dx = x\\ln x - x + C$"
+        ]
+      },
+      {
+        "type": "methodes",
+        "title": "Méthodes et astuces",
+        "items": [
+          "**Pour $\\displaystyle \\int_1^2 \\frac{\\ln(1+x) - \\ln x}{x^2} dx$** : Utiliser $\\ln(1+x) - \\ln x = \\ln\\left(\\displaystyle \\frac{1+x}{x}\\right) = \\ln\\left(1 + \\frac{1}{x}\\right)$",
+          "**Pour $\\displaystyle \\int_0^{\\pi/2} \\sin x e^x dx$** : Intégration par parties itérée (2 fois)",
+          "**Pour simplifier $\\ln(1+x) - \\ln x$** : Propriété des logarithmes"
+        ]
+      },
+      {
+        "type": "pieges",
+        "title": "Pièges à éviter absolument",
+        "items": [
+          "**ATTENTION** : Dans l'IPP, bien choisir $u$ et $dv$ pour simplifier",
+          "**DANGER** : Ne pas oublier de changer les bornes lors d'un changement de variable",
+          "**PIÈGE** : $\\displaystyle \\int \\sin x e^x dx$ nécessite 2 IPP pour revenir à l'intégrale de départ",
+          "**ATTENTION** : Vérifier que l'intégrale impropre converge avant de la calculer"
+        ]
+      }
+    ]
+  },
+  "quiz": [
+    {
+      "id": "q10",
+      "theme": "Calcul intégral",
+      "question": "Calculer $\\displaystyle \\int_1^2 \\frac{\\ln(1+x) - \\ln x}{x^2} dx$",
+      "type": "mcq",
+      "options": [
+        { "id": "a", "text": "$\\displaystyle \\ln\\left(\\frac{3}{2}\\right) - \\ln 2 + \\frac{1}{2}$", "isCorrect": true },
+        { "id": "b", "text": "$\\displaystyle \\ln 3 - \\ln 2$", "isCorrect": false },
+        { "id": "c", "text": "$\\displaystyle \\frac{1}{2}$", "isCorrect": false },
+        { "id": "d", "text": "$1$", "isCorrect": false }
+      ],
+      "explanation": "On simplifie : $\\displaystyle \\ln(1+x) - \\ln x = \\ln\\left(\\frac{1+x}{x}\\right) = \\ln\\left(1 + \\frac{1}{x}\\right)$. Donc $\\displaystyle \\int_1^2 \\frac{\\ln(1+1/x)}{x^2} dx$. On pose $u = 1 + \\displaystyle \\frac{1}{x}$, donc $du = -\\displaystyle \\frac{dx}{x^2}$. Quand $x = 1$, $u = 2$; quand $x = 2$, $u = \\displaystyle \\frac{3}{2}$. Donc $\\displaystyle \\int_1^2 \\frac{\\ln(1+1/x)}{x^2} dx = -\\int_2^{3/2} \\ln u du = \\int_{3/2}^2 \\ln u du = [u\\ln u - u]_{3/2}^2 = (2\\ln 2 - 2) - (\\displaystyle \\frac{3}{2}\\ln\\frac{3}{2} - \\frac{3}{2})$. Après simplification, on obtient la réponse a.",
+      "hints": [
+        "Simplifier avec $\\ln(1+x) - \\ln x = \\ln\\left(\\displaystyle \\frac{1+x}{x}\\right)$",
+        "Changement de variable $u = 1 + 1/x$",
+        "Calculer $\\displaystyle \\int \\ln u du$ par IPP"
+      ]
+    },
+    {
+      "id": "q11",
+      "theme": "Calcul intégral",
+      "question": "Calculer $\\displaystyle \\int_0^{\\pi/2} \\sin x e^x dx$",
+      "type": "mcq",
+      "options": [
+        { "id": "a", "text": "$\\displaystyle \\frac{e^{\\pi/2} - 1}{2}$", "isCorrect": false },
+        { "id": "b", "text": "$\\displaystyle \\frac{e^{\\pi/2} + 1}{2}$", "isCorrect": true },
+        { "id": "c", "text": "$\\displaystyle e^{\\pi/2}$", "isCorrect": false },
+        { "id": "d", "text": "$1$", "isCorrect": false }
+      ],
+      "explanation": "On utilise l'IPP deux fois. Posons $I = \\displaystyle \\int \\sin x e^x dx$. IPP1 : $u = \\sin x$, $dv = e^x dx$, donc $du = \\cos x dx$, $v = e^x$. $I = \\sin x e^x - \\displaystyle \\int \\cos x e^x dx$. IPP2 sur $\\displaystyle \\int \\cos x e^x dx$ : $u = \\cos x$, $dv = e^x dx$, donc $du = -\\sin x dx$, $v = e^x$. $\\displaystyle \\int \\cos x e^x dx = \\cos x e^x + \\int \\sin x e^x dx = \\cos x e^x + I$. Donc $I = \\sin x e^x - (\\cos x e^x + I) = \\sin x e^x - \\cos x e^x - I$. Ainsi $2I = e^x(\\sin x - \\cos x)$, d'où $I = \\displaystyle \\frac{e^x(\\sin x - \\cos x)}{2} + C$. En évaluant de 0 à $\\pi/2$ : $\\displaystyle \\left[\\frac{e^x(\\sin x - \\cos x)}{2}\\right]_0^{\\pi/2} = \\frac{e^{\\pi/2}(1 - 0)}{2} - \\frac{1(0 - 1)}{2} = \\frac{e^{\\pi/2}}{2} + \\frac{1}{2} = \\frac{e^{\\pi/2} + 1}{2}$.",
+      "hints": [
+        "Utiliser l'intégration par parties avec $u = \\sin x$ et $dv = e^x dx$",
+        "Réitérer l'IPP sur $\\displaystyle \\int \\cos x e^x dx$",
+        "Vous obtiendrez une équation en $I$, résoudre pour $I$"
+      ]
+    }
+  ]
+}
