@@ -20,6 +20,10 @@ const ConcoursQuizView: React.FC = () => {
     const [currentHintIndex, setCurrentHintIndex] = useState(0);
     const timerRef = useRef<number | null>(null);
 
+    // Pour l'en-tête
+    const concoursName = localStorage.getItem('currentConcoursType')?.toUpperCase() || 'CONCOURS';
+    const concoursYear = localStorage.getItem('currentConcoursYear') || concoursData?.annee || '';
+
     useEffect(() => {
         const quizMode = localStorage.getItem('concoursQuizMode');
 
@@ -172,6 +176,10 @@ const ConcoursQuizView: React.FC = () => {
         setCurrentHintIndex(0);
     };
 
+    const handleBackToResume = () => {
+        dispatch({ type: 'CHANGE_VIEW', payload: { view: 'concours-resume' } });
+    };
+
     const formattedTime = useMemo(() => {
         const minutes = Math.floor(timeSpent / 60).toString().padStart(2, '0');
         const seconds = (timeSpent % 60).toString().padStart(2, '0');
@@ -205,35 +213,51 @@ const ConcoursQuizView: React.FC = () => {
     if (isFinished) {
         return (
             <div className="min-h-screen bg-white relative overflow-hidden">
-                {/* Geometric motif background (decorative) */}
+                {/* Modern futuristic background with geometric shapes */}
                 <div className="absolute inset-0 pointer-events-none" aria-hidden={true}>
                     <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
                         <defs>
                             <linearGradient id="concoursGradientQuiz" x1="0%" x2="100%" y1="0%" y2="100%">
-                                <stop offset="0%" stopColor="#7c5cff" stopOpacity="0.08" />
-                                <stop offset="100%" stopColor="#4fd1c5" stopOpacity="0.08" />
+                                <stop offset="0%" stopColor="#667eea" stopOpacity="0.12" />
+                                <stop offset="50%" stopColor="#764ba2" stopOpacity="0.08" />
+                                <stop offset="100%" stopColor="#f093fb" stopOpacity="0.12" />
                             </linearGradient>
-                            <filter id="blurSmallQuiz" x="-20%" y="-20%" width="140%" height="140%">
-                                <feGaussianBlur stdDeviation="36" />
+                            <filter id="blurSmallQuiz" x="-50%" y="-50%" width="200%" height="200%">
+                                <feGaussianBlur stdDeviation="50" />
                             </filter>
-                            <pattern id="concours-hex-quiz" width="48" height="48" patternUnits="userSpaceOnUse">
-                                <path d="M24 0 L36 12 L24 24 L12 12 Z" fill="white" opacity="0.03" />
+                            <pattern id="concours-grid-quiz" width="40" height="40" patternUnits="userSpaceOnUse">
+                                <circle cx="20" cy="20" r="1" fill="#667eea" opacity="0.05" />
+                                <rect x="19" y="0" width="2" height="40" fill="#764ba2" opacity="0.02" />
+                                <rect x="0" y="19" width="40" height="2" fill="#764ba2" opacity="0.02" />
                             </pattern>
                         </defs>
 
                         <rect width="100%" height="100%" fill="url(#concoursGradientQuiz)" />
 
-                        <g filter="url(#blurSmallQuiz)" opacity="0.26">
-                            <circle cx="16%" cy="24%" r="140" fill="#ffffff" />
-                            <rect x="62%" y="8%" width="280" height="180" rx="28" fill="#ffffff" />
+                        <g filter="url(#blurSmallQuiz)" opacity="0.3">
+                            <circle cx="20%" cy="20%" r="160" fill="#667eea" />
+                            <circle cx="80%" cy="30%" r="140" fill="#f093fb" />
+                            <rect x="60%" y="60%" width="300" height="200" rx="50" fill="#764ba2" />
+                            <polygon points="100,500 250,600 150,700" fill="#f5576c" />
                         </g>
 
-                        <rect width="100%" height="100%" fill="url(#concours-hex-quiz)" opacity="0.05" />
+                        <rect width="100%" height="100%" fill="url(#concours-grid-quiz)" opacity="0.1" />
+
+                        {/* Decorative lines */}
+                        <path d="M0,300 L300,100 L600,200 L900,50" stroke="#667eea" strokeWidth="2" fill="none" opacity="0.05" />
+                        <path d="M1200,400 L900,500 L600,450 L300,600" stroke="#f093fb" strokeWidth="2" fill="none" opacity="0.05" />
                     </svg>
                 </div>
 
-                <div className="max-w-3xl mx-auto px-6 py-12">
-                    <div className="border border-gray-200 p-12 text-center">
+                <div className="relative z-10 max-w-3xl mx-auto px-6 py-12">
+                    {/* En-tête du quiz */}
+                    <div className="mb-8 text-center">
+                        <div className="inline-block px-5 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-sm font-medium rounded-full shadow-lg mb-4">
+                            Concours {concoursName} {concoursYear}
+                        </div>
+                    </div>
+
+                    <div className="border border-gray-200 p-12 text-center bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl">
                         <div className="text-6xl font-light text-gray-900 mb-8">{score}%</div>
                         <p className="text-lg text-gray-600 font-light mb-12">
                             {answeredCount} / {totalQuestions} questions répondues
@@ -282,29 +306,42 @@ const ConcoursQuizView: React.FC = () => {
                     <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
                         <defs>
                             <linearGradient id="concoursGradientQuiz2" x1="0%" x2="100%" y1="0%" y2="100%">
-                                <stop offset="0%" stopColor="#7c5cff" stopOpacity="0.06" />
-                                <stop offset="100%" stopColor="#4fd1c5" stopOpacity="0.06" />
+                                <stop offset="0%" stopColor="#a8edea" stopOpacity="0.1" />
+                                <stop offset="50%" stopColor="#fed6e3" stopOpacity="0.08" />
+                                <stop offset="100%" stopColor="#a8edea" stopOpacity="0.1" />
                             </linearGradient>
-                            <filter id="blurSmallQuiz2" x="-20%" y="-20%" width="140%" height="140%">
-                                <feGaussianBlur stdDeviation="36" />
+                            <filter id="blurSmallQuiz2" x="-50%" y="-50%" width="200%" height="200%">
+                                <feGaussianBlur stdDeviation="45" />
                             </filter>
-                            <pattern id="concours-hex-quiz2" width="48" height="48" patternUnits="userSpaceOnUse">
-                                <path d="M24 0 L36 12 L24 24 L12 12 Z" fill="white" opacity="0.03" />
+                            <pattern id="concours-dots-quiz2" width="30" height="30" patternUnits="userSpaceOnUse">
+                                <circle cx="15" cy="15" r="1.2" fill="#667eea" opacity="0.06" />
                             </pattern>
                         </defs>
 
                         <rect width="100%" height="100%" fill="url(#concoursGradientQuiz2)" />
 
-                        <g filter="url(#blurSmallQuiz2)" opacity="0.24">
-                            <circle cx="16%" cy="24%" r="120" fill="#ffffff" />
-                            <rect x="62%" y="8%" width="240" height="160" rx="28" fill="#ffffff" />
+                        <g filter="url(#blurSmallQuiz2)" opacity="0.28">
+                            <circle cx="25%" cy="15%" r="140" fill="#a8edea" />
+                            <circle cx="75%" cy="25%" r="160" fill="#fed6e3" />
+                            <ellipse cx="50%" cy="70%" rx="200" ry="120" fill="#fbc2eb" />
+                            <rect x="10%" y="60%" width="200" height="150" rx="75" fill="#a6c1ee" />
                         </g>
 
-                        <rect width="100%" height="100%" fill="url(#concours-hex-quiz2)" opacity="0.05" />
+                        <rect width="100%" height="100%" fill="url(#concours-dots-quiz2)" opacity="0.1" />
+
+                        {/* Soft wave lines */}
+                        <path d="M0,150 Q200,100 400,150 T800,150" stroke="#667eea" strokeWidth="1.5" fill="none" opacity="0.04" />
+                        <path d="M0,450 Q250,400 500,450 T1000,450" stroke="#f093fb" strokeWidth="1.5" fill="none" opacity="0.04" />
                     </svg>
                 </div>
 
-                <div className="max-w-4xl mx-auto px-6 py-12 font-sans">
+                <div className="relative z-10 max-w-4xl mx-auto px-6 py-12 font-sans">
+                {/* En-tête du quiz */}
+                <div className="mb-8 text-center">
+                    <div className="inline-block px-5 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-sm font-medium rounded-full shadow-lg">
+                        Concours {concoursName} {concoursYear}
+                    </div>
+                </div>
                 {/* Progress */}
                 <div className="flex justify-center gap-2 mb-8">
                     {concoursData.quiz.map((q, index) => (

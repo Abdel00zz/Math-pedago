@@ -133,32 +133,44 @@ const ConcoursListView: React.FC = () => {
 
     return (
         <div className="min-h-screen relative overflow-hidden" style={{
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
         }}>
-            {/* Geometric motif background (decorative) */}
+            {/* Modern animated background with dynamic shapes */}
             <div className="absolute inset-0 pointer-events-none" aria-hidden={true}>
                 <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                         <linearGradient id="concoursGradient" x1="0%" x2="100%" y1="0%" y2="100%">
-                            <stop offset="0%" stopColor="#7c5cff" stopOpacity="0.12" />
-                            <stop offset="100%" stopColor="#4fd1c5" stopOpacity="0.12" />
+                            <stop offset="0%" stopColor="#43e97b" stopOpacity="0.15" />
+                            <stop offset="50%" stopColor="#38f9d7" stopOpacity="0.12" />
+                            <stop offset="100%" stopColor="#4facfe" stopOpacity="0.15" />
                         </linearGradient>
-                        <filter id="blurSmall" x="-20%" y="-20%" width="140%" height="140%">
-                            <feGaussianBlur stdDeviation="40" />
+                        <filter id="blurSmall" x="-50%" y="-50%" width="200%" height="200%">
+                            <feGaussianBlur stdDeviation="55" />
                         </filter>
-                        <pattern id="concours-hex" width="48" height="48" patternUnits="userSpaceOnUse">
-                            <path d="M24 0 L36 12 L24 24 L12 12 Z" fill="white" opacity="0.03" />
+                        <pattern id="concours-mesh" width="50" height="50" patternUnits="userSpaceOnUse">
+                            <circle cx="25" cy="25" r="2" fill="white" opacity="0.05" />
+                            <line x1="0" y1="25" x2="50" y2="25" stroke="white" strokeWidth="0.5" opacity="0.03" />
+                            <line x1="25" y1="0" x2="25" y2="50" stroke="white" strokeWidth="0.5" opacity="0.03" />
                         </pattern>
                     </defs>
 
                     <rect width="100%" height="100%" fill="url(#concoursGradient)" />
 
-                    <g filter="url(#blurSmall)" opacity="0.28">
-                        <circle cx="18%" cy="22%" r="160" fill="#ffffff" />
-                        <rect x="60%" y="10%" width="360" height="220" rx="40" fill="#ffffff" />
+                    <g filter="url(#blurSmall)" opacity="0.32">
+                        <circle cx="20%" cy="18%" r="170" fill="#43e97b" />
+                        <circle cx="80%" cy="25%" r="190" fill="#38f9d7" />
+                        <ellipse cx="50%" cy="75%" rx="280" ry="160" fill="#4facfe" />
+                        <rect x="65%" y="12%" width="300" height="200" rx="100" fill="#00f2fe" />
+                        <polygon points="100,600 300,700 200,800" fill="#fa709a" />
                     </g>
 
-                    <rect width="100%" height="100%" fill="url(#concours-hex)" opacity="0.06" />
+                    <rect width="100%" height="100%" fill="url(#concours-mesh)" opacity="0.08" />
+
+                    {/* Dynamic curves */}
+                    <path d="M0,200 Q300,150 600,200 T1200,200" stroke="white" strokeWidth="2" fill="none" opacity="0.05" />
+                    <path d="M0,400 Q250,350 500,400 T1000,400" stroke="white" strokeWidth="2" fill="none" opacity="0.05" />
+                    <circle cx="10%" cy="80%" r="80" fill="white" opacity="0.03" />
+                    <circle cx="90%" cy="85%" r="100" fill="white" opacity="0.03" />
                 </svg>
             </div>
 

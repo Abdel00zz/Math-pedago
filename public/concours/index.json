@@ -37,12 +37,37 @@
       "color": "",
       "examens": [
         {
+          "annee": "2025",
+          "fichiers": [
+            {
+              "id": "ensa-2025-nombres-complexes",
+              "theme": "Nombres complexes",
+              "file": "/concours/ensa/2025-nombres-complexes.json"
+            }
+          ]
+        },
+        {
           "annee": "2024",
           "fichiers": [
             {
               "id": "ensa-2024-probabilites",
               "theme": "Probabilités",
               "file": "/concours/ensa/2024-probabilites.json"
+            }
+          ]
+        },
+        {
+          "annee": "2022",
+          "fichiers": [
+            {
+              "id": "ensa-2022-nombres-complexes",
+              "theme": "Nombres complexes",
+              "file": "/concours/ensa/2022-nombres-complexes.json"
+            },
+            {
+              "id": "ensa-2022-probabilites",
+              "theme": "Probabilités",
+              "file": "/concours/ensa/2022-probabilites.json"
             }
           ]
         },

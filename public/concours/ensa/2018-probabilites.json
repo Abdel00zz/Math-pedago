@@ -22,25 +22,25 @@
         "type": "formules",
         "title": "Formules essentielles",
         "items": [
-          "**Formule de la loi binomiale** : $P(X = k) = \\binom{n}{k} p^k (1-p)^{n-k}$ pour $k \\in \\{0, 1, ..., n\\}$",
-          "**Nombre de combinaisons** : $\\binom{n}{p}$ désigne le nombre de combinaison de $p$ parmi $n$",
-          "**Propriété des combinaisons** : $\\binom{n}{p} = \\binom{n}{n-p}$",
-          "**Somme des probabilités** : $\\sum_{k=0}^{n} P(X = k) = 1$",
-          "**Complémentaire** : $P(\\overline{A}) = 1 - P(A)$",
-          "**Formule du binôme** : $(a + b)^n = \\sum_{k=0}^{n} \\binom{n}{k} a^k b^{n-k}$",
-          "**Cas particulier** : $\\sum_{k=0}^{n} \\binom{n}{k} p^k (1-p)^{n-k} = (p + (1-p))^n = 1$"
+          "**Formule de la loi binomiale** : $\\displaystyle P(X = k) = \\binom{n}{k} p^k (1-p)^{n-k}$ pour $k \\in \\{0, 1, ..., n\\}$",
+          "**Nombre de combinaisons** : $\\displaystyle \\binom{n}{p}$ désigne le nombre de combinaison de $p$ parmi $n$",
+          "**Propriété des combinaisons** : $\\displaystyle \\binom{n}{p} = \\binom{n}{n-p}$",
+          "**Somme des probabilités** : $\\displaystyle \\sum_{k=0}^{n} P(X = k) = 1$",
+          "**Complémentaire** : $\\displaystyle P(\\overline{A}) = 1 - P(A)$",
+          "**Formule du binôme** : $\\displaystyle (a + b)^n = \\sum_{k=0}^{n} \\binom{n}{k} a^k b^{n-k}$",
+          "**Cas particulier** : $\\displaystyle \\sum_{k=0}^{n} \\binom{n}{k} p^k (1-p)^{n-k} = (p + (1-p))^n = 1$"
         ]
       },
       {
         "type": "methodes",
         "title": "Méthodes et astuces",
         "items": [
-          "**Pour un QCM** : Si chaque question a 4 réponses et une seule correcte, la probabilité de répondre au hasard correctement est $\\frac{1}{4}$",
+          "**Pour un QCM** : Si chaque question a 4 réponses et une seule correcte, la probabilité de répondre au hasard correctement est $\\displaystyle \\frac{1}{4}$",
           "**Pour dénombrer les grilles-réponses** : Si on a 20 questions à 4 choix, il y a $4^{20}$ grilles possibles",
-          "**Pour calculer $P(A_0)$** (aucune bonne réponse) : $P(A_0) = (\\frac{3}{4})^{20}$ si on répond au hasard",
-          "**Pour calculer $P(A_n)$** ($n$ bonnes réponses) : $P(A_n) = \\binom{20}{n} (\\frac{1}{4})^n (\\frac{3}{4})^{20-n}$",
-          "**Pour au moins $k$ succès** : $P(X \\geq k) = \\sum_{i=k}^{n} \\binom{n}{i} p^i (1-p)^{n-i}$",
-          "**Pour au plus $k$ succès** : $P(X \\leq k) = \\sum_{i=0}^{k} \\binom{n}{i} p^i (1-p)^{n-i}$"
+          "**Pour calculer $P(A_0)$** (aucune bonne réponse) : $\\displaystyle P(A_0) = \\left(\\frac{3}{4}\\right)^{20}$ si on répond au hasard",
+          "**Pour calculer $P(A_n)$** ($n$ bonnes réponses) : $\\displaystyle P(A_n) = \\binom{20}{n} \\left(\\frac{1}{4}\\right)^n \\left(\\frac{3}{4}\\right)^{20-n}$",
+          "**Pour au moins $k$ succès** : $\\displaystyle P(X \\geq k) = \\sum_{i=k}^{n} \\binom{n}{i} p^i (1-p)^{n-i}$",
+          "**Pour au plus $k$ succès** : $\\displaystyle P(X \\leq k) = \\sum_{i=0}^{k} \\binom{n}{i} p^i (1-p)^{n-i}$"
         ]
       },
       {
@@ -48,10 +48,10 @@
         "title": "Pièges à éviter absolument",
         "items": [
           "**ATTENTION** : Le nombre de grilles-réponses possibles est $4^{20}$, pas $20^4$ ni $20 \\times 4$",
-          "**DANGER** : Pour calculer $P(A_0)$, c'est $(\\frac{3}{4})^{20}$, pas $\\frac{3^{20}}{4}$",
-          "**PIÈGE** : $P(A_n) \\neq \\binom{20}{n} \\times \\frac{1}{4^{20}}$. Il faut utiliser la formule binomiale complète",
-          "**ATTENTION** : Pour \"au moins 6 fois\", c'est $\\sum_{n=6}^{20}$, pas $\\sum_{n=0}^{6}$",
-          "**DANGER** : Ne confonds pas $\\binom{n}{p}$ (combinaisons) et $n^p$ (arrangements avec répétition)"
+          "**DANGER** : Pour calculer $P(A_0)$, c'est $\\displaystyle \\left(\\frac{3}{4}\\right)^{20}$, pas $\\displaystyle \\frac{3^{20}}{4}$",
+          "**PIÈGE** : $\\displaystyle P(A_n) \\neq \\binom{20}{n} \\times \\frac{1}{4^{20}}$. Il faut utiliser la formule binomiale complète",
+          "**ATTENTION** : Pour \"au moins 6 fois\", c'est $\\displaystyle \\sum_{n=6}^{20}$, pas $\\displaystyle \\sum_{n=0}^{6}$",
+          "**DANGER** : Ne confonds pas $\\displaystyle \\binom{n}{p}$ (combinaisons) et $n^p$ (arrangements avec répétition)"
         ]
       },
       {

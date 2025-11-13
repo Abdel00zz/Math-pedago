@@ -10,7 +10,6 @@ const ConcoursResumeView: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const [confirmed, setConfirmed] = useState(false);
     const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
-    const [checkedItems, setCheckedItems] = useState<Set<string>>(new Set());
     const [navigationMode, setNavigationMode] = useState<'theme' | 'year' | null>(null);
 
     useEffect(() => {
@@ -86,46 +85,42 @@ const ConcoursResumeView: React.FC = () => {
         }
     };
 
-    const toggleItemCheck = (itemId: string) => {
-        setCheckedItems(prev => {
-            const newSet = new Set(prev);
-            if (newSet.has(itemId)) {
-                newSet.delete(itemId);
-            } else {
-                newSet.add(itemId);
-            }
-            return newSet;
-        });
-    };
-
     return (
         <div className="min-h-screen relative overflow-hidden concours-math-red" style={{
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
         }}>
-            {/* Geometric motif background (decorative) */}
+            {/* Modern geometric background with flowing lines and shapes */}
             <div className="absolute inset-0 pointer-events-none" aria-hidden={true}>
                 <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                         <linearGradient id="concoursGradientResume" x1="0%" x2="100%" y1="0%" y2="100%">
-                            <stop offset="0%" stopColor="#7c5cff" stopOpacity="0.12" />
-                            <stop offset="100%" stopColor="#4fd1c5" stopOpacity="0.12" />
+                            <stop offset="0%" stopColor="#ff9a9e" stopOpacity="0.15" />
+                            <stop offset="50%" stopColor="#fecfef" stopOpacity="0.12" />
+                            <stop offset="100%" stopColor="#ffecd2" stopOpacity="0.15" />
                         </linearGradient>
-                        <filter id="blurSmallResume" x="-20%" y="-20%" width="140%" height="140%">
-                            <feGaussianBlur stdDeviation="40" />
+                        <filter id="blurSmallResume" x="-50%" y="-50%" width="200%" height="200%">
+                            <feGaussianBlur stdDeviation="60" />
                         </filter>
-                        <pattern id="concours-hex-resume" width="48" height="48" patternUnits="userSpaceOnUse">
-                            <path d="M24 0 L36 12 L24 24 L12 12 Z" fill="white" opacity="0.03" />
+                        <pattern id="concours-wave-resume" width="60" height="60" patternUnits="userSpaceOnUse">
+                            <circle cx="30" cy="30" r="1.5" fill="white" opacity="0.04" />
+                            <path d="M0,30 Q15,20 30,30 T60,30" stroke="white" strokeWidth="0.5" fill="none" opacity="0.03" />
                         </pattern>
                     </defs>
 
                     <rect width="100%" height="100%" fill="url(#concoursGradientResume)" />
 
-                    <g filter="url(#blurSmallResume)" opacity="0.28">
-                        <circle cx="22%" cy="20%" r="150" fill="#ffffff" />
-                        <rect x="62%" y="14%" width="320" height="220" rx="36" fill="#ffffff" />
+                    <g filter="url(#blurSmallResume)" opacity="0.35">
+                        <circle cx="15%" cy="25%" r="180" fill="#ffd89b" />
+                        <circle cx="85%" cy="15%" r="200" fill="#ff6b95" />
+                        <ellipse cx="50%" cy="80%" rx="300" ry="150" fill="#fa709a" />
+                        <rect x="70%" y="50%" width="250" height="180" rx="90" fill="#fee140" />
                     </g>
 
-                    <rect width="100%" height="100%" fill="url(#concours-hex-resume)" opacity="0.06" />
+                    <rect width="100%" height="100%" fill="url(#concours-wave-resume)" opacity="0.08" />
+
+                    {/* Flowing curves */}
+                    <path d="M0,100 Q250,50 500,100 T1000,100 L1000,0 L0,0 Z" fill="white" opacity="0.02" />
+                    <path d="M0,200 Q300,150 600,200 T1200,200" stroke="white" strokeWidth="2" fill="none" opacity="0.04" />
                 </svg>
             </div>
 
@@ -143,77 +138,42 @@ const ConcoursResumeView: React.FC = () => {
                     </p>
                 </div>
 
-                {/* Progression avec badge et barre */}
+                {/* Progression avec badge */}
                 <div className="mb-12 bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-6">
-                    <div className="flex items-center justify-between mb-4">
-                        <div className="inline-block px-3 py-1 bg-indigo-100 text-xs text-indigo-700 font-light rounded-lg">
+                    <div className="flex items-center justify-between">
+                        <div className="inline-block px-4 py-2 bg-gradient-to-r from-amber-100 to-yellow-100 text-sm text-amber-800 font-medium rounded-xl">
                             Section {currentSectionIndex + 1} / {totalSections}
                         </div>
-                        <div className="text-xs text-gray-600 font-light">
-                            {checkedItems.size} / {currentSection.items.length} validés
+                        <div className="text-sm text-gray-700 font-medium">
+                            {currentSection.title}
                         </div>
-                    </div>
-                    <div className="h-2 bg-gray-100 overflow-hidden rounded-full">
-                        <div
-                            className="h-full bg-gradient-to-r from-green-500 to-emerald-500 transition-all duration-500 rounded-full"
-                            style={{ width: `${currentSection.items.length > 0 ? (checkedItems.size / currentSection.items.length) * 100 : 0}%` }}
-                        />
                     </div>
                 </div>
 
                 {/* Section actuelle */}
-                <div className="mb-12 bg-white/95 backdrop-blur-sm rounded-2xl shadow-lg p-8">
-                    {/* En-tête de section */}
-                    <div className="mb-8">
-                        <h2 className="text-2xl font-light text-gray-900">
-                            {currentSection.title}
-                        </h2>
-                    </div>
+                <div className="mb-12 space-y-5">
+                    {currentSection.items.map((item: string, itemIndex: number) => {
+                        const isWarning = item.includes('ATTENTION') || item.includes('DANGER') || item.includes('PIÈGE');
 
-                    {/* Liste des items */}
-                    <div className="space-y-4">
-                        {currentSection.items.map((item: string, itemIndex: number) => {
-                            const itemId = `${currentSectionIndex}-${itemIndex}`;
-                            const isChecked = checkedItems.has(itemId);
-                            const isWarning = item.includes('ATTENTION') || item.includes('DANGER') || item.includes('PIÈGE');
-
-                            return (
-                                <div
-                                    key={itemIndex}
-                                    className={`bg-white rounded-xl shadow-sm hover:shadow transition-all ${
-                                        isWarning ? 'border-l-4 border-l-red-400' : ''
-                                    } ${isChecked ? 'bg-gradient-to-br from-green-50 to-emerald-50' : ''}`}
-                                >
-                                    <div className="p-6">
-                                        <div className="flex gap-4 items-start">
-                                            {/* Contenu */}
-                                            <div className="flex-1 text-sm text-gray-700 font-light leading-relaxed">
-                                                <FormattedText text={item} />
-                                            </div>
-
-                                            {/* Checkbox rond à droite */}
-                                            <div className="flex-shrink-0">
-                                                <button
-                                                    onClick={() => toggleItemCheck(itemId)}
-                                                    className={`w-6 h-6 rounded-full border-2 transition-all flex items-center justify-center ${
-                                                        isChecked
-                                                            ? 'bg-green-600 border-green-600'
-                                                            : 'border-gray-300 hover:border-gray-500'
-                                                    }`}
-                                                >
-                                                    {isChecked && (
-                                                        <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                                                        </svg>
-                                                    )}
-                                                </button>
-                                            </div>
-                                        </div>
+                        return (
+                            <div
+                                key={itemIndex}
+                                className={`rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 ${
+                                    isWarning
+                                        ? 'bg-gradient-to-br from-red-50 to-pink-50 border-l-4 border-red-400'
+                                        : 'bg-gradient-to-br from-amber-50 to-yellow-50'
+                                }`}
+                            >
+                                <div className="p-8">
+                                    <div className={`text-base leading-relaxed ${
+                                        isWarning ? 'text-gray-800' : 'text-gray-800'
+                                    }`}>
+                                        <FormattedText text={item} />
                                     </div>
                                 </div>
-                            );
-                        })}
-                    </div>
+                            </div>
+                        );
+                    })}
                 </div>
 
                 {/* Navigation */}
