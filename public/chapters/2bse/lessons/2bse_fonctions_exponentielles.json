@@ -1,43 +1,187 @@
 {
   "header": {
-    "chapter": "2ème BSE - Mathématiques",
     "title": "Fonctions Exponentielles",
-    "subtitle": "Définition, propriétés et applications"
+    "subtitle": "Fonction exponentielle népérienne et exponentielle de base a",
+    "classe": "2ème Bac PC-SVT",
+    "chapter": "Chapitre 7",
+    "academicYear": "2025-2026"
   },
   "sections": [
     {
-      "title": "La fonction exponentielle",
+      "title": "La fonction exponentielle népérienne",
       "subsections": [
         {
-          "title": "Définition",
+          "title": "Définition et notation",
           "elements": [
             {
-              "type": "definition",
-              "title": "Fonction exponentielle",
-              "content": "La fonction exponentielle est l'unique fonction f définie sur ℝ telle que :\n• f'(x) = f(x) pour tout x ∈ ℝ\n• f(0) = 1"
+              "type": "p",
+              "content": "La fonction exponentielle népérienne est la fonction réciproque de la fonction logarithme népérien. C'est l'une des fonctions les plus importantes en mathématiques et en sciences."
             },
             {
-              "type": "notation",
-              "content": "On note cette fonction exp(x) ou eˣ où e ≈ 2,718281828..."
+              "type": "definition-box",
+              "preamble": "**Fonction exponentielle népérienne** :",
+              "content": "La fonction $f$ définie par $f(x) = \\ln(x)$ sur $]0;+\\infty[$ est continue et strictement croissante.\n\nElle admet donc une fonction réciproque $f^{-1}$, appelée **fonction exponentielle népérienne**, notée $\\exp$ ou $e$.\n\n$$f^{-1} = \\exp : \\mathbb{R} \\longrightarrow ]0;+\\infty[$$\n$$x \\longmapsto f^{-1}(x) = \\exp(x) = e^x$$"
             },
             {
-              "type": "property",
-              "title": "Propriété fondamentale",
-              "content": "Pour tout x ∈ ℝ : (eˣ)' = eˣ"
+              "type": "property-box",
+              "preamble": "**Propriétés fondamentales** :",
+              "listType": "bullet",
+              "content": [
+                "La fonction exponentielle est continue et strictement croissante sur $\\mathbb{R}$",
+                "Les courbes de $f(x)=\\ln(x)$ et $f^{-1}(x)=e^x$ sont symétriques par rapport à la première bissectrice (droite $y=x$)",
+                "Pour tout $x \\in \\mathbb{R}$ : $\\exp(x) = e^x > 0$",
+                "Pour tout $x \\in ]0;+\\infty[$ : $\\exp(\\ln(x)) = x$ et $\\ln(\\exp(x)) = x$"
+              ]
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Relations fondamentales** :",
+              "content": "**1.** Pour tout $x \\in ]0;+\\infty[$ :\n\n$$\\exp(\\ln(x)) = x \\quad \\text{ et } \\quad \\ln(\\exp(x)) = x$$\n\n**2.** Pour tout $x \\in \\mathbb{R}$ :\n\n$$\\ln(e^x) = x \\quad \\text{ et } \\quad e^{\\ln(x)} = x \\text{ (si } x>0\\text{)}$$\n\n**3.** Relation caractéristique :\n\n$$\\exp(x) = y \\Leftrightarrow x = \\ln(y) \\quad \\text{ avec } y > 0$$"
             }
           ]
         },
         {
-          "title": "Propriétés algébriques",
+          "title": "Résolution d'équations et d'inéquations",
           "elements": [
             {
-              "type": "property",
-              "title": "Relation fonctionnelle",
-              "content": "Pour tous a, b ∈ ℝ : eᵃ⁺ᵇ = eᵃ × eᵇ"
+              "type": "property-box",
+              "preamble": "**Propriétés de comparaison** :",
+              "listType": "bullet",
+              "content": [
+                "$e^a = e^b \\Leftrightarrow a = b$ pour tous $a,b \\in \\mathbb{R}$",
+                "$e^a < e^b \\Leftrightarrow a < b$ pour tous $a,b \\in \\mathbb{R}$",
+                "$e^a \\leq e^b \\Leftrightarrow a \\leq b$ pour tous $a,b \\in \\mathbb{R}$"
+              ]
             },
             {
-              "type": "property",
-              "content": "• e⁰ = 1\n• e⁻ˣ = 1/eˣ\n• eˣ⁻ʸ = eˣ/eʸ\n• (eˣ)ⁿ = eⁿˣ pour n ∈ ℤ"
+              "type": "example-box",
+              "preamble": "**Exemple 1 : À compléter - Résolution d'équation**",
+              "content": "Résoudre dans $\\mathbb{R}$ l'équation : $e^x - 3 = 0$\n\n$$e^x - 3 = 0 \\Leftrightarrow e^x = ___3___$$\n\n$$\\Leftrightarrow x = \\ln(___3___)$$\n\nL'ensemble des solutions est : $S = \\{___\\ln(3)___\\}$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 2 : Résolution d'équation exponentielle**",
+              "content": "Résoudre dans $\\mathbb{R}$ l'équation : $e^{x+3} = e^{2x-7}$\n\nOn utilise la propriété : $e^a = e^b \\Leftrightarrow a = b$\n\n$$e^{x+3} = e^{2x-7} \\Leftrightarrow x+3 = 2x-7$$\n\n$$\\Leftrightarrow x = 10$$\n\nL'ensemble des solutions est : $S = \\{10\\}$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 3 : À compléter - Résolution d'inéquation**",
+              "content": "Résoudre dans $\\mathbb{R}$ l'inéquation : $e^{x+1} < e^{6x-2}$\n\nOn utilise la croissance stricte de l'exponentielle :\n\n$$e^{x+1} < e^{6x-2} \\Leftrightarrow x+1 < ___6x-2___$$\n\n$$\\Leftrightarrow -5x < ___-3___$$\n\n$$\\Leftrightarrow x > \\dfrac{___3___}{___5___}$$\n\nL'ensemble des solutions est : $S = \\left]\\dfrac{3}{5};+\\infty\\right[$"
+            },
+            {
+              "type": "remark-box",
+              "preamble": "**Attention** :",
+              "content": "Lorsqu'on multiplie ou divise une inéquation par un nombre négatif, on doit **inverser le sens** de l'inégalité.\n\nExemple : $-5x < -3 \\Leftrightarrow x > \\dfrac{3}{5}$ (on divise par $-5 < 0$)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Propriétés algébriques",
+      "subsections": [
+        {
+          "title": "Opérations sur les exponentielles",
+          "elements": [
+            {
+              "type": "property-box",
+              "preamble": "**Propriétés fondamentales** :",
+              "content": "Pour tous réels $a$ et $b$, et pour tout rationnel $r \\in \\mathbb{Q}$ :\n\n| **Propriété** | **Exemple** |\n|---------------|-------------|\n| $e^{a+b} = e^a \\times e^b$ | $e^7 = e^4 \\times e^3$ |\n| $e^{-a} = \\dfrac{1}{e^a}$ | $e^{-2} = \\dfrac{1}{e^2}$ |\n| $e^{a-b} = \\dfrac{e^a}{e^b}$ | $e^5 = \\dfrac{e^7}{e^2}$ |\n| $(e^a)^r = e^{ar}$ | $(e^3)^4 = e^{12}$ |\n| $\\sqrt[n]{e^a} = e^{\\frac{a}{n}}$ | $\\sqrt{e^6} = e^3$ |"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 4 : À compléter - Simplification d'expressions**",
+              "content": "Simplifions les expressions suivantes :\n\n**1.** $\\dfrac{e^{5x+3}}{e^{x-3}} = e^{(5x+3)-(x-3)} = e^{___4x+6___}$\n\n**2.** $e^{2x} \\times e^{-x} \\times e^{3x} = e^{2x+(-x)+3x} = e^{___4x___}$\n\n**3.** $(e^{x+1})^3 = e^{3(x+1)} = e^{___3x+3___}$\n\n**4.** $\\sqrt{e^{2x-6}} = e^{\\frac{2x-6}{2}} = e^{___x-3___}$"
+            },
+            {
+              "type": "theorem-box",
+              "preamble": "**Démonstration de $e^{a+b} = e^a \\times e^b$** :",
+              "content": "Posons $A = e^{a+b}$ et $B = e^a \\times e^b$.\n\n**Pour A** :\n$$\\ln(A) = \\ln(e^{a+b}) = a+b \\quad (1)$$\n\n**Pour B** :\n$$\\ln(B) = \\ln(e^a \\times e^b) = \\ln(e^a) + \\ln(e^b) = a + b \\quad (2)$$\n\nD'après $(1)$ et $(2)$ : $\\ln(A) = \\ln(B)$\n\nDonc $A = B$, c'est-à-dire $e^{a+b} = e^a \\times e^b$"
+            }
+          ]
+        },
+        {
+          "title": "Domaines de définition",
+          "elements": [
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 5 : Domaines de définition**",
+              "listType": "bullet",
+              "content": [
+                "**Fonction** $f(x) = \\dfrac{2}{e^x}$ : Comme $e^x > 0$ pour tout $x \\in \\mathbb{R}$, on a $D_f = \\mathbb{R}$",
+                "**Fonction** $g(x) = \\sqrt{e^x}$ : Comme $e^x > 0$ pour tout $x \\in \\mathbb{R}$, on a $D_g = \\mathbb{R}$",
+                "**Fonction** $h(x) = \\ln(e^x - 1)$ : Il faut $e^x - 1 > 0$, soit $e^x > 1 = e^0$, donc $x > 0$. Ainsi $D_h = ]0;+\\infty[$"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Limites de la fonction exponentielle",
+      "subsections": [
+        {
+          "title": "Limites usuelles",
+          "elements": [
+            {
+              "type": "property-box",
+              "preamble": "**Limites aux bornes** :",
+              "content": "$$\\lim_{x \\to -\\infty} e^x = 0 \\qquad \\text{et} \\qquad \\lim_{x \\to +\\infty} e^x = +\\infty$$\n\n$$\\lim_{x \\to 0} \\dfrac{e^x - 1}{x} = 1$$"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Croissances comparées** :",
+              "content": "Pour tout entier naturel $n \\in \\mathbb{N}^*$ :\n\n$$\\lim_{x \\to -\\infty} x^n \\times e^x = 0$$\n\n$$\\lim_{x \\to +\\infty} \\dfrac{e^x}{x^n} = +\\infty$$\n\n$$\\lim_{x \\to +\\infty} x^n \\times e^{-x} = 0$$\n\n**Interprétation** : L'exponentielle l'emporte toujours sur les puissances."
+            },
+            {
+              "type": "remark-box",
+              "preamble": "**Règle pratique** :",
+              "content": "À l'infini, l'exponentielle \"bat\" toujours les polynômes :\n- En $+\\infty$ : $e^x$ croît plus vite que $x^n$\n- En $-\\infty$ : $e^x$ tend vers $0$ plus vite que $\\dfrac{1}{x^n}$ tend vers $0$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 6 : À compléter - Calcul de limites**",
+              "content": "**1.** Calculons $\\displaystyle\\lim_{x \\to +\\infty} \\dfrac{e^{2x}}{x}$\n\nPosons $t = 2x$. Quand $x \\to +\\infty$, on a $t \\to ___+\\infty___$\n\n$$\\lim_{x \\to +\\infty} \\dfrac{e^{2x}}{x} = \\lim_{t \\to +\\infty} \\dfrac{e^t}{\\frac{t}{2}} = \\lim_{t \\to +\\infty} \\dfrac{2e^t}{t} = ___+\\infty___$$\n\n**2.** Calculons $\\displaystyle\\lim_{x \\to +\\infty} \\dfrac{e^x + 2x}{x^3}$\n\n$$\\lim_{x \\to +\\infty} \\dfrac{e^x + 2x}{x^3} = \\lim_{x \\to +\\infty} \\left(\\dfrac{e^x}{x^3} + \\dfrac{2}{x^2}\\right) = ___+\\infty___ + ___0___ = +\\infty$$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Dérivée de la fonction exponentielle",
+      "subsections": [
+        {
+          "title": "Dérivée de $e^x$",
+          "elements": [
+            {
+              "type": "theorem-box",
+              "preamble": "**Dérivée de la fonction exponentielle** :",
+              "content": "La fonction $f(x) = e^x$ est dérivable sur $\\mathbb{R}$ et pour tout $x \\in \\mathbb{R}$ :\n\n$$\\left(e^x\\right)' = e^x$$\n\n**Remarque** : La fonction exponentielle est égale à sa propre dérivée, ce qui la rend unique."
+            },
+            {
+              "type": "theorem-box",
+              "preamble": "**Dérivée de $e^{u(x)}$** :",
+              "content": "Si $u$ est une fonction dérivable sur un intervalle $I$, alors la fonction $f(x) = e^{u(x)}$ est dérivable sur $I$ et :\n\n$$\\left(e^{u(x)}\\right)' = u'(x) \\times e^{u(x)}$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 7 : Calcul de dérivées**",
+              "content": "Calculons les dérivées des fonctions suivantes :\n\n**1.** $f(x) = e^{5x^2+3x}$\n\nOn pose $u(x) = 5x^2 + 3x$, donc $u'(x) = 10x + 3$\n\n$$f'(x) = (10x+3) \\times e^{5x^2+3x}$$\n\n**2.** $g(x) = x^2 \\times e^x$\n\nOn utilise la formule $(uv)' = u'v + uv'$ :\n\n$$g'(x) = 2x \\times e^x + x^2 \\times e^x = (2x+x^2) \\times e^x = x(x+2)e^x$$\n\n**3.** $h(x) = \\dfrac{e^x}{x^2}$\n\nOn utilise la formule $\\left(\\dfrac{u}{v}\\right)' = \\dfrac{u'v - uv'}{v^2}$ :\n\n$$h'(x) = \\dfrac{e^x \\times x^2 - e^x \\times 2x}{x^4} = \\dfrac{e^x(x-2)}{x^3}$$"
+            }
+          ]
+        },
+        {
+          "title": "Primitives",
+          "elements": [
+            {
+              "type": "property-box",
+              "preamble": "**Primitives de l'exponentielle** :",
+              "content": "**1.** Une primitive de $f(x) = e^x$ est $F(x) = e^x + c$ où $c \\in \\mathbb{R}$\n\n**2.** Si $u$ est dérivable sur un intervalle $I$, une primitive de $f(x) = u'(x) \\times e^{u(x)}$ est :\n\n$$F(x) = e^{u(x)} + c \\quad \\text{ où } c \\in \\mathbb{R}$$"
+            },
+            {
+              "type": "remark-box",
+              "preamble": "**Méthode pratique** :",
+              "content": "Pour trouver une primitive de $f(x) = g(x) \\times e^{u(x)}$ :\n1. Vérifier si $g(x)$ est proportionnel à $u'(x)$\n2. Si oui, une primitive est de la forme $\\dfrac{k}{a} e^{u(x)}$ où $a$ est le coefficient de proportionnalité"
             }
           ]
         }
@@ -47,96 +191,156 @@
       "title": "Étude de la fonction exponentielle",
       "subsections": [
         {
-          "title": "Variations et limites",
+          "title": "Tableau de variation et courbe",
           "elements": [
             {
-              "type": "property",
-              "title": "Monotonie",
-              "content": "La fonction exponentielle est strictement croissante sur ℝ"
+              "type": "property-box",
+              "preamble": "**Variations de $f(x) = e^x$** :",
+              "content": "La fonction $f(x) = e^x$ est :\n- **Définie** sur $\\mathbb{R}$\n- **Continue** et **dérivable** sur $\\mathbb{R}$\n- **Strictement croissante** sur $\\mathbb{R}$ car $f'(x) = e^x > 0$ pour tout $x \\in \\mathbb{R}$\n- $\\displaystyle\\lim_{x \\to -\\infty} e^x = 0$ : l'axe des abscisses est asymptote horizontale en $-\\infty$\n- $\\displaystyle\\lim_{x \\to +\\infty} e^x = +\\infty$"
             },
             {
-              "type": "property",
-              "title": "Limites",
-              "content": "• lim(x→-∞) eˣ = 0\n• lim(x→+∞) eˣ = +∞"
+              "type": "property-box",
+              "preamble": "**Tableau de variation** :",
+              "content": "| $x$ | $-\\infty$ | | $+\\infty$ |\n|-----|-----------|---|----------|\n| $f'(x)$ | | $+$ | |\n| | | | $+\\infty$ |\n| $f(x)$ | | ↗ | |\n| | $0$ | | |"
             },
             {
-              "type": "property",
-              "title": "Signe",
-              "content": "Pour tout x ∈ ℝ : eˣ > 0"
-            }
-          ]
-        },
-        {
-          "title": "Croissances comparées",
-          "elements": [
-            {
-              "type": "theorem",
-              "title": "Croissance exponentielle",
-              "content": "L'exponentielle croît plus vite que toute fonction polynomiale :\nlim(x→+∞) eˣ/xⁿ = +∞ pour tout n ∈ ℕ"
-            },
-            {
-              "type": "limit",
-              "content": "• lim(x→0) (eˣ - 1)/x = 1\n• lim(x→+∞) x/eˣ = 0"
+              "type": "remark-box",
+              "preamble": "**Points remarquables** :",
+              "listType": "bullet",
+              "content": [
+                "$f(0) = e^0 = 1$ : la courbe passe par le point $(0;1)$",
+                "$f(1) = e \\approx 2,718$ : la courbe passe par le point $(1;e)$",
+                "La tangente en $x=0$ a pour équation $y = x + 1$ (car $f'(0) = 1$)",
+                "La courbe est au-dessus de ses tangentes (fonction convexe)"
+              ]
             }
           ]
         }
       ]
     },
     {
-      "title": "Équations et inéquations",
+      "title": "Fonction exponentielle de base a",
       "subsections": [
         {
-          "title": "Résolution d'équations",
+          "title": "Définition et notation",
           "elements": [
             {
-              "type": "method",
-              "title": "Équation eˣ = a",
-              "content": "• Si a ≤ 0 : pas de solution\n• Si a > 0 : x = ln(a)"
+              "type": "p",
+              "content": "On peut définir des fonctions exponentielles avec d'autres bases que $e$. Ces fonctions sont très utilisées en sciences (croissance exponentielle, décroissance radioactive, etc.)."
             },
             {
-              "type": "method",
-              "title": "Équation eᶠ⁽ˣ⁾ = eᵍ⁽ˣ⁾",
-              "content": "Équivaut à f(x) = g(x) (car exp est injective)"
+              "type": "definition-box",
+              "preamble": "**Fonction exponentielle de base $a$** :",
+              "content": "Soit $a \\in ]0;1[ \\cup ]1;+\\infty[$.\n\nLa fonction exponentielle de base $a$ est définie par :\n\n$$f(x) = a^x = e^{x\\ln(a)}$$\n\npour tout $x \\in \\mathbb{R}$."
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Propriétés** :",
+              "listType": "bullet",
+              "content": [
+                "Pour tout $x \\in \\mathbb{R}$ : $a^x = e^{x\\ln(a)}$",
+                "Pour tout $x > 0$ : $\\log_a(x) = \\dfrac{\\ln(x)}{\\ln(a)}$",
+                "Relation : $a^x = y \\Leftrightarrow x = \\log_a(y)$ avec $y > 0$",
+                "Cas particulier : $10^x = e^{x\\ln(10)}$ et $\\log_{10}(x) = \\dfrac{\\ln(x)}{\\ln(10)}$"
+              ]
             }
           ]
         },
         {
-          "title": "Inéquations",
+          "title": "Propriétés algébriques",
           "elements": [
             {
-              "type": "method",
-              "title": "Inéquation eˣ > a",
-              "content": "• Si a ≤ 0 : solution x ∈ ℝ\n• Si a > 0 : solution x > ln(a)"
+              "type": "property-box",
+              "preamble": "**Opérations avec $a^x$** :",
+              "content": "Pour $a \\in ]0;1[ \\cup ]1;+\\infty[$, $r \\in \\mathbb{Q}$ et $x,y \\in \\mathbb{R}$ :\n\n| **Propriété** | **Exemple** |\n|---------------|-------------|\n| $a^{x+y} = a^x \\times a^y$ | $2^5 = 2^3 \\times 2^2$ |\n| $a^{-x} = \\dfrac{1}{a^x}$ | $3^{-2} = \\dfrac{1}{9}$ |\n| $a^{x-y} = \\dfrac{a^x}{a^y}$ | $5^3 = \\dfrac{5^7}{5^4}$ |\n| $(a^x)^r = a^{xr}$ | $(2^3)^4 = 2^{12}$ |\n| $\\sqrt[n]{a^x} = a^{\\frac{x}{n}}$ | $\\sqrt{4^6} = 4^3$ |"
+            }
+          ]
+        },
+        {
+          "title": "Dérivée et variations",
+          "elements": [
+            {
+              "type": "theorem-box",
+              "preamble": "**Dérivée de $a^x$** :",
+              "content": "La fonction $f(x) = a^x = e^{x\\ln(a)}$ est dérivable sur $\\mathbb{R}$ et :\n\n$$\\left(a^x\\right)' = \\ln(a) \\times a^x$$"
             },
             {
-              "type": "method",
-              "title": "Inéquation eᶠ⁽ˣ⁾ > eᵍ⁽ˣ⁾",
-              "content": "Équivaut à f(x) > g(x) (car exp est strictement croissante)"
+              "type": "property-box",
+              "preamble": "**Sens de variation** :",
+              "listType": "bullet",
+              "content": [
+                "Si $0 < a < 1$ : $\\ln(a) < 0$ donc $(a^x)' < 0$. La fonction $f(x) = a^x$ est **strictement décroissante** sur $\\mathbb{R}$",
+                "Si $a > 1$ : $\\ln(a) > 0$ donc $(a^x)' > 0$. La fonction $f(x) = a^x$ est **strictement croissante** sur $\\mathbb{R}$"
+              ]
+            },
+            {
+              "type": "remark-box",
+              "preamble": "**Remarque importante** :",
+              "content": "Pour toute base $a > 0$ et $a \\neq 1$, la fonction $f(x) = a^x$ vérifie toujours :\n- $f(0) = a^0 = 1$ (la courbe passe par le point $(0;1)$)\n- $f(x) > 0$ pour tout $x \\in \\mathbb{R}$"
             }
           ]
         }
       ]
     },
     {
-      "title": "Applications",
+      "title": "Exercices d'application",
       "subsections": [
         {
-          "title": "Modélisation de phénomènes",
+          "title": "Exercices avec solutions détaillées",
           "elements": [
             {
-              "type": "application",
-              "title": "Croissance exponentielle",
-              "content": "Population : P(t) = P₀eᵏᵗ (k > 0 pour la croissance, k < 0 pour la décroissance)"
+              "type": "practice-box",
+              "statement": "**Exercice 1** : Étude d'une fonction exponentielle\n\nSoit $f$ la fonction définie sur $\\mathbb{R}$ par : $$f(x) = (2x-1)e^{-x}$$",
+              "listType": "numbered",
+              "content": [
+                "Calculer les limites de $f$ en $-\\infty$ et en $+\\infty$",
+                "Calculer la dérivée $f'(x)$ et étudier son signe",
+                "Dresser le tableau de variation de $f$",
+                "Déterminer l'équation de la tangente à la courbe de $f$ au point d'abscisse $0$"
+              ],
+              "solution": [
+                "**Limite en $-\\infty$** :\n\n$$\\lim_{x \\to -\\infty} f(x) = \\lim_{x \\to -\\infty} (2x-1)e^{-x}$$\n\nPosons $t = -x$. Quand $x \\to -\\infty$, on a $t \\to +\\infty$\n\n$$\\lim_{x \\to -\\infty} (2x-1)e^{-x} = \\lim_{t \\to +\\infty} (-2t-1)e^t = \\lim_{t \\to +\\infty} -2te^t - e^t = -\\infty$$\n\n(car $\\displaystyle\\lim_{t \\to +\\infty} te^t = +\\infty$ par croissances comparées)\n\n**Limite en $+\\infty$** :\n\n$$\\lim_{x \\to +\\infty} f(x) = \\lim_{x \\to +\\infty} (2x-1)e^{-x} = \\lim_{x \\to +\\infty} \\dfrac{2x-1}{e^x}$$\n\nPar croissances comparées : $\\displaystyle\\lim_{x \\to +\\infty} \\dfrac{x}{e^x} = 0$\n\nDonc : $\\displaystyle\\lim_{x \\to +\\infty} f(x) = 0$\n\nLa droite $y = 0$ (axe des abscisses) est asymptote horizontale en $+\\infty$.",
+                "Calculons $f'(x)$ en utilisant la formule $(uv)' = u'v + uv'$ :\n\n$$f'(x) = (2x-1)'e^{-x} + (2x-1)(e^{-x})'$$\n\n$$= 2e^{-x} + (2x-1)(-e^{-x})$$\n\n$$= 2e^{-x} - (2x-1)e^{-x}$$\n\n$$= e^{-x}[2 - (2x-1)]$$\n\n$$= e^{-x}(2 - 2x + 1)$$\n\n$$= e^{-x}(3-2x)$$\n\n**Étude du signe** :\n\nComme $e^{-x} > 0$ pour tout $x \\in \\mathbb{R}$, le signe de $f'(x)$ est celui de $(3-2x)$.\n\n$f'(x) = 0 \\Leftrightarrow 3-2x = 0 \\Leftrightarrow x = \\dfrac{3}{2}$\n\n$f'(x) > 0 \\Leftrightarrow 3-2x > 0 \\Leftrightarrow x < \\dfrac{3}{2}$\n\n$f'(x) < 0 \\Leftrightarrow x > \\dfrac{3}{2}$",
+                "Calculons $f\\left(\\dfrac{3}{2}\\right)$ :\n\n$$f\\left(\\dfrac{3}{2}\\right) = \\left(2 \\times \\dfrac{3}{2} - 1\\right)e^{-\\frac{3}{2}} = 2e^{-\\frac{3}{2}}$$\n\n**Tableau de variation** :\n\n| $x$ | $-\\infty$ | | $\\dfrac{3}{2}$ | | $+\\infty$ |\n|-----|-----------|---|----------------|---|----------|\n| $f'(x)$ | | $+$ | $0$ | $-$ | |\n| | | | $2e^{-\\frac{3}{2}}$ | | |\n| $f(x)$ | | ↗ | | ↘ | |\n| | $-\\infty$ | | | | $0$ |\n\nLa fonction $f$ admet un maximum en $x = \\dfrac{3}{2}$ qui vaut $2e^{-\\frac{3}{2}} \\approx 0,446$.",
+                "L'équation de la tangente au point d'abscisse $a$ est : $y = f'(a)(x-a) + f(a)$\n\nPour $a = 0$ :\n\n$$f(0) = (2 \\times 0 - 1)e^0 = -1$$\n\n$$f'(0) = e^0(3-0) = 3$$\n\nDonc l'équation de la tangente est :\n\n$$y = 3(x-0) + (-1) = 3x - 1$$\n\nLa tangente à la courbe de $f$ au point d'abscisse $0$ a pour équation : $y = 3x - 1$"
+              ],
+              "placeholder": "Pour les limites, pensez aux croissances comparées"
             },
             {
-              "type": "application",
-              "title": "Désintégration radioactive",
-              "content": "N(t) = N₀e⁻λᵗ où λ est la constante de désintégration"
+              "type": "practice-box",
+              "statement": "**Exercice 2** : Résolution d'équations et d'inéquations\n\nRésoudre dans $\\mathbb{R}$ les équations et inéquations suivantes :",
+              "listType": "numbered",
+              "content": [
+                "$e^{2x-3} = e^{x+1}$",
+                "$e^{x^2} = e^{4x-3}$",
+                "$e^{2x} - 3e^x + 2 = 0$",
+                "$e^{2x+1} \\geq e^{5-x}$"
+              ],
+              "solution": [
+                "On utilise la propriété : $e^a = e^b \\Leftrightarrow a = b$\n\n$$e^{2x-3} = e^{x+1} \\Leftrightarrow 2x-3 = x+1$$\n\n$$\\Leftrightarrow 2x - x = 1 + 3$$\n\n$$\\Leftrightarrow x = 4$$\n\n**Ensemble des solutions** : $S = \\{4\\}$",
+                "$$e^{x^2} = e^{4x-3} \\Leftrightarrow x^2 = 4x-3$$\n\n$$\\Leftrightarrow x^2 - 4x + 3 = 0$$\n\nCalculons le discriminant : $\\Delta = (-4)^2 - 4(1)(3) = 16 - 12 = 4 > 0$\n\nDeux solutions distinctes :\n\n$$x_1 = \\dfrac{4-2}{2} = 1 \\quad \\text{ et } \\quad x_2 = \\dfrac{4+2}{2} = 3$$\n\n**Ensemble des solutions** : $S = \\{1 ; 3\\}$",
+                "Posons $X = e^x$ (avec $X > 0$). L'équation devient :\n\n$$X^2 - 3X + 2 = 0$$\n\nCalculons le discriminant : $\\Delta = 9 - 8 = 1 > 0$\n\n$$X_1 = \\dfrac{3-1}{2} = 1 \\quad \\text{ et } \\quad X_2 = \\dfrac{3+1}{2} = 2$$\n\nOn résout maintenant :\n\n**Première solution** : $e^x = 1 \\Leftrightarrow e^x = e^0 \\Leftrightarrow x = 0$\n\n**Deuxième solution** : $e^x = 2 \\Leftrightarrow x = \\ln(2)$\n\n**Ensemble des solutions** : $S = \\{0 ; \\ln(2)\\}$",
+                "On utilise la croissance stricte de l'exponentielle :\n\n$$e^{2x+1} \\geq e^{5-x} \\Leftrightarrow 2x+1 \\geq 5-x$$\n\n$$\\Leftrightarrow 2x + x \\geq 5 - 1$$\n\n$$\\Leftrightarrow 3x \\geq 4$$\n\n$$\\Leftrightarrow x \\geq \\dfrac{4}{3}$$\n\n**Ensemble des solutions** : $S = \\left[\\dfrac{4}{3};+\\infty\\right[$"
+              ],
+              "placeholder": "Pour l'équation 3, posez X = e^x"
             },
             {
-              "type": "application",
-              "title": "Circuit RC",
-              "content": "Charge d'un condensateur : q(t) = q₀(1 - e⁻ᵗ/ᴿᶜ)"
+              "type": "practice-box",
+              "statement": "**Exercice 3** : Étude d'une fonction avec exponentielle de base 3\n\nSoit $f$ la fonction définie sur $\\mathbb{R}$ par : $$f(x) = 3^{x^2-x}$$",
+              "listType": "numbered",
+              "content": [
+                "Exprimer $f(x)$ en fonction de la fonction exponentielle népérienne",
+                "Calculer $\\displaystyle\\lim_{x \\to -\\infty} f(x)$ et $\\displaystyle\\lim_{x \\to +\\infty} f(x)$",
+                "Calculer $f'(x)$ et étudier son signe",
+                "Dresser le tableau de variation de $f$"
+              ],
+              "solution": [
+                "On sait que pour tout $x \\in \\mathbb{R}$ : $a^x = e^{x\\ln(a)}$\n\nDonc :\n\n$$f(x) = 3^{x^2-x} = e^{(x^2-x)\\ln(3)}$$\n\nOu encore :\n\n$$f(x) = e^{(x^2-x)\\ln(3)} = e^{\\ln(3)x^2 - \\ln(3)x}$$",
+                "**Limite en $-\\infty$** :\n\nQuand $x \\to -\\infty$ : $x^2 - x = x(x-1) \\to +\\infty$\n\nDonc : $\\displaystyle\\lim_{x \\to -\\infty} (x^2-x) = +\\infty$\n\nOr : $\\displaystyle\\lim_{t \\to +\\infty} 3^t = +\\infty$ (car $3 > 1$)\n\nD'où : $\\displaystyle\\lim_{x \\to -\\infty} f(x) = +\\infty$\n\n**Limite en $+\\infty$** :\n\nQuand $x \\to +\\infty$ : $x^2 - x \\to +\\infty$\n\nDonc : $\\displaystyle\\lim_{x \\to +\\infty} f(x) = +\\infty$",
+                "On utilise la formule : $(e^{u(x)})' = u'(x) \\times e^{u(x)}$\n\nAvec $u(x) = (x^2-x)\\ln(3)$, on a : $u'(x) = (2x-1)\\ln(3)$\n\nDonc :\n\n$$f'(x) = (2x-1)\\ln(3) \\times e^{(x^2-x)\\ln(3)}$$\n\n$$= (2x-1)\\ln(3) \\times 3^{x^2-x}$$\n\n**Étude du signe** :\n\nComme $3^{x^2-x} > 0$ pour tout $x$ et $\\ln(3) > 0$, le signe de $f'(x)$ est celui de $(2x-1)$.\n\n$f'(x) = 0 \\Leftrightarrow 2x-1 = 0 \\Leftrightarrow x = \\dfrac{1}{2}$\n\n$f'(x) < 0 \\Leftrightarrow 2x-1 < 0 \\Leftrightarrow x < \\dfrac{1}{2}$\n\n$f'(x) > 0 \\Leftrightarrow x > \\dfrac{1}{2}$",
+                "Calculons $f\\left(\\dfrac{1}{2}\\right)$ :\n\n$$f\\left(\\dfrac{1}{2}\\right) = 3^{\\left(\\frac{1}{2}\\right)^2 - \\frac{1}{2}} = 3^{\\frac{1}{4}-\\frac{1}{2}} = 3^{-\\frac{1}{4}} = \\dfrac{1}{3^{\\frac{1}{4}}} = \\dfrac{1}{\\sqrt[4]{3}}$$\n\nOu encore : $f\\left(\\dfrac{1}{2}\\right) = 3^{-\\frac{1}{4}} \\approx 0,760$\n\n**Tableau de variation** :\n\n| $x$ | $-\\infty$ | | $\\dfrac{1}{2}$ | | $+\\infty$ |\n|-----|-----------|---|----------------|---|----------|\n| $f'(x)$ | | $-$ | $0$ | $+$ | |\n| | | | $3^{-\\frac{1}{4}}$ | | |\n| $f(x)$ | | ↘ | | ↗ | |\n| | $+\\infty$ | | | | $+\\infty$ |\n\nLa fonction $f$ admet un minimum en $x = \\dfrac{1}{2}$ qui vaut $3^{-\\frac{1}{4}} = \\dfrac{1}{\\sqrt[4]{3}} \\approx 0,760$."
+              ],
+              "placeholder": "Utilisez le fait que $3^x = e^{x\\ln(3)}$"
             }
           ]
         }

@@ -1,220 +1,398 @@
 {
   "header": {
-    "title": "La Dérivation",
-    "subtitle": "Nombre dérivé et fonction dérivée",
+    "title": "Dérivation",
+    "subtitle": "Étude locale des fonctions numériques",
     "classe": "1ère Bac Sciences Mathématiques",
-    "chapter": "Chapitre 10",
+    "chapter": "Chapitre 2",
     "academicYear": "2025-2026"
   },
   "sections": [
     {
-      "title": "Nombre Dérivé",
+      "title": "Dérivabilité en un point",
       "subsections": [
         {
-          "title": "Taux d'Accroissement",
+          "title": "Nombre dérivé",
           "elements": [
             {
-              "type": "p",
-              "content": "Le taux d'accroissement mesure la variation moyenne d'une fonction entre deux points. Il permet d'introduire la notion de dérivée."
-            },
-            {
               "type": "definition-box",
-              "preamble": "**Taux d'accroissement** :",
-              "content": "Soit $f$ une fonction définie sur un intervalle $I$ et $a \\in I$.\n\nPour tout $h \\neq 0$ tel que $a + h \\in I$, le **taux d'accroissement** de $f$ entre $a$ et $a + h$ est :\n\n$$\\tau_h = \\dfrac{f(a + h) - f(a)}{h}$$\n\nOu de manière équivalente, pour $x \\neq a$ dans $I$ :\n$$\\tau = \\dfrac{f(x) - f(a)}{x - a}$$"
+              "preamble": "**Dérivabilité en un point - nombre dérivé** :",
+              "content": "Soit $f$ une fonction définie sur un intervalle ouvert $I$ et $a$ un réel de $I$. On dit que $f$ est dérivable en $a$, s'il existe un nombre réel $l$, tel que $$\\displaystyle\\lim_{x\\to a}\\frac{f(x)-f(a)}{x-a}=l$$ Le réel $l$ est appelé le **nombre dérivé** de $f$ en $a$. On le note par $f'(a)$."
             },
             {
-              "type": "p",
-              "content": "?> **Interprétation géométrique** : Le taux d'accroissement représente la pente de la droite passant par les points $A(a; f(a))$ et $B(a+h; f(a+h))$ de la courbe."
+              "type": "example-box",
+              "preamble": "**Exemple 1 : À compléter - Dérivabilité d'une fonction affine**",
+              "content": "Étudier la dérivabilité de la fonction $f$ en $a$ dans le cas suivant : $f(x)=5x+2$ et $a=1$\n\nOn a : $f(1)=5\\times ___1___ + 2 = ___7___$\n\nCalculons la limite : $$\\displaystyle\\lim_{x\\to 1}\\frac{f(x)-f(1)}{x-1}=\\lim_{x\\to 1}\\frac{5x+2-7}{x-1}=\\lim_{x\\to 1}\\frac{5x-___5___}{x-1}$$\n\n$$=\\lim_{x\\to 1}\\frac{5(x-___1___)}{x-1}=\\lim_{x\\to 1}___5___=5$$\n\nDonc $f$ est ___dérivable___ en $1$ et $f'(1)=___5___$"
             }
           ]
         },
         {
-          "title": "Définition du Nombre Dérivé",
+          "title": "Dérivabilité à droite et à gauche",
           "elements": [
             {
               "type": "definition-box",
-              "preamble": "**Nombre dérivé** :",
-              "content": "Soit $f$ une fonction définie sur un intervalle $I$ et $a \\in I$.\n\nOn dit que $f$ est **dérivable en $a$** si le taux d'accroissement admet une limite finie quand $h$ tend vers $0$ :\n\n$$\\lim_{h \\to 0} \\dfrac{f(a + h) - f(a)}{h} = L$$\n\nCette limite $L$ est appelée **nombre dérivé** de $f$ en $a$, noté $f'(a)$."
+              "preamble": "**Dérivabilité à droite** :",
+              "content": "Soit $f$ une fonction définie sur un intervalle de la forme $[a,b[$. On dit que $f$ est dérivable à droite en $a$, si $$\\displaystyle\\lim_{x\\to a^+}\\frac{f(x)-f(a)}{x-a}$$ est finie. Cette limite est appelée le **nombre dérivé à droite** en $a$, noté $f'_d(a)$."
             },
             {
-              "type": "remark-box",
-              "content": "**Notations** : On utilise diverses notations pour le nombre dérivé : $f'(a)$, $\\dfrac{df}{dx}(a)$, ou $(Df)(a)$."
+              "type": "definition-box",
+              "preamble": "**Dérivabilité à gauche** :",
+              "content": "Soit $f$ une fonction définie sur un intervalle de la forme $]b,a]$. On dit que $f$ est dérivable à gauche en $a$, si $$\\displaystyle\\lim_{x\\to a^-}\\frac{f(x)-f(a)}{x-a}$$ est finie. Cette limite est appelée le **nombre dérivé à gauche** en $a$, noté $f'_g(a)$."
+            },
+            {
+              "type": "property-box",
+              "content": "$f$ est dérivable en $a$ si, et seulement si $f$ est à la fois dérivable à droite et à gauche en $a$ et $f'_d(a)=f'_g(a)$."
             },
             {
               "type": "example-box",
-              "preamble": "**Calcul par définition** :",
-              "content": "Calculer la dérivée de $f(x) = x^2$ en $a = 3$ par définition.\n\n$$f'(3) = \\lim_{h \\to 0} \\dfrac{f(3 + h) - f(3)}{h}$$\n\n$$= \\lim_{h \\to 0} \\dfrac{(3 + h)^2 - 9}{h}$$\n\n$$= \\lim_{h \\to 0} \\dfrac{9 + 6h + h^2 - 9}{h}$$\n\n$$= \\lim_{h \\to 0} \\dfrac{6h + h^2}{h} = \\lim_{h \\to 0} (6 + h) = ___6___$$\n\nDonc $f'(3) = 6$"
+              "preamble": "**Exemple 2 : À compléter - Valeur absolue et point anguleux**",
+              "content": "Soit $f(x)=|x-3|$ et $a=3$. Étudions la dérivabilité en $3$.\n\n**À gauche :** Pour $x<3$ : $f(x)=|x-3|=___-(x-3)___$ car $x-3<0$\n\nDonc $f(x)=___-x+3___$ pour $x<3$, et $f(3)=___0___$\n\nCalculons : $$\\displaystyle\\lim_{x\\to 3^-}\\frac{f(x)-f(3)}{x-3}=\\lim_{x\\to 3^-}\\frac{-x+3-0}{x-3}=\\lim_{x\\to 3^-}\\frac{-(x-___3___)}{x-3}=___-1___$$\n\nDonc $f'_g(3)=___-1___$\n\n**À droite :** Pour $x>3$ : $f(x)=x-3$\n\n$$\\displaystyle\\lim_{x\\to 3^+}\\frac{f(x)-f(3)}{x-3}=\\lim_{x\\to 3^+}\\frac{x-3-0}{x-3}=___1___$$\n\nDonc $f'_d(3)=___1___$\n\n**Conclusion :** Puisque $f'_d(3)\\neq f'_g(3)$, $f$ n'est pas ___dérivable___ en $3$. Le point d'abscisse $3$ est un **point anguleux**."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Interprétation graphique - Tangente",
+      "subsections": [
+        {
+          "title": "Coefficient directeur et équation de la tangente",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Interprétation géométrique du nombre dérivé** :",
+              "content": "Soit $f$ une fonction dérivable en $a$ et $(C_f)$ sa représentation graphique dans un repère $(O;\\vec{i},\\vec{j})$. Le nombre $f'(a)$ est le **coefficient directeur de la tangente** $(T)$ à la courbe $(C_f)$ au point d'abscisse $a$."
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Calcul du coefficient directeur** :",
+              "content": "Si $A(x_A;y_A)\\in(T)$ et $B(x_B;y_B)\\in(T)$, alors $$\\displaystyle f'(a)=\\frac{y_B-y_A}{x_B-x_A}$$"
+            },
+            {
+              "type": "definition-box",
+              "preamble": "**Équation de la tangente** :",
+              "content": "La droite $(T)$ : $$y=f'(a)(x-a)+f(a)$$ est appelée la **tangente** à la courbe $(C_f)$ au point d'abscisse $a$."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 3 : À compléter - Équation de la tangente à une parabole**",
+              "content": "Soit $f(x)=x^2$ et $a=2$. Déterminons l'équation de la tangente à $(C_f)$ au point d'abscisse $2$.\n\n**Étape 1 :** Calculons $f(2)=2^2=___4___$\n\n**Étape 2 :** On sait que $(x^2)'=2x$ donc $f'(x)=___2x___$ et $f'(2)=2\\times___2___=___4___$\n\n**Étape 3 :** L'équation de la tangente est : $$y=f'(2)(x-2)+f(2)$$\n\n$$y=___4___\\times(x-2)+___4___$$\n\n$$y=4x-___8___+4=___4x-4___$$"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Demi-tangente à droite** :",
+              "content": "Si $f$ est dérivable à droite en $a$, alors $(C_f)$ admet au point $A(a,f(a))$ une demi-tangente d'équation : $$y=f'_d(a)(x-a)+f(a) \\quad ; \\quad x\\geq a$$"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Demi-tangente à gauche** :",
+              "content": "Si $f$ est dérivable à gauche en $a$, alors $(C_f)$ admet au point $A(a,f(a))$ une demi-tangente d'équation : $$y=f'_g(a)(x-a)+f(a) \\quad ; \\quad x\\leq a$$"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Demi-tangente verticale** :",
+              "content": "Si $\\displaystyle\\lim_{x\\to a^\\pm}\\frac{f(x)-f(a)}{x-a}=\\pm\\infty$, alors $(C_f)$ admet une demi-tangente verticale d'équation $x=a$ (parallèle à l'axe des ordonnées).\n\nLa direction (vers le haut ou vers le bas) dépend du signe de la limite."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Approximation affine",
+      "subsections": [
+        {
+          "title": "Définition et applications",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Approximation affine d'une fonction** :",
+              "content": "Soit $f$ une fonction dérivable en $a$. La fonction $g$ telle que $$g(x)=f'(a)(x-a)+f(a)$$ s'appelle l'**approximation affine** de $f$ au voisinage de $a$."
+            },
+            {
+              "type": "property-box",
+              "content": "Pour tout réel $h$ voisin de $a$ : $f(h)\\approx g(h)$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 4 : À compléter - Approximation de $(1+x)^2$**",
+              "content": "Soit $f(x)=(1+x)^2$. Déterminons l'approximation affine au voisinage de $0$.\n\n**Étape 1 :** $f(0)=(1+___0___)^2=___1___$\n\n**Étape 2 :** $f'(x)=2(1+x)$ donc $f'(0)=2(1+___0___)=___2___$\n\n**Étape 3 :** L'approximation affine est : $$g(x)=f'(0)(x-0)+f(0)=___2___x+___1___$$\n\nDonc pour $x$ voisin de $0$ : $(1+x)^2\\approx___2x+1___$\n\n**Application :** $(1{,}0001)^2\\approx 2\\times___0{,}0001___+1=0{,}0002+1=___1{,}0002___$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Dérivabilité sur un intervalle - Fonction dérivée",
+      "subsections": [
+        {
+          "title": "Définitions",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Dérivabilité sur un intervalle ouvert** :",
+              "content": "On dit que $f$ est dérivable sur $]a,b[$ lorsque $f$ est dérivable en tout réel de $]a,b[$."
+            },
+            {
+              "type": "definition-box",
+              "preamble": "**Dérivabilité sur un intervalle fermé** :",
+              "content": "On dit que $f$ est dérivable sur $[a,b]$ lorsque $f$ est dérivable sur $]a,b[$, dérivable à droite en $a$ et à gauche en $b$."
+            },
+            {
+              "type": "definition-box",
+              "preamble": "**Fonction dérivée** :",
+              "content": "Si $f$ est dérivable sur un intervalle $I$, alors la fonction qui à chaque réel $x$ de $I$ associe $f'(x)$ est appelée la **fonction dérivée** de $f$, notée $f'$."
+            },
+            {
+              "type": "property-box",
+              "content": "Si $f$ est dérivable sur un intervalle $I$, alors elle est dérivable sur chaque intervalle inclus dans $I$."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Dérivées des fonctions usuelles",
+      "subsections": [
+        {
+          "title": "Tableau des dérivées",
+          "elements": [
+            {
+              "type": "property-box",
+              "preamble": "**Tableau récapitulatif** :",
+              "content": "Soit $a$, $b$, $c$ des nombres réels et $n\\in\\mathbb{N}^*$.\n\n| $f(x)$ | $D_f$ | $f'(x)$ | Écriture |\n|--------|-------|---------|----------|\n| $c$ | $\\mathbb{R}$ | $0$ | $(c)'=0$ |\n| $ax+b$ | $\\mathbb{R}$ | $a$ | $(ax+b)'=a$ |\n| $x^n$ | $\\mathbb{R}$ | $nx^{n-1}$ | $(x^n)'=nx^{n-1}$ |\n| $\\displaystyle\\frac{1}{x}$ | $\\mathbb{R}^*$ | $\\displaystyle-\\frac{1}{x^2}$ | $\\displaystyle\\left(\\frac{1}{x}\\right)'=-\\frac{1}{x^2}$ |\n| $\\displaystyle\\frac{1}{x^n}$ | $\\mathbb{R}^*$ | $\\displaystyle-\\frac{n}{x^{n+1}}$ | $\\displaystyle\\left(\\frac{1}{x^n}\\right)'=-\\frac{n}{x^{n+1}}$ |\n| $\\sqrt{x}$ | $[0;+\\infty[$ | $\\displaystyle\\frac{1}{2\\sqrt{x}}$ | $\\displaystyle(\\sqrt{x})'=\\frac{1}{2\\sqrt{x}}$ |\n| $\\cos(x)$ | $\\mathbb{R}$ | $-\\sin(x)$ | $(\\cos(x))'=-\\sin(x)$ |\n| $\\sin(x)$ | $\\mathbb{R}$ | $\\cos(x)$ | $(\\sin(x))'=\\cos(x)$ |\n| $\\tan(x)$ | $\\mathbb{R}\\backslash\\{\\frac{\\pi}{2}+k\\pi;k\\in\\mathbb{Z}\\}$ | $1+\\tan^2(x)$ | $(\\tan(x))'=1+\\tan^2(x)$ |\n| $\\cos(ax+b)$ | $\\mathbb{R}$ | $-a\\sin(ax+b)$ | $(\\cos(ax+b))'=-a\\sin(ax+b)$ |\n| $\\sin(ax+b)$ | $\\mathbb{R}$ | $a\\cos(ax+b)$ | $(\\sin(ax+b))'=a\\cos(ax+b)$ |"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 5 : À compléter - Dérivées de fonctions usuelles**",
+              "content": "Calculons les dérivées suivantes :\n\n**a)** $f(x)=x^5$ donc $f'(x)=___5___x^{___4___}$\n\n**b)** $\\displaystyle f(x)=\\frac{1}{x^3}$ donc $f'(x)=\\displaystyle-\\frac{___3___}{x^{___4___}}$\n\n**c)** $f(x)=\\sqrt{x}$ donc $f'(x)=\\displaystyle\\frac{1}{2\\sqrt{___x___}}$\n\n**d)** $f(x)=\\cos(x)$ donc $f'(x)=___-\\sin(x)___$\n\n**e)** $f(x)=\\sin(2x)$ donc $f'(x)=___2___\\cos(___2x___)$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Opérations sur les fonctions dérivées",
+      "subsections": [
+        {
+          "title": "Règles de dérivation",
+          "elements": [
+            {
+              "type": "property-box",
+              "preamble": "**Tableau des opérations** :",
+              "content": "Soit $u$ et $v$ deux fonctions dérivables sur $I$, $\\alpha$ un réel et $n\\in\\mathbb{N}^*$.\n\n| Fonction | Fonction dérivée | Conditions |\n|----------|------------------|------------|\n| $u+v$ | $u'+v'$ | |\n| $u\\times v$ | $u'v+uv'$ | |\n| $\\alpha\\times u$ | $\\alpha u'$ | |\n| $\\displaystyle\\frac{1}{u}$ | $\\displaystyle-\\frac{u'}{u^2}$ | $u(x)\\neq 0$ |\n| $\\displaystyle\\frac{u}{v}$ | $\\displaystyle\\frac{u'v-uv'}{v^2}$ | $v(x)\\neq 0$ |\n| $\\sqrt{u}$ | $\\displaystyle\\frac{u'}{2\\sqrt{u}}$ | $u(x)>0$ |\n| $u^n$ | $nu'u^{n-1}$ | |"
+            },
+            {
+              "type": "property-box",
+              "content": "**Toute fonction polynôme** est dérivable sur $\\mathbb{R}$.\n\n**Toute fonction rationnelle** est dérivable sur chaque intervalle de son ensemble de définition."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 6 : À compléter - Dérivée d'une somme et d'un produit**",
+              "content": "**a)** Soit $f(x)=x^2+3x$\n\nOn a : $(x^2)'=___2x___$ et $(3x)'=___3___$\n\nDonc : $f'(x)=___2x___+___3___=___2x+3___$\n\n**b)** Soit $f(x)=x^3\\times\\cos(x)$\n\nOn pose $u(x)=x^3$ donc $u'(x)=___3x^2___$ et $v(x)=\\cos(x)$ donc $v'(x)=___-\\sin(x)___$\n\nFormule : $(uv)'=u'v+uv'$\n\nDonc : $f'(x)=___3x^2___\\times\\cos(x)+x^3\\times(___-\\sin(x)___)$\n\n$f'(x)=3x^2\\cos(x)-x^3\\sin(x)$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 7 : À compléter - Dérivée d'un quotient**",
+              "content": "Soit $\\displaystyle f(x)=\\frac{x+1}{x-2}$. Calculons $f'(x)$.\n\nOn pose $u(x)=x+1$ donc $u'(x)=___1___$ et $v(x)=x-2$ donc $v'(x)=___1___$\n\nFormule : $\\displaystyle\\left(\\frac{u}{v}\\right)'=\\frac{u'v-uv'}{v^2}$\n\n$$f'(x)=\\frac{___1___\\times(x-2)-(x+1)\\times___1___}{(x-2)^2}$$\n\n$$=\\frac{x-2-x-1}{(x-2)^2}=\\frac{___-3___}{(x-2)^2}$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 8 : À compléter - Dérivée d'une composée**",
+              "content": "**a)** Soit $f(x)=\\sqrt{x^2+1}$\n\nOn pose $u(x)=x^2+1$ donc $u'(x)=___2x___$\n\nFormule : $\\displaystyle(\\sqrt{u})'=\\frac{u'}{2\\sqrt{u}}$\n\n$$f'(x)=\\frac{___2x___}{2\\sqrt{___x^2+1___}}=\\frac{x}{\\sqrt{x^2+1}}$$\n\n**b)** Soit $f(x)=(2x+3)^5$\n\nOn pose $u(x)=2x+3$ donc $u'(x)=___2___$\n\nFormule : $(u^n)'=nu'u^{n-1}$\n\n$$f'(x)=___5___\\times___2___\\times(2x+3)^{___4___}=___10___(2x+3)^4$$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Dérivée et sens de variations",
+      "subsections": [
+        {
+          "title": "Théorèmes fondamentaux",
+          "elements": [
+            {
+              "type": "theorem-box",
+              "preamble": "**Liens entre dérivée et monotonie** :",
+              "content": "Soit $f$ une fonction dérivable sur un intervalle $I$.\n\n$f$ est **croissante** sur $I$ $\\Leftrightarrow$ $(\\forall x\\in I)$ $f'(x)\\geq 0$\n\n$f$ est **décroissante** sur $I$ $\\Leftrightarrow$ $(\\forall x\\in I)$ $f'(x)\\leq 0$\n\n$f$ est **constante** sur $I$ $\\Leftrightarrow$ $(\\forall x\\in I)$ $f'(x)=0$"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Stricte monotonie** :",
+              "content": "Si $f'$ est positive sur $I$ et ne s'y annule qu'en un nombre fini de points, alors $f$ est **strictement croissante** sur $I$.\n\nSi $f'$ est négative sur $I$ et ne s'y annule qu'en un nombre fini de points, alors $f$ est **strictement décroissante** sur $I$."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 9 : À compléter - Étude du sens de variations**",
+              "content": "Soit $f(x)=\\displaystyle\\frac{2x+3}{x-1}$ sur $\\mathbb{R}\\backslash\\{1\\}$. Étudions le sens de variations.\n\n**Étape 1 :** Calculons $f'(x)$ avec la formule du quotient :\n\n$$f'(x)=\\frac{___2___(x-1)-(2x+3)\\times___1___}{(x-1)^2}$$\n\n$$=\\frac{2x-2-2x-3}{(x-1)^2}=\\frac{___-5___}{(x-1)^2}$$\n\n**Étape 2 :** Étude du signe\n\nPuisque $(x-1)^2>0$ pour $x\\neq 1$, le signe de $f'(x)$ est le signe de ___$-5$___.\n\nDonc $f'(x)$ ___$<$___ $0$ sur $\\mathbb{R}\\backslash\\{1\\}$.\n\n**Conclusion :** $f$ est ___décroissante___ sur $]-\\infty;1[$ et sur $]1;+\\infty[$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Dérivée et extremums",
+      "subsections": [
+        {
+          "title": "Extremums locaux",
+          "elements": [
+            {
+              "type": "theorem-box",
+              "preamble": "**Condition nécessaire d'extremum** :",
+              "content": "Soit $f$ une fonction dérivable sur un intervalle ouvert $I$ et $a\\in I$.\n\nSi $f$ admet un **extremum local** (minimum ou maximum) en $a$, alors $$f'(a)=0$$"
             },
             {
               "type": "property-box",
               "preamble": "**Interprétation géométrique** :",
-              "content": "Si $f$ est dérivable en $a$, alors la courbe de $f$ admet une **tangente** au point $A(a; f(a))$.\n\nL'équation de cette tangente est :\n$$y = f'(a)(x - a) + f(a)$$\n\nLe coefficient directeur de cette tangente est $f'(a)$."
+              "content": "Si $f$ admet un extremum local en $a$, alors la tangente à $(C_f)$ au point $A(a,f(a))$ est **horizontale**."
+            },
+            {
+              "type": "definition-box",
+              "preamble": "**Valeur maximale et minimale** :",
+              "content": "$f(a)$ est la **valeur maximale** de $f$ sur $I$ $\\Leftrightarrow$ $(\\forall x\\in I)$ $f(x)\\leq f(a)$\n\n$f(a)$ est la **valeur minimale** de $f$ sur $I$ $\\Leftrightarrow$ $(\\forall x\\in I)$ $f(x)\\geq f(a)$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 10 : À compléter - Recherche d'extremums**",
+              "content": "Soit $f(x)=x^3-3x+1$. Cherchons les extremums de $f$.\n\n**Étape 1 :** Calcul de $f'(x)$\n\n$f'(x)=___3___x^2-___3___=3(x^2-1)=3(x-___1___)(x+___1___)$\n\n**Étape 2 :** $f'(x)=0\\Leftrightarrow x=___-1___ \\text{ ou } x=___1___$\n\n**Étape 3 :** Tableau de signes de $f'$\n\nSur $]-\\infty;-1[$ : $(x-1)<0$ et $(x+1)<0$ donc $f'(x)$ ___$>$___ $0$\n\nSur $]-1;1[$ : $(x-1)<0$ et $(x+1)>0$ donc $f'(x)$ ___$<$___ $0$\n\nSur $]1;+\\infty[$ : $(x-1)>0$ et $(x+1)>0$ donc $f'(x)$ ___$>$___ $0$\n\n**Conclusion :**\n\n$f'$ change de signe de $+$ vers $-$ en $-1$ : ___maximum local___\n\n$f'$ change de signe de $-$ vers $+$ en $1$ : ___minimum local___"
             }
           ]
         }
       ]
     },
     {
-      "title": "Fonction Dérivée",
+      "title": "Dérivées successives et équations différentielles",
       "subsections": [
         {
-          "title": "Définition",
+          "title": "Dérivées successives",
           "elements": [
             {
               "type": "definition-box",
-              "preamble": "**Fonction dérivée** :",
-              "content": "Soit $f$ une fonction définie sur un intervalle $I$.\n\nSi $f$ est dérivable en tout point de $I$, on définit la **fonction dérivée** de $f$, notée $f'$, par :\n\n$$f' : I \\to \\mathbb{R}$$\n$$x \\mapsto f'(x)$$\n\nOù $f'(x)$ est le nombre dérivé de $f$ en $x$."
+              "preamble": "**Dérivée première, seconde, n-ième** :",
+              "content": "Soit $f$ une fonction dérivable sur $I$.\n\nLa dérivée $f'$ de $f$ est appelée la **dérivée première** de $f$.\n\nSi $f'$ est dérivable, sa dérivée est appelée **dérivée seconde** de $f$, notée $f''$ ou $f^{(2)}$.\n\nPar itération, la **dérivée $n$-ième** de $f$ est notée $f^{(n)}$."
+            },
+            {
+              "type": "definition-box",
+              "preamble": "**Écriture différentielle** :",
+              "content": "Si $y=f(x)$, on peut écrire : $$f'(x)=\\frac{dy}{dx} \\quad \\text{ou} \\quad dy=f'(x)dx$$\n\nCette écriture est appelée **écriture différentielle**."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 11 : À compléter - Calcul de dérivées successives**",
+              "content": "Soit $f(x)=x^4$. Calculons les dérivées successives.\n\n$f'(x)=___4___x^{___3___}=4x^3$\n\n$f''(x)=(f'(x))'=(4x^3)'=4\\times___3___x^2=___12x^2___$\n\n$f^{(3)}(x)=(f''(x))'=(12x^2)'=12\\times___2___x=___24x___$\n\n$f^{(4)}(x)=(f^{(3)}(x))'=(24x)'=___24___$\n\n$f^{(5)}(x)=(f^{(4)}(x))'=(24)'=___0___$"
             }
           ]
         },
         {
-          "title": "Dérivées des Fonctions Usuelles",
+          "title": "Équations différentielles",
           "elements": [
             {
-              "type": "property-box",
-              "preamble": "**Tableau des dérivées** :",
-              "content": [
-                ">> **Fonctions de base**",
-                "$(c)' = 0$ où $c$ est une constante",
-                "$(x)' = 1$",
-                "$(x^n)' = nx^{n-1}$ pour $n \\in \\mathbb{N}^*$",
-                "$\\left(\\dfrac{1}{x}\\right)' = -\\dfrac{1}{x^2}$ pour $x \\neq 0$",
-                "$\\left(\\sqrt{x}\\right)' = \\dfrac{1}{2\\sqrt{x}}$ pour $x > 0$",
-                ">> **Fonctions trigonométriques**",
-                "$(\\sin x)' = \\cos x$",
-                "$(\\cos x)' = -\\sin x$",
-                "$(\\tan x)' = 1 + \\tan^2 x = \\dfrac{1}{\\cos^2 x}$ pour $x \\neq \\dfrac{\\pi}{2} + k\\pi$"
-              ],
-              "listType": "bullet"
+              "type": "definition-box",
+              "preamble": "**Équation différentielle** :",
+              "content": "Une **équation différentielle** est une équation entre une fonction $f$ et ses dérivées, où la fonction $f$ est l'inconnue. On note généralement la fonction par $y$ et ses dérivées par $y'$, $y''$, etc."
             },
-            {
-              "type": "example-box",
-              "preamble": "**Applications directes** :",
-              "content": "Calculer les dérivées suivantes :\n\n1. $f(x) = x^5$ → $f'(x) = ___5x^4___$\n\n2. $f(x) = \\dfrac{1}{x^3}$ → $f(x) = x^{-3}$ → $f'(x) = -3x^{-4} = ___-\\dfrac{3}{x^4}___$\n\n3. $f(x) = \\sqrt{x}$ → $f'(x) = ___\\dfrac{1}{2\\sqrt{x}}___$"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "title": "Opérations sur les Dérivées",
-      "subsections": [
-        {
-          "title": "Règles de Calcul",
-          "elements": [
-            {
-              "type": "property-box",
-              "preamble": "**Linéarité de la dérivation** :",
-              "content": [
-                ">> **Somme** :",
-                "$(u + v)' = u' + v'$",
-                ">> **Produit par un scalaire** :",
-                "$(ku)' = ku'$ où $k$ est une constante",
-                ">> **Produit** :",
-                "$(uv)' = u'v + uv'$",
-                ">> **Quotient** :",
-                "$\\left(\\dfrac{u}{v}\\right)' = \\dfrac{u'v - uv'}{v^2}$ pour $v \\neq 0$"
-              ],
-              "listType": "bullet"
-            },
-            {
-              "type": "p",
-              "content": "?> **Mnémotechnique pour le produit** : \"La dérivée du premier **fois** le second **plus** le premier **fois** la dérivée du second\"."
-            },
-            {
-              "type": "practice-box",
-              "statement": "Calculer les dérivées des fonctions suivantes :",
-              "content": [
-                "$f(x) = (3x^2 + 1)(x - 2)$",
-                "$g(x) = \\dfrac{x^2 + 1}{x - 3}$",
-                "$h(x) = x^2 \\sin x$"
-              ],
-              "solution": [
-                "**Méthode** : $(uv)' = u'v + uv'$\n\nPosons $u = 3x^2 + 1$ et $v = x - 2$\n\n$u' = 6x$ et $v' = 1$\n\n$f'(x) = 6x(x - 2) + (3x^2 + 1) \\times 1$\n\n$= 6x^2 - 12x + 3x^2 + 1 = 9x^2 - 12x + 1$",
-                "**Méthode** : $\\left(\\dfrac{u}{v}\\right)' = \\dfrac{u'v - uv'}{v^2}$\n\nPosons $u = x^2 + 1$ et $v = x - 3$\n\n$u' = 2x$ et $v' = 1$\n\n$g'(x) = \\dfrac{2x(x - 3) - (x^2 + 1) \\times 1}{(x - 3)^2}$\n\n$= \\dfrac{2x^2 - 6x - x^2 - 1}{(x - 3)^2} = \\dfrac{x^2 - 6x - 1}{(x - 3)^2}$",
-                "**Méthode** : $(uv)' = u'v + uv'$\n\nPosons $u = x^2$ et $v = \\sin x$\n\n$u' = 2x$ et $v' = \\cos x$\n\n$h'(x) = 2x \\sin x + x^2 \\cos x$"
-              ]
-            }
-          ]
-        },
-        {
-          "title": "Dérivée d'une Fonction Composée",
-          "elements": [
-            {
-              "type": "property-box",
-              "preamble": "**Règle de la chaîne** :",
-              "content": "Si $u$ est dérivable en $x$ et $v$ est dérivable en $u(x)$, alors la fonction composée $v \\circ u$ est dérivable en $x$ et :\n\n$$(v \\circ u)'(x) = v'(u(x)) \\times u'(x)$$\n\nOu avec la notation $f = v \\circ u$ :\n$$f'(x) = u'(x) \\times v'(u(x))$$"
-            },
-            {
-              "type": "property-box",
-              "preamble": "**Formules utiles** :",
-              "content": [
-                "$(u^n)' = nu'u^{n-1}$ pour $n \\in \\mathbb{N}^*$",
-                "$\\left(\\dfrac{1}{u}\\right)' = -\\dfrac{u'}{u^2}$ pour $u \\neq 0$",
-                "$(\\sqrt{u})' = \\dfrac{u'}{2\\sqrt{u}}$ pour $u > 0$",
-                "$(\\sin u)' = u' \\cos u$",
-                "$(\\cos u)' = -u' \\sin u$"
-              ],
-              "listType": "bullet"
-            },
-            {
-              "type": "example-box",
-              "preamble": "**Fonction composée** :",
-              "content": "Calculer la dérivée de $f(x) = (2x + 1)^3$.\n\nPosons $u(x) = 2x + 1$ et $v(t) = t^3$\n\nAlors $f = v \\circ u$\n\n$u'(x) = ___2___$ et $v'(t) = 3t^2$\n\n$f'(x) = u'(x) \\times v'(u(x)) = 2 \\times 3(2x + 1)^2 = ___6(2x + 1)^2___$"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "title": "Applications de la Dérivée",
-      "subsections": [
-        {
-          "title": "Sens de Variation",
-          "elements": [
             {
               "type": "theorem-box",
-              "preamble": "**Théorème fondamental** :",
-              "content": "Soit $f$ une fonction dérivable sur un intervalle $I$.\n\n**Croissance** : $f$ est croissante sur $I$ si et seulement si $f'(x) \\geq 0$ pour tout $x \\in I$\n\n**Décroissance** : $f$ est décroissante sur $I$ si et seulement si $f'(x) \\leq 0$ pour tout $x \\in I$\n\n**Constance** : $f$ est constante sur $I$ si et seulement si $f'(x) = 0$ pour tout $x \\in I$"
-            },
-            {
-              "type": "p",
-              "content": "?> **Méthode** : Pour étudier les variations d'une fonction, on calcule sa dérivée, on étudie son signe, puis on dresse le tableau de variations."
-            }
-          ]
-        },
-        {
-          "title": "Extrema Locaux",
-          "elements": [
-            {
-              "type": "property-box",
-              "preamble": "**Condition nécessaire** :",
-              "content": "Si $f$ est dérivable en $a$ et admet un extremum local en $a$, alors :\n$$f'(a) = 0$$\n\n**Attention** : La réciproque est fausse. $f'(a) = 0$ ne garantit pas l'existence d'un extremum."
+              "preamble": "**Solutions de l'équation $y''+\\omega^2 y=0$** :",
+              "content": "Soit $\\omega$ un nombre réel non nul. Les solutions de l'équation différentielle $$y''+\\omega^2 y=0$$ sont les fonctions $y$ telles que $$y(x)=a\\cos(\\omega x)+b\\sin(\\omega x)$$ où $a$ et $b$ sont des constantes réelles."
             },
             {
               "type": "property-box",
-              "preamble": "**Condition suffisante** :",
-              "content": "Si $f'$ change de signe en $a$ :\n\n**Maximum local** : Si $f'$ passe du positif au négatif en $a$, alors $f$ admet un maximum local en $a$\n\n**Minimum local** : Si $f'$ passe du négatif au positif en $a$, alors $f$ admet un minimum local en $a$"
+              "preamble": "**Solution unique avec conditions initiales** :",
+              "content": "Soit $\\omega$ un nombre réel non nul et $x_0,y_0,y_1\\in\\mathbb{R}$.\n\nL'équation différentielle $y''+\\omega^2 y=0$ admet une **unique solution** $y$ telle que $$y(x_0)=y_0 \\quad \\text{et} \\quad y'(x_0)=y_1$$"
             },
             {
-              "type": "practice-box",
-              "statement": "Étudier les variations de $f(x) = x^3 - 3x + 1$ et déterminer ses extrema.",
-              "content": [
-                "Calculer $f'(x)$",
-                "Étudier le signe de $f'(x)$",
-                "Dresser le tableau de variations",
-                "Déterminer les extrema"
-              ],
-              "solution": [
-                "$f'(x) = 3x^2 - 3 = 3(x^2 - 1) = 3(x - 1)(x + 1)$",
-                "$f'(x) = 0$ pour $x = -1$ ou $x = 1$\n\nTableau de signes :\n- Si $x < -1$ : $f'(x) > 0$ (croissante)\n- Si $-1 < x < 1$ : $f'(x) < 0$ (décroissante)\n- Si $x > 1$ : $f'(x) > 0$ (croissante)",
-                "| $x$ | $-\\infty$ | | $-1$ | | $1$ | | $+\\infty$ |\n|-----|-----------|---|------|---|-----|---|----------|\n| $f'(x)$ | | $+$ | $0$ | $-$ | $0$ | $+$ | |\n| $f(x)$ | $-\\infty$ | ↗ | $3$ | ↘ | $-1$ | ↗ | $+\\infty$ |",
-                "$f$ admet un **maximum local** en $x = -1$ avec $f(-1) = (-1)^3 - 3(-1) + 1 = 3$\n\n$f$ admet un **minimum local** en $x = 1$ avec $f(1) = 1 - 3 + 1 = -1$"
-              ]
+              "type": "example-box",
+              "preamble": "**Exemple 12 : À compléter - Résolution d'une équation différentielle**",
+              "content": "Résoudre l'équation différentielle : $y''+4y=0$\n\n**Étape 1 :** Identification\n\nOn a $\\omega^2=___4___$ donc $\\omega=___2___$\n\n**Étape 2 :** Solution générale\n\nLes solutions sont de la forme : $$y(x)=a\\cos(___2___x)+b\\sin(___2___x)$$\n\noù $a$ et $b$ sont des constantes réelles.\n\n**Application :** Trouver la solution vérifiant $y(0)=1$ et $y'(0)=0$\n\n$y(0)=a\\cos(0)+b\\sin(0)=___a___=1$ donc $a=___1___$\n\n$y'(x)=-2a\\sin(2x)+2b\\cos(2x)$\n\n$y'(0)=-2a\\sin(0)+2b\\cos(0)=___2b___=0$ donc $b=___0___$\n\nSolution unique : $y(x)=___\\cos(2x)___$"
             }
           ]
         }
       ]
     }
-  ]
+  ],
+  "exercices": [
+    {
+      "id": "exercice_1",
+      "titre": "Dérivabilité en un point et interprétation graphique",
+      "enonce": "Étudier la dérivabilité de la fonction $f$ en $a$ et interpréter les résultats obtenus dans les cas suivants :\n\n1) $f(x)=\\sqrt{3x-2}$ et $a=2$\n\n2) $\\displaystyle f(x)=\\begin{cases}1-\\cos(x) & \\text{si } x\\geq 0\\\\ \\sin(x) & \\text{si } x<0\\end{cases}$ et $a=0$\n\n3) $f(x)=x^3$ et $a=-1$. Déterminer ensuite l'équation de la tangente à $(C_f)$ au point d'abscisse $-1$.",
+      "difficulte": "moyen",
+      "objectif": "Maîtriser le calcul du nombre dérivé par définition et l'interprétation géométrique"
+    },
+    {
+      "id": "exercice_2",
+      "titre": "Calcul de dérivées - Fonctions composées",
+      "enonce": "Calculer $f'(x)$ dans les cas suivants :\n\n1) $f(x)=\\sqrt{x}+x^5$\n\n2) $f(x)=x^6\\times\\cos(x)$\n\n3) $f(x)=(2x+3)^5$\n\n4) $\\displaystyle f(x)=\\frac{3x+6}{4x+7}$\n\n5) $f(x)=\\sqrt{x^5\\times\\sin(x)}$",
+      "difficulte": "moyen",
+      "objectif": "Appliquer les règles de dérivation (somme, produit, quotient, composée)"
+    },
+    {
+      "id": "exercice_3",
+      "titre": "Étude complète d'une fonction - Variations et extremums",
+      "enonce": "On considère la fonction $f$ telle que : $\\displaystyle f(x)=\\frac{2x+3}{x-1}$\n\n1) Déterminer $D_f$ et $D_{f'}$\n\n2) Calculer les limites de $f$ aux bornes de $D_f$\n\n3) Calculer $f'(x)$ pour tout $x\\in D_{f'}$\n\n4) Dresser le tableau de variations de $f$\n\n5) Déterminer l'équation de la tangente à $(C_f)$ au point d'abscisse $2$",
+      "difficulte": "difficile",
+      "objectif": "Réaliser une étude complète de fonction avec dérivée et variations"
+    },
+    {
+      "id": "exercice_4",
+      "titre": "Extremums et optimisation",
+      "enonce": "On considère la fonction $f$ définie par : $f(x)=x^3+b^3+c^3-3xbc$ où $b$ et $c$ sont deux nombres réels strictement positifs.\n\n1) Vérifier que : $f(\\sqrt[3]{bc})=(\\sqrt[3]{b^5}-\\sqrt[3]{c^5})^2$\n\n2) En déduire que : $(\\forall x\\in]0;+\\infty[)$ $f(x)\\geq 3(x+b+c)(x-bc)$\n\n**Application :** Un éditeur doit produire un livre avec les contraintes suivantes :\n\nSur chaque page, l'aire d'un rectangle est $49\\text{ m}^2$. Déterminer les dimensions de ce rectangle pour que son périmètre soit minimal.",
+      "difficulte": "difficile",
+      "objectif": "Utiliser les extremums pour résoudre un problème d'optimisation"
+    },
+    {
+      "id": "exercice_5",
+      "titre": "Équations différentielles",
+      "enonce": "1) Résoudre les équations différentielles suivantes :\n\na) $y''+4y=0$\n\nb) $y''+9y=0$\n\nc) $y''+5y=0$\n\nd) $y''+16y=0$\n\n2) Déterminer la solution de l'équation différentielle $y''+\\omega^2 y=0$ qui vérifie :\n\na) $y(0)=0$ et $y'(0)=1$ pour $\\omega=2$\n\nb) $y(0)=1$ et $y'(0)=0$ pour $\\omega=3$",
+      "difficulte": "moyen",
+      "objectif": "Résoudre des équations différentielles du second ordre à coefficients constants"
+    }
+  ],
+  "methodologie": [
+    {
+      "titre": "Calcul du nombre dérivé par définition",
+      "etapes": [
+        "Identifier la fonction $f$ et le point $a$",
+        "Calculer $f(a)$",
+        "Calculer la limite $\\displaystyle\\lim_{x\\to a}\\frac{f(x)-f(a)}{x-a}$",
+        "Si la limite existe et est finie : $f$ est dérivable en $a$ et $f'(a)$ égal à cette limite",
+        "Si la limite est infinie ou n'existe pas : $f$ n'est pas dérivable en $a$"
+      ]
+    },
+    {
+      "titre": "Détermination de l'équation de la tangente",
+      "etapes": [
+        "Calculer $f(a)$ (ordonnée du point de tangence)",
+        "Calculer $f'(a)$ (coefficient directeur)",
+        "Écrire l'équation : $y=f'(a)(x-a)+f(a)$",
+        "Développer et simplifier si nécessaire"
+      ]
+    },
+    {
+      "titre": "Étude du sens de variations",
+      "etapes": [
+        "Déterminer le domaine de définition $D_f$",
+        "Calculer la dérivée $f'(x)$",
+        "Étudier le signe de $f'(x)$ sur $D_f$ (tableau de signes)",
+        "Construire le tableau de variations",
+        "Conclure : $f'(x)>0$ implique croissance, $f'(x)<0$ implique décroissance"
+      ]
+    },
+    {
+      "titre": "Recherche des extremums",
+      "etapes": [
+        "Résoudre l'équation $f'(x)=0$ pour trouver les points critiques",
+        "Étudier le signe de $f'$ autour de chaque point critique",
+        "Si $f'$ change de signe de $+$ vers $-$ : maximum local",
+        "Si $f'$ change de signe de $-$ vers $+$ : minimum local",
+        "Calculer $f$ aux points critiques pour obtenir les valeurs extrêmes"
+      ]
+    }
+  ],
+  "applications": [
+    "Étude complète de fonctions (domaine, variations, extremums, asymptotes)",
+    "Problèmes d'optimisation en économie (coût minimal, bénéfice maximal)",
+    "Calcul de vitesses et d'accélérations en physique (cinématique)",
+    "Approximations linéaires et estimations de valeurs",
+    "Résolution d'équations différentielles (oscillateurs harmoniques, circuits électriques)"
+  ],
+  "remarques_finales": "La dérivation est l'outil fondamental de l'analyse qui permet d'étudier le comportement local des fonctions. Elle trouve des applications dans tous les domaines scientifiques : physique (mouvement, vitesse, accélération), économie (coût marginal, élasticité), biologie (taux de croissance), etc. La maîtrise des techniques de calcul des dérivées et leur interprétation géométrique sont essentielles pour la résolution de problèmes concrets d'optimisation et de modélisation."
 }

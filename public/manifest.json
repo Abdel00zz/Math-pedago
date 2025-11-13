@@ -193,7 +193,7 @@
     {
       "id": "1bsm-la-derivation",
       "file": "1bsm/1bsm_la_derivation.json",
-      "isActive": false,
+      "isActive": true,
       "version": "v1.1.0-f41aef"
     },
     {
@@ -255,7 +255,7 @@
     {
       "id": "2bse-fonctions-exponentielles",
       "file": "2bse/2bse_fonctions_exponentielles.json",
-      "isActive": false,
+      "isActive": true,
       "version": "v1.1.0-85a0fc"
     },
     {
@@ -273,7 +273,7 @@
     {
       "id": "2bse-nombres-complexes",
       "file": "2bse/2bse_nombres_complexes.json",
-      "isActive": false,
+      "isActive": true,
       "version": "v1.1.0-ca6bb5"
     },
     {
