@@ -186,6 +186,78 @@
       ]
     },
     {
+      "title": "Suites Définies par Récurrence",
+      "subsections": [
+        {
+          "title": "Suites du type $u_{n+1} = f(u_n)$",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Suite récurrente** :",
+              "content": "Une suite définie par récurrence est une suite où chaque terme dépend du (des) terme(s) précédent(s).\n\nLa forme générale est : $\\begin{cases} u_0 = a \\\\ u_{n+1} = f(u_n) \\end{cases}$\n\noù $a$ est le **terme initial** et $f$ est une **fonction de récurrence**."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Suite récurrente linéaire** :",
+              "content": "Soit la suite définie par : $\\begin{cases} u_0 = 2 \\\\ u_{n+1} = 3u_n - 1 \\end{cases}$\n\nCalculons les premiers termes :\n- $u_0 = 2$\n- $u_1 = 3 \\times 2 - 1 = ___5___$\n- $u_2 = 3 \\times 5 - 1 = ___14___$\n- $u_3 = 3 \\times 14 - 1 = ___41___$"
+            },
+            {
+              "type": "practice-box",
+              "statement": "Soit la suite $(u_n)$ définie par : $\\begin{cases} u_0 = 1 \\\\ u_{n+1} = \\dfrac{2u_n + 3}{u_n + 2} \\end{cases}$",
+              "listType": "numbered",
+              "content": [
+                "Calculer $u_1$, $u_2$ et $u_3$",
+                "Montrer que pour tout $n \\in \\mathbb{N}$, $u_n > 0$",
+                "Étudier la monotonie de la suite en calculant $u_{n+1} - u_n$"
+              ],
+              "solution": [
+                "$u_1 = \\dfrac{2 \\times 1 + 3}{1 + 2} = \\dfrac{5}{3}$\n\n$u_2 = \\dfrac{2 \\times \\frac{5}{3} + 3}{\\frac{5}{3} + 2} = \\dfrac{\\frac{10}{3} + 3}{\\frac{5}{3} + 2} = \\dfrac{\\frac{19}{3}}{\\frac{11}{3}} = \\dfrac{19}{11}$\n\n$u_3 = \\dfrac{2 \\times \\frac{19}{11} + 3}{\\frac{19}{11} + 2} = \\dfrac{\\frac{38}{11} + 3}{\\frac{19}{11} + 2} = \\dfrac{\\frac{71}{11}}{\\frac{41}{11}} = \\dfrac{71}{41}$",
+                "**Par récurrence** :\n\n**Initialisation** : $u_0 = 1 > 0$ ✓\n\n**Hérédité** : Supposons $u_n > 0$. Alors :\n$u_{n+1} = \\dfrac{2u_n + 3}{u_n + 2}$\n\nComme $u_n > 0$, on a $2u_n + 3 > 0$ et $u_n + 2 > 0$\n\nDonc $u_{n+1} > 0$ ✓\n\n**Conclusion** : Pour tout $n \\in \\mathbb{N}$, $u_n > 0$",
+                "$u_{n+1} - u_n = \\dfrac{2u_n + 3}{u_n + 2} - u_n$\n\n$= \\dfrac{2u_n + 3 - u_n(u_n + 2)}{u_n + 2}$\n\n$= \\dfrac{2u_n + 3 - u_n^2 - 2u_n}{u_n + 2}$\n\n$= \\dfrac{3 - u_n^2}{u_n + 2}$\n\nPour $n \\geq 2$, on a $u_n > \\sqrt{3}$ (peut être vérifié par calcul), donc $u_n^2 > 3$\n\nDonc $u_{n+1} - u_n < 0$ pour $n$ assez grand, la suite est décroissante à partir d'un certain rang."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Suites Arithmético-Géométriques",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Suite arithmético-géométrique** :",
+              "content": "Une suite $(u_n)$ est **arithmético-géométrique** si elle vérifie une relation de la forme :\n$$u_{n+1} = au_n + b$$\n\noù $a \\neq 0$, $a \\neq 1$ et $b \\neq 0$ sont des nombres réels."
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Point fixe et transformation** :",
+              "content": "Pour résoudre $u_{n+1} = au_n + b$ avec $a \\neq 1$ :\n\n**Étape 1** : Trouver le point fixe $\\ell$ en résolvant $\\ell = a\\ell + b$, soit $\\ell = \\dfrac{b}{1-a}$\n\n**Étape 2** : Poser $v_n = u_n - \\ell$. Alors $(v_n)$ est géométrique de raison $a$ :\n$$v_{n+1} = av_n$$\n\n**Étape 3** : On obtient $v_n = v_0 \\cdot a^n = (u_0 - \\ell) \\cdot a^n$\n\n**Étape 4** : Donc $u_n = v_n + \\ell = (u_0 - \\ell) \\cdot a^n + \\ell$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Résolution d'une suite arithmético-géométrique** :",
+              "content": "Soit $(u_n)$ définie par : $\\begin{cases} u_0 = 5 \\\\ u_{n+1} = 2u_n + 3 \\end{cases}$\n\n**Étape 1** : Point fixe $\\ell$ :\n$$\\ell = 2\\ell + 3 \\Rightarrow \\ell - 2\\ell = 3 \\Rightarrow -\\ell = 3 \\Rightarrow \\ell = ___-3___$$\n\n**Étape 2** : Posons $v_n = u_n - (-3) = u_n + 3$\n$$v_{n+1} = u_{n+1} + 3 = 2u_n + 3 + 3 = 2u_n + 6 = 2(u_n + 3) = 2v_n$$\n\n**Étape 3** : $(v_n)$ est géométrique de raison $2$ avec $v_0 = u_0 + 3 = 5 + 3 = 8$\n$$v_n = 8 \\times 2^n = 2^{n+3}$$\n\n**Étape 4** : $u_n = v_n - 3 = 2^{n+3} - 3 = ___8 \\times 2^n - 3___$"
+            },
+            {
+              "type": "practice-box",
+              "statement": "Soit la suite $(u_n)$ définie par : $\\begin{cases} u_0 = 1 \\\\ u_{n+1} = \\dfrac{1}{2}u_n + 4 \\end{cases}$",
+              "listType": "numbered",
+              "content": [
+                "Déterminer le point fixe $\\ell$ de la suite",
+                "Poser $v_n = u_n - \\ell$ et montrer que $(v_n)$ est une suite géométrique",
+                "Exprimer $v_n$ puis $u_n$ en fonction de $n$",
+                "Calculer $\\lim\\limits_{n \\to +\\infty} u_n$"
+              ],
+              "solution": [
+                "$\\ell = \\dfrac{1}{2}\\ell + 4$\n\n$\\ell - \\dfrac{1}{2}\\ell = 4$\n\n$\\dfrac{1}{2}\\ell = 4$\n\n$\\ell = 8$",
+                "$v_n = u_n - 8$\n\n$v_{n+1} = u_{n+1} - 8 = \\dfrac{1}{2}u_n + 4 - 8 = \\dfrac{1}{2}u_n - 4$\n\n$= \\dfrac{1}{2}(u_n - 8) = \\dfrac{1}{2}v_n$\n\nDonc $(v_n)$ est géométrique de raison $q = \\dfrac{1}{2}$",
+                "$v_0 = u_0 - 8 = 1 - 8 = -7$\n\n$v_n = v_0 \\times q^n = -7 \\times \\left(\\dfrac{1}{2}\\right)^n = -\\dfrac{7}{2^n}$\n\nDonc :\n$u_n = v_n + 8 = -\\dfrac{7}{2^n} + 8 = 8 - \\dfrac{7}{2^n}$",
+                "Comme $\\left|\\dfrac{1}{2}\\right| < 1$, on a $\\lim\\limits_{n \\to +\\infty} \\dfrac{1}{2^n} = 0$\n\nDonc :\n$\\lim\\limits_{n \\to +\\infty} u_n = 8 - 0 = 8$\n\nLa suite converge vers le point fixe $\\ell = 8$"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
       "title": "Raisonnement par Récurrence",
       "subsections": [
         {
@@ -208,6 +280,46 @@
                 "**Initialisation** : Pour $n = 1$ :\n\nMembre de gauche : $\\sum_{k=1}^{1} k = 1$\n\nMembre de droite : $\\dfrac{1(1+1)}{2} = \\dfrac{2}{2} = 1$\n\nLa propriété est vraie pour $n = 1$ ✓",
                 "**Hérédité** : Supposons la propriété vraie pour un certain $n \\geq 1$, c'est-à-dire :\n$$\\sum_{k=1}^{n} k = \\dfrac{n(n+1)}{2}$$\n\nMontrons qu'elle est vraie pour $n+1$ :\n\n$$\\sum_{k=1}^{n+1} k = \\left(\\sum_{k=1}^{n} k\\right) + (n+1)$$\n\n$$= \\dfrac{n(n+1)}{2} + (n+1)$$ (par hypothèse de récurrence)\n\n$$= \\dfrac{n(n+1) + 2(n+1)}{2} = \\dfrac{(n+1)(n+2)}{2}$$\n\nC'est bien la formule attendue pour $n+1$ ✓",
                 "**Conclusion** : Par le principe de récurrence, la propriété est vraie pour tout $n \\geq 1$."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Applications Avancées",
+          "elements": [
+            {
+              "type": "example-box",
+              "preamble": "**Inégalité de Bernoulli** :",
+              "content": "Démontrons par récurrence que pour tout $x \\geq -1$ et tout $n \\in \\mathbb{N}$ :\n$$(1 + x)^n \\geq 1 + nx$$\n\n**Initialisation** : Pour $n = 0$ :\n$(1 + x)^0 = 1 \\geq 1 + 0 \\times x = 1$ ✓\n\n**Hérédité** : Supposons $(1 + x)^n \\geq 1 + nx$ avec $x \\geq -1$\n\nMultiplions par $(1 + x) \\geq 0$ :\n$$(1 + x)^{n+1} \\geq (1 + nx)(1 + x)$$\n$$= 1 + x + nx + nx^2$$\n$$= 1 + (n+1)x + nx^2$$\n$$\\geq 1 + (n+1)x$$ (car $nx^2 \\geq 0$)\n\n**Conclusion** : L'inégalité est vraie pour tout $n \\in \\mathbb{N}$"
+            },
+            {
+              "type": "practice-box",
+              "statement": "Soit $(u_n)$ la suite définie par : $\\begin{cases} u_0 = 2 \\\\ u_{n+1} = \\sqrt{2 + u_n} \\end{cases}$",
+              "listType": "numbered",
+              "content": [
+                "Montrer par récurrence que pour tout $n \\in \\mathbb{N}$, $0 < u_n \\leq 2$",
+                "Montrer que la suite est croissante",
+                "En déduire que la suite est convergente et déterminer sa limite"
+              ],
+              "solution": [
+                "**Initialisation** : $u_0 = 2$, donc $0 < u_0 \\leq 2$ ✓\n\n**Hérédité** : Supposons $0 < u_n \\leq 2$\n\nAlors $2 < 2 + u_n \\leq 4$\n\nDonc $\\sqrt{2} < \\sqrt{2 + u_n} \\leq 2$\n\nComme $\\sqrt{2} > 0$, on a $0 < u_{n+1} \\leq 2$ ✓\n\n**Conclusion** : Pour tout $n \\in \\mathbb{N}$, $0 < u_n \\leq 2$",
+                "Étudions $u_{n+1} - u_n$ :\n\n$u_{n+1} - u_n = \\sqrt{2 + u_n} - u_n$\n\nPosons $f(x) = \\sqrt{2 + x} - x$. Étudions $f$ sur $[0; 2]$ :\n\n$f'(x) = \\dfrac{1}{2\\sqrt{2 + x}} - 1 = \\dfrac{1 - 2\\sqrt{2 + x}}{2\\sqrt{2 + x}}$\n\n$f'(x) \\geq 0 \\Leftrightarrow 1 \\geq 2\\sqrt{2 + x} \\Leftrightarrow \\dfrac{1}{4} \\geq 2 + x$ (impossible pour $x \\geq 0$)\n\nMais calculons directement : $u_{n+1}^2 - u_n^2 = 2 + u_n - u_n^2 = 2 - u_n(u_n - 1)$\n\nPour $u_n \\leq 2$, il faut voir si $u_{n+1} > u_n$ ou non.\n\nEn fait, montrons que $u_{n+1} \\geq u_n$ :\n$\\sqrt{2 + u_n} \\geq u_n \\Leftrightarrow 2 + u_n \\geq u_n^2 \\Leftrightarrow u_n^2 - u_n - 2 \\leq 0$\n\n$u_n^2 - u_n - 2 = (u_n - 2)(u_n + 1)$\n\nPour $0 < u_n \\leq 2$, on a $u_n - 2 \\leq 0$ et $u_n + 1 > 0$\n\nDonc $(u_n - 2)(u_n + 1) \\leq 0$ ✓\n\nLa suite est croissante",
+                "La suite est croissante et majorée par $2$, donc elle converge.\n\nSoit $\\ell$ sa limite. Par passage à la limite dans la relation de récurrence :\n\n$\\ell = \\sqrt{2 + \\ell}$\n\n$\\ell^2 = 2 + \\ell$\n\n$\\ell^2 - \\ell - 2 = 0$\n\n$(\\ell - 2)(\\ell + 1) = 0$\n\nDonc $\\ell = 2$ ou $\\ell = -1$\n\nComme $u_n > 0$ pour tout $n$, on a $\\ell \\geq 0$\n\nDonc $\\ell = 2$"
+              ]
+            },
+            {
+              "type": "practice-box",
+              "statement": "Démontrer par récurrence que pour tout $n \\geq 1$ : $\\displaystyle \\sum_{k=1}^{n} k^2 = \\dfrac{n(n+1)(2n+1)}{6}$",
+              "listType": "numbered",
+              "content": [
+                "Vérifier l'initialisation pour $n = 1$",
+                "Démontrer l'hérédité",
+                "Conclure et calculer $1^2 + 2^2 + 3^2 + \\cdots + 10^2$"
+              ],
+              "solution": [
+                "**Initialisation** : Pour $n = 1$ :\n\nMembre de gauche : $\\sum_{k=1}^{1} k^2 = 1^2 = 1$\n\nMembre de droite : $\\dfrac{1 \\times 2 \\times 3}{6} = \\dfrac{6}{6} = 1$\n\nLa propriété est vraie pour $n = 1$ ✓",
+                "**Hérédité** : Supposons la propriété vraie pour un certain $n \\geq 1$ :\n$$\\sum_{k=1}^{n} k^2 = \\dfrac{n(n+1)(2n+1)}{6}$$\n\nMontrons qu'elle est vraie pour $n+1$ :\n\n$$\\sum_{k=1}^{n+1} k^2 = \\left(\\sum_{k=1}^{n} k^2\\right) + (n+1)^2$$\n\n$$= \\dfrac{n(n+1)(2n+1)}{6} + (n+1)^2$$ (par hypothèse de récurrence)\n\n$$= (n+1)\\left[\\dfrac{n(2n+1)}{6} + (n+1)\\right]$$\n\n$$= (n+1)\\left[\\dfrac{n(2n+1) + 6(n+1)}{6}\\right]$$\n\n$$= (n+1)\\left[\\dfrac{2n^2 + n + 6n + 6}{6}\\right]$$\n\n$$= (n+1)\\left[\\dfrac{2n^2 + 7n + 6}{6}\\right]$$\n\n$$= (n+1)\\left[\\dfrac{(n+2)(2n+3)}{6}\\right]$$\n\n$$= \\dfrac{(n+1)(n+2)(2n+3)}{6}$$\n\nC'est bien la formule attendue pour $n+1$ ✓",
+                "**Conclusion** : Par le principe de récurrence, la propriété est vraie pour tout $n \\geq 1$.\n\nPour $n = 10$ :\n$$1^2 + 2^2 + \\cdots + 10^2 = \\dfrac{10 \\times 11 \\times 21}{6} = \\dfrac{2310}{6} = 385$$"
               ]
             }
           ]

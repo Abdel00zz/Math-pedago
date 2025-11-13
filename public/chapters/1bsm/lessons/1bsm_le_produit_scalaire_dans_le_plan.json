@@ -1,12 +1,43 @@
 {
   "header": {
     "title": "Le Produit Scalaire dans le Plan",
-    "subtitle": "Définitions et applications",
+    "subtitle": "Définitions, propriétés et applications géométriques",
     "classe": "1ère Bac Sciences Mathématiques",
     "chapter": "Chapitre 6",
     "academicYear": "2025-2026"
   },
   "sections": [
+    {
+      "title": "Introduction au Produit Scalaire",
+      "subsections": [
+        {
+          "title": "Motivation et Applications",
+          "elements": [
+            {
+              "type": "p",
+              "content": "Le produit scalaire est une opération mathématique fondamentale qui associe à deux vecteurs un **nombre réel**. Cette notion trouve de nombreuses applications en physique et en géométrie."
+            },
+            {
+              "type": "p",
+              "content": "En **physique**, le produit scalaire permet de calculer le travail d'une force : $W = \\vec{F} \\cdot \\vec{d}$ où $\\vec{F}$ est la force et $\\vec{d}$ le déplacement."
+            },
+            {
+              "type": "p",
+              "content": "En **géométrie**, le produit scalaire permet de :"
+            },
+            {
+              "content": [
+                "Calculer des angles entre deux vecteurs",
+                "Déterminer si deux droites sont perpendiculaires",
+                "Calculer des distances (point à une droite, etc.)",
+                "Établir des équations de cercles et de droites"
+              ],
+              "listType": "bullet"
+            }
+          ]
+        }
+      ]
+    },
     {
       "title": "Définitions du Produit Scalaire",
       "subsections": [
@@ -15,17 +46,44 @@
           "elements": [
             {
               "type": "p",
-              "content": "Le produit scalaire est une opération fondamentale qui associe à deux vecteurs un nombre réel. Il permet de mesurer l'angle entre deux vecteurs et d'étudier l'orthogonalité."
+              "content": "La définition analytique est la plus simple à utiliser dans un repère orthonormé."
             },
             {
               "type": "definition-box",
-              "preamble": "**Produit scalaire (définition analytique)** :",
+              "preamble": "**Produit scalaire - Définition analytique** :",
               "content": "Dans un repère orthonormé $(O; \\vec{i}, \\vec{j})$, soient $\\vec{u}\\begin{pmatrix} x \\\\ y \\end{pmatrix}$ et $\\vec{v}\\begin{pmatrix} x' \\\\ y' \\end{pmatrix}$ deux vecteurs.\n\nLe **produit scalaire** de $\\vec{u}$ et $\\vec{v}$, noté $\\vec{u} \\cdot \\vec{v}$, est le nombre réel défini par :\n\n$$\\vec{u} \\cdot \\vec{v} = xx' + yy'$$"
             },
             {
+              "type": "remark-box",
+              "preamble": "**Attention** :",
+              "content": "Cette formule n'est valable que dans un **repère orthonormé**. Elle ne s'applique pas dans un repère quelconque."
+            },
+            {
               "type": "example-box",
-              "preamble": "**Calcul direct** :",
+              "preamble": "**Calcul direct dans un repère orthonormé** :",
               "content": "Soient $\\vec{u}\\begin{pmatrix} 3 \\\\ -2 \\end{pmatrix}$ et $\\vec{v}\\begin{pmatrix} 1 \\\\ 4 \\end{pmatrix}$.\n\n$$\\vec{u} \\cdot \\vec{v} = 3 \\times 1 + (-2) \\times 4 = 3 - 8 = ___-5___$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Produit scalaire avec des vecteurs quelconques** :",
+              "content": "Dans un repère orthonormé, on donne $A(2; 1)$, $B(5; 3)$ et $C(4; -1)$.\n\nCalculons $\\overrightarrow{AB} \\cdot \\overrightarrow{AC}$.\n\n**Solution** :\n\nD'abord, calculons les coordonnées des vecteurs :\n$$\\overrightarrow{AB}\\begin{pmatrix} 5-2 \\\\ 3-1 \\end{pmatrix} = \\begin{pmatrix} ___3___ \\\\ ___2___ \\end{pmatrix}$$\n\n$$\\overrightarrow{AC}\\begin{pmatrix} 4-2 \\\\ -1-1 \\end{pmatrix} = \\begin{pmatrix} ___2___ \\\\ ___-2___ \\end{pmatrix}$$\n\nDonc :\n$$\\overrightarrow{AB} \\cdot \\overrightarrow{AC} = 3 \\times 2 + 2 \\times (-2) = 6 - 4 = ___2___$$"
+            },
+            {
+              "type": "practice-box",
+              "statement": "Dans un repère orthonormé $(O; \\vec{i}, \\vec{j})$, on donne $\\vec{u} = 2\\vec{i} - 3\\vec{j}$ et $\\vec{v} = -\\vec{i} + 5\\vec{j}$.",
+              "listType": "numbered",
+              "content": [
+                "Donner les coordonnées de $\\vec{u}$ et $\\vec{v}$",
+                "Calculer $\\vec{u} \\cdot \\vec{v}$",
+                "Calculer $\\|\\vec{u}\\|$ et $\\|\\vec{v}\\|$",
+                "Calculer $(\\vec{u} + \\vec{v}) \\cdot (\\vec{u} - \\vec{v})$"
+              ],
+              "solution": [
+                "$\\vec{u}\\begin{pmatrix} 2 \\\\ -3 \\end{pmatrix}$ et $\\vec{v}\\begin{pmatrix} -1 \\\\ 5 \\end{pmatrix}$",
+                "$\\vec{u} \\cdot \\vec{v} = 2 \\times (-1) + (-3) \\times 5 = -2 - 15 = -17$",
+                "$\\|\\vec{u}\\| = \\sqrt{2^2 + (-3)^2} = \\sqrt{4 + 9} = \\sqrt{13}$\n\n$\\|\\vec{v}\\| = \\sqrt{(-1)^2 + 5^2} = \\sqrt{1 + 25} = \\sqrt{26}$",
+                "On utilise l'identité remarquable :\n$$(\\vec{u} + \\vec{v}) \\cdot (\\vec{u} - \\vec{v}) = \\|\\vec{u}\\|^2 - \\|\\vec{v}\\|^2$$\n\n$$= 13 - 26 = -13$$"
+              ]
             }
           ]
         },
@@ -33,32 +91,73 @@
           "title": "Définition Géométrique",
           "elements": [
             {
+              "type": "p",
+              "content": "La définition géométrique fait intervenir l'angle entre deux vecteurs et leurs normes."
+            },
+            {
               "type": "definition-box",
-              "preamble": "**Produit scalaire (définition géométrique)** :",
-              "content": "Soient $\\vec{u}$ et $\\vec{v}$ deux vecteurs non nuls et $\\theta$ l'angle orienté entre ces vecteurs.\n\nLe produit scalaire de $\\vec{u}$ et $\\vec{v}$ est :\n\n$$\\vec{u} \\cdot \\vec{v} = \\|\\vec{u}\\| \\times \\|\\vec{v}\\| \\times \\cos(\\theta)$$\n\nOù $\\|\\vec{u}\\|$ et $\\|\\vec{v}\\|$ sont les normes (longueurs) des vecteurs."
+              "preamble": "**Produit scalaire - Définition géométrique** :",
+              "content": "Soient $\\vec{u}$ et $\\vec{v}$ deux vecteurs non nuls et $\\theta$ l'angle géométrique entre ces vecteurs (avec $0 \\leq \\theta \\leq \\pi$).\n\nLe produit scalaire de $\\vec{u}$ et $\\vec{v}$ est :\n\n$$\\vec{u} \\cdot \\vec{v} = \\|\\vec{u}\\| \\times \\|\\vec{v}\\| \\times \\cos(\\theta)$$\n\nOù $\\|\\vec{u}\\|$ et $\\|\\vec{v}\\|$ sont les normes (longueurs) des vecteurs."
             },
             {
               "type": "remark-box",
-              "content": "**Cas particuliers** :\n\nSi $\\vec{u} = \\vec{0}$ ou $\\vec{v} = \\vec{0}$, alors $\\vec{u} \\cdot \\vec{v} = 0$"
+              "preamble": "**Cas particuliers** :",
+              "content": [
+                ">>Si $\\vec{u} = \\vec{0}$ ou $\\vec{v} = \\vec{0}$, alors $\\vec{u} \\cdot \\vec{v} = 0$",
+                "Si $\\theta = 0$ (vecteurs colinéaires de même sens) : $\\vec{u} \\cdot \\vec{v} = \\|\\vec{u}\\| \\times \\|\\vec{v}\\|$",
+                "Si $\\theta = \\dfrac{\\pi}{2}$ (vecteurs perpendiculaires) : $\\vec{u} \\cdot \\vec{v} = 0$",
+                "Si $\\theta = \\pi$ (vecteurs colinéaires de sens opposé) : $\\vec{u} \\cdot \\vec{v} = -\\|\\vec{u}\\| \\times \\|\\vec{v}\\|$"
+              ],
+              "listType": "bullet"
             },
             {
               "type": "property-box",
               "preamble": "**Norme d'un vecteur** :",
-              "content": "Le produit scalaire d'un vecteur $\\vec{u}$ par lui-même donne le carré de sa norme :\n\n$$\\vec{u} \\cdot \\vec{u} = \\|\\vec{u}\\|^2$$\n\nDonc : $\\|\\vec{u}\\| = \\sqrt{\\vec{u} \\cdot \\vec{u}}$"
+              "content": "Le produit scalaire d'un vecteur $\\vec{u}$ par lui-même donne le carré de sa norme :\n\n$$\\vec{u} \\cdot \\vec{u} = \\|\\vec{u}\\|^2$$\n\nDonc : $$\\|\\vec{u}\\| = \\sqrt{\\vec{u} \\cdot \\vec{u}}$$\n\nDans un repère orthonormé, si $\\vec{u}\\begin{pmatrix} x \\\\ y \\end{pmatrix}$, alors :\n\n$$\\|\\vec{u}\\| = \\sqrt{x^2 + y^2}$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Calcul d'angle entre deux vecteurs** :",
+              "content": "Soient $\\vec{u}$ et $\\vec{v}$ deux vecteurs non nuls tels que $\\vec{u} \\cdot \\vec{v} = 12$, $\\|\\vec{u}\\| = 4$ et $\\|\\vec{v}\\| = 6$.\n\nDéterminons l'angle $\\theta$ entre $\\vec{u}$ et $\\vec{v}$.\n\n**Solution** :\n\nD'après la définition géométrique :\n$$\\cos(\\theta) = \\dfrac{\\vec{u} \\cdot \\vec{v}}{\\|\\vec{u}\\| \\times \\|\\vec{v}\\|} = \\dfrac{12}{4 \\times 6} = \\dfrac{12}{24} = \\dfrac{1}{2}$$\n\nDonc $\\theta = \\arccos\\left(\\dfrac{1}{2}\\right) = \\dfrac{\\pi}{3}$ radians = $___60___$°"
+            },
+            {
+              "type": "practice-box",
+              "statement": "Dans un repère orthonormé, on donne $\\vec{u}\\begin{pmatrix} 1 \\\\ \\sqrt{3} \\end{pmatrix}$ et $\\vec{v}\\begin{pmatrix} \\sqrt{3} \\\\ 1 \\end{pmatrix}$.",
+              "listType": "numbered",
+              "content": [
+                "Calculer $\\vec{u} \\cdot \\vec{v}$ en utilisant la définition analytique",
+                "Calculer $\\|\\vec{u}\\|$ et $\\|\\vec{v}\\|$",
+                "En déduire l'angle $\\theta$ entre $\\vec{u}$ et $\\vec{v}$"
+              ],
+              "solution": [
+                "$\\vec{u} \\cdot \\vec{v} = 1 \\times \\sqrt{3} + \\sqrt{3} \\times 1 = \\sqrt{3} + \\sqrt{3} = 2\\sqrt{3}$",
+                "$\\|\\vec{u}\\| = \\sqrt{1^2 + (\\sqrt{3})^2} = \\sqrt{1 + 3} = \\sqrt{4} = 2$\n\n$\\|\\vec{v}\\| = \\sqrt{(\\sqrt{3})^2 + 1^2} = \\sqrt{3 + 1} = \\sqrt{4} = 2$",
+                "D'après la définition géométrique :\n$$\\cos(\\theta) = \\dfrac{\\vec{u} \\cdot \\vec{v}}{\\|\\vec{u}\\| \\times \\|\\vec{v}\\|} = \\dfrac{2\\sqrt{3}}{2 \\times 2} = \\dfrac{2\\sqrt{3}}{4} = \\dfrac{\\sqrt{3}}{2}$$\n\nDonc $\\theta = \\arccos\\left(\\dfrac{\\sqrt{3}}{2}\\right) = \\dfrac{\\pi}{6}$ radians = 30°"
+              ]
             }
           ]
         },
         {
-          "title": "Définition par Projection",
+          "title": "Définition par Projection Orthogonale",
           "elements": [
             {
-              "type": "definition-box",
-              "preamble": "**Produit scalaire et projection** :",
-              "content": "Soient $A$, $B$ et $C$ trois points du plan, et $H$ le projeté orthogonal de $C$ sur la droite $(AB)$.\n\nLe produit scalaire $\\overrightarrow{AB} \\cdot \\overrightarrow{AC}$ est donné par :\n\n$$\\overrightarrow{AB} \\cdot \\overrightarrow{AC} = \\overrightarrow{AB} \\cdot \\overrightarrow{AH} = AB \\times AH$$\n\noù $AH$ est la mesure algébrique de $\\overrightarrow{AH}$ sur la droite $(AB)$."
+              "type": "p",
+              "content": "La projection orthogonale est une interprétation géométrique très utile du produit scalaire."
             },
             {
-              "type": "p",
-              "content": "?> **Astuce** : La projection orthogonale est très utile pour calculer des produits scalaires dans des figures géométriques où les angles ne sont pas évidents."
+              "type": "definition-box",
+              "preamble": "**Produit scalaire et projection orthogonale** :",
+              "content": "Soient $A$, $B$ et $C$ trois points du plan, et $H$ le projeté orthogonal de $C$ sur la droite $(AB)$.\n\nLe produit scalaire $\\overrightarrow{AB} \\cdot \\overrightarrow{AC}$ est donné par :\n\n$$\\overrightarrow{AB} \\cdot \\overrightarrow{AC} = \\overrightarrow{AB} \\cdot \\overrightarrow{AH} = \\pm AB \\times AH$$\n\noù le signe dépend de l'orientation : positif si $\\overrightarrow{AH}$ et $\\overrightarrow{AB}$ sont de même sens, négatif sinon."
+            },
+            {
+              "type": "remark-box",
+              "preamble": "**Astuce de calcul** :",
+              "content": "La projection orthogonale est très utile pour calculer des produits scalaires dans des figures géométriques où les angles ne sont pas évidents, notamment dans les triangles rectangles."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Calcul par projection** :",
+              "content": "Soit $ABC$ un triangle rectangle en $B$ tel que $AB = 3$ et $BC = 4$.\n\nCalculons $\\overrightarrow{CA} \\cdot \\overrightarrow{CB}$.\n\n**Solution** :\n\nLe projeté orthogonal de $A$ sur la droite $(CB)$ est le point $B$ lui-même (car $ABC$ est rectangle en $B$).\n\nDonc :\n$$\\overrightarrow{CA} \\cdot \\overrightarrow{CB} = \\overrightarrow{CB} \\cdot \\overrightarrow{CB} = \\|\\overrightarrow{CB}\\|^2 = CB^2 = ___16___$$"
             }
           ]
         }
@@ -74,46 +173,80 @@
               "type": "property-box",
               "preamble": "**Propriétés fondamentales** :",
               "content": [
-                ">> **Commutativité** : $\\vec{u} \\cdot \\vec{v} = \\vec{v} \\cdot \\vec{u}$",
-                ">> **Linéarité** :",
+                ">>**Commutativité** : Pour tous vecteurs $\\vec{u}$ et $\\vec{v}$",
+                "$\\vec{u} \\cdot \\vec{v} = \\vec{v} \\cdot \\vec{u}$",
+                "",
+                ">>**Linéarité** : Pour tous vecteurs $\\vec{u}$, $\\vec{v}$ et $\\vec{w}$",
                 "$\\vec{u} \\cdot (\\vec{v} + \\vec{w}) = \\vec{u} \\cdot \\vec{v} + \\vec{u} \\cdot \\vec{w}$",
                 "$(\\lambda \\vec{u}) \\cdot \\vec{v} = \\lambda (\\vec{u} \\cdot \\vec{v}) = \\vec{u} \\cdot (\\lambda \\vec{v})$ pour tout réel $\\lambda$",
-                ">> **Positivité** :",
+                "",
+                ">>**Positivité** : Pour tout vecteur $\\vec{u}$",
                 "$\\vec{u} \\cdot \\vec{u} \\geq 0$ et $\\vec{u} \\cdot \\vec{u} = 0 \\Leftrightarrow \\vec{u} = \\vec{0}$"
               ],
               "listType": "bullet"
+            },
+            {
+              "type": "practice-box",
+              "statement": "Démontrer que pour tous vecteurs $\\vec{u}$, $\\vec{v}$ et $\\vec{w}$, on a : $(\\vec{u} + \\vec{v}) \\cdot \\vec{w} = \\vec{u} \\cdot \\vec{w} + \\vec{v} \\cdot \\vec{w}$",
+              "content": "Utiliser la propriété de linéarité et la commutativité",
+              "solution": [
+                "D'après la propriété de linéarité :\n$$\\vec{w} \\cdot (\\vec{u} + \\vec{v}) = \\vec{w} \\cdot \\vec{u} + \\vec{w} \\cdot \\vec{v}$$\n\nD'après la commutativité :\n$$\\vec{w} \\cdot \\vec{u} = \\vec{u} \\cdot \\vec{w}$$\n$$\\vec{w} \\cdot \\vec{v} = \\vec{v} \\cdot \\vec{w}$$\n$$\\vec{w} \\cdot (\\vec{u} + \\vec{v}) = (\\vec{u} + \\vec{v}) \\cdot \\vec{w}$$\n\nDonc :\n$$(\\vec{u} + \\vec{v}) \\cdot \\vec{w} = \\vec{u} \\cdot \\vec{w} + \\vec{v} \\cdot \\vec{w}$$"
+              ]
             }
           ]
         },
         {
-          "title": "Formules Importantes",
+          "title": "Formules de Développement",
           "elements": [
             {
               "type": "property-box",
-              "preamble": "**Formules de développement** :",
+              "preamble": "**Formules remarquables** :",
               "content": [
-                ">> **Carré d'une somme** :",
-                "$(\\vec{u} + \\vec{v})^2 = \\|\\vec{u}\\|^2 + 2\\vec{u} \\cdot \\vec{v} + \\|\\vec{v}\\|^2$",
-                ">> **Carré d'une différence** :",
-                "$(\\vec{u} - \\vec{v})^2 = \\|\\vec{u}\\|^2 - 2\\vec{u} \\cdot \\vec{v} + \\|\\vec{v}\\|^2$",
-                ">> **Identité de polarisation** :",
+                ">>**Carré d'une somme** :",
+                "$(\\vec{u} + \\vec{v})^2 = \\|\\vec{u} + \\vec{v}\\|^2 = \\|\\vec{u}\\|^2 + 2\\vec{u} \\cdot \\vec{v} + \\|\\vec{v}\\|^2$",
+                "",
+                ">>**Carré d'une différence** :",
+                "$(\\vec{u} - \\vec{v})^2 = \\|\\vec{u} - \\vec{v}\\|^2 = \\|\\vec{u}\\|^2 - 2\\vec{u} \\cdot \\vec{v} + \\|\\vec{v}\\|^2$",
+                "",
+                ">>**Identité de polarisation** :",
                 "$\\vec{u} \\cdot \\vec{v} = \\dfrac{1}{2}\\left(\\|\\vec{u} + \\vec{v}\\|^2 - \\|\\vec{u}\\|^2 - \\|\\vec{v}\\|^2\\right)$",
-                ">> **Identité remarquable** :",
+                "",
+                ">>**Identité remarquable** :",
                 "$(\\vec{u} + \\vec{v}) \\cdot (\\vec{u} - \\vec{v}) = \\|\\vec{u}\\|^2 - \\|\\vec{v}\\|^2$"
               ],
               "listType": "bullet"
             },
             {
+              "type": "remark-box",
+              "preamble": "**Analogie avec les nombres réels** :",
+              "content": "Ces formules ressemblent aux identités remarquables des nombres réels : $(a+b)^2 = a^2 + 2ab + b^2$. Cette analogie facilite leur mémorisation."
+            },
+            {
               "type": "example-box",
-              "preamble": "**Application des formules** :",
-              "content": "Soient $\\vec{u}$ et $\\vec{v}$ deux vecteurs tels que $\\|\\vec{u}\\| = 3$, $\\|\\vec{v}\\| = 2$ et $\\vec{u} \\cdot \\vec{v} = 4$.\n\nCalculons $\\|\\vec{u} + \\vec{v}\\|$ :\n\n$$\\|\\vec{u} + \\vec{v}\\|^2 = \\|\\vec{u}\\|^2 + 2\\vec{u} \\cdot \\vec{v} + \\|\\vec{v}\\|^2$$\n\n$$= 3^2 + 2 \\times 4 + 2^2 = 9 + 8 + 4 = ___21___$$\n\nDonc $\\|\\vec{u} + \\vec{v}\\| = \\sqrt{21}$"
+              "preamble": "**Application des formules de développement** :",
+              "content": "Soient $\\vec{u}$ et $\\vec{v}$ deux vecteurs tels que $\\|\\vec{u}\\| = 3$, $\\|\\vec{v}\\| = 2$ et $\\vec{u} \\cdot \\vec{v} = 4$.\n\n**1. Calculons $\\|\\vec{u} + \\vec{v}\\|$** :\n\n$$\\|\\vec{u} + \\vec{v}\\|^2 = \\|\\vec{u}\\|^2 + 2\\vec{u} \\cdot \\vec{v} + \\|\\vec{v}\\|^2$$\n\n$$= 3^2 + 2 \\times 4 + 2^2 = 9 + 8 + 4 = ___21___$$\n\nDonc $\\|\\vec{u} + \\vec{v}\\| = \\sqrt{21}$\n\n**2. Calculons $\\|\\vec{u} - \\vec{v}\\|$** :\n\n$$\\|\\vec{u} - \\vec{v}\\|^2 = \\|\\vec{u}\\|^2 - 2\\vec{u} \\cdot \\vec{v} + \\|\\vec{v}\\|^2$$\n\n$$= 9 - 8 + 4 = ___5___$$\n\nDonc $\\|\\vec{u} - \\vec{v}\\| = \\sqrt{5}$"
+            },
+            {
+              "type": "practice-box",
+              "statement": "Soient $\\vec{u}$ et $\\vec{v}$ deux vecteurs tels que $\\|\\vec{u}\\| = 5$, $\\|\\vec{v}\\| = 3$ et $\\|\\vec{u} + \\vec{v}\\| = 7$.",
+              "listType": "numbered",
+              "content": [
+                "Calculer $\\vec{u} \\cdot \\vec{v}$",
+                "En déduire l'angle $\\theta$ entre $\\vec{u}$ et $\\vec{v}$ (arrondir à 0,01 près)",
+                "Calculer $\\|\\vec{u} - \\vec{v}\\|$"
+              ],
+              "solution": [
+                "On utilise la formule : $\\|\\vec{u} + \\vec{v}\\|^2 = \\|\\vec{u}\\|^2 + 2\\vec{u} \\cdot \\vec{v} + \\|\\vec{v}\\|^2$\n\n$$7^2 = 5^2 + 2\\vec{u} \\cdot \\vec{v} + 3^2$$\n$$49 = 25 + 2\\vec{u} \\cdot \\vec{v} + 9$$\n$$49 = 34 + 2\\vec{u} \\cdot \\vec{v}$$\n$$2\\vec{u} \\cdot \\vec{v} = 15$$\n$$\\vec{u} \\cdot \\vec{v} = \\dfrac{15}{2} = 7.5$$",
+                "D'après la définition géométrique :\n$$\\cos(\\theta) = \\dfrac{\\vec{u} \\cdot \\vec{v}}{\\|\\vec{u}\\| \\times \\|\\vec{v}\\|} = \\dfrac{7.5}{5 \\times 3} = \\dfrac{7.5}{15} = 0.5$$\n\nDonc $\\theta = \\arccos(0.5) = \\dfrac{\\pi}{3}$ radians $\\approx 1.05$ radians ou 60°",
+                "On utilise la formule : $\\|\\vec{u} - \\vec{v}\\|^2 = \\|\\vec{u}\\|^2 - 2\\vec{u} \\cdot \\vec{v} + \\|\\vec{v}\\|^2$\n\n$$\\|\\vec{u} - \\vec{v}\\|^2 = 25 - 2 \\times 7.5 + 9 = 25 - 15 + 9 = 19$$\n\nDonc $\\|\\vec{u} - \\vec{v}\\| = \\sqrt{19} \\approx 4.36$"
+              ]
             }
           ]
         }
       ]
     },
     {
-      "title": "Orthogonalité",
+      "title": "Orthogonalité et Perpendicularité",
       "subsections": [
         {
           "title": "Vecteurs Orthogonaux",
@@ -124,19 +257,38 @@
               "content": "Deux vecteurs $\\vec{u}$ et $\\vec{v}$ sont **orthogonaux** si et seulement si leur produit scalaire est nul :\n\n$$\\vec{u} \\perp \\vec{v} \\Leftrightarrow \\vec{u} \\cdot \\vec{v} = 0$$\n\nPar convention, le vecteur nul $\\vec{0}$ est orthogonal à tout vecteur."
             },
             {
-              "type": "p",
-              "content": "!> **Attention** : Deux vecteurs orthogonaux ne sont pas nécessairement perpendiculaires au sens géométrique si l'un d'eux est le vecteur nul."
+              "type": "remark-box",
+              "preamble": "**Attention** :",
+              "content": "Deux vecteurs orthogonaux ne sont pas nécessairement perpendiculaires au sens géométrique si l'un d'eux est le vecteur nul. La notion de perpendicularité géométrique nécessite que les deux vecteurs soient non nuls."
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Caractérisation de l'orthogonalité** :",
+              "content": "Dans un repère orthonormé, deux vecteurs $\\vec{u}\\begin{pmatrix} x \\\\ y \\end{pmatrix}$ et $\\vec{v}\\begin{pmatrix} x' \\\\ y' \\end{pmatrix}$ sont orthogonaux si et seulement si :\n\n$$xx' + yy' = 0$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Détermination d'un vecteur orthogonal** :",
+              "content": "Dans un repère orthonormé, on donne $\\vec{u}\\begin{pmatrix} 2 \\\\ 3 \\end{pmatrix}$ et $\\vec{v}\\begin{pmatrix} x \\\\ -2 \\end{pmatrix}$.\n\nDéterminons $x$ pour que $\\vec{u}$ et $\\vec{v}$ soient orthogonaux.\n\n**Solution** :\n\n$\\vec{u}$ et $\\vec{v}$ sont orthogonaux si et seulement si $\\vec{u} \\cdot \\vec{v} = 0$\n\n$$2x + 3 \\times (-2) = 0$$\n$$2x - 6 = 0$$\n$$x = ___3___$$\n\nDonc $\\vec{v}\\begin{pmatrix} 3 \\\\ -2 \\end{pmatrix}$"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Vecteur orthogonal dans le plan** :",
+              "content": "Si $\\vec{u}\\begin{pmatrix} x \\\\ y \\end{pmatrix}$ est un vecteur non nul, alors un vecteur orthogonal à $\\vec{u}$ est :\n\n$$\\vec{v}\\begin{pmatrix} -y \\\\ x \\end{pmatrix} \\quad \\text{ou} \\quad \\vec{v}\\begin{pmatrix} y \\\\ -x \\end{pmatrix}$$\n\nEn effet : $\\vec{u} \\cdot \\vec{v} = x(-y) + y(x) = -xy + xy = 0$"
             },
             {
               "type": "practice-box",
-              "statement": "Dans un repère orthonormé, on donne $\\vec{u}\\begin{pmatrix} 2 \\\\ 3 \\end{pmatrix}$ et $\\vec{v}\\begin{pmatrix} x \\\\ -2 \\end{pmatrix}$.",
+              "statement": "Dans un repère orthonormé, on considère les vecteurs $\\vec{u}\\begin{pmatrix} 4 \\\\ -1 \\end{pmatrix}$ et $\\vec{v}\\begin{pmatrix} a \\\\ b \\end{pmatrix}$.",
+              "listType": "numbered",
               "content": [
-                "Déterminer $x$ pour que $\\vec{u}$ et $\\vec{v}$ soient orthogonaux",
-                "Vérifier le résultat graphiquement"
+                "Trouver une relation entre $a$ et $b$ pour que $\\vec{u}$ et $\\vec{v}$ soient orthogonaux",
+                "Donner deux exemples de vecteurs $\\vec{v}$ orthogonaux à $\\vec{u}$",
+                "Si de plus $\\|\\vec{v}\\| = \\sqrt{17}$, déterminer toutes les valeurs possibles de $(a; b)$"
               ],
               "solution": [
-                "$\\vec{u}$ et $\\vec{v}$ sont orthogonaux si et seulement si $\\vec{u} \\cdot \\vec{v} = 0$\n\n$$2x + 3 \\times (-2) = 0$$\n$$2x - 6 = 0$$\n$$x = 3$$\n\nDonc $\\vec{v}\\begin{pmatrix} 3 \\\\ -2 \\end{pmatrix}$",
-                "On peut vérifier que les vecteurs $\\vec{u}\\begin{pmatrix} 2 \\\\ 3 \\end{pmatrix}$ et $\\vec{v}\\begin{pmatrix} 3 \\\\ -2 \\end{pmatrix}$ forment un angle de 90° dans le repère orthonormé."
+                "$\\vec{u} \\perp \\vec{v} \\Leftrightarrow \\vec{u} \\cdot \\vec{v} = 0$\n\n$$4a + (-1)b = 0$$\n$$4a - b = 0$$\n$$b = 4a$$",
+                "En utilisant $b = 4a$ :\n\n- Pour $a = 1$ : $\\vec{v}\\begin{pmatrix} 1 \\\\ 4 \\end{pmatrix}$\n- Pour $a = -1$ : $\\vec{v}\\begin{pmatrix} -1 \\\\ -4 \\end{pmatrix}$\n\nOn peut aussi utiliser la propriété : $\\vec{v}\\begin{pmatrix} 1 \\\\ 4 \\end{pmatrix}$ ou $\\vec{v}\\begin{pmatrix} -1 \\\\ -4 \\end{pmatrix}$",
+                "On a $b = 4a$ et $\\|\\vec{v}\\| = \\sqrt{17}$\n\nDonc : $\\sqrt{a^2 + b^2} = \\sqrt{17}$\n\n$$a^2 + (4a)^2 = 17$$\n$$a^2 + 16a^2 = 17$$\n$$17a^2 = 17$$\n$$a^2 = 1$$\n$$a = 1 \\text{ ou } a = -1$$\n\nDonc :\n- Si $a = 1$ : $b = 4$, donc $\\vec{v}\\begin{pmatrix} 1 \\\\ 4 \\end{pmatrix}$\n- Si $a = -1$ : $b = -4$, donc $\\vec{v}\\begin{pmatrix} -1 \\\\ -4 \\end{pmatrix}$"
               ]
             }
           ]
@@ -146,32 +298,80 @@
           "elements": [
             {
               "type": "property-box",
-              "preamble": "**Condition de perpendicularité** :",
+              "preamble": "**Condition de perpendicularité de deux droites** :",
               "content": "Deux droites de vecteurs directeurs respectifs $\\vec{u}$ et $\\vec{v}$ sont perpendiculaires si et seulement si :\n\n$$\\vec{u} \\cdot \\vec{v} = 0$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Vérification de perpendicularité** :",
+              "content": "Dans un repère orthonormé, on considère les droites $(D_1)$ et $(D_2)$ de vecteurs directeurs respectifs $\\vec{u}\\begin{pmatrix} 3 \\\\ 2 \\end{pmatrix}$ et $\\vec{v}\\begin{pmatrix} -4 \\\\ 6 \\end{pmatrix}$.\n\nVérifions si $(D_1)$ et $(D_2)$ sont perpendiculaires.\n\n**Solution** :\n\n$$\\vec{u} \\cdot \\vec{v} = 3 \\times (-4) + 2 \\times 6 = -12 + 12 = ___0___$$\n\nDonc $(D_1) \\perp (D_2)$"
+            },
+            {
+              "type": "practice-box",
+              "statement": "Dans un repère orthonormé, on considère les points $A(1; 2)$, $B(4; 3)$, $C(2; 5)$ et $D(3; k)$ où $k$ est un réel.",
+              "listType": "numbered",
+              "content": [
+                "Déterminer $k$ pour que les droites $(AB)$ et $(CD)$ soient perpendiculaires",
+                "Pour cette valeur de $k$, vérifier que $ABDC$ forme un trapèze rectangle"
+              ],
+              "solution": [
+                "Calculons les vecteurs directeurs :\n$$\\overrightarrow{AB}\\begin{pmatrix} 4-1 \\\\ 3-2 \\end{pmatrix} = \\begin{pmatrix} 3 \\\\ 1 \\end{pmatrix}$$\n\n$$\\overrightarrow{CD}\\begin{pmatrix} 3-2 \\\\ k-5 \\end{pmatrix} = \\begin{pmatrix} 1 \\\\ k-5 \\end{pmatrix}$$\n\nPour que $(AB) \\perp (CD)$, il faut $\\overrightarrow{AB} \\cdot \\overrightarrow{CD} = 0$ :\n\n$$3 \\times 1 + 1 \\times (k-5) = 0$$\n$$3 + k - 5 = 0$$\n$$k = 2$$",
+                "Pour $k = 2$, on a $D(3; 2)$.\n\nVérifions si c'est un trapèze rectangle :\n- On a déjà $(AB) \\perp (CD)$\n- $\\overrightarrow{AB}\\begin{pmatrix} 3 \\\\ 1 \\end{pmatrix}$ et $\\overrightarrow{DC}\\begin{pmatrix} -1 \\\\ 3 \\end{pmatrix}$\n\nComme $(AB)$ et $(CD)$ sont perpendiculaires et non parallèles, $ABDC$ n'est pas un trapèze mais un quadrilatère avec un angle droit.\n\nVérifions plutôt si $(BC) \\parallel (AD)$ :\n$$\\overrightarrow{BC}\\begin{pmatrix} -2 \\\\ 2 \\end{pmatrix}$$\n$$\\overrightarrow{AD}\\begin{pmatrix} 2 \\\\ 0 \\end{pmatrix}$$\n\nLes vecteurs ne sont pas colinéaires, donc $ABDC$ n'est pas un trapèze."
+              ]
             }
           ]
         }
       ]
     },
     {
-      "title": "Applications Géométriques",
+      "title": "Applications Géométriques du Produit Scalaire",
       "subsections": [
         {
           "title": "Théorème d'Al-Kashi",
           "elements": [
             {
-              "type": "theorem-box",
-              "preamble": "**Théorème d'Al-Kashi (généralisation de Pythagore)** :",
-              "content": "Dans un triangle $ABC$, on a :\n\n$$BC^2 = AB^2 + AC^2 - 2 \\cdot AB \\cdot AC \\cdot \\cos(\\widehat{BAC})$$\n\nCe théorème généralise le théorème de Pythagore (qui est le cas particulier où $\\widehat{BAC} = 90°$)."
+              "type": "p",
+              "content": "Le théorème d'Al-Kashi (ou théorème des cosinus) généralise le théorème de Pythagore aux triangles quelconques."
             },
             {
-              "type": "p",
-              "content": "?> **Démonstration** : On utilise la relation $\\overrightarrow{BC} = \\overrightarrow{AC} - \\overrightarrow{AB}$ et on calcule $\\|\\overrightarrow{BC}\\|^2 = \\overrightarrow{BC} \\cdot \\overrightarrow{BC}$."
+              "type": "theorem-box",
+              "preamble": "**Théorème d'Al-Kashi** :",
+              "content": "Dans un triangle $ABC$, on a :\n\n$$BC^2 = AB^2 + AC^2 - 2 \\cdot AB \\cdot AC \\cdot \\cos(\\widehat{BAC})$$\n\nCe théorème se généralise pour les trois côtés du triangle."
+            },
+            {
+              "type": "remark-box",
+              "preamble": "**Cas particulier** :",
+              "content": "Si le triangle $ABC$ est rectangle en $A$, alors $\\widehat{BAC} = 90°$ et $\\cos(90°) = 0$, donc :\n$$BC^2 = AB^2 + AC^2$$\n\nOn retrouve le **théorème de Pythagore**."
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Démonstration par le produit scalaire** :",
+              "content": "On utilise la relation $\\overrightarrow{BC} = \\overrightarrow{AC} - \\overrightarrow{AB}$ :\n\n$$BC^2 = \\|\\overrightarrow{BC}\\|^2 = \\overrightarrow{BC} \\cdot \\overrightarrow{BC}$$\n$$= (\\overrightarrow{AC} - \\overrightarrow{AB}) \\cdot (\\overrightarrow{AC} - \\overrightarrow{AB})$$\n$$= \\|\\overrightarrow{AC}\\|^2 - 2\\overrightarrow{AB} \\cdot \\overrightarrow{AC} + \\|\\overrightarrow{AB}\\|^2$$\n$$= AC^2 + AB^2 - 2 \\cdot AB \\cdot AC \\cdot \\cos(\\widehat{BAC})$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Application du théorème d'Al-Kashi** :",
+              "content": "Soit $ABC$ un triangle tel que $AB = 7$, $AC = 5$ et $\\widehat{BAC} = 60°$. Calculons $BC$.\n\n**Solution** :\n\nD'après le théorème d'Al-Kashi :\n$$BC^2 = AB^2 + AC^2 - 2 \\cdot AB \\cdot AC \\cdot \\cos(\\widehat{BAC})$$\n\n$$BC^2 = 7^2 + 5^2 - 2 \\times 7 \\times 5 \\times \\cos(60°)$$\n\n$$BC^2 = 49 + 25 - 70 \\times \\dfrac{1}{2}$$\n\n$$BC^2 = 74 - 35 = ___39___$$\n\nDonc $BC = \\sqrt{39} \\approx 6.24$"
+            },
+            {
+              "type": "practice-box",
+              "statement": "Soit $ABC$ un triangle tel que $AB = 8$, $BC = 10$ et $AC = 6$.",
+              "listType": "numbered",
+              "content": [
+                "Calculer $\\cos(\\widehat{BAC})$ en utilisant le théorème d'Al-Kashi",
+                "En déduire la mesure de l'angle $\\widehat{BAC}$ (arrondir au degré près)",
+                "Le triangle $ABC$ est-il rectangle ? Justifier"
+              ],
+              "solution": [
+                "D'après le théorème d'Al-Kashi :\n$$BC^2 = AB^2 + AC^2 - 2 \\cdot AB \\cdot AC \\cdot \\cos(\\widehat{BAC})$$\n\n$$10^2 = 8^2 + 6^2 - 2 \\times 8 \\times 6 \\times \\cos(\\widehat{BAC})$$\n$$100 = 64 + 36 - 96 \\cos(\\widehat{BAC})$$\n$$100 = 100 - 96 \\cos(\\widehat{BAC})$$\n$$96 \\cos(\\widehat{BAC}) = 0$$\n$$\\cos(\\widehat{BAC}) = 0$$",
+                "Si $\\cos(\\widehat{BAC}) = 0$, alors $\\widehat{BAC} = 90°$",
+                "Oui, le triangle $ABC$ est rectangle en $A$ car $\\widehat{BAC} = 90°$.\n\nOn peut vérifier avec Pythagore : $AB^2 + AC^2 = 64 + 36 = 100 = BC^2$ ✓"
+              ]
             }
           ]
         },
         {
-          "title": "Médiane et Théorème de la Médiane",
+          "title": "Théorème de la Médiane",
           "elements": [
             {
               "type": "theorem-box",
@@ -179,9 +379,273 @@
               "content": "Dans un triangle $ABC$, si $I$ est le milieu de $[BC]$, alors :\n\n$$AB^2 + AC^2 = 2\\left(AI^2 + BI^2\\right)$$\n\nOu de manière équivalente :\n$$AB^2 + AC^2 = 2AI^2 + \\dfrac{BC^2}{2}$$"
             },
             {
+              "type": "property-box",
+              "preamble": "**Démonstration** :",
+              "content": "Puisque $I$ est le milieu de $[BC]$, on a $\\overrightarrow{IB} + \\overrightarrow{IC} = \\vec{0}$.\n\nCalculons $AB^2 + AC^2$ :\n$$AB^2 + AC^2 = \\|\\overrightarrow{AB}\\|^2 + \\|\\overrightarrow{AC}\\|^2$$\n$$= \\|\\overrightarrow{AI} + \\overrightarrow{IB}\\|^2 + \\|\\overrightarrow{AI} + \\overrightarrow{IC}\\|^2$$\n$$= 2\\|\\overrightarrow{AI}\\|^2 + 2\\overrightarrow{AI} \\cdot (\\overrightarrow{IB} + \\overrightarrow{IC}) + \\|\\overrightarrow{IB}\\|^2 + \\|\\overrightarrow{IC}\\|^2$$\n$$= 2AI^2 + 0 + BI^2 + IC^2$$\n$$= 2AI^2 + 2BI^2$$"
+            },
+            {
               "type": "example-box",
               "preamble": "**Application du théorème de la médiane** :",
-              "content": "Soit $ABC$ un triangle tel que $AB = 5$, $AC = 7$ et $BC = 6$. Si $I$ est le milieu de $[BC]$, calculons $AI$.\n\nD'après le théorème de la médiane :\n$$AB^2 + AC^2 = 2AI^2 + \\dfrac{BC^2}{2}$$\n\n$$25 + 49 = 2AI^2 + \\dfrac{36}{2}$$\n\n$$74 = 2AI^2 + 18$$\n\n$$2AI^2 = 74 - 18 = ___56___$$\n\n$$AI^2 = 28$$\n\nDonc $AI = \\sqrt{28} = 2\\sqrt{7}$"
+              "content": "Soit $ABC$ un triangle tel que $AB = 5$, $AC = 7$ et $BC = 6$. Si $I$ est le milieu de $[BC]$, calculons $AI$.\n\n**Solution** :\n\nD'après le théorème de la médiane :\n$$AB^2 + AC^2 = 2AI^2 + \\dfrac{BC^2}{2}$$\n\n$$25 + 49 = 2AI^2 + \\dfrac{36}{2}$$\n\n$$74 = 2AI^2 + 18$$\n\n$$2AI^2 = 74 - 18 = ___56___$$\n\n$$AI^2 = 28$$\n\nDonc $AI = \\sqrt{28} = 2\\sqrt{7} \\approx 5.29$"
+            },
+            {
+              "type": "practice-box",
+              "statement": "Soit $ABC$ un triangle isocèle en $A$ tel que $AB = AC = 10$ et $BC = 12$. Soit $I$ le milieu de $[BC]$.",
+              "listType": "numbered",
+              "content": [
+                "Calculer $AI$ en utilisant le théorème de la médiane",
+                "Vérifier que $AI$ est la hauteur issue de $A$",
+                "Calculer l'aire du triangle $ABC$"
+              ],
+              "solution": [
+                "D'après le théorème de la médiane :\n$$AB^2 + AC^2 = 2AI^2 + \\dfrac{BC^2}{2}$$\n\n$$10^2 + 10^2 = 2AI^2 + \\dfrac{12^2}{2}$$\n$$200 = 2AI^2 + 72$$\n$$2AI^2 = 128$$\n$$AI^2 = 64$$\n$$AI = 8$$",
+                "Puisque le triangle est isocèle en $A$ et $I$ est le milieu de $[BC]$, la médiane $[AI]$ est aussi la hauteur issue de $A$.\n\nOn peut vérifier : $\\overrightarrow{AI} \\cdot \\overrightarrow{BC} = 0$ car $\\overrightarrow{AI}$ est perpendiculaire à $\\overrightarrow{BC}$.",
+                "L'aire du triangle $ABC$ est :\n$$\\mathcal{A} = \\dfrac{1}{2} \\times BC \\times AI = \\dfrac{1}{2} \\times 12 \\times 8 = 48$$"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Distance d'un Point à une Droite",
+          "elements": [
+            {
+              "type": "p",
+              "content": "Le produit scalaire permet de calculer facilement la distance d'un point à une droite."
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Distance d'un point à une droite** :",
+              "content": "Soit $(D)$ une droite passant par un point $A$ et de vecteur directeur $\\vec{u}$, et soit $M$ un point du plan.\n\nLa distance de $M$ à la droite $(D)$ est donnée par :\n\n$$d(M, (D)) = \\dfrac{|\\overrightarrow{AM} \\cdot \\vec{n}|}{\\|\\vec{n}\\|}$$\n\noù $\\vec{n}$ est un vecteur normal à $(D)$ (c'est-à-dire orthogonal à $\\vec{u}$)."
+            },
+            {
+              "type": "remark-box",
+              "preamble": "**Méthode alternative** :",
+              "content": "On peut aussi calculer la distance en utilisant la projection orthogonale : si $H$ est le projeté orthogonal de $M$ sur $(D)$, alors $d(M, (D)) = MH$."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Calcul de distance d'un point à une droite** :",
+              "content": "Dans un repère orthonormé, soit $(D)$ la droite passant par $A(1; 2)$ et de vecteur directeur $\\vec{u}\\begin{pmatrix} 3 \\\\ 4 \\end{pmatrix}$.\n\nCalculons la distance du point $M(5; 7)$ à la droite $(D)$.\n\n**Solution** :\n\nUn vecteur normal à $(D)$ est $\\vec{n}\\begin{pmatrix} -4 \\\\ 3 \\end{pmatrix}$ (on permute les coordonnées de $\\vec{u}$ et on change un signe).\n\nVérifions : $\\vec{u} \\cdot \\vec{n} = 3 \\times (-4) + 4 \\times 3 = -12 + 12 = 0$ ✓\n\nCalculons $\\overrightarrow{AM}$ :\n$$\\overrightarrow{AM}\\begin{pmatrix} 5-1 \\\\ 7-2 \\end{pmatrix} = \\begin{pmatrix} 4 \\\\ 5 \\end{pmatrix}$$\n\nDonc :\n$$d(M, (D)) = \\dfrac{|\\overrightarrow{AM} \\cdot \\vec{n}|}{\\|\\vec{n}\\|} = \\dfrac{|4 \\times (-4) + 5 \\times 3|}{\\sqrt{(-4)^2 + 3^2}}$$\n\n$$= \\dfrac{|-16 + 15|}{\\sqrt{16 + 9}} = \\dfrac{|-1|}{\\sqrt{25}} = \\dfrac{1}{5} = ___0.2___$$"
+            },
+            {
+              "type": "practice-box",
+              "statement": "Dans un repère orthonormé, soit $(D)$ la droite d'équation $3x + 4y - 7 = 0$.",
+              "listType": "numbered",
+              "content": [
+                "Déterminer un vecteur normal $\\vec{n}$ à la droite $(D)$",
+                "Calculer la distance du point $M(2; 1)$ à la droite $(D)$",
+                "Déterminer les coordonnées du projeté orthogonal $H$ de $M$ sur $(D)$"
+              ],
+              "solution": [
+                "Une droite d'équation $ax + by + c = 0$ a pour vecteur normal $\\vec{n}\\begin{pmatrix} a \\\\ b \\end{pmatrix}$\n\nDonc $\\vec{n}\\begin{pmatrix} 3 \\\\ 4 \\end{pmatrix}$ est un vecteur normal à $(D)$",
+                "La distance d'un point $M(x_0; y_0)$ à une droite d'équation $ax + by + c = 0$ est :\n\n$$d(M, (D)) = \\dfrac{|ax_0 + by_0 + c|}{\\sqrt{a^2 + b^2}}$$\n\nDonc :\n$$d(M, (D)) = \\dfrac{|3 \\times 2 + 4 \\times 1 - 7|}{\\sqrt{3^2 + 4^2}} = \\dfrac{|6 + 4 - 7|}{\\sqrt{9 + 16}} = \\dfrac{|3|}{\\sqrt{25}} = \\dfrac{3}{5}$$",
+                "Le projeté orthogonal $H$ de $M$ sur $(D)$ vérifie :\n- $H \\in (D)$ donc $3x_H + 4y_H - 7 = 0$\n- $\\overrightarrow{MH}$ est colinéaire à $\\vec{n}$, donc $\\overrightarrow{MH} = t\\vec{n}$ pour un certain réel $t$\n\nOn a $\\overrightarrow{MH}\\begin{pmatrix} x_H - 2 \\\\ y_H - 1 \\end{pmatrix} = t\\begin{pmatrix} 3 \\\\ 4 \\end{pmatrix}$\n\nDonc : $x_H = 2 + 3t$ et $y_H = 1 + 4t$\n\nEn substituant dans l'équation de $(D)$ :\n$$3(2 + 3t) + 4(1 + 4t) - 7 = 0$$\n$$6 + 9t + 4 + 16t - 7 = 0$$\n$$25t + 3 = 0$$\n$$t = -\\dfrac{3}{25}$$\n\nDonc :\n$$x_H = 2 + 3 \\times \\left(-\\dfrac{3}{25}\\right) = 2 - \\dfrac{9}{25} = \\dfrac{50 - 9}{25} = \\dfrac{41}{25}$$\n$$y_H = 1 + 4 \\times \\left(-\\dfrac{3}{25}\\right) = 1 - \\dfrac{12}{25} = \\dfrac{25 - 12}{25} = \\dfrac{13}{25}$$\n\nDonc $H\\left(\\dfrac{41}{25}; \\dfrac{13}{25}\\right)$"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Équations de Cercles",
+          "elements": [
+            {
+              "type": "p",
+              "content": "Le produit scalaire permet d'établir et de reconnaître les équations de cercles dans le plan."
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Équation cartésienne d'un cercle** :",
+              "content": "Dans un repère orthonormé, le cercle de centre $\\Omega(a; b)$ et de rayon $r$ a pour équation :\n\n$$(x - a)^2 + (y - b)^2 = r^2$$\n\nCette équation se développe sous la forme :\n$$x^2 + y^2 - 2ax - 2by + c = 0$$\n\navec $c = a^2 + b^2 - r^2$"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Caractérisation vectorielle** :",
+              "content": "L'ensemble des points $M$ du plan tels que $\\overrightarrow{\\Omega M} \\cdot \\overrightarrow{\\Omega M} = r^2$ est le cercle de centre $\\Omega$ et de rayon $r$.\n\nAutrement dit : $M \\in \\mathcal{C}(\\Omega, r) \\Leftrightarrow \\|\\overrightarrow{\\Omega M}\\|^2 = r^2$"
+            },
+            {
+              "type": "theorem-box",
+              "preamble": "**Cercle défini par un diamètre** :",
+              "content": "L'ensemble des points $M$ du plan tels que $\\overrightarrow{MA} \\cdot \\overrightarrow{MB} = 0$ est le cercle de diamètre $[AB]$.\n\nAutrement dit : $M$ appartient au cercle de diamètre $[AB]$ si et seulement si le triangle $MAB$ est rectangle en $M$."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Équation d'un cercle** :",
+              "content": "Dans un repère orthonormé, déterminons l'équation du cercle de centre $\\Omega(2; -1)$ et de rayon $r = 3$.\n\n**Solution** :\n\n$$(x - 2)^2 + (y - (-1))^2 = 3^2$$\n$$(x - 2)^2 + (y + 1)^2 = ___9___$$\n\nDéveloppons :\n$$x^2 - 4x + 4 + y^2 + 2y + 1 = 9$$\n$$x^2 + y^2 - 4x + 2y - 4 = 0$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Reconnaissance d'un cercle** :",
+              "content": "Déterminons la nature de l'ensemble des points $M(x; y)$ vérifiant : $x^2 + y^2 - 6x + 4y + 9 = 0$\n\n**Solution** :\n\nOn regroupe les termes :\n$$(x^2 - 6x) + (y^2 + 4y) + 9 = 0$$\n\nOn complète les carrés :\n$$(x^2 - 6x + 9) - 9 + (y^2 + 4y + 4) - 4 + 9 = 0$$\n$$(x - 3)^2 + (y + 2)^2 = 9 - 9 + 4 = ___4___$$\n\nDonc c'est le cercle de centre $\\Omega(3; -2)$ et de rayon $r = 2$"
+            },
+            {
+              "type": "practice-box",
+              "statement": "Dans un repère orthonormé, on donne les points $A(1; 3)$ et $B(5; -1)$.",
+              "listType": "numbered",
+              "content": [
+                "Déterminer l'équation du cercle de diamètre $[AB]$ sous la forme $(x - a)^2 + (y - b)^2 = r^2$",
+                "Développer cette équation sous la forme $x^2 + y^2 + \\alpha x + \\beta y + \\gamma = 0$",
+                "Vérifier que le point $C(4; 2)$ appartient à ce cercle en utilisant le produit scalaire"
+              ],
+              "solution": [
+                "Le centre $\\Omega$ du cercle de diamètre $[AB]$ est le milieu de $[AB]$ :\n$$\\Omega\\left(\\dfrac{1+5}{2}; \\dfrac{3+(-1)}{2}\\right) = \\Omega(3; 1)$$\n\nLe rayon est :\n$$r = \\dfrac{AB}{2} = \\dfrac{\\sqrt{(5-1)^2 + (-1-3)^2}}{2} = \\dfrac{\\sqrt{16 + 16}}{2} = \\dfrac{\\sqrt{32}}{2} = \\dfrac{4\\sqrt{2}}{2} = 2\\sqrt{2}$$\n\nDonc l'équation est :\n$$(x - 3)^2 + (y - 1)^2 = (2\\sqrt{2})^2 = 8$$",
+                "Développons :\n$$x^2 - 6x + 9 + y^2 - 2y + 1 = 8$$\n$$x^2 + y^2 - 6x - 2y + 10 - 8 = 0$$\n$$x^2 + y^2 - 6x - 2y + 2 = 0$$\n\nDonc $\\alpha = -6$, $\\beta = -2$ et $\\gamma = 2$",
+                "Le point $C$ appartient au cercle de diamètre $[AB]$ si et seulement si $\\overrightarrow{CA} \\cdot \\overrightarrow{CB} = 0$\n\n$$\\overrightarrow{CA}\\begin{pmatrix} 1-4 \\\\ 3-2 \\end{pmatrix} = \\begin{pmatrix} -3 \\\\ 1 \\end{pmatrix}$$\n\n$$\\overrightarrow{CB}\\begin{pmatrix} 5-4 \\\\ -1-2 \\end{pmatrix} = \\begin{pmatrix} 1 \\\\ -3 \\end{pmatrix}$$\n\n$$\\overrightarrow{CA} \\cdot \\overrightarrow{CB} = (-3) \\times 1 + 1 \\times (-3) = -3 - 3 = -6 \\neq 0$$\n\nDonc $C$ n'appartient pas au cercle de diamètre $[AB]$."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Exercices Complémentaires avec Fill-in-Blanks",
+      "subsections": [
+        {
+          "title": "Calculs Progressifs",
+          "elements": [
+            {
+              "type": "example-box",
+              "preamble": "**Calcul guidé avec étapes** :",
+              "content": "Dans un repère orthonormé, soient $\\vec{u}\\begin{pmatrix} -2 \\\\ 5 \\end{pmatrix}$ et $\\vec{v}\\begin{pmatrix} 3 \\\\ 1 \\end{pmatrix}$.\n\n**Étape 1** : Calculons le produit scalaire\n$$\\vec{u} \\cdot \\vec{v} = (-2) \\times 3 + 5 \\times 1 = -6 + 5 = ___-1___$$\n\n**Étape 2** : Calculons les normes\n$$\\|\\vec{u}\\| = \\sqrt{(-2)^2 + 5^2} = \\sqrt{4 + 25} = \\sqrt{___29___}$$\n$$\\|\\vec{v}\\| = \\sqrt{3^2 + 1^2} = \\sqrt{9 + 1} = \\sqrt{___10___}$$\n\n**Étape 3** : Calculons l'angle $\\theta$ entre les vecteurs\n$$\\cos(\\theta) = \\dfrac{\\vec{u} \\cdot \\vec{v}}{\\|\\vec{u}\\| \\times \\|\\vec{v}\\|} = \\dfrac{-1}{\\sqrt{29} \\times \\sqrt{10}} = \\dfrac{___-1___}{\\sqrt{290}}$$\n\nL'angle est obtus car $\\cos(\\theta) < 0$"
+            },
+            {
+              "type": "practice-box",
+              "statement": "On considère un triangle $ABC$ avec $A(1; 1)$, $B(4; 2)$ et $C(3; 5)$ dans un repère orthonormé.",
+              "listType": "numbered",
+              "content": [
+                "Calculer les coordonnées de $\\overrightarrow{AB}$, $\\overrightarrow{AC}$ et $\\overrightarrow{BC}$",
+                "Calculer les longueurs $AB$, $AC$ et $BC$",
+                "Déterminer la nature du triangle $ABC$ (équilatéral, isocèle, rectangle ou quelconque)",
+                "Calculer l'angle $\\widehat{BAC}$ (donner la valeur exacte de son cosinus)",
+                "Calculer l'aire du triangle $ABC$ en utilisant la formule : $\\mathcal{A} = \\dfrac{1}{2} AB \\times AC \\times \\sin(\\widehat{BAC})$"
+              ],
+              "solution": [
+                "$\\overrightarrow{AB}\\begin{pmatrix} 4-1 \\\\ 2-1 \\end{pmatrix} = \\begin{pmatrix} 3 \\\\ 1 \\end{pmatrix}$\n\n$\\overrightarrow{AC}\\begin{pmatrix} 3-1 \\\\ 5-1 \\end{pmatrix} = \\begin{pmatrix} 2 \\\\ 4 \\end{pmatrix}$\n\n$\\overrightarrow{BC}\\begin{pmatrix} 3-4 \\\\ 5-2 \\end{pmatrix} = \\begin{pmatrix} -1 \\\\ 3 \\end{pmatrix}$",
+                "$AB = \\|\\overrightarrow{AB}\\| = \\sqrt{3^2 + 1^2} = \\sqrt{10}$\n\n$AC = \\|\\overrightarrow{AC}\\| = \\sqrt{2^2 + 4^2} = \\sqrt{20} = 2\\sqrt{5}$\n\n$BC = \\|\\overrightarrow{BC}\\| = \\sqrt{(-1)^2 + 3^2} = \\sqrt{10}$",
+                "On remarque que $AB = BC = \\sqrt{10}$, donc le triangle est **isocèle** en $B$.\n\nVérifions s'il est rectangle :\n$AB^2 + BC^2 = 10 + 10 = 20 = AC^2$\n\nDonc le triangle est **rectangle** en $B$ et isocèle.",
+                "$\\cos(\\widehat{BAC}) = \\dfrac{\\overrightarrow{AB} \\cdot \\overrightarrow{AC}}{AB \\times AC}$\n\n$\\overrightarrow{AB} \\cdot \\overrightarrow{AC} = 3 \\times 2 + 1 \\times 4 = 6 + 4 = 10$\n\n$\\cos(\\widehat{BAC}) = \\dfrac{10}{\\sqrt{10} \\times 2\\sqrt{5}} = \\dfrac{10}{2\\sqrt{50}} = \\dfrac{10}{2 \\times 5\\sqrt{2}} = \\dfrac{10}{10\\sqrt{2}} = \\dfrac{1}{\\sqrt{2}} = \\dfrac{\\sqrt{2}}{2}$\n\nDonc $\\widehat{BAC} = 45°$",
+                "Puisque $\\cos(\\widehat{BAC}) = \\dfrac{\\sqrt{2}}{2}$, on a $\\sin(\\widehat{BAC}) = \\dfrac{\\sqrt{2}}{2}$ (car $\\widehat{BAC} = 45°$)\n\n$\\mathcal{A} = \\dfrac{1}{2} \\times \\sqrt{10} \\times 2\\sqrt{5} \\times \\dfrac{\\sqrt{2}}{2}$\n\n$= \\dfrac{1}{2} \\times 2\\sqrt{50} \\times \\dfrac{\\sqrt{2}}{2}$\n\n$= \\dfrac{\\sqrt{50} \\times \\sqrt{2}}{2}$\n\n$= \\dfrac{\\sqrt{100}}{2} = \\dfrac{10}{2} = 5$\n\nOu plus simplement, comme le triangle est rectangle en $B$ :\n$\\mathcal{A} = \\dfrac{1}{2} \\times AB \\times BC = \\dfrac{1}{2} \\times \\sqrt{10} \\times \\sqrt{10} = \\dfrac{10}{2} = 5$"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Applications Avancées",
+          "elements": [
+            {
+              "type": "example-box",
+              "preamble": "**Ensemble de points défini par un produit scalaire** :",
+              "content": "Dans un repère orthonormé, on donne $A(2; 1)$ et $B(6; 3)$.\n\nDéterminons l'ensemble des points $M(x; y)$ tels que $\\overrightarrow{MA} \\cdot \\overrightarrow{MB} = 0$.\n\n**Solution** :\n\nCette condition signifie que $M$ appartient au cercle de diamètre $[AB]$.\n\nLe centre $\\Omega$ est le milieu de $[AB]$ :\n$$\\Omega\\left(\\dfrac{2+6}{2}; \\dfrac{1+3}{2}\\right) = \\Omega(___4___; ___2___)$$\n\nLe rayon est :\n$$r = \\dfrac{AB}{2} = \\dfrac{\\sqrt{(6-2)^2 + (3-1)^2}}{2} = \\dfrac{\\sqrt{16 + 4}}{2} = \\dfrac{\\sqrt{20}}{2} = \\dfrac{2\\sqrt{5}}{2} = \\sqrt{___5___}$$\n\nL'équation du cercle est :\n$$(x - 4)^2 + (y - 2)^2 = 5$$"
+            },
+            {
+              "type": "practice-box",
+              "statement": "Dans un repère orthonormé, on considère les points $A(-1; 2)$, $B(3; 4)$ et on note $I$ le milieu de $[AB]$.",
+              "listType": "numbered",
+              "content": [
+                "Déterminer les coordonnées de $I$",
+                "Montrer que pour tout point $M$ du plan : $\\overrightarrow{MA} \\cdot \\overrightarrow{MB} = MI^2 - \\dfrac{AB^2}{4}$",
+                "En déduire l'ensemble des points $M$ tels que $\\overrightarrow{MA} \\cdot \\overrightarrow{MB} = 0$",
+                "Déterminer l'ensemble des points $M$ tels que $\\overrightarrow{MA} \\cdot \\overrightarrow{MB} = 5$",
+                "Déterminer l'ensemble des points $M$ tels que $\\overrightarrow{MA} \\cdot \\overrightarrow{MB} = -5$"
+              ],
+              "solution": [
+                "$I\\left(\\dfrac{-1+3}{2}; \\dfrac{2+4}{2}\\right) = I(1; 3)$",
+                "Utilisons la relation de Chasles :\n\n$\\overrightarrow{MA} = \\overrightarrow{MI} + \\overrightarrow{IA}$\n$\\overrightarrow{MB} = \\overrightarrow{MI} + \\overrightarrow{IB}$\n\nDonc :\n$\\overrightarrow{MA} \\cdot \\overrightarrow{MB} = (\\overrightarrow{MI} + \\overrightarrow{IA}) \\cdot (\\overrightarrow{MI} + \\overrightarrow{IB})$\n\n$= \\overrightarrow{MI} \\cdot \\overrightarrow{MI} + \\overrightarrow{MI} \\cdot \\overrightarrow{IB} + \\overrightarrow{IA} \\cdot \\overrightarrow{MI} + \\overrightarrow{IA} \\cdot \\overrightarrow{IB}$\n\n$= MI^2 + \\overrightarrow{MI} \\cdot (\\overrightarrow{IB} + \\overrightarrow{IA}) + \\overrightarrow{IA} \\cdot \\overrightarrow{IB}$\n\nComme $I$ est le milieu de $[AB]$, on a $\\overrightarrow{IA} + \\overrightarrow{IB} = \\vec{0}$\n\nDe plus : $\\overrightarrow{IA} \\cdot \\overrightarrow{IB} = -\\overrightarrow{IA} \\cdot \\overrightarrow{IA}$ (car $\\overrightarrow{IB} = -\\overrightarrow{IA}$)\n\n$= -IA^2 = -\\left(\\dfrac{AB}{2}\\right)^2 = -\\dfrac{AB^2}{4}$\n\nDonc : $\\overrightarrow{MA} \\cdot \\overrightarrow{MB} = MI^2 - \\dfrac{AB^2}{4}$",
+                "$\\overrightarrow{MA} \\cdot \\overrightarrow{MB} = 0 \\Leftrightarrow MI^2 = \\dfrac{AB^2}{4}$\n\nCalculons $AB$ : $AB = \\sqrt{(3-(-1))^2 + (4-2)^2} = \\sqrt{16 + 4} = \\sqrt{20} = 2\\sqrt{5}$\n\nDonc $\\dfrac{AB^2}{4} = \\dfrac{20}{4} = 5$\n\nL'ensemble est le cercle de centre $I(1; 3)$ et de rayon $\\sqrt{5}$",
+                "$\\overrightarrow{MA} \\cdot \\overrightarrow{MB} = 5 \\Leftrightarrow MI^2 - 5 = 5 \\Leftrightarrow MI^2 = 10$\n\nL'ensemble est le cercle de centre $I(1; 3)$ et de rayon $\\sqrt{10}$",
+                "$\\overrightarrow{MA} \\cdot \\overrightarrow{MB} = -5 \\Leftrightarrow MI^2 = 5 - 5 = 0 \\Leftrightarrow MI = 0$\n\nL'ensemble est le point $I$ lui-même."
+              ]
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Produit scalaire et parallélogramme** :",
+              "content": "Soit $ABCD$ un parallélogramme de centre $O$. On note $a = AB$ et $b = BC$.\n\nExprimons $\\overrightarrow{AC} \\cdot \\overrightarrow{BD}$ en fonction de $a$ et $b$.\n\n**Solution** :\n\nDans un parallélogramme, les diagonales se coupent en leur milieu. Donc :\n$$\\overrightarrow{AC} = \\overrightarrow{AB} + \\overrightarrow{BC}$$\n$$\\overrightarrow{BD} = \\overrightarrow{BC} + \\overrightarrow{CD} = \\overrightarrow{BC} - \\overrightarrow{AB}$$ (car $\\overrightarrow{CD} = -\\overrightarrow{AB}$)\n\nDonc :\n$$\\overrightarrow{AC} \\cdot \\overrightarrow{BD} = (\\overrightarrow{AB} + \\overrightarrow{BC}) \\cdot (\\overrightarrow{BC} - \\overrightarrow{AB})$$\n\nEn utilisant l'identité $(u + v)(v - u) = v^2 - u^2$ :\n$$\\overrightarrow{AC} \\cdot \\overrightarrow{BD} = \\|\\overrightarrow{BC}\\|^2 - \\|\\overrightarrow{AB}\\|^2 = b^2 - a^2 = ___b^2 - a^2___$$\n\n**Remarque** : Le parallélogramme est un losange si et seulement si $a = b$, c'est-à-dire si et seulement si $\\overrightarrow{AC} \\cdot \\overrightarrow{BD} = ___0___$ (diagonales perpendiculaires)."
+            },
+            {
+              "type": "practice-box",
+              "statement": "Soit $ABCD$ un carré de côté $a$. On note $O$ le centre du carré.",
+              "listType": "numbered",
+              "content": [
+                "Exprimer $\\overrightarrow{AB} \\cdot \\overrightarrow{AC}$ en fonction de $a$",
+                "Calculer $\\overrightarrow{AO} \\cdot \\overrightarrow{AC}$ en fonction de $a$",
+                "Calculer $\\overrightarrow{AC} \\cdot \\overrightarrow{BD}$ et en déduire la nature du carré",
+                "Soit $M$ un point du cercle de centre $O$ et de rayon $\\dfrac{a\\sqrt{2}}{2}$. Calculer $\\overrightarrow{MA} \\cdot \\overrightarrow{MC}$"
+              ],
+              "solution": [
+                "Dans le triangle $ABC$ rectangle en $B$, on a :\n$\\overrightarrow{AB} \\cdot \\overrightarrow{AC} = \\overrightarrow{AB} \\cdot (\\overrightarrow{AB} + \\overrightarrow{BC})$\n\n$= \\overrightarrow{AB} \\cdot \\overrightarrow{AB} + \\overrightarrow{AB} \\cdot \\overrightarrow{BC}$\n\n$= \\|\\overrightarrow{AB}\\|^2 + 0$ (car $\\overrightarrow{AB} \\perp \\overrightarrow{BC}$)\n\n$= a^2$",
+                "Le point $O$ est le milieu de $[AC]$ (diagonales d'un carré se coupent en leur milieu).\n\nDonc $\\overrightarrow{AO} = \\dfrac{1}{2}\\overrightarrow{AC}$\n\n$\\overrightarrow{AO} \\cdot \\overrightarrow{AC} = \\dfrac{1}{2}\\overrightarrow{AC} \\cdot \\overrightarrow{AC} = \\dfrac{1}{2}\\|\\overrightarrow{AC}\\|^2$\n\nDans un carré : $AC = a\\sqrt{2}$\n\nDonc : $\\overrightarrow{AO} \\cdot \\overrightarrow{AC} = \\dfrac{1}{2}(a\\sqrt{2})^2 = \\dfrac{1}{2} \\times 2a^2 = a^2$",
+                "Dans un carré : $\\overrightarrow{AC} = \\overrightarrow{AB} + \\overrightarrow{BC}$ et $\\overrightarrow{BD} = \\overrightarrow{BC} - \\overrightarrow{AB}$ (car $\\overrightarrow{CD} = -\\overrightarrow{AB}$)\n\nDonc :\n$\\overrightarrow{AC} \\cdot \\overrightarrow{BD} = (\\overrightarrow{AB} + \\overrightarrow{BC}) \\cdot (\\overrightarrow{BC} - \\overrightarrow{AB})$\n\n$= \\|\\overrightarrow{BC}\\|^2 - \\|\\overrightarrow{AB}\\|^2 = a^2 - a^2 = 0$\n\nDonc les diagonales $[AC]$ et $[BD]$ sont **perpendiculaires**, ce qui est une propriété caractéristique du carré.",
+                "Comme $M$ est sur le cercle de centre $O$ et de rayon $\\dfrac{a\\sqrt{2}}{2}$, on a $OM = \\dfrac{a\\sqrt{2}}{2}$\n\nUtilisons la formule du milieu : $\\overrightarrow{MA} \\cdot \\overrightarrow{MC} = MO^2 - OA^2$\n\nOr $O$ est le centre du carré, donc $OA = \\dfrac{AC}{2} = \\dfrac{a\\sqrt{2}}{2}$\n\nDonc :\n$\\overrightarrow{MA} \\cdot \\overrightarrow{MC} = \\left(\\dfrac{a\\sqrt{2}}{2}\\right)^2 - \\left(\\dfrac{a\\sqrt{2}}{2}\\right)^2 = 0$\n\nAutrement dit, tous les points du cercle circonscrit au carré vérifient $\\overrightarrow{MA} \\cdot \\overrightarrow{MC} = 0$, donc le cercle de diamètre $[AC]$ est bien le cercle circonscrit au carré."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Synthèse et Exercices d'Approfondissement",
+      "subsections": [
+        {
+          "title": "Méthodes Essentielles",
+          "elements": [
+            {
+              "type": "remark-box",
+              "preamble": "**Méthodes à retenir** :",
+              "content": [
+                ">>**Pour calculer un produit scalaire** :",
+                "Utiliser la définition analytique dans un repère orthonormé",
+                "Utiliser la définition géométrique si on connaît les normes et l'angle",
+                "Utiliser la projection orthogonale dans les triangles rectangles",
+                "",
+                ">>**Pour montrer que deux vecteurs sont orthogonaux** :",
+                "Calculer leur produit scalaire et montrer qu'il est nul",
+                "",
+                ">>**Pour calculer un angle** :",
+                "Utiliser $\\cos(\\theta) = \\dfrac{\\vec{u} \\cdot \\vec{v}}{\\|\\vec{u}\\| \\times \\|\\vec{v}\\|}$",
+                "",
+                ">>**Pour calculer une norme** :",
+                "Utiliser $\\|\\vec{u}\\| = \\sqrt{\\vec{u} \\cdot \\vec{u}}$"
+              ],
+              "listType": "bullet"
+            }
+          ]
+        },
+        {
+          "title": "Exercices de Synthèse",
+          "elements": [
+            {
+              "type": "practice-box",
+              "statement": "Dans un repère orthonormé $(O; \\vec{i}, \\vec{j})$, on considère les points $A(1; 2)$, $B(4; 3)$, $C(3; 6)$ et $D(0; 5)$.",
+              "listType": "numbered",
+              "content": [
+                "Calculer les coordonnées des vecteurs $\\overrightarrow{AB}$, $\\overrightarrow{AC}$, $\\overrightarrow{AD}$ et $\\overrightarrow{BC}$",
+                "Calculer $\\overrightarrow{AB} \\cdot \\overrightarrow{AC}$ et en déduire $\\cos(\\widehat{BAC})$",
+                "Le triangle $ABC$ est-il rectangle ? Justifier",
+                "Montrer que le quadrilatère $ABCD$ est un losange",
+                "Calculer l'aire du triangle $ABC$"
+              ],
+              "solution": [
+                "$\\overrightarrow{AB}\\begin{pmatrix} 3 \\\\ 1 \\end{pmatrix}$, $\\overrightarrow{AC}\\begin{pmatrix} 2 \\\\ 4 \\end{pmatrix}$, $\\overrightarrow{AD}\\begin{pmatrix} -1 \\\\ 3 \\end{pmatrix}$, $\\overrightarrow{BC}\\begin{pmatrix} -1 \\\\ 3 \\end{pmatrix}$",
+                "$\\overrightarrow{AB} \\cdot \\overrightarrow{AC} = 3 \\times 2 + 1 \\times 4 = 6 + 4 = 10$\n\n$\\|\\overrightarrow{AB}\\| = \\sqrt{3^2 + 1^2} = \\sqrt{10}$\n\n$\\|\\overrightarrow{AC}\\| = \\sqrt{2^2 + 4^2} = \\sqrt{20} = 2\\sqrt{5}$\n\nDonc :\n$$\\cos(\\widehat{BAC}) = \\dfrac{\\overrightarrow{AB} \\cdot \\overrightarrow{AC}}{\\|\\overrightarrow{AB}\\| \\times \\|\\overrightarrow{AC}\\|} = \\dfrac{10}{\\sqrt{10} \\times 2\\sqrt{5}} = \\dfrac{10}{2\\sqrt{50}} = \\dfrac{10}{10\\sqrt{2}} = \\dfrac{1}{\\sqrt{2}} = \\dfrac{\\sqrt{2}}{2}$$",
+                "Non, car $\\cos(\\widehat{BAC}) = \\dfrac{\\sqrt{2}}{2} \\neq 0$, donc l'angle $\\widehat{BAC} \\neq 90°$.\n\nVérifions les autres angles :\n$\\overrightarrow{BA} \\cdot \\overrightarrow{BC} = (-3) \\times (-1) + (-1) \\times 3 = 3 - 3 = 0$\n\nDonc le triangle $ABC$ est rectangle en $B$.",
+                "On remarque que $\\overrightarrow{BC} = \\overrightarrow{AD}$ (mêmes coordonnées), donc $ABCD$ est un parallélogramme.\n\nCalculons les longueurs des côtés :\n$AB = \\sqrt{10}$\n$BC = \\sqrt{(-1)^2 + 3^2} = \\sqrt{10}$\n\nDonc $AB = BC$. Comme $ABCD$ est un parallélogramme avec deux côtés consécutifs égaux, c'est un losange.",
+                "Le triangle $ABC$ est rectangle en $B$, donc :\n$$\\mathcal{A} = \\dfrac{1}{2} \\times AB \\times BC = \\dfrac{1}{2} \\times \\sqrt{10} \\times \\sqrt{10} = \\dfrac{1}{2} \\times 10 = 5$$"
+              ]
+            },
+            {
+              "type": "practice-box",
+              "statement": "Soient $\\vec{u}$ et $\\vec{v}$ deux vecteurs du plan tels que $\\|\\vec{u}\\| = 4$, $\\|\\vec{v}\\| = 3$ et l'angle entre $\\vec{u}$ et $\\vec{v}$ est $\\theta = \\dfrac{\\pi}{3}$.",
+              "listType": "numbered",
+              "content": [
+                "Calculer $\\vec{u} \\cdot \\vec{v}$",
+                "Calculer $\\|2\\vec{u} + 3\\vec{v}\\|$",
+                "Calculer $\\|\\vec{u} - \\vec{v}\\|$",
+                "Déterminer l'angle entre $\\vec{u} + \\vec{v}$ et $\\vec{u} - \\vec{v}$"
+              ],
+              "solution": [
+                "$\\vec{u} \\cdot \\vec{v} = \\|\\vec{u}\\| \\times \\|\\vec{v}\\| \\times \\cos(\\theta) = 4 \\times 3 \\times \\cos\\left(\\dfrac{\\pi}{3}\\right) = 12 \\times \\dfrac{1}{2} = 6$",
+                "$\\|2\\vec{u} + 3\\vec{v}\\|^2 = (2\\vec{u} + 3\\vec{v}) \\cdot (2\\vec{u} + 3\\vec{v})$\n\n$= 4\\|\\vec{u}\\|^2 + 12\\vec{u} \\cdot \\vec{v} + 9\\|\\vec{v}\\|^2$\n\n$= 4 \\times 16 + 12 \\times 6 + 9 \\times 9$\n\n$= 64 + 72 + 81 = 217$\n\nDonc $\\|2\\vec{u} + 3\\vec{v}\\| = \\sqrt{217}$",
+                "$\\|\\vec{u} - \\vec{v}\\|^2 = \\|\\vec{u}\\|^2 - 2\\vec{u} \\cdot \\vec{v} + \\|\\vec{v}\\|^2$\n\n$= 16 - 2 \\times 6 + 9 = 16 - 12 + 9 = 13$\n\nDonc $\\|\\vec{u} - \\vec{v}\\| = \\sqrt{13}$",
+                "Calculons $(\\vec{u} + \\vec{v}) \\cdot (\\vec{u} - \\vec{v})$ :\n\n$(\\vec{u} + \\vec{v}) \\cdot (\\vec{u} - \\vec{v}) = \\|\\vec{u}\\|^2 - \\|\\vec{v}\\|^2 = 16 - 9 = 7$\n\nCalculons $\\|\\vec{u} + \\vec{v}\\|$ :\n\n$\\|\\vec{u} + \\vec{v}\\|^2 = \\|\\vec{u}\\|^2 + 2\\vec{u} \\cdot \\vec{v} + \\|\\vec{v}\\|^2 = 16 + 12 + 9 = 37$\n\nDonc $\\|\\vec{u} + \\vec{v}\\| = \\sqrt{37}$\n\nL'angle $\\alpha$ entre $\\vec{u} + \\vec{v}$ et $\\vec{u} - \\vec{v}$ vérifie :\n\n$$\\cos(\\alpha) = \\dfrac{(\\vec{u} + \\vec{v}) \\cdot (\\vec{u} - \\vec{v})}{\\|\\vec{u} + \\vec{v}\\| \\times \\|\\vec{u} - \\vec{v}\\|} = \\dfrac{7}{\\sqrt{37} \\times \\sqrt{13}} = \\dfrac{7}{\\sqrt{481}}$$"
+              ]
             }
           ]
         }
