@@ -484,14 +484,6 @@ a {
   transform: translateX(-3px);
 }
 
-/* Bouton retour flottant pour les leçons - Design minimaliste et moderne */
-.lesson-back-floating {
-  position: fixed;
-  top: 2rem;
-  left: 2rem;
-  z-index: 1000;
-}
-
 .standard-header__back-btn--lesson {
   position: relative;
   background: rgba(255, 255, 255, 0.95);
@@ -528,11 +520,6 @@ a {
 
 /* Responsive - mobile */
 @media (max-width: 768px) {
-  .lesson-back-floating {
-    top: 1rem;
-    left: 1rem;
-  }
-  
   .standard-header__back-btn--lesson {
     min-width: 3rem;
     min-height: 3rem;

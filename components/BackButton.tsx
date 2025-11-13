@@ -15,18 +15,8 @@ const BackButton: React.FC<BackButtonProps> = ({
     label = "Retour",
     className = "",
 }) => {
-    return (
-        <button
-            onClick={onClick}
-            className={`coursera-btn coursera-btn--back ${className}`}
-            aria-label={label}
-            title={label}
-        >
-            <span className="material-symbols-outlined" style={{ fontSize: '1.2rem' }}>
-                arrow_back
-            </span>
-        </button>
-    );
+    // No-op: platform-wide back buttons have been removed.
+    return null;
 };
 
 export default BackButton;

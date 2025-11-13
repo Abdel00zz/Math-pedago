@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch } from '../../context/AppContext';
-import StandardHeader from '../StandardHeader';
+// StandardHeader removed per concours design change
 import FormattedText from '../FormattedText';
 import type { ConcoursData, ConcoursResumeSection } from '../../types';
 
@@ -102,21 +102,32 @@ const ConcoursResumeView: React.FC = () => {
         <div className="min-h-screen relative overflow-hidden concours-math-red" style={{
             background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         }}>
-            {/* SVG Pattern Background */}
-            <div className="absolute inset-0 opacity-10">
+            {/* Geometric motif background (decorative) */}
+            <div className="absolute inset-0 pointer-events-none" aria-hidden={true}>
                 <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
                     <defs>
-                        <pattern id="concours-resume-pattern" width="60" height="60" patternUnits="userSpaceOnUse">
-                            <circle cx="30" cy="30" r="2" fill="white" opacity="0.4"/>
-                            <circle cx="0" cy="0" r="2" fill="white" opacity="0.3"/>
-                            <circle cx="60" cy="60" r="2" fill="white" opacity="0.3"/>
+                        <linearGradient id="concoursGradientResume" x1="0%" x2="100%" y1="0%" y2="100%">
+                            <stop offset="0%" stopColor="#7c5cff" stopOpacity="0.12" />
+                            <stop offset="100%" stopColor="#4fd1c5" stopOpacity="0.12" />
+                        </linearGradient>
+                        <filter id="blurSmallResume" x="-20%" y="-20%" width="140%" height="140%">
+                            <feGaussianBlur stdDeviation="40" />
+                        </filter>
+                        <pattern id="concours-hex-resume" width="48" height="48" patternUnits="userSpaceOnUse">
+                            <path d="M24 0 L36 12 L24 24 L12 12 Z" fill="white" opacity="0.03" />
                         </pattern>
                     </defs>
-                    <rect width="100%" height="100%" fill="url(#concours-resume-pattern)" />
+
+                    <rect width="100%" height="100%" fill="url(#concoursGradientResume)" />
+
+                    <g filter="url(#blurSmallResume)" opacity="0.28">
+                        <circle cx="22%" cy="20%" r="150" fill="#ffffff" />
+                        <rect x="62%" y="14%" width="320" height="220" rx="36" fill="#ffffff" />
+                    </g>
+
+                    <rect width="100%" height="100%" fill="url(#concours-hex-resume)" opacity="0.06" />
                 </svg>
             </div>
-
-            <StandardHeader title="Résumé du thème" />
 
             <div className="relative z-10 max-w-6xl mx-auto px-6 py-12">
                 {/* En-tête */}

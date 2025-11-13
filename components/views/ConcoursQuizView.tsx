@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useAppDispatch } from '../../context/AppContext';
-import StandardHeader from '../StandardHeader';
+// StandardHeader removed per concours design change
 import MCQQuestion from '../quiz/MCQQuestion';
 import OrderingQuestion from '../quiz/OrderingQuestion';
 import FormattedText from '../FormattedText';
@@ -204,8 +204,33 @@ const ConcoursQuizView: React.FC = () => {
 
     if (isFinished) {
         return (
-            <div className="min-h-screen bg-white">
-                <StandardHeader title="Résultats du quiz" />
+            <div className="min-h-screen bg-white relative overflow-hidden">
+                {/* Geometric motif background (decorative) */}
+                <div className="absolute inset-0 pointer-events-none" aria-hidden={true}>
+                    <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="concoursGradientQuiz" x1="0%" x2="100%" y1="0%" y2="100%">
+                                <stop offset="0%" stopColor="#7c5cff" stopOpacity="0.08" />
+                                <stop offset="100%" stopColor="#4fd1c5" stopOpacity="0.08" />
+                            </linearGradient>
+                            <filter id="blurSmallQuiz" x="-20%" y="-20%" width="140%" height="140%">
+                                <feGaussianBlur stdDeviation="36" />
+                            </filter>
+                            <pattern id="concours-hex-quiz" width="48" height="48" patternUnits="userSpaceOnUse">
+                                <path d="M24 0 L36 12 L24 24 L12 12 Z" fill="white" opacity="0.03" />
+                            </pattern>
+                        </defs>
+
+                        <rect width="100%" height="100%" fill="url(#concoursGradientQuiz)" />
+
+                        <g filter="url(#blurSmallQuiz)" opacity="0.26">
+                            <circle cx="16%" cy="24%" r="140" fill="#ffffff" />
+                            <rect x="62%" y="8%" width="280" height="180" rx="28" fill="#ffffff" />
+                        </g>
+
+                        <rect width="100%" height="100%" fill="url(#concours-hex-quiz)" opacity="0.05" />
+                    </svg>
+                </div>
 
                 <div className="max-w-3xl mx-auto px-6 py-12">
                     <div className="border border-gray-200 p-12 text-center">
@@ -252,10 +277,34 @@ const ConcoursQuizView: React.FC = () => {
     }
 
     return (
-        <div className="min-h-screen bg-white">
-            <StandardHeader title={`Quiz - ${concoursData.theme}`} />
+            <div className="min-h-screen bg-white relative overflow-hidden">
+                <div className="absolute inset-0 pointer-events-none" aria-hidden={true}>
+                    <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="concoursGradientQuiz2" x1="0%" x2="100%" y1="0%" y2="100%">
+                                <stop offset="0%" stopColor="#7c5cff" stopOpacity="0.06" />
+                                <stop offset="100%" stopColor="#4fd1c5" stopOpacity="0.06" />
+                            </linearGradient>
+                            <filter id="blurSmallQuiz2" x="-20%" y="-20%" width="140%" height="140%">
+                                <feGaussianBlur stdDeviation="36" />
+                            </filter>
+                            <pattern id="concours-hex-quiz2" width="48" height="48" patternUnits="userSpaceOnUse">
+                                <path d="M24 0 L36 12 L24 24 L12 12 Z" fill="white" opacity="0.03" />
+                            </pattern>
+                        </defs>
 
-            <div className="max-w-4xl mx-auto px-6 py-12 font-sans">
+                        <rect width="100%" height="100%" fill="url(#concoursGradientQuiz2)" />
+
+                        <g filter="url(#blurSmallQuiz2)" opacity="0.24">
+                            <circle cx="16%" cy="24%" r="120" fill="#ffffff" />
+                            <rect x="62%" y="8%" width="240" height="160" rx="28" fill="#ffffff" />
+                        </g>
+
+                        <rect width="100%" height="100%" fill="url(#concours-hex-quiz2)" opacity="0.05" />
+                    </svg>
+                </div>
+
+                <div className="max-w-4xl mx-auto px-6 py-12 font-sans">
                 {/* Progress */}
                 <div className="flex justify-center gap-2 mb-8">
                     {concoursData.quiz.map((q, index) => (

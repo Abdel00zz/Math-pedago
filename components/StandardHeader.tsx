@@ -34,21 +34,6 @@ const StandardHeader: React.FC<StandardHeaderProps> = ({
 }) => {
   const hasAside = Boolean(children);
 
-  const renderBackButton = (isLesson = false) => {
-    if (!onBack) return null;
-    
-    return (
-      <button
-        onClick={onBack}
-        className={`standard-header__back-btn ${isLesson ? 'standard-header__back-btn--lesson' : ''}`}
-        aria-label={backLabel}
-        title={backLabel}
-      >
-        <span className="material-symbols-outlined">arrow_back</span>
-      </button>
-    );
-  };
-
   if (variant === 'dashboard') {
     return (
       <header className={`dashboard-header ${className}`}>
@@ -62,11 +47,6 @@ const StandardHeader: React.FC<StandardHeaderProps> = ({
   if (variant === 'lesson') {
     return (
       <>
-        {onBack && (
-          <div className="lesson-back-floating">
-            {renderBackButton(true)}
-          </div>
-        )}
         <header className={`standard-header--lesson ${className}`}>
           <div className="standard-header__lesson-bar">
             <span className="standard-header__lesson-spacer" aria-hidden="true" />
@@ -85,7 +65,7 @@ const StandardHeader: React.FC<StandardHeaderProps> = ({
   return (
     <header className={`standard-header ${className}`}>
       <div className="standard-header__inner">
-        {onBack ? renderBackButton() : <span className="standard-header__spacer" aria-hidden="true" />}
+        <span className="standard-header__spacer" aria-hidden="true" />
         <div className="standard-header__main">
           {badgeText && (
             <div className="standard-header__badge">

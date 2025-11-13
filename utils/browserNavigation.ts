@@ -162,8 +162,29 @@ export function extractNavigationState(state: AppState): NavigationState {
  * Pousse un nouvel état dans l'historique du navigateur
  */
 export function pushNavigationState(navState: NavigationState, title?: string): void {
+    if (typeof window === 'undefined') return;
+
     const url = buildURL(navState);
     const stateData = { ...navState };
+
+    const currentUrl = window.location.pathname + (window.location.search || '');
+    const currentState = window.history.state || null;
+
+    const sameUrl = currentUrl === url;
+    const sameState = JSON.stringify(currentState) === JSON.stringify(stateData);
+
+    if (sameUrl && sameState) {
+        // Aucun changement → éviter d'empiler une entrée identique
+        return;
+    }
+
+    if (sameUrl && !sameState) {
+        // Même URL mais état différent → remplacer l'état courant sans pousser
+        window.history.replaceState(stateData, title || '', url);
+        return;
+    }
+
+    // URL différente → pousser une nouvelle entrée
     window.history.pushState(stateData, title || '', url);
 }
 

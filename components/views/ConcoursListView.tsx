@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppState } from '../../context/AppContext';
-import StandardHeader from '../StandardHeader';
+// StandardHeader removed per concours design change
 import type { ConcoursIndex, ConcoursInfo, ConcoursExamen } from '../../types';
 
 interface ThemeGroup {
@@ -135,21 +135,32 @@ const ConcoursListView: React.FC = () => {
         <div className="min-h-screen relative overflow-hidden" style={{
             background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         }}>
-            {/* SVG Pattern Background */}
-            <div className="absolute inset-0 opacity-10">
+            {/* Geometric motif background (decorative) */}
+            <div className="absolute inset-0 pointer-events-none" aria-hidden={true}>
                 <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
                     <defs>
-                        <pattern id="concours-list-pattern" width="60" height="60" patternUnits="userSpaceOnUse">
-                            <circle cx="30" cy="30" r="2" fill="white" opacity="0.4"/>
-                            <circle cx="0" cy="0" r="2" fill="white" opacity="0.3"/>
-                            <circle cx="60" cy="60" r="2" fill="white" opacity="0.3"/>
+                        <linearGradient id="concoursGradient" x1="0%" x2="100%" y1="0%" y2="100%">
+                            <stop offset="0%" stopColor="#7c5cff" stopOpacity="0.12" />
+                            <stop offset="100%" stopColor="#4fd1c5" stopOpacity="0.12" />
+                        </linearGradient>
+                        <filter id="blurSmall" x="-20%" y="-20%" width="140%" height="140%">
+                            <feGaussianBlur stdDeviation="40" />
+                        </filter>
+                        <pattern id="concours-hex" width="48" height="48" patternUnits="userSpaceOnUse">
+                            <path d="M24 0 L36 12 L24 24 L12 12 Z" fill="white" opacity="0.03" />
                         </pattern>
                     </defs>
-                    <rect width="100%" height="100%" fill="url(#concours-list-pattern)" />
+
+                    <rect width="100%" height="100%" fill="url(#concoursGradient)" />
+
+                    <g filter="url(#blurSmall)" opacity="0.28">
+                        <circle cx="18%" cy="22%" r="160" fill="#ffffff" />
+                        <rect x="60%" y="10%" width="360" height="220" rx="40" fill="#ffffff" />
+                    </g>
+
+                    <rect width="100%" height="100%" fill="url(#concours-hex)" opacity="0.06" />
                 </svg>
             </div>
-
-            <StandardHeader title={`Concours ${concoursInfo.name}`} />
 
             <div className="relative z-10 max-w-6xl mx-auto px-6 py-12">
                 <div className="mb-12">

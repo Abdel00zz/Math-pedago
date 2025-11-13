@@ -638,17 +638,7 @@ const ChapterHubView: React.FC = () => {
         <>
             <GlobalActionButtons />
             
-            {/* Bouton retour flottant similaire aux leçons */}
-            <div className="chapter-hub-back-floating">
-                <button
-                    onClick={() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'dashboard' } })}
-                    className="standard-header__back-btn standard-header__back-btn--lesson"
-                    aria-label="Retour au tableau de bord"
-                    title="Retour au tableau de bord"
-                >
-                    <span className="material-symbols-outlined">arrow_back</span>
-                </button>
-            </div>
+            {/* Bouton retour supprimé */}
             
             <div className="chapter-hub-container max-w-5xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 animate-slideInUp pb-20 sm:pb-16 md:pb-12 pt-4 sm:pt-6 md:pt-8">
                 {showConfetti && (

@@ -3,7 +3,7 @@ import { ChapterData, FileSystemDirectoryHandle } from '../types';
 import { VideoEditor } from './VideoEditor';
 import { QuizEditor } from './QuizEditor';
 import { ExerciseEditor } from './ExerciseEditor';
-import { LessonEditor } from './LessonEditor';
+import { LessonEditorV2 } from './LessonEditorV2';
 import { DocumentTextIcon, VideoCameraIcon, QuestionMarkCircleIcon, PencilSquareIcon, InformationCircleIcon, BookOpenIcon } from './icons';
 
 interface ChapterEditorProps {
@@ -13,7 +13,7 @@ interface ChapterEditorProps {
     dirHandle: FileSystemDirectoryHandle | null;
 }
 
-type Tab = 'info' | 'videos' | 'quiz' | 'exercises' | 'lesson';
+type Tab = 'info' | 'videos' | 'quiz' | 'exercises' | 'lesson' | 'concours';
 
 export const ChapterEditor: React.FC<ChapterEditorProps> = ({ chapter, onClose, onSave, dirHandle }) => {
     const [editedChapter, setEditedChapter] = useState<ChapterData>(() => JSON.parse(JSON.stringify(chapter)));
@@ -83,6 +83,7 @@ export const ChapterEditor: React.FC<ChapterEditorProps> = ({ chapter, onClose, 
         { id: 'videos', name: 'Vidéos', icon: VideoCameraIcon },
         { id: 'quiz', name: 'Quiz', icon: QuestionMarkCircleIcon },
         { id: 'exercises', name: 'Exercices', icon: PencilSquareIcon },
+        { id: 'concours', name: 'Concours', icon: QuestionMarkCircleIcon },
     ];
 
     return (
@@ -131,7 +132,7 @@ export const ChapterEditor: React.FC<ChapterEditorProps> = ({ chapter, onClose, 
                     <main className="flex-1 bg-white overflow-y-auto">
                         {activeTab === 'info' && <InfoTab />}
                         {activeTab === 'lesson' && (
-                            <LessonEditor 
+                            <LessonEditorV2
                                 chapterId={editedChapter.id}
                                 lessonFilePath={editedChapter.lessonFile}
                                 classType={editedChapter.class_type}
@@ -142,6 +143,20 @@ export const ChapterEditor: React.FC<ChapterEditorProps> = ({ chapter, onClose, 
                         {activeTab === 'videos' && <VideoEditor chapter={editedChapter} setChapter={setEditedChapter} />}
                         {activeTab === 'quiz' && <QuizEditor chapter={editedChapter} setChapter={setEditedChapter} />}
                         {activeTab === 'exercises' && <ExerciseEditor chapter={editedChapter} setChapter={setEditedChapter} dirHandle={dirHandle} />}
+                        {activeTab === 'concours' && (
+                            <div className="p-6">
+                                <div className="text-center py-12">
+                                    <QuestionMarkCircleIcon className="w-16 h-16 mx-auto text-gray-400 mb-4" />
+                                    <h3 className="text-xl font-bold text-gray-900 mb-2">Gestion des Concours</h3>
+                                    <p className="text-gray-600 mb-6">
+                                        Ajoutez et gérez les concours et leurs éléments pour ce chapitre.
+                                    </p>
+                                    <p className="text-sm text-gray-500 italic">
+                                        Fonctionnalité en cours de développement
+                                    </p>
+                                </div>
+                            </div>
+                        )}
                     </main>
                 </div>
 

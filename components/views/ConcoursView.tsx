@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch } from '../../context/AppContext';
-import StandardHeader from '../StandardHeader';
+// StandardHeader removed per concours design change
 import Modal from '../Modal';
 import type { ConcoursIndex, ConcoursInfo } from '../../types';
 
@@ -31,13 +31,6 @@ const ConcoursView: React.FC = () => {
         sessionStorage.setItem('currentConcoursType', concoursType);
     };
 
-    const handleBackClick = () => {
-        dispatch({
-            type: 'CHANGE_VIEW',
-            payload: { view: 'login' },
-        });
-    };
-
     if (loading) {
         return (
             <div className="min-h-screen bg-white flex items-center justify-center">
@@ -54,20 +47,46 @@ const ConcoursView: React.FC = () => {
             background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         }}>
             {/* SVG Pattern Background */}
-            <div className="absolute inset-0 opacity-10">
-                <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <pattern id="concours-pattern" width="60" height="60" patternUnits="userSpaceOnUse">
-                            <circle cx="30" cy="30" r="2" fill="white" opacity="0.4"/>
-                            <circle cx="0" cy="0" r="2" fill="white" opacity="0.3"/>
-                            <circle cx="60" cy="60" r="2" fill="white" opacity="0.3"/>
-                        </pattern>
-                    </defs>
-                    <rect width="100%" height="100%" fill="url(#concours-pattern)" />
-                </svg>
-            </div>
+                <div className="absolute inset-0 pointer-events-none" aria-hidden={true}>
+                    <svg className="w-full h-full" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="geom-grad-1" x1="0" x2="1" y1="0" y2="1">
+                                <stop offset="0%" stopColor="#f6f9ff" />
+                                <stop offset="100%" stopColor="#fff8fb" />
+                            </linearGradient>
 
-            <StandardHeader onBack={handleBackClick} title="Préparation Concours" />
+                            <pattern id="hex-pattern" width="80" height="70" patternUnits="userSpaceOnUse" patternTransform="rotate(0)">
+                                <g fill="none" strokeOpacity="0.06" stroke="#2b6cb0" strokeWidth="1">
+                                    <path d="M40 0 L80 20 L80 50 L40 70 L0 50 L0 20 Z" />
+                                </g>
+                            </pattern>
+
+                            <filter id="blur-soft" x="-50%" y="-50%" width="200%" height="200%">
+                                <feGaussianBlur stdDeviation="40" />
+                            </filter>
+                        </defs>
+
+                        {/* Background gradient base */}
+                        <rect width="1200" height="800" fill="url(#geom-grad-1)" />
+
+                        {/* Large, soft geometric shapes (blurred) */}
+                        <g filter="url(#blur-soft)" opacity="0.18">
+                            <rect x="-120" y="-60" width="420" height="420" rx="60" fill="#DDE8FF" transform="rotate(-20 90 150)" />
+                            <rect x="860" y="60" width="520" height="520" rx="80" fill="#FFE9E9" transform="rotate(15 1110 320)" />
+                            <circle cx="600" cy="540" r="260" fill="#F3E8FF" />
+                        </g>
+
+                        {/* Geometric motif overlay (hexagons pattern, subtle) */}
+                        <rect width="1200" height="800" fill="url(#hex-pattern)" opacity="0.035" />
+
+                        {/* Accent lines for structure */}
+                        <g stroke="#ffffff" strokeWidth="1" opacity="0.06">
+                            <path d="M80 200 L1120 200" />
+                            <path d="M60 420 L1140 420" />
+                            <path d="M40 640 L1160 640" />
+                        </g>
+                    </svg>
+                </div>
 
             {/* Bouton Aide */}
             <div className="absolute top-4 sm:top-6 right-4 sm:right-6 z-50">

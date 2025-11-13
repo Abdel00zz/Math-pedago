@@ -35,8 +35,12 @@ const LessonView: React.FC = () => {
     }, []);
 
     const handleBack = useCallback(() => {
-        dispatch({ type: 'CHANGE_VIEW', payload: { view: 'work-plan' } });
-    }, [dispatch]);
+        // Utiliser la navigation native du navigateur au lieu de dispatch(CHANGE_VIEW)
+        // pour éviter de pousser deux états dans l'historique
+        if (typeof window !== 'undefined') {
+            window.history.back();
+        }
+    }, []);
 
     // Charger la leçon (inline ou depuis fichier) avec cache intelligent
     useEffect(() => {
@@ -214,12 +218,7 @@ const LessonView: React.FC = () => {
                     <span className="material-symbols-outlined !text-6xl text-error mb-4">error</span>
                     <p className="text-text-primary text-xl font-bold mb-2">Erreur de chargement</p>
                     <p className="text-text-secondary mb-6">{error}</p>
-                    <button
-                        onClick={handleBack}
-                        className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-all"
-                    >
-                        Retour au chapitre
-                    </button>
+                    {/* Bouton 'Retour au chapitre' supprimé */}
                 </div>
             </div>
         );
@@ -231,12 +230,7 @@ const LessonView: React.FC = () => {
                 <div className="text-center">
                     <span className="material-symbols-outlined !text-6xl text-text-disabled mb-4">menu_book</span>
                     <p className="text-text-secondary text-lg">Leçon non disponible</p>
-                    <button
-                        onClick={handleBack}
-                        className="mt-6 px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-all"
-                    >
-                        Retour au chapitre
-                    </button>
+                    {/* Bouton 'Retour au chapitre' supprimé */}
                 </div>
             </div>
         );
