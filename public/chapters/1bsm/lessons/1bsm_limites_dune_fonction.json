@@ -59,7 +59,7 @@
             {
               "type": "example-box",
               "preamble": "**Limite à l'infini** :",
-              "content": "Calculer $\\lim\\limits_{x \\to +\\infty} \\dfrac{2x + 1}{x + 3}$.\n\nOn factorise par $x$ au numérateur et au dénominateur :\n\n$$\\dfrac{2x + 1}{x + 3} = \\dfrac{x(2 + \\frac{1}{x})}{x(1 + \\frac{3}{x})} = \\dfrac{2 + \\frac{1}{x}}{1 + \\frac{3}{x}}$$\n\nQuand $x \\to +\\infty$ : $\\frac{1}{x} \\to 0$ et $\\frac{3}{x} \\to 0$\n\nDonc : $\\lim\\limits_{x \\to +\\infty} \\dfrac{2x + 1}{x + 3} = \\dfrac{2 + 0}{1 + 0} = ___2___$$"
+              "content": "Calculer $\\lim\\limits_{x \\to +\\infty} \\dfrac{2x + 1}{x + 3}$.\n\nOn factorise par $x$ au numérateur et au dénominateur :\n\n$$\\dfrac{2x + 1}{x + 3} = \\dfrac{x(2 + \\frac{1}{x})}{x(1 + \\frac{3}{x})} = \\dfrac{2 + \\frac{1}{x}}{1 + \\frac{3}{x}}$$\n\nQuand $x \\to +\\infty$ : $\\frac{1}{x} \\to 0$ et $\\frac{3}{x} \\to 0$\n\nDonc : $$\\lim\\limits_{x \\to +\\infty} \\dfrac{2x + 1}{x + 3} = \\dfrac{2 + 0}{1 + 0} = ___2___$$"
             }
           ]
         }
