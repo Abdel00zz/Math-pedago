@@ -217,7 +217,7 @@
     {
       "id": "1bsm-denombrement",
       "file": "1bsm/1bsm_denombrement.json",
-      "isActive": false,
+      "isActive": true,
       "version": "v1.1.0-47538d"
     },
     {
@@ -229,7 +229,7 @@
     {
       "id": "1bsm-arithmetique-dans-z",
       "file": "1bsm/1bsm_arithmetique_dans_z.json",
-      "isActive": false,
+      "isActive": true,
       "version": "v1.1.0-78c4bb"
     }
   ],
