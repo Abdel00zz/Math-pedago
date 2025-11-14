@@ -16,6 +16,16 @@ const App: React.FC = () => {
     const state = useAppState();
 
     const renderView = () => {
+        // Si l'utilisateur est connecté et essaie d'accéder à la page de connexion,
+        // le rediriger vers le dashboard ou concours selon son profil
+        if (state.profile && state.view === 'login') {
+            if (state.profile.classId === 'concours') {
+                return <ConcoursView />;
+            } else {
+                return <DashboardView />;
+            }
+        }
+
         switch (state.view) {
             case 'login':
                 return <LoginView />;

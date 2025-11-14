@@ -7,12 +7,12 @@
 .lesson-canvas {
   display: flex;
   flex-direction: column;
-  gap: clamp(1.1rem, 2.4vw, 1.9rem);
-  /* horizontal paddings reduced so canvas can be wider on large screens */
-  padding: clamp(0.85rem, 1.8vw, 1.6rem) clamp(3rem, 4vw, 4.5rem) clamp(0.85rem, 1.8vw, 1.6rem) clamp(1.25rem, 2vw, 2rem);
+  gap: clamp(0.8rem, 1.8vw, 1.4rem);
+  /* Contenu aligné à gauche avec padding réduit */
+  padding: clamp(0.6rem, 1.2vw, 1rem) clamp(1.5rem, 2.5vw, 2.5rem) clamp(0.6rem, 1.2vw, 1rem) clamp(0.8rem, 1.5vw, 1.5rem);
   /* increase max width to allow wider lesson area */
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 0;
 }
 
 /* Mobile optimizations - Tablet */
@@ -155,7 +155,7 @@
 .lesson-stack {
   display: flex;
   flex-direction: column;
-  gap: clamp(1.6rem, 3.4vw, 2.6rem);
+  gap: clamp(1.2rem, 2.5vw, 1.8rem);
 }
 
 .lesson-section,
@@ -176,7 +176,7 @@
 .lesson-section {
   display: flex;
   flex-direction: column;
-  gap: clamp(0.9rem, 2vw, 1.5rem);
+  gap: clamp(0.7rem, 1.5vw, 1.1rem);
 }
 
 .lesson-section__header {
@@ -221,7 +221,7 @@
 .lesson-section__body {
   display: flex;
   flex-direction: column;
-  gap: clamp(1.1rem, 2.5vw, 1.9rem);
+  gap: clamp(0.8rem, 1.8vw, 1.3rem);
 }
 
 /* ========================================
@@ -230,7 +230,7 @@
 .lesson-subsection {
   display: flex;
   flex-direction: column;
-  gap: clamp(0.75rem, 1.3vw, 1.15rem);
+  gap: clamp(0.6rem, 1vw, 0.9rem);
 }
 
 .lesson-subsection__header {
@@ -265,7 +265,7 @@
 .lesson-subsection__body {
   display: flex;
   flex-direction: column;
-  gap: clamp(0.7rem, 1.2vw, 1.1rem);
+  gap: clamp(0.5rem, 0.9vw, 0.8rem);
 }
 
 .lesson-subsection__elements {
@@ -319,17 +319,17 @@
   position: relative;
   display: flex;
   align-items: flex-start;
-  gap: 0.65rem;
+  gap: 0.5rem;
   color: var(--text-color);
   font-size: clamp(0.93rem, 1.6vw, 1.03rem);
   line-height: 1.75;
   letter-spacing: 0.01em;
-  padding: clamp(0.65rem, 1.2vw, 0.9rem) clamp(0.85rem, 1.6vw, 1.15rem);
+  padding: clamp(0.5rem, 1vw, 0.7rem) clamp(0.65rem, 1.2vw, 0.9rem);
   border-radius: clamp(9px, 1.6vw, 12px);
   background: rgba(255, 255, 255, 0.92);
   border: 1px solid rgba(148, 163, 184, 0.22);
   box-shadow: none;
-  margin: clamp(0.35rem, 0.9vw, 0.6rem) 0;
+  margin: clamp(0.25rem, 0.6vw, 0.4rem) 0;
 }
 
 .lesson-paragraph:hover {
