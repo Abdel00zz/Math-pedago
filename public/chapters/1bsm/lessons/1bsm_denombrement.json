@@ -1,51 +1,141 @@
 {
   "header": {
     "title": "Dénombrement",
-    "subtitle": "Arrangements, combinaisons et permutations",
-    "classe": "1ère Bac Sciences Mathématiques",
-    "chapter": "Chapitre 16",
+    "subtitle": "Cardinal, arrangements, permutations, combinaisons et formule du binôme",
+    "classe": "1ère Bac Sciences Mathématiques (SM)",
+    "chapter": "Chapitre 13",
     "academicYear": "2025-2026"
   },
   "sections": [
     {
-      "title": "Principes Fondamentaux",
+      "title": "Ensembles finis et cardinal",
       "subsections": [
         {
-          "title": "Principe Additif et Multiplicatif",
+          "title": "Notion d'ensemble fini",
           "elements": [
             {
               "type": "p",
-              "content": "Le dénombrement est l'art de compter les éléments d'un ensemble fini. Il repose sur deux principes fondamentaux."
+              "content": "Le dénombrement est l'art de compter les éléments d'un ensemble de manière systématique et rigoureuse. Cette discipline est fondamentale en mathématiques et trouve de nombreuses applications en probabilités, en informatique et dans la vie quotidienne."
             },
             {
-              "type": "property-box",
-              "preamble": "**Principe additif** :",
-              "content": "Si deux ensembles $A$ et $B$ sont **disjoints** (sans élément commun), alors :\n\n$$\\text{Card}(A \\cup B) = \\text{Card}(A) + \\text{Card}(B)$$\n\n**Généralisation** : Pour $n$ ensembles disjoints deux à deux $A_1, A_2, \\ldots, A_n$ :\n$$\\text{Card}(A_1 \\cup A_2 \\cup \\cdots \\cup A_n) = \\text{Card}(A_1) + \\text{Card}(A_2) + \\cdots + \\text{Card}(A_n)$$"
+              "type": "definition-box",
+              "preamble": "**Ensemble fini** :",
+              "content": "Un ensemble $E$ non vide est dit **fini** s'il existe un entier naturel $n \\in \\mathbb{N}^*$ tel qu'il existe une bijection de $\\{1, 2, \\ldots, n\\}$ dans $E$.\n\nDans ce cas, on dit que le **cardinal** de $E$ est $n$, et on note :\n\n$$\\text{Card}(E) = n \\quad \\text{ ou } \\quad |E| = n$$\n\nPar convention : $\\text{Card}(\\emptyset) = 0$"
             },
             {
-              "type": "property-box",
-              "preamble": "**Principe multiplicatif** :",
-              "content": "Si une action $A$ peut être effectuée de $m$ façons différentes, et pour chacune de ces façons, une action $B$ peut être effectuée de $n$ façons différentes, alors la succession des deux actions peut être réalisée de :\n\n$$m \\times n \\text{ façons}$$"
+              "type": "remark-box",
+              "preamble": "**Principe de dénombrement** :",
+              "content": "Dénombrer un ensemble fini $E$, c'est déterminer son cardinal, c'est-à-dire compter le nombre de ses éléments.\n\nPour que le dénombrement soit correct, il faut :\n- Ne compter **que** les éléments de $E$\n- Ne pas **oublier** d'éléments\n- Ne pas compter certains éléments **plusieurs fois**"
             },
             {
               "type": "example-box",
-              "preamble": "**Choix de menu** :",
-              "content": "Un restaurant propose 4 entrées, 5 plats principaux et 3 desserts.\n\nCombien de menus différents (entrée + plat + dessert) peut-on composer ?\n\nPar le principe multiplicatif : $4 \\times 5 \\times 3 = ___60___ $ menus différents."
+              "preamble": "**Exemple 1 : À compléter - Cardinal d'ensembles simples**",
+              "content": "Déterminons le cardinal des ensembles suivants :\n\n**1.** $E = \\{2, 4, 6, 8, 10\\}$\n$$\\text{Card}(E) = ___5___$$\n\n**2.** $F = \\{x \\in \\mathbb{N} : x < 7\\}$\n$$F = \\{0, 1, 2, 3, 4, 5, 6\\}$$\n$$\\text{Card}(F) = ___7___$$\n\n**3.** $G = \\{x \\in \\mathbb{N} : 5 \\leq x \\leq 12\\}$\n$$G = \\{5, 6, 7, 8, 9, 10, 11, 12\\}$$\n$$\\text{Card}(G) = ___8___$$\n\n**4.** $H = \\{lettres du mot MAROC\\}$\n$$H = \\{M, A, R, O, C\\}$$\n$$\\text{Card}(H) = ___5___$$"
             }
           ]
         },
         {
-          "title": "Factorielle",
+          "title": "Propriétés des cardinaux",
           "elements": [
             {
-              "type": "definition-box",
-              "preamble": "**Factorielle** :",
-              "content": "Pour tout entier naturel $n \\geq 1$, on définit la **factorielle de $n$**, notée $n!$, par :\n\n$$n! = 1 \\times 2 \\times 3 \\times \\cdots \\times n$$\n\n**Par convention** : $0! = 1$\n\n**Relation de récurrence** : $n! = n \\times (n-1)!$"
+              "type": "property-box",
+              "preamble": "**Propriétés fondamentales** :",
+              "content": "Soient $A$ et $B$ deux ensembles finis.\n\n**1. Union d'ensembles disjoints** :\nSi $A \\cap B = \\emptyset$, alors :\n$$\\text{Card}(A \\cup B) = \\text{Card}(A) + \\text{Card}(B)$$\n\n**2. Formule d'inclusion-exclusion** :\nPour deux ensembles quelconques :\n$$\\text{Card}(A \\cup B) = \\text{Card}(A) + \\text{Card}(B) - \\text{Card}(A \\cap B)$$\n\n**3. Différence ensembliste** :\nSi $A \\subset B$, alors :\n$$\\text{Card}(B \\setminus A) = \\text{Card}(B) - \\text{Card}(A)$$\n\n**4. Sous-ensemble** :\nSi $A \\subset B$, alors :\n$$\\text{Card}(A) \\leq \\text{Card}(B)$$"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Généralisation pour trois ensembles** :",
+              "content": "Soient $A$, $B$ et $C$ trois ensembles finis. Alors :\n\n$$\\text{Card}(A \\cup B \\cup C) = \\text{Card}(A) + \\text{Card}(B) + \\text{Card}(C)$$\n$$- \\text{Card}(A \\cap B) - \\text{Card}(A \\cap C) - \\text{Card}(B \\cap C)$$\n$$+ \\text{Card}(A \\cap B \\cap C)$$"
             },
             {
               "type": "example-box",
-              "preamble": "**Calculs de factorielles** :",
-              "content": "Calculer les factorielles suivantes :\n\n$3! = 1 \\times 2 \\times 3 = ___6___$\n\n$5! = 1 \\times 2 \\times 3 \\times 4 \\times 5 = ___120___$\n\n$\\dfrac{6!}{4!} = \\dfrac{6 \\times 5 \\times 4!}{4!} = 6 \\times 5 = ___30___$"
+              "preamble": "**Exemple 2 : À compléter - Application de la formule d'inclusion-exclusion**",
+              "content": "Dans une classe de 40 élèves :\n- 25 élèves étudient l'anglais\n- 18 élèves étudient l'espagnol\n- 10 élèves étudient les deux langues\n\n**Question** : Combien d'élèves étudient au moins une langue ?\n\n**Solution** :\nSoit $A$ l'ensemble des élèves étudiant l'anglais et $B$ l'ensemble des élèves étudiant l'espagnol.\n\nOn a :\n- $\\text{Card}(A) = ___25___$\n- $\\text{Card}(B) = ___18___$\n- $\\text{Card}(A \\cap B) = ___10___$\n\nD'après la formule d'inclusion-exclusion :\n$$\\text{Card}(A \\cup B) = \\text{Card}(A) + \\text{Card}(B) - \\text{Card}(A \\cap B)$$\n$$= 25 + 18 - ___10___$$\n$$= ___33___$$\n\n**Réponse** : ___33___ élèves étudient au moins une langue."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 3 : Problème avec diagramme de Venn**",
+              "content": "Dans une classe de 38 élèves :\n- 31 étudient l'anglais (A)\n- 24 étudient l'espagnol (E)\n- 17 étudient l'allemand (L)\n- 12 étudient l'anglais et l'allemand\n- 9 étudient l'espagnol et l'allemand\n- 4 étudient les trois langues\n\n**Questions** :\n\n**a)** Nombre d'élèves étudiant l'anglais et l'espagnol :\n\nUtilisons la formule pour trois ensembles. On sait que tous les 38 élèves étudient au moins une langue, donc :\n$$38 = 31 + 24 + 17 - \\text{Card}(A \\cap E) - 12 - 9 + 4$$\n$$38 = 72 - \\text{Card}(A \\cap E) - 21 + 4$$\n$$38 = 55 - \\text{Card}(A \\cap E)$$\n$$\\text{Card}(A \\cap E) = 17$$\n\n**b)** Nombre d'élèves étudiant uniquement l'allemand :\n\nLes élèves étudiant uniquement l'allemand = Total allemand - (ceux qui font allemand avec autre chose)\n$$= 17 - (12 + 9 - 4)$$\n$$= 17 - 17 = 0$$\n\nAucun élève n'étudie uniquement l'allemand."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Principe fondamental de dénombrement",
+      "subsections": [
+        {
+          "title": "Principe de multiplication",
+          "elements": [
+            {
+              "type": "theorem-box",
+              "preamble": "**Principe fondamental du dénombrement** :",
+              "content": "Si une situation de dénombrement nécessite $k$ choix successifs et si :\n- Le 1er choix peut produire $n_1$ résultats possibles\n- Le 2e choix peut produire $n_2$ résultats possibles\n- ...\n- Le $k$-ième choix peut produire $n_k$ résultats possibles\n\nAlors la situation de dénombrement peut se faire de $$n_1 \\times n_2 \\times \\cdots \\times n_k$$ manières différentes."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 4 : À compléter - Formation de nombres**",
+              "content": "On dispose des chiffres $\\{2, 3, 5, 6, 7\\}$. On veut former des entiers naturels de trois chiffres **distincts** parmi ces chiffres.\n\n**a) Nombre total de nombres de 3 chiffres distincts :**\n\n- Choix du 1er chiffre : ___5___ possibilités\n- Choix du 2e chiffre : ___4___ possibilités (un chiffre déjà utilisé)\n- Choix du 3e chiffre : ___3___ possibilités (deux chiffres déjà utilisés)\n\nNombre total : $5 \\times 4 \\times 3 = ___60___$\n\n**b) Nombres pairs de 3 chiffres distincts :**\n\nPour qu'un nombre soit pair, il doit se terminer par 2 ou 6.\n\n- Choix du **dernier** chiffre : ___2___ possibilités (2 ou 6)\n- Choix du 1er chiffre : ___4___ possibilités (5 chiffres - 1 déjà utilisé)\n- Choix du 2e chiffre : ___3___ possibilités\n\nNombre de nombres pairs : $2 \\times 4 \\times 3 = ___24___$\n\n**c) Multiples de 5 de 3 chiffres distincts :**\n\nPour qu'un nombre soit divisible par 5, il doit se terminer par 5.\n\n- Choix du **dernier** chiffre : ___1___ possibilité (uniquement 5)\n- Choix du 1er chiffre : ___4___ possibilités\n- Choix du 2e chiffre : ___3___ possibilités\n\nNombre de multiples de 5 : $1 \\times 4 \\times 3 = ___12___$"
+            }
+          ]
+        },
+        {
+          "title": "Cardinal d'un produit cartésien",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Produit cartésien** :",
+              "content": "Soient $E$ et $F$ deux ensembles. Le **produit cartésien** de $E$ par $F$, noté $E \\times F$, est l'ensemble des couples $(x, y)$ où $x \\in E$ et $y \\in F$ :\n\n$$E \\times F = \\{(x, y) : x \\in E \\text{ et } y \\in F\\}$$"
+            },
+            {
+              "type": "theorem-box",
+              "preamble": "**Cardinal d'un produit cartésien** :",
+              "content": "Soient $E$ et $F$ deux ensembles finis non vides. Alors :\n\n$$\\text{Card}(E \\times F) = \\text{Card}(E) \\times \\text{Card}(F)$$\n\n**Généralisation** : Pour $n$ ensembles finis $E_1, E_2, \\ldots, E_n$ :\n\n$$\\text{Card}(E_1 \\times E_2 \\times \\cdots \\times E_n) = \\text{Card}(E_1) \\times \\text{Card}(E_2) \\times \\cdots \\times \\text{Card}(E_n)$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 5 : À compléter - Numéros de téléphone**",
+              "content": "**Question** : Combien existe-t-il de numéros de téléphone mobile marocains commençant par 061 ?\n\n**Solution** :\nUn numéro de téléphone mobile marocain a la forme : **0 6 1 _ _ _ _ _ _ _**\n\nIl reste ___7___ positions à remplir.\n\nChaque position peut être occupée par un chiffre de 0 à 9, soit ___10___ possibilités.\n\nNombre total de numéros :\n$$10^7 = ___10\\,000\\,000___$$\n\n**Réponse** : Il existe **10 millions** de numéros de téléphone commençant par 061."
+            }
+          ]
+        },
+        {
+          "title": "Nombre d'applications",
+          "elements": [
+            {
+              "type": "theorem-box",
+              "preamble": "**Nombre d'applications entre deux ensembles** :",
+              "content": "Soient $E$ et $F$ deux ensembles finis non vides avec $\\text{Card}(E) = p$ et $\\text{Card}(F) = n$.\n\nLe nombre d'applications de $E$ dans $F$ est :\n\n$$n^p = (\\text{Card}(F))^{\\text{Card}(E)}$$"
+            },
+            {
+              "type": "remark-box",
+              "preamble": "**Justification** :",
+              "content": "Pour chaque élément de $E$ (il y en a $p$), on doit choisir une image dans $F$ (il y a $n$ choix possibles).\n\nD'après le principe fondamental : $\\underbrace{n \\times n \\times \\cdots \\times n}_{p \\text{ fois}} = n^p$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 6 : À compléter - Lancers de dés**",
+              "content": "On lance un dé cubique (faces numérotées de 1 à 6) trois fois de suite. On obtient un triplet $(a, b, c)$ à l'issue des trois lancers.\n\n**a) Nombre total de triplets possibles :**\n\nChaque lancer donne ___6___ résultats possibles.\n\nOn effectue ___3___ lancers.\n\nNombre total : $6^3 = ___216___$ triplets\n\n**b) Triplets comportant uniquement des chiffres impairs :**\n\nChiffres impairs sur un dé : 1, 3, 5 (soit ___3___ chiffres)\n\nChaque lancer doit donner un chiffre impair : ___3___ possibilités\n\nNombre de triplets : $3^3 = ___27___$\n\n**c) Triplets avec chiffres deux à deux distincts :**\n\n- 1er lancer : ___6___ possibilités\n- 2e lancer : ___5___ possibilités (un chiffre déjà sorti)\n- 3e lancer : ___4___ possibilités (deux chiffres déjà sortis)\n\nNombre de triplets : $6 \\times 5 \\times 4 = ___120___$\n\n**d) Triplets comportant au moins une fois le chiffre 1 :**\n\nUtilisons le complémentaire : triplets **sans** le chiffre 1.\n\nChaque lancer doit donner un chiffre de {2, 3, 4, 5, 6} : ___5___ possibilités\n\nNombre de triplets sans 1 : $5^3 = ___125___$\n\nNombre de triplets avec au moins un 1 : $216 - 125 = ___91___$"
+            }
+          ]
+        },
+        {
+          "title": "Nombre de parties d'un ensemble",
+          "elements": [
+            {
+              "type": "theorem-box",
+              "preamble": "**Nombre de parties d'un ensemble fini** :",
+              "content": "Soit $E$ un ensemble fini de cardinal $n$. Soit $\\mathcal{P}(E)$ l'ensemble des parties de $E$ (ensemble de tous les sous-ensembles de $E$).\n\nAlors :\n$$\\text{Card}(\\mathcal{P}(E)) = 2^n$$"
+            },
+            {
+              "type": "remark-box",
+              "preamble": "**Justification** :",
+              "content": "Pour construire une partie de $E$, on doit décider pour chaque élément de $E$ s'il appartient ou non à cette partie.\n\nPour chaque élément : 2 choix (appartient ou n'appartient pas)\n\nPour $n$ éléments : $2^n$ parties possibles"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 7 : Parties d'un ensemble**",
+              "content": "Soit $E = \\{a, b, c\\}$. Déterminons toutes les parties de $E$.\n\n**Cardinal de $E$** : $\\text{Card}(E) = 3$\n\n**Nombre de parties** : $2^3 = 8$\n\n**Liste des parties** :\n1. $\\emptyset$ (ensemble vide)\n2. $\\{a\\}$\n3. $\\{b\\}$\n4. $\\{c\\}$\n5. $\\{a, b\\}$\n6. $\\{a, c\\}$\n7. $\\{b, c\\}$\n8. $\\{a, b, c\\}$ (ensemble $E$ lui-même)\n\nDonc : $\\mathcal{P}(E) = \\{\\emptyset, \\{a\\}, \\{b\\}, \\{c\\}, \\{a,b\\}, \\{a,c\\}, \\{b,c\\}, \\{a,b,c\\}\\}$"
             }
           ]
         }
@@ -55,50 +145,102 @@
       "title": "Arrangements",
       "subsections": [
         {
-          "title": "Arrangements Sans Répétition",
+          "title": "Arrangements avec répétition",
           "elements": [
             {
               "type": "definition-box",
-              "preamble": "**Arrangement** :",
-              "content": "Un **arrangement** de $p$ éléments pris parmi $n$ éléments distincts (avec $p \\leq n$) est un choix **ordonné** de $p$ éléments parmi $n$.\n\nLe nombre d'arrangements de $p$ éléments parmi $n$ est noté $A_n^p$ et vaut :\n\n$$A_n^p = \\dfrac{n!}{(n-p)!} = n(n-1)(n-2)\\cdots(n-p+1)$$"
+              "preamble": "**Arrangement avec répétition** :",
+              "content": "Soit $E$ un ensemble fini non vide de cardinal $n \\geq 1$ et $p \\in \\mathbb{N}^*$.\n\nUn **arrangement avec répétition** de $p$ éléments de $E$ (ou une **$p$-liste** de $E$) est un élément du produit cartésien :\n\n$$E^p = \\underbrace{E \\times E \\times \\cdots \\times E}_{p \\text{ fois}}$$\n\nC'est un $p$-uplet $(x_1, x_2, \\ldots, x_p)$ où $x_i \\in E$ pour tout $i$."
             },
             {
               "type": "remark-box",
-              "content": "**Différence avec les combinaisons** : Dans un arrangement, **l'ordre compte**. $(A, B)$ est différent de $(B, A)$."
+              "preamble": "**Situation caractéristique** :",
+              "content": "Un arrangement avec répétition correspond à un **tirage successif avec remise** :\n- On tire $p$ boules **une à une** dans une urne contenant $n$ boules\n- Après chaque tirage, on **remet** la boule dans l'urne\n- L'**ordre** des tirages compte\n- Les **répétitions** sont autorisées"
+            },
+            {
+              "type": "theorem-box",
+              "preamble": "**Nombre d'arrangements avec répétition** :",
+              "content": "Soit $E$ un ensemble fini de cardinal $n$ et $p \\in \\mathbb{N}^*$.\n\nLe nombre d'arrangements avec répétition de $p$ éléments de $E$ est :\n\n$$n^p$$"
             },
             {
               "type": "example-box",
-              "preamble": "**Course de chevaux** :",
-              "content": "Dans une course de 10 chevaux, combien de tiercés (podiums ordonnés de 3 chevaux) sont possibles ?\n\n$$A_{10}^3 = \\dfrac{10!}{(10-3)!} = \\dfrac{10!}{7!} = 10 \\times 9 \\times 8 = ___720___$$\n\nIl y a 720 tiercés possibles."
+              "preamble": "**Exemple 8 : À compléter - Codes secrets**",
+              "content": "Un code secret est formé de 4 chiffres choisis parmi {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}.\n\n**a) Nombre de codes possibles si les répétitions sont autorisées :**\n\nOn a $n = ___10___$ chiffres disponibles et $p = ___4___$ positions.\n\nNombre de codes : $10^4 = ___10\\,000___$\n\n**b) Nombre de codes commençant par 0 :**\n\nLe premier chiffre est fixé à 0 : ___1___ possibilité\n\nLes 3 autres positions : $10^3 = ___1\\,000___$ possibilités\n\nNombre de codes : $1 \\times 1000 = ___1\\,000___$\n\n**c) Nombre de codes ne contenant que des chiffres pairs :**\n\nChiffres pairs : 0, 2, 4, 6, 8 (soit ___5___ chiffres)\n\nChaque position peut être remplie par un chiffre pair : ___5___ possibilités\n\nNombre de codes : $5^4 = ___625___$"
             }
           ]
         },
         {
-          "title": "Permutations",
+          "title": "Arrangements sans répétition",
           "elements": [
             {
               "type": "definition-box",
-              "preamble": "**Permutation** :",
-              "content": "Une **permutation** de $n$ éléments est un arrangement de $n$ éléments parmi $n$, c'est-à-dire un rangement ordonné de tous les éléments.\n\nLe nombre de permutations de $n$ éléments est :\n\n$$P_n = A_n^n = n!$$"
+              "preamble": "**Arrangement sans répétition** :",
+              "content": "Soit $E$ un ensemble fini non vide de cardinal $n \\geq 1$ et $p \\in \\mathbb{N}^*$ tel que $p \\leq n$.\n\nUn **arrangement sans répétition** de $p$ éléments de $E$ est un $p$-uplet $(x_1, x_2, \\ldots, x_p)$ où :\n- $x_i \\in E$ pour tout $i$\n- Les éléments $x_1, x_2, \\ldots, x_p$ sont **deux à deux distincts**"
+            },
+            {
+              "type": "remark-box",
+              "preamble": "**Situation caractéristique** :",
+              "content": "Un arrangement sans répétition correspond à un **tirage successif sans remise** :\n- On tire $p$ boules **une à une** dans une urne contenant $n$ boules\n- Après chaque tirage, on ne remet **pas** la boule dans l'urne\n- L'**ordre** des tirages compte\n- Les **répétitions** ne sont pas autorisées"
+            },
+            {
+              "type": "theorem-box",
+              "preamble": "**Nombre d'arrangements sans répétition** :",
+              "content": "Soit $E$ un ensemble fini de cardinal $n$ et $p \\in \\mathbb{N}^*$ tel que $1 \\leq p \\leq n$.\n\nLe nombre d'arrangements sans répétition de $p$ éléments de $E$, noté $A_n^p$, est :\n\n$$A_n^p = n \\times (n-1) \\times (n-2) \\times \\cdots \\times (n-p+1) = \\dfrac{n!}{(n-p)!}$$\n\noù $n! = n \\times (n-1) \\times \\cdots \\times 2 \\times 1$ (factorielle de $n$)"
             },
             {
               "type": "example-box",
-              "preamble": "**Anagrammes** :",
-              "content": "Combien d'anagrammes (mots en réarrangeant les lettres) peut-on former avec le mot MATH ?\n\nLe mot MATH a 4 lettres distinctes.\n\nNombre d'anagrammes : $4! = ___24___$\n\nExemples : MATH, MTHA, MAHT, AMTH, etc."
+              "preamble": "**Exemple 9 : À compléter - Podium de course**",
+              "content": "Dans une course de 12 athlètes, on veut déterminer le podium (1er, 2ème et 3ème).\n\n**Question** : De combien de façons différentes peut-on former le podium ?\n\n**Solution** :\nOn cherche le nombre d'arrangements de ___3___ éléments parmi ___12___.\n\n$$A_{12}^3 = 12 \\times 11 \\times 10$$\n$$= ___1\\,320___$$\n\nOu en utilisant la formule avec les factorielles :\n$$A_{12}^3 = \\dfrac{12!}{(12-3)!} = \\dfrac{12!}{9!}$$\n$$= \\dfrac{12 \\times 11 \\times 10 \\times 9!}{9!}$$\n$$= 12 \\times 11 \\times 10 = ___1\\,320___$$\n\n**Réponse** : Il y a **1 320** podiums possibles."
             },
             {
-              "type": "practice-box",
-              "statement": "De combien de façons peut-on ranger 6 livres sur une étagère ?",
+              "type": "example-box",
+              "preamble": "**Exemple 10 : Tirage de boules**",
+              "content": "Une urne contient :\n- 10 boules noires numérotées de 1 à 10\n- 5 boules blanches numérotées de 11 à 15\n- 3 boules rouges numérotées de 16 à 18\n\nOn tire 5 boules successivement **sans remise**.\n\n**a) Nombre total de séries de tirages possibles :**\n\nTotal de boules : $10 + 5 + 3 = 18$\n\nOn tire 5 boules sans remise avec ordre :\n$$A_{18}^5 = 18 \\times 17 \\times 16 \\times 15 \\times 14$$\n$$= 1\\,028\\,160$$\n\n**b) Séries commençant par une boule rouge et composées uniquement de boules paires :**\n\nBoules paires : 2, 4, 6, 8, 10, 12, 14, 16, 18 (soit 9 boules)\n\nBoules rouges paires : 16, 18 (soit 2 boules)\n\n- 1ère position : une boule rouge paire : 2 choix\n- Reste 8 boules paires disponibles\n- 4 positions restantes : $A_8^4 = 8 \\times 7 \\times 6 \\times 5 = 1680$\n\nNombre de séries : $2 \\times 1680 = 3360$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Permutations",
+      "subsections": [
+        {
+          "title": "Définition et calcul",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Permutation d'un ensemble fini** :",
+              "content": "Soit $E$ un ensemble fini non vide de cardinal $n \\in \\mathbb{N}^*$.\n\nOn appelle **permutation** de $E$ toute bijection de $E$ dans $E$.\n\nAutrement dit, une permutation est un arrangement sans répétition de **tous** les éléments de $E$ (cas où $p = n$)."
+            },
+            {
+              "type": "remark-box",
+              "preamble": "**Situation caractéristique** :",
+              "content": "Une permutation correspond à une **réorganisation complète** des éléments :\n- On ordonne **tous** les $n$ éléments de $E$\n- L'**ordre** compte\n- Chaque élément apparaît **exactement une fois**"
+            },
+            {
+              "type": "theorem-box",
+              "preamble": "**Nombre de permutations** :",
+              "content": "Soit $E$ un ensemble fini de cardinal $n \\in \\mathbb{N}^*$.\n\nLe nombre de permutations de $E$ est noté $n!$ (se lit \"**factorielle $n$**\") et vaut :\n\n$$n! = n \\times (n-1) \\times (n-2) \\times \\cdots \\times 2 \\times 1$$\n\n**Conventions** : $0! = 1$ et $1! = 1$"
+            },
+            {
+              "type": "remark-box",
+              "preamble": "**Relations importantes** :",
+              "listType": "bullet",
               "content": [
-                "Identifier le type de problème",
-                "Appliquer la formule appropriée",
-                "Calculer le résultat"
-              ],
-              "solution": [
-                "Il s'agit d'une **permutation** de 6 éléments (ordre important, tous les livres sont rangés).",
-                "Formule : $P_6 = 6!$",
-                "$6! = 1 \\times 2 \\times 3 \\times 4 \\times 5 \\times 6 = 720$ façons"
+                "$n! = n \\times (n-1)!$ pour tout $n \\geq 1$",
+                "$A_n^p = \\dfrac{n!}{(n-p)!}$",
+                "$A_n^n = n!$ (arrangement de tous les éléments = permutation)"
               ]
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 11 : À compléter - Rangement de livres**",
+              "content": "On dispose de 5 livres différents sur une étagère.\n\n**Question** : De combien de façons peut-on ranger ces 5 livres ?\n\n**Solution** :\nOn cherche le nombre de permutations de ___5___ éléments.\n\n$$5! = 5 \\times 4 \\times 3 \\times 2 \\times 1$$\n$$= ___120___$$\n\n**Réponse** : Il y a **120** façons de ranger les livres."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 12 : Coloriage avec contraintes**",
+              "content": "On dispose de 4 couleurs (vert, jaune, rouge, bleu) pour colorier 4 cases d'un motif avec des couleurs **toutes distinctes**.\n\n**Question** : Combien de coloriages différents sont possibles ?\n\n**Solution** :\nPuisque chaque couleur doit être utilisée exactement une fois, il s'agit d'une permutation de 4 couleurs :\n\n$$4! = 4 \\times 3 \\times 2 \\times 1 = 24$$\n\n**Réponse** : **24 coloriages** différents sont possibles."
             }
           ]
         }
@@ -108,95 +250,178 @@
       "title": "Combinaisons",
       "subsections": [
         {
-          "title": "Combinaisons Sans Répétition",
+          "title": "Définition et formule",
           "elements": [
             {
               "type": "definition-box",
               "preamble": "**Combinaison** :",
-              "content": "Une **combinaison** de $p$ éléments parmi $n$ éléments distincts (avec $p \\leq n$) est un choix **non ordonné** de $p$ éléments parmi $n$.\n\nLe nombre de combinaisons de $p$ éléments parmi $n$ est noté $C_n^p$ ou $\\binom{n}{p}$ et vaut :\n\n$$C_n^p = \\binom{n}{p} = \\dfrac{n!}{p!(n-p)!}$$"
+              "content": "Soit $E$ un ensemble fini non vide de cardinal $n \\geq 1$ et $p \\in \\mathbb{N}$ tel que $0 \\leq p \\leq n$.\n\nUne **combinaison** de $p$ éléments pris parmi les $n$ éléments de $E$ est une partie de $E$ dont le cardinal est $p$.\n\nAutrement dit, c'est un sous-ensemble à $p$ éléments de $E$."
             },
             {
               "type": "remark-box",
-              "content": "**Différence avec les arrangements** : Dans une combinaison, **l'ordre ne compte pas**. $\\{A, B\\}$ est identique à $\\{B, A\\}$."
+              "preamble": "**Situation caractéristique** :",
+              "content": "Une combinaison correspond à un **tirage simultané** (ou sans ordre) :\n- On tire $p$ boules **simultanément** dans une urne contenant $n$ boules\n- L'**ordre** ne compte **pas**\n- Les **répétitions** ne sont pas autorisées\n\n**Différence avec arrangement** : Dans un arrangement, l'ordre compte. Dans une combinaison, seul le choix des éléments importe, pas leur ordre."
+            },
+            {
+              "type": "theorem-box",
+              "preamble": "**Nombre de combinaisons** :",
+              "content": "Soit $E$ un ensemble de cardinal $n$ et $p \\in \\mathbb{N}$ tel que $0 \\leq p \\leq n$.\n\nLe nombre de combinaisons de $p$ éléments parmi $n$, noté $C_n^p$ ou $\\binom{n}{p}$, est :\n\n$$C_n^p = \\binom{n}{p} = \\dfrac{A_n^p}{p!} = \\dfrac{n!}{p!(n-p)!}$$"
+            },
+            {
+              "type": "remark-box",
+              "preamble": "**Justification de la formule** :",
+              "content": "Chaque combinaison de $p$ éléments peut être ordonnée de $p!$ façons différentes, ce qui donne un arrangement.\n\nDonc : Nombre d'arrangements = Nombre de combinaisons $\\times$ $p!$\n\n$$A_n^p = C_n^p \\times p!$$\n\nD'où : $$C_n^p = \\dfrac{A_n^p}{p!} = \\dfrac{n!}{p!(n-p)!}$$"
             },
             {
               "type": "property-box",
-              "preamble": "**Propriétés** :",
-              "content": [
-                "$C_n^0 = 1$ (ensemble vide)",
-                "$C_n^n = 1$ (tous les éléments)",
-                "$C_n^1 = n$",
-                "$C_n^p = C_n^{n-p}$ (symétrie)",
-                "$C_n^p = C_{n-1}^{p-1} + C_{n-1}^p$ (formule de Pascal)"
-              ],
-              "listType": "bullet"
+              "preamble": "**Propriétés des coefficients binomiaux** :",
+              "content": "Pour tous entiers $n$ et $p$ tels que $0 \\leq p \\leq n$ :\n\n**1. Cas particuliers** :\n$$C_n^0 = 1 \\quad \\text{et} \\quad C_n^n = 1$$\n$$C_n^1 = n \\quad \\text{et} \\quad C_n^{n-1} = n$$\n\n**2. Symétrie** :\n$$C_n^p = C_n^{n-p}$$\n\n**3. Formule de Pascal** :\n$$C_{n+1}^{p+1} = C_n^p + C_n^{p+1}$$"
             },
             {
               "type": "example-box",
-              "preamble": "**Équipe sportive** :",
-              "content": "Parmi 12 joueurs, combien d'équipes de 5 joueurs peut-on former ?\n\n$$C_{12}^5 = \\dfrac{12!}{5! \\times 7!} = \\dfrac{12 \\times 11 \\times 10 \\times 9 \\times 8}{5 \\times 4 \\times 3 \\times 2 \\times 1}$$\n\n$$= \\dfrac{95040}{120} = ___792___$$\n\nOn peut former 792 équipes différentes."
-            }
-          ]
-        },
-        {
-          "title": "Triangle de Pascal",
-          "elements": [
-            {
-              "type": "property-box",
-              "preamble": "**Triangle de Pascal** :",
-              "content": "Le triangle de Pascal est une disposition triangulaire des coefficients binomiaux $C_n^p$ :\n\n```\n              1\n           1     1\n        1     2     1\n     1     3     3     1\n  1     4     6     4     1\n1     5    10    10     5     1\n```\n\nChaque nombre est la somme des deux nombres situés juste au-dessus."
+              "preamble": "**Exemple 13 : À compléter - Comité d'élèves**",
+              "content": "Une classe de 30 élèves doit élire un comité de 4 élèves.\n\n**Question** : Combien de comités différents peut-on former ?\n\n**Solution** :\nL'ordre des élèves dans le comité n'a pas d'importance. Il s'agit donc d'une **combinaison** de ___4___ élèves parmi ___30___.\n\n$$C_{30}^4 = \\dfrac{30!}{4!(30-4)!} = \\dfrac{30!}{4! \\times 26!}$$\n\n$$= \\dfrac{30 \\times 29 \\times 28 \\times 27 \\times 26!}{4! \\times 26!}$$\n\n$$= \\dfrac{30 \\times 29 \\times 28 \\times 27}{4 \\times 3 \\times 2 \\times 1}$$\n\n$$= \\dfrac{30 \\times 29 \\times 28 \\times 27}{24}$$\n\n$$= \\dfrac{657\\,720}{24} = ___27\\,405___$$\n\n**Réponse** : On peut former **27 405** comités différents."
             },
             {
-              "type": "p",
-              "content": "?> **Lien avec le binôme** : Les coefficients de la ligne $n$ sont les coefficients du développement de $(a + b)^n$."
+              "type": "remark-box",
+              "preamble": "**Triangle de Pascal** :",
+              "content": "Le triangle de Pascal permet de calculer les coefficients binomiaux $C_n^p$ de manière récursive :\n\n```\nn=0:                1\nn=1:              1   1\nn=2:            1   2   1\nn=3:          1   3   3   1\nn=4:        1   4   6   4   1\nn=5:      1   5  10  10   5   1\n```\n\nChaque nombre est la somme des deux nombres au-dessus de lui (formule de Pascal)."
             }
           ]
         }
       ]
     },
     {
-      "title": "Applications et Problèmes",
+      "title": "Formule du binôme de Newton",
       "subsections": [
         {
-          "title": "Stratégies de Résolution",
+          "title": "Énoncé et applications",
           "elements": [
             {
-              "type": "p",
-              "content": "Pour résoudre un problème de dénombrement, il faut se poser les bonnes questions :"
+              "type": "theorem-box",
+              "preamble": "**Formule du binôme de Newton** :",
+              "content": "Soient $a$ et $b$ deux nombres réels et $n \\in \\mathbb{N}^*$.\n\n$$(a + b)^n = \\sum_{k=0}^{n} C_n^k a^{n-k} b^k = \\sum_{k=0}^{n} \\binom{n}{k} a^{n-k} b^k$$\n\nAutrement dit :\n\n$$(a+b)^n = C_n^0 a^n + C_n^1 a^{n-1}b + C_n^2 a^{n-2}b^2 + \\cdots + C_n^{n-1} ab^{n-1} + C_n^n b^n$$"
+            },
+            {
+              "type": "remark-box",
+              "preamble": "**Cas particuliers utiles** :",
+              "listType": "bullet",
+              "content": [
+                "$(a+b)^2 = a^2 + 2ab + b^2$",
+                "$(a+b)^3 = a^3 + 3a^2b + 3ab^2 + b^3$",
+                "$(a-b)^n = \\sum_{k=0}^{n} C_n^k (-1)^k a^{n-k} b^k$",
+                "En posant $a=b=1$ : $2^n = \\sum_{k=0}^{n} C_n^k$",
+                "En posant $a=1, b=-1$ : $0 = \\sum_{k=0}^{n} C_n^k (-1)^k$"
+              ]
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 14 : À compléter - Développement avec le binôme**",
+              "content": "Développons $(2x + 3)^4$ en utilisant la formule du binôme.\n\n**Solution** :\n$$(2x + 3)^4 = \\sum_{k=0}^{4} C_4^k (2x)^{4-k} (3)^k$$\n\nCalculons terme par terme :\n\n**$k=0$** : $C_4^0 (2x)^4 (3)^0 = 1 \\times 16x^4 \\times 1 = ___16x^4___$\n\n**$k=1$** : $C_4^1 (2x)^3 (3)^1 = 4 \\times 8x^3 \\times 3 = ___96x^3___$\n\n**$k=2$** : $C_4^2 (2x)^2 (3)^2 = 6 \\times 4x^2 \\times 9 = ___216x^2___$\n\n**$k=3$** : $C_4^3 (2x)^1 (3)^3 = 4 \\times 2x \\times 27 = ___216x___$\n\n**$k=4$** : $C_4^4 (2x)^0 (3)^4 = 1 \\times 1 \\times 81 = ___81___$\n\n**Résultat** :\n$$(2x + 3)^4 = 16x^4 + 96x^3 + 216x^2 + 216x + 81$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 15 : Coefficient d'un terme particulier**",
+              "content": "Quel est le coefficient de $a^7b^3$ dans le développement de $(a-b)^{10}$ ?\n\n**Solution** :\nDans le développement de $(a-b)^{10}$, le terme général est :\n$$C_{10}^k a^{10-k} (-b)^k = C_{10}^k (-1)^k a^{10-k} b^k$$\n\nPour avoir $a^7b^3$, il faut que :\n- $10 - k = 7 \\Rightarrow k = 3$\n\nLe terme correspondant est :\n$$C_{10}^3 (-1)^3 a^7 b^3$$\n\nCalculons le coefficient :\n$$C_{10}^3 \\times (-1)^3 = \\dfrac{10!}{3!7!} \\times (-1)$$\n$$= \\dfrac{10 \\times 9 \\times 8}{3 \\times 2 \\times 1} \\times (-1)$$\n$$= 120 \\times (-1) = -120$$\n\n**Réponse** : Le coefficient de $a^7b^3$ est **-120**."
             },
             {
               "type": "property-box",
-              "preamble": "**Questions clés** :",
-              "content": [
-                "**L'ordre est-il important ?**",
-                "Oui → Arrangement ou Permutation",
-                "Non → Combinaison",
-                "**Prend-on tous les éléments ?**",
-                "Oui ($p = n$) → Permutation",
-                "Non ($p < n$) → Arrangement ou Combinaison",
-                "**Y a-t-il répétition possible ?**",
-                "Oui → Formules avec répétition",
-                "Non → Formules sans répétition"
-              ],
-              "listType": "bullet"
+              "preamble": "**Formules de sommation utiles** :",
+              "content": "Pour tout $n \\in \\mathbb{N}$ :\n\n**1.** $\\sum_{k=0}^{n} C_n^k = 2^n$ (somme de tous les coefficients binomiaux)\n\n**2.** $\\sum_{k=0}^{n} (-1)^k C_n^k = 0$ (somme alternée)\n\n**3.** $\\sum_{k=0}^{n} k \\cdot C_n^k = n \\cdot 2^{n-1}$\n\n**4.** $\\sum_{k=0}^{n} (C_n^k)^2 = C_{2n}^n$"
             }
           ]
-        },
+        }
+      ]
+    },
+    {
+      "title": "Exercices d'application",
+      "subsections": [
         {
-          "title": "Problèmes Variés",
+          "title": "Exercices typiques avec solutions détaillées",
           "elements": [
             {
               "type": "practice-box",
-              "statement": "Résoudre les problèmes suivants :",
+              "statement": "**Exercice 1** : Problèmes de cardinal et inclusion-exclusion\n\nDans un lycée de 500 élèves :\n- 320 élèves pratiquent le football (F)\n- 180 élèves pratiquent le basketball (B)\n- 150 élèves pratiquent le volleyball (V)\n- 100 élèves pratiquent F et B\n- 80 élèves pratiquent F et V\n- 50 élèves pratiquent B et V\n- 30 élèves pratiquent les trois sports",
+              "listType": "numbered",
               "content": [
-                "Combien de codes à 4 chiffres peut-on former avec les chiffres 1, 2, 3, 4, 5 sans répétition ?",
-                "Dans une classe de 25 élèves, on veut choisir un délégué et un sous-délégué. Combien de choix possibles ?",
-                "Combien de mains de 5 cartes peut-on distribuer à partir d'un jeu de 52 cartes ?"
+                "Combien d'élèves pratiquent au moins un sport ?",
+                "Combien d'élèves ne pratiquent aucun sport ?",
+                "Combien d'élèves pratiquent exactement un sport ?",
+                "Combien d'élèves pratiquent exactement deux sports ?"
               ],
               "solution": [
-                "**Arrangement** : L'ordre compte (1234 ≠ 4321), sans répétition, on prend 4 éléments parmi 5.\n\n$$A_5^4 = \\dfrac{5!}{(5-4)!} = \\dfrac{5!}{1!} = 5! = 120$$",
-                "**Arrangement** : L'ordre compte (délégué ≠ sous-délégué), on choisit 2 parmi 25.\n\n$$A_{25}^2 = 25 \\times 24 = 600$$",
-                "**Combinaison** : L'ordre ne compte pas (main de cartes), on choisit 5 cartes parmi 52.\n\n$$C_{52}^5 = \\dfrac{52!}{5! \\times 47!} = \\dfrac{52 \\times 51 \\times 50 \\times 49 \\times 48}{120} = 2~598~960$$"
+                "Utilisons la formule d'inclusion-exclusion pour trois ensembles :\n\n$$|F \\cup B \\cup V| = |F| + |B| + |V|$$\n$$- |F \\cap B| - |F \\cap V| - |B \\cap V|$$\n$$+ |F \\cap B \\cap V|$$\n\n$$= 320 + 180 + 150 - 100 - 80 - 50 + 30$$\n$$= 650 - 230 + 30$$\n$$= 450$$\n\n**Réponse** : **450 élèves** pratiquent au moins un sport.",
+                "Nombre d'élèves ne pratiquant aucun sport :\n$$500 - 450 = 50$$\n\n**Réponse** : **50 élèves** ne pratiquent aucun sport.",
+                "Pour trouver le nombre d'élèves pratiquant **exactement** un sport, utilisons un diagramme de Venn :\n\n**Uniquement F** :\n$$|F| - |F \\cap B| - |F \\cap V| + |F \\cap B \\cap V|$$\n$$= 320 - 100 - 80 + 30 = 170$$\n\n**Uniquement B** :\n$$|B| - |F \\cap B| - |B \\cap V| + |F \\cap B \\cap V|$$\n$$= 180 - 100 - 50 + 30 = 60$$\n\n**Uniquement V** :\n$$|V| - |F \\cap V| - |B \\cap V| + |F \\cap B \\cap V|$$\n$$= 150 - 80 - 50 + 30 = 50$$\n\n**Total** : $170 + 60 + 50 = 280$\n\n**Réponse** : **280 élèves** pratiquent exactement un sport.",
+                "Élèves pratiquant exactement deux sports :\n\n**F et B uniquement** : $|F \\cap B| - |F \\cap B \\cap V| = 100 - 30 = 70$\n\n**F et V uniquement** : $|F \\cap V| - |F \\cap B \\cap V| = 80 - 30 = 50$\n\n**B et V uniquement** : $|B \\cap V| - |F \\cap B \\cap V| = 50 - 30 = 20$\n\n**Total** : $70 + 50 + 20 = 140$\n\n**Réponse** : **140 élèves** pratiquent exactement deux sports."
+              ]
+            },
+            {
+              "type": "practice-box",
+              "statement": "**Exercice 2** : Arrangements, permutations et combinaisons\n\nUne équipe de 15 joueurs doit participer à un tournoi.",
+              "listType": "numbered",
+              "content": [
+                "De combien de façons peut-on choisir un capitaine et un vice-capitaine ?",
+                "De combien de façons peut-on aligner 11 joueurs sur le terrain en tenant compte de l'ordre ?",
+                "De combien de façons peut-on sélectionner 11 joueurs parmi 15 pour former l'équipe titulaire (sans tenir compte de l'ordre) ?",
+                "Pour une photo, on veut aligner les 15 joueurs. De combien de façons peut-on le faire si le capitaine doit être au centre ?"
+              ],
+              "solution": [
+                "On cherche le nombre de façons de choisir **2 personnes ordonnées** (capitaine puis vice-capitaine) parmi 15.\n\nC'est un arrangement de 2 éléments parmi 15 :\n$$A_{15}^2 = 15 \\times 14 = 210$$\n\n**Réponse** : **210 façons**",
+                "On cherche le nombre de façons d'ordonner 11 joueurs parmi 15.\n\nC'est un arrangement de 11 éléments parmi 15 :\n$$A_{15}^{11} = \\dfrac{15!}{(15-11)!} = \\dfrac{15!}{4!}$$\n$$= 15 \\times 14 \\times 13 \\times \\cdots \\times 5$$\n$$= 10\\,897\\,286\\,400$$\n\n**Réponse** : **10 897 286 400 façons**",
+                "On cherche le nombre de façons de choisir 11 joueurs parmi 15 **sans tenir compte de l'ordre**.\n\nC'est une combinaison de 11 éléments parmi 15 :\n$$C_{15}^{11} = C_{15}^{15-11} = C_{15}^4$$\n$$= \\dfrac{15!}{4! \\times 11!}$$\n$$= \\dfrac{15 \\times 14 \\times 13 \\times 12}{4 \\times 3 \\times 2 \\times 1}$$\n$$= \\dfrac{32\\,760}{24} = 1\\,365$$\n\n**Réponse** : **1 365 façons**",
+                "Si le capitaine doit être au centre (position 8 sur 15), alors :\n\n- Position du capitaine : **fixée** (1 façon)\n- Positions des 14 autres joueurs : permutation de 14 éléments\n\n$$14! = 87\\,178\\,291\\,200$$\n\n**Réponse** : **87 178 291 200 façons**"
+              ]
+            },
+            {
+              "type": "practice-box",
+              "statement": "**Exercice 3** : Problèmes de tirages\n\nUne urne contient 8 boules rouges, 6 boules blanches et 4 boules noires (toutes numérotées).",
+              "listType": "numbered",
+              "content": [
+                "On tire 5 boules simultanément. Combien y a-t-il de tirages possibles ?",
+                "Combien de tirages contiennent exactement 3 boules rouges ?",
+                "Combien de tirages contiennent au moins une boule noire ?",
+                "On tire 5 boules successivement sans remise. Combien y a-t-il de tirages où les 2 premières boules sont rouges ?"
+              ],
+              "solution": [
+                "Total de boules : $8 + 6 + 4 = 18$\n\nOn tire 5 boules simultanément (ordre ne compte pas) :\n$$C_{18}^5 = \\dfrac{18!}{5! \\times 13!}$$\n$$= \\dfrac{18 \\times 17 \\times 16 \\times 15 \\times 14}{5 \\times 4 \\times 3 \\times 2 \\times 1}$$\n$$= \\dfrac{1\\,028\\,160}{120} = 8\\,568$$\n\n**Réponse** : **8 568 tirages**",
+                "Pour avoir exactement 3 boules rouges :\n- Choisir 3 boules parmi les 8 rouges : $C_8^3$\n- Choisir 2 boules parmi les 10 non-rouges : $C_{10}^2$\n\n$$C_8^3 \\times C_{10}^2 = \\dfrac{8!}{3!5!} \\times \\dfrac{10!}{2!8!}$$\n$$= \\dfrac{8 \\times 7 \\times 6}{6} \\times \\dfrac{10 \\times 9}{2}$$\n$$= 56 \\times 45 = 2\\,520$$\n\n**Réponse** : **2 520 tirages**",
+                "Utilisons le complémentaire : tirages **sans** boule noire.\n\nSans boule noire, on tire 5 boules parmi les 14 non-noires :\n$$C_{14}^5 = \\dfrac{14!}{5! \\times 9!}$$\n$$= \\dfrac{14 \\times 13 \\times 12 \\times 11 \\times 10}{120}$$\n$$= \\dfrac{240\\,240}{120} = 2\\,002$$\n\nTirages avec au moins une boule noire :\n$$C_{18}^5 - C_{14}^5 = 8\\,568 - 2\\,002 = 6\\,566$$\n\n**Réponse** : **6 566 tirages**",
+                "Tirage successif avec ordre :\n- 1ère boule rouge : 8 choix\n- 2e boule rouge : 7 choix (reste 7 rouges)\n- 3 boules suivantes parmi 16 restantes : $A_{16}^3$\n\n$$8 \\times 7 \\times A_{16}^3 = 56 \\times \\dfrac{16!}{13!}$$\n$$= 56 \\times (16 \\times 15 \\times 14)$$\n$$= 56 \\times 3\\,360 = 188\\,160$$\n\n**Réponse** : **188 160 tirages**"
+              ]
+            },
+            {
+              "type": "practice-box",
+              "statement": "**Exercice 4** : Formule du binôme de Newton\n\nSoit $n \\in \\mathbb{N}^*$.",
+              "listType": "numbered",
+              "content": [
+                "Développer $(x + 2)^5$",
+                "Calculer $\\sum_{k=0}^{7} C_7^k$",
+                "Calculer $\\sum_{k=0}^{6} (-1)^k C_6^k$",
+                "Trouver le coefficient de $x^8$ dans le développement de $(2x - 3)^{12}$"
+              ],
+              "solution": [
+                "En utilisant la formule du binôme :\n$$(x+2)^5 = \\sum_{k=0}^{5} C_5^k x^{5-k} \\cdot 2^k$$\n\n$$= C_5^0 x^5 + C_5^1 x^4 \\cdot 2 + C_5^2 x^3 \\cdot 4 + C_5^3 x^2 \\cdot 8 + C_5^4 x \\cdot 16 + C_5^5 \\cdot 32$$\n\n$$= x^5 + 5 \\cdot 2x^4 + 10 \\cdot 4x^3 + 10 \\cdot 8x^2 + 5 \\cdot 16x + 32$$\n\n$$= x^5 + 10x^4 + 40x^3 + 80x^2 + 80x + 32$$\n\n**Réponse** : $(x+2)^5 = x^5 + 10x^4 + 40x^3 + 80x^2 + 80x + 32$",
+                "D'après la formule : $(1+1)^n = \\sum_{k=0}^{n} C_n^k$\n\nDonc : $$\\sum_{k=0}^{7} C_7^k = 2^7 = 128$$\n\n**Réponse** : **128**",
+                "D'après la formule : $(1-1)^n = \\sum_{k=0}^{n} (-1)^k C_n^k$\n\nDonc : $$\\sum_{k=0}^{6} (-1)^k C_6^k = 0^6 = 0$$\n\n**Réponse** : **0**",
+                "Dans le développement de $(2x-3)^{12}$, le terme général est :\n$$C_{12}^k (2x)^{12-k} (-3)^k = C_{12}^k \\cdot 2^{12-k} \\cdot (-3)^k \\cdot x^{12-k}$$\n\nPour avoir $x^8$, il faut : $12 - k = 8 \\Rightarrow k = 4$\n\nLe coefficient est :\n$$C_{12}^4 \\cdot 2^{12-4} \\cdot (-3)^4$$\n$$= C_{12}^4 \\cdot 2^8 \\cdot 81$$\n\nCalculons $C_{12}^4$ :\n$$C_{12}^4 = \\dfrac{12!}{4! \\cdot 8!} = \\dfrac{12 \\times 11 \\times 10 \\times 9}{24} = 495$$\n\nCoefficient final :\n$$495 \\times 256 \\times 81 = 10\\,264\\,320$$\n\n**Réponse** : Le coefficient de $x^8$ est **10 264 320**"
+              ]
+            },
+            {
+              "type": "practice-box",
+              "statement": "**Exercice 5** : Problème de mots de passe et codes\n\nUn système de sécurité utilise des codes.",
+              "listType": "numbered",
+              "content": [
+                "Combien de codes de 6 caractères peut-on former avec les 26 lettres de l'alphabet (répétitions autorisées) ?",
+                "Combien de ces codes contiennent exactement 3 voyelles (A, E, I, O, U) et 3 consonnes, sachant que les positions sont fixées (3 premières positions pour voyelles, 3 dernières pour consonnes) ?",
+                "On forme un mot de 8 lettres avec les lettres du mot MATHEMATIQUES. Combien de mots différents peut-on former ?",
+                "Une plaque d'immatriculation marocaine a la forme : **12345-A-67** (5 chiffres, 1 lettre, 2 chiffres). Combien de plaques différentes peut-on former ?"
+              ],
+              "solution": [
+                "Chaque position peut être remplie par une des 26 lettres.\n\nAvec 6 positions :\n$$26^6 = 308\\,915\\,776$$\n\n**Réponse** : **308 915 776 codes**",
+                "Voyelles : 5 lettres (A, E, I, O, U)\nConsonnes : 21 lettres\n\nPour les 3 premières positions (voyelles avec répétitions) :\n$$5^3 = 125$$\n\nPour les 3 dernières positions (consonnes avec répétitions) :\n$$21^3 = 9\\,261$$\n\nTotal :\n$$125 \\times 9\\,261 = 1\\,157\\,625$$\n\n**Réponse** : **1 157 625 codes**",
+                "Le mot MATHEMATIQUES contient 13 lettres :\n- M : 2 fois\n- A : 2 fois\n- T : 2 fois\n- H : 1 fois\n- E : 2 fois\n- I : 1 fois\n- Q : 1 fois\n- U : 1 fois\n- S : 1 fois\n\nPour former un mot de 8 lettres, il faut d'abord choisir 8 lettres parmi ces 13, puis les permuter.\n\nCeci est complexe car il faut tenir compte des répétitions...\n\n**Approche simplifiée** : Si on suppose qu'on utilise toutes les 13 lettres :\n$$\\dfrac{13!}{2! \\cdot 2! \\cdot 2! \\cdot 2!} = \\dfrac{13!}{16}$$\n\nMais avec seulement 8 lettres, le calcul dépend des lettres choisies.\n\n**Réponse approximative** : Le calcul exact dépend de la sélection des lettres.",
+                "Format : **_ _ _ _ _ - _ - _ _**\n\n- 5 premiers chiffres : $10^5 = 100\\,000$\n- 1 lettre : 26 possibilités\n- 2 derniers chiffres : $10^2 = 100$\n\nTotal :\n$$100\\,000 \\times 26 \\times 100 = 260\\,000\\,000$$\n\n**Réponse** : **260 millions** de plaques différentes"
               ]
             }
           ]
