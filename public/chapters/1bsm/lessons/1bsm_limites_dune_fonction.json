@@ -1,65 +1,256 @@
 {
   "header": {
     "title": "Limites d'une Fonction",
-    "subtitle": "Comportement asymptotique et continuité",
+    "subtitle": "Étude rigoureuse et approche intuitive des limites numériques",
     "classe": "1ère Bac Sciences Mathématiques",
-    "chapter": "Chapitre 9",
+    "chapter": "Chapitre 4",
     "academicYear": "2025-2026"
   },
   "sections": [
     {
-      "title": "Notion de Limite",
+      "title": "Rappels et Compléments sur les Intervalles Pointés",
       "subsections": [
         {
-          "title": "Limite Finie en un Point",
+          "title": "Concepts Fondamentaux des Intervalles",
           "elements": [
             {
               "type": "p",
-              "content": "La notion de limite permet d'étudier le comportement d'une fonction au voisinage d'un point, même si elle n'est pas définie en ce point."
+              "content": "Les **intervalles pointés** constituent le fondement rigoureux de la théorie des limites. Ils permettent d'analyser le comportement d'une fonction au **voisinage** d'un point spécifique, indépendamment de sa valeur exactement à ce point."
             },
             {
               "type": "definition-box",
-              "preamble": "**Limite finie en un point** :",
-              "content": "Soit $f$ une fonction définie au voisinage de $a$ (sauf peut-être en $a$).\n\nOn dit que $f$ admet pour **limite $L$** lorsque $x$ tend vers $a$ si :\n\nPour tout intervalle ouvert contenant $L$, il existe un intervalle ouvert contenant $a$ tel que pour tout $x$ de cet intervalle (distinct de $a$), $f(x)$ appartient au premier intervalle.\n\nOn note : $\\lim\\limits_{x \\to a} f(x) = L$ ou $f(x) \\xrightarrow[x \\to a]{} L$"
+              "preamble": "**Intervalle ouvert : centre et rayon** :",
+              "content": "Soit $I = ]a, b[$ un intervalle ouvert où $a < b$.\n\n>> Le **centre** de l'intervalle est : $x_0 = \\dfrac{a + b}{2}$\n\n>> Le **rayon** (demi-largeur) mesure la distance du centre aux extrémités : $r = \\dfrac{b - a}{2}$\n\n>> **Réécriture équivalente** : $I = ]x_0 - r, x_0 + r[$\n\nTous les points de $I$ vérifient : $|x - x_0| < r$"
             },
             {
-              "type": "p",
-              "content": "?> **Interprétation graphique** : Quand $x$ se rapproche de $a$, $f(x)$ se rapproche de $L$. La courbe de $f$ se rapproche de la droite horizontale $y = L$."
+              "type": "definition-box",
+              "preamble": "**Intervalle pointé** :",
+              "content": "L'**intervalle pointé** de centre $x_0$ et de rayon $r$ est :\n\n$$I^* = ]x_0 - r, x_0 + r[\\setminus\\{x_0\\}$$\n\nC'est l'intervalle $I$ **auquel on retire le centre** $x_0$, ou encore :\n\n$$I^* = ]x_0 - r, x_0[ \\cup ]x_0, x_0 + r[$$\n\nC'est l'**union de deux intervalles ouverts** de part et d'autre du centre."
+            },
+            {
+              "type": "theorem-box",
+              "preamble": "**Caractérisation algébrique d'un intervalle pointé** :",
+              "content": "Un point $x$ appartient à l'intervalle pointé de centre $x_0$ et de rayon $r$ si et seulement si :\n\n$$x \\in ]x_0 - r, x_0 + r[^* \\Leftrightarrow 0 < |x - x_0| < r$$\n\n>> **Interprétation** :\n>> - $|x - x_0| > 0$ signifie que $x \\neq x_0$ (le point est strictement distinct du centre)\n>> - $|x - x_0| < r$ signifie que $x$ est à une distance inférieure à $r$ du centre"
             },
             {
               "type": "example-box",
-              "preamble": "**Limite simple** :",
-              "content": "Calculer $\\lim\\limits_{x \\to 2} (3x + 1)$.\n\nPar continuité des fonctions polynomiales :\n$$\\lim\\limits_{x \\to 2} (3x + 1) = 3 \\times 2 + 1 = ___7___$$"
+              "preamble": "**Exemple 1 : À compléter - Construction complète d'un intervalle pointé**",
+              "content": "Soit l'intervalle $I = ]1, 5[$.\n\n**Étape 1** : Calculons le centre.\n$$x_0 = \\dfrac{1 + 5}{2} = \\dfrac{___6___}{2} = ___3___$$\n\n**Étape 2** : Calculons le rayon.\n$$r = \\dfrac{5 - 1}{2} = \\dfrac{___4___}{2} = ___2___$$\n\n**Étape 3** : Écrivons l'intervalle pointé.\n$$I^* = ]___3___ - ___2___, ___3___ + ___2___[\\setminus\\{___3___\\}$$\n$$= ]___1___, ___5___[\\setminus\\{___3___\\}$$\n\n**Étape 4** : Interprétation. Les points de $I^*$ sont tous les nombres $x$ tels que :\n$$___0___ < |x - ___3___| < ___2___$$\n\n**Exemples de points dans $I^*$** : $2.5$, $3.1$, $4$, mais pas $3$ (retiré)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Limite Nulle en Zéro",
+      "subsections": [
+        {
+          "title": "Définition Rigoureuse et Théorème du Gendarme",
+          "elements": [
+            {
+              "type": "p",
+              "content": "La **limite nulle en 0** est le concept fondamental de toute la théorie des limites. Elle capture l'idée intuitive que **les valeurs de la fonction deviennent arbitrairement petites** quand $x$ s'approche de 0, aussi près de 0 qu'on le souhaite."
+            },
+            {
+              "type": "definition-box",
+              "preamble": "**Définition formelle : Limite nulle en 0** :",
+              "content": "Soit $f$ une fonction définie sur un intervalle pointé de centre 0 (c'est-à-dire sur $]-r, r[^*$ pour un certain $r > 0$).\n\n**On dit que $f$ admet 0 comme limite en 0** si et seulement si :\n\n$$(\\forall \\varepsilon > 0)(\\exists \\alpha > 0)(\\forall x \\in D_f)(0 < |x| < \\alpha \\Rightarrow |f(x)| < \\varepsilon)$$\n\n**Notation** : $\\displaystyle\\lim_{x\\to 0} f(x) = 0$\n\n>> **Signification** : Pour toute tolérance $\\varepsilon > 0$, on peut trouver un rayon $\\alpha > 0$ tel que tous les points à distance inférieure à $\\alpha$ de 0 aient des images à distance inférieure à $\\varepsilon$ de 0."
+            },
+            {
+              "type": "remark-box",
+              "preamble": "**Points essentiels à retenir** :",
+              "content": "!> **La condition $0 < |x| < \\alpha$ est cruciale** :\n>> - Elle exclut le point $x = 0$ lui-même\n>> - Cela signifie : on n'a pas besoin que $f$ soit définie en 0\n>> - Même si $f(0)$ existe, sa valeur n'affecte pas la limite\n>> - La limite mesure le **comportement à proximité**, pas au point\n\n?> **Astuce utile** : Pour montrer une limite nulle, le théorème du gendarme est très efficace : si $|f(x)| \\leq g(x)$ avec $g(x) \\to 0$, alors $f(x) \\to 0$"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Fonctions de référence tendant vers 0 quand $x \\to 0$** :",
+              "listType": "bullet",
+              "content": [
+                "$f(x) = x^n$ pour tout $n \\in \\mathbb{N}^*$ (croissance polynomiale rapide)",
+                "$f(x) = \\sqrt{|x|}$ (racine carrée, croissance moyenne)",
+                "$f(x) = kx$ où $k \\in \\mathbb{R}$ (croissance linéaire)",
+                "$f(x) = |x|^p$ pour tout $p > 0$ réel (puissance quelconque)",
+                "$f(x) = x \\sin\\left(\\dfrac{1}{x}\\right)$ (produit bornée × tendant vers 0)"
+              ]
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 2 : À compléter - Démonstration formelle d'une puissance**",
+              "content": "Montrons rigoureusement que $\\displaystyle\\lim_{x\\to 0} x^2 = 0$.\n\n**Étape 1** : Soit $\\varepsilon > 0$ un nombre arbitraire donné (la tolérance).\n\n**Étape 2** : On doit trouver $\\alpha > 0$ tel que :\n$$\\text{Si } 0 < |x| < \\alpha \\text{ alors } |x^2| < \\varepsilon$$\n\n**Étape 3** : Puisque $|x^2| = x^2 = |x|^2$, la condition devient :\n$$|x|^2 < \\varepsilon \\Rightarrow |x| < ___\\sqrt{\\varepsilon}___$$\n\n**Étape 4** : Posons $\\alpha = ___\\sqrt{\\varepsilon}___$. Alors pour $0 < |x| < ___\\sqrt{\\varepsilon}___$ :\n$$|x|^2 < ___\\varepsilon___ \\Rightarrow |x^2| < ___\\varepsilon___ ✓$$\n\n**Conclusion** : Cette propriété est vérifiée pour **tout** $\\varepsilon > 0$."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 3 : À compléter - Racine carrée**",
+              "content": "Montrons que $\\displaystyle\\lim_{x\\to 0} \\sqrt{|x|} = 0$.\n\n**Étape 1** : Soit $\\varepsilon > 0$.\n\n**Étape 2** : On cherche $\\alpha > 0$ tel que :\n$$0 < |x| < \\alpha \\Rightarrow |\\sqrt{|x|}| < \\varepsilon$$\n\n**Étape 3** : Puisque la racine est positive, $|\\sqrt{|x|}| = \\sqrt{|x|}$, d'où :\n$$\\sqrt{|x|} < \\varepsilon \\Rightarrow |x| < ___\\varepsilon^2___$$\n\n**Étape 4** : Posons $\\alpha = ___\\varepsilon^2___$. Alors :\n$$\\text{Si } 0 < |x| < ___\\varepsilon^2___ \\text{ alors } \\sqrt{|x|} < ___\\varepsilon___ ✓$$\n\n**Conclusion** : $\\displaystyle\\lim_{x\\to 0} \\sqrt{|x|} = 0$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 4 : À compléter - Théorème du gendarme appliqué**",
+              "content": "Calculons $\\displaystyle\\lim_{x\\to 0} x\\sin\\left(\\dfrac{1}{x}\\right)$ en utilisant le théorème du gendarme.\n\n**Étape 1** : Rappelons que pour tout réel $u$ :\n$$-1 \\leq \\sin u \\leq 1$$\n\n**Étape 2** : Avec $u = \\dfrac{1}{x}$ (pour $x \\neq 0$) :\n$$-1 \\leq \\sin\\left(\\dfrac{1}{x}\\right) \\leq ___1___$$\n\n**Étape 3** : Encadrement de $f(x)$ :\n\n>> Pour $x > 0$ : $___-x___ \\leq x\\sin\\left(\\dfrac{1}{x}\\right) \\leq ___x___$\n>> Pour $x < 0$ : $___x___ \\leq x\\sin\\left(\\dfrac{1}{x}\\right) \\leq ___-x___$\n\n**Étape 4** : Limites des bornes :\n$$\\lim_{x\\to 0} (-|x|) = 0 \\text{ et } \\lim_{x\\to 0} |x| = 0$$\n\n**Étape 5** : Par le théorème du gendarme :\n$$\\lim_{x\\to 0} x\\sin\\left(\\dfrac{1}{x}\\right) = ___0___$$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Limite Finie en un Point",
+      "subsections": [
+        {
+          "title": "Généralisation et Continuité Directe",
+          "elements": [
+            {
+              "type": "p",
+              "content": "La **limite finie en un point $a$** généralise le concept de limite nulle en 0. Au lieu de chercher des valeurs proches de 0, on cherche des valeurs proches d'un nombre réel $l$. C'est l'outil permettant de comprendre la continuité et les comportements locaux de fonctions."
+            },
+            {
+              "type": "definition-box",
+              "preamble": "**Définition formelle : Limite finie $l$ en $a$** :",
+              "content": "Soit $f$ une fonction définie sur un intervalle pointé de centre $a$, et soit $l \\in \\mathbb{R}$.\n\n**On dit que $f$ tend vers $l$ quand $x$ tend vers $a$** si et seulement si :\n\n$$(\\forall \\varepsilon > 0)(\\exists \\alpha > 0)(\\forall x \\in D_f)(0 < |x - a| < \\alpha \\Rightarrow |f(x) - l| < \\varepsilon)$$\n\n**Notation** : $\\displaystyle\\lim_{x\\to a} f(x) = l$\n\n>> **Signification** : Pour toute tolérance $\\varepsilon > 0$, on peut trouver un rayon $\\alpha > 0$ tel que tous les points à distance $\\alpha$ de $a$ aient des images à distance inférieure à $\\varepsilon$ de $l$."
+            },
+            {
+              "type": "remark-box",
+              "preamble": "**Connexion avec la limite nulle en 0** :",
+              "content": "?> La limite finie en $a$ se **ramène exactement** à la limite nulle en 0 :\n\n$$\\lim_{x\\to a} f(x) = l \\Leftrightarrow \\lim_{x\\to a} [f(x) - l] = 0$$\n\nEn posant $h = x - a$, on obtient : $\\lim_{h\\to 0} [f(a + h) - l] = 0$\n\nCette simple translation montre que **toute limite finie est une limite nulle** après changement de variable."
+            },
+            {
+              "type": "theorem-box",
+              "preamble": "**Théorème : Unicité de la limite** :",
+              "content": "Si une fonction $f$ admet une limite en un point $a$, alors cette limite est **absolument unique**.\n\nC'est-à-dire : Il existe **un et un seul** nombre réel $l$ tel que $\\displaystyle\\lim_{x\\to a} f(x) = l$.\n\nOn ne peut pas avoir deux limites différentes pour la même fonction au même point."
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Continuité directe des polynômes et fractions rationnelles** :",
+              "listType": "bullet",
+              "content": [
+                "**Polynômes** : Pour tout polynôme $P$ et tout réel $a$ : $\\displaystyle\\lim_{x\\to a} P(x) = P(a)$",
+                "**Fractions rationnelles** : Pour $f(x) = \\dfrac{P(x)}{Q(x)}$ avec $Q(a) \\neq 0$ : $\\displaystyle\\lim_{x\\to a} f(x) = f(a)$",
+                "**Implication** : Ces fonctions sont **continues** en tout point de leur domaine"
+              ]
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 5 : À compléter - Substitution directe dans un polynôme**",
+              "content": "Calculons $\\displaystyle\\lim_{x\\to 3} (2x^3 - 4x + 1)$.\n\n**Étape 1** : Identifions la fonction.\n$$f(x) = 2x^3 - 4x + 1 \\text{ (polynôme)}$$\n\n**Étape 2** : Pour un polynôme, la limite en un point est la valeur au point :\n$$\\lim_{x\\to 3} f(x) = f(3)$$\n\n**Étape 3** : Calculons $f(3)$ :\n$$f(3) = 2(___3___)^3 - 4(___3___) + 1$$\n$$= 2 \\times ___27___ - ___12___ + 1$$\n$$= ___54___ - 12 + 1$$\n$$= ___43___$$\n\n**Conclusion** : $\\displaystyle\\lim_{x\\to 3} (2x^3 - 4x + 1) = ___43___$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 6 : À compléter - Fonction rationnelle avec vérification du dénominateur**",
+              "content": "Calculons $\\displaystyle\\lim_{x\\to 2} \\dfrac{x^2 + x - 1}{2x - 3}$.\n\n**Étape 1** : **Vérification essentielle** : le dénominateur en $x = 2$ :\n$$2(___2___) - 3 = ___4___ - 3 = ___1___ \\neq 0 ✓$$\n\n**Étape 2** : Calculons le numérateur en $x = 2$ :\n$$(___2___)^2 + ___2___ - 1 = 4 + 2 - 1 = ___5___$$\n\n**Étape 3** : Appliquons la formule de limit :\n$$\\lim_{x\\to 2} \\dfrac{x^2 + x - 1}{2x - 3} = \\dfrac{___5___}{___1___} = ___5___$$\n\n**Conclusion** : On pouvait directement substituer car le dénominateur n'est pas nul."
             }
           ]
         },
         {
-          "title": "Limite Infinie",
+          "title": "Techniques Avancées : Gendarme et Conjugué",
           "elements": [
             {
-              "type": "definition-box",
-              "preamble": "**Limite infinie en un point** :",
-              "content": "On dit que $f(x)$ tend vers $+\\infty$ lorsque $x$ tend vers $a$ si :\n\nPour tout réel $A$, aussi grand soit-il, il existe un intervalle ouvert contenant $a$ tel que pour tout $x$ de cet intervalle (distinct de $a$), on a $f(x) > A$.\n\nOn note : $\\lim\\limits_{x \\to a} f(x) = +\\infty$\n\nDe même pour $-\\infty$."
+              "type": "theorem-box",
+              "preamble": "**Théorème du gendarme (Sandwich)** :",
+              "content": "Si sur un intervalle pointé de centre $a$ on a l'encadrement :\n\n$$g(x) \\leq f(x) \\leq h(x)$$\n\net si les bornes ont la même limite :\n\n$$\\lim_{x\\to a} g(x) = \\lim_{x\\to a} h(x) = l$$\n\nalors $f$ est **prise en sandwich** et :\n\n$$\\lim_{x\\to a} f(x) = l$$"
             },
             {
               "type": "example-box",
-              "preamble": "**Fonction rationnelle** :",
-              "content": "Calculer $\\lim\\limits_{x \\to 0} \\dfrac{1}{x^2}$.\n\nLorsque $x$ se rapproche de $0$, $x^2$ devient très petit (positif), donc $\\dfrac{1}{x^2}$ devient très grand.\n\n$$\\lim\\limits_{x \\to 0} \\dfrac{1}{x^2} = ___+\\infty___$$"
+              "preamble": "**Exemple 7 : À compléter - Simplification par quantité conjuguée**",
+              "content": "Calculons $\\displaystyle\\lim_{x\\to 0} \\dfrac{\\sqrt{1 + x} - 1}{x}$.\n\n**Étape 1** : Vérifions la forme. En $x = 0$ : $\\dfrac{\\sqrt{1} - 1}{0} = \\dfrac{0}{0}$ (indéterminé)\n\n**Étape 2** : Multiplions par la quantité conjuguée :\n\n$$\\dfrac{\\sqrt{1 + x} - 1}{x} \\times \\dfrac{___\\sqrt{1 + x} + 1___}{___\\sqrt{1 + x} + 1___}$$\n\n**Étape 3** : Développons le numérateur (différence de carrés) :\n\n$$= \\dfrac{(1 + x) - 1}{x(\\sqrt{1 + x} + 1)} = \\dfrac{___x___}{x(\\sqrt{1 + x} + 1)}$$\n\n**Étape 4** : Simplifiez (pour $x \\neq 0$) :\n\n$$= \\dfrac{1}{___\\sqrt{1 + x} + 1___}$$\n\n**Étape 5** : Calculez la limite :\n\n$$\\lim_{x\\to 0} \\dfrac{1}{\\sqrt{1 + x} + 1} = \\dfrac{1}{\\sqrt{1} + 1} = \\dfrac{1}{___2___}$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 8 : À compléter - Utilisation de la valeur absolue**",
+              "content": "Montrons que si $\\displaystyle\\lim_{x\\to a} |f(x)| = 0$, alors $\\displaystyle\\lim_{x\\to a} f(x) = 0$.\n\n**Étape 1** : Supposons $\\displaystyle\\lim_{x\\to a} |f(x)| = 0$.\n\n**Étape 2** : Rappelons l'inégalité importante :\n$$-|f(x)| \\leq f(x) \\leq ___| f(x)|___$$\n\n**Étape 3** : Prenons les limites en $x \\to a$ :\n$$\\lim_{x\\to a} (-|f(x)|) = -0 = 0$$\n$$\\lim_{x\\to a} |f(x)| = 0$$\n\n**Étape 4** : Par le théorème du gendarme, la fonction $f(x)$ prise en sandwich entre deux suites tendant vers 0 doit :\n$$\\lim_{x\\to a} f(x) = ___0___$$\n\n**Conclusion** : La limite de la valeur absolue étant 0 implique que la limite de la fonction est 0."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Limites Latérales et Limites Infinies",
+      "subsections": [
+        {
+          "title": "Limites à Droite et à Gauche",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Limite à droite en $a$** :",
+              "content": "Soit $f$ définie sur $]a, a + r[$ où $r > 0$.\n\n**On dit que $f$ tend vers $l$ quand $x$ tend vers $a$ par la droite** si :\n\n$$(\\forall \\varepsilon > 0)(\\exists \\alpha > 0)(\\forall x \\in D_f)(0 < x - a < \\alpha \\Rightarrow |f(x) - l| < \\varepsilon)$$\n\n**Notation** : $\\displaystyle\\lim_{x\\to a^+} f(x) = l$ ou $\\displaystyle\\lim_{x\\to a, x > a} f(x) = l$\n\n>> On appelle cela la limite **par la droite** ou **unilatérale droite**."
+            },
+            {
+              "type": "definition-box",
+              "preamble": "**Limite à gauche en $a$** :",
+              "content": "De manière analogue, pour $f$ définie sur $]a - r, a[$ :\n\n**On dit que $f$ tend vers $l$ quand $x$ tend vers $a$ par la gauche** si :\n\n$$(\\forall \\varepsilon > 0)(\\exists \\alpha > 0)(\\forall x \\in D_f)(0 < a - x < \\alpha \\Rightarrow |f(x) - l| < \\varepsilon)$$\n\n**Notation** : $\\displaystyle\\lim_{x\\to a^-} f(x) = l$ ou $\\displaystyle\\lim_{x\\to a, x < a} f(x) = l$"
+            },
+            {
+              "type": "theorem-box",
+              "preamble": "**Théorème : Existence de la limite bilatérale** :",
+              "content": "Une fonction $f$ admet une limite $l$ en $a$ **si et seulement si** elle admet des limites à droite et à gauche de $a$, et ces deux limites sont égales à $l$ :\n\n$$\\lim_{x\\to a} f(x) = l \\Leftrightarrow \\begin{cases} \\displaystyle\\lim_{x\\to a^+} f(x) = l \\\\ \\displaystyle\\lim_{x\\to a^-} f(x) = l \\end{cases}$$\n\n>> **Conséquence** : Si les limites latérales existent mais sont différentes, il n'existe pas de limite en $a$."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 9 : À compléter - Fonction définie par morceaux**",
+              "content": "Soit $f(x) = \\begin{cases} x^2 + 1 & \\text{si } x < 2 \\\\ 3x - 2 & \\text{si } x \\geq 2 \\end{cases}$\n\nÉtudions la limite en $x = 2$.\n\n**Limite à gauche** (quand $x \\to 2^-$, on utilise $x^2 + 1$) :\n$$\\lim_{x\\to 2^-} f(x) = \\lim_{x\\to 2^-} (x^2 + 1) = (___2___)^2 + 1 = 4 + 1 = ___5___$$\n\n**Limite à droite** (quand $x \\to 2^+$, on utilise $3x - 2$) :\n$$\\lim_{x\\to 2^+} f(x) = \\lim_{x\\to 2^+} (3x - 2) = 3(___2___) - 2 = 6 - 2 = ___4___$$\n\n**Conclusion** : \nPuisque $\\lim_{x\\to 2^-} f(x) = 5 \\neq 4 = \\lim_{x\\to 2^+} f(x)$,\nla fonction **n'admet pas de limite en $x = 2$** (discontinuité de saut)."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 10 : À compléter - Trouver un paramètre pour la continuité**",
+              "content": "Soit $g(x) = \\begin{cases} 2x^2 - 3x + 5 & \\text{si } x \\geq 1 \\\\ -x^2 + x + k & \\text{si } x < 1 \\end{cases}$\n\nDéterminons la valeur de $k$ pour que $g$ admette une limite en $x = 1$.\n\n**Limite à droite** :\n$$\\lim_{x\\to 1^+} g(x) = 2(___1___)^2 - 3(___1___) + 5 = 2 - 3 + 5 = ___4___$$\n\n**Limite à gauche** :\n$$\\lim_{x\\to 1^-} g(x) = -(___1___)^2 + ___1___ + k = -1 + 1 + k = ___k___$$\n\n**Condition d'égalité** :\n$$\\lim_{x\\to 1^+} g(x) = \\lim_{x\\to 1^-} g(x)$$\n$$___4___ = ___k___$$\n\n**Conclusion** : Pour que $g$ admette une limite en $x = 1$, il faut $k = ___4___$."
             }
           ]
         },
         {
-          "title": "Limite à l'Infini",
+          "title": "Limites Infinies aux Points Finis",
           "elements": [
             {
               "type": "definition-box",
-              "preamble": "**Limite à l'infini** :",
-              "content": "On dit que $f(x)$ tend vers $L$ lorsque $x$ tend vers $+\\infty$ si :\n\nPour tout intervalle ouvert contenant $L$, il existe un réel $A$ tel que pour tout $x > A$, on a $f(x)$ appartenant à cet intervalle.\n\nOn note : $\\lim\\limits_{x \\to +\\infty} f(x) = L$"
+              "preamble": "**Limite $+\\infty$ à droite de $a$** :",
+              "content": "On dit que $f$ **tend vers $+\\infty$ quand $x$ tend vers $a$ par la droite** si :\n\n$$(\\forall A > 0)(\\exists \\alpha > 0)(\\forall x \\in D_f)(0 < x - a < \\alpha \\Rightarrow f(x) > A)$$\n\n**Notation** : $\\displaystyle\\lim_{x\\to a^+} f(x) = +\\infty$\n\n>> **Interprétation géométrique** : La courbe s'élève indéfiniment quand $x$ s'approche de $a$ par la droite.\n\n>> **Asymptote verticale** : La droite $(\\Delta) : x = a$ est appelée asymptote verticale."
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Fonctions tendant vers l'infini** :",
+              "listType": "bullet",
+              "content": [
+                "$f(x) = \\dfrac{k}{|x|}$ où $k > 0$ tend vers $+\\infty$ quand $x \\to 0$",
+                "$f(x) = \\dfrac{k}{\\sqrt{|x|}}$ où $k > 0$ tend vers $+\\infty$ quand $x \\to 0$",
+                "$f(x) = \\dfrac{k}{|x|^n}$ où $k > 0$, $n \\in \\mathbb{N}^*$ tend vers $+\\infty$ quand $x \\to 0$"
+              ]
             },
             {
               "type": "example-box",
-              "preamble": "**Limite à l'infini** :",
-              "content": "Calculer $\\lim\\limits_{x \\to +\\infty} \\dfrac{2x + 1}{x + 3}$.\n\nOn factorise par $x$ au numérateur et au dénominateur :\n\n$$\\dfrac{2x + 1}{x + 3} = \\dfrac{x(2 + \\frac{1}{x})}{x(1 + \\frac{3}{x})} = \\dfrac{2 + \\frac{1}{x}}{1 + \\frac{3}{x}}$$\n\nQuand $x \\to +\\infty$ : $\\frac{1}{x} \\to 0$ et $\\frac{3}{x} \\to 0$\n\nDonc : $$\\lim\\limits_{x \\to +\\infty} \\dfrac{2x + 1}{x + 3} = \\dfrac{2 + 0}{1 + 0} = ___2___$$"
+              "preamble": "**Exemple 11 : À compléter - Fonction rationnelle simple**",
+              "content": "Étudions $f(x) = \\dfrac{1}{x}$ aux alentours de $x = 0$.\n\n**Limite à droite** (quand $x \\to 0^+$) :\n\nLe dénominateur tend vers $0^+$ (par des valeurs **positives**).\n\nDonc : $\\lim_{x\\to 0^+} \\dfrac{1}{x} = ___+\\infty___$\n\n**Limite à gauche** (quand $x \\to 0^-$) :\n\nLe dénominateur tend vers $0^-$ (par des valeurs **négatives**).\n\nDonc : $\\lim_{x\\to 0^-} \\dfrac{1}{x} = ___-\\infty___$\n\n**Conclusion** : \n>> - La droite $x = 0$ (axe des $y$) est une **asymptote verticale bilatérale**\n>> - La courbe monte vers $+\\infty$ à droite et descend vers $-\\infty$ à gauche"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 12 : À compléter - Analyse du signe du dénominateur**",
+              "content": "Calculons $\\displaystyle\\lim_{x\\to 1^+} \\dfrac{3x + 1}{x^2 - 1}$\n\n**Étape 1** : Analysons le numérateur en $x \\to 1^+$ :\n$$\\lim_{x\\to 1^+} (3x + 1) = 3(___1___) + 1 = ___4___ > 0$$\n\n**Étape 2** : Factorisons et analysons le dénominateur :\n$$x^2 - 1 = (x - 1)(x + 1)$$\n\nQuand $x \\to 1^+$ :\n>> - $(x - 1) \\to 0^+$ (positif puisque $x > 1$)\n>> - $(x + 1) \\to 2$ (positif)\n\nDonc : $(x - 1)(x + 1) \\to 0^+ \\times 2 = 0^+$\n\n**Étape 3** : Concluez :\n$$\\lim_{x\\to 1^+} \\dfrac{3x + 1}{x^2 - 1} = \\dfrac{4}{0^+} = ___+\\infty___$$"
+            }
+          ]
+        },
+        {
+          "title": "Limites Finies et Infinies en $\\pm\\infty$",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Limite finie quand $x \\to +\\infty$** :",
+              "content": "Soit $f$ définie sur $]a, +\\infty[$ et $l \\in \\mathbb{R}$.\n\n**On dit que $f$ tend vers $l$ quand $x$ tend vers $+\\infty$** si :\n\n$$(\\forall \\varepsilon > 0)(\\exists B > 0)(\\forall x \\in D_f)(x > B \\Rightarrow |f(x) - l| < \\varepsilon)$$\n\n**Notation** : $\\displaystyle\\lim_{x\\to +\\infty} f(x) = l$\n\n>> **Interprétation géométrique** : La droite $(\\Delta) : y = l$ est une **asymptote horizontale**."
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Fonctions tendant vers 0 en l'infini** :",
+              "listType": "bullet",
+              "content": [
+                "$f(x) = \\dfrac{k}{|x|}$ où $k \\in \\mathbb{R}$ tend vers $0$ quand $x \\to \\pm\\infty$",
+                "$f(x) = \\dfrac{k}{\\sqrt{|x|}}$ où $k \\in \\mathbb{R}$ tend vers $0$ quand $x \\to \\pm\\infty$",
+                "$f(x) = \\dfrac{k}{|x|^n}$ où $k \\in \\mathbb{R}$, $n \\in \\mathbb{N}^*$ tend vers $0$ quand $x \\to \\pm\\infty$"
+              ]
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 13 : À compléter - Limite d'une fonction rationnelle en l'infini**",
+              "content": "Calculons $\\displaystyle\\lim_{x\\to +\\infty} \\dfrac{3x^2 - x + 5}{2x^2 + 4}$\n\n**Méthode** : Factoriser le plus haut degré au numérateur et au dénominateur.\n\n**Numérateur** :\n$$3x^2 - x + 5 = x^2\\left(3 - \\dfrac{1}{___x___} + \\dfrac{5}{___x^2___}\\right)$$\n\n**Dénominateur** :\n$$2x^2 + 4 = x^2\\left(2 + \\dfrac{4}{___x^2___}\\right)$$\n\n**Fraction simplifiée** :\n$$\\dfrac{3x^2 - x + 5}{2x^2 + 4} = \\dfrac{x^2\\left(3 - \\dfrac{1}{x} + \\dfrac{5}{x^2}\\right)}{x^2\\left(2 + \\dfrac{4}{x^2}\\right)} = \\dfrac{3 - \\dfrac{1}{x} + \\dfrac{5}{x^2}}{2 + \\dfrac{4}{x^2}}$$\n\n**Limite** :\n$$\\lim_{x\\to +\\infty} \\dfrac{3x^2 - x + 5}{2x^2 + 4} = \\dfrac{3 - 0 + 0}{2 + 0} = \\dfrac{___3___}{___2___}$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 14 : À compléter - Polynôme en l'infini**",
+              "content": "Calculons $\\displaystyle\\lim_{x\\to +\\infty} (3x^3 - 5x + 2)$\n\n**Règle** : Pour un polynôme, la limite en $\\pm\\infty$ est celle de son **terme de plus haut degré**.\n\n**Identification du terme dominant** :\n$$\\lim_{x\\to +\\infty} (3x^3 - 5x + 2) = \\lim_{x\\to +\\infty} 3x^3$$\n\n**Calcul** :\n$$\\lim_{x\\to +\\infty} 3x^3 = 3 \\times (+\\infty) = ___+\\infty___$$\n\n**Pour $x \\to -\\infty$** :\n$$\\lim_{x\\to -\\infty} 3x^3 = 3 \\times (-\\infty) = ___-\\infty___$$\n\n**Note** : Le degré est impair (3), donc le signe de la limite change avec le signe de $x$."
             }
           ]
         }
@@ -69,136 +260,152 @@
       "title": "Opérations sur les Limites",
       "subsections": [
         {
-          "title": "Limites et Opérations",
-          "elements": [
-            {
-              "type": "property-box",
-              "preamble": "**Somme, produit, quotient** :",
-              "content": "Si $\\lim\\limits_{x \\to a} f(x) = L$ et $\\lim\\limits_{x \\to a} g(x) = L'$, alors :\n\n**Somme** : $\\lim\\limits_{x \\to a} [f(x) + g(x)] = L + L'$\n\n**Produit** : $\\lim\\limits_{x \\to a} [f(x) \\times g(x)] = L \\times L'$\n\n**Quotient** : $\\lim\\limits_{x \\to a} \\dfrac{f(x)}{g(x)} = \\dfrac{L}{L'}$ (si $L' \\neq 0$)"
-            },
-            {
-              "type": "p",
-              "content": "!> **Formes indéterminées** : Dans certains cas, les opérations ci-dessus ne permettent pas de conclure directement. Ce sont les formes indéterminées : $\\dfrac{0}{0}$, $\\dfrac{\\infty}{\\infty}$, $0 \\times \\infty$, $\\infty - \\infty$, etc."
-            }
-          ]
-        },
-        {
-          "title": "Levée d'Indétermination",
+          "title": "Règles d'Opérations et Formes Indéterminées",
           "elements": [
             {
               "type": "p",
-              "content": "Pour lever une forme indéterminée, on utilise diverses techniques : factorisation, mise au même dénominateur, multiplication par la quantité conjuguée, etc."
+              "content": "Les **règles opératoires** permettent de calculer les limites de fonctions complexes à partir des limites de fonctions plus simples. Cependant, certaines **formes indéterminées** exigent des manipulations algébriques avant de conclure."
             },
             {
-              "type": "practice-box",
-              "statement": "Calculer les limites suivantes :",
-              "content": [
-                "$\\lim\\limits_{x \\to 1} \\dfrac{x^2 - 1}{x - 1}$ (forme $\\frac{0}{0}$)",
-                "$\\lim\\limits_{x \\to +\\infty} \\dfrac{3x^2 + 2x - 1}{x^2 - 5}$ (forme $\\frac{\\infty}{\\infty}$)",
-                "$\\lim\\limits_{x \\to 0} \\dfrac{\\sqrt{x + 1} - 1}{x}$ (forme $\\frac{0}{0}$)"
-              ],
-              "solution": [
-                "On factorise le numérateur :\n$$\\dfrac{x^2 - 1}{x - 1} = \\dfrac{(x-1)(x+1)}{x - 1} = x + 1$$ (pour $x \\neq 1$)\n\nDonc : $\\lim\\limits_{x \\to 1} \\dfrac{x^2 - 1}{x - 1} = 1 + 1 = 2$",
-                "On divise numérateur et dénominateur par $x^2$ :\n$$\\dfrac{3x^2 + 2x - 1}{x^2 - 5} = \\dfrac{3 + \\frac{2}{x} - \\frac{1}{x^2}}{1 - \\frac{5}{x^2}}$$\n\nQuand $x \\to +\\infty$ : $\\dfrac{2}{x} \\to 0$, $\\dfrac{1}{x^2} \\to 0$, $\\dfrac{5}{x^2} \\to 0$\n\nDonc : $\\lim\\limits_{x \\to +\\infty} \\dfrac{3x^2 + 2x - 1}{x^2 - 5} = \\dfrac{3}{1} = 3$",
-                "On multiplie par la quantité conjuguée :\n$$\\dfrac{\\sqrt{x + 1} - 1}{x} \\times \\dfrac{\\sqrt{x + 1} + 1}{\\sqrt{x + 1} + 1} = \\dfrac{(x + 1) - 1}{x(\\sqrt{x + 1} + 1)} = \\dfrac{x}{x(\\sqrt{x + 1} + 1)} = \\dfrac{1}{\\sqrt{x + 1} + 1}$$\n\nDonc : $\\lim\\limits_{x \\to 0} \\dfrac{\\sqrt{x + 1} - 1}{x} = \\dfrac{1}{\\sqrt{1} + 1} = \\dfrac{1}{2}$"
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "title": "Asymptotes",
-      "subsections": [
-        {
-          "title": "Asymptotes Verticales",
-          "elements": [
+              "type": "theorem-box",
+              "preamble": "**Opérations sur les limites finies** :",
+              "content": "Si $\\displaystyle\\lim_{x\\to a} f(x) = l$ et $\\displaystyle\\lim_{x\\to a} g(x) = l'$ où $l, l' \\in \\mathbb{R}$, alors :\n\n**1. Somme** : $\\displaystyle\\lim_{x\\to a} [f(x) + g(x)] = l + l'$\n\n**2. Produit** : $\\displaystyle\\lim_{x\\to a} [f(x) \\cdot g(x)] = l \\cdot l'$\n\n**3. Quotient** : $\\displaystyle\\lim_{x\\to a} \\dfrac{f(x)}{g(x)} = \\dfrac{l}{l'}$ si $l' \\neq 0$\n\n**4. Racine carrée** : $\\displaystyle\\lim_{x\\to a} \\sqrt{f(x)} = \\sqrt{l}$ si $l > 0$\n\n**5. Valeur absolue** : $\\displaystyle\\lim_{x\\to a} |f(x)| = |l|$"
+            },
             {
-              "type": "definition-box",
-              "preamble": "**Asymptote verticale** :",
-              "content": "La droite d'équation $x = a$ est une **asymptote verticale** à la courbe de $f$ si :\n$$\\lim\\limits_{x \\to a^+} f(x) = \\pm \\infty \\quad \\text{ou} \\quad \\lim\\limits_{x \\to a^-} f(x) = \\pm \\infty$$"
+              "type": "remark-box",
+              "preamble": "**Formes indéterminées à connaître** :",
+              "content": "!> **Attention** : Certaines combinaisons de limites conduisent à des formes qu'on ne peut pas calculer directement :\n\n>> - $\\dfrac{0}{0}$ (quotient de deux limites nulles)\n>> - $\\dfrac{\\infty}{\\infty}$ (quotient de deux limites infinies)\n>> - $0 \\cdot \\infty$ (produit)\n>> - $\\infty - \\infty$ (différence)\n\n?> **Dans ces cas** : Des manipulations algébriques sont nécessaires avant de conclure (factorisation, quantité conjuguée, etc.)"
             },
             {
               "type": "example-box",
-              "preamble": "**Recherche d'asymptote verticale** :",
-              "content": "Soit $f(x) = \\dfrac{1}{x - 2}$. Étudier l'existence d'asymptotes verticales.\n\nOn cherche les valeurs où $f$ n'est pas définie : $x = ___2___$\n\n$\\lim\\limits_{x \\to 2^+} \\dfrac{1}{x - 2} = +\\infty$ et $\\lim\\limits_{x \\to 2^-} \\dfrac{1}{x - 2} = -\\infty$\n\nLa droite $x = 2$ est une asymptote verticale."
+              "preamble": "**Exemple 15 : À compléter - Combinaison de limites finies**",
+              "content": "Calculons $\\displaystyle\\lim_{x\\to -1} \\sqrt{3x^2 + 1 + 2x}$\n\n**Étape 1** : Calculez la limite de l'expression sous la racine :\n$$\\lim_{x\\to -1} (3x^2 + 1 + 2x) = 3(___-1___)^2 + 1 + 2(___-1___)$$\n$$= 3 \\times 1 + 1 - 2 = ___2___$$\n\n**Étape 2** : Appliquez la continuité de la racine carrée :\n$$\\lim_{x\\to -1} \\sqrt{3x^2 + 1 + 2x} = \\sqrt{___2___}$$\n\nPuisque $2 > 0$, on peut extraire la racine carrée."
             }
           ]
         },
         {
-          "title": "Asymptotes Horizontales",
+          "title": "Limites Trigonométriques Remarquables",
           "elements": [
             {
-              "type": "definition-box",
-              "preamble": "**Asymptote horizontale** :",
-              "content": "La droite d'équation $y = L$ est une **asymptote horizontale** à la courbe de $f$ en $+\\infty$ (ou $-\\infty$) si :\n$$\\lim\\limits_{x \\to +\\infty} f(x) = L \\quad \\text{(ou } \\lim\\limits_{x \\to -\\infty} f(x) = L\\text{)}$$"
-            }
-          ]
-        },
-        {
-          "title": "Asymptotes Obliques",
-          "elements": [
-            {
-              "type": "definition-box",
-              "preamble": "**Asymptote oblique** :",
-              "content": "La droite d'équation $y = ax + b$ est une **asymptote oblique** à la courbe de $f$ en $+\\infty$ si :\n$$\\lim\\limits_{x \\to +\\infty} [f(x) - (ax + b)] = 0$$\n\nPour déterminer $a$ et $b$ :\n$$a = \\lim\\limits_{x \\to +\\infty} \\dfrac{f(x)}{x} \\quad \\text{et} \\quad b = \\lim\\limits_{x \\to +\\infty} [f(x) - ax]$$"
+              "type": "property-box",
+              "preamble": "**Continuité des fonctions trigonométriques** :",
+              "listType": "bullet",
+              "content": [
+                "Pour tout réel $a$ : $\\displaystyle\\lim_{x\\to a} \\sin x = \\sin a$",
+                "Pour tout réel $a$ : $\\displaystyle\\lim_{x\\to a} \\cos x = \\cos a$",
+                "Pour $a \\neq \\dfrac{\\pi}{2} + k\\pi$ ($k \\in \\mathbb{Z}$) : $\\displaystyle\\lim_{x\\to a} \\tan x = \\tan a$"
+              ]
             },
             {
-              "type": "practice-box",
-              "statement": "Déterminer l'asymptote oblique de $f(x) = \\dfrac{x^2 + x + 1}{x + 1}$ en $+\\infty$.",
-              "content": [
-                "Calculer $a = \\lim\\limits_{x \\to +\\infty} \\dfrac{f(x)}{x}$",
-                "Calculer $b = \\lim\\limits_{x \\to +\\infty} [f(x) - ax]$",
-                "Donner l'équation de l'asymptote"
-              ],
-              "solution": [
-                "$$a = \\lim\\limits_{x \\to +\\infty} \\dfrac{f(x)}{x} = \\lim\\limits_{x \\to +\\infty} \\dfrac{x^2 + x + 1}{x(x + 1)} = \\lim\\limits_{x \\to +\\infty} \\dfrac{x^2 + x + 1}{x^2 + x}$$\n\nEn divisant par $x^2$ : $a = \\lim\\limits_{x \\to +\\infty} \\dfrac{1 + \\frac{1}{x} + \\frac{1}{x^2}}{1 + \\frac{1}{x}} = 1$",
-                "On effectue la division euclidienne :\n$$\\dfrac{x^2 + x + 1}{x + 1} = x + \\dfrac{1}{x + 1}$$\n\nDonc $f(x) - x = \\dfrac{1}{x + 1}$\n\n$$b = \\lim\\limits_{x \\to +\\infty} \\dfrac{1}{x + 1} = 0$$",
-                "L'asymptote oblique est la droite d'équation $y = x$"
-              ]
+              "type": "theorem-box",
+              "preamble": "**Limites trigonométriques fondamentales** :",
+              "content": "Ces trois limites sont essentielles et très fréquemment utilisées :\n\n$$(1) \\quad \\displaystyle\\lim_{x\\to 0} \\dfrac{\\sin x}{x} = 1$$\n\n$$(2) \\quad \\displaystyle\\lim_{x\\to 0} \\dfrac{\\tan x}{x} = 1$$\n\n$$(3) \\quad \\displaystyle\\lim_{x\\to 0} \\dfrac{1 - \\cos x}{x^2} = \\dfrac{1}{2}$$"
+            },
+            {
+              "type": "remark-box",
+              "preamble": "**Généralisation des limites trigonométriques** :",
+              "content": "?> Si $\\displaystyle\\lim_{x\\to a} u(x) = 0$, alors :\n\n>> - $\\displaystyle\\lim_{x\\to a} \\dfrac{\\sin u(x)}{u(x)} = 1$\n>> - $\\displaystyle\\lim_{x\\to a} \\dfrac{\\tan u(x)}{u(x)} = 1$\n>> - $\\displaystyle\\lim_{x\\to a} \\dfrac{1 - \\cos u(x)}{u(x)^2} = \\dfrac{1}{2}$\n\nCes formules permettent de calculer rapidement les limites complexes."
             }
           ]
         }
       ]
+    }
+  ],
+  "exercises": [
+    {
+      "type": "practice-box",
+      "statement": "**Exercice 1** : Étude complète de limites latérales avec fonction définie par morceaux\n\nSoit la fonction $f$ définie par :\n$$f(x) = \\begin{cases} \\dfrac{x^2 - 4}{x - 2} & \\text{si } x < 2 \\\\ 5 & \\text{si } x = 2 \\\\ \\sqrt{x - 2} + 3 & \\text{si } x > 2 \\end{cases}$$",
+      "listType": "numbered",
+      "content": [
+        "Simplifiez l'expression $\\dfrac{x^2 - 4}{x - 2}$ pour $x \\neq 2$",
+        "Déterminez $\\displaystyle\\lim_{x\\to 2^-} f(x)$",
+        "Déterminez $\\displaystyle\\lim_{x\\to 2^+} f(x)$",
+        "La fonction $f$ admet-elle une limite en $x = 2$ ? Justifiez votre réponse",
+        "Analysez la continuité de $f$ en $x = 2$"
+      ],
+      "solution": [
+        "Pour $x < 2$, on a $x \\neq 2$, donc on peut factoriser :\n\n$$\\dfrac{x^2 - 4}{x - 2} = \\dfrac{(x - 2)(x + 2)}{x - 2} = x + 2$$\n\nL'expression se simplifie en $x + 2$.",
+        "$\\displaystyle\\lim_{x\\to 2^-} f(x) = \\lim_{x\\to 2^-} (x + 2) = 2 + 2 = 4$\n\nLa limite à gauche est **4**.",
+        "$\\displaystyle\\lim_{x\\to 2^+} f(x) = \\lim_{x\\to 2^+} (\\sqrt{x - 2} + 3) = \\sqrt{2 - 2} + 3 = 0 + 3 = 3$\n\nLa limite à droite est **3**.",
+        "Puisque $\\displaystyle\\lim_{x\\to 2^-} f(x) = 4 \\neq 3 = \\lim_{x\\to 2^+} f(x)$,\n\n**la fonction n'admet pas de limite en $x = 2$**.\n\nLes limites latérales existent mais sont différentes : on dit qu'il existe une **discontinuité de saut**.",
+        "Bien que $f$ soit définie en $x = 2$ avec $f(2) = 5$, cette valeur n'aide pas car les limites latérales ne s'accordent pas. **$f$ est discontinue en $x = 2$** : on a un **saut** de hauteur $|4 - 3| = 1$ dans la fonction."
+      ]
     },
     {
-      "title": "Continuité",
-      "subsections": [
-        {
-          "title": "Fonction Continue",
-          "elements": [
-            {
-              "type": "definition-box",
-              "preamble": "**Continuité en un point** :",
-              "content": "Une fonction $f$ est **continue en $a$** si :\n\n1. $f$ est définie en $a$\n2. $\\lim\\limits_{x \\to a} f(x)$ existe\n3. $\\lim\\limits_{x \\to a} f(x) = f(a)$"
-            },
-            {
-              "type": "property-box",
-              "preamble": "**Fonctions continues usuelles** :",
-              "content": [
-                "Les fonctions **polynômes** sont continues sur $\\mathbb{R}$",
-                "Les fonctions **rationnelles** sont continues sur leur domaine de définition",
-                "Les fonctions **trigonométriques** $\\sin$, $\\cos$, $\\tan$ sont continues sur leur domaine",
-                "La fonction **racine carrée** est continue sur $\\mathbb{R}^+$"
-              ],
-              "listType": "bullet"
-            }
-          ]
-        },
-        {
-          "title": "Théorème des Valeurs Intermédiaires",
-          "elements": [
-            {
-              "type": "theorem-box",
-              "preamble": "**Théorème des valeurs intermédiaires (TVI)** :",
-              "content": "Soit $f$ une fonction continue sur un intervalle $[a; b]$.\n\nPour tout réel $k$ compris entre $f(a)$ et $f(b)$, il existe au moins un réel $c \\in [a; b]$ tel que :\n$$f(c) = k$$\n\n**Corollaire** : Si $f$ est continue sur $[a; b]$ et si $f(a)$ et $f(b)$ sont de signes contraires, alors l'équation $f(x) = 0$ admet au moins une solution dans $]a; b[$."
-            },
-            {
-              "type": "p",
-              "content": "?> **Application** : Le TVI permet de prouver l'existence de solutions d'équations sans les calculer explicitement."
-            }
-          ]
-        }
+      "type": "practice-box",
+      "statement": "**Exercice 2** : Résolution de formes indéterminées $\\dfrac{0}{0}$\n\nDéterminez les limites suivantes qui se présentent sous la forme indéterminée $\\dfrac{0}{0}$ :",
+      "listType": "numbered",
+      "content": [
+        "$\\displaystyle\\lim_{x\\to 1} \\dfrac{x^2 - 3x + 2}{x - 1}$",
+        "$\\displaystyle\\lim_{x\\to 2} \\dfrac{\\sqrt{x + 2} - 2}{x - 2}$",
+        "$\\displaystyle\\lim_{x\\to 0} \\dfrac{\\sin 3x}{x}$"
+      ],
+      "solution": [
+        "**Identifier la forme indéterminée** :\n\nEn substituant $x = 1$ :\n>> - Numérateur : $1 - 3 + 2 = 0$ ✓\n>> - Dénominateur : $1 - 1 = 0$ ✓\n\nOn a bien $\\dfrac{0}{0}$.\n\n**Stratégie** : Factoriser le numérateur.\n\n$x^2 - 3x + 2 = (x - 1)(x - 2)$ (car les racines sont 1 et 2)\n\n**Simplifier** :\n$$\\dfrac{x^2 - 3x + 2}{x - 1} = \\dfrac{(x - 1)(x - 2)}{x - 1} = x - 2 \\text{ (pour } x \\neq 1)$$\n\n**Calculer la limite** :\n$$\\displaystyle\\lim_{x\\to 1} \\dfrac{x^2 - 3x + 2}{x - 1} = \\lim_{x\\to 1} (x - 2) = 1 - 2 = -1$$",
+        "**Identifier la forme indéterminée** :\n\nEn substituant $x = 2$ :\n>> - Numérateur : $\\sqrt{2 + 2} - 2 = 2 - 2 = 0$ ✓\n>> - Dénominateur : $2 - 2 = 0$ ✓\n\n**Stratégie** : Multiplier par la quantité conjuguée.\n\n$$\\dfrac{\\sqrt{x + 2} - 2}{x - 2} \\times \\dfrac{\\sqrt{x + 2} + 2}{\\sqrt{x + 2} + 2} = \\dfrac{(x + 2) - 4}{(x - 2)(\\sqrt{x + 2} + 2)}$$\n\n$$= \\dfrac{x - 2}{(x - 2)(\\sqrt{x + 2} + 2)} = \\dfrac{1}{\\sqrt{x + 2} + 2} \\text{ (pour } x \\neq 2)$$\n\n**Calculer la limite** :\n$$\\displaystyle\\lim_{x\\to 2} \\dfrac{\\sqrt{x + 2} - 2}{x - 2} = \\lim_{x\\to 2} \\dfrac{1}{\\sqrt{x + 2} + 2} = \\dfrac{1}{\\sqrt{4} + 2} = \\dfrac{1}{2 + 2} = \\dfrac{1}{4}$$",
+        "**Identifier la limite trigonométrique** :\n\nOn reconnaît une limite de référence. En substituant $x = 0$ :\n$$\\dfrac{\\sin 0}{0} = \\dfrac{0}{0} \\text{ (indéterminé)}$$\n\n**Utiliser la limite remarquable** :\n$$\\lim_{u\\to 0} \\dfrac{\\sin u}{u} = 1$$\n\nEn posant $u = 3x$ (donc $u \\to 0$ quand $x \\to 0$) :\n$$\\dfrac{\\sin 3x}{x} = \\dfrac{3 \\sin 3x}{3x} = 3 \\times \\dfrac{\\sin 3x}{3x} = 3 \\times \\dfrac{\\sin u}{u}$$\n\n**Calculer la limite** :\n$$\\displaystyle\\lim_{x\\to 0} \\dfrac{\\sin 3x}{x} = 3 \\times \\lim_{u\\to 0} \\dfrac{\\sin u}{u} = 3 \\times 1 = 3$$"
+      ]
+    },
+    {
+      "type": "practice-box",
+      "statement": "**Exercice 3** : Limites infinies et asymptotes verticales\n\nSoit la fonction $f(x) = \\dfrac{2x - 3}{(x - 1)^2}$",
+      "listType": "numbered",
+      "content": [
+        "Déterminez l'ensemble de définition $D_f$",
+        "Étudiez $\\displaystyle\\lim_{x\\to 1^+} f(x)$ et $\\displaystyle\\lim_{x\\to 1^-} f(x)$",
+        "Existe-t-il une asymptote verticale ? Précisez sa nature"
+      ],
+      "solution": [
+        "$f$ est définie pour $(x - 1)^2 \\neq 0$, c'est-à-dire $x \\neq 1$.\n\nAinsi : **$D_f = \\mathbb{R} \\setminus \\{1\\} = ]-\\infty, 1[ \\cup ]1, +\\infty[$**",
+        "**Analyse du numérateur** :\n\nQuand $x \\to 1$ : $2x - 3 \\to 2(1) - 3 = -1 < 0$ (constant négatif)\n\n**Analyse du dénominateur** :\n\nPour tout $x \\neq 1$ : $(x - 1)^2 > 0$ (toujours positif)\n\nQuand $x \\to 1^+$ : $(x - 1)^2 \\to 0^+$\nQuand $x \\to 1^-$ : $(x - 1)^2 \\to 0^+$\n\n**Calcul des limites** :\n\n$$\\displaystyle\\lim_{x\\to 1^+} f(x) = \\dfrac{-1}{0^+} = -\\infty$$\n\n$$\\displaystyle\\lim_{x\\to 1^-} f(x) = \\dfrac{-1}{0^+} = -\\infty$$",
+        "Oui, **la droite $(\\Delta) : x = 1$ est une asymptote verticale bilatérale**.\n\nCette asymptote est **bilatérale** car les deux limites latérales sont infinies du même côté ($-\\infty$).\n\nGéométriquement : la courbe s'approche de la droite $x = 1$ en descendant indéfiniment des deux côtés."
+      ]
+    },
+    {
+      "type": "practice-box",
+      "statement": "**Exercice 4** : Limites en $\\pm\\infty$ et asymptotes horizontales\n\nSoit la fonction $f(x) = \\dfrac{-6x^5 + 2x^4 + 8x}{5x^3 + 2x^2 + 5x + 3}$ (fraction rationnelle)",
+      "listType": "numbered",
+      "content": [
+        "Déterminez le degré du numérateur et du dénominateur",
+        "Calculez $\\displaystyle\\lim_{x\\to +\\infty} f(x)$",
+        "Calculez $\\displaystyle\\lim_{x\\to -\\infty} f(x)$",
+        "Existe-t-il une asymptote horizontale ?"
+      ],
+      "solution": [
+        "**Numérateur** : $-6x^5 + 2x^4 + 8x$ est de degré **5**\n\n**Dénominateur** : $5x^3 + 2x^2 + 5x + 3$ est de degré **3**\n\nPuisque le degré du numérateur (5) est **supérieur** au degré du dénominateur (3), les limites aux infinités seront **infinies**.",
+        "**Application de la règle** :\n\nLa limite du quotient est la limite du rapport des termes de plus haut degré :\n\n$$\\lim_{x\\to +\\infty} f(x) = \\lim_{x\\to +\\infty} \\dfrac{-6x^5}{5x^3} = \\lim_{x\\to +\\infty} \\dfrac{-6}{5} x^2 = -\\dfrac{6}{5} \\times (+\\infty) = -\\infty$$",
+        "$$\\lim_{x\\to -\\infty} f(x) = \\lim_{x\\to -\\infty} \\dfrac{-6x^5}{5x^3} = \\lim_{x\\to -\\infty} -\\dfrac{6}{5} x^2$$\n\nQuand $x \\to -\\infty$, on a $x^2 \\to +\\infty$ (le carré rend positif), donc :\n\n$$\\lim_{x\\to -\\infty} f(x) = -\\dfrac{6}{5} \\times (+\\infty) = -\\infty$$",
+        "**Non**, il n'existe **pas d'asymptote horizontale**.\n\nPour qu'il existe une asymptote horizontale $y = l$, il faudrait que les limites aux infinités soient **finies** (égales à un nombre réel $l$).\n\nOr, ici les deux limites sont infinies. Cela signifie que la courbe **s'échappe vers l'infini** sans se stabiliser autour d'une droite horizontale."
+      ]
+    },
+    {
+      "type": "practice-box",
+      "statement": "**Exercice 5** : Application complète du théorème du gendarme\n\nSoit la fonction $f(x) = x^2 \\sin\\left(\\dfrac{1}{x}\\right)$ pour $x \\neq 0$",
+      "listType": "numbered",
+      "content": [
+        "Encadrez la fonction sinus par deux bornes constants",
+        "En déduisez un encadrement de $f(x)$",
+        "Appliquez le théorème du gendarme pour déterminer $\\displaystyle\\lim_{x\\to 0} f(x)$"
+      ],
+      "solution": [
+        "**Propriété du sinus** :\n\nPour tout réel $u$, le sinus est toujours borné :\n$$-1 \\leq \\sin u \\leq 1$$\n\nDonc : $-1 \\leq \\sin\\left(\\dfrac{1}{x}\\right) \\leq 1$",
+        "**Encadrement de $f(x)$** :\n\nEn multipliant l'inégalité par $x^2 \\geq 0$ (la multiplication ne change pas le sens car $x^2 > 0$) :\n\n$$-x^2 \\leq x^2 \\sin\\left(\\dfrac{1}{x}\\right) \\leq x^2$$\n\nDonc : $-x^2 \\leq f(x) \\leq x^2$",
+        "**Application du théorème du gendarme** :\n\nLes deux bornes tendent toutes les deux vers 0 :\n$$\\lim_{x\\to 0} (-x^2) = 0 \\text{ et } \\lim_{x\\to 0} x^2 = 0$$\n\nPar le théorème du gendarme, la fonction $f(x)$ prise en sandwich entre deux suites tendant vers 0 doit également tendre vers 0 :\n\n$$\\lim_{x\\to 0} f(x) = \\lim_{x\\to 0} x^2\\sin\\left(\\dfrac{1}{x}\\right) = 0$$\n\n**Interprétation** : Même si le sinus oscille indéfiniment entre $-1$ et $1$, le facteur $x^2$ qui tendvers 0 écrase ces oscillations à zéro."
+      ]
+    },
+    {
+      "type": "practice-box",
+      "statement": "**Exercice 6** : Limites trigonométriques sophistiquées\n\nDéterminez les limites suivantes en utilisant les limites remarquables :",
+      "listType": "numbered",
+      "content": [
+        "$\\displaystyle\\lim_{x\\to 0} \\dfrac{\\sin 7x}{\\tan 3x}$",
+        "$\\displaystyle\\lim_{x\\to 0} \\dfrac{1 - \\cos x}{x \\sin x}$",
+        "$\\displaystyle\\lim_{x\\to \\pi} \\dfrac{\\sin(x - \\pi)}{x - \\pi}$"
+      ],
+      "solution": [
+        "**Décomposition** :\n\n$$\\dfrac{\\sin 7x}{\\tan 3x} = \\dfrac{\\sin 7x}{\\dfrac{\\sin 3x}{\\cos 3x}} = \\dfrac{\\sin 7x \\cdot \\cos 3x}{\\sin 3x}$$\n\n**Réorganisation** :\n$$= \\dfrac{\\sin 7x}{7x} \\cdot \\dfrac{7x}{\\sin 3x} \\cdot \\dfrac{\\cos 3x}{1} = \\dfrac{\\sin 7x}{7x} \\cdot \\dfrac{7x}{3x} \\cdot \\dfrac{\\sin 3x}{3x} \\cdot \\dfrac{\\cos 3x}{1}$$\n\n**Simplification** :\n$$= \\dfrac{\\sin 7x}{7x} \\cdot \\dfrac{7}{3} \\cdot \\dfrac{3x}{\\sin 3x} \\cdot \\cos 3x$$\n\n**Utilisation des limites de référence** :\n>> - $\\displaystyle\\lim_{x\\to 0} \\dfrac{\\sin 7x}{7x} = 1$\n>> - $\\displaystyle\\lim_{x\\to 0} \\dfrac{3x}{\\sin 3x} = 1$\n>> - $\\displaystyle\\lim_{x\\to 0} \\cos 3x = 1$\n\n**Résultat** :\n$$\\lim_{x\\to 0} \\dfrac{\\sin 7x}{\\tan 3x} = 1 \\times \\dfrac{7}{3} \\times 1 \\times 1 = \\dfrac{7}{3}$$",
+        "**Factorisation intelligente** :\n\n$$\\dfrac{1 - \\cos x}{x \\sin x} = \\dfrac{1 - \\cos x}{x^2} \\times \\dfrac{x}{\\sin x}$$\n\n**Utilisation des limites remarquables** :\n>> - $\\displaystyle\\lim_{x\\to 0} \\dfrac{1 - \\cos x}{x^2} = \\dfrac{1}{2}$ (limite de référence)\n>> - $\\displaystyle\\lim_{x\\to 0} \\dfrac{x}{\\sin x} = 1$\n\n**Résultat** :\n$$\\lim_{x\\to 0} \\dfrac{1 - \\cos x}{x \\sin x} = \\dfrac{1}{2} \\times 1 = \\dfrac{1}{2}$$",
+        "**Changement de variable** :\n\nPosons $u = x - \\pi$, donc $x = u + \\pi$ et $u \\to 0$ quand $x \\to \\pi$.\n\n$$\\sin(x - \\pi) = \\sin(u)$$\n\nDonc :\n$$\\lim_{x\\to \\pi} \\dfrac{\\sin(x - \\pi)}{x - \\pi} = \\lim_{u\\to 0} \\dfrac{\\sin u}{u} = 1$$\n\nCette limite vaut 1, c'est la limite remarquable fondamentale."
       ]
     }
   ]

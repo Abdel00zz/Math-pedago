@@ -7,13 +7,19 @@
 
 @media (min-width: 768px) and (max-width: 1023px) {
   .lesson-experience__content {
-    margin-left: 220px;
+    /* remove left margin so content is flush with the left edge */
+    margin-left: 0;
   }
 }
 
 @media (min-width: 1024px) {
   .lesson-experience__content {
-    margin-right: 260px;
+    /* account for the right-side fixed navigator (width + gutter)
+       increase right margin so content is pushed further left and
+       is not covered by the fixed navigator */
+    margin-right: 380px;
+    /* remove left margin so content is flush with the left edge */
+    margin-left: 0;
   }
 }
 
@@ -531,6 +537,8 @@
   }
 
   .lesson-experience__content {
+    /* ensure content isn't hidden under the mobile navigator (fixed at top) */
+    padding-top: 5.25rem;
     padding-bottom: 2rem;
     margin-top: 0.5rem;
   }

@@ -8,15 +8,18 @@
   display: flex;
   flex-direction: column;
   gap: clamp(1.1rem, 2.4vw, 1.9rem);
-  padding: clamp(0.85rem, 1.8vw, 1.6rem) clamp(5.5rem, 6vw, 7rem) clamp(0.85rem, 1.8vw, 1.6rem) clamp(2rem, 3vw, 3rem);
-  max-width: 900px;
+  /* horizontal paddings reduced so canvas can be wider on large screens */
+  padding: clamp(0.85rem, 1.8vw, 1.6rem) clamp(3rem, 4vw, 4.5rem) clamp(0.85rem, 1.8vw, 1.6rem) clamp(1.25rem, 2vw, 2rem);
+  /* increase max width to allow wider lesson area */
+  max-width: 1200px;
   margin: 0 auto;
 }
 
 /* Mobile optimizations - Tablet */
 @media (max-width: 768px) {
   .lesson-canvas {
-    padding-left: clamp(4rem, 4.5vw, 5rem);
+    /* reduce the large left nav offset on tablet so content takes more width */
+    padding-left: clamp(2.5rem, 3vw, 3.5rem);
     padding-right: clamp(0.75rem, 1.5vw, 1.25rem);
   }
 
@@ -38,7 +41,8 @@
 /* Mobile optimizations - Small tablet */
 @media (max-width: 640px) {
   .lesson-canvas {
-    padding-left: clamp(3.75rem, 4vw, 4.5rem);
+    /* smaller left offset for small tablets/large phones */
+    padding-left: clamp(2rem, 2.6vw, 2.75rem);
     padding-right: 0.85rem;
     gap: clamp(1rem, 2vw, 1.5rem);
   }
@@ -71,7 +75,8 @@
 /* Mobile optimizations - Phone */
 @media (max-width: 480px) {
   .lesson-canvas {
-    padding-left: 3.2rem;
+    /* phone: keep a small left offset for navigator but much smaller */
+    padding-left: 1.6rem;
     padding-right: 0.65rem;
     padding-top: 0.65rem;
     padding-bottom: 0.65rem;
