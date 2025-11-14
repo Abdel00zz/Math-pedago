@@ -1,0 +1,292 @@
+{
+  "header": {
+    "title": "Trigonométrie - Formules de Transformation",
+    "subtitle": "Formules d'addition, de duplication, de linéarisation et de transformation",
+    "classe": "1ère Bac Sciences Mathématiques (SM)",
+    "chapter": "Chapitre 8",
+    "academicYear": "2025-2026"
+  },
+  "sections": [
+    {
+      "title": "Formules de Transformation de Base",
+      "subsections": [
+        {
+          "title": "Formules d'Addition",
+          "elements": [
+            {
+              "type": "p",
+              "content": "Les formules d'addition constituent les outils fondamentaux de la trigonométrie. Elles permettent de calculer les valeurs trigonométriques d'une somme ou d'une différence d'angles à partir des valeurs des angles individuels. Ces formules sont essentielles pour simplifier des expressions et résoudre des équations trigonométriques complexes. Maîtriser ces formules est la clé pour réussir en trigonométrie avancée."
+            },
+            {
+              "type": "theorem-box",
+              "preamble": "**Formules d'addition** :",
+              "content": "Soient $a$ et $b$ deux nombres réels. On a les formules suivantes :\n\n**Pour le cosinus** :\n$$\\cos(a - b) = \\cos a \\cdot \\cos b + \\sin a \\cdot \\sin b$$\n$$\\cos(a + b) = \\cos a \\cdot \\cos b - \\sin a \\cdot \\sin b$$\n\n**Pour le sinus** :\n$$\\sin(a - b) = \\sin a \\cdot \\cos b - \\cos a \\cdot \\sin b$$\n$$\\sin(a + b) = \\sin a \\cdot \\cos b + \\cos a \\cdot \\sin b$$"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Formules d'addition pour la tangente** :",
+              "content": "Soient $a$ et $b$ deux nombres réels tels que $\\tan a$ et $\\tan b$ existent, avec $a + b \\neq \\dfrac{\\pi}{2} + k\\pi$ et $a - b \\neq \\dfrac{\\pi}{2} + k\\pi$ où $k \\in \\mathbb{Z}$.\n\n$$\\tan(a + b) = \\dfrac{\\tan a + \\tan b}{1 - \\tan a \\cdot \\tan b}$$\n\n$$\\tan(a - b) = \\dfrac{\\tan a - \\tan b}{1 + \\tan a \\cdot \\tan b}$$"
+            },
+            {
+              "type": "remark-box",
+              "preamble": "**Astuces mnémotechniques** :",
+              "listType": "bullet",
+              "content": [
+                "**Pour le cosinus** : Dans $\\cos(a \\pm b)$, les fonctions sont identiques (cos·cos et sin·sin), avec le signe inversé pour la somme",
+                "",
+                "**Pour le sinus** : Dans $\\sin(a \\pm b)$, les fonctions sont croisées (sin·cos et cos·sin), avec le signe conservé",
+                "",
+                "**Pour la tangente** : Pour $\\tan(a + b)$, on additionne au numérateur et on soustrait au dénominateur (signe opposé)",
+                "",
+                "**Moyen de vérification** : On peut toujours vérifier avec des angles remarquables comme $\\dfrac{\\pi}{6}$, $\\dfrac{\\pi}{4}$, $\\dfrac{\\pi}{3}$"
+              ]
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Calcul avec décomposition d'angles remarquables**",
+              "content": "En remarquant que $\\dfrac{5\\pi}{12} = \\dfrac{2\\pi}{3} - \\dfrac{\\pi}{4}$, calculons $\\cos\\left(\\dfrac{5\\pi}{12}\\right)$ et $\\sin\\left(\\dfrac{5\\pi}{12}\\right)$.\n\n**Solution** :\n\n**Calcul de $\\cos\\left(\\dfrac{5\\pi}{12}\\right)$** :\n\nOn utilise : $\\cos(a - b) = \\cos a \\cdot \\cos b + \\sin a \\cdot \\sin b$\n\n$$\\cos\\left(\\dfrac{5\\pi}{12}\\right) = \\cos\\left(\\dfrac{2\\pi}{3} - \\dfrac{\\pi}{4}\\right)$$\n\n$$= \\cos\\left(\\dfrac{2\\pi}{3}\\right) \\cdot \\cos\\left(\\dfrac{\\pi}{4}\\right) + \\sin\\left(\\dfrac{2\\pi}{3}\\right) \\cdot \\sin\\left(\\dfrac{\\pi}{4}\\right)$$\n\n$$= ___-\\dfrac{1}{2}___ \\times ___\\dfrac{\\sqrt{2}}{2}___ + ___\\dfrac{\\sqrt{3}}{2}___ \\times ___\\dfrac{\\sqrt{2}}{2}___$$\n\n$$= \\dfrac{-\\sqrt{2} + \\sqrt{6}}{4} = ___\\dfrac{\\sqrt{6} - \\sqrt{2}}{4}___$$\n\n**Calcul de $\\sin\\left(\\dfrac{5\\pi}{12}\\right)$** :\n\nOn utilise : $\\sin(a - b) = \\sin a \\cdot \\cos b - \\cos a \\cdot \\sin b$\n\n$$\\sin\\left(\\dfrac{5\\pi}{12}\\right) = \\sin\\left(\\dfrac{2\\pi}{3}\\right) \\cdot \\cos\\left(\\dfrac{\\pi}{4}\\right) - \\cos\\left(\\dfrac{2\\pi}{3}\\right) \\cdot \\sin\\left(\\dfrac{\\pi}{4}\\right)$$\n\n$$= ___\\dfrac{\\sqrt{3}}{2}___ \\times ___\\dfrac{\\sqrt{2}}{2}___ - ___\\left(-\\dfrac{1}{2}\\right)___ \\times ___\\dfrac{\\sqrt{2}}{2}___$$\n\n$$= ___\\dfrac{\\sqrt{6} + \\sqrt{2}}{4}___$$\n\n**Réponse** : $\\cos\\left(\\dfrac{5\\pi}{12}\\right) = \\dfrac{\\sqrt{6} - \\sqrt{2}}{4}$ et $\\sin\\left(\\dfrac{5\\pi}{12}\\right) = \\dfrac{\\sqrt{6} + \\sqrt{2}}{4}$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Calcul de valeurs avec somme d'angles**",
+              "content": "Calculons $\\cos\\left(\\dfrac{11\\pi}{12}\\right)$ et $\\sin\\left(\\dfrac{11\\pi}{12}\\right)$ en remarquant que $\\dfrac{11\\pi}{12} = \\dfrac{2\\pi}{3} + \\dfrac{\\pi}{4}$.\n\n**Solution** :\n\n**Pour le cosinus** :\n\n$$\\cos\\left(\\dfrac{11\\pi}{12}\\right) = \\cos\\left(\\dfrac{2\\pi}{3} + \\dfrac{\\pi}{4}\\right)$$\n\n$$= \\cos\\left(\\dfrac{2\\pi}{3}\\right) \\cdot \\cos\\left(\\dfrac{\\pi}{4}\\right) - \\sin\\left(\\dfrac{2\\pi}{3}\\right) \\cdot \\sin\\left(\\dfrac{\\pi}{4}\\right)$$\n\n$$= ___-\\dfrac{1}{2}___ \\times ___\\dfrac{\\sqrt{2}}{2}___ - ___\\dfrac{\\sqrt{3}}{2}___ \\times ___\\dfrac{\\sqrt{2}}{2}___$$\n\n$$= ___-\\dfrac{\\sqrt{2} + \\sqrt{6}}{4}___$$\n\n**Pour le sinus** :\n\n$$\\sin\\left(\\dfrac{11\\pi}{12}\\right) = \\sin\\left(\\dfrac{2\\pi}{3}\\right) \\cdot \\cos\\left(\\dfrac{\\pi}{4}\\right) + \\cos\\left(\\dfrac{2\\pi}{3}\\right) \\cdot \\sin\\left(\\dfrac{\\pi}{4}\\right)$$\n\n$$= ___\\dfrac{\\sqrt{3}}{2}___ \\times ___\\dfrac{\\sqrt{2}}{2}___ + ___\\left(-\\dfrac{1}{2}\\right)___ \\times ___\\dfrac{\\sqrt{2}}{2}___$$\n\n$$= ___\\dfrac{\\sqrt{6} - \\sqrt{2}}{4}___$$\n\n**Vérification** : $\\cos^2\\left(\\dfrac{11\\pi}{12}\\right) + \\sin^2\\left(\\dfrac{11\\pi}{12}\\right) = 1$ ✓\n\n**Réponse** : $\\cos\\left(\\dfrac{11\\pi}{12}\\right) = -\\dfrac{\\sqrt{2} + \\sqrt{6}}{4}$ et $\\sin\\left(\\dfrac{11\\pi}{12}\\right) = \\dfrac{\\sqrt{6} - \\sqrt{2}}{4}$"
+            },
+            {
+              "type": "practice-box",
+              "statement": "**Calcul avec conditions sur les angles**\n\nSoit $a$ et $b$ deux angles tels que :\n\n$\\cos a = \\dfrac{3}{5}$ avec $a \\in ]0 ; \\dfrac{\\pi}{2}[$\n\n$\\sin b = \\dfrac{5}{13}$ avec $b \\in ]0 ; \\dfrac{\\pi}{2}[$",
+              "listType": "numbered",
+              "content": [
+                "Calculer $\\sin a$ et $\\cos b$",
+                "Calculer $\\cos(a + b)$, $\\sin(a + b)$ et $\\cos(a - b)$",
+                "En déduire $\\tan(a + b)$ et $\\tan(a - b)$",
+                "Déterminer un encadrement de $a + b$"
+              ],
+              "solution": [
+                "**Calcul de $\\sin a$** :\n\nOn utilise la relation fondamentale : $\\cos^2 a + \\sin^2 a = 1$\n\n$$\\sin^2 a = 1 - \\cos^2 a = 1 - \\left(\\dfrac{3}{5}\\right)^2 = 1 - \\dfrac{9}{25} = \\dfrac{16}{25}$$\n\nComme $a \\in ]0 ; \\dfrac{\\pi}{2}[$, on a $\\sin a > 0$, donc :\n\n$$\\sin a = \\sqrt{\\dfrac{16}{25}} = \\dfrac{4}{5}$$\n\n**Calcul de $\\cos b$** :\n\nDe même : $\\cos^2 b = 1 - \\sin^2 b = 1 - \\left(\\dfrac{5}{13}\\right)^2 = 1 - \\dfrac{25}{169} = \\dfrac{144}{169}$\n\nComme $b \\in ]0 ; \\dfrac{\\pi}{2}[$, on a $\\cos b > 0$, donc :\n\n$$\\cos b = \\sqrt{\\dfrac{144}{169}} = \\dfrac{12}{13}$$\n\n**Réponse** : $\\sin a = \\dfrac{4}{5}$ et $\\cos b = \\dfrac{12}{13}$",
+                "**Calcul de $\\cos(a + b)$** :\n\nOn utilise la formule : $\\cos(a + b) = \\cos a \\cdot \\cos b - \\sin a \\cdot \\sin b$\n\n$$\\cos(a + b) = \\dfrac{3}{5} \\times \\dfrac{12}{13} - \\dfrac{4}{5} \\times \\dfrac{5}{13}$$\n\n$$= \\dfrac{36}{65} - \\dfrac{20}{65} = \\dfrac{16}{65}$$\n\n**Calcul de $\\sin(a + b)$** :\n\nOn utilise : $\\sin(a + b) = \\sin a \\cdot \\cos b + \\cos a \\cdot \\sin b$\n\n$$\\sin(a + b) = \\dfrac{4}{5} \\times \\dfrac{12}{13} + \\dfrac{3}{5} \\times \\dfrac{5}{13}$$\n\n$$= \\dfrac{48}{65} + \\dfrac{15}{65} = \\dfrac{63}{65}$$\n\n**Calcul de $\\cos(a - b)$** :\n\nOn utilise : $\\cos(a - b) = \\cos a \\cdot \\cos b + \\sin a \\cdot \\sin b$\n\n$$\\cos(a - b) = \\dfrac{3}{5} \\times \\dfrac{12}{13} + \\dfrac{4}{5} \\times \\dfrac{5}{13}$$\n\n$$= \\dfrac{36}{65} + \\dfrac{20}{65} = \\dfrac{56}{65}$$\n\n**Réponse** : $\\cos(a + b) = \\dfrac{16}{65}$, $\\sin(a + b) = \\dfrac{63}{65}$ et $\\cos(a - b) = \\dfrac{56}{65}$",
+                "**Calcul de $\\tan(a + b)$** :\n\n$$\\tan(a + b) = \\dfrac{\\sin(a + b)}{\\cos(a + b)} = \\dfrac{\\frac{63}{65}}{\\frac{16}{65}} = \\dfrac{63}{16}$$\n\n**Calcul de $\\tan(a - b)$** :\n\nCalculons d'abord $\\sin(a - b)$ :\n\n$$\\sin(a - b) = \\sin a \\cdot \\cos b - \\cos a \\cdot \\sin b = \\dfrac{4}{5} \\times \\dfrac{12}{13} - \\dfrac{3}{5} \\times \\dfrac{5}{13} = \\dfrac{48 - 15}{65} = \\dfrac{33}{65}$$\n\n$$\\tan(a - b) = \\dfrac{\\sin(a - b)}{\\cos(a - b)} = \\dfrac{\\frac{33}{65}}{\\frac{56}{65}} = \\dfrac{33}{56}$$\n\n**Réponse** : $\\tan(a + b) = \\dfrac{63}{16}$ et $\\tan(a - b) = \\dfrac{33}{56}$",
+                "**Encadrement de $a + b$** :\n\nOn sait que $a \\in ]0 ; \\dfrac{\\pi}{2}[$ et $b \\in ]0 ; \\dfrac{\\pi}{2}[$\n\nDonc : $a + b \\in ]0 ; \\pi[$\n\nDe plus, $\\cos(a + b) = \\dfrac{16}{65} > 0$ et $\\sin(a + b) = \\dfrac{63}{65} > 0$\n\nCela signifie que $a + b$ est dans le premier quadrant : $a + b \\in ]0 ; \\dfrac{\\pi}{2}[$\n\n**Réponse** : $a + b \\in ]\\dfrac{\\pi}{3} ; \\dfrac{\\pi}{2}[$"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Formules de Duplication",
+          "elements": [
+            {
+              "type": "p",
+              "content": "Les formules de duplication, également appelées formules de l'angle double, permettent d'exprimer les fonctions trigonométriques de $2a$ en fonction des fonctions trigonométriques de $a$. Ces formules sont obtenues comme cas particuliers des formules d'addition en posant $b = a$. Elles sont fondamentales pour simplifier des expressions, résoudre des équations trigonométriques et effectuer des calculs d'intégrales."
+            },
+            {
+              "type": "theorem-box",
+              "preamble": "**Formules de duplication** :",
+              "content": "Soit $a$ un nombre réel. On a les formules suivantes :\n\n**Pour le cosinus** (trois formes équivalentes) :\n$$\\cos(2a) = \\cos^2 a - \\sin^2 a$$\n$$\\cos(2a) = 2\\cos^2 a - 1$$\n$$\\cos(2a) = 1 - 2\\sin^2 a$$\n\n**Pour le sinus** :\n$$\\sin(2a) = 2\\sin a \\cdot \\cos a$$\n\n**Pour la tangente** (si $\\tan a$ existe et $a \\neq \\dfrac{\\pi}{4} + k\\dfrac{\\pi}{2}$, $k \\in \\mathbb{Z}$) :\n$$\\tan(2a) = \\dfrac{2\\tan a}{1 - \\tan^2 a}$$"
+            },
+            {
+              "type": "remark-box",
+              "preamble": "**Choix de la forme appropriée** :",
+              "listType": "bullet",
+              "content": [
+                "Les trois formes de $\\cos(2a)$ sont équivalentes et découlent de $\\cos^2 a + \\sin^2 a = 1$",
+                "",
+                "**Utiliser $\\cos(2a) = 2\\cos^2 a - 1$** quand on connaît uniquement $\\cos a$",
+                "",
+                "**Utiliser $\\cos(2a) = 1 - 2\\sin^2 a$** quand on connaît uniquement $\\sin a$",
+                "",
+                "La formule $\\sin(2a) = 2\\sin a \\cos a$ est unique et très pratique"
+              ]
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Calcul avec valeur donnée de cosinus**",
+              "content": "Soit $x$ un réel tel que $\\cos x = \\dfrac{1}{3}$ avec $x \\in ]0 ; \\dfrac{\\pi}{2}[$. Calculons $\\cos(2x)$, $\\sin(2x)$ et $\\tan(2x)$.\n\n**Solution** :\n\n**Étape 1** : Calcul de $\\sin x$\n\n$$\\sin^2 x = 1 - \\cos^2 x = 1 - \\left(\\dfrac{1}{3}\\right)^2 = 1 - ___\\dfrac{1}{9}___ = ___\\dfrac{8}{9}___$$\n\nComme $x \\in ]0 ; \\dfrac{\\pi}{2}[$, on a $\\sin x > 0$, donc :\n\n$$\\sin x = \\sqrt{\\dfrac{8}{9}} = ___\\dfrac{2\\sqrt{2}}{3}___$$\n\n**Étape 2** : Calcul de $\\cos(2x)$\n\nUtilisons $\\cos(2x) = 2\\cos^2 x - 1$ :\n\n$$\\cos(2x) = 2 \\times \\left(___\\dfrac{1}{3}___\\right)^2 - 1 = 2 \\times ___\\dfrac{1}{9}___ - 1 = ___-\\dfrac{7}{9}___$$\n\n**Étape 3** : Calcul de $\\sin(2x)$\n\nUtilisons $\\sin(2x) = 2\\sin x \\cos x$ :\n\n$$\\sin(2x) = 2 \\times ___\\dfrac{2\\sqrt{2}}{3}___ \\times ___\\dfrac{1}{3}___ = ___\\dfrac{4\\sqrt{2}}{9}___$$\n\n**Étape 4** : Calcul de $\\tan(2x)$\n\n$$\\tan(2x) = \\dfrac{\\sin(2x)}{\\cos(2x)} = \\dfrac{\\frac{4\\sqrt{2}}{9}}{-\\frac{7}{9}} = ___-\\dfrac{4\\sqrt{2}}{7}___$$\n\n**Réponse** : $\\cos(2x) = -\\dfrac{7}{9}$, $\\sin(2x) = \\dfrac{4\\sqrt{2}}{9}$ et $\\tan(2x) = -\\dfrac{4\\sqrt{2}}{7}$"
+            }
+          ]
+        },
+        {
+          "title": "Formules de Linéarisation",
+          "elements": [
+            {
+              "type": "p",
+              "content": "Les formules de linéarisation permettent de transformer des puissances ou des produits de fonctions trigonométriques en sommes de fonctions trigonométriques simples. Ces formules sont obtenues à partir des formules de duplication et sont particulièrement utiles pour le calcul intégral et la simplification d'expressions complexes."
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Formules de linéarisation fondamentales** :",
+              "content": "Soit $a$ un nombre réel.\n\n**Pour les carrés** :\n\n$$\\cos^2 a = \\dfrac{1 + \\cos(2a)}{2}$$\n\n$$\\sin^2 a = \\dfrac{1 - \\cos(2a)}{2}$$\n\n**Pour le produit $\\sin \\cos$** :\n\n$$\\sin a \\cdot \\cos a = \\dfrac{\\sin(2a)}{2}$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Linéarisation d'une puissance quatrième**",
+              "content": "Linéarisons l'expression $f(x) = \\cos^4 x$ pour tout $x \\in \\mathbb{R}$.\n\n**Solution** :\n\nOn utilise : $\\cos^2 x = \\dfrac{1 + \\cos(2x)}{2}$\n\n$$\\cos^4 x = (\\cos^2 x)^2 = \\left(___\\dfrac{1 + \\cos(2x)}{2}___\\right)^2$$\n\nDéveloppons :\n\n$$= \\dfrac{(1 + \\cos(2x))^2}{4} = \\dfrac{1 + 2\\cos(2x) + \\cos^2(2x)}{4}$$\n\nLinéarisons $\\cos^2(2x)$ :\n\n$$\\cos^2(2x) = \\dfrac{1 + \\cos(4x)}{2}$$\n\nDonc :\n\n$$\\cos^4 x = \\dfrac{1 + 2\\cos(2x) + \\frac{1 + \\cos(4x)}{2}}{4}$$\n\n$$= \\dfrac{2 + 4\\cos(2x) + 1 + \\cos(4x)}{8}$$\n\n$$= \\dfrac{___3___ + ___4\\cos(2x)___ + ___\\cos(4x)___}{8}$$\n\n**Réponse** : $\\cos^4 x = \\dfrac{3 + 4\\cos(2x) + \\cos(4x)}{8}$"
+            },
+            {
+              "type": "practice-box",
+              "statement": "**Linéarisation et calculs**\n\nSoit $x \\in \\mathbb{R}$.",
+              "listType": "numbered",
+              "content": [
+                "Linéariser $\\sin^2 x$",
+                "Montrer que $\\sin^3 x = \\dfrac{3\\sin x - \\sin(3x)}{4}$",
+                "Linéariser $\\sin^2 x \\cos^2 x$"
+              ],
+              "solution": [
+                "**Linéarisation de $\\sin^2 x$** :\n\nOn applique directement : $$\\sin^2 x = \\dfrac{1 - \\cos(2x)}{2}$$\n\n**Réponse** : $\\sin^2 x = \\dfrac{1 - \\cos(2x)}{2}$",
+                "**Démonstration** :\n\nPartons de $\\sin(3x) = \\sin(2x + x)$ :\n\n$$\\sin(3x) = \\sin(2x)\\cos x + \\cos(2x)\\sin x$$\n\n$$= 2\\sin x \\cos^2 x + (1 - 2\\sin^2 x)\\sin x$$\n\n$$= 2\\sin x(1 - \\sin^2 x) + \\sin x - 2\\sin^3 x$$\n\n$$= 3\\sin x - 4\\sin^3 x$$\n\nDonc : $$\\sin^3 x = \\dfrac{3\\sin x - \\sin(3x)}{4}$$\n\n**Réponse** : Démontré",
+                "**Linéarisation de $\\sin^2 x \\cos^2 x$** :\n\nOn utilise $\\sin x \\cos x = \\dfrac{\\sin(2x)}{2}$ :\n\n$$\\sin^2 x \\cos^2 x = (\\sin x \\cos x)^2 = \\left(\\dfrac{\\sin(2x)}{2}\\right)^2 = \\dfrac{\\sin^2(2x)}{4}$$\n\nLinéarisons $\\sin^2(2x)$ :\n\n$$\\sin^2(2x) = \\dfrac{1 - \\cos(4x)}{2}$$\n\nDonc : $$\\sin^2 x \\cos^2 x = \\dfrac{1}{4} \\times \\dfrac{1 - \\cos(4x)}{2} = \\dfrac{1 - \\cos(4x)}{8}$$\n\n**Réponse** : $\\sin^2 x \\cos^2 x = \\dfrac{1 - \\cos(4x)}{8}$"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Formules en Fonction de tan(a/2)",
+          "elements": [
+            {
+              "type": "p",
+              "content": "Ces formules remarquables permettent d'exprimer $\\cos a$, $\\sin a$ et $\\tan a$ en fonction de la tangente de l'angle moitié. En posant $t = \\tan\\left(\\dfrac{a}{2}\\right)$, on peut transformer toute expression trigonométrique en une expression rationnelle en $t$, ce qui est très utile pour résoudre certaines équations."
+            },
+            {
+              "type": "theorem-box",
+              "preamble": "**Formules en fonction de $\\tan\\left(\\dfrac{a}{2}\\right)$** :",
+              "content": "Soit $a$ tel que $\\tan\\left(\\dfrac{a}{2}\\right)$ existe et $a \\neq \\pi + 2k\\pi$ pour tout $k \\in \\mathbb{Z}$.\n\nOn pose : $t = \\tan\\left(\\dfrac{a}{2}\\right)$\n\nAlors :\n\n$$\\cos a = \\dfrac{1 - t^2}{1 + t^2}$$\n\n$$\\sin a = \\dfrac{2t}{1 + t^2}$$\n\n$$\\tan a = \\dfrac{2t}{1 - t^2} \\quad \\text{(si } t \\neq \\pm 1\\text{)}$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Application des formules avec $\\tan\\left(\\dfrac{a}{2}\\right)$**",
+              "content": "Soit $\\tan\\left(\\dfrac{a}{2}\\right) = 2$. Calculons $\\cos a$, $\\sin a$ et $\\tan a$.\n\n**Solution** :\n\nOn pose $t = \\tan\\left(\\dfrac{a}{2}\\right) = ___2___$\n\n**Calcul de $\\cos a$** :\n\n$$\\cos a = \\dfrac{1 - t^2}{1 + t^2} = \\dfrac{1 - ___4___}{1 + ___4___} = \\dfrac{___-3___}{___5___} = ___-\\dfrac{3}{5}___$$\n\n**Calcul de $\\sin a$** :\n\n$$\\sin a = \\dfrac{2t}{1 + t^2} = \\dfrac{2 \\times ___2___}{1 + ___4___} = \\dfrac{___4___}{___5___}$$\n\n**Calcul de $\\tan a$** :\n\n$$\\tan a = \\dfrac{2t}{1 - t^2} = \\dfrac{2 \\times ___2___}{1 - ___4___} = \\dfrac{___4___}{___-3___} = ___-\\dfrac{4}{3}___$$\n\n**Vérification** : $\\tan a = \\dfrac{\\sin a}{\\cos a} = \\dfrac{4/5}{-3/5} = -\\dfrac{4}{3}$ ✓\n\n**Réponse** : $\\cos a = -\\dfrac{3}{5}$, $\\sin a = \\dfrac{4}{5}$ et $\\tan a = -\\dfrac{4}{3}$"
+            },
+            {
+              "type": "practice-box",
+              "statement": "**Utilisation des formules**\n\nSoit $x$ tel que $\\tan\\left(\\dfrac{x}{2}\\right) = -\\dfrac{1}{2}$ avec $x \\in ]\\pi ; 2\\pi[$.",
+              "listType": "numbered",
+              "content": [
+                "Calculer $\\cos x$, $\\sin x$ et $\\tan x$",
+                "Vérifier que $x \\in ]\\pi ; 2\\pi[$",
+                "Calculer $\\cos(2x)$ et $\\sin(2x)$"
+              ],
+              "solution": [
+                "On pose $t = -\\dfrac{1}{2}$\n\n**Calcul de $\\cos x$** :\n$$\\cos x = \\dfrac{1 - t^2}{1 + t^2} = \\dfrac{1 - \\frac{1}{4}}{1 + \\frac{1}{4}} = \\dfrac{\\frac{3}{4}}{\\frac{5}{4}} = \\dfrac{3}{5}$$\n\n**Calcul de $\\sin x$** :\n$$\\sin x = \\dfrac{2t}{1 + t^2} = \\dfrac{2 \\times (-\\frac{1}{2})}{\\frac{5}{4}} = \\dfrac{-1}{\\frac{5}{4}} = -\\dfrac{4}{5}$$\n\n**Calcul de $\\tan x$** :\n$$\\tan x = \\dfrac{2t}{1 - t^2} = \\dfrac{-1}{\\frac{3}{4}} = -\\dfrac{4}{3}$$\n\n**Réponse** : $\\cos x = \\dfrac{3}{5}$, $\\sin x = -\\dfrac{4}{5}$ et $\\tan x = -\\dfrac{4}{3}$",
+                "Puisque $\\cos x > 0$ et $\\sin x < 0$, on a $x$ dans le quatrième quadrant.\n\nDonc : $x \\in ]\\dfrac{3\\pi}{2} ; 2\\pi[ \\subset ]\\pi ; 2\\pi[$\n\n**Réponse** : Vérifié",
+                "**Calcul de $\\cos(2x)$** :\n$$\\cos(2x) = 2\\cos^2 x - 1 = 2 \\times \\left(\\dfrac{3}{5}\\right)^2 - 1 = \\dfrac{18}{25} - 1 = -\\dfrac{7}{25}$$\n\n**Calcul de $\\sin(2x)$** :\n$$\\sin(2x) = 2\\sin x \\cos x = 2 \\times \\left(-\\dfrac{4}{5}\\right) \\times \\dfrac{3}{5} = -\\dfrac{24}{25}$$\n\n**Réponse** : $\\cos(2x) = -\\dfrac{7}{25}$ et $\\sin(2x) = -\\dfrac{24}{25}$"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Transformation de Sommes en Produits",
+      "subsections": [
+        {
+          "title": "Formules de Transformation Somme → Produit",
+          "elements": [
+            {
+              "type": "p",
+              "content": "Les formules de transformation de sommes en produits permettent de factoriser des sommes ou différences de fonctions trigonométriques en produits. Ces formules sont essentielles pour résoudre des équations trigonométriques, car elles permettent de transformer une somme nulle en un produit nul."
+            },
+            {
+              "type": "theorem-box",
+              "preamble": "**Formules de transformation somme → produit** :",
+              "content": "Soient $p$ et $q$ deux nombres réels. On a :\n\n$$\\cos p + \\cos q = 2\\cos\\left(\\dfrac{p + q}{2}\\right) \\cdot \\cos\\left(\\dfrac{p - q}{2}\\right)$$\n\n$$\\cos p - \\cos q = -2\\sin\\left(\\dfrac{p + q}{2}\\right) \\cdot \\sin\\left(\\dfrac{p - q}{2}\\right)$$\n\n$$\\sin p + \\sin q = 2\\sin\\left(\\dfrac{p + q}{2}\\right) \\cdot \\cos\\left(\\dfrac{p - q}{2}\\right)$$\n\n$$\\sin p - \\sin q = 2\\cos\\left(\\dfrac{p + q}{2}\\right) \\cdot \\sin\\left(\\dfrac{p - q}{2}\\right)$$"
+            },
+            {
+              "type": "remark-box",
+              "preamble": "**Astuces pour retenir** :",
+              "listType": "bullet",
+              "content": [
+                "Le facteur **2** apparaît toujours devant le produit",
+                "",
+                "On utilise toujours $\\dfrac{p + q}{2}$ (demi-somme) et $\\dfrac{p - q}{2}$ (demi-différence)",
+                "",
+                "Pour **cos + cos** : on obtient **cos · cos**",
+                "",
+                "Pour **cos - cos** : on obtient **-sin · sin** (signe négatif !)",
+                "",
+                "Pour **sin + sin** : on obtient **sin · cos**",
+                "",
+                "Pour **sin - sin** : on obtient **cos · sin**"
+              ]
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Factorisation de sommes trigonométriques**",
+              "content": "Écrivons sous forme de produit les sommes suivantes.\n\n**a)** $\\cos(5x) + \\cos(3x)$\n\nOn a $p = ___5x___$ et $q = ___3x___$\n\n$$\\dfrac{p + q}{2} = \\dfrac{5x + 3x}{2} = ___4x___$$\n\n$$\\dfrac{p - q}{2} = \\dfrac{5x - 3x}{2} = ___x___$$\n\nDonc : $$\\cos(5x) + \\cos(3x) = 2\\cos(___4x___) \\cdot \\cos(___x___)$$\n\n**b)** $\\sin(7x) - \\sin(3x)$\n\n$$\\dfrac{p + q}{2} = ___5x___ \\quad \\text{et} \\quad \\dfrac{p - q}{2} = ___2x___$$\n\nDonc : $$\\sin(7x) - \\sin(3x) = 2\\cos(___5x___) \\cdot \\sin(___2x___)$$"
+            },
+            {
+              "type": "practice-box",
+              "statement": "**Résolution d'équations avec factorisation**",
+              "listType": "numbered",
+              "content": [
+                "Écrire sous forme de produit $E(x) = \\sin(5x) + \\sin(x)$",
+                "En déduire les solutions dans $\\mathbb{R}$ de $\\sin(5x) + \\sin(x) = 0$",
+                "Résoudre dans $[0 ; 2\\pi]$ l'inéquation : $\\sin(5x) + \\sin(x) \\geq 0$"
+              ],
+              "solution": [
+                "**Factorisation** :\n\nAvec $p = 5x$ et $q = x$ :\n\n$$\\dfrac{p + q}{2} = 3x \\quad \\text{et} \\quad \\dfrac{p - q}{2} = 2x$$\n\nDonc : $$E(x) = 2\\sin(3x) \\cdot \\cos(2x)$$\n\n**Réponse** : $E(x) = 2\\sin(3x) \\cos(2x)$",
+                "**Résolution** :\n\n$$2\\sin(3x) \\cos(2x) = 0$$\n\n**Cas 1** : $\\sin(3x) = 0 \\Rightarrow 3x = k\\pi \\Rightarrow x = \\dfrac{k\\pi}{3}$\n\n**Cas 2** : $\\cos(2x) = 0 \\Rightarrow 2x = \\dfrac{\\pi}{2} + k\\pi \\Rightarrow x = \\dfrac{\\pi}{4} + \\dfrac{k\\pi}{2}$\n\n**Réponse** : $S = \\left\\{\\dfrac{k\\pi}{3} : k \\in \\mathbb{Z}\\right\\} \\cup \\left\\{\\dfrac{\\pi}{4} + \\dfrac{k\\pi}{2} : k \\in \\mathbb{Z}\\right\\}$",
+                "**Résolution de l'inéquation** :\n\nOn doit avoir : $\\sin(3x) \\cos(2x) \\geq 0$\n\nÉtude du signe sur $[0 ; 2\\pi]$ :\n\n$\\sin(3x) = 0$ pour $x = 0, \\dfrac{\\pi}{3}, \\dfrac{2\\pi}{3}, \\pi, \\dfrac{4\\pi}{3}, \\dfrac{5\\pi}{3}, 2\\pi$\n\n$\\cos(2x) = 0$ pour $x = \\dfrac{\\pi}{4}, \\dfrac{3\\pi}{4}, \\dfrac{5\\pi}{4}, \\dfrac{7\\pi}{4}$\n\nAprès étude du tableau de signes :\n\n**Réponse** : $S = [0 ; \\dfrac{\\pi}{4}] \\cup [\\dfrac{\\pi}{3} ; \\dfrac{2\\pi}{3}] \\cup [\\dfrac{3\\pi}{4} ; \\pi] \\cup [\\dfrac{5\\pi}{4} ; \\dfrac{4\\pi}{3}] \\cup [\\dfrac{5\\pi}{3} ; \\dfrac{7\\pi}{4}] \\cup \\{2\\pi\\}$"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Transformation de l'Expression a·cos(x) + b·sin(x)",
+      "subsections": [
+        {
+          "title": "Forme Canonique Trigonométrique",
+          "elements": [
+            {
+              "type": "p",
+              "content": "La transformation de l'expression $a\\cos(x) + b\\sin(x)$ en une forme factorisée unique permet de ramener une combinaison linéaire de cosinus et sinus à une seule fonction trigonométrique. Cette technique est très utile pour résoudre des équations et inéquations trigonométriques, et pour déterminer les extrema d'une fonction."
+            },
+            {
+              "type": "theorem-box",
+              "preamble": "**Théorème de transformation** :",
+              "content": "Soient $a$ et $b$ deux réels tels que $(a, b) \\neq (0, 0)$.\n\nIl existe un réel $\\varphi$ (appelé **phase**) tel que pour tout $x \\in \\mathbb{R}$ :\n\n$$a\\cos(x) + b\\sin(x) = R \\cdot \\cos(x - \\varphi)$$\n\navec :\n\n$$R = \\sqrt{a^2 + b^2} \\quad \\text{(module)}$$\n\net :\n\n$$\\cos \\varphi = \\dfrac{a}{R} \\quad \\text{et} \\quad \\sin \\varphi = \\dfrac{b}{R}$$"
+            },
+            {
+              "type": "remark-box",
+              "preamble": "**Remarques importantes** :",
+              "listType": "bullet",
+              "content": [
+                "Le module $R = \\sqrt{a^2 + b^2}$ est toujours strictement positif",
+                "",
+                "La fonction $f(x) = a\\cos(x) + b\\sin(x)$ admet un **maximum** égal à $R$ et un **minimum** égal à $-R$",
+                "",
+                "Cette forme est très utile pour résoudre $a\\cos(x) + b\\sin(x) = c$",
+                "",
+                "En physique, cette transformation correspond au passage d'une somme d'ondes à une onde unique"
+              ]
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Transformation de somme simple**",
+              "content": "Mettons $f(x) = \\cos(x) + \\sin(x)$ sous forme de $R\\cos(x - \\varphi)$.\n\n**Solution** :\n\nOn a $a = ___1___$ et $b = ___1___$\n\n**Étape 1** : Calcul du module\n\n$$R = \\sqrt{___1___^2 + ___1___^2} = \\sqrt{___2___}$$\n\n**Étape 2** : Détermination de $\\varphi$\n\n$$\\cos \\varphi = \\dfrac{1}{___\\sqrt{2}___} = ___\\dfrac{\\sqrt{2}}{2}___$$\n\n$$\\sin \\varphi = \\dfrac{1}{___\\sqrt{2}___} = ___\\dfrac{\\sqrt{2}}{2}___$$\n\nOn reconnaît $\\varphi = ___\\dfrac{\\pi}{4}___$\n\n**Résultat** :\n\n$$\\cos(x) + \\sin(x) = ___\\sqrt{2}___ \\cdot \\cos\\left(x - ___\\dfrac{\\pi}{4}___\\right)$$\n\n**Vérification** (pour $x = 0$) :\n\n$\\cos(0) + \\sin(0) = 1$\n\n$\\sqrt{2} \\cos\\left(-\\dfrac{\\pi}{4}\\right) = \\sqrt{2} \\times \\dfrac{\\sqrt{2}}{2} = 1$ ✓\n\n**Réponse** : $\\cos(x) + \\sin(x) = \\sqrt{2}\\cos\\left(x - \\dfrac{\\pi}{4}\\right)$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Transformation avec coefficients particuliers**",
+              "content": "Transformons $g(x) = \\sqrt{3}\\cos(x) - \\sin(x)$.\n\n**Solution** :\n\nOn a $a = ___\\sqrt{3}___$ et $b = ___-1___$\n\n$$R = \\sqrt{(___\\sqrt{3}___)^2 + (___-1___)^2} = \\sqrt{___3___ + ___1___} = ___2___$$\n\n$$\\cos \\varphi = \\dfrac{\\sqrt{3}}{___2___} \\quad \\text{et} \\quad \\sin \\varphi = \\dfrac{-1}{___2___}$$\n\nPuisque $\\cos \\varphi > 0$ et $\\sin \\varphi < 0$, on a $\\varphi$ dans le 4ème quadrant.\n\nOn reconnaît : $\\varphi = -\\dfrac{\\pi}{6}$\n\n**Résultat** :\n\n$$\\sqrt{3}\\cos(x) - \\sin(x) = 2\\cos\\left(x + \\dfrac{\\pi}{6}\\right)$$\n\n**Réponse** : $g(x) = 2\\cos\\left(x + \\dfrac{\\pi}{6}\\right)$"
+            },
+            {
+              "type": "practice-box",
+              "statement": "**Transformation et résolution**\n\nSoit $E(x) = \\cos(x) + \\sqrt{3}\\sin(x)$.",
+              "listType": "numbered",
+              "content": [
+                "Montrer que $E(x) = 2\\cos\\left(x - \\dfrac{\\pi}{3}\\right)$",
+                "Résoudre dans $\\mathbb{R}$ : $\\cos(x) + \\sqrt{3}\\sin(x) = 1$",
+                "Résoudre dans $[0 ; 2\\pi]$ : $\\cos(x) + \\sqrt{3}\\sin(x) \\geq \\sqrt{3}$"
+              ],
+              "solution": [
+                "**Transformation** :\n\n$a = 1$, $b = \\sqrt{3}$\n\n$$R = \\sqrt{1 + 3} = 2$$\n\n$$\\cos \\varphi = \\dfrac{1}{2}, \\quad \\sin \\varphi = \\dfrac{\\sqrt{3}}{2}$$\n\nDonc $\\varphi = \\dfrac{\\pi}{3}$\n\n$$E(x) = 2\\cos\\left(x - \\dfrac{\\pi}{3}\\right)$$\n\n**Réponse** : Démontré",
+                "**Résolution** :\n\n$$2\\cos\\left(x - \\dfrac{\\pi}{3}\\right) = 1$$\n\n$$\\cos\\left(x - \\dfrac{\\pi}{3}\\right) = \\dfrac{1}{2}$$\n\nSolutions : $x - \\dfrac{\\pi}{3} = \\pm \\dfrac{\\pi}{3} + 2k\\pi$\n\n**Cas 1** : $x = \\dfrac{2\\pi}{3} + 2k\\pi$\n\n**Cas 2** : $x = 2k\\pi$\n\n**Réponse** : $S = \\{2k\\pi : k \\in \\mathbb{Z}\\} \\cup \\left\\{\\dfrac{2\\pi}{3} + 2k\\pi : k \\in \\mathbb{Z}\\right\\}$",
+                "**Inéquation** :\n\n$$2\\cos\\left(x - \\dfrac{\\pi}{3}\\right) \\geq \\sqrt{3}$$\n\n$$\\cos\\left(x - \\dfrac{\\pi}{3}\\right) \\geq \\dfrac{\\sqrt{3}}{2}$$\n\nDans $[0 ; 2\\pi]$, pour $x - \\dfrac{\\pi}{3} \\in \\left[-\\dfrac{\\pi}{3} ; \\dfrac{5\\pi}{3}\\right]$ :\n\nSolution : $x - \\dfrac{\\pi}{3} \\in \\left[-\\dfrac{\\pi}{6} ; \\dfrac{\\pi}{6}\\right]$\n\nDonc : $x \\in \\left[\\dfrac{\\pi}{6} ; \\dfrac{\\pi}{2}\\right]$\n\n**Réponse** : $S = \\left[\\dfrac{\\pi}{6} ; \\dfrac{\\pi}{2}\\right]$"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

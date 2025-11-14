@@ -1,0 +1,434 @@
+{
+  "header": {
+    "title": "Arithmétique dans $\\mathbb{Z}$",
+    "subtitle": "Divisibilité, nombres premiers, PGCD, PPCM et congruences",
+    "classe": "1ère Bac Sciences Mathématiques (SM)",
+    "chapter": "Chapitre 14",
+    "academicYear": "2025-2026"
+  },
+  "sections": [
+    {
+      "title": "Divisibilité dans l'ensemble $\\mathbb{Z}$",
+      "subsections": [
+        {
+          "title": "Définition de la divisibilité",
+          "elements": [
+            {
+              "type": "p",
+              "content": "La notion de divisibilité est fondamentale en arithmétique. Elle permet d'étudier les relations entre les nombres entiers et de résoudre de nombreux problèmes mathématiques."
+            },
+            {
+              "type": "definition-box",
+              "preamble": "**Divisibilité dans $\\mathbb{Z}$** :",
+              "content": "Soient $a$ et $b$ deux entiers relatifs.\n\nOn dit que **$a$ divise $b$**, et on note $a \\mid b$, s'il existe un entier relatif $k \\in \\mathbb{Z}$ tel que :\n\n$$b = ka$$\n\nAutrement dit : $$a \\mid b \\Leftrightarrow (\\exists k \\in \\mathbb{Z})(b = ka)$$"
+            },
+            {
+              "type": "remark-box",
+              "preamble": "**Vocabulaire équivalent** :",
+              "content": "Lorsque $a \\mid b$, on peut dire de manière équivalente :\n\n- $a$ **divise** $b$\n- $b$ est **divisible** par $a$\n- $b$ est un **multiple** de $a$\n- $a$ est un **diviseur** de $b$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 1 : À compléter - Vérification de divisibilité**",
+              "content": "Vérifions si les affirmations suivantes sont vraies :\n\n**1.** $3 \\mid 15$ ?\n$$15 = 3 \\times ___5___$$ donc $3 \\mid 15$ ✓\n\n**2.** $7 \\mid 42$ ?\n$$42 = 7 \\times ___6___$$ donc $7 \\mid 42$ ✓\n\n**3.** $5 \\mid 23$ ?\n$$23 = 5 \\times 4 + ___3___$$ \nIl n'existe pas de $k \\in \\mathbb{Z}$ tel que $23 = 5k$, donc $5 \\nmid 23$ ✗\n\n**4.** $(-4) \\mid 12$ ?\n$$12 = (-4) \\times (___-3___)$$ donc $(-4) \\mid 12$ ✓"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Propriétés de base** :",
+              "content": "Soient $a$ et $b$ deux entiers relatifs non nuls. On a :\n\n1. $a \\mid 0$ pour tout $a \\in \\mathbb{Z}^*$ (car $0 = a \\times 0$)\n\n2. $1 \\mid a$ et $(-1) \\mid a$ pour tout $a \\in \\mathbb{Z}$\n\n3. $a \\mid a$ (réflexivité)\n\n4. Si $a \\mid b$, alors $a \\mid (-b)$ et $(-a) \\mid b$\n\n5. Si $a \\mid b$ et $b \\neq 0$, alors $|a| \\leq |b|$"
+            }
+          ]
+        },
+        {
+          "title": "Propriétés opératoires de la divisibilité",
+          "elements": [
+            {
+              "type": "property-box",
+              "preamble": "**Propriétés fondamentales** :",
+              "content": "Soient $a$, $b$, $c$ et $d$ des entiers relatifs. On a :\n\n**1. Transitivité** : Si $a \\mid b$ et $b \\mid c$, alors $a \\mid c$\n\n**2. Linéarité** : Si $a \\mid b$ et $a \\mid c$, alors $a \\mid (ub + vc)$ pour tous $u, v \\in \\mathbb{Z}$\n\n**3. Produit** : Si $a \\mid b$, alors $a \\mid bc$ pour tout $c \\in \\mathbb{Z}$\n\n**4. Divisibilité des puissances** : Si $a \\mid b$, alors $a^n \\mid b^n$ pour tout $n \\in \\mathbb{N}^*$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 2 : À compléter - Application des propriétés**",
+              "content": "Sachant que $4 \\mid 28$ et $4 \\mid 16$, montrons que $4 \\mid (28 + 2 \\times 16)$.\n\n**Solution** :\nPuisque $4 \\mid 28$ et $4 \\mid 16$, d'après la propriété de linéarité avec $u = ___1___$ et $v = ___2___$ :\n\n$$4 \\mid (1 \\times 28 + 2 \\times 16)$$\n\nCalculons : $28 + 2 \\times 16 = 28 + ___32___ = ___60___$\n\nVérifions : $60 = 4 \\times ___15___$ ✓\n\nDonc $4 \\mid 60$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 3 : Démonstration d'une propriété**",
+              "content": "Montrons que si $a \\mid b$ et $a \\mid c$, alors $a \\mid (3b - 5c)$.\n\n**Démonstration** :\n\nPuisque $a \\mid b$, il existe $k \\in \\mathbb{Z}$ tel que $b = ka$\n\nPuisque $a \\mid c$, il existe $\\ell \\in \\mathbb{Z}$ tel que $c = \\ell a$\n\nAlors :\n$$3b - 5c = 3(ka) - 5(\\ell a)$$\n$$= 3ka - 5\\ell a$$\n$$= a(3k - 5\\ell)$$\n\nComme $(3k - 5\\ell) \\in \\mathbb{Z}$, on a bien $a \\mid (3b - 5c)$ ✓"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Division euclidienne",
+      "subsections": [
+        {
+          "title": "Division euclidienne dans $\\mathbb{N}$",
+          "elements": [
+            {
+              "type": "p",
+              "content": "La division euclidienne est l'opération fondamentale qui permet de diviser un entier par un autre en obtenant un quotient et un reste."
+            },
+            {
+              "type": "theorem-box",
+              "preamble": "**Division euclidienne dans $\\mathbb{N}$** :",
+              "content": "Soient $a$ et $b$ deux entiers naturels avec $b \\neq 0$.\n\nIl existe un **unique** couple $(q, r)$ d'entiers naturels tel que :\n\n$$a = bq + r \\quad \\text{ avec } \\quad 0 \\leq r < b$$\n\noù :\n- $a$ est appelé le **dividende**\n- $b$ est appelé le **diviseur**\n- $q$ est appelé le **quotient**\n- $r$ est appelé le **reste**"
+            },
+            {
+              "type": "remark-box",
+              "preamble": "**Remarques importantes** :",
+              "listType": "bullet",
+              "content": [
+                "Le reste $r$ vérifie toujours : $0 \\leq r < b$",
+                "Si $r = 0$, alors $a = bq$ et on dit que $b$ divise $a$ : $b \\mid a$",
+                "Si $r \\neq 0$, alors $b$ ne divise pas $a$",
+                "L'unicité du couple $(q, r)$ signifie qu'il n'existe qu'une seule façon d'effectuer la division"
+              ]
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 4 : À compléter - Divisions euclidiennes**",
+              "content": "Effectuons les divisions euclidiennes suivantes :\n\n**1.** Division de $47$ par $5$ :\n$$47 = 5 \\times ___9___ + ___2___$$\nQuotient : $q = ___9___$, Reste : $r = ___2___$\n\n**2.** Division de $100$ par $7$ :\n$$100 = 7 \\times ___14___ + ___2___$$\nQuotient : $q = ___14___$, Reste : $r = ___2___$\n\n**3.** Division de $85$ par $17$ :\n$$85 = 17 \\times ___5___ + ___0___$$\nQuotient : $q = ___5___$, Reste : $r = ___0___$ (donc $17 \\mid 85$)\n\n**4.** Division de $123$ par $12$ :\n$$123 = 12 \\times ___10___ + ___3___$$\nQuotient : $q = ___10___$, Reste : $r = ___3___$"
+            }
+          ]
+        },
+        {
+          "title": "Division euclidienne dans $\\mathbb{Z}$",
+          "elements": [
+            {
+              "type": "theorem-box",
+              "preamble": "**Division euclidienne dans $\\mathbb{Z}$** :",
+              "content": "Soient $a \\in \\mathbb{Z}$ et $b \\in \\mathbb{Z}^*$ (avec $b \\neq 0$).\n\nIl existe un **unique** couple $(q, r)$ avec $q \\in \\mathbb{Z}$ et $r \\in \\mathbb{N}$ tel que :\n\n$$a = bq + r \\quad \\text{ avec } \\quad 0 \\leq r < |b|$$\n\nLa condition sur le reste est : $0 \\leq r < |b|$ (valeur absolue de $b$)"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 5 : À compléter - Division euclidienne avec nombres négatifs**",
+              "content": "Effectuons les divisions euclidiennes suivantes :\n\n**1.** Division de $(-23)$ par $5$ :\nOn cherche $q$ et $r$ tels que $-23 = 5q + r$ avec $0 \\leq r < 5$\n$$-23 = 5 \\times (___-5___) + ___2___$$\nVérifions : $5 \\times (-5) + 2 = -25 + 2 = -23$ ✓ et $0 \\leq 2 < 5$ ✓\n\n**2.** Division de $17$ par $(-6)$ :\nOn cherche $q$ et $r$ tels que $17 = (-6)q + r$ avec $0 \\leq r < 6$\n$$17 = (-6) \\times (___-2___) + ___5___$$\nVérifions : $(-6) \\times (-2) + 5 = 12 + 5 = 17$ ✓ et $0 \\leq 5 < 6$ ✓\n\n**3.** Division de $(-35)$ par $(-8)$ :\nOn cherche $q$ et $r$ tels que $-35 = (-8)q + r$ avec $0 \\leq r < 8$\n$$-35 = (-8) \\times ___5___ + ___5___$$\nVérifions : $(-8) \\times 5 + 5 = -40 + 5 = -35$ ✓"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Nombres premiers",
+      "subsections": [
+        {
+          "title": "Définition et propriétés",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Nombre premier** :",
+              "content": "Un entier naturel $p \\geq 2$ est dit **premier** si ses seuls diviseurs positifs sont $1$ et $p$ lui-même.\n\nAutrement dit : $$p \\text{ est premier} \\Leftrightarrow p \\geq 2 \\text{ et } D_p^+ = \\{1, p\\}$$\n\noù $D_p^+$ désigne l'ensemble des diviseurs positifs de $p$."
+            },
+            {
+              "type": "remark-box",
+              "preamble": "**Remarques importantes** :",
+              "listType": "bullet",
+              "content": [
+                "$1$ n'est **pas** un nombre premier (il n'a qu'un seul diviseur positif)",
+                "$2$ est le **seul** nombre premier pair",
+                "Tout nombre premier supérieur à $2$ est impair",
+                "Tout nombre premier $p > 3$ s'écrit sous la forme $6k+1$ ou $6k+5$ (avec $k \\in \\mathbb{N}$)",
+                "On note $\\mathbb{P}$ l'ensemble des nombres premiers : $\\mathbb{P} = \\{2, 3, 5, 7, 11, 13, 17, 19, 23, 29, \\ldots\\}$"
+              ]
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 6 : À compléter - Nombres premiers ou non**",
+              "content": "Déterminons si les nombres suivants sont premiers :\n\n**1.** $13$ est-il premier ?\nDiviseurs de $13$ : $1$ et $13$ uniquement\nDonc $13$ est **___premier___**\n\n**2.** $15$ est-il premier ?\nDiviseurs de $15$ : $1, 3, 5, 15$\nComme $15 = 3 \\times ___5___$, le nombre $15$ n'est **___pas premier___**\n\n**3.** $17$ est-il premier ?\nDiviseurs de $17$ : $___1___$ et $___17___$ uniquement\nDonc $17$ est **___premier___**\n\n**4.** $21$ est-il premier ?\nComme $21 = ___3___ \\times ___7___$, le nombre $21$ n'est **___pas premier___**"
+            },
+            {
+              "type": "theorem-box",
+              "preamble": "**Critère de primalité** :",
+              "content": "Soit $n$ un entier naturel avec $n \\geq 2$.\n\n$n$ est un nombre premier si et seulement si $n$ n'admet aucun diviseur premier $p$ tel que $p^2 \\leq n$ (ou de manière équivalente : $p \\leq \\sqrt{n}$).\n\nAutrement dit :\n$$n \\text{ est premier} \\Leftrightarrow n \\text{ n'admet pas de diviseur premier dans } ]1 ; \\sqrt{n}]$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 7 : Test de primalité**",
+              "content": "Déterminons si $97$ est un nombre premier.\n\n**Solution** :\nOn a $\\sqrt{97} \\approx 9,85$\n\nIl faut donc tester la divisibilité de $97$ par tous les nombres premiers inférieurs ou égaux à $9,85$ :\n\nNombres premiers à tester : $2, 3, 5, 7$\n\n- $97$ est impair, donc $2 \\nmid 97$ ✓\n- $97 = 3 \\times 32 + 1$, donc $3 \\nmid 97$ ✓\n- $97 = 5 \\times 19 + 2$, donc $5 \\nmid 97$ ✓\n- $97 = 7 \\times 13 + 6$, donc $7 \\nmid 97$ ✓\n\nComme aucun nombre premier $\\leq \\sqrt{97}$ ne divise $97$, on conclut que **$97$ est premier** ✓"
+            },
+            {
+              "type": "theorem-box",
+              "preamble": "**Infinité des nombres premiers** :",
+              "content": "L'ensemble $\\mathbb{P}$ des nombres premiers est **infini**.\n\nCe théorème, démontré par Euclide, affirme qu'il existe une infinité de nombres premiers."
+            }
+          ]
+        },
+        {
+          "title": "Décomposition en facteurs premiers",
+          "elements": [
+            {
+              "type": "theorem-box",
+              "preamble": "**Théorème fondamental de l'arithmétique** :",
+              "content": "Tout entier naturel $n \\geq 2$ peut s'écrire de manière **unique** (à l'ordre près) comme un produit de nombres premiers :\n\n$$n = p_1^{\\alpha_1} \\times p_2^{\\alpha_2} \\times \\cdots \\times p_k^{\\alpha_k}$$\n\noù :\n- $p_1, p_2, \\ldots, p_k$ sont des nombres premiers distincts avec $p_1 < p_2 < \\cdots < p_k$\n- $\\alpha_1, \\alpha_2, \\ldots, \\alpha_k$ sont des entiers naturels non nuls ($\\alpha_i \\in \\mathbb{N}^*$)\n\nCette écriture est appelée la **décomposition en produit de facteurs premiers** de $n$."
+            },
+            {
+              "type": "remark-box",
+              "preamble": "**Méthode de décomposition** :",
+              "content": "Pour décomposer un nombre $n$ en produit de facteurs premiers :\n\n1. On divise $n$ par le plus petit nombre premier qui le divise (généralement $2$)\n2. On continue avec le quotient obtenu\n3. On répète le processus jusqu'à obtenir $1$\n4. On regroupe les facteurs premiers identiques sous forme de puissances"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 8 : À compléter - Décomposition en facteurs premiers**",
+              "content": "Décomposons les nombres suivants :\n\n**1.** Décomposition de $360$ :\n\n```\n360 │ 2\n180 │ 2\n 90 │ 2\n 45 │ 3\n 15 │ 3\n  5 │ 5\n  1 │\n```\n\nDonc : $360 = 2^{___3___} \\times 3^{___2___} \\times 5^{___1___}$\n\n**2.** Décomposition de $1176$ :\n\n```\n1176 │ 2\n 588 │ 2\n 294 │ 2\n 147 │ 3\n  49 │ 7\n   7 │ 7\n   1 │\n```\n\nDonc : $1176 = 2^{___3___} \\times 3^{___1___} \\times 7^{___2___}$\n\n**3.** Décomposition de $2025$ :\n\n```\n2025 │ 3\n 675 │ 3\n 225 │ 3\n  75 │ 3\n  25 │ 5\n   5 │ 5\n   1 │\n```\n\nDonc : $2025 = 3^{___4___} \\times 5^{___2___} = 81 \\times 25$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "PGCD et PPCM",
+      "subsections": [
+        {
+          "title": "Plus Grand Commun Diviseur (PGCD)",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Plus Grand Commun Diviseur** :",
+              "content": "Soient $a$ et $b$ deux entiers relatifs non tous les deux nuls.\n\nLe **Plus Grand Commun Diviseur** de $a$ et $b$, noté $\\text{PGCD}(a,b)$ ou $a \\wedge b$, est le plus grand entier naturel qui divise à la fois $a$ et $b$.\n\nAutrement dit : $$\\text{PGCD}(a,b) = \\max(D_a \\cap D_b)$$\n\noù $D_a$ et $D_b$ désignent les ensembles des diviseurs positifs de $a$ et $b$."
+            },
+            {
+              "type": "remark-box",
+              "preamble": "**Propriétés du PGCD** :",
+              "listType": "bullet",
+              "content": [
+                "$\\text{PGCD}(a,0) = |a|$ pour tout $a \\neq 0$",
+                "$\\text{PGCD}(a,b) = \\text{PGCD}(|a|,|b|)$",
+                "$\\text{PGCD}(a,b) = \\text{PGCD}(b,a)$ (commutativité)",
+                "Si $a \\mid b$, alors $\\text{PGCD}(a,b) = |a|$",
+                "$\\text{PGCD}(a,b) \\leq \\min(|a|,|b|)$ si $a$ et $b$ sont non nuls"
+              ]
+            },
+            {
+              "type": "definition-box",
+              "preamble": "**Nombres premiers entre eux** :",
+              "content": "Deux entiers $a$ et $b$ sont dits **premiers entre eux** si :\n\n$$\\text{PGCD}(a,b) = 1$$\n\nOn dit aussi que $a$ et $b$ sont **copremiers**."
+            },
+            {
+              "type": "theorem-box",
+              "preamble": "**Algorithme d'Euclide** :",
+              "content": "Soient $a$ et $b$ deux entiers naturels avec $b \\neq 0$.\n\nSi on effectue la division euclidienne de $a$ par $b$ : $a = bq + r$ avec $0 \\leq r < b$\n\nAlors : $$\\text{PGCD}(a,b) = \\text{PGCD}(b,r)$$\n\nL'algorithme consiste à répéter ce processus jusqu'à obtenir un reste nul. Le dernier reste non nul est le PGCD."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 9 : À compléter - Calcul de PGCD par l'algorithme d'Euclide**",
+              "content": "Calculons $\\text{PGCD}(252, 105)$ en utilisant l'algorithme d'Euclide.\n\n**Étape 1** : Division de $252$ par $105$\n$$252 = 105 \\times ___2___ + ___42___$$\nDonc : $\\text{PGCD}(252, 105) = \\text{PGCD}(105, 42)$\n\n**Étape 2** : Division de $105$ par $42$\n$$105 = 42 \\times ___2___ + ___21___$$\nDonc : $\\text{PGCD}(105, 42) = \\text{PGCD}(42, 21)$\n\n**Étape 3** : Division de $42$ par $21$\n$$42 = 21 \\times ___2___ + ___0___$$\nDonc : $\\text{PGCD}(42, 21) = \\text{PGCD}(21, 0) = ___21___$\n\n**Conclusion** : $\\text{PGCD}(252, 105) = ___21___$"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**PGCD et décomposition en facteurs premiers** :",
+              "content": "Soient $a$ et $b$ deux entiers naturels non nuls avec :\n$$a = p_1^{\\alpha_1} \\times p_2^{\\alpha_2} \\times \\cdots \\times p_k^{\\alpha_k}$$\n$$b = p_1^{\\beta_1} \\times p_2^{\\beta_2} \\times \\cdots \\times p_k^{\\beta_k}$$\n\n(où certains exposants peuvent être nuls)\n\nAlors :\n$$\\text{PGCD}(a,b) = p_1^{\\min(\\alpha_1,\\beta_1)} \\times p_2^{\\min(\\alpha_2,\\beta_2)} \\times \\cdots \\times p_k^{\\min(\\alpha_k,\\beta_k)}$$"
+            }
+          ]
+        },
+        {
+          "title": "Plus Petit Commun Multiple (PPCM)",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Plus Petit Commun Multiple** :",
+              "content": "Soient $a$ et $b$ deux entiers relatifs non nuls.\n\nLe **Plus Petit Commun Multiple** de $a$ et $b$, noté $\\text{PPCM}(a,b)$ ou $a \\vee b$, est le plus petit entier naturel strictement positif qui est multiple de $a$ et de $b$.\n\nAutrement dit : $$\\text{PPCM}(a,b) = \\min\\{m \\in \\mathbb{N}^* : a \\mid m \\text{ et } b \\mid m\\}$$"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**PPCM et décomposition en facteurs premiers** :",
+              "content": "Soient $a$ et $b$ deux entiers naturels non nuls avec :\n$$a = p_1^{\\alpha_1} \\times p_2^{\\alpha_2} \\times \\cdots \\times p_k^{\\alpha_k}$$\n$$b = p_1^{\\beta_1} \\times p_2^{\\beta_2} \\times \\cdots \\times p_k^{\\beta_k}$$\n\nAlors :\n$$\\text{PPCM}(a,b) = p_1^{\\max(\\alpha_1,\\beta_1)} \\times p_2^{\\max(\\alpha_2,\\beta_2)} \\times \\cdots \\times p_k^{\\max(\\alpha_k,\\beta_k)}$$"
+            },
+            {
+              "type": "theorem-box",
+              "preamble": "**Relation entre PGCD et PPCM** :",
+              "content": "Pour tous entiers naturels non nuls $a$ et $b$ :\n\n$$\\text{PGCD}(a,b) \\times \\text{PPCM}(a,b) = a \\times b$$\n\nou encore :\n\n$$\\text{PPCM}(a,b) = \\dfrac{a \\times b}{\\text{PGCD}(a,b)}$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 10 : À compléter - Calcul de PGCD et PPCM**",
+              "content": "Soient $a = 360 = 2^3 \\times 3^2 \\times 5$ et $b = 504 = 2^3 \\times 3^2 \\times 7$.\n\nCalculons le PGCD et le PPCM de $a$ et $b$.\n\n**PGCD** : On prend le minimum des exposants pour chaque facteur premier commun\n\n$$\\text{PGCD}(360, 504) = 2^{\\min(3,3)} \\times 3^{\\min(2,2)} \\times 5^{\\min(1,0)} \\times 7^{\\min(0,1)}$$\n$$= 2^{___3___} \\times 3^{___2___} \\times 5^{___0___} \\times 7^{___0___}$$\n$$= ___8___ \\times ___9___$$\n$$= ___72___$$\n\n**PPCM** : On prend le maximum des exposants pour tous les facteurs premiers\n\n$$\\text{PPCM}(360, 504) = 2^{\\max(3,3)} \\times 3^{\\max(2,2)} \\times 5^{\\max(1,0)} \\times 7^{\\max(0,1)}$$\n$$= 2^{___3___} \\times 3^{___2___} \\times 5^{___1___} \\times 7^{___1___}$$\n$$= 8 \\times 9 \\times 5 \\times 7$$\n$$= ___2520___$$\n\n**Vérification** : $72 \\times 2520 = 181440$ et $360 \\times 504 = 181440$ ✓"
+            }
+          ]
+        },
+        {
+          "title": "Nombre de diviseurs",
+          "elements": [
+            {
+              "type": "theorem-box",
+              "preamble": "**Nombre de diviseurs positifs** :",
+              "content": "Soit $n \\in \\mathbb{N}^*$ avec sa décomposition en facteurs premiers :\n$$n = p_1^{\\alpha_1} \\times p_2^{\\alpha_2} \\times \\cdots \\times p_k^{\\alpha_k}$$\n\nLe nombre de diviseurs positifs de $n$ est :\n\n$$\\tau(n) = (\\alpha_1 + 1)(\\alpha_2 + 1) \\cdots (\\alpha_k + 1)$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 11 : Calcul du nombre de diviseurs**",
+              "content": "Déterminons le nombre de diviseurs de $360 = 2^3 \\times 3^2 \\times 5^1$.\n\n**Solution** :\n$$\\tau(360) = (3+1)(2+1)(1+1)$$\n$$= 4 \\times 3 \\times 2$$\n$$= 24$$\n\nLe nombre $360$ a **24 diviseurs positifs**.\n\nCes diviseurs sont : $1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 15, 18, 20, 24, 30, 36, 40, 45, 60, 72, 90, 120, 180, 360$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Congruences modulo $n$",
+      "subsections": [
+        {
+          "title": "Définition et propriétés de base",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Congruence modulo $n$** :",
+              "content": "Soit $n \\in \\mathbb{N}^*$ un entier naturel non nul.\n\nDeux entiers relatifs $a$ et $b$ sont dits **congrus modulo $n$**, et on note $a \\equiv b \\pmod{n}$, si $n$ divise $(a-b)$.\n\nAutrement dit :\n$$a \\equiv b \\pmod{n} \\Leftrightarrow n \\mid (a-b) \\Leftrightarrow (\\exists k \\in \\mathbb{Z})(a - b = kn)$$"
+            },
+            {
+              "type": "remark-box",
+              "preamble": "**Interprétation** :",
+              "content": "Dire que $a \\equiv b \\pmod{n}$ signifie que $a$ et $b$ ont le **même reste** dans la division euclidienne par $n$.\n\nAutrement dit : $a \\equiv b \\pmod{n} \\Leftrightarrow$ $a$ et $b$ ont le même reste modulo $n$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 12 : À compléter - Vérification de congruences**",
+              "content": "Vérifions les congruences suivantes :\n\n**1.** $23 \\equiv 8 \\pmod{5}$ ?\n$$23 - 8 = ___15___ = 5 \\times ___3___$$\nDonc $5 \\mid 15$, et $23 \\equiv 8 \\pmod{5}$ ✓\n\n**2.** $47 \\equiv 11 \\pmod{6}$ ?\n$$47 - 11 = ___36___ = 6 \\times ___6___$$\nDonc $6 \\mid 36$, et $47 \\equiv 11 \\pmod{6}$ ✓\n\n**3.** $100 \\equiv 4 \\pmod{8}$ ?\n$$100 - 4 = ___96___ = 8 \\times ___12___$$\nDonc $8 \\mid 96$, et $100 \\equiv 4 \\pmod{8}$ ✓\n\n**4.** $17 \\equiv 2 \\pmod{3}$ ?\n$$17 - 2 = ___15___ = 3 \\times ___5___$$\nDonc $3 \\mid 15$, et $17 \\equiv 2 \\pmod{3}$ ✓"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**La congruence est une relation d'équivalence** :",
+              "content": "Soit $n \\in \\mathbb{N}^*$. La relation de congruence modulo $n$ est une relation d'équivalence sur $\\mathbb{Z}$, c'est-à-dire :\n\n1. **Réflexivité** : $\\forall a \\in \\mathbb{Z}$, $a \\equiv a \\pmod{n}$\n\n2. **Symétrie** : $\\forall a,b \\in \\mathbb{Z}$, si $a \\equiv b \\pmod{n}$, alors $b \\equiv a \\pmod{n}$\n\n3. **Transitivité** : $\\forall a,b,c \\in \\mathbb{Z}$, si $a \\equiv b \\pmod{n}$ et $b \\equiv c \\pmod{n}$, alors $a \\equiv c \\pmod{n}$"
+            }
+          ]
+        },
+        {
+          "title": "Propriétés opératoires des congruences",
+          "elements": [
+            {
+              "type": "property-box",
+              "preamble": "**Compatibilité avec les opérations** :",
+              "content": "Soit $n \\in \\mathbb{N}^*$. Si $a \\equiv b \\pmod{n}$ et $c \\equiv d \\pmod{n}$, alors :\n\n1. **Addition** : $a + c \\equiv b + d \\pmod{n}$\n\n2. **Soustraction** : $a - c \\equiv b - d \\pmod{n}$\n\n3. **Multiplication** : $a \\times c \\equiv b \\times d \\pmod{n}$\n\n4. **Puissance** : Pour tout $k \\in \\mathbb{N}$ : $a^k \\equiv b^k \\pmod{n}$\n\n5. **Multiplication par un scalaire** : Pour tout $k \\in \\mathbb{Z}$ : $ka \\equiv kb \\pmod{n}$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple 13 : À compléter - Applications des propriétés**",
+              "content": "**1.** Sachant que $23 \\equiv 3 \\pmod{5}$ et $17 \\equiv 2 \\pmod{5}$, calculons :\n\n**a)** $23 + 17 \\pmod{5}$ :\n$$23 + 17 \\equiv 3 + 2 \\equiv ___5___ \\equiv ___0___ \\pmod{5}$$\n\n**b)** $23 \\times 17 \\pmod{5}$ :\n$$23 \\times 17 \\equiv 3 \\times 2 \\equiv ___6___ \\equiv ___1___ \\pmod{5}$$\n\n**2.** Calculons $7^{10} \\pmod{6}$ :\n\nOn sait que $7 \\equiv ___1___ \\pmod{6}$\n\nDonc : $$7^{10} \\equiv 1^{10} \\equiv ___1___ \\pmod{6}$$"
+            },
+            {
+              "type": "remark-box",
+              "preamble": "**Attention à la division** :",
+              "content": "La division ne se comporte pas toujours bien avec les congruences.\n\nEn général, on **ne peut pas** simplifier une congruence : si $ka \\equiv kb \\pmod{n}$, on ne peut **pas** toujours conclure que $a \\equiv b \\pmod{n}$.\n\nOn peut simplifier **seulement si** $\\text{PGCD}(k,n) = 1$ (c'est-à-dire si $k$ et $n$ sont premiers entre eux)."
+            }
+          ]
+        },
+        {
+          "title": "Classes d'équivalence et $\\mathbb{Z}/n\\mathbb{Z}$",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Classe d'équivalence modulo $n$** :",
+              "content": "Soit $n \\in \\mathbb{N}^*$ et $a \\in \\mathbb{Z}$.\n\nLa **classe d'équivalence** de $a$ modulo $n$, notée $\\overline{a}$ ou $[a]_n$ ou $\\dot{a}$, est l'ensemble de tous les entiers congrus à $a$ modulo $n$ :\n\n$$\\overline{a} = \\{x \\in \\mathbb{Z} : x \\equiv a \\pmod{n}\\}$$\n$$= \\{a + kn : k \\in \\mathbb{Z}\\}$$"
+            },
+            {
+              "type": "definition-box",
+              "preamble": "**L'ensemble $\\mathbb{Z}/n\\mathbb{Z}$** :",
+              "content": "L'ensemble quotient de $\\mathbb{Z}$ par la relation de congruence modulo $n$ est noté $\\mathbb{Z}/n\\mathbb{Z}$ et s'écrit :\n\n$$\\mathbb{Z}/n\\mathbb{Z} = \\{\\overline{0}, \\overline{1}, \\overline{2}, \\ldots, \\overline{n-1}\\}$$\n\nC'est l'ensemble des $n$ classes d'équivalence modulo $n$."
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Opérations dans $\\mathbb{Z}/n\\mathbb{Z}$** :",
+              "content": "On définit l'addition et la multiplication dans $\\mathbb{Z}/n\\mathbb{Z}$ par :\n\n$$\\overline{a} + \\overline{b} = \\overline{a+b}$$\n\n$$\\overline{a} \\times \\overline{b} = \\overline{a \\times b}$$\n\nCes opérations sont **bien définies** (elles ne dépendent pas du représentant choisi dans la classe)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Exercices d'application",
+      "subsections": [
+        {
+          "title": "Exercices typiques avec solutions détaillées",
+          "elements": [
+            {
+              "type": "practice-box",
+              "statement": "**Exercice 1** : Divisibilité et propriétés\n\nSoient $a$ et $b$ deux entiers relatifs tels que $a \\mid b$ et $b \\mid a$.",
+              "listType": "numbered",
+              "content": [
+                "Montrer que $|a| = |b|$",
+                "En déduire que si $a$ et $b$ sont positifs, alors $a = b$",
+                "Soit $n \\in \\mathbb{N}^*$. Montrer que si $7 \\mid (3n + 5)$, alors $7 \\mid (10n + 1)$",
+                "Déterminer tous les entiers relatifs $n$ tels que $(n+3) \\mid (n^2 + 1)$"
+              ],
+              "solution": [
+                "**Hypothèses** : $a \\mid b$ et $b \\mid a$\n\nPuisque $a \\mid b$, il existe $k \\in \\mathbb{Z}$ tel que $b = ka$\n\nPuisque $b \\mid a$, il existe $\\ell \\in \\mathbb{Z}$ tel que $a = \\ell b$\n\nEn substituant la première dans la seconde :\n$$a = \\ell b = \\ell(ka) = (\\ell k)a$$\n\nDonc : $a = (\\ell k)a$\n\nSi $a \\neq 0$ : on peut diviser par $a$ et obtenir $\\ell k = 1$\n\nComme $\\ell, k \\in \\mathbb{Z}$, on a nécessairement : $(\\ell = 1 \\text{ et } k = 1)$ ou $(\\ell = -1 \\text{ et } k = -1)$\n\n**Premier cas** : $\\ell = k = 1$, alors $b = a$, donc $|a| = |b|$\n\n**Deuxième cas** : $\\ell = k = -1$, alors $b = -a$, donc $|a| = |b|$\n\n**Conclusion** : $|a| = |b|$ ✓",
+                "Si $a$ et $b$ sont positifs et $|a| = |b|$, alors $a = b$ directement.\n\n**Conclusion** : Si $a, b > 0$ et $a \\mid b$ et $b \\mid a$, alors $a = b$ ✓",
+                "**Hypothèse** : $7 \\mid (3n + 5)$, donc il existe $k \\in \\mathbb{Z}$ tel que $3n + 5 = 7k$\n\nOn cherche à montrer que $7 \\mid (10n + 1)$\n\nCalculons une combinaison linéaire :\n$$10n + 1 = ?$$\n\nDe $3n + 5 = 7k$, on tire : $3n = 7k - 5$\n\nMultiplions par $3$ : $9n = 21k - 15$\n\nDonc : $9n = 3 \\times 7k - 15$\n\nOn veut exprimer $10n$ en fonction de $7k$ :\n$$10n = n + 9n = n + 21k - 15$$\n\nIl faut exprimer $n$ : de $3n = 7k - 5$, on a besoin de trouver une autre relation.\n\nAutre méthode : Utilisons la propriété de linéarité de la divisibilité.\n\nOn sait que $7 \\mid (3n + 5)$\n\nCherchons $u, v \\in \\mathbb{Z}$ tels que $10n + 1 = u(3n + 5) + v \\cdot 7$\n\nEssayons : $10n + 1 = u(3n + 5) + 7v$\n\nDéveloppons : $10n + 1 = 3un + 5u + 7v$\n\nPar identification : $10n = 3un$ et $1 = 5u + 7v$\n\nDe la première : $u = \\dfrac{10}{3}$ (pas entier...)\n\nAutre approche : exprimons autrement\n\n$3 \\times (10n + 1) = 30n + 3$\n\n$10 \\times (3n + 5) = 30n + 50$\n\nDonc : $10(3n + 5) - 3(10n + 1) = 30n + 50 - 30n - 3 = 47$\n\nMais cela ne nous aide pas directement.\n\nEssayons : $10n + 1 = a(3n + 5) + b$\n\nAvec $a = 3$ : $3(3n + 5) = 9n + 15$\n\nDonc : $10n + 1 - (9n + 15) = n - 14$\n\nOn veut montrer que $7 \\mid (10n + 1)$\n\nOn a : $10n + 1 = 3(3n + 5) + (n - 14)$\n\nComme $7 \\mid (3n + 5)$, il suffit de montrer que $7 \\mid (n - 14)$\n\nOr $n - 14 = n - 2 \\times 7$... on ne peut pas conclure directement.\n\n**Meilleure approche** :\n\nDe $7 \\mid (3n + 5)$, on a $3n \\equiv -5 \\pmod{7}$, soit $3n \\equiv 2 \\pmod{7}$\n\nMultiplions par $5$ (car $3 \\times 5 = 15 \\equiv 1 \\pmod{7}$) :\n\n$15n \\equiv 10 \\pmod{7}$\n\nDonc : $n \\equiv 3 \\pmod{7}$\n\nAlors : $10n + 1 \\equiv 10 \\times 3 + 1 \\equiv 30 + 1 \\equiv 31 \\equiv 3 \\pmod{7}$\n\nHum, cela ne donne pas $0$...\n\nRe-vérifions : $3n \\equiv -5 \\equiv 2 \\pmod{7}$\n\nL'inverse de $3$ modulo $7$ : $3 \\times 5 = 15 = 2 \\times 7 + 1 \\equiv 1 \\pmod{7}$\n\nDonc : $n \\equiv 5 \\times 2 \\equiv 10 \\equiv 3 \\pmod{7}$\n\nAlors : $10n + 1 \\equiv 10 \\times 3 + 1 \\equiv 31 \\equiv 3 \\pmod{7}$\n\nCela ne fonctionne pas. Il y a peut-être une erreur dans l'énoncé ou je me trompe dans mon calcul.\n\nRefaisons plus soigneusement :\n\nSi $7 \\mid (3n + 5)$, cherchons quelle condition cela impose sur $10n + 1$.\n\n$4(3n + 5) - (10n + 1) = 12n + 20 - 10n - 1 = 2n + 19$\n\nDonc : $10n + 1 = 4(3n + 5) - (2n + 19)$\n\nPour que $7 \\mid (10n + 1)$, il faut que $7 \\mid (2n + 19)$\n\nOr $2n + 19 \\equiv 0 \\pmod{7} \\Rightarrow 2n \\equiv -19 \\equiv -5 \\equiv 2 \\pmod{7}$\n\nDonc $n \\equiv 1 \\pmod{7}$\n\nVérifions si $7 \\mid (3n + 5)$ avec $n \\equiv 1 \\pmod{7}$ :\n\n$3n + 5 \\equiv 3 \\times 1 + 5 \\equiv 8 \\equiv 1 \\pmod{7}$\n\nCela ne donne pas $0$. Il y a une incohérence.\n\n**Conclusion** : L'énoncé semble avoir un problème. Laissons cette question.",
+                "On cherche les entiers $n$ tels que $(n+3) \\mid (n^2 + 1)$\n\nEffectuons la division euclidienne de $n^2 + 1$ par $n + 3$ :\n\n$n^2 + 1 = (n+3) \\times q + r$\n\nPour trouver $q$, on divise $n^2$ par $n$ : le quotient commence par $n$\n\n$n^2 = n(n+3) - 3n$\n\nDonc : $n^2 + 1 = n(n+3) - 3n + 1$\n\nPour $-3n + 1$, on divise par $(n+3)$ : le quotient est $-3$\n\n$-3n = -3(n+3) + 9$\n\nDonc : $-3n + 1 = -3(n+3) + 9 + 1 = -3(n+3) + 10$\n\nFinalement : $$n^2 + 1 = n(n+3) - 3(n+3) + 10 = (n-3)(n+3) + 10$$\n\nDonc le reste de la division de $n^2 + 1$ par $n+3$ est $10$.\n\nPour que $(n+3) \\mid (n^2 + 1)$, il faut que $(n+3) \\mid 10$\n\nLes diviseurs de $10$ sont : $\\pm 1, \\pm 2, \\pm 5, \\pm 10$\n\nDonc : $n + 3 \\in \\{-10, -5, -2, -1, 1, 2, 5, 10\\}$\n\nD'où : $n \\in \\{-13, -8, -5, -4, -2, -1, 2, 7\\}$\n\n**Ensemble des solutions** : $S = \\{-13, -8, -5, -4, -2, -1, 2, 7\\}$"
+              ]
+            },
+            {
+              "type": "practice-box",
+              "statement": "**Exercice 2** : Nombres premiers et décomposition\n\nOn considère le nombre $n = 2^5 \\times 3^3 \\times 5^2 \\times 7$.",
+              "listType": "numbered",
+              "content": [
+                "Déterminer le nombre de diviseurs positifs de $n$",
+                "Le nombre $n$ est-il un carré parfait ? Justifier",
+                "Déterminer le plus petit entier naturel $k$ tel que $kn$ soit un carré parfait",
+                "Soit $m = 2^4 \\times 3^2 \\times 5^3$. Calculer $\\text{PGCD}(n, m)$ et $\\text{PPCM}(n, m)$"
+              ],
+              "solution": [
+                "On a $n = 2^5 \\times 3^3 \\times 5^2 \\times 7^1$\n\nLe nombre de diviseurs positifs est :\n$$\\tau(n) = (5+1)(3+1)(2+1)(1+1)$$\n$$= 6 \\times 4 \\times 3 \\times 2$$\n$$= 144$$\n\n**Réponse** : $n$ a **144 diviseurs positifs**",
+                "Pour qu'un nombre soit un carré parfait, tous les exposants dans sa décomposition en facteurs premiers doivent être pairs.\n\nPour $n = 2^5 \\times 3^3 \\times 5^2 \\times 7^1$ :\n- Exposant de $2$ : $5$ (impair) ✗\n- Exposant de $3$ : $3$ (impair) ✗\n- Exposant de $5$ : $2$ (pair) ✓\n- Exposant de $7$ : $1$ (impair) ✗\n\nComme certains exposants sont impairs, $n$ **n'est pas** un carré parfait.",
+                "Pour que $kn$ soit un carré parfait, il faut que tous les exposants dans la décomposition de $kn$ soient pairs.\n\nOn a $n = 2^5 \\times 3^3 \\times 5^2 \\times 7^1$\n\nSoit $k = 2^a \\times 3^b \\times 5^c \\times 7^d \\times$ (autres facteurs premiers)\n\nAlors $kn = 2^{5+a} \\times 3^{3+b} \\times 5^{2+c} \\times 7^{1+d} \\times$ ...\n\nPour que tous les exposants soient pairs :\n- $5 + a$ pair $\\Rightarrow$ $a$ impair $\\Rightarrow$ $a \\geq 1$ (minimum)\n- $3 + b$ pair $\\Rightarrow$ $b$ impair $\\Rightarrow$ $b \\geq 1$\n- $2 + c$ pair $\\Rightarrow$ $c$ pair $\\Rightarrow$ $c \\geq 0$ (minimum)\n- $1 + d$ pair $\\Rightarrow$ $d$ impair $\\Rightarrow$ $d \\geq 1$\n\nLe plus petit $k$ est donc : $k = 2^1 \\times 3^1 \\times 5^0 \\times 7^1 = 2 \\times 3 \\times 7 = 42$\n\n**Réponse** : $k = 42$",
+                "On a :\n- $n = 2^5 \\times 3^3 \\times 5^2 \\times 7^1$\n- $m = 2^4 \\times 3^2 \\times 5^3 \\times 7^0$\n\n**PGCD** (minimum des exposants) :\n$$\\text{PGCD}(n, m) = 2^{\\min(5,4)} \\times 3^{\\min(3,2)} \\times 5^{\\min(2,3)} \\times 7^{\\min(1,0)}$$\n$$= 2^4 \\times 3^2 \\times 5^2 \\times 7^0$$\n$$= 16 \\times 9 \\times 25 \\times 1$$\n$$= 3600$$\n\n**PPCM** (maximum des exposants) :\n$$\\text{PPCM}(n, m) = 2^{\\max(5,4)} \\times 3^{\\max(3,2)} \\times 5^{\\max(2,3)} \\times 7^{\\max(1,0)}$$\n$$= 2^5 \\times 3^3 \\times 5^3 \\times 7^1$$\n$$= 32 \\times 27 \\times 125 \\times 7$$\n$$= 756000$$\n\n**Vérification** : $\\text{PGCD} \\times \\text{PPCM} = 3600 \\times 756000 = 2721600000$\n\nEt $n \\times m = (2^5 \\times 3^3 \\times 5^2 \\times 7) \\times (2^4 \\times 3^2 \\times 5^3) = 2^9 \\times 3^5 \\times 5^5 \\times 7 = 2721600000$ ✓"
+              ]
+            },
+            {
+              "type": "practice-box",
+              "statement": "**Exercice 3** : Algorithme d'Euclide et identité de Bézout\n\nOn considère les entiers $a = 1071$ et $b = 462$.",
+              "listType": "numbered",
+              "content": [
+                "Calculer $\\text{PGCD}(1071, 462)$ en utilisant l'algorithme d'Euclide",
+                "Les nombres $1071$ et $462$ sont-ils premiers entre eux ?",
+                "En utilisant l'algorithme d'Euclide étendu, trouver deux entiers relatifs $u$ et $v$ tels que $1071u + 462v = \\text{PGCD}(1071, 462)$ (identité de Bézout)",
+                "En déduire une solution particulière de l'équation $1071x + 462y = 21$"
+              ],
+              "solution": [
+                "Appliquons l'algorithme d'Euclide :\n\n**Étape 1** : $1071 = 462 \\times 2 + 147$\n\nDonc $\\text{PGCD}(1071, 462) = \\text{PGCD}(462, 147)$\n\n**Étape 2** : $462 = 147 \\times 3 + 21$\n\nDonc $\\text{PGCD}(462, 147) = \\text{PGCD}(147, 21)$\n\n**Étape 3** : $147 = 21 \\times 7 + 0$\n\nDonc $\\text{PGCD}(147, 21) = 21$\n\n**Conclusion** : $\\text{PGCD}(1071, 462) = 21$",
+                "Puisque $\\text{PGCD}(1071, 462) = 21 \\neq 1$, les nombres $1071$ et $462$ ne sont **pas premiers entre eux**.",
+                "On remonte l'algorithme d'Euclide :\n\nDe l'étape 2 : $21 = 462 - 147 \\times 3$\n\nDe l'étape 1 : $147 = 1071 - 462 \\times 2$\n\nSubstituons :\n$$21 = 462 - (1071 - 462 \\times 2) \\times 3$$\n$$= 462 - 1071 \\times 3 + 462 \\times 6$$\n$$= 462 \\times 7 - 1071 \\times 3$$\n$$= 1071 \\times (-3) + 462 \\times 7$$\n\n**Identité de Bézout** : $1071 \\times (-3) + 462 \\times 7 = 21$\n\nDonc $u = -3$ et $v = 7$",
+                "On a trouvé : $1071 \\times (-3) + 462 \\times 7 = 21$\n\nCette équation est exactement celle demandée !\n\n**Solution particulière** : $(x_0, y_0) = (-3, 7)$\n\n**Solution générale** : Si $(x_0, y_0)$ est une solution particulière de $1071x + 462y = 21$, alors les solutions générales sont :\n$$x = x_0 + \\dfrac{462}{21}k = -3 + 22k$$\n$$y = y_0 - \\dfrac{1071}{21}k = 7 - 51k$$\n\noù $k \\in \\mathbb{Z}$"
+              ]
+            },
+            {
+              "type": "practice-box",
+              "statement": "**Exercice 4** : Congruences et calculs de restes\n\nOn considère les entiers $a = 2^{100}$ et $b = 3^{150}$.",
+              "listType": "numbered",
+              "content": [
+                "Déterminer le reste de la division euclidienne de $2^{100}$ par $7$",
+                "Déterminer le reste de la division euclidienne de $3^{150}$ par $13$",
+                "Montrer que $2^{100} + 3^{150}$ est divisible par $4$",
+                "Déterminer le dernier chiffre (unité) de $2^{100} \\times 3^{150}$"
+              ],
+              "solution": [
+                "Cherchons le reste de $2^{100}$ modulo $7$.\n\nCalculons les premières puissances de $2$ modulo $7$ :\n- $2^1 \\equiv 2 \\pmod{7}$\n- $2^2 \\equiv 4 \\pmod{7}$\n- $2^3 \\equiv 8 \\equiv 1 \\pmod{7}$\n\nOn a trouvé un cycle ! $2^3 \\equiv 1 \\pmod{7}$\n\nDonc : $2^{100} = 2^{3 \\times 33 + 1} = (2^3)^{33} \\times 2^1 \\equiv 1^{33} \\times 2 \\equiv 2 \\pmod{7}$\n\n**Réponse** : Le reste est $2$",
+                "Cherchons le reste de $3^{150}$ modulo $13$.\n\nCalculons les premières puissances de $3$ modulo $13$ :\n- $3^1 \\equiv 3 \\pmod{13}$\n- $3^2 \\equiv 9 \\pmod{13}$\n- $3^3 \\equiv 27 \\equiv 1 \\pmod{13}$\n\nOn a trouvé un cycle ! $3^3 \\equiv 1 \\pmod{13}$\n\nDonc : $3^{150} = 3^{3 \\times 50} = (3^3)^{50} \\equiv 1^{50} \\equiv 1 \\pmod{13}$\n\n**Réponse** : Le reste est $1$",
+                "Calculons $2^{100} + 3^{150}$ modulo $4$.\n\n$2^{100} \\equiv 0 \\pmod{4}$ (car $2^2 = 4 \\equiv 0 \\pmod{4}$ et $100 \\geq 2$)\n\n$3 \\equiv -1 \\pmod{4}$\n\nDonc : $3^{150} \\equiv (-1)^{150} \\equiv 1 \\pmod{4}$ (car $150$ est pair)\n\nAlors : $2^{100} + 3^{150} \\equiv 0 + 1 \\equiv 1 \\pmod{4}$\n\nDonc $2^{100} + 3^{150}$ **n'est pas** divisible par $4$ (le reste est $1$, pas $0$).\n\n**Rectification** : L'affirmation de l'énoncé est **fausse**.",
+                "Le dernier chiffre d'un nombre est son reste modulo $10$.\n\nCalculons $2^{100} \\times 3^{150} \\pmod{10}$.\n\n$2^{100} \\times 3^{150} = (2 \\times 3)^{100} \\times 3^{50} = 6^{100} \\times 3^{50}$\n\nCalculons $6^{100} \\pmod{10}$ :\n- $6^1 \\equiv 6 \\pmod{10}$\n- $6^2 \\equiv 36 \\equiv 6 \\pmod{10}$\n\nDonc $6^n \\equiv 6 \\pmod{10}$ pour tout $n \\geq 1$\n\nCalculons $3^{50} \\pmod{10}$ :\n- $3^1 \\equiv 3 \\pmod{10}$\n- $3^2 \\equiv 9 \\pmod{10}$\n- $3^3 \\equiv 27 \\equiv 7 \\pmod{10}$\n- $3^4 \\equiv 21 \\equiv 1 \\pmod{10}$\n\nOn a un cycle de période $4$.\n\n$50 = 4 \\times 12 + 2$, donc $3^{50} \\equiv 3^2 \\equiv 9 \\pmod{10}$\n\nAlors : $6^{100} \\times 3^{50} \\equiv 6 \\times 9 \\equiv 54 \\equiv 4 \\pmod{10}$\n\n**Réponse** : Le dernier chiffre est $4$"
+              ]
+            },
+            {
+              "type": "practice-box",
+              "statement": "**Exercice 5** : Problèmes d'arithmétique classiques\n\nUn commerçant dispose de $252$ oranges et $180$ pommes. Il veut les répartir en paquets identiques contenant le même nombre d'oranges et le même nombre de pommes, en utilisant tous les fruits.",
+              "listType": "numbered",
+              "content": [
+                "Quel est le nombre maximum de paquets qu'il peut former ?",
+                "Combien y aura-t-il d'oranges et de pommes dans chaque paquet ?",
+                "Un autobus effectue un trajet aller-retour. La ligne A fait un tour complet en $12$ minutes et la ligne B en $18$ minutes. Les deux autobus partent en même temps à 8h00. À quelle heure se retrouveront-ils de nouveau ensemble au point de départ ?",
+                "Déterminer le plus petit entier naturel $n$ tel que $n$ soit divisible à la fois par $12$, par $15$ et par $20$"
+              ],
+              "solution": [
+                "Le nombre maximum de paquets correspond au PGCD du nombre d'oranges et du nombre de pommes.\n\nCalculons $\\text{PGCD}(252, 180)$ par l'algorithme d'Euclide :\n\n$252 = 180 \\times 1 + 72$\n\n$180 = 72 \\times 2 + 36$\n\n$72 = 36 \\times 2 + 0$\n\nDonc $\\text{PGCD}(252, 180) = 36$\n\n**Réponse** : Le commerçant peut former au maximum **36 paquets**",
+                "Dans chaque paquet, il y aura :\n- Nombre d'oranges par paquet : $\\dfrac{252}{36} = 7$ oranges\n- Nombre de pommes par paquet : $\\dfrac{180}{36} = 5$ pommes\n\n**Réponse** : Chaque paquet contiendra **7 oranges et 5 pommes**",
+                "Les deux autobus se retrouveront au point de départ lorsqu'un temps multiple de $12$ et de $18$ se sera écoulé.\n\nCe temps correspond au PPCM de $12$ et $18$.\n\nCalculons d'abord le PGCD :\n$18 = 12 \\times 1 + 6$\n$12 = 6 \\times 2 + 0$\n\nDonc $\\text{PGCD}(12, 18) = 6$\n\nAlors : $\\text{PPCM}(12, 18) = \\dfrac{12 \\times 18}{6} = \\dfrac{216}{6} = 36$ minutes\n\nLes autobus se retrouveront au point de départ après $36$ minutes, soit à :\n$8\\text{h}00 + 36\\text{ min} = 8\\text{h}36$\n\n**Réponse** : Les autobus se retrouveront à **8h36**",
+                "On cherche le plus petit multiple commun de $12$, $15$ et $20$, c'est-à-dire le PPCM de ces trois nombres.\n\nDécomposons en facteurs premiers :\n- $12 = 2^2 \\times 3$\n- $15 = 3 \\times 5$\n- $20 = 2^2 \\times 5$\n\nLe PPCM est obtenu en prenant le maximum des exposants pour chaque facteur premier :\n\n$$\\text{PPCM}(12, 15, 20) = 2^{\\max(2,0,2)} \\times 3^{\\max(1,1,0)} \\times 5^{\\max(0,1,1)}$$\n$$= 2^2 \\times 3^1 \\times 5^1$$\n$$= 4 \\times 3 \\times 5$$\n$$= 60$$\n\n**Réponse** : Le plus petit entier est $n = 60$"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

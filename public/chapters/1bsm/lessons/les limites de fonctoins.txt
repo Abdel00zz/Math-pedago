@@ -1,0 +1,413 @@
+{
+  "header": {
+    "title": "Limites d'une Fonction",
+    "subtitle": "Voisinages, définitions formelles, asymptotes et techniques de calcul",
+    "classe": "1ère Bac Sciences Mathématiques (SM)",
+    "chapter": "Chapitre 5",
+    "academicYear": "2025-2026"
+  },
+  "sections": [
+    {
+      "title": "Introduction et Voisinages",
+      "subsections": [
+        {
+          "title": "Notion de voisinage",
+          "elements": [
+            {
+              "type": "p",
+              "content": "La notion de limite étudie le comportement d'une fonction $f(x)$ lorsque $x$ 's'approche' d'une valeur $a$ (ou tend vers l'infini), sans nécessairement que $x$ soit égal à $a$. Pour formaliser cette 'approche', on utilise la notion de voisinage."
+            },
+            {
+              "type": "definition-box",
+              "preamble": "**Voisinage pointé** :",
+              [cite_start]"content": "Soient $a$ un réel et $\\alpha > 0$. L'ensemble $]a - \\alpha, a + \\alpha[ \\setminus \\{a\\}$ est appelé un **voisinage pointé** de $a$.\n\nOn peut le noter $V_{\\alpha}(a)^*$.\n\nCet ensemble contient tous les $x$ 'proches' de $a$, mais pas $a$ lui-même. C'est crucial, car la limite en $a$ ne dépend pas de la valeur de $f(a)$.\n\nL'équivalence en valeur absolue est : [cite: 16]\n$$x \\in ]a - \\alpha, a + \\alpha[ \\setminus \\{a\\} \\iff 0 < |x - a| < \\alpha$$"
+            }
+          ]
+        },
+        {
+          "title": "Définition formelle (Limite finie en $a$)",
+          "elements": [
+            {
+              "type": "p",
+              "content": "En 1ère Bac SM, nous introduisons la définition formelle (dite 'epsilon-alpha') pour caractériser rigoureusement une limite finie."
+            },
+            {
+              "type": "definition-box",
+              [cite_start]"preamble": "**Définition (Limite finie $l$ en $a$)** : [cite: 55, 57]",
+              [cite_start]"content": "Soit $f$ une fonction définie sur un voisinage pointé de $a$, et $l$ un réel.\n\nOn dit que $f(x)$ tend vers $l$ quand $x$ tend vers $a$ si :\nPour tout intervalle ouvert 'cible' $]l - \\epsilon, l + \\epsilon[$ (aussi petit soit-il, avec $\\epsilon > 0$), il existe un intervalle de départ $]a - \\alpha, a + \\alpha[$ (avec $\\alpha > 0$) tel que si $x$ est dans le voisinage pointé de $a$, alors $f(x)$ est dans l'intervalle cible.\n\nOn écrit : **$\\lim_{x \\to a} f(x) = l$**\n\n**Formalisme ($\epsilon, \alpha$)** : [cite: 57]\n$$(\\forall \\epsilon > 0) (\\exists \\alpha > 0) (\\forall x \\in D_f) \\left( 0 < |x - a| < \\alpha \\implies |f(x) - l| < \\epsilon \\right)$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**À compléter : Preuve par définition (Fonction affine)**",
+              [cite_start]"content": "Montrons en utilisant la définition ($\epsilon, \alpha$) que $\\lim_{x \\to 2} (3x + 1) = 7$. [cite: 59]\n\n**Solution** :\nIci, $a = 2$, $f(x) = 3x+1$ et $l = 7$.\n\n**Analyse (Brouillon)** :\nSoit $\\epsilon > 0$ fixé.\nOn cherche $\\alpha > 0$ tel que $0 < |x - 2| < \\alpha \\implies |f(x) - l| < \\epsilon$.\n\nOn part de l'inégalité d'arrivée :\n$$|f(x) - l| < \\epsilon$$
+$$| (3x + 1) - 7 | < \\epsilon$$
+$$| 3x - 6 | < \\epsilon$$
+$$| 3(x - 2) | < \\epsilon$$
+$$3 |x - 2| < \\epsilon$$
+$$|x - 2| < \\dfrac{\\epsilon}{3}$$\n\n**Synthèse (Réponse)** :\nSoit $\\epsilon > 0$.\nPosons $\\alpha = ___\\dfrac{\\epsilon}{3}___$. C'est bien un nombre $> 0$.\n\nMontrons que ce $\\alpha$ fonctionne :\nSupposons $0 < |x - 2| < \\alpha$.\nOn a $|x - 2| < \\dfrac{\\epsilon}{3}$.\nEn multipliant par 3 : $3|x - 2| < \\epsilon$\n$$|3(x - 2)| < \\epsilon$$
+$$|3x - 6| < \\epsilon$$
+$$| (3x + 1) - 7 | < \\epsilon$$
+$$| f(x) - l | < \\epsilon$$\n\n**Conclusion** : Nous avons bien montré que $(\\forall \\epsilon > 0) (\\exists \\alpha = \\frac{\\epsilon}{3} > 0) (0 < |x - 2| < \\alpha \\implies |(3x+1) - 7| < \\epsilon)$.\nDonc, $\\lim_{x \\to 2} (3x + 1) = 7$."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Limites à Gauche et à Droite, Asymptotes Verticales",
+      "subsections": [
+        {
+          "title": "Limites à gauche et à droite",
+          "elements": [
+            {
+              "type": "p",
+              "content": "Parfois, le comportement de $f$ en $a$ diffère selon que $x$ s'approche de $a$ par valeurs inférieures ($x \\to a^-$) ou par valeurs supérieures ($x \\to a^+$)."
+            },
+            {
+              "type": "definition-box",
+              [cite_start]"preamble": "**Définition (Limite à droite)** : [cite: 105, 107]",
+              [cite_start]"content": "On dit que $f(x)$ tend vers $l$ quand $x$ tend vers $a$ **par la droite** si :\n$$(\\forall \\epsilon > 0) (\\exists \\alpha > 0) (\\forall x \\in D_f) \\left( 0 < x - a < \\alpha \\implies |f(x) - l| < \\epsilon \\right)$$\nOn note : $\\lim_{x \\to a^+} f(x) = l$ [cite: 108]\n\nDe même, pour la **limite à gauche** ($x \\to a^-$), la condition est $0 < a - x < \\alpha$ (ou $-\\alpha < x - a < 0$)."
+            },
+            {
+              "type": "theorem-box",
+              [cite_start]"preamble": "**Théorème (Lien entre limite et limites G/D)** : [cite: 129, 131]",
+              "content": "Une fonction $f$ admet une limite $l$ en $a$ **si et seulement si** elle admet une limite à droite en $a$ ET une limite à gauche en $a$, et que ces deux limites sont égales à $l$.\n\n$$\\lim_{x \\to a} f(x) = l \\iff \\left( \\lim_{x \\to a^+} f(x) = l \\quad \\text{et} \\quad \\lim_{x \\to a^-} f(x) = l \\right)$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**À compléter : Limites G/D (Partie Entière)**",
+              [cite_start]"content": "Calculons les limites à gauche et à droite en $a=1$ de $f(x) = E(x)$, la fonction 'partie entière'. [cite: 98][cite_start]\n\n**Solution** :\n\n**Limite à droite ($x \\to 1^+$)** :\nSi $x$ s'approche de 1 par la droite, $x$ est dans un intervalle comme $]1, 1+\\alpha[$ (par exemple $x = 1.1, 1.01, \dots$).\nPlus formellement, si $x \\in [1, 2[$, alors $E(x) = ___1___$.\nDonc, $\\lim_{x \\to 1^+} E(x) = \\lim_{x \\to 1^+} 1 = ___1___$.\n\n**Limite à gauche ($x \\to 1^-$)** :\nSi $x$ s'approche de 1 par la gauche, $x$ est dans un intervalle comme $]1-\\alpha, 1[$ (par exemple $x = 0.9, 0.99, \dots$).\nSi $x \\in [0, 1[$, alors $E(x) = ___0___$.\nDonc, $\\lim_{x \\to 1^-} E(x) = \\lim_{x \\to 1^-} 0 = ___0___$.\n\n**Conclusion** : Puisque $\\lim_{x \\to 1^+} E(x) \\neq \\lim_{x \\to 1^-} E(x)$ ($1 \\neq 0$), la fonction $f(x) = E(x)$ **n'admet pas de limite** en $a=1$. [cite: 101]"
+            }
+          ]
+        },
+        {
+          "title": "Limites infinies en $a$ (Asymptote Verticale)",
+          "elements": [
+            {
+              "type": "p",
+              "content": "Que se passe-t-il quand $f(x)$ devient arbitrairement grand (positif ou négatif) lorsque $x$ s'approche de $a$ ? C'est le concept de limite infinie, graphiquement lié aux asymptotes."
+            },
+            {
+              "type": "definition-box",
+              [cite_start]"preamble": "**Définition (Limite $+\\infty$ à droite)** : [cite: 176]",
+              "content": "On dit que $f(x)$ tend vers $+\\infty$ quand $x$ tend vers $a$ par la droite si :\nPour tout 'seuil' $A > 0$ (aussi grand soit-il), il existe $\\alpha > 0$ tel que si $x$ s'approche de $a$ par la droite, $f(x)$ dépasse ce seuil.\n\n**Formalisme ($A, \\alpha$)** :\n$$(\\forall A > 0) (\\exists \\alpha > 0) (\\forall x \\in D_f) \\left( 0 < x - a < \\alpha \\implies f(x) > A \\right)$$\nOn note : $\\lim_{x \\to a^+} f(x) = +\\infty$"
+            },
+            {
+              "type": "definition-box",
+              [cite_start]"preamble": "**Asymptote Verticale** : [cite: 199]",
+              [cite_start]"content": "Si $f$ admet une limite infinie ($+\\infty$ ou $-\\infty$) à droite ou à gauche en $a$ :\n\n$$\\lim_{x \\to a^+} f(x) = \\pm\\infty \quad \\text{OU} \quad \\lim_{x \\to a^-} f(x) = \\pm\\infty$$\n\nAlors la droite d'équation **$x = a$** est une **asymptote verticale** à la courbe $C_f$. [cite: 187, 195]"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**À compléter : Calcul (Asymptote Verticale)**",
+              [cite_start]"content": "Déterminons $\\lim_{x \\to 3^+} \\frac{2x - 1}{x - 3}$ et $\\lim_{x \\to 3^-} \\frac{2x - 1}{x - 3}$. [cite: 371, 372, 374, 384]\n\n**Solution** :\n\n**1. Limite du numérateur** :\n$$\\lim_{x \\to 3} (2x - 1) = 2(3) - 1 = ___5___$$ (C'est un nombre positif).\n\n**2. Limite du dénominateur** :\n$$\\lim_{x \\to 3} (x - 3) = ___0___$$\n\nNous avons une forme '$\\frac{5}{0}$'. Le résultat sera $\\pm\\infty$. Il faut étudier le signe du dénominateur.\n\n**3. Étude du signe de $(x-3)$** :\nSi $x \\to 3^+$ (ex: $x=3.1$), alors $x > 3$, donc $x - 3 > 0$. On note $0^+$.\nSi $x \\to 3^-$ (ex: $x=2.9$), alors $x < 3$, donc $x - 3 < 0$. On note $0^-$.\n\n**4. Conclusion** :\n$$\\lim_{x \\to 3^+} \\frac{2x - 1}{x - 3} = \\frac{5}{0^+} = ___+\\infty___$$\n$$\\lim_{x \\to 3^-} \\frac{2x - 1}{x - 3} = \\frac{5}{0^-} = ___-\\infty___$$\n\nGraphiquement, la droite **$x = 3$** est une asymptote verticale."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Limites en l'Infini et Asymptotes Horizontales",
+      "subsections": [
+        {
+          "title": "Limite finie en $\\pm\\infty$ (Asymptote Horizontale)",
+          "elements": [
+            {
+              "type": "p",
+              "content": "On étudie maintenant le comportement de $f(x)$ lorsque $x$ devient arbitrairement grand, $x \\to +\\infty$ ou $x \\to -\\infty$."
+            },
+            {
+              "type": "definition-box",
+              [cite_start]"preamble": "**Définition (Limite finie $l$ en $+\\infty$)** : [cite: 215]",
+              [cite_start]"content": "On dit que $f(x)$ tend vers $l$ quand $x$ tend vers $+\\infty$ si :\n$$(\\forall \\epsilon > 0) (\\exists B > 0) (\\forall x \\in D_f) \\left( x > B \\implies |f(x) - l| < \\epsilon \\right)$$\nOn note : $\\lim_{x \\to +\\infty} f(x) = l$ [cite: 216]"
+            },
+            {
+              "type": "definition-box",
+              [cite_start]"preamble": "**Asymptote Horizontale** : [cite: 241]",
+              [cite_start]"content": "Si $f$ admet une limite finie $l$ en $+\\infty$ ou en $-\\infty$ :\n\n$$\\lim_{x \\to +\\infty} f(x) = l \quad \\text{OU} \quad \\lim_{x \\to -\\infty} f(x) = l$$\n\nAlors la droite d'équation **$y = l$** est une **asymptote horizontale** à la courbe $C_f$. [cite: 229, 230]"
+            },
+            {
+              "type": "property-box",
+              [cite_start]"preamble": "**Limites de référence en $\\pm\\infty$** : [cite: 220, 222, 225]",
+              "content": "Soit $n \\in \\mathbb{N}^*$ et $k$ un réel.\n\n$$\\lim_{x \\to +\\infty} \\frac{k}{x^n} = 0 \quad \\text{et} \quad \\lim_{x \\to -\\infty} \\frac{k}{x^n} = 0$$\n\n$$\\lim_{x \\to +\\infty} \\frac{k}{\\sqrt{x}} = 0$$"
+            },
+            {
+              "type": "remark-box",
+              [cite_start]"preamble": "**Position relative** : [cite: 243]",
+              [cite_start]"content": "Pour savoir si $C_f$ est au-dessus ou au-dessous de son asymptote $y=l$, on étudie le signe de l'expression **$f(x) - l$** au voisinage de $\\pm\\infty$. [cite: 244, 247]"
+            }
+          ]
+        },
+        {
+          "title": "Limite infinie en $\\pm\\infty$",
+          "elements": [
+            {
+              "type": "definition-box",
+              [cite_start]"preamble": "**Définition (Limite $+\\infty$ en $+\\infty$)** : [cite: 271]",
+              [cite_start]"content": "On dit que $f(x)$ tend vers $+\\infty$ quand $x$ tend vers $+\\infty$ si :\n$$(\\forall A > 0) (\\exists B > 0) (\\forall x \\in D_f) \\left( x > B \\implies f(x) > A \\right)$$\nOn note : $\\lim_{x \\to +\\infty} f(x) = +\\infty$ [cite: 274]"
+            },
+            {
+              "type": "property-box",
+              [cite_start]"preamble": "**Limites de référence en $+\\infty$** : [cite: 275]",
+              "content": "Soit $n \\in \\mathbb{N}^*$.\n\n$$\\lim_{x \\to +\\infty} x^n = +\\infty$$\n$$\\lim_{x \\to +\\infty} \\sqrt{x} = +\\infty$$\n\n**En $-\\infty$** (attention au signe) :\n$$\\lim_{x \\to -\\infty} x^n = \\begin{cases} +\\infty & \\text{si } n \\text{ est pair} \\\\ -\\infty & \\text{si } n \\text{ est impair} \\end{cases}$$"
+            },
+            {
+              "type": "remark-box",
+              "preamble": "**Branches infinies**",
+              "content": "Si $\\lim_{x \\to \\pm\\infty} f(x) = \\pm\\infty$, la courbe $C_f$ admet une **branche infinie**. [cite_start]L'étude des asymptotes obliques (type $y=ax+b$) ou des branches paraboliques sera vue plus en détail dans le chapitre 'Étude de fonctions'. [cite: 281]"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Opérations, Formes Indéterminées et Techniques",
+      "subsections": [
+        {
+          "title": "Opérations sur les limites",
+          "elements": [
+            {
+              "type": "p",
+              [cite_start]"content": "Les opérations sur les limites (somme, produit, quotient) suivent des règles intuitives, mais génèrent 4 'Formes Indéterminées' (FI) où l'on ne peut pas conclure directement. [cite: 315]"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Les 4 Formes Indéterminées (FI) à connaître** :",
+              "content": "Les FIs sont des situations où tout est possible ; il faut 'lever l'indétermination'.\n\n1.  [cite_start]**Somme** : $ (+\\infty) + (-\\infty) $ ou $ (-\\infty) + (+\\infty) $ [cite: 317]\n2.  [cite_start]**Produit** : $ 0 \\times (\\pm\\infty) $ [cite: 328]\n3.  [cite_start]**Quotient** : $ \\dfrac{0}{0} $ [cite: 366]\n4.  [cite_start]**Quotient** : $ \\dfrac{\\pm\\infty}{\\pm\\infty} $ [cite: 367]"
+            },
+            {
+              "type": "p",
+              "content": "La suite de ce chapitre se concentre sur les méthodes pour lever ces indéterminations."
+            }
+          ]
+        },
+        {
+          "title": "Technique 1 : Polynômes et Fractions Rationnelles en $\\pm\\infty$",
+          "elements": [
+            {
+              "type": "theorem-box",
+              [cite_start]"preamble": "**Règle (Limite en $\\pm\\infty$)** : [cite: 396, 397]",
+              "content": "La limite d'une fonction **polynôme** ou **rationnelle** en $+\\infty$ ou $-\\infty$ est égale à la limite du **rapport de ses termes de plus haut degré**.\n\n**Polynôme** :\n$\\lim_{x \\to \\pm\\infty} (a_n x^n + \dots + a_0) = \\lim_{x \\to \\pm\\infty} a_n x^n$\n\n**Rationnelle** :\n$\\lim_{x \\to \\pm\\infty} \\frac{a_n x^n + \dots}{b_m x^m + \dots} = \\lim_{x \\to \\pm\\infty} \\frac{a_n x^n}{b_m x^m}$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**À compléter : Application (Fraction rationnelle)**",
+              "content": "Déterminons $\\lim_{x \\to +\\infty} \\frac{3x^2 - 5x + 1}{2x^2 + 7x}$ et $\\lim_{x \\to -\\infty} \\frac{5x^3 + 1}{x^2 - 2}$.\n\n**Solution** :\n\n**1. $\\lim_{x \\to +\\infty} \\frac{3x^2 - 5x + 1}{2x^2 + 7x}$** (FI $\\frac{\\infty}{\\infty}$)\nOn applique la règle (termes de plus haut degré) :\n$$ \\lim_{x \\to +\\infty} \\frac{___3x^2___}{___2x^2___} = \\lim_{x \\to +\\infty} \\frac{3}{2} = ___\\frac{3}{2}___$$\nGraphiquement, $y = 3/2$ est une asymptote horizontale.\n\n**2. $\\lim_{x \\to -\\infty} \\frac{5x^3 + 1}{x^2 - 2}$** (FI $\\frac{\\infty}{\\infty}$)\n$$ \\lim_{x \\to -\\infty} \\frac{___5x^3___}{___x^2___} = \\lim_{x \\to -\\infty} 5x = 5 \\times (-\\infty) = ___-\\infty___$$"
+            }
+          ]
+        },
+        {
+          "title": "Technique 2 : Factorisation (FI $\\frac{0}{0}$)",
+          "elements": [
+            {
+              "type": "remark-box",
+              "preamble": "**Méthode**",
+              "content": "Pour une fraction rationnelle $f(x) = P(x) / Q(x)$ qui donne une FI $\\frac{0}{0}$ en $a$, cela signifie que $a$ est une racine de $P(x)$ et $Q(x)$.\nOn peut donc factoriser $P(x)$ et $Q(x)$ par $(x-a)$ pour simplifier."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**À compléter : Factorisation (FI $\\frac{0}{0}$)**",
+              "content": "Déterminons $\\lim_{x \\to 2} \\frac{x^2 - 4}{x^2 + x - 6}$.\n\n**Solution** :\nNumérateur en 2 : $(2)^2 - 4 = 0$.\nDénominateur en 2 : $(2)^2 + (2) - 6 = 4 + 2 - 6 = 0$.\nC'est une FI $\\frac{0}{0}$.\n\n**1. Factorisation du numérateur** :\n$x^2 - 4 = (x - 2)(x + 2)$ (Identité remarquable).\n\n**2. Factorisation du dénominateur** :\n$x^2 + x - 6$. On sait que 2 est racine. L'autre racine $x_2$ vérifie $x_1 \cdot x_2 = c/a \implies 2 \cdot x_2 = -6 \implies x_2 = -3$.\n$x^2 + x - 6 = (x - 2)(x + 3)$.\n\n**3. Calcul** :\n$$ \\lim_{x \\to 2} \\frac{(x - 2)(x + 2)}{(x - 2)(x + 3)} = \\lim_{x \\to 2} \\frac{x + 2}{x + 3} $$ (On simplifie par $(x-2)$ car $x \\neq 2$)\n\n$$ = \\frac{2 + 2}{2 + 3} = ___\\frac{4}{5}___$$"
+            }
+          ]
+        },
+        {
+          "title": "Technique 3 : Expression Conjuguée (Racines)",
+          "elements": [
+            {
+              "type": "remark-box",
+              [cite_start]"preamble": "**Méthode** : [cite: 78]",
+              "content": "Face à une FI ($0/0$ ou $\\infty - \\infty$) impliquant $\\sqrt{A} - B$ ou $\\sqrt{A} - \\sqrt{B}$, on multiplie le numérateur ET le dénominateur par l'**expression conjuguée** ($\sqrt{A} + B$ ou $\sqrt{A} + \\sqrt{B}$) pour faire disparaître la racine gênante grâce à $(u-v)(u+v) = u^2 - v^2$."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**À compléter : Conjugué (FI $\\frac{0}{0}$)**",
+              [cite_start]"content": "Déterminons $\\lim_{x \\to 0} \\frac{\\sqrt{x+4} - 2}{x}$. [cite: 393]\n\n**Solution** :\nNumérateur en 0 : $\\sqrt{0+4} - 2 = 2 - 2 = 0$.\nDénominateur en 0 : $0$.\nC'est une FI $\\frac{0}{0}$.\n\nOn multiplie par le conjugué de $\\sqrt{x+4} - 2$, qui est $(\\sqrt{x+4} + 2)$ :\n\n$$ \\lim_{x \\to 0} \\frac{(\\sqrt{x+4} - 2) (___\\sqrt{x+4} + 2___)}{x (___\\sqrt{x+4} + 2___)} $$
+\n$$ = \\lim_{x \\to 0} \\frac{(x+4) - (2)^2}{x (\\sqrt{x+4} + 2)} = \\lim_{x \\to 0} \\frac{x + 4 - 4}{x (\\sqrt{x+4} + 2)} $$
+\n$$ = \\lim_{x \\to 0} \\frac{x}{x (\\sqrt{x+4} + 2)} $$
+\nOn simplifie par $x$ (car $x \\neq 0$) :\n$$ = \\lim_{x \\to 0} \\frac{1}{\\sqrt{x+4} + 2} $$
+\nMaintenant on peut remplacer $x$ par 0 :\n$$ = \\frac{1}{\\sqrt{0+4} + 2} = \\frac{1}{2 + 2} = ___\\frac{1}{4}___$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**À compléter : Conjugué (FI $\\infty - \\infty$)**",
+              "content": "Déterminons $\\lim_{x \\to +\\infty} (\\sqrt{x^2 + 5x} - x)$.\n\n**Solution** :\nC'est une FI $\\infty - \\infty$.\nOn multiplie par le conjugué $(\\sqrt{x^2 + 5x} + x)$ (sur lui-même) :\n\n$$ \\lim_{x \\to +\\infty} \\frac{(\\sqrt{x^2 + 5x} - x) (___\\sqrt{x^2 + 5x} + x___)}{(___\\sqrt{x^2 + 5x} + x___)} $$
+\n$$ = \\lim_{x \\to +\\infty} \\frac{(x^2 + 5x) - x^2}{\\sqrt{x^2 + 5x} + x} = \\lim_{x \\to +\\infty} \\frac{5x}{\\sqrt{x^2 + 5x} + x} $$
+\nC'est maintenant une FI $\\frac{\\infty}{\\infty}$. On factorise par le terme de plus haut degré (ici $x$) en haut et en bas.\nAu dénominateur : $\\sqrt{x^2 + 5x} = \\sqrt{x^2(1 + 5/x)} = |x|\\sqrt{1 + 5/x}$.\nComme $x \\to +\\infty$, $x > 0$, donc $|x| = x$.\n\n$$ = \\lim_{x \\to +\\infty} \\frac{5x}{x\\sqrt{1 + 5/x} + x} = \\lim_{x \\to +\\infty} \\frac{x(5)}{x(\\sqrt{1 + 5/x} + 1)} $$
+\nOn simplifie par $x$ :\n$$ = \\lim_{x \\to +\\infty} \\frac{5}{\\sqrt{1 + 5/x} + 1} $$
+\nPuisque $\\lim_{x \\to +\\infty} 5/x = 0$ :\n$$ = \\frac{5}{\\sqrt{1 + 0} + 1} = \\frac{5}{1 + 1} = ___\\frac{5}{2}___$$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Limites et Ordre (Théorèmes d'Encadrement)",
+      "subsections": [
+        {
+          "title": "Théorème des Gendarmes",
+          "elements": [
+            {
+              "type": "p",
+              "content": "Ces théorèmes permettent de trouver une limite en 'piégeant' une fonction compliquée entre deux fonctions plus simples."
+            },
+            {
+              "type": "theorem-box",
+              [cite_start]"preamble": "**Théorème d'encadrement (des Gendarmes)** : [cite: 85, 295]",
+              "content": "Soient $f, g, h$ des fonctions définies sur un intervalle pointé de $a$ (ou au voisinage de $\\pm\\infty$).\n\nSi $g(x) \\le f(x) \\le h(x)$ pour $x$ assez proche de $a$,\nET si $\\lim_{x \\to a} g(x) = l$ ET $\\lim_{x \\to a} h(x) = l$,\n\nAlors : $$\\lim_{x \\to a} f(x) = l$$"
+            },
+            {
+              "type": "theorem-box",
+              [cite_start]"preamble": "**Théorèmes de comparaison (Minoration/Majoration)** : [cite: 302]",
+              "content": "1. [cite_start]Si $f(x) \\le g(x)$ et $\\lim_{x \\to a} f(x) = +\\infty$, alors $\\lim_{x \\to a} g(x) = +\\infty$. [cite: 305]\n2. [cite_start]Si $f(x) \\le g(x)$ et $\\lim_{x \\to a} g(x) = -\\infty$, alors $\\lim_{x \\to a} f(x) = -\\infty$. [cite: 304, 306]"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**À compléter : Application (Gendarmes)**",
+              "content": "Déterminons $\\lim_{x \\to +\\infty} \\frac{3x + \\cos x}{x}$.\n\n**Solution** :\nOn ne peut pas calculer $\\lim_{x \\to +\\infty} \\cos x$. On doit encadrer.\n\nOn sait que pour tout $x$ :\n$$ -1 \\le \\cos x \\le 1 $$\n\nOn ajoute $3x$ (on construit $f(x)$) :\n$$ 3x - 1 \\le 3x + \\cos x \\le 3x + 1 $$\n\nOn divise par $x$. Comme $x \\to +\\infty$, $x$ est positif, l'ordre ne change pas.\n$$ \\frac{3x - 1}{x} \\le \\frac{3x + \\cos x}{x} \\le \\frac{3x + 1}{x} $$
+$$ 3 - \\frac{1}{x} \\le f(x) \\le 3 + \\frac{1}{x} $$\n\nOn calcule les limites des 'gendarmes' :\n$\\lim_{x \\to +\\infty} (3 - \\frac{1}{x}) = 3 - 0 = ___3___$\n$\\lim_{x \\to +\\infty} (3 + \\frac{1}{x}) = 3 + 0 = ___3___$\n\n**Conclusion** : D'après le théorème des gendarmes, $\\lim_{x \\to +\\infty} f(x) = ___3___$."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**À compléter : Application (Comparaison)**",
+              "content": "Déterminons $\\lim_{x \\to +\\infty} (x + \\sin x)$.\n\n**Solution** :\nC'est une forme $'+ \\infty + (\\text{oscillant})'$, pas une FI.\nOn utilise la comparaison.\n\nOn sait que pour tout $x$ :\n$$ \\sin x \\ge ___\\-1___ $$\n\nOn ajoute $x$ :\n$$ x + \\sin x \\ge x - 1 $$\n\nOn calcule la limite du terme minorant :\n$$ \\lim_{x \\to +\\infty} (x - 1) = ___+\\infty___ $$\n\n**Conclusion** : D'après le théorème de comparaison (minoration), on conclut que :\n$$ \\lim_{x \\to +\\infty} (x + \\sin x) = ___+\\infty___ $$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Limites Trigonométriques Fondamentales",
+      "subsections": [
+        {
+          "title": "Limites de référence (en 0)",
+          "elements": [
+            {
+              "type": "p",
+              [cite_start]"content": "Les limites trigonométriques suivantes sont fondamentales et sont démontrées en 1BSM (souvent à l'aide du théorème des gendarmes et d'encadrements géométriques). [cite: 404, 405] Elles servent de base à tous les calculs de limites trigonométriques."
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Théorèmes (Limites trigonométriques)** :",
+              [cite_start]"content": "$$\\lim_{x \\to 0} \\frac{\\sin x}{x} = 1$$ [cite: 407][cite_start]\n\n$$\\lim_{x \\to 0} \\frac{\\tan x}{x} = 1$$ [cite: 407][cite_start]\n\n$$\\lim_{x \\to 0} \\frac{1 - \\cos x}{x^2} = \\frac{1}{2}$$ [cite: 408]"
+            },
+            {
+              "type": "remark-box",
+              "preamble": "**Conséquences utiles** :",
+              "content": "En posant $u = ax$ (avec $a \\neq 0$), on a $\\lim_{x \to 0} u = 0$. Par composition :\n\n$$\\lim_{x \\to 0} \\frac{\\sin(ax)}{ax} = 1 \quad \\text{et} \quad \\lim_{x \\to 0} \\frac{\\tan(ax)}{ax} = 1$$\n\nAttention aussi : $\\lim_{x \\to 0} \\frac{1 - \\cos x}{x} = \\lim_{x \\to 0} \\frac{1 - \\cos x}{x^2} \cdot x = \\frac{1}{2} \cdot 0 = 0$."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**À compléter : Calcul (Limites Trigonométriques)**",
+              [cite_start]"content": "Déterminons $\\lim_{x \\to 0} \\frac{\\sin(7x)}{\\tan(3x)}$. [cite: 408]\n\n**Solution** :\nC'est une FI $\\frac{0}{0}$. On doit faire apparaître les limites de référence.\nOn 'force' l'apparition de $7x$ et $3x$ au dénominateur.\n\n$$ \\frac{\\sin(7x)}{\\tan(3x)} = \\frac{\\sin(7x)}{1} \cdot \\frac{1}{\\tan(3x)} $$
+\n$$ = \\left( \\frac{\\sin(7x)}{___7x___} \\right) \cdot \\left( \\frac{___3x___}{\\tan(3x)} \\right) \cdot \\frac{7x}{3x} $$
+\n$$ = \\left( \\frac{\\sin(7x)}{7x} \\right) \cdot \\left( \\frac{1}{\\frac{\\tan(3x)}{3x}} \\right) \cdot \\left( \\frac{7}{3} \\right) $$\n\nOn calcule la limite de chaque morceau quand $x \\to 0$ :\n$\\lim_{x \\to 0} \\frac{\\sin(7x)}{7x} = 1$ (en posant $u=7x$)\n$\\lim_{x \\to 0} \\frac{\\tan(3x)}{3x} = 1$ (en posant $v=3x$)\n\nLa limite est donc :\n$$ (___1___) \cdot \\left( \\frac{1}{___1___} \\right) \cdot \\left( \\frac{7}{3} \\right) = ___\\frac{7}{3}___$$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Exercices d'Application Typiques",
+      "subsections": [
+        {
+          "title": "Série d'exercices",
+          "elements": [
+            {
+              "type": "practice-box",
+              "statement": "**Exercice 1 : Asymptotes Verticales et Signe**\n\nCalculer les limites suivantes et interpréter graphiquement le résultat :\n1. $\\lim_{x \\to 2^+} \\frac{3x - 10}{x - 2}$\n2. $\\lim_{x \\to 2^-} \\frac{3x - 10}{x - 2}$",
+              "listType": "numbered",
+              "content": [
+                "Calculer la limite à droite",
+                "Calculer la limite à gauche"
+              ],
+              "solution": [
+                "**1. Limite à droite ($x \\to 2^+$)**\n\nOn calcule la limite du numérateur et du dénominateur :\n$\\lim_{x \\to 2^+} (3x - 10) = 3(2) - 10 = -4$ (Négatif)\n$\\lim_{x \\to 2^+} (x - 2) = 0$\n\nIl faut étudier le signe du $0$. Si $x \to 2^+$, alors $x > 2$, donc $x - 2 > 0$. C'est un $0^+$.\n\nLa limite est de la forme $\\frac{-4}{0^+} = -\\infty$.\n\n**Réponse 1** : $\\lim_{x \\to 2^+} \\frac{3x - 10}{x - 2} = -\\infty$.",
+                "**2. Limite à gauche ($x \\to 2^-$)**\n\nLe numérateur tend toujours vers $-4$.\n$\\lim_{x \\to 2^-} (x - 2) = 0$\n\nOn étudie le signe. Si $x \to 2^-$, alors $x < 2$, donc $x - 2 < 0$. [cite_start]C'est un $0^-$.\n\nLa limite est de la forme $\\frac{-4}{0^-} = +\\infty$ (règle des signes $\\frac{-}{-} = +$).\n\n**Réponse 2** : $\\lim_{x \\to 2^-} \\frac{3x - 10}{x - 2} = +\\infty$.\n\n**Interprétation graphique** : La droite d'équation $x = 2$ est une asymptote verticale à la courbe $C_f$. [cite: 199]"
+              ]
+            },
+            {
+              "type": "practice-box",
+              "statement": "**Exercice 2 : FI $\\frac{0}{0}$ - Factorisation**\n\nCalculer la limite : $\\lim_{x \\to -3} \\frac{x^2 + 2x - 3}{x^2 + 5x + 6}$",
+              "listType": "numbered",
+              "content": [
+                "Vérifier la Forme Indéterminée",
+                "Factoriser le numérateur et le dénominateur",
+                "Calculer la limite"
+              ],
+              "solution": [
+                "**1. [cite_start]Vérification** :\nNumérateur : $(-3)^2 + 2(-3) - 3 = 9 - 6 - 3 = 0$.\nDénominateur : $(-3)^2 + 5(-3) + 6 = 9 - 15 + 6 = 0$.\nC'est bien une FI $\\frac{0}{0}$. [cite: 366]",
+                "**2. Factorisation** :\nLe numérateur $x^2 + 2x - 3$ a $-3$ comme racine. L'autre racine $x_2$ vérifie $x_1 \cdot x_2 = c/a \implies -3 \cdot x_2 = -3 \implies x_2 = 1$.
+$x^2 + 2x - 3 = (x - (-3))(x - 1) = (x + 3)(x - 1)$.\n\nLe dénominateur $x^2 + 5x + 6$ a $-3$ comme racine. L'autre racine $x_2$ vérifie $x_1 \cdot x_2 = c/a \implies -3 \cdot x_2 = 6 \implies x_2 = -2$.
+$x^2 + 5x + 6 = (x - (-3))(x - (-2)) = (x + 3)(x + 2)$.",
+                "**3. Calcul** :\n$$ \\lim_{x \\to -3} \\frac{(x + 3)(x - 1)}{(x + 3)(x + 2)} = \\lim_{x \\to -3} \\frac{x - 1}{x + 2} $$
+(On simplifie par $(x+3)$ car $x \neq -3$)\n\n$$ = \\frac{-3 - 1}{-3 + 2} = \\frac{-4}{-1} = 4 $$\n\n**Réponse** : $\\lim_{x \\to -3} \\frac{x^2 + 2x - 3}{x^2 + 5x + 6} = 4$."
+              ]
+            },
+            {
+              "type": "practice-box",
+              "statement": "**Exercice 3 : FI $\\frac{0}{0}$ - Racine (Conjugué)**\n\nCalculer la limite : $\\lim_{x \\to 5} \\frac{\\sqrt{2x - 1} - 3}{x - 5}$",
+              "listType": "numbered",
+              "content": [
+                "Vérifier la FI",
+                "Utiliser l'expression conjuguée",
+                "Simplifier et calculer"
+              ],
+              "solution": [
+                "**1. Vérification** :\nNumérateur : $\\sqrt{2(5) - 1} - 3 = \\sqrt{9} - 3 = 3 - 3 = 0$.\nDénominateur : $5 - 5 = 0$.\nC'est une FI $\\frac{0}{0}$.",
+                "**2. [cite_start]Expression Conjuguée** :\nOn multiplie haut et bas par le conjugué $\\sqrt{2x - 1} + 3$ : [cite: 78]\n$$ \\lim_{x \\to 5} \\frac{(\\sqrt{2x - 1} - 3) (\\sqrt{2x - 1} + 3)}{(x - 5) (\\sqrt{2x - 1} + 3)} $$
+$$ = \\lim_{x \\to 5} \\frac{(2x - 1) - (3)^2}{(x - 5) (\\sqrt{2x - 1} + 3)} $$
+$$ = \\lim_{x \\to 5} \\frac{2x - 1 - 9}{(x - 5) (\\sqrt{2x - 1} + 3)} $$
+$$ = \\lim_{x \\to 5} \\frac{2x - 10}{(x - 5) (\\sqrt{2x - 1} + 3)} $$",
+                "**3. Simplifier et calculer** :\nOn factorise le numérateur : $2x - 10 = 2(x - 5)$.\n$$ = \\lim_{x \\to 5} \\frac{2(x - 5)}{(x - 5) (\\sqrt{2x - 1} + 3)} $$
+On simplifie par $(x - 5)$ (car $x \neq 5$) :\n$$ = \\lim_{x \\to 5} \\frac{2}{\\sqrt{2x - 1} + 3} $$
+On remplace $x$ par 5 :\n$$ = \\frac{2}{\\sqrt{2(5) - 1} + 3} = \\frac{2}{\\sqrt{9} + 3} = \\frac{2}{3 + 3} = \\frac{2}{6} = \\frac{1}{3} $$
+\n**Réponse** : $\\lim_{x \\to 5} \\frac{\\sqrt{2x - 1} - 3}{x - 5} = \\frac{1}{3}$."
+              ]
+            },
+            {
+              "type": "practice-box",
+              "statement": "**Exercice 4 : FI $\\infty - \\infty$ - Racine (Conjugué)**\n\nCalculer la limite : $\\lim_{x \\to +\\infty} (\\sqrt{x^2 + 6x} - x)$",
+              "listType": "numbered",
+              "content": [
+                "Vérifier la FI",
+                "Utiliser l'expression conjuguée",
+                "Factoriser par le terme dominant"
+              ],
+              "solution": [
+                "**1. [cite_start]Vérification** :\n$\lim_{x \to +\\infty} \\sqrt{x^2 + 6x} = +\\infty$ et $\lim_{x \to +\\infty} -x = -\\infty$.\nC'est une FI $\\infty - \\infty$. [cite: 317]",
+                "**2. Expression Conjuguée** :\n$$ \\lim_{x \\to +\\infty} \\frac{(\\sqrt{x^2 + 6x} - x) (\\sqrt{x^2 + 6x} + x)}{\\sqrt{x^2 + 6x} + x} $$
+$$ = \\lim_{x \\to +\\infty} \\frac{(x^2 + 6x) - x^2}{\\sqrt{x^2 + 6x} + x} $$
+$$ = \\lim_{x \\to +\\infty} \\frac{6x}{\\sqrt{x^2 + 6x} + x} $$",
+                "**3. Factoriser (FI $\\frac{\\infty}{\\infty}$)** :\nOn factorise par $x$ au dénominateur. Attention à la racine :\n$\sqrt{x^2 + 6x} = \\sqrt{x^2(1 + 6/x)} = |x|\\sqrt{1 + 6/x}$.\nComme $x \\to +\\infty$, $x > 0$ et $|x| = x$.\n$$ = \\lim_{x \\to +\\infty} \\frac{6x}{x\\sqrt{1 + 6/x} + x} $$
+$$ = \\lim_{x \\to +\\infty} \\frac{x(6)}{x(\\sqrt{1 + 6/x} + 1)} $$
+On simplifie par $x$ :\n$$ = \\lim_{x \\to +\\infty} \\frac{6}{\\sqrt{1 + 6/x} + 1} $$
+Quand $x \\to +\\infty$, $6/x \to 0$.
+$$ = \\frac{6}{\\sqrt{1 + 0} + 1} = \\frac{6}{1 + 1} = \\frac{6}{2} = 3 $$
+\n**Réponse** : $\\lim_{x \\to +\\infty} (\\sqrt{x^2 + 6x} - x) = 3$."
+              ]
+            },
+            {
+              "type": "practice-box",
+              "statement": "**Exercice 5 : Limites Trigonométriques**\n\nCalculer la limite : $\\lim_{x \\to 0} \\frac{1 - \\cos(2x)}{\\sin(5x) \cdot x}$",
+              "listType": "numbered",
+              "content": [
+                "Vérifier la FI",
+                "Faire apparaître les limites de référence",
+                "Calculer"
+              ],
+              "solution": [
+                "**1. Vérification** :\nNumérateur : $1 - \\cos(0) = 1 - 1 = 0$.\nDénominateur : $\\sin(0) \cdot 0 = 0 \cdot 0 = 0$.\nC'est une FI $\\frac{0}{0}$.",
+                "**2. [cite_start]Limites de référence** :\nOn a deux briques : $1 - \\cos(2x)$ et $\\sin(5x)$.\nOn sait que $\\lim_{u \to 0} \\frac{1 - \\cos u}{u^2} = \\frac{1}{2}$[cite: 408]. Ici $u = 2x$. [cite_start]Il nous faut $(2x)^2 = 4x^2$.\nOn sait que $\\lim_{v \to 0} \\frac{\\sin v}{v} = 1$[cite: 407]. Ici $v = 5x$. Il nous faut $5x$.\n\nOn réécrit l'expression :\n$$ \\lim_{x \\to 0} \\frac{1 - \\cos(2x)}{\\sin(5x) \cdot x} = \\lim_{x \\to 0} \\left( \\frac{1 - \\cos(2x)}{(2x)^2} \\right) \cdot \\left( \\frac{5x}{\\sin(5x)} \\right) \cdot \\frac{(2x)^2}{5x \cdot x} $$
+$$ = \\lim_{x \\to 0} \\left( \\frac{1 - \\cos(2x)}{4x^2} \\right) \cdot \\left( \\frac{1}{\\frac{\\sin(5x)}{5x}} \\right) \cdot \\left( \\frac{4x^2}{5x^2} \\right) $$",
+                "**3. Calcul** :\nOn sépare les limites :\n$$ = \\left( \\lim_{x \to 0} \\frac{1 - \\cos(2x)}{(2x)^2} \\right) \cdot \\left( \\lim_{x \to 0} \\frac{1}{\\frac{\\sin(5x)}{5x}} \\right) \cdot \\left( \\lim_{x \to 0} \\frac{4}{5} \\right) $$
+En posant $u=2x$ et $v=5x$, les deux premières limites valent $\\frac{1}{2}$ et $1$.\n$$ = \\left( \\frac{1}{2} \\right) \cdot \\left( \\frac{1}{1} \\right) \cdot \\left( \\frac{4}{5} \\right) = \\frac{4}{10} = \\frac{2}{5} $$
+\n**Réponse** : $\\lim_{x \\to 0} \\frac{1 - \\cos(2x)}{\\sin(5x) \cdot x} = \\frac{2}{5}$."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
