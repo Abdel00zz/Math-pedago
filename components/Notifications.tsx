@@ -51,38 +51,28 @@ export const Notifications: React.FC = () => {
     // Style minimaliste et épuré
     const typeInfo: { [key in ToastNotificationType]: { 
         icon: string; 
-        bgColor: string;
-        borderColor: string;
         textColor: string;
-        iconBg: string;
+        accent: string;
     } } = {
         success: { 
             icon: 'check_circle', 
-            bgColor: 'bg-white',
-            borderColor: 'border-emerald-200',
             textColor: 'text-emerald-700',
-            iconBg: 'bg-emerald-50'
+            accent: 'text-emerald-500'
         },
         warning: { 
             icon: 'info', 
-            bgColor: 'bg-white',
-            borderColor: 'border-amber-200',
             textColor: 'text-amber-700',
-            iconBg: 'bg-amber-50'
+            accent: 'text-amber-500'
         },
         error: { 
             icon: 'error_outline', 
-            bgColor: 'bg-white',
-            borderColor: 'border-rose-200',
             textColor: 'text-rose-700',
-            iconBg: 'bg-rose-50'
+            accent: 'text-rose-500'
         },
         info: { 
             icon: 'info', 
-            bgColor: 'bg-white',
-            borderColor: 'border-blue-200',
             textColor: 'text-blue-700',
-            iconBg: 'bg-blue-50'
+            accent: 'text-blue-500'
         },
     };
 
@@ -97,7 +87,7 @@ export const Notifications: React.FC = () => {
 
     return ReactDOM.createPortal(
         <div
-            className="fixed top-4 left-4 z-[1000] flex flex-col gap-1.5 w-full max-w-xs pointer-events-none"
+            className="fixed bottom-6 right-6 z-[1000] flex flex-col items-end gap-2 w-full max-w-sm pointer-events-none"
             role="region"
             aria-label="Notifications"
         >
@@ -129,42 +119,42 @@ export const Notifications: React.FC = () => {
                         aria-atomic="true"
                         onClick={isClickable ? handleActionClick : undefined}
                         className={`
-                            relative w-full rounded-lg
-                            ${info.bgColor}
-                            border ${info.borderColor}
-                            shadow-sm
-                            pointer-events-auto
-                            transition-all duration-300 ease-out
-                            ${isClickable ? 'cursor-pointer hover:shadow-md' : ''}
+                            relative w-full sm:w-72 rounded-2xl
+                            bg-white/92 backdrop-blur border border-slate-200/40
+                            shadow-lg/40 pointer-events-auto
+                            transition-all duration-250 ease-out
+                            ${isClickable ? 'cursor-pointer hover:shadow-xl/40' : 'hover:shadow-xl/40'}
                             ${isLeaving
-                                ? 'opacity-0 -translate-x-8 scale-95'
-                                : 'opacity-100 translate-x-0 scale-100 animate-slideInFromLeft'
+                                ? 'opacity-0 translate-y-4 scale-95'
+                                : 'opacity-100 translate-y-0 scale-100'
                             }
                         `}
                         style={{
-                            transitionProperty: 'opacity, transform',
+                            transitionProperty: 'opacity, transform, box-shadow',
                         }}
                     >
-                        <div className="flex items-center gap-2 p-2">
+                        <div className="flex items-center gap-3 px-3 py-2">
                             {/* Icône minimaliste centrée verticalement */}
                             <div className="flex-shrink-0">
-                                <div className={`w-6 h-6 rounded-md ${info.iconBg} flex items-center justify-center`}>
-                                    <span className={`material-symbols-outlined !text-sm ${info.textColor}`}>
-                                        {info.icon}
-                                    </span>
+                                <div className="relative">
+                                    <div className={`relative w-11 h-11 rounded-2xl bg-slate-50 flex items-center justify-center shadow-sm border border-slate-200/60`}>
+                                        <span className={`material-symbols-outlined text-3xl ${info.accent}`}>
+                                            {info.icon}
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
 
                             <div className="flex-grow min-w-0">
                                 {notif.title && (
-                                    <h4 className={`font-semibold text-xs leading-tight ${info.textColor}`}>
+                                    <h4 className={`font-semibold text-sm leading-snug tracking-tight text-slate-900`}>
                                         {notif.title}
                                     </h4>
                                 )}
                                 {notif.message && (
                                     <div
                                         id={notif.id}
-                                        className="text-[0.7rem] text-gray-600 leading-snug"
+                                        className="text-[0.75rem] text-slate-500 leading-snug mt-0.5"
                                         dangerouslySetInnerHTML={{ __html: notif.message }}
                                     />
                                 )}
@@ -172,10 +162,11 @@ export const Notifications: React.FC = () => {
                                 {notif.action && (
                                     <button
                                         onClick={handleActionClick}
-                                        className={`mt-1 px-2 py-1 text-[0.65rem] font-medium rounded
-                                            ${info.textColor} ${info.iconBg}
-                                            hover:opacity-80
-                                            transition-opacity duration-200`}
+                                        className={`mt-2 inline-flex items-center gap-1 px-2.5 py-1 text-[0.7rem] font-medium
+                                            rounded-full border border-slate-200/60
+                                            text-slate-700 bg-white/85
+                                            hover:bg-white hover:border-slate-300
+                                            transition-colors duration-200`}
                                         aria-label={notif.action.label}
                                     >
                                         {notif.action.label}
@@ -186,23 +177,14 @@ export const Notifications: React.FC = () => {
                             {/* Bouton de fermeture minimaliste */}
                             <button
                                 onClick={handleDismiss}
-                                className="flex-shrink-0 w-5 h-5 rounded hover:bg-gray-100 transition-colors duration-200 flex items-center justify-center text-gray-400 hover:text-gray-600"
+                                className="flex-shrink-0 w-6 h-6 rounded-lg bg-transparent hover:bg-slate-100 transition-colors duration-200 flex items-center justify-center text-slate-400 hover:text-slate-600"
                                 aria-label="Fermer"
                             >
-                                <span className="material-symbols-outlined !text-sm">close</span>
+                                <span className="material-symbols-outlined text-base">close</span>
                             </button>
                         </div>
 
-                        {/* Barre de progression fine en bas */}
-                        <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gray-100 rounded-b-xl overflow-hidden">
-                            <div 
-                                className={`h-full ${info.iconBg}`}
-                                style={{
-                                    width: '100%',
-                                    animation: `shrink ${notif.duration || 3000}ms linear forwards`
-                                }}
-                            ></div>
-                        </div>
+                        {/* Barre de progression supprimée pour une esthétique ultra minimaliste */}
                     </div>
                 );
             })}

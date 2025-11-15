@@ -215,9 +215,11 @@ const ArabicContent: React.FC = () => (
             </div>
         </div>
 
-        <div className="mt-8 text-center" dir="ltr">
+        <div className="mt-8 text-center" dir="rtl">
             <p className="text-sm text-muted-foreground">
-                Conçu et développé par بدوح عبد المالك — تصميم وتطوير
+                منصّة صُمِّمَت وطُوِّرَت بكل شغف على يد <span className="text-primary font-semibold">بدوح عبد المالك</span>
+                <span className="mx-1 text-slate-400">•</span>
+                المملكة المغربية
             </p>
         </div>
     </div>
