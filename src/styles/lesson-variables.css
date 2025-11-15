@@ -1,0 +1,261 @@
+/* ========================================
+   LESSON VARIABLES - CENTRALIZED DESIGN TOKENS
+   Single source of truth for all lesson styles
+   ======================================== */
+
+:root {
+  /* ========================================
+     COLORS - Lesson Accent Palette
+     ======================================== */
+
+  /* Primary lesson color */
+  --lesson-primary: #4255ff;
+  --lesson-primary-light: rgba(66, 85, 255, 0.16);
+  --lesson-primary-lighter: rgba(95, 125, 255, 0.1);
+
+  /* Text colors */
+  --lesson-text-primary: #1f2937;
+  --lesson-text-secondary: #64748b;
+  --lesson-text-muted: rgba(71, 85, 105, 0.8);
+
+  /* Box accent colors - Harmonious palette */
+  --lesson-accent-theorem: #3B82F6;        /* Blue */
+  --lesson-accent-definition: #6366F1;     /* Indigo */
+  --lesson-accent-proposition: #10B981;    /* Emerald */
+  --lesson-accent-property: #F59E0B;       /* Amber */
+  --lesson-accent-corollary: #06B6D4;      /* Cyan */
+  --lesson-accent-lemma: #8B5CF6;          /* Violet */
+  --lesson-accent-activity: #000000;       /* Black for activities */
+
+  /* Inline box accent colors */
+  --lesson-accent-example: #8B5CF6;        /* Violet light */
+  --lesson-accent-remark: #10B981;         /* Mint green */
+  --lesson-accent-method: #F97316;         /* Orange */
+  --lesson-accent-warning: #EF4444;        /* Soft red */
+  --lesson-accent-note: #3B82F6;           /* Sky blue */
+
+  /* Callout colors */
+  --lesson-callout-warning-border: rgba(251, 191, 36, 0.28);
+  --lesson-callout-warning-bg: rgba(255, 251, 235, 0.5);
+  --lesson-callout-warning-icon-bg: rgba(251, 191, 36, 0.2);
+  --lesson-callout-warning-icon: #b45309;
+
+  --lesson-callout-tip-border: rgba(34, 197, 94, 0.28);
+  --lesson-callout-tip-bg: rgba(240, 253, 244, 0.6);
+  --lesson-callout-tip-icon-bg: rgba(34, 197, 94, 0.16);
+  --lesson-callout-tip-icon: #15803d;
+
+  /* Success/Complete colors */
+  --lesson-success: #22c55e;
+  --lesson-success-light: rgba(34, 197, 94, 0.12);
+  --lesson-success-border: rgba(34, 197, 94, 0.24);
+
+  /* Error colors */
+  --lesson-error: #ef4444;
+
+  /* ========================================
+     SPACING - Consistent gaps and paddings
+     ======================================== */
+
+  /* Canvas spacing */
+  --lesson-canvas-gap: clamp(1.1rem, 2.4vw, 1.9rem);
+  --lesson-canvas-padding-vertical: clamp(0.85rem, 1.8vw, 1.6rem);
+  --lesson-canvas-padding-horizontal: clamp(1.25rem, 2vw, 2rem);
+  --lesson-canvas-padding-right: clamp(3rem, 4vw, 4.5rem);
+  --lesson-canvas-max-width: 1200px;
+
+  /* Stack spacing */
+  --lesson-stack-gap: clamp(1.6rem, 3.4vw, 2.6rem);
+
+  /* Section spacing */
+  --lesson-section-gap: clamp(0.9rem, 2vw, 1.5rem);
+  --lesson-section-header-gap: clamp(0.8rem, 1.5vw, 1.2rem);
+  --lesson-section-header-margin: clamp(0.6rem, 1.2vw, 1rem);
+  --lesson-section-body-gap: clamp(1.1rem, 2.5vw, 1.9rem);
+
+  /* Subsection spacing */
+  --lesson-subsection-gap: clamp(0.75rem, 1.3vw, 1.15rem);
+  --lesson-subsection-header-gap: clamp(0.6rem, 1.2vw, 0.9rem);
+  --lesson-subsection-header-margin: clamp(0.4rem, 0.8vw, 0.7rem);
+  --lesson-subsection-body-gap: clamp(0.7rem, 1.2vw, 1.1rem);
+
+  /* Subitem spacing */
+  --lesson-subitem-gap: clamp(0.6rem, 1.1vw, 0.9rem);
+  --lesson-subitem-body-gap: clamp(0.7rem, 1.2vw, 1rem);
+
+  /* Paragraph spacing */
+  --lesson-paragraph-gap: 0.65rem;
+  --lesson-paragraph-padding: clamp(0.65rem, 1.2vw, 0.9rem) clamp(0.85rem, 1.6vw, 1.15rem);
+  --lesson-paragraph-margin: clamp(0.35rem, 0.9vw, 0.6rem) 0;
+
+  /* Box spacing */
+  --lesson-box-padding: clamp(1.1rem, 2.2vw, 1.65rem);
+  --lesson-box-margin: clamp(1rem, 2vw, 1.5rem);
+  --lesson-box-header-gap: clamp(0.6rem, 1.2vw, 0.9rem);
+  --lesson-box-header-margin: clamp(0.8rem, 1.8vw, 1.35rem);
+  --lesson-box-body-gap: clamp(0.65rem, 1.2vw, 1rem);
+
+  /* Inline box spacing */
+  --lesson-inline-padding: clamp(0.95rem, 1.8vw, 1.4rem);
+  --lesson-inline-margin: clamp(0.8rem, 1.6vw, 1.2rem);
+  --lesson-inline-header-gap: clamp(0.5rem, 1vw, 0.75rem);
+
+  /* Callout spacing */
+  --lesson-callout-padding: clamp(0.85rem, 1.6vw, 1.35rem);
+  --lesson-callout-gap: 1rem;
+
+  /* ========================================
+     TYPOGRAPHY - Font sizes and line heights
+     ======================================== */
+
+  /* Section titles */
+  --lesson-section-title-size: clamp(1.35rem, 2.8vw, 1.85rem);
+  --lesson-section-title-weight: 700;
+  --lesson-section-title-line-height: 1.3;
+  --lesson-section-title-letter-spacing: -0.02em;
+
+  /* Subsection titles */
+  --lesson-subsection-title-size: clamp(1.1rem, 2vw, 1.4rem);
+  --lesson-subsection-title-weight: 600;
+  --lesson-subsection-title-line-height: 1.4;
+
+  /* Subitem titles */
+  --lesson-subitem-title-size: 0.78rem;
+  --lesson-subitem-title-weight: 600;
+  --lesson-subitem-title-letter-spacing: 0.08em;
+
+  /* Paragraph text */
+  --lesson-paragraph-size: clamp(0.93rem, 1.6vw, 1.03rem);
+  --lesson-paragraph-line-height: 1.75;
+  --lesson-paragraph-letter-spacing: 0.01em;
+
+  /* Section intro */
+  --lesson-intro-size: clamp(0.95rem, 1.7vw, 1.05rem);
+  --lesson-intro-line-height: 1.7;
+
+  /* Callout text */
+  --lesson-callout-size: 0.95rem;
+  --lesson-callout-line-height: 1.6;
+
+  /* Box badge */
+  --lesson-badge-size: 0.68rem;
+  --lesson-badge-weight: 600;
+  --lesson-badge-letter-spacing: 0.12em;
+
+  /* Box title */
+  --lesson-box-title-size: clamp(0.88rem, 1.5vw, 0.98rem);
+  --lesson-box-title-weight: 600;
+  --lesson-box-title-line-height: 1.4;
+
+  /* ========================================
+     SIZING - Index badges, icons, buttons
+     ======================================== */
+
+  /* Section index */
+  --lesson-section-index-size: clamp(2rem, 3.5vw, 2.5rem);
+  --lesson-section-index-font: clamp(0.9rem, 1.5vw, 1.1rem);
+
+  /* Subsection index */
+  --lesson-subsection-index-size: clamp(1.6rem, 2.8vw, 2rem);
+  --lesson-subsection-index-font: clamp(0.75rem, 1.3vw, 0.9rem);
+
+  /* Callout icon */
+  --lesson-callout-icon-size: 2.5rem;
+  --lesson-callout-icon-font: 1.5rem;
+
+  /* ========================================
+     BORDERS & RADIUS - Consistent shapes
+     ======================================== */
+
+  --lesson-border-radius-sm: clamp(8px, 1.5vw, 12px);
+  --lesson-border-radius-md: clamp(9px, 1.6vw, 12px);
+  --lesson-border-radius-lg: clamp(12px, 2vw, 16px);
+
+  --lesson-paragraph-border: 1px solid rgba(148, 163, 184, 0.22);
+  --lesson-paragraph-border-hover: rgba(66, 85, 255, 0.24);
+
+  --lesson-box-border: 2px solid;
+  --lesson-inline-border: 2px solid;
+
+  --lesson-callout-border: 1.5px solid rgba(15, 23, 42, 0.08);
+
+  /* ========================================
+     BACKGROUNDS - Subtle layers
+     ======================================== */
+
+  --lesson-paragraph-bg: rgba(255, 255, 255, 0.92);
+  --lesson-paragraph-bg-hover: #ffffff;
+
+  --lesson-box-bg: #ffffff;
+  --lesson-inline-bg: #ffffff;
+  --lesson-callout-bg: rgba(255, 255, 255, 0.92);
+
+  --lesson-section-index-bg: linear-gradient(135deg, rgba(66, 85, 255, 0.16), rgba(95, 125, 255, 0.1));
+  --lesson-subsection-index-bg: rgba(66, 85, 255, 0.12);
+
+  /* ========================================
+     LAYOUT - Shell and scroll
+     ======================================== */
+
+  --lesson-shell-scroll-margin: 6.25rem;
+  --lesson-experience-gap: clamp(1.5rem, 3vw, 2.5rem);
+  --lesson-readable-max-width: 960px;
+
+  /* ========================================
+     BREAKPOINTS - Responsive design tokens
+     ======================================== */
+
+  --breakpoint-phone: 480px;
+  --breakpoint-tablet-sm: 640px;
+  --breakpoint-tablet: 768px;
+  --breakpoint-desktop: 1024px;
+
+  /* ========================================
+     NAVIGATOR - Fixed navigation panel
+     ======================================== */
+
+  --navigator-bg: #ffffff;
+  --navigator-bg-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(249, 250, 251, 0.95) 100%);
+  --navigator-border: #e5e7eb;
+  --navigator-border-transparent: rgba(229, 231, 235, 0.8);
+  --navigator-text-primary: #111827;
+  --navigator-text-secondary: #6b7280;
+  --navigator-accent-primary: #6b7280;
+  --navigator-accent-secondary: #9ca3af;
+
+  --navigator-width: 260px;
+  --navigator-width-tablet: 220px;
+  --navigator-top: 100px;
+  --navigator-top-mobile: 70px;
+  --navigator-right: 3rem;
+
+  /* ========================================
+     TRANSITIONS - Smooth animations
+     ======================================== */
+
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.2s ease;
+  --transition-slow: 0.3s ease;
+  --transition-bounce: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ========================================
+     Z-INDEX - Stacking context
+     ======================================== */
+
+  --z-lesson-content: 1;
+  --z-lesson-box: 2;
+  --z-lesson-navigator: 100;
+}
+
+/* ========================================
+   PREFERS REDUCED MOTION - Accessibility
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition-fast: 0s;
+    --transition-normal: 0s;
+    --transition-slow: 0s;
+    --transition-bounce: 0s;
+  }
+}

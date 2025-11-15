@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useRef, useCallback, ReactNode } from 'react';
+import React, { createContext, useContext, useRef, useCallback, ReactNode, useEffect } from 'react';
 
 interface NumberingState {
     'definition-box': number;
@@ -18,17 +18,19 @@ interface NumberingContextValue {
 
 const NumberingContext = createContext<NumberingContextValue | undefined>(undefined);
 
-export const NumberingProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const countersRef = useRef<NumberingState>({
-        'definition-box': 0,
-        'theorem-box': 0,
-        'proposition-box': 0,
-        'property-box': 0,
-        'remark-box': 0,
-        'example-box': 0,
-        'practice-box': 0,
-        'explain-box': 0,
-    });
+const createInitialCounters = (): NumberingState => ({
+    'definition-box': 0,
+    'theorem-box': 0,
+    'proposition-box': 0,
+    'property-box': 0,
+    'remark-box': 0,
+    'example-box': 0,
+    'practice-box': 0,
+    'explain-box': 0,
+});
+
+export const NumberingProvider: React.FC<{ children: ReactNode; resetKey?: string | number | null }> = ({ children, resetKey = null }) => {
+    const countersRef = useRef<NumberingState>(createInitialCounters());
 
     const getNextNumber = useCallback((type: keyof NumberingState) => {
         countersRef.current[type] += 1;
@@ -36,17 +38,12 @@ export const NumberingProvider: React.FC<{ children: ReactNode }> = ({ children 
     }, []);
 
     const reset = useCallback(() => {
-        countersRef.current = {
-            'definition-box': 0,
-            'theorem-box': 0,
-            'proposition-box': 0,
-            'property-box': 0,
-            'remark-box': 0,
-            'example-box': 0,
-            'practice-box': 0,
-            'explain-box': 0,
-        };
+        countersRef.current = createInitialCounters();
     }, []);
+
+    useEffect(() => {
+        reset();
+    }, [resetKey, reset]);
 
     return (
         <NumberingContext.Provider value={{ getNextNumber, reset }}>

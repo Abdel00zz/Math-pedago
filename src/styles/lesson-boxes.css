@@ -1,13 +1,17 @@
 /* ========================================
-   LESSON BOXES - Boîtes de contenu
-   PERFORMANCE OPTIMIZED
+   LESSON BOXES - OPTIMIZED
+   Specialized content containers (Theorem, Definition, etc.)
+   Uses centralized variables from lesson-variables.css
    ======================================== */
 
-/* Layout principal */
+/* ========================================
+   LAYOUT - Experience containers
+   ======================================== */
+
 .lesson-experience {
   display: flex;
   flex-direction: column;
-  gap: clamp(1.5rem, 3vw, 2.5rem);
+  gap: var(--lesson-experience-gap);
 }
 
 .lesson-experience__content {
@@ -17,162 +21,221 @@
 
 .lesson-experience__readable {
   width: 100%;
-  max-width: 960px;
+  max-width: var(--lesson-readable-max-width);
   margin: 0 auto;
 }
 
 /* ========================================
-   BOÎTES PRINCIPALES (Théorème, Définition, etc.)
-   Style unifié avec bordure colorée
+   BASE BOX STYLES - Shared by all box types
    ======================================== */
-.lesson-box {
+
+.lesson-box,
+.lesson-inline {
+  --box-border-accent: var(--lesson-accent, var(--lesson-inline-accent, #2563eb));
   position: relative;
-  padding: clamp(1.1rem, 2.2vw, 1.65rem);
-  border-radius: 12px;
-  background: #FFFFFF;
-  border: 2px solid var(--lesson-accent);
+  border-radius: clamp(14px, 1.4vw, 20px);
   overflow: hidden;
-  margin-bottom: clamp(1rem, 2vw, 1.5rem);
+  isolation: isolate;
+  border: 1.4px solid color-mix(in srgb, var(--box-border-accent) 45%, #dce7f9);
+  background-color: #fff;
+  box-shadow: 0 18px 32px rgba(15, 23, 42, 0.08), 0 6px 16px rgba(15, 23, 42, 0.05);
+  padding: clamp(1rem, 1.7vw, 1.4rem) clamp(1.1rem, 1.9vw, 1.8rem);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
-.lesson-box::after {
+.lesson-box {
+  padding-left: calc(clamp(1.1rem, 1.9vw, 1.8rem) + 1.25rem);
+  margin-bottom: var(--lesson-box-margin);
+}
+
+.lesson-inline {
+  --box-border-accent: var(--lesson-inline-accent, var(--lesson-accent, #2563eb));
+  padding-left: calc(clamp(0.9rem, 1.5vw, 1.3rem) + 0.85rem);
+  margin-bottom: var(--lesson-inline-margin);
+}
+
+.lesson-box::before,
+.lesson-inline::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(
+      135deg,
+      transparent,
+      transparent 12px,
+      color-mix(in srgb, var(--box-border-accent) 8%, rgba(226, 232, 240, 0.4)) 12px,
+      color-mix(in srgb, var(--box-border-accent) 8%, rgba(226, 232, 240, 0.4)) 13px
+    );
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.lesson-box::after,
+.lesson-inline::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, transparent 0, color-mix(in srgb, var(--box-border-accent) 4%, rgba(248, 250, 252, 0.3)) 0, color-mix(in srgb, var(--box-border-accent) 4%, rgba(248, 250, 252, 0.3)) 1.8rem, transparent 1.8rem);
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.lesson-box:hover,
+.lesson-inline:hover {
+  border-color: color-mix(in srgb, var(--box-border-accent) 60%, #a6bde3);
+  box-shadow: 0 22px 38px rgba(15, 23, 42, 0.12);
+}
+
+/* ========================================
+   BOX HEADERS - Title and badge section
+   ======================================== */
+
+.lesson-box__header,
+.lesson-inline__header {
+  display: flex;
+  align-items: baseline;
+  gap: var(--lesson-box-header-gap);
+  flex-wrap: wrap;
+  position: relative;
+  z-index: var(--z-lesson-box);
+}
+
+.lesson-box__header {
+  margin-bottom: var(--lesson-box-header-margin);
+}
+
+.lesson-inline__header {
+  margin-bottom: 0.9rem;
+}
+
+/* ========================================
+   BADGES - Type indicators
+   ======================================== */
+
+.lesson-box__badge,
+.lesson-inline__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: var(--lesson-badge-size);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: calc(var(--lesson-badge-letter-spacing) * 0.9);
+  border-radius: 999px;
+  position: relative;
+  padding: 0.28rem 0.95rem;
+  border: 1.5px solid color-mix(in srgb, var(--lesson-accent, var(--lesson-inline-accent, #2563eb)) 65%, rgba(15, 23, 42, 0.12));
+  background: rgba(255, 255, 255, 0.98);
+  color: color-mix(in srgb, var(--lesson-accent, var(--lesson-inline-accent, #2563eb)) 85%, #0f172a);
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.1);
+  z-index: 10;
+}
+
+.lesson-inline__badge {
+  border-color: color-mix(in srgb, var(--lesson-inline-accent) 65%, rgba(15, 23, 42, 0.12));
+  color: color-mix(in srgb, var(--lesson-inline-accent) 85%, #0f172a);
+}
+
+.lesson-box__badge::after,
+.lesson-inline__badge::after {
   display: none;
 }
 
-/* Header de la boîte */
-.lesson-box__header {
-  display: flex;
-  align-items: baseline;
-  gap: clamp(0.6rem, 1.2vw, 0.9rem);
-  flex-wrap: wrap;
-  margin-bottom: clamp(0.8rem, 1.8vw, 1.35rem);
-  position: relative;
-  z-index: 2;
-}
+/* ========================================
+   DIVIDERS & TITLES
+   ======================================== */
 
-/* Badge (type de boîte) */
-.lesson-box__badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.35rem 0.85rem;
-  font-size: 0.68rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  border-radius: 6px;
-  background: transparent;
-  color: var(--lesson-accent);
-  border: 1px solid var(--lesson-accent);
+.lesson-box__divider,
+.lesson-inline__divider {
+  opacity: 0.35;
+  font-weight: 400;
   flex-shrink: 0;
 }
 
-/* Séparateur entre badge et titre */
 .lesson-box__divider {
-  color: var(--lesson-accent);
-  opacity: 0.4;
-  font-weight: 300;
-  font-size: clamp(0.9rem, 1.6vw, 1.1rem);
-  flex-shrink: 0;
+  color: color-mix(in srgb, var(--lesson-accent) 65%, #0f172a);
+  font-size: clamp(0.88rem, 1.4vw, 1.05rem);
+  letter-spacing: 0.2em;
 }
 
-/* Titre à côté du badge */
-.lesson-box__title {
-  font-size: clamp(0.88rem, 1.5vw, 0.98rem);
-  font-weight: 600;
-  color: var(--lesson-accent);
-  line-height: 1.4;
+.lesson-inline__divider {
+  color: color-mix(in srgb, var(--lesson-inline-accent) 70%, #0f172a);
+  font-size: clamp(0.8rem, 1.2vw, 0.95rem);
+  letter-spacing: 0.16em;
+}
+
+.lesson-box__title,
+.lesson-inline__title {
+  font-weight: 700;
+  line-height: var(--lesson-box-title-line-height);
   flex: 1;
   min-width: 0;
 }
 
-/* Bouton d'action */
+.lesson-box__title {
+  font-size: var(--lesson-box-title-size);
+  color: color-mix(in srgb, var(--lesson-accent) 85%, #0f172a);
+}
+
+.lesson-inline__title {
+  font-size: clamp(0.85rem, 1.4vw, 0.95rem);
+  color: color-mix(in srgb, var(--lesson-inline-accent) 85%, #0f172a);
+}
+
+/* ========================================
+   ACTION BUTTON - Optional header action
+   ======================================== */
+
 .lesson-box__action {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.3rem;
-  height: 2.3rem;
-  border-radius: 6px;
-  background: #FFFFFF;
-  border: 1px solid rgba(148, 163, 184, 0.3);
-  /* move the action button to the far right of the header */
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 12px;
+  background: transparent;
+  border: none;
   margin-left: auto;
   cursor: pointer;
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
 }
 
 .lesson-box__action:hover {
-  border-color: var(--lesson-accent);
-  background: rgba(148, 163, 184, 0.05);
+  opacity: 0.7;
+  transform: scale(1.1);
 }
 
-.lesson-box__action svg {
-  width: 1.15rem;
-  height: 1.15rem;
-}
-
-/* Corps de la boîte */
-.lesson-box__body {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  gap: clamp(0.65rem, 1.2vw, 1rem);
+.lesson-box__action svg,
+.lesson-box__action .material-symbols-outlined {
+  width: 1.2rem;
+  height: 1.2rem;
+  font-size: 1.2rem;
 }
 
 /* ========================================
-   BOÎTES INLINE (Exemple, Remarque)
-   Style unifié avec bordure colorée
+   BOX BODY - Content area
    ======================================== */
-.lesson-inline {
+
+.lesson-box__body,
+.lesson-inline__body {
   position: relative;
-  padding: clamp(0.95rem, 1.8vw, 1.4rem);
-  border-radius: 12px;
-  background: #FFFFFF;
-  border: 2px solid var(--lesson-inline-accent);
-  margin-bottom: clamp(0.8rem, 1.6vw, 1.2rem);
-}
-
-.lesson-inline__header {
+  z-index: 10;
   display: flex;
-  align-items: baseline;
-  gap: clamp(0.5rem, 1vw, 0.75rem);
-  flex-wrap: wrap;
-  margin-bottom: 0.9rem;
+  flex-direction: column;
+  color: #1e293b;
+  font-weight: 450;
 }
 
-.lesson-inline__badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.3rem 0.75rem;
-  font-size: 0.68rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.11em;
-  border-radius: 6px;
-  background: transparent;
-  color: var(--lesson-inline-accent);
-  border: 1px solid var(--lesson-inline-accent);
-  flex-shrink: 0;
+.lesson-box__body {
+  gap: var(--lesson-box-body-gap);
 }
 
-/* Séparateur pour inline boxes */
-.lesson-inline__divider {
-  color: var(--lesson-inline-accent);
-  opacity: 0.4;
-  font-weight: 300;
-  font-size: clamp(0.85rem, 1.4vw, 1rem);
-  flex-shrink: 0;
-}
-
-/* Titre pour inline boxes */
-.lesson-inline__title {
-  font-size: clamp(0.85rem, 1.4vw, 0.95rem);
-  font-weight: 600;
-  color: var(--lesson-inline-accent);
-  line-height: 1.4;
-  flex: 1;
-  min-width: 0;
+.lesson-inline__body {
+  gap: 0.6rem;
 }
 
 .lesson-inline__content {
@@ -181,86 +244,69 @@
   gap: 0.65rem;
 }
 
-.lesson-inline__body {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-}
-
 /* ========================================
-   PALETTE DE COULEURS COHÉRENTE
-   Palette harmonieuse pour différencier les types
+   COLOR PALETTE - Box type variations
+   Uses centralized color variables
    ======================================== */
 
-/* Théorème - Bleu profond */
+/* Main boxes - Academic content */
 .lesson-box--theorem {
-  --lesson-accent: #3B82F6;
+  --lesson-accent: var(--lesson-accent-theorem);
 }
 
-/* Activity boxes: force a black border for the activity/frame boxes */
-.lesson-box--activity {
-  border-color: #000 !important;
-}
-
-/* Badge in activity boxes: force black text and border so the badge matches the black frame */
-.lesson-box--activity .lesson-box__badge {
-  color: #000 !important;
-  border-color: #000 !important;
-}
-
-/* Définition - Indigo */
 .lesson-box--definition {
-  --lesson-accent: #6366F1;
+  --lesson-accent: var(--lesson-accent-definition);
 }
 
-/* Proposition - Vert émeraude */
 .lesson-box--proposition {
-  --lesson-accent: #10B981;
+  --lesson-accent: var(--lesson-accent-proposition);
 }
 
-/* Propriété - Ambre */
 .lesson-box--property {
-  --lesson-accent: #F59E0B;
+  --lesson-accent: var(--lesson-accent-property);
 }
 
-/* Corollaire - Cyan */
 .lesson-box--corollary {
-  --lesson-accent: #06B6D4;
+  --lesson-accent: var(--lesson-accent-corollary);
 }
 
-/* Lemme - Violet */
 .lesson-box--lemma {
-  --lesson-accent: #8B5CF6;
+  --lesson-accent: var(--lesson-accent-lemma);
 }
 
-/* Exemple - Violet clair */
+/* Activity boxes - Special styling with black border */
+.lesson-box--activity {
+  --lesson-accent: var(--lesson-accent-activity);
+}
+
+/* Inline boxes - Contextual content */
 .lesson-inline--example {
-  --lesson-inline-accent: #8B5CF6;
+  --lesson-inline-accent: var(--lesson-accent-example);
+  border-color: #1e293b !important;
+  border-width: 2px !important;
 }
 
-/* Remarque - Vert menthe */
 .lesson-inline--remark {
-  --lesson-inline-accent: #10B981;
+  --lesson-inline-accent: var(--lesson-accent-remark);
 }
 
-/* Méthode - Orange */
 .lesson-inline--method {
-  --lesson-inline-accent: #F97316;
+  --lesson-inline-accent: var(--lesson-accent-method);
 }
 
-/* Attention - Rouge doux */
 .lesson-inline--warning {
-  --lesson-inline-accent: #EF4444;
+  --lesson-inline-accent: var(--lesson-accent-warning);
 }
 
-/* Note - Bleu ciel */
 .lesson-inline--note {
-  --lesson-inline-accent: #3B82F6;
+  --lesson-inline-accent: var(--lesson-accent-note);
 }
 
 /* ========================================
-   RESPONSIVE - MOBILE OPTIMIZED
+   RESPONSIVE - CONSOLIDATED BREAKPOINTS
    ======================================== */
+
+/* Tablet (768px) */
 @media (max-width: 768px) {
   .lesson-box {
     padding: 1rem 1.2rem;
@@ -293,6 +339,7 @@
   }
 }
 
+/* Small Tablet (640px) */
 @media (max-width: 640px) {
   .lesson-box {
     padding: 0.95rem 1.05rem;
@@ -316,6 +363,7 @@
   }
 }
 
+/* Phone (480px) */
 @media (max-width: 480px) {
   .lesson-box {
     padding: 0.9rem;

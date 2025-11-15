@@ -241,7 +241,7 @@ const LessonView: React.FC = () => {
         return (
             <div className="flex items-center justify-center min-h-screen">
                 <div className="text-center">
-                    <span className="material-symbols-outlined !text-6xl text-primary mb-4 animate-spin">refresh</span>
+                    <span className="material-symbols-outlined !text-6xl text-primary mb-4">refresh</span>
                     <p className="text-text-secondary text-lg">Chargement de la leçon...</p>
                 </div>
             </div>
@@ -312,7 +312,7 @@ const LessonView: React.FC = () => {
 
             {/* Badge de complétion discret */}
             {scrollProgress >= 95 && (
-                <div className="fixed bottom-6 right-6 animate-slideInUp">
+                <div className="fixed bottom-6 right-6">
                     <div className="bg-success/20 border-2 border-success rounded-full px-4 py-2 flex items-center gap-2 shadow-lg">
                         <span className="material-symbols-outlined !text-xl text-success">check_circle</span>
                         <span className="font-semibold text-success text-sm">Terminé</span>

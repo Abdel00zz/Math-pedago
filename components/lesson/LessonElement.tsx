@@ -3,7 +3,7 @@
  * Style Pedago, indépendant de l'app Lesson
  */
 
-import React, { useMemo, useState, useId } from 'react';
+import React, { useMemo, useState } from 'react';
 import type { CSSProperties } from 'react';
 import type {
     LessonElement as ElementType,
@@ -73,9 +73,9 @@ const BOX_CONFIG = {
         },
         'practice-box': {
             label: 'Exercice',
-            accent: '#2563EB',
-            accentSoft: 'rgba(37, 99, 235, 0.08)',
-            accentStrong: 'rgba(37, 99, 235, 0.18)',
+            accent: '#DB3A34',
+            accentSoft: 'rgba(219, 58, 52, 0.12)',
+            accentStrong: 'rgba(219, 58, 52, 0.26)',
         },
 } as const;
 
@@ -257,8 +257,6 @@ const InteractiveBox: React.FC<{ element: ElementType; showAnswers?: boolean }> 
     const config = INTERACTIVE_CONFIG[interactiveElement.type as keyof typeof INTERACTIVE_CONFIG];
     const { getNextNumber } = useNumbering();
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const bulbGradientId = useId();
-    const bulbGlowId = `${bulbGradientId}-glow`;
     
     // Obtenir le numéro pour cette box AVANT le check de config
     const boxNumber = useMemo(() => getNextNumber(interactiveElement.type as keyof typeof INTERACTIVE_CONFIG), [interactiveElement.type, getNextNumber]);
@@ -293,40 +291,9 @@ const InteractiveBox: React.FC<{ element: ElementType; showAnswers?: boolean }> 
                         aria-label="Afficher la solution"
                     >
                         <span className="lesson-box__action-icon" aria-hidden="true">
-                            <svg
-                                width="18"
-                                height="18"
-                                viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"
-                                role="img"
-                                focusable="false"
-                            >
-                                <defs>
-                                    <radialGradient id={bulbGlowId} cx="50%" cy="40%" r="65%">
-                                        <stop offset="0%" stopColor="#fff9e6" stopOpacity="0.92" />
-                                        <stop offset="55%" stopColor="#d9efff" stopOpacity="0.46" />
-                                        <stop offset="100%" stopColor="#8ab4ff" stopOpacity="0" />
-                                    </radialGradient>
-                                    <linearGradient id={bulbGradientId} x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%" stopColor="#fff7c2" />
-                                        <stop offset="55%" stopColor="#fcd34d" />
-                                        <stop offset="100%" stopColor="#f97316" />
-                                    </linearGradient>
-                                </defs>
-                                <circle cx="12" cy="10" r="7.6" fill={`url(#${bulbGlowId})`} opacity="0.65" />
-                                <path
-                                    d="M12 3.5c-3.03 0-5.5 2.43-5.5 5.43 0 2.1 1.15 3.97 2.98 4.94.34.18.52.54.52.9v1.58c0 .31.25.56.56.56h3.88c.31 0 .56-.25.56-.56v-1.58c0-.36.2-.7.52-.88 1.86-.96 3.02-2.86 3.02-4.97 0-3-2.47-5.42-5.5-5.42Zm-2.5 16.1c0 .22.18.4.4.4h4.2c.22 0 .4-.18.4-.4v-.4H9.5v.4Z"
-                                    style={{ fill: `url(#${bulbGradientId})`, stroke: '#2563eb', strokeWidth: 0.6, paintOrder: 'fill' }}
-                                />
-                                <path
-                                    d="M10 18.7h4"
-                                    stroke="#1d4ed8"
-                                    strokeWidth="1.1"
-                                    strokeLinecap="round"
-                                    opacity="0.65"
-                                />
-                                <circle cx="12" cy="6.4" r="1.55" fill="#ffffff" opacity="0.82" />
-                            </svg>
+                            <span className="material-symbols-outlined text-base text-blue-600 drop-shadow-[0_0_10px_rgba(37,99,235,0.35)]">
+                                lightbulb
+                            </span>
                         </span>
                     </button>
                 )}

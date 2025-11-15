@@ -187,6 +187,13 @@ const Section: React.FC<{
 
 export const LessonDisplay: React.FC<LessonDisplayProps> = ({ lesson, showAnswers = false, showHeader = true, onBack }) => {
     const { setActiveSubsectionId } = useLessonProgress();
+    const numberingResetKey = useMemo(() => {
+        const headerSignature = [lesson.header?.title, lesson.header?.chapter, lesson.header?.classe]
+            .filter(Boolean)
+            .join('::');
+        const sectionsSignature = lesson.sections.map((section) => section.title).join('||');
+        return `${headerSignature}__${sectionsSignature}`;
+    }, [lesson]);
 
     useEffect(() => {
         const subsectionElements = Array.from(
@@ -235,7 +242,7 @@ export const LessonDisplay: React.FC<LessonDisplayProps> = ({ lesson, showAnswer
     }, [lesson, setActiveSubsectionId]);
 
     return (
-        <NumberingProvider>
+        <NumberingProvider resetKey={numberingResetKey}>
             <div className="lesson-canvas">
                 {showHeader && <Header headerData={lesson.header} onBack={onBack} />}
                 <div className="lesson-stack">

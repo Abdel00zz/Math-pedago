@@ -83,7 +83,7 @@ const VideoCapsules: React.FC = () => {
             {/* Modal plein écran optimisé pour mobile et pédagogie */}
             {playingVideoId && currentVideo && (
                 <div
-                    className="fixed inset-0 z-50 bg-black flex items-center justify-center animate-fadeIn"
+                    className="fixed inset-0 z-50 bg-black flex items-center justify-center"
                     onClick={handleClosePlayer}
                 >
                     <div
@@ -179,7 +179,7 @@ const VideoCapsules: React.FC = () => {
                 </div>
             )}
 
-            <div className="max-w-6xl mx-auto animate-slideInUp px-4 sm:px-6 lg:px-8 pb-24 sm:pb-12">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 sm:pb-12">
             {/* Header avec progression responsive et compact */}
             <div className="mb-6 md:mb-8 bg-surface/80 backdrop-blur-sm p-4 md:p-6 rounded-2xl border border-border/50 shadow-soft">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 md:gap-4 mb-4">
@@ -204,7 +204,7 @@ const VideoCapsules: React.FC = () => {
                 </div>
 
                 {allWatched && (
-                    <div className="mt-3 flex items-center gap-2 text-success bg-success/10 rounded-lg p-3 animate-fadeIn border border-success/20">
+                    <div className="mt-3 flex items-center gap-2 text-success bg-success/10 rounded-lg p-3 border border-success/20">
                         <span className="material-symbols-outlined !text-xl md:!text-2xl flex-shrink-0">check_circle</span>
                         <span className="font-display font-semibold text-xs md:text-sm">Toutes les vidéos comprises ! 🎉</span>
                     </div>
@@ -262,7 +262,7 @@ const VideoCapsules: React.FC = () => {
 
                                 {/* Badge validé */}
                                 {isWatched && (
-                                    <div className="absolute top-2 right-2 bg-success text-white p-1.5 rounded-lg animate-scaleIn shadow-glow-success">
+                                    <div className="absolute top-2 right-2 bg-success text-white p-1.5 rounded-lg shadow-glow-success">
                                         <span className="material-symbols-outlined !text-xl">check_circle</span>
                                     </div>
                                 )}
@@ -310,7 +310,7 @@ const VideoCapsules: React.FC = () => {
 
             {/* Message d'encouragement */}
             {!allWatched && watchedCount > 0 && (
-                <div className="mt-6 md:mt-8 p-4 md:p-6 bg-gradient-to-br from-info/10 to-info/5 border-2 border-info/30 rounded-xl text-center animate-fadeIn shadow-soft">
+                <div className="mt-6 md:mt-8 p-4 md:p-6 bg-gradient-to-br from-info/10 to-info/5 border-2 border-info/30 rounded-xl text-center shadow-soft">
                     <div className="inline-flex items-center justify-center w-12 h-12 bg-info/20 rounded-xl mb-3">
                         <span className="material-symbols-outlined text-info !text-3xl">emoji_events</span>
                     </div>
