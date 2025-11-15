@@ -85,13 +85,17 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link 
+    <link
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap"
         rel="stylesheet"
     />
-    
+
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-    
+
+    <!-- Préconnexion au CDN MathJax pour un chargement plus rapide -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+
     <!-- MathJax Configuration -->
     <script>
       window.MathJax = {
@@ -117,13 +121,17 @@
         },
         startup: {
           ready: () => {
-            console.log('MathJax est chargé et prêt');
+            console.log('✅ MathJax chargé et prêt en', performance.now().toFixed(0), 'ms');
             window.MathJax.startup.defaultReady();
+            // Signal que MathJax est prêt pour éviter les tentatives inutiles
+            window.mathJaxReady = true;
+            document.dispatchEvent(new CustomEvent('mathjax-ready'));
           }
         }
       };
     </script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- defer au lieu de async pour garantir le chargement avant l'exécution de React -->
+    <script id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
     <style>
         body {
@@ -205,6 +213,22 @@
         }
         
         /* ===== MATHJAX STYLING - Responsive Math Fonts ===== */
+
+        /* Masquer le contenu LaTeX non compilé pour éviter le flash de syntaxe */
+        .math-content:not(.math-initialized) {
+            visibility: hidden;
+        }
+
+        .math-content.math-initialized {
+            visibility: visible;
+            animation: fadeInMath 0.2s ease-out;
+        }
+
+        @keyframes fadeInMath {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
         :root {
             --math-text-color: #E2E8F0;
             --math-bg-color: transparent;

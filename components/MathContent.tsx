@@ -65,10 +65,13 @@ const MathContent: React.FC<MathContentProps> = ({ content, className = '', inli
         let cancelled = false;
         let timeoutId: number | null = null;
         let retryCount = 0;
-        const MAX_RETRIES = 100; // Augmenté pour donner plus de temps
+        const MAX_RETRIES = 30; // Réduit de 100 à 30 (suffisant avec defer)
 
         const el = containerRef.current;
         if (!el) return;
+
+        // Ajouter la classe pour masquer le contenu non compilé
+        el.classList.remove('math-initialized');
 
         // Traiter le Markdown en protégeant les expressions LaTeX
         const processedContent = processMarkdown(content);
@@ -98,17 +101,21 @@ const MathContent: React.FC<MathContentProps> = ({ content, className = '', inli
             });
 
             // Vérifier si MathJax est disponible
-            if (!window.MathJax) {
+            if (!window.MathJax || !window.mathJaxReady) {
                 retryCount++;
                 if (retryCount < MAX_RETRIES) {
-                    logDebug('MathJax not ready, retrying in', retryCount < 10 ? 100 : 200, 'ms...');
-                    // Délai progressif : 100ms pour les 10 premiers essais, puis 200ms
-                    const delay = retryCount < 10 ? 100 : 200;
+                    // Délai réduit : 50ms au lieu de 100-200ms
+                    const delay = retryCount < 5 ? 30 : 50;
+                    logDebug('MathJax not ready, retrying in', delay, 'ms... (attempt', retryCount, '/', MAX_RETRIES, ')');
                     timeoutId = window.setTimeout(typeset, delay);
                 } else {
                     console.error('❌ MathJax NON DISPONIBLE après', MAX_RETRIES, 'tentatives');
                     console.error('❌ Vérifiez que le script MathJax est bien chargé dans index.html');
                     console.error('❌ Contenu non rendu:', containerRef.current?.textContent);
+                    // Rendre visible même sans MathJax pour ne pas bloquer l'affichage
+                    if (containerRef.current) {
+                        containerRef.current.classList.add('math-initialized');
+                    }
                 }
                 return;
             }
@@ -159,6 +166,11 @@ const MathContent: React.FC<MathContentProps> = ({ content, className = '', inli
                     await window.MathJax.typesetPromise([containerRef.current]);
                     logDebug('✅ MathJax typesetting complete!');
 
+                    // Rendre le contenu visible après le rendu réussi
+                    if (containerRef.current) {
+                        containerRef.current.classList.add('math-initialized');
+                    }
+
                     // 🔍 DIAGNOSTIC 4: Contenu après rendu
                     logDebug('Content after typesetting:', {
                         html: containerRef.current.innerHTML,
@@ -168,6 +180,10 @@ const MathContent: React.FC<MathContentProps> = ({ content, className = '', inli
                 } else {
                     console.error('❌ window.MathJax.typesetPromise n\'existe pas');
                     console.error('Structure MathJax:', Object.keys(window.MathJax || {}));
+                    // Rendre visible même si typesetPromise n'existe pas
+                    if (containerRef.current) {
+                        containerRef.current.classList.add('math-initialized');
+                    }
                 }
             } catch (error) {
                 console.error('❌ MathJax rendering error:', error);
@@ -180,13 +196,17 @@ const MathContent: React.FC<MathContentProps> = ({ content, className = '', inli
                 if (retryCount < 3) {
                     retryCount++;
                     logDebug(`Retrying after error (attempt ${retryCount}/3)...`);
-                    timeoutId = window.setTimeout(typeset, 300);
+                    timeoutId = window.setTimeout(typeset, 100);
+                }
+                // Rendre visible même en cas d'erreur pour ne pas bloquer l'affichage
+                if (containerRef.current) {
+                    containerRef.current.classList.add('math-initialized');
                 }
             }
         };
 
-        // Démarrer le rendu avec un délai initial plus long pour laisser MathJax se charger
-        timeoutId = window.setTimeout(typeset, 100);
+        // Démarrer le rendu avec un délai minimal (réduit de 100ms à 20ms)
+        timeoutId = window.setTimeout(typeset, 20);
 
         return () => {
             cancelled = true;
