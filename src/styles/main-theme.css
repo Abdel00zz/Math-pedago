@@ -1,6 +1,9 @@
 /* Main Theme File - Imports all modular CSS files */
 /* PERFORMANCE OPTIMIZED - NO TRANSITIONS ON CRITICAL ELEMENTS */
 
+/* Design Tokens - Must be imported first */
+@import './lesson-variables.css';
+
 /* Core Styles */
 @import './typography.css';
 
