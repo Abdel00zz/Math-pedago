@@ -589,6 +589,28 @@
           "sub_sub_questions": [],
           "images": []
         }
+      ],
+      "hint": [
+        {
+          "text": "**Équation $f(x) = g(x)$** : repère sur le graphique les points où les deux courbes se coupent (même abscisse et même ordonnée). Les abscisses de ces points sont les solutions de l'équation.",
+          "questionNumber": "1"
+        },
+        {
+          "text": "**Inéquation $f(x) > g(x)$** : regarde les zones où la courbe bleue de $f$ est au-dessus de la courbe rouge de $g$. Traduis ces zones en intervalles d'abscisses.",
+          "questionNumber": "2"
+        },
+        {
+          "text": "**Tableaux de signes** : pour chaque fonction, repère les zéros (points où la courbe coupe l'axe des abscisses), puis note sur quels intervalles la courbe est au-dessus (valeurs positives) ou en-dessous (valeurs négatives) de l'axe.",
+          "questionNumber": "3"
+        },
+        {
+          "text": "**Image d'un intervalle par $f$** : pour $f([-3;0])$ ou $f([1;4])$, regarde la portion de la courbe de $f$ comprise entre ces abscisses, puis identifie les valeurs minimale et maximale prises par $f(x)$.",
+          "questionNumber": "4"
+        },
+        {
+          "text": "**Même stratégie pour $g$** : applique la même méthode que pour $f$, mais uniquement avec la courbe rouge de $g$ pour trouver $g([-3;0])$ et $g([1;4])$.",
+          "questionNumber": "5"
+        }
       ]
     },
     {
@@ -646,6 +668,36 @@
           "sub_sub_questions": [],
           "images": []
         }
+      ],
+      "hint": [
+        {
+          "text": "**Mettre $f$ sous forme canonique** : ajoute puis retranche $(\\frac{3}{2})^2$ pour écrire $x^2 - 3x = (x-\\frac{3}{2})^2 - \\frac{9}{4}$. Pour $g$, sépare $\\frac{3-x}{x+2}$ en $-1 + \\frac{5}{x+2}$.",
+          "questionNumber": "1"
+        },
+        {
+          "text": "**Variations de $f$ et $g$** : la forme canonique donne le sommet de la parabole de $f$ et donc son sens de variation. Pour $g$, pense au domaine (dénominateur non nul) et au comportement d'une fonction homographique (asymptotes verticale et horizontale).",
+          "questionNumber": "2"
+        },
+        {
+          "text": "**Résoudre $f(x)=g(x)$ (partie a)** : écris $x^2 - 3x = \\frac{3-x}{x+2}$ puis multiplie par $(x+2)$ (en excluant $x=-2$) pour obtenir une équation polynomiale du second degré.",
+          "questionNumber": "3"
+        },
+        {
+          "text": "**Points d'intersection (partie b)** : utilise les solutions trouvées pour calculer les ordonnées $y = f(x)$ ou $y = g(x)$ et former les points d'intersection $(x; y)$ de $C_f$ et $C_g$.",
+          "questionNumber": "3.b"
+        },
+        {
+          "text": "**Intersections avec les axes** : pour l'axe des abscisses, impose $y=0$ donc résous $f(x)=0$ ou $g(x)=0$. Pour l'axe des ordonnées, impose $x=0$ et calcule $f(0)$ et $g(0)$.",
+          "questionNumber": "4"
+        },
+        {
+          "text": "**Tracer les courbes** : place le sommet de la parabole, les intersections avec les axes et quelques points supplémentaires, puis trace $C_f$. Fais de même pour $C_g$ en utilisant les asymptotes et les points d'intersection.",
+          "questionNumber": "5"
+        },
+        {
+          "text": "**Inégalité $f(x) \\ge g(x)$** : sur le graphique, repère les abscisses où la courbe de $f$ est au-dessus ou confondue avec celle de $g$. Écris ensuite ces abscisses sous forme d'intervalles.",
+          "questionNumber": "6"
+        }
       ]
     },
     {
@@ -697,6 +749,28 @@
           ],
           "images": []
         }
+      ],
+      "hint": [
+        {
+          "text": "**Domaine de $f$** : repère les valeurs interdites par l'expression $x + \\frac{1}{x}$. Demande-toi pour quelles valeurs de $x$ le terme $\\frac{1}{x}$ n'est pas défini.",
+          "questionNumber": "1"
+        },
+        {
+          "text": "**Parité de $f$** : calcule $f(-x)$ et compare-le à $f(x)$ et à $-f(x)$. Utilise les règles de signe sur $-x$ et $\\frac{1}{-x}$.",
+          "questionNumber": "2"
+        },
+        {
+          "text": "**Taux de variation $f(x)-f(y)$** : écris $f(x)-f(y) = (x+\\frac{1}{x}) - (y+\\frac{1}{y})$ puis factorise pour faire apparaître $(x-y)$. Analyse ensuite le signe de ce facteur pour en déduire les variations sur chaque intervalle.",
+          "questionNumber": "3"
+        },
+        {
+          "text": "**Inégalité $f(x) \\ge 2$** : pense à l'identité $x + \\frac{1}{x} \\ge 2$ pour $x>0$ en utilisant par exemple $(\\sqrt{x} - \\frac{1}{\\sqrt{x}})^2 \\ge 0$.",
+          "questionNumber": "4"
+        },
+        {
+          "text": "**Lien entre $f$ et $g$** : remplace $x$ par $(x+3)$ dans $f$ puis simplifie pour obtenir $g(x)$. Utilise ensuite les variations de $f$ pour transférer l'information sur $g$.",
+          "questionNumber": "5"
+        }
       ]
     },
     {
@@ -740,6 +814,28 @@
             }
           ],
           "images": []
+        }
+      ],
+      "hint": [
+        {
+          "text": "**Domaines de $f$ et $g$** : pour $f(x)=\\sqrt{x+4}$, impose $x+4 \\ge 0$. Pour $g(x)=\\frac{2}{x+1}$, exclue la valeur qui annule le dénominateur.",
+          "questionNumber": "1"
+        },
+        {
+          "text": "**Point d'intersection $A(0;2)$** : vérifie simplement que $x=0$ appartient aux domaines et que $f(0)$ et $g(0)$ valent tous les deux 2.",
+          "questionNumber": "2"
+        },
+        {
+          "text": "**Tracé des courbes** : pour $f$, choisis quelques valeurs de $x$ dans le domaine et calcule $\\sqrt{x+4}$. Pour $g$, pense à la forme d'une homographique avec asymptote verticale et horizontale.",
+          "questionNumber": "3"
+        },
+        {
+          "text": "**Inégalité $f(x) \\ge g(x)$** : utilise le graphique commun de $(C_f)$ et $(C_g)$ pour repérer les zones où la courbe de $f$ est au-dessus ou confondue avec celle de $g$, puis lis les abscisses correspondantes.",
+          "questionNumber": "4"
+        },
+        {
+          "text": "**Domaine de $h$** : pour $h(x) = \\sqrt{\\frac{4x+6}{x+1}}$, impose d'abord $x+1 \\neq 0$, puis que le quotient $\\frac{4x+6}{x+1}$ soit positif ou nul.",
+          "questionNumber": "5"
         }
       ]
     },
@@ -787,6 +883,28 @@
             }
           ],
           "images": []
+        }
+      ],
+      "hint": [
+        {
+          "text": "**Variations de $f$ et $g$** : pour $f$, reconnais une parabole concave (coefficient de $x^2$ négatif) et trouve son sommet. Pour $g$, utilise le déterminant $\\Delta = ad-bc$ d'une homographique pour connaître le sens de variation.",
+          "questionNumber": "1"
+        },
+        {
+          "text": "**Maximum de $f$** : la valeur maximale absolue se lit au sommet de la parabole. Calcule l'abscisse du sommet puis l'ordonnée correspondante.",
+          "questionNumber": "2"
+        },
+        {
+          "text": "**Tracé de $(C_f)$** : appuie-toi sur le sommet, les intersections avec les axes et quelques points supplémentaires pour tracer une parabole précise.",
+          "questionNumber": "3"
+        },
+        {
+          "text": "**Images d'intervalles par $f$** : pour chaque intervalle de $x$, utilise le tableau de variations de $f$ pour lire les valeurs minimale et maximale atteintes, puis écris $f(I)$ comme un intervalle.",
+          "questionNumber": "4"
+        },
+        {
+          "text": "**Domaine de $h = g \\circ f$** : commence par déterminer les valeurs de $x$ pour lesquelles $f(x)$ appartient au domaine de $g$ (éviter $f(x) = -1$). Ensuite, compose pour obtenir $h(x)$ et utilise les variations de $f$ et $g$ sur les intervalles demandés.",
+          "questionNumber": "5"
         }
       ]
     },
@@ -836,6 +954,24 @@
           ],
           "images": []
         }
+      ],
+      "hint": [
+        {
+          "text": "**Domaine de $f$** : impose $x-2 \\ge 0$ pour que la racine carrée soit définie. Simplifie ensuite la condition.",
+          "questionNumber": "1"
+        },
+        {
+          "text": "**Minorant de $f$** : essaie d'écrire $f(x)$ comme une somme d'un carré et d'une constante, par exemple en posant $t = \\sqrt{x-2}$ et en étudiant $t^2 - 2t + 1$.",
+          "questionNumber": "2"
+        },
+        {
+          "text": "**Étude de $h(x)=\\sqrt{x-2}$** : sur $[2,+\\infty[$, observe que la racine carrée est croissante. Utilise cela pour remplir le tableau de variations et trouver les images des intervalles demandés.",
+          "questionNumber": "3"
+        },
+        {
+          "text": "**Composition avec un polynôme $g$** : exprime $f(x)$ en fonction de $t = h(x)$, puis identifie le polynôme $g$ tel que $f(x) = g(h(x))$. Utilise ensuite le sens de variation de $h$ et de $g$ pour déduire celui de $f$ et de $\\frac{1}{f}$.",
+          "questionNumber": "4"
+        }
       ]
     },
     {
@@ -851,8 +987,8 @@
             {
               "id": "img_1762886788316",
               "path": "pictures/1bsm/1bsm-generalites-sur-les-fonctions/img_20251111T184628249Z_test__3_.png",
-              "caption": "test (3).png",
-              "size": "medium",
+              
+              "size": "small",
               "custom_width": null,
               "custom_height": null,
               "position": "float-right",
@@ -879,6 +1015,20 @@
           "questionNumber": "3",
           "sub_sub_questions": [],
           "images": []
+        }
+      ],
+      "hint": [
+        {
+          "text": "**Expression de $S(x)$** : commence par déterminer les coordonnées de $M'$ en utilisant l'équation de la droite $(AM)$, puis utilise la formule de l'aire d'un triangle en fonction de la base et de la hauteur.",
+          "questionNumber": "1"
+        },
+        {
+          "text": "**Taux d'accroissement de $S$** : calcule $\\frac{S(a)-S(b)}{a-b}$ à partir de l'expression de $S(x)$ et factorise. Analyse ensuite le signe du terme entre parenthèses pour déduire la monotonie de $S$.",
+          "questionNumber": "2"
+        },
+        {
+          "text": "**Minimum de l'aire** : utilise le tableau de variations de $S$ pour localiser le minimum sur $]3;+\\infty[$ et calcule la valeur minimale correspondante.",
+          "questionNumber": "3"
         }
       ]
     },
@@ -917,19 +1067,45 @@
               "text": "Représenter la fonction $g$ dans un repère orthonormé $(O; \\vec{i}; \\vec{j})$."
             },
             {
-              "text": "a) Montrer que : ($\\forall x \\in \\mathbb{R}^+$) $0 \\le h(x) \\le 2$."
+              "text": "Montrer que : ($\\forall x \\in \\mathbb{R}^+$) $0 \\le h(x) \\le 2$."
             },
             {
-              "text": "b) Résoudre dans $\\mathbb{R}^+$ l'équation : $4h(x) = \\sqrt{2(x+1)}$."
+              "text": "Résoudre dans $\\mathbb{R}^+$ l'équation : $4h(x) = \\sqrt{2(x+1)}$."
             },
             {
-              "text": "c) Vérifier que : ($\\forall x \\in \\mathbb{R}^+$) $h(x) = f \\circ g(x)$."
+              "text": "Vérifier que : ($\\forall x \\in \\mathbb{R}^+$) $h(x) = f \\circ g(x)$."
             },
             {
-              "text": "d) Dresser le tableau de variations de la fonction $h$."
+              "text": "Dresser le tableau de variations de la fonction $h$."
             }
           ],
           "images": []
+        }
+      ],
+      "hint": [
+        {
+          "text": "**Parité de $f$** : calcule $f(-x)$ et compare-le à $f(x)$ et à $-f(x)$ pour décider si $f$ est paire, impaire ou ni l'une ni l'autre.",
+          "questionNumber": "1"
+        },
+        {
+          "text": "**Bornes de $f$** : pense à étudier $|f(x)| = \\left|\\frac{4x}{x^2+1}\\right|$ et essaie de majorer cette expression pour tout $x$ réel.",
+          "questionNumber": "1.b"
+        },
+        {
+          "text": "**Variations de $f$** : dérive $f$ ou utilise une étude de signe sur $\\frac{4x}{x^2+1}$ pour déterminer sur quels intervalles $f$ est croissante ou décroissante, puis construis le tableau de variations.",
+          "questionNumber": "1.c"
+        },
+        {
+          "text": "**Inégalité avec $a+b$** : essaie de relier l'inégalité à la forme de $f$ en posant par exemple $a=\\sqrt{u}$ et $b=\\sqrt{v}$ ou en utilisant une inégalité classique comme $a^2+b^2 \\ge 2ab$.",
+          "questionNumber": "1.d"
+        },
+        {
+          "text": "**Image de $f$** : une fois les bornes trouvées, vérifie qu'elles sont effectivement atteintes par la fonction pour conclure que $f(\\mathbb{R}) = [-2;2]$.",
+          "questionNumber": "1.e"
+        },
+        {
+          "text": "**Étude de $g$ et $h$** : pour $g(x)=\\sqrt{x}$, rappelle-toi que la racine carrée est croissante sur $\\mathbb{R}^+$. Pour $h(x)=\\frac{4\\sqrt{x}}{1+x}$, observe qu'il s'agit d'une composition entre $f$ et $g$.",
+          "questionNumber": "2"
         }
       ]
     },
@@ -969,6 +1145,24 @@
           ],
           "images": []
         }
+      ],
+      "hint": [
+        {
+          "text": "**Domaine avec partie entière** : remarque que pour tout $x$, le terme $x - 4E(\\frac{x}{4})$ est compris entre 0 et 4 (inclus), ce qui garantit que la racine est définie pour tous les réels.",
+          "questionNumber": "1"
+        },
+        {
+          "text": "**Périodicité 4** : compare $f(x)$ et $f(x+4)$ en utilisant la propriété $E(\\frac{x+4}{4}) = E(\\frac{x}{4}) + 1$.",
+          "questionNumber": "2"
+        },
+        {
+          "text": "**Encadrement de $f(x)$** : utilise le fait que $0 \\le x - 4E(\\frac{x}{4}) < 4$ pour en déduire un encadrement de $\\sqrt{x - 4E(\\frac{x}{4})}$ puis de $f(x)$.",
+          "questionNumber": "3"
+        },
+        {
+          "text": "**Expression sur $[0;4[$** : sur cet intervalle, $E(\\frac{x}{4})=0$, ce qui simplifie beaucoup la formule de $f$. Utilise ensuite la périodicité pour tracer sur $[-4;8[$.",
+          "questionNumber": "4"
+        }
       ]
     },
     {
@@ -999,7 +1193,7 @@
           "images": []
         },
         {
-          "text": "Partie II : Équation fonctionnelle (Cauchy)",
+          "text": "Partie II : Équation fonctionnelle",
           "questionNumber": "2",
           "sub_sub_questions": [
             {
@@ -1025,6 +1219,56 @@
             }
           ],
           "images": []
+        }
+      ],
+      "hint": [
+        {
+          "text": "**Choix de $n$** : exploite la définition de la partie entière de $\\frac{1}{a-b}$ pour encadrer $n$. L'encadrement $E(x) \\le x < E(x)+1$ permet de conclure que $n \\in \\mathbb{N}^*$.",
+          "questionNumber": "1.a"
+        },
+        {
+          "text": "**Encadrement de $\\frac{1+m}{n}$** : écris $m = E(nb)$ puis encadre $m$ par $nb$ et $nb+1$ afin de traduire l'inégalité obtenue sur $\\frac{1+m}{n}$.",
+          "questionNumber": "1.b"
+        },
+        {
+          "text": "**Deux rationnels distincts** : subdivise l'intervalle $[\\beta; \\alpha]$ avec un entier $n$ assez grand pour obtenir des bornes rationnelles et choisis deux points consécutifs de cette subdivision.",
+          "questionNumber": "1.c"
+        },
+        {
+          "text": "**Choix de $p$** : applique encore la propriété de la partie entière à $\\frac{\\sqrt{2}}{y-x}$ pour montrer que $p \\in \\mathbb{N}^*$.",
+          "questionNumber": "1.d"
+        },
+        {
+          "text": "**Construction de $\\omega$** : suppose que $\\omega$ est rationnel et observe que cela impliquerait que $\\sqrt{2}$ est rationnel. Utilise l'encadrement précédent pour vérifier que $\\omega$ reste bien dans $] \\beta; \\alpha[$.",
+          "questionNumber": "1.e"
+        },
+        {
+          "text": "**Valeur de $f(0)$** : utilise l'équation fonctionnelle avec $(x, y) = (0, 0)$ pour calculer $f(0)$. Teste ensuite $(1, 0)$ et $(0, 1)$ afin d'encadrer les valeurs possibles de $f(1)$.",
+          "questionNumber": "2.a"
+        },
+        {
+          "text": "**Parité de $f$** : compare $f(x)$ et $f(-x)$ en évaluant l'équation fonctionnelle avec $(x, y) = (x, -x)$ pour montrer que $f$ est impaire.",
+          "questionNumber": "2.b"
+        },
+        {
+          "text": "**Valeurs sur $\\mathbb{N}$** : mets en place une récurrence en partant de $f(0)$ et en utilisant la relation $f(n+1) = f(n) + f(1)$.",
+          "questionNumber": "2.c"
+        },
+        {
+          "text": "**Extension à $\\mathbb{Z}$** : exploite la parité de $f$ pour relier $f(-n)$ à $f(n)$ et ainsi connaître la valeur sur tous les entiers.",
+          "questionNumber": "2.d"
+        },
+        {
+          "text": "**Valeurs sur $\\mathbb{Q}$** : écris un rationnel sous la forme $\\frac{p}{q}$ et applique l'équation fonctionnelle à $q \\cdot \\frac{p}{q}$ pour utiliser les valeurs déjà connues sur $p$ et $q$.",
+          "questionNumber": "2.e"
+        },
+        {
+          "text": "**Monotonie** : montre que $f$ est bornée sur un intervalle et additive, ce qui permet de conclure qu'elle est continue en 0 puis croissante sur tout $\\mathbb{R}$.",
+          "questionNumber": "2.f"
+        },
+        {
+          "text": "**Conclusion sur $f$** : utilise la densité de $\\mathbb{Q}$ dans $\\mathbb{R}$ et la continuité (ou la monotonie) obtenue pour affirmer que $f(x) = x$ pour tout réel.",
+          "questionNumber": "2.g"
         }
       ]
     }
