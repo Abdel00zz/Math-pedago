@@ -1334,40 +1334,117 @@
   color: #475569;
 }
 
-/* Status variants */
+/* Status variants - Styles modernes et minimalistes */
 .chapter-card-v2[data-status="todo"] .chapter-card-v2__bg {
-  background: linear-gradient(135deg, 
-    rgba(255, 247, 237, 0.98) 0%, 
-    rgba(255, 251, 235, 0.95) 100%);
-  border-color: rgba(253, 186, 116, 0.3);
+  background:
+    radial-gradient(circle at 85% 15%, rgba(255, 154, 0, 0.08), transparent 50%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 251, 247, 0.9));
+  border: 1px solid rgba(255, 154, 0, 0.15);
+  border-radius: 20px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow:
+    0 4px 20px rgba(255, 154, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .chapter-card-v2[data-status="progress"] .chapter-card-v2__bg {
-  background: linear-gradient(135deg, 
-    rgba(254, 252, 232, 0.98) 0%, 
-    rgba(254, 249, 195, 0.95) 100%);
-  border-color: rgba(253, 224, 71, 0.3);
+  background:
+    radial-gradient(circle at 20% 80%, rgba(255, 193, 7, 0.12), transparent 60%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 252, 240, 0.9));
+  border: 1px solid rgba(255, 193, 7, 0.2);
+  border-radius: 20px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow:
+    0 4px 20px rgba(255, 193, 7, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .chapter-card-v2[data-status="completed"] .chapter-card-v2__bg {
-  background: linear-gradient(135deg, 
-    rgba(240, 253, 244, 0.98) 0%, 
-    rgba(220, 252, 231, 0.95) 100%);
-  border-color: rgba(187, 247, 208, 0.3);
+  background:
+    radial-gradient(circle at 15% 85%, rgba(34, 197, 94, 0.1), transparent 50%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(247, 254, 247, 0.9));
+  border: 1px solid rgba(34, 197, 94, 0.18);
+  border-radius: 20px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow:
+    0 4px 20px rgba(34, 197, 94, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .chapter-card-v2[data-status="update"] .chapter-card-v2__bg {
-  background: linear-gradient(135deg, 
-    rgba(250, 245, 255, 0.98) 0%, 
-    rgba(243, 232, 255, 0.95) 100%);
-  border-color: rgba(233, 213, 255, 0.3);
+  background:
+    radial-gradient(circle at 50% 20%, rgba(168, 85, 247, 0.08), transparent 60%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(252, 250, 255, 0.9));
+  border: 1px solid rgba(168, 85, 247, 0.15);
+  border-radius: 20px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow:
+    0 4px 20px rgba(168, 85, 247, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .chapter-card-v2[data-status="locked"] .chapter-card-v2__bg {
-  background: linear-gradient(135deg, 
-    rgba(248, 250, 252, 0.98) 0%, 
-    rgba(241, 245, 249, 0.95) 100%);
-  border-color: rgba(226, 232, 240, 0.5);
+  background:
+    radial-gradient(circle at 80% 80%, rgba(100, 116, 139, 0.05), transparent 50%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.85), rgba(248, 250, 252, 0.9));
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 20px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow:
+    0 2px 12px rgba(100, 116, 139, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  opacity: 0.8;
+}
+
+/* Effets hover modernes pour tous les types de cartes */
+.chapter-card-v2[data-status="todo"]:not(.is-disabled):hover .chapter-card-v2__bg {
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 32px rgba(255, 154, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  border-color: rgba(255, 154, 0, 0.25);
+}
+
+.chapter-card-v2[data-status="progress"]:not(.is-disabled):hover .chapter-card-v2__bg {
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 32px rgba(255, 193, 7, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  border-color: rgba(255, 193, 7, 0.3);
+}
+
+.chapter-card-v2[data-status="completed"]:not(.is-disabled):hover .chapter-card-v2__bg {
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 32px rgba(34, 197, 94, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  border-color: rgba(34, 197, 94, 0.28);
+}
+
+.chapter-card-v2[data-status="update"]:not(.is-disabled):hover .chapter-card-v2__bg {
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 32px rgba(168, 85, 247, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  border-color: rgba(168, 85, 247, 0.25);
+}
+
+.chapter-card-v2[data-status="locked"]:not(.is-disabled):hover .chapter-card-v2__bg {
+  transform: translateY(-1px);
+  box-shadow:
+    0 4px 20px rgba(100, 116, 139, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  opacity: 0.9;
 }
 
 /* Responsive adjustments - Optimized for mobile */
@@ -1528,53 +1605,81 @@
   }
 }
 
-/* Sessions actives - Bordure animée élégante avec gradient indigo/violet/bleu */
+/* Sessions actives - Style holographique cristallin créatif */
 .chapter-card-v2.has-active-session .chapter-card-v2__bg {
-  animation: activeBorderPulse 3s ease-in-out infinite;
-  border-width: 2px;
-  border-style: solid;
-  position: relative;
-  overflow: visible;
+  position: absolute;
+  inset: 0;
+  border: none;
+  background:
+    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3), transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3), transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(200, 160, 255, 0.2), transparent 50%),
+    url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='crystal' x='0' y='0' width='60' height='60' patternUnits='userSpaceOnUse'%3E%3Cpolygon points='30,5 50,25 30,45 10,25' fill='none' stroke='%23e0c3fc' stroke-width='0.5' opacity='0.4'/%3E%3Cpolygon points='30,15 40,25 30,35 20,25' fill='%23f0e6ff' opacity='0.2'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23crystal)'/%3E%3C/svg%3E"),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(248, 245, 255, 0.8));
+  border-radius: 24px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow:
+    0 8px 32px rgba(120, 119, 198, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  overflow: hidden;
 }
 
-/* Gradient élégant sur la bordure - Plus subtil et professionnel */
 .chapter-card-v2.has-active-session .chapter-card-v2__bg::before {
   content: '';
   position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  background: linear-gradient(
-    120deg,
-    #667eea,
-    #764ba2,
-    #3b82f6,
-    #667eea
-  );
-  background-size: 200% 200%;
+  inset: 0;
   border-radius: inherit;
-  z-index: -1;
-  opacity: 0.4;
-  animation: liveGradientRotate 4s ease infinite;
-  filter: blur(6px);
+  background:
+    conic-gradient(from 0deg at 50% 50%, 
+      rgba(255, 119, 198, 0.3) 0deg,
+      rgba(120, 119, 198, 0.2) 120deg,
+      rgba(200, 160, 255, 0.3) 240deg,
+      rgba(255, 119, 198, 0.3) 360deg);
+  opacity: 0;
+  transition: all 0.6s ease;
+  animation: holographic-rotate 8s linear infinite;
 }
 
-/* État hover - Effet subtil et élégant */
-.chapter-card-v2.has-active-session:not(.is-disabled):hover .chapter-card-v2__bg {
-  transform: translateY(-2px);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+.chapter-card-v2.has-active-session:hover .chapter-card-v2__bg::before {
+  opacity: 0.7;
+}
+
+.chapter-card-v2.has-active-session:hover .chapter-card-v2__bg {
+  transform: translateY(-4px) scale(1.02);
   box-shadow:
-    0 15px 40px rgba(15, 23, 42, 0.15),
-    0 8px 20px rgba(15, 23, 42, 0.1),
-    0 0 0 4px rgba(102, 126, 234, 0.2),
-    0 0 25px rgba(102, 126, 234, 0.3),
+    0 20px 60px rgba(120, 119, 198, 0.3),
+    0 8px 24px rgba(255, 119, 198, 0.2),
+    0 0 0 1px rgba(255, 255, 255, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
+@keyframes holographic-rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* État hover - Effet subtil et élégant avec style mat */
+.chapter-card-v2.has-active-session:not(.is-disabled):hover .chapter-card-v2__bg {
+  transform: translateY(-1px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow:
+    0 8px 30px rgba(45, 55, 72, 0.35),
+    0 4px 12px rgba(45, 55, 72, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  border-color: #4a5568;
+}
+
 .chapter-card-v2.has-active-session:not(.is-disabled):hover .chapter-card-v2__bg::before {
-  opacity: 0.6;
-  filter: blur(8px);
+  opacity: 1;
+  background: linear-gradient(
+    135deg,
+    rgba(107, 114, 128, 0.15) 0%,
+    rgba(75, 85, 99, 0.08) 50%,
+    rgba(55, 65, 81, 0.15) 100%
+  );
 }
 
 /* ========================================
@@ -1582,37 +1687,84 @@
    Simple bordure animée, SANS overlay
    ======================================== */
 
-/* Animation pour bordure bleue simple */
-@keyframes upcomingBorderPulse {
-  0%, 100% {
-    border-color: rgba(59, 130, 246, 0.6);
-    box-shadow:
-      0 10px 30px rgba(15, 23, 42, 0.12),
-      0 5px 15px rgba(15, 23, 42, 0.08),
-      0 0 0 3px rgba(59, 130, 246, 0.2),
-      0 0 15px rgba(59, 130, 246, 0.3);
-  }
-  50% {
-    border-color: rgba(37, 99, 235, 0.8);
-    box-shadow:
-      0 15px 40px rgba(15, 23, 42, 0.15),
-      0 8px 20px rgba(15, 23, 42, 0.1),
-      0 0 0 4px rgba(37, 99, 235, 0.25),
-      0 0 20px rgba(37, 99, 235, 0.4);
-  }
-}
-
-/* Appliquer bordure bleue animée SEULEMENT */
+/* Sessions prochaines - Style cyberpunk néon créatif */
 .chapter-card-v2.has-upcoming-session .chapter-card-v2__bg {
-  border-width: 2px;
-  border-style: solid;
-  animation: upcomingBorderPulse 3s ease-in-out infinite;
+  position: absolute;
+  inset: 0;
+  border: none;
+  background:
+    radial-gradient(circle at 10% 20%, rgba(0, 255, 135, 0.2), transparent 50%),
+    radial-gradient(circle at 90% 80%, rgba(0, 200, 255, 0.2), transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(50, 255, 180, 0.1), transparent 70%),
+    url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='neon-grid' x='0' y='0' width='25' height='25' patternUnits='userSpaceOnUse'%3E%3Cpath d='M 25 0 L 0 0 0 25' fill='none' stroke='%2300ff87' stroke-width='0.3' opacity='0.6'/%3E%3Ccircle cx='0' cy='0' r='1' fill='%2300ff87' opacity='0.8'/%3E%3Ccircle cx='25' cy='25' r='0.5' fill='%2300c8ff' opacity='0.6'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23neon-grid)'/%3E%3C/svg%3E"),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.85), rgba(240, 255, 250, 0.9));
+  border-radius: 24px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow:
+    0 8px 32px rgba(0, 255, 135, 0.12),
+    0 0 0 1px rgba(255, 255, 255, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  overflow: hidden;
 }
 
-/* État hover pour sessions prochaines */
+.chapter-card-v2.has-upcoming-session .chapter-card-v2__bg::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background:
+    linear-gradient(45deg,
+      rgba(0, 255, 135, 0.4) 0%,
+      rgba(0, 200, 255, 0.3) 25%,
+      rgba(50, 255, 180, 0.4) 50%,
+      rgba(0, 255, 135, 0.3) 75%,
+      rgba(0, 200, 255, 0.4) 100%);
+  opacity: 0;
+  transition: all 0.6s ease;
+  background-size: 200% 200%;
+  animation: neon-pulse 3s ease-in-out infinite;
+}
+
+.chapter-card-v2.has-upcoming-session:hover .chapter-card-v2__bg::before {
+  opacity: 0.8;
+  animation-duration: 1.5s;
+}
+
+.chapter-card-v2.has-upcoming-session:hover .chapter-card-v2__bg {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow:
+    0 20px 60px rgba(0, 255, 135, 0.25),
+    0 8px 24px rgba(0, 200, 255, 0.2),
+    0 0 0 1px rgba(255, 255, 255, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+@keyframes neon-pulse {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* État hover pour sessions prochaines - Style mat élégant */
 .chapter-card-v2.has-upcoming-session:not(.is-disabled):hover .chapter-card-v2__bg {
-  transform: translateY(-2px);
+  transform: translateY(-1px);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow:
+    0 8px 30px rgba(47, 133, 90, 0.2),
+    0 4px 12px rgba(47, 133, 90, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  border-color: #38a169;
+}
+
+.chapter-card-v2.has-upcoming-session:not(.is-disabled):hover .chapter-card-v2__bg::before {
+  opacity: 0.9;
+  background: linear-gradient(
+    135deg,
+    rgba(47, 133, 90, 0.12) 0%,
+    rgba(34, 197, 94, 0.06) 50%,
+    rgba(47, 133, 90, 0.12) 100%
+  );
 }
 
 /* Effet pulsant subtil pour le statut des sessions actives */
@@ -1646,17 +1798,18 @@
   position: absolute;
   top: 0;
   left: -100%;
-  width: 50%;
+  width: 30%;
   height: 100%;
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(255, 255, 255, 0.3),
+    rgba(255, 255, 255, 0.08),
     transparent
   );
-  animation: liveShine 3s ease-in-out infinite;
-  animation-delay: 1s;
+  animation: liveShine 6s ease-in-out infinite;
+  animation-delay: 2s;
   pointer-events: none;
+  opacity: 0.6;
 }
 
 /* ✨ Badge "EN DIRECT" supprimé - Remplacé par bordure animée élégante ✨ */

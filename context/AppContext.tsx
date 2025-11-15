@@ -90,6 +90,15 @@ const appReducer = (state: AppState, action: Action): AppState => {
                 concoursMode
             } = action.payload;
 
+            const requestedView = view;
+            const previousView = state.view;
+            let safeView = requestedView;
+
+            // Une fois connecté, ignorer toute navigation explicite vers l'écran de login
+            if (state.profile && requestedView === 'login') {
+                safeView = state.profile.classId === 'concours' ? 'concours' : 'dashboard';
+            }
+
             // Mettre à jour les champs concours depuis payload ou garder les valeurs actuelles
             let finalConcoursType = concoursType !== undefined ? concoursType : state.currentConcoursType;
             let finalConcoursId = concoursId !== undefined ? concoursId : state.currentConcoursId;
@@ -99,20 +108,20 @@ const appReducer = (state: AppState, action: Action): AppState => {
 
             // Si on navigue vers une vue concours, lire depuis sessionStorage si non fournis
             if (typeof window !== 'undefined') {
-                if (view === 'concours-list' && !finalConcoursType) {
+                if (safeView === 'concours-list' && !finalConcoursType) {
                     finalConcoursType = sessionStorage.getItem('currentConcoursType');
                 }
-                if ((view === 'concours-resume' || view === 'concours-quiz') && !finalConcoursId) {
+                if ((safeView === 'concours-resume' || safeView === 'concours-quiz') && !finalConcoursId) {
                     finalConcoursId = sessionStorage.getItem('currentConcoursFile');
                 }
-                if (view === 'concours-year' && !finalConcoursYear) {
+                if (safeView === 'concours-year' && !finalConcoursYear) {
                     finalConcoursYear = sessionStorage.getItem('currentConcoursYear');
                 }
             }
 
             let newState: AppState = {
                 ...state,
-                view,
+                view: safeView,
                 currentChapterId: chapterId !== undefined ? chapterId : state.currentChapterId,
                 activitySubView: subView !== undefined ? subView : state.activitySubView,
                 isReviewMode: review ?? false,
@@ -125,7 +134,7 @@ const appReducer = (state: AppState, action: Action): AppState => {
 
             const targetChapterId = chapterId !== undefined ? chapterId : state.currentChapterId;
 
-            if (view === 'activity' && subView === 'quiz' && review && targetChapterId && newState.progress[targetChapterId]) {
+            if (safeView === 'activity' && subView === 'quiz' && review && targetChapterId && newState.progress[targetChapterId]) {
                 const progress = newState.progress[targetChapterId];
                 newState.progress = {
                     ...newState.progress,
@@ -139,7 +148,7 @@ const appReducer = (state: AppState, action: Action): AppState => {
             // Synchroniser avec l'historique du navigateur (sauf si le changement vient déjà de l'historique)
             if (!fromHistory && typeof window !== 'undefined') {
                 const navState = {
-                    view,
+                    view: safeView,
                     chapterId: newState.currentChapterId,
                     subView: newState.activitySubView,
                     review: newState.isReviewMode,
@@ -149,7 +158,11 @@ const appReducer = (state: AppState, action: Action): AppState => {
                     concoursTheme: newState.currentConcoursTheme,
                     concoursMode: newState.concoursNavigationMode
                 };
-                pushNavigationState(navState);
+                if (previousView === 'login' && safeView !== 'login') {
+                    replaceNavigationState(navState);
+                } else {
+                    pushNavigationState(navState);
+                }
             }
 
             return newState;
@@ -1003,7 +1016,62 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
             const navState = event.state || getCurrentNavigationState();
 
             if (navState && navState.view) {
-                console.log('Navigating from history to:', navState);
+                // Logique de navigation hiérarchique: retourner à la page parente
+                let targetView = navState.view;
+                let targetChapterId = navState.chapterId || null;
+                let targetSubView = navState.subView || null;
+
+                // Si on est dans une sous-vue d'activité (lesson/quiz/videos/exercises), retourner au chapterHub
+                if (navState.view === 'activity' && navState.subView && navState.chapterId) {
+                    // Rediriger vers chapterHub au lieu de la sous-vue
+                    targetView = 'activity';
+                    targetSubView = null;
+                    
+                    // Remplacer l'état actuel pour pointer vers chapterHub
+                    replaceNavigationState({
+                        view: 'activity',
+                        chapterId: navState.chapterId,
+                        subView: null,
+                        review: navState.review || false
+                    });
+                    
+                    dispatch({
+                        type: 'CHANGE_VIEW',
+                        payload: {
+                            view: 'activity',
+                            chapterId: navState.chapterId,
+                            subView: null,
+                            review: navState.review || false,
+                            fromHistory: true
+                        }
+                    });
+                    return;
+                }
+
+                // Si on est au chapterHub, retourner au dashboard
+                if (navState.view === 'activity' && !navState.subView && navState.chapterId) {
+                    targetView = 'dashboard';
+                    targetChapterId = null;
+                    
+                    replaceNavigationState({
+                        view: 'dashboard'
+                    });
+                    
+                    dispatch({
+                        type: 'CHANGE_VIEW',
+                        payload: {
+                            view: 'dashboard',
+                            fromHistory: true
+                        }
+                    });
+                    return;
+                }
+
+                const sanitizedView = (state.profile && targetView === 'login')
+                    ? (state.profile.classId === 'concours' ? 'concours' : 'dashboard')
+                    : targetView;
+
+                console.log('Navigating from history to:', { ...navState, view: sanitizedView });
 
                 // Restaurer les données sessionStorage pour les concours si nécessaire
                 if (navState.concoursType) {
@@ -1023,9 +1091,9 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
                 dispatch({
                     type: 'CHANGE_VIEW',
                     payload: {
-                        view: navState.view,
-                        chapterId: navState.chapterId || null,
-                        subView: navState.subView || null,
+                        view: sanitizedView,
+                        chapterId: targetChapterId,
+                        subView: targetSubView,
                         review: navState.review || false,
                         concoursType: navState.concoursType || null,
                         concoursId: navState.concoursId || null,
@@ -1059,7 +1127,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         return () => {
             window.removeEventListener('popstate', handlePopState);
         };
-    }, [dispatch, state.view, state.currentChapterId, state.activitySubView, state.isReviewMode, state.currentConcoursType, state.currentConcoursId, state.currentConcoursYear, state.currentConcoursTheme, state.concoursNavigationMode]);
+    }, [dispatch, state.profile, state.view, state.currentChapterId, state.activitySubView, state.isReviewMode, state.currentConcoursType, state.currentConcoursId, state.currentConcoursYear, state.currentConcoursTheme, state.concoursNavigationMode]);
 
     return (
         <AppStateContext.Provider value={state}>

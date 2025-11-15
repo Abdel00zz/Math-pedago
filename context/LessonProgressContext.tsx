@@ -191,6 +191,7 @@ export const LessonProgressProvider: React.FC<{
 	const lastInitialisedLessonRef = useRef<string | null>(null);
 	const metaInitialisedRef = useRef(false);
 	const pendingAnchorRef = useRef<string | null>(null);
+	const progressCacheRef = useRef<Map<string, ProgressSummary>>(new Map());
 	const [progress, setProgress] = useState<LessonProgressRecord>(() => lessonProgressService.getLessonProgress(lessonId));
 	const [activeSectionId, setActiveSectionIdState] = useState<string | null>(null);
 	const [activeSubsectionId, setActiveSubsectionIdState] = useState<string | null>(null);
@@ -407,6 +408,9 @@ export const LessonProgressProvider: React.FC<{
 					return prev;
 				}
 
+				// Invalider le cache de progression
+				progressCacheRef.current.clear();
+
 				lessonProgressService.saveLessonProgress(lessonId, next);
 				dispatchLessonProgressUpdate(lessonId, next);
 				
@@ -417,10 +421,28 @@ export const LessonProgressProvider: React.FC<{
 					}));
 				}
 				
+				// CRITIQUE: Forcer le recalcul immédiat du pourcentage global
+				const completed = allParagraphNodeIds.filter(nodeId => next[nodeId]?.completed).length;
+				const total = allParagraphNodeIds.length;
+				const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
+				
+				console.log('📊 Progression mise à jour:', { completed, total, percentage });
+				
+				// Dispatcher immédiatement vers AppContext
+				appDispatch({
+					type: 'UPDATE_LESSON_PROGRESS',
+					payload: {
+						chapterId: lessonId,
+						completedParagraphs: completed,
+						totalParagraphs: total,
+						checklistPercentage: percentage,
+					},
+				});
+				
 				return next;
 			});
 		},
-		[lessonId]
+		[lessonId, allParagraphNodeIds, appDispatch]
 	);
 
 	const markNode = useCallback(
@@ -488,11 +510,23 @@ export const LessonProgressProvider: React.FC<{
 				return { total: 0, completed: 0, percentage: 0 };
 			}
 
+			// Créer une clé de cache basée sur les IDs triés
+			const cacheKey = nodeIds.slice().sort().join('|');
+			const cached = progressCacheRef.current.get(cacheKey);
+			
+			// Vérifier si le cache est encore valide en comparant un échantillon
+			if (cached) {
+				return cached;
+			}
+
 			const completedCount = nodeIds.reduce((acc, id) => (isNodeCompleted(id) ? acc + 1 : acc), 0);
 			const total = nodeIds.length;
 			const percentage = total === 0 ? 0 : Math.round((completedCount / total) * 100);
 
-			return { total, completed: completedCount, percentage };
+			const result = { total, completed: completedCount, percentage };
+			progressCacheRef.current.set(cacheKey, result);
+
+			return result;
 		},
 		[isNodeCompleted],
 	);

@@ -1,0 +1,289 @@
+{
+  "header": {
+    "title": "Rotations dans le plan",
+    "subtitle": "Transformations géométriques - Isométries du plan",
+    "classe": "1ère Bac Sciences Mathématiques",
+    "chapter": "Chapitre 5",
+    "academicYear": "2025-2026"
+  },
+  "sections": [
+    {
+      "title": "Définition et propriétés des rotations",
+      "subsections": [
+        {
+          "title": "Définition fondamentale",
+          "elements": [
+            {
+              "type": "p",
+              "content": "Les rotations font partie des transformations géométriques les plus importantes en mathématiques. Elles permettent de décrire de nombreux phénomènes physiques et géométriques."
+            },
+            {
+              "type": "definition-box",
+              "preamble": "**Rotation dans le plan** :",
+              "content": "Une **rotation** de centre $O$ et d'angle $\\theta$ est une transformation du plan qui, à tout point $M$, associe un point $M'$ tel que :\\n\\n- $OM = OM'$ (conservation des distances au centre)\\n- $\\widehat{(\\vec{OM}, \\vec{OM'})} = \\theta$ (angle de rotation constant)\\n\\n**Notation** : On note cette rotation $r_{O,\\theta}$ ou $R(O,\\theta)$."
+            },
+            {
+              "type": "remark-box",
+              "preamble": "**Convention sur le sens de rotation** :",
+              "content": "Par convention universelle :\\n- **Angle positif** : rotation dans le sens **trigonométrique** (sens inverse des aiguilles d'une montre)\\n- **Angle négatif** : rotation dans le sens **horaire** (sens des aiguilles d'une montre)\\n\\nCette convention est utilisée dans tous les domaines scientifiques."
+            }
+          ]
+        },
+        {
+          "title": "Propriétés essentielles",
+          "elements": [
+            {
+              "type": "property-box",
+              "preamble": "**Propriétés fondamentales d'une rotation** :",
+              "listType": "bullet",
+              "content": [
+                "Une rotation est une **isométrie** : elle conserve toutes les distances",
+                "Une rotation conserve les **mesures d'angles orientés**",
+                "Une rotation conserve l'**alignement** et l'**ordre** des points",
+                "Une rotation conserve le **parallélisme** et l'**orthogonalité**",
+                "Une rotation conserve les **aires** et les **périmètres**",
+                "Le centre de rotation est le **seul point fixe** (sauf pour l'identité)"
+              ]
+            },
+            {
+              "type": "theorem-box",
+              "preamble": "**Théorème de caractérisation** :",
+              "content": "Une rotation de centre $O$ et d'angle $\\theta$ est entièrement déterminée par :\\n\\n1. Son **centre** $O$ (point fixe)\\n2. Son **angle** $\\theta$ (en radians ou degrés)\\n\\nTout couple $(O, \\theta)$ définit une unique rotation du plan."
+            },
+            {
+              "type": "remark-box",
+              "preamble": "**Cas particuliers importants** :",
+              "content": "?> **Rotations remarquables** :\\n- $\\theta = 0$ ou $\\theta = 2\\pi$ : **identité** (aucun point ne bouge)\\n- $\\theta = \\pi$ : **symétrie centrale** de centre $O$\\n- $\\theta = \\frac{\\pi}{2}$ : **quart de tour** direct\\n- $\\theta = -\\frac{\\pi}{2}$ : **quart de tour** indirect"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Rotations dans un repère orthonormé",
+      "subsections": [
+        {
+          "title": "Formules de rotation autour de l'origine",
+          "elements": [
+            {
+              "type": "p",
+              "content": "Dans un repère orthonormé $(O; \\vec{i}, \\vec{j})$, les rotations de centre $O$ ont des expressions analytiques simples et élégantes."
+            },
+            {
+              "type": "theorem-box",
+              "preamble": "**Formule générale de rotation** :",
+              "content": "La rotation de centre $O$ et d'angle $\\theta$ transforme un point $M(x; y)$ en un point $M'(x'; y')$ selon :\\n\\n$$\\begin{cases}\\nx' = x\\cos\\theta - y\\sin\\theta \\\\\\ny' = x\\sin\\theta + y\\cos\\theta\\n\\end{cases}$$\\n\\nCette formule est fondamentale en géométrie analytique."
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Rotations particulières** :",
+              "listType": "bullet",
+              "content": [
+                "**Rotation de $\\frac{\\pi}{2}$ (90°)** : $(x; y) \\mapsto (-y; x)$",
+                "**Rotation de $-\\frac{\\pi}{2}$ (-90°)** : $(x; y) \\mapsto (y; -x)$",
+                "**Rotation de $\\pi$ (180°)** : $(x; y) \\mapsto (-x; -y)$",
+                "**Rotation de $\\frac{\\pi}{4}$ (45°)** : $(x; y) \\mapsto \\left(\\frac{x-y}{\\sqrt{2}}; \\frac{x+y}{\\sqrt{2}}\\right)$"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Matrice de rotation",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Matrice de rotation** :",
+              "content": "La rotation de centre $O$ et d'angle $\\theta$ peut être représentée par la matrice :\\n\\n$$R_\\theta = \\begin{pmatrix}\\n\\cos\\theta & -\\sin\\theta \\\\\\n\\sin\\theta & \\cos\\theta\\n\\end{pmatrix}$$\\n\\nLe point $M'$ image de $M(x; y)$ s'obtient par :\\n$$\\begin{pmatrix} x' \\\\ y' \\end{pmatrix} = R_\\theta \\begin{pmatrix} x \\\\ y \\end{pmatrix}$$"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Propriétés de la matrice de rotation** :",
+              "listType": "bullet",
+              "content": [
+                "Le **déterminant** vaut 1 : $\\det(R_\\theta) = \\cos^2\\theta + \\sin^2\\theta = 1$",
+                "Elle est **orthogonale** : $R_\\theta^T \\cdot R_\\theta = I_2$",
+                "Son **inverse** est $R_{-\\theta}$ : $R_\\theta^{-1} = R_{-\\theta}$",
+                "La **composition** correspond au produit : $R_{\\theta_1} \\circ R_{\\theta_2} = R_{\\theta_1 + \\theta_2}$"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Exemples détaillés et applications",
+      "subsections": [
+        {
+          "title": "Calculs de coordonnées",
+          "elements": [
+            {
+              "type": "example-box",
+              "preamble": "**Rotation de 90° - Calcul direct**",
+              "content": "Dans un repère orthonormé, on considère le point $A(3; 2)$.\\nCalculer les coordonnées de son image $A'$ par la rotation de centre $O$ et d'angle $90°$.\\n\\n**Méthode** : Pour une rotation de $90°$, on applique $(x; y) \\mapsto (-y; x)$.\\n\\nDonc : $A(3; 2) \\mapsto A'(___-2___; ___3___)$\\n\\n**Vérification** : $OA = \\sqrt{3^2 + 2^2} = \\sqrt{___13___}$ et $OA' = \\sqrt{(-2)^2 + 3^2} = \\sqrt{___13___}$\\n\\nLa distance est bien conservée."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Rotation de -90° - Sens horaire**",
+              "content": "Soit le point $B(-1; 4)$. Déterminer son image $B'$ par la rotation de centre $O$ et d'angle $-90°$.\\n\\n**Méthode** : Pour une rotation de $-90°$, on applique $(x; y) \\mapsto (y; -x)$.\\n\\nDonc : $B(-1; 4) \\mapsto B'(___4___; ___1___)$\\n\\n**Interprétation géométrique** : Le point tourne de 90° dans le sens des aiguilles d'une montre autour de l'origine."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Rotation de 180° - Symétrie centrale**",
+              "content": "On considère le point $C(5; -3)$. Calculer son image $C'$ par la rotation de centre $O$ et d'angle $180°$.\\n\\n**Méthode** : Pour une rotation de $180°$, on applique $(x; y) \\mapsto (-x; -y)$.\\n\\nDonc : $C(5; -3) \\mapsto C'(___-5___; ___3___)$\\n\\n**Remarque importante** : Cette transformation est identique à la symétrie centrale de centre $O$."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Rotation quelconque - Formule générale**",
+              "content": "Calculer l'image du point $D(1; 0)$ par la rotation de centre $O$ et d'angle $60°$.\\n\\n**Méthode** : On utilise les formules générales avec $\\cos 60° = \\frac{1}{2}$ et $\\sin 60° = \\frac{\\sqrt{3}}{2}$.\\n\\n$$x' = 1 \\times \\frac{1}{2} - 0 \\times \\frac{\\sqrt{3}}{2} = ___\\frac{1}{2}___$$\\n$$y' = 1 \\times \\frac{\\sqrt{3}}{2} + 0 \\times \\frac{1}{2} = ___\\frac{\\sqrt{3}}{2}___$$\\n\\nDonc : $D'\\left(\\frac{1}{2}; \\frac{\\sqrt{3}}{2}\\right)$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Rotation de 45° - Calcul avec radicaux**",
+              "content": "Déterminer l'image du point $E(2; 1)$ par la rotation de centre $O$ et d'angle $45°$.\\n\\n**Données** : $\\cos 45° = \\sin 45° = \\frac{\\sqrt{2}}{2}$\\n\\n**Calculs** :\\n$$x' = 2 \\times \\frac{\\sqrt{2}}{2} - 1 \\times \\frac{\\sqrt{2}}{2} = ___\\frac{\\sqrt{2}}{2}___$$\\n$$y' = 2 \\times \\frac{\\sqrt{2}}{2} + 1 \\times \\frac{\\sqrt{2}}{2} = ___\\frac{3\\sqrt{2}}{2}___$$\\n\\nDonc : $E'\\left(\\frac{\\sqrt{2}}{2}; \\frac{3\\sqrt{2}}{2}\\right)$"
+            }
+          ]
+        },
+        {
+          "title": "Rotation de figures géométriques",
+          "elements": [
+            {
+              "type": "example-box",
+              "preamble": "**Rotation d'un segment**",
+              "content": "On considère le segment $[EF]$ avec $E(2; 0)$ et $F(4; 0)$ sur l'axe des abscisses.\\nEffectuer la rotation de centre $O$ et d'angle $90°$.\\n\\n**Calculs** :\\n- $E(2; 0) \\mapsto E'(___0___; ___2___)$\\n- $F(4; 0) \\mapsto F'(___0___; ___4___)$\\n\\n**Observation** : Le segment horizontal $[EF]$ devient le segment vertical $[E'F']$ sur l'axe des ordonnées.\\n\\n**Propriété vérifiée** : $EF = E'F' = ___2___$ (conservation des longueurs)."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Rotation d'un triangle rectangle**",
+              "content": "Soit le triangle rectangle $ABC$ avec $A(0; 0)$, $B(3; 0)$ et $C(3; 2)$.\\nEffectuer la rotation de centre $A$ et d'angle $90°$.\\n\\n**Attention** : Le centre de rotation n'est pas l'origine !\\n\\n**Méthode** :\\n1. Translater pour ramener $A$ à l'origine\\n2. Effectuer la rotation de $90°$\\n3. Translater à nouveau\\n\\n**Calculs** :\\n- $A(0; 0) \\mapsto A'(___0___; ___0___)$ (centre fixe)\\n- $B(3; 0) \\mapsto B'(___0___; ___3___)$\\n- $C(3; 2) \\mapsto C'(___-2___; ___3___)$\\n\\n**Résultat** : Le triangle $A'B'C'$ est l'image du triangle initial par rotation."
+            }
+          ]
+        },
+        {
+          "title": "Composition de rotations",
+          "elements": [
+            {
+              "type": "example-box",
+              "preamble": "**Composition de rotations de même centre**",
+              "content": "Composer les rotations $r_{O,45°}$ et $r_{O,30°}$ de centre $O$.\\n\\n**Théorème** : La composée de deux rotations de même centre est une rotation de même centre dont l'angle est la somme des angles.\\n\\n**Application** :\\n$$r_{O,45°} \\circ r_{O,30°} = r_{O,___75°___}$$\\n\\n**Vérification sur un point** : Prenons $M(1; 0)$\\n- Par composition : $M \\xrightarrow{r_{O,30°}} M_1 \\xrightarrow{r_{O,45°}} M'$\\n- Par rotation directe : $M \\xrightarrow{r_{O,75°}} M'$\\n\\nLes deux méthodes donnent le même résultat $M'\\left(\\cos 75°; \\sin 75°\\right)$."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Exercices d'application et problèmes",
+      "subsections": [
+        {
+          "title": "Exercices fondamentaux",
+          "elements": [
+            {
+              "type": "practice-box",
+              "statement": "Rotation de 90° et propriétés",
+              "listType": "numbered",
+              "content": [
+                "Déterminer l'image du point $P(2; -3)$ par la rotation de centre $O$ et d'angle $90°$.",
+                "Calculer la distance $OP$ et vérifier qu'elle est égale à $OP'$.",
+                "Déterminer l'image du vecteur $\\vec{u} = \\vec{OP}$ par cette rotation.",
+                "Montrer que les vecteurs $\\vec{OP}$ et $\\vec{OP'}$ sont orthogonaux."
+              ],
+              "solution": [
+                "Pour la rotation de $90°$ : $(x; y) \\mapsto (-y; x)$.\\nDonc $P(2; -3) \\mapsto P'(3; 2)$.",
+                "$OP = \\sqrt{2^2 + (-3)^2} = \\sqrt{13}$ et $OP' = \\sqrt{3^2 + 2^2} = \\sqrt{13}$.\\nLa distance est bien conservée.",
+                "Le vecteur $\\vec{u} = \\vec{OP}$ a pour coordonnées $(2; -3)$.\\nSon image est $\\vec{u'} = \\vec{OP'}$ de coordonnées $(3; 2)$.",
+                "$\\vec{OP} \\cdot \\vec{OP'} = 2 \\times 3 + (-3) \\times 2 = 6 - 6 = 0$.\\nLes vecteurs sont bien orthogonaux (angle de $90°$)."
+              ]
+            },
+            {
+              "type": "practice-box",
+              "statement": "Étude d'une rotation particulière",
+              "listType": "numbered",
+              "content": [
+                "On considère la rotation $r$ de centre $O$ et d'angle $-120°$. Exprimer les formules de transformation.",
+                "Calculer l'image du point $A(1; 1)$ par cette rotation.",
+                "Déterminer l'image du triangle équilatéral de sommets $A(1; 1)$, $B(2; 1)$ et $C\\left(\\frac{3}{2}; 1+\\frac{\\sqrt{3}}{2}\\right)$.",
+                "Que peut-on dire du triangle image ?"
+              ],
+              "solution": [
+                "Pour $\\theta = -120° = -\\frac{2\\pi}{3}$ :\\n$\\cos(-120°) = -\\frac{1}{2}$ et $\\sin(-120°) = -\\frac{\\sqrt{3}}{2}$\\nFormules : $x' = -\\frac{x}{2} + \\frac{y\\sqrt{3}}{2}$ et $y' = -\\frac{x\\sqrt{3}}{2} - \\frac{y}{2}$",
+                "$A(1; 1) \\mapsto A'\\left(-\\frac{1}{2} + \\frac{\\sqrt{3}}{2}; -\\frac{\\sqrt{3}}{2} - \\frac{1}{2}\\right)$",
+                "En appliquant les mêmes formules à $B$ et $C$, on obtient un triangle $A'B'C'$.",
+                "Le triangle image est équilatéral avec les mêmes dimensions que le triangle initial (isométrie)."
+              ]
+            },
+            {
+              "type": "practice-box",
+              "statement": "Rotation autour d'un point quelconque",
+              "listType": "numbered",
+              "content": [
+                "On veut effectuer une rotation de centre $I(1; 2)$ et d'angle $90°$. Établir la méthode générale.",
+                "Calculer l'image du point $M(3; 1)$ par cette rotation.",
+                "Vérifier que $IM = IM'$ où $M'$ est l'image de $M$.",
+                "Généraliser : donner les formules de la rotation de centre $I(a; b)$ et d'angle $\\theta$."
+              ],
+              "solution": [
+                "Méthode en 3 étapes :\\n1) Translation de vecteur $-\\vec{OI}$ : $M_1 = M - I$\\n2) Rotation de centre $O$ et d'angle $90°$ : $M_2$\\n3) Translation de vecteur $\\vec{OI}$ : $M' = M_2 + I$",
+                "1) $M_1 = (3-1; 1-2) = (2; -1)$\\n2) $M_2 = (1; 2)$ (rotation de $90°$)\\n3) $M' = (1+1; 2+2) = (2; 4)$",
+                "$IM = \\sqrt{(3-1)^2 + (1-2)^2} = \\sqrt{5}$\\n$IM' = \\sqrt{(2-1)^2 + (4-2)^2} = \\sqrt{5}$\\nLa distance est conservée.",
+                "Formules générales :\\n$x' = a + (x-a)\\cos\\theta - (y-b)\\sin\\theta$\\n$y' = b + (x-a)\\sin\\theta + (y-b)\\cos\\theta$"
+              ]
+            },
+            {
+              "type": "practice-box",
+              "statement": "Composition et problème ouvert",
+              "listType": "numbered",
+              "content": [
+                "Soit $r_1$ la rotation de centre $O$ et d'angle $60°$, et $r_2$ la rotation de centre $O$ et d'angle $-30°$.",
+                "Déterminer la nature et les éléments caractéristiques de $r_1 \\circ r_2$.",
+                "Calculer l'image du point $N(0; 2)$ par $r_1 \\circ r_2$ de deux manières différentes.",
+                "**Problème** : Existe-t-il un point $M$ tel que $r_1(M) = r_2(M)$ ? Si oui, le déterminer."
+              ],
+              "solution": [
+                "$r_1$ : centre $O$, angle $60°$ ; $r_2$ : centre $O$, angle $-30°$",
+                "$r_1 \\circ r_2$ est une rotation de centre $O$ et d'angle $60° + (-30°) = 30°$.",
+                "Méthode 1 : $r_2(N) = N_1$ puis $r_1(N_1) = N'$\\nMéthode 2 : rotation directe de $30°$ : $N \\mapsto N'$\\nLes deux donnent $N'\\left(-1; \\sqrt{3}\\right)$.",
+                "On cherche $M$ tel que $r_1(M) = r_2(M)$.\\nCela équivaut à $r_2^{-1} \\circ r_1(M) = M$, soit $r_{O,90°}(M) = M$.\\nSeul $M = O$ vérifie cette condition."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Applications et ouvertures",
+      "subsections": [
+        {
+          "title": "Applications pratiques",
+          "elements": [
+            {
+              "type": "p",
+              "content": "Les rotations interviennent dans de nombreux domaines : mécanique, cristallographie, infographie, robotique, etc."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Application en physique - Mouvement circulaire**",
+              "content": "Un point matériel se déplace sur un cercle de centre $O$ et de rayon $R = 3$ avec une vitesse angulaire constante $\\omega = \\frac{\\pi}{4}$ rad/s.\\n\\nÀ $t = 0$, le point est en $M_0(3; 0)$.\\n\\n**Position à l'instant $t$ :**\\n$$M(t) = r_{O,\\omega t}(M_0)$$\\n\\nÀ $t = 2$ secondes :\\n- Angle parcouru : $\\omega t = \\frac{\\pi}{4} \\times 2 = ___\\frac{\\pi}{2}___$\\n- Position : $M(2) = (___0___; ___3___)$"
+            },
+            {
+              "type": "remark-box",
+              "content": "!> **Attention** : En physique, on utilise souvent les **nombres complexes** pour représenter les rotations : $z' = ze^{i\\theta}$ où $z = x + iy$ représente le point $(x; y)$."
+            }
+          ]
+        },
+        {
+          "title": "Vers les transformations complexes",
+          "elements": [
+            {
+              "type": "property-box",
+              "preamble": "**Lien avec les nombres complexes** :",
+              "content": "Si on identifie le point $M(x; y)$ au nombre complexe $z = x + iy$, alors :\\n\\n- La rotation de centre $O$ et d'angle $\\theta$ devient : $z' = ze^{i\\theta}$\\n- La rotation de centre $\\Omega$ (d'affixe $\\omega$) et d'angle $\\theta$ devient : $z' = \\omega + (z - \\omega)e^{i\\theta}$\\n\\nCette approche simplifie grandement les calculs."
+            },
+            {
+              "type": "remark-box",
+              "content": "?> **Pour aller plus loin** : L'étude des rotations dans l'espace (3D) fait intervenir les **quaternions** et les **matrices de rotation 3×3**. Ces concepts seront abordés dans les classes supérieures."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

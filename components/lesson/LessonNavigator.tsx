@@ -13,7 +13,7 @@ const toAlphabetic = (index: number) => {
     return `${base[quotient - 1]}${base[remainder]}`;
 };
 
-export const LessonNavigator: React.FC = () => {
+const LessonNavigatorComponent: React.FC = () => {
     const {
         outline,
         getProgress,
@@ -73,104 +73,80 @@ export const LessonNavigator: React.FC = () => {
         scrollToAnchor(subsectionAnchor, { offset: 96 });
     };
 
-    const handleSubsectionCheckbox = useCallback((e: React.MouseEvent, subsectionId: string, subsectionTitle: string, paragraphNodeIds: string[]) => {
-        e.stopPropagation(); // Empêcher le clic de déclencher la navigation
-        
-        if (paragraphNodeIds.length === 0) return;
-        
-        // Vérifier l'état actuel des paragraphes de cette sous-section
-    const completedCount = paragraphNodeIds.filter(nodeId => isNodeCompleted(nodeId)).length;
-    const totalNodes = paragraphNodeIds.length;
-    const allCompleted = completedCount === totalNodes;
-        
-        const subsectionTitleClean = subsectionTitle.replace(/<[^>]*>/g, '');
-        
-        // Debug temporaire - à supprimer en production
-        if (process.env.NODE_ENV === 'development') {
-            console.log('Debug handleSubsectionCheckbox:', {
-                subsectionTitle: subsectionTitleClean,
-                totalNodes,
-                completedCount,
-                allCompleted,
-                paragraphNodeIds: paragraphNodeIds.length
-            });
-        }
-        
-        // Utiliser setTimeout pour attendre que les changements soient appliqués avant d'afficher la notification
-        const showNotificationAfterUpdate = (modifiedCount: number, action: 'coché' | 'décoché') => {
-            setTimeout(() => {
-                // Recalculer la progression globale après les modifications
-                const globalProgress = getProgress(allParagraphNodeIds);
-                const progressText = globalProgress.total > 0 
-                    ? ` · Progression totale: ${globalProgress.percentage}%`
-                    : '';
-                
-                const actionText = action === 'coché' ? 'validé' : 'décoché';
-                
-            // Logique correcte : on coche/décoche UNE sous-section (= 1 paragraphe dans le sommaire)
-            // Les paragraphNodeIds représentant désormais ce paragraphe unique
-                const title = action === 'coché' ? 'Paragraphe validé' : 'Paragraphe décoché';
-                const type = action === 'coché' ? 'success' : 'info';
-                
-                // Message plus précis : on parle du paragraphe (sous-section) validé, pas des éléments HTML internes
-                // Exemple de test avec formules mathématiques pour certaines sections
-                let mathExample = '';
-                if (subsectionTitleClean.toLowerCase().includes('équation') || 
-                    subsectionTitleClean.toLowerCase().includes('calcul') ||
-                    subsectionTitleClean.toLowerCase().includes('formule')) {
-                    mathExample = ` · Ex: $E = mc^2$`;
-                } else if (subsectionTitleClean.toLowerCase().includes('géométrie') ||
-                          subsectionTitleClean.toLowerCase().includes('triangle')) {
-                    mathExample = ` · Ex: $a^2 + b^2 = c^2$`;
-                } else if (Math.random() < 0.3) { // 30% de chance pour tester
-                    mathExample = ` · Score: $\\frac{${globalProgress.completed}}{${globalProgress.total}}$`;
-                }
-                
-                // Durée plus longue pour les notifications avec formules mathématiques
-                const notificationDuration = mathExample ? 4500 : 2500;
-                
-                addNotification(title, type, {
-                    message: `<strong>${subsectionTitleClean}</strong> ${actionText}${progressText}${mathExample}`,
-                    duration: notificationDuration,
-                });
-            }, 100); // Délai plus long pour s'assurer de la synchronisation
-        };
-        
-        if (allCompleted) {
-            // Si tous sont complétés, les décocher tous (seulement ceux de cette sous-section)
-            paragraphNodeIds.forEach(nodeId => {
-                markNode(nodeId, false);
-            });
-            
-            // On décoche 1 paragraphe (= cette sous-section), peu importe le nombre d'éléments HTML qu'elle contient
-            showNotificationAfterUpdate(1, 'décoché');
-        } else {
-            // Cocher seulement les paragraphes de cette sous-section qui ne sont pas encore cochés
-            const uncompleted = paragraphNodeIds.filter(nodeId => !isNodeCompleted(nodeId));
+    const handleSubsectionCheckbox = useCallback((
+        e: React.MouseEvent,
+        subsectionId: string,
+        subsectionTitle: string,
+        paragraphNodeIds: string[],
+        fallbackNodeId?: string
+    ) => {
+        e.stopPropagation();
 
-            if (process.env.NODE_ENV === 'development') {
-                console.log('Nœuds de paragraphe non complétés à cocher:', uncompleted.length, 'sur', totalNodes, 'dans le paragraphe:', subsectionTitleClean);
-            }
-            
-            uncompleted.forEach(nodeId => {
-                markNode(nodeId, true);
+        const safeNodeIds = paragraphNodeIds.length > 0
+            ? paragraphNodeIds
+            : fallbackNodeId
+                ? [fallbackNodeId]
+                : [];
+
+        if (safeNodeIds.length === 0) {
+            addNotification('Progression indisponible', 'warning', {
+                message: 'Impossible de retrouver cet élément dans la progression.',
+                duration: 3000,
             });
-            
-            if (uncompleted.length > 0) {
-                // On coche 1 paragraphe (= cette sous-section), peu importe le nombre d'éléments HTML qu'elle contient
-                showNotificationAfterUpdate(1, 'coché');
-            } else {
-                // Tous étaient déjà cochés (cas rare mais possible)
-                // Test avec formule mathématique pour les sections déjà validées
-                const mathTest = Math.random() < 0.5 ? ` · Status: $\\checkmark$` : '';
-                
-                addNotification('Déjà validé', 'info', {
-                    message: `<strong>${subsectionTitleClean}</strong> · Paragraphe déjà validé${mathTest}`,
+            return;
+        }
+
+        const subsectionTitleClean = subsectionTitle.replace(/<[^>]*>/g, '');
+
+        // Logique radicalement simplifiée :
+        // - Si tout est coché : tout décocher
+        // - Sinon : tout cocher
+        const allCompleted = safeNodeIds.every(nodeId => isNodeCompleted(nodeId));
+
+        try {
+            if (allCompleted) {
+                // Décocher tous les nodes
+                safeNodeIds.forEach(nodeId => markNode(nodeId, false));
+
+                // Notification immédiate avec le pourcentage actuel (sera mis à jour automatiquement)
+                addNotification('Paragraphe décoché', 'info', {
+                    message: `<strong>${subsectionTitleClean}</strong> · Progression mise à jour`,
                     duration: 2000,
                 });
+            } else {
+                // Cocher tous les nodes (même ceux déjà cochés pour être sûr)
+                safeNodeIds.forEach(nodeId => markNode(nodeId, true));
+
+                // Vérifier si la leçon est maintenant complète (100%)
+                const totalCompleted = allParagraphNodeIds.filter(nodeId => {
+                    // Après avoir coché les nodes, vérifier leur état
+                    return safeNodeIds.includes(nodeId) || isNodeCompleted(nodeId);
+                }).length;
+
+                const isLessonComplete = totalCompleted === allParagraphNodeIds.length;
+
+                if (isLessonComplete) {
+                    // Notification spéciale pour progression complète
+                    addNotification('🎉 Leçon terminée !', 'success', {
+                        message: `<strong>${subsectionTitleClean}</strong> · Félicitations ! Vous avez terminé cette leçon.`,
+                        duration: 4000,
+                    });
+                } else {
+                    // Notification normale pour validation partielle
+                    addNotification('Paragraphe validé', 'success', {
+                        message: `<strong>${subsectionTitleClean}</strong> · Progression mise à jour`,
+                        duration: 2000,
+                    });
+                }
             }
+        } catch (error) {
+            console.error('Erreur lors de la mise à jour de la progression:', error);
+            addNotification('Erreur de progression', 'error', {
+                message: 'Impossible de mettre à jour la progression de ce paragraphe.',
+                duration: 3000,
+            });
         }
-    }, [isNodeCompleted, markNode, addNotification, getProgress, allParagraphNodeIds]);
+    }, [isNodeCompleted, markNode, addNotification, allParagraphNodeIds]);
 
 
 
@@ -300,10 +276,11 @@ export const LessonNavigator: React.FC = () => {
                 >
                     <div className="lesson-navigator__sections" role="navigation" aria-label="Sommaire des sections">
                     {outline.map((section) => {
-                        const sectionComplete = section.subsections.every(
-                            (subsection) =>
-                                getProgress(subsection.paragraphNodeIds).completed === getProgress(subsection.paragraphNodeIds).total
-                        );
+                        const sectionComplete = section.subsections.every((subsection) => {
+                            const nodes = subsection.paragraphNodeIds?.length > 0 ? subsection.paragraphNodeIds : [subsection.progressNodeId];
+                            const prog = getProgress(nodes);
+                            return prog.total > 0 && prog.completed === prog.total;
+                        });
                         const sectionActive = activeSectionId === section.id;
 
                         return (
@@ -325,7 +302,10 @@ export const LessonNavigator: React.FC = () => {
 
                                 <ul className="lesson-navigator__subsections">
                                     {section.subsections.map((subsection, subsectionIndex) => {
-                                        const subsectionProgress = getProgress(subsection.paragraphNodeIds);
+                                        const subsectionParagraphNodes = subsection.paragraphNodeIds && subsection.paragraphNodeIds.length > 0
+                                            ? subsection.paragraphNodeIds
+                                            : [subsection.progressNodeId];
+                                        const subsectionProgress = getProgress(subsectionParagraphNodes);
                                         const subsectionComplete =
                                             subsectionProgress.total > 0 && subsectionProgress.completed === subsectionProgress.total;
                                         const subsectionActive = activeSubsectionId === subsection.id;
@@ -353,7 +333,13 @@ export const LessonNavigator: React.FC = () => {
                                                     </button>
                                                     <button
                                                         type="button"
-                                                        onClick={(e) => handleSubsectionCheckbox(e, subsection.id, subsection.title, subsection.paragraphNodeIds)}
+                                                        onClick={(e) => handleSubsectionCheckbox(
+                                                            e,
+                                                            subsection.id,
+                                                            subsection.title,
+                                                            subsectionParagraphNodes,
+                                                            subsection.progressNodeId
+                                                        )}
                                                         className={`lesson-navigator__subsection-checkbox${subsectionComplete ? ' is-checked' : ''}`}
                                                         title={subsectionComplete 
                                                             ? `Décocher ce paragraphe`
@@ -382,3 +368,6 @@ export const LessonNavigator: React.FC = () => {
         </aside>
     );
 };
+
+// Exporter directement sans React.memo pour garantir les re-renders nécessaires
+export const LessonNavigator = LessonNavigatorComponent;

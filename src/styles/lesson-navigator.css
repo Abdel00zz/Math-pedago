@@ -3,28 +3,45 @@
 .lesson-experience {
   display: block;
   position: relative;
+  /* shared metrics so navigator width and gutter stay in sync */
+  --lesson-navigator-width: 260px;
+  --lesson-navigator-gap: 2.5rem;
 }
 
 @media (min-width: 768px) and (max-width: 1023px) {
+  .lesson-experience {
+    --lesson-navigator-width: 240px;
+    --lesson-navigator-gap: 3rem;
+  }
+
   .lesson-experience__content {
     /* remove left margin so content is flush with the left edge */
     margin-left: 0;
+    margin-right: calc(var(--lesson-navigator-width) + var(--lesson-navigator-gap));
+    padding-right: 1.5rem;
   }
 }
 
 @media (min-width: 1024px) {
+  .lesson-experience {
+    --lesson-navigator-width: 300px;
+    --lesson-navigator-gap: 2.5rem;
+  }
+
   .lesson-experience__content {
     /* account for the right-side fixed navigator (width + gutter)
-       increase right margin so content is pushed further left and
-       is not covered by the fixed navigator */
-    margin-right: 380px;
+       increase right margin so content keeps a breathing space */
+    margin-right: calc(var(--lesson-navigator-width) + var(--lesson-navigator-gap));
     /* remove left margin so content is flush with the left edge */
     margin-left: 0;
+    padding-right: 2rem;
   }
 }
 
 .lesson-experience__content {
   min-width: 0;
+  padding-right: 1rem;
+  margin-right: calc(var(--lesson-navigator-width) + var(--lesson-navigator-gap));
 }
 
 .lesson-experience__readable {
@@ -40,21 +57,31 @@
   --text-secondary: #6b7280;
   --accent-primary: #4f46e5;
   --accent-secondary: #10b981;
+  --accent-active-bg: #f8f5ff;
+  --accent-active-border: #dcd2ff;
+  --accent-active-text: #3c2f60;
+  --accent-active-glow: rgba(111, 99, 255, 0.18);
 
   position: fixed;
   top: 100px;
-  right: 3rem;
-  width: 260px;
+  right: var(--lesson-navigator-gap);
+  width: var(--lesson-navigator-width);
   max-height: calc(100vh - 120px);
-  background-color: var(--navigator-bg);
-  border: 1px solid var(--navigator-border);
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(248, 248, 255, 0.92));
+  border: 1px solid rgba(79, 70, 229, 0.08);
+  border-radius: 16px;
+  box-shadow: 0 15px 40px rgba(15, 23, 42, 0.08);
+  backdrop-filter: blur(18px);
   z-index: 100;
   display: flex;
   flex-direction: column;
   contain: layout style;
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease, box-shadow 0.35s ease;
+}
+
+.lesson-navigator:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.12);
 }
 
 .lesson-navigator::after {
@@ -64,9 +91,9 @@
 @media (min-width: 768px) and (max-width: 1023px) {
   .lesson-navigator {
     left: auto;
-    right: 2.5rem;
+    right: var(--lesson-navigator-gap);
     top: 100px;
-    width: 220px;
+    width: var(--lesson-navigator-width);
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(249, 250, 251, 0.95) 100%);
     border: 1.5px solid rgba(99, 102, 241, 0.15);
     border-radius: 14px;
@@ -101,9 +128,9 @@
 @media (min-width: 1024px) {
   .lesson-navigator {
     left: auto;
-    right: max(3rem, calc((100vw - 1200px) / 2 + 1rem));
+    right: var(--lesson-navigator-gap);
     top: 100px;
-    width: 260px;
+    width: var(--lesson-navigator-width);
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(249, 250, 251, 0.95) 100%);
     border: 1.5px solid rgba(99, 102, 241, 0.15);
     border-radius: 16px;
@@ -218,7 +245,7 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   text-align: center;
-  color: var(--text-primary);
+  color: #4f46e5;
 }
 
 .lesson-navigator__toggle:hover {
@@ -248,22 +275,25 @@
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
-  border: none;
-  padding: 0.4rem 0;
-  border-radius: 0;
-  background: transparent;
+  border: 1px solid transparent;
+  padding: 0.45rem 0.35rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.35);
   box-shadow: none;
-  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
 }
 
 .lesson-navigator__section:hover {
-  transform: none;
-  background: transparent;
+  transform: translateX(-2px);
+  background: rgba(255, 255, 255, 0.55);
+  border-color: rgba(79, 70, 229, 0.12);
 }
 
 .lesson-navigator__section.is-active {
-  background-color: rgba(79, 70, 229, 0.05);
-  border-radius: 8px;
+  background: var(--accent-active-bg);
+  border-radius: 12px;
+  border: 1px solid var(--accent-active-border);
+  box-shadow: 0 12px 28px var(--accent-active-glow);
 }
 
 .lesson-navigator__section.is-complete {
@@ -271,7 +301,7 @@
 }
 
 .lesson-navigator__section.is-active .lesson-navigator__section-title {
-  color: var(--accent-primary);
+  color: var(--accent-active-text);
   font-weight: 600;
 }
 
@@ -286,20 +316,21 @@
   gap: 0.7rem;
   align-items: center;
   text-align: left;
-  background: transparent;
-  border: none;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid transparent;
   color: var(--text-primary);
-  padding: 0.5rem;
+  padding: 0.55rem;
   cursor: pointer;
   font-size: 0.8rem;
   font-weight: 500;
-  border-radius: 6px;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  border-radius: 10px;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
 .lesson-navigator__section-trigger:hover {
-  background-color: rgba(79, 70, 229, 0.08);
+  background-color: rgba(99, 102, 241, 0.08);
   color: var(--accent-primary);
+  border-color: rgba(79, 70, 229, 0.18);
 }
 
 .lesson-navigator__section-index {
@@ -317,9 +348,10 @@
 }
 
 .lesson-navigator__section.is-active .lesson-navigator__section-index {
-  background-color: var(--accent-primary);
-  color: white;
-  transform: scale(1.05);
+  background: linear-gradient(135deg, #c7b7ff, #9d8bff);
+  color: #2f2659;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(111, 99, 255, 0.3);
 }
 
 .lesson-navigator__section.is-complete .lesson-navigator__section-index {
@@ -360,6 +392,8 @@
   display: flex;
   flex-direction: column;
   gap: 0;
+  border-left: 1px dashed rgba(99, 102, 241, 0.2);
+  padding-left: 0.35rem;
 }
 
 .lesson-navigator__subsection-wrapper {
@@ -375,14 +409,14 @@
   align-items: center;
   text-align: left;
   background: transparent;
-  border: none;
+  border: 1px solid transparent;
   color: var(--text-secondary);
   padding: 0.4rem 0.5rem;
   cursor: pointer;
   font-size: 0.75rem;
   font-weight: 400;
   border-radius: 6px;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
   flex: 1;
   min-width: 0;
 }
@@ -421,9 +455,11 @@
 }
 
 .lesson-navigator__subsection.is-active .lesson-navigator__subsection-trigger {
-  color: var(--accent-primary);
-  background-color: rgba(79, 70, 229, 0.1);
-  font-weight: 500;
+  color: var(--accent-active-text);
+  background: var(--accent-active-bg);
+  border-color: var(--accent-active-border);
+  box-shadow: 0 8px 18px var(--accent-active-glow);
+  font-weight: 600;
 }
 
 .lesson-navigator__subsection.is-complete .lesson-navigator__subsection-trigger {
@@ -449,8 +485,8 @@
 }
 
 .lesson-navigator__subsection.is-active .lesson-navigator__subsection-title {
-  font-weight: 500;
-  color: var(--primary-color);
+  font-weight: 600;
+  color: var(--accent-active-text);
 }
 
 .lesson-navigator__subsection-index {
@@ -469,9 +505,10 @@
 }
 
 .lesson-navigator__subsection.is-active .lesson-navigator__subsection-index {
-  background-color: var(--accent-primary);
-  color: white;
+  background: linear-gradient(135deg, #d7ccff, #b8a9ff);
+  color: #2f2659;
   font-weight: 600;
+  box-shadow: 0 4px 10px rgba(111, 99, 255, 0.25);
 }
 
 .lesson-navigator__subsection.is-complete .lesson-navigator__subsection-index {
@@ -668,3 +705,11 @@
     margin-top: 0.4rem;
   }
 }
+/* Updated: 20251114-221706 */
+/* Updated: 20251114-222731 */
+/* Updated: 20251114-223850 */
+/* Fixed overlap: 20251114-224032 */
+/* Responsive fix: 20251114-224438 */
+/* 1920x1080 optimized: 20251114-224700 */
+/* Navigation security + spacing update: 20251114-230059 */
+/* Style refresh: 20251114-231024 */

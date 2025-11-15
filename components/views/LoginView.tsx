@@ -90,13 +90,37 @@ const LoginForm: React.FC<LoginFormProps> = ({ name, setName, classId, setClassI
                         id="name"
                         type="text"
                         value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        onChange={(e) => {
+                            // Bloquer totalement la modification si le nom est déjà stocké
+                            if (!hasPreloadedName) {
+                                setName(e.target.value);
+                            }
+                        }}
+                        onKeyDown={(e) => {
+                            // Empêcher toute saisie clavier si le nom est stocké
+                            if (hasPreloadedName) {
+                                e.preventDefault();
+                            }
+                        }}
+                        onPaste={(e) => {
+                            // Empêcher le collage si le nom est stocké
+                            if (hasPreloadedName) {
+                                e.preventDefault();
+                            }
+                        }}
+                        onContextMenu={(e) => {
+                            // Empêcher le menu contextuel si le nom est stocké
+                            if (hasPreloadedName) {
+                                e.preventDefault();
+                            }
+                        }}
                         className={`w-full rounded-2xl border border-slate-200 bg-white px-12 py-3 text-base text-slate-900 shadow-sm transition-all duration-200 focus:border-slate-900/30 focus:outline-none focus:ring-2 focus:ring-slate-900/10 placeholder:text-slate-400 ${
-                            hasPreloadedName ? 'cursor-not-allowed bg-slate-50 text-slate-500' : ''
+                            hasPreloadedName ? 'cursor-not-allowed bg-slate-50 text-slate-500 select-none pointer-events-none' : ''
                         }`}
                         placeholder="Votre nom et prénom"
                         required
                         readOnly={hasPreloadedName}
+                        tabIndex={hasPreloadedName ? -1 : 0}
                         style={{ fontFamily: "'Manrope', 'Segoe UI', sans-serif" }}
                     />
                 </div>
@@ -235,8 +259,20 @@ const LoginView: React.FC = () => {
     };
 
     return (
-        <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-[#eef2ff] via-[#f7f9ff] to-white px-4 py-10 sm:px-6">
-            <div className="w-full max-w-lg rounded-3xl border border-slate-200/70 bg-white/90 p-8 shadow-[0_28px_70px_rgba(15,23,42,0.12)] backdrop-blur-xl sm:p-12">
+        <div 
+            className="flex min-h-screen items-center justify-center px-4 py-10 sm:px-6"
+            style={{
+                background: `
+                    radial-gradient(circle at 20% 30%, rgba(79, 70, 229, 0.08), transparent 50%),
+                    radial-gradient(circle at 80% 70%, rgba(219, 39, 119, 0.06), transparent 50%),
+                    radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.04), transparent 70%),
+                    url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='futuristic-hex' x='0' y='0' width='60' height='52' patternUnits='userSpaceOnUse'%3E%3Cpath d='M28 0l14 8v16l-14 8-14-8V8z' fill='none' stroke='%234f46e5' stroke-width='0.2' opacity='0.3'/%3E%3Cpath d='M14 26l14 8v16l-14 8-14-8V34z' fill='none' stroke='%23db2777' stroke-width='0.2' opacity='0.2'/%3E%3Ccircle cx='28' cy='16' r='1.5' fill='%234f46e5' opacity='0.15'/%3E%3Ccircle cx='14' cy='42' r='1' fill='%23db2777' opacity='0.1'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23futuristic-hex)'/%3E%3C/svg%3E"),
+                    linear-gradient(135deg, #f8faff 0%, #f0f4ff 50%, #fef7ff 100%)
+                `
+            }}
+        >
+            <div className="w-full max-w-lg rounded-3xl border border-white/30 bg-white/85 p-8 shadow-[0_32px_80px_rgba(15,23,42,0.15)] backdrop-blur-2xl sm:p-12
+                before:absolute before:inset-0 before:rounded-3xl before:bg-gradient-to-br before:from-white/40 before:to-transparent before:opacity-50 before:pointer-events-none relative overflow-hidden">
                 <LoginHeader />
 
                 {/* Toggle Mode avec design pill - UNIQUEMENT pour les nouveaux utilisateurs */}

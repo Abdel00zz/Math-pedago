@@ -7,12 +7,12 @@
 .lesson-canvas {
   display: flex;
   flex-direction: column;
-  gap: clamp(1.1rem, 2.4vw, 1.9rem);
-  /* horizontal paddings reduced so canvas can be wider on large screens */
-  padding: clamp(0.85rem, 1.8vw, 1.6rem) clamp(3rem, 4vw, 4.5rem) clamp(0.85rem, 1.8vw, 1.6rem) clamp(1.25rem, 2vw, 2rem);
-  /* increase max width to allow wider lesson area */
-  max-width: 1200px;
-  margin: 0 auto;
+  gap: clamp(0.8rem, 1.8vw, 1.4rem);
+  /* Contenu aligné à gauche avec padding réduit */
+  padding: clamp(0.6rem, 1.2vw, 1rem) clamp(1.5rem, 2.5vw, 2.5rem) clamp(0.6rem, 1.2vw, 1rem) clamp(0.8rem, 1.5vw, 1.5rem);
+  /* narrow canvas further so the column change is obvious */
+  max-width: 960px;
+  margin: 0;
 }
 
 /* Mobile optimizations - Tablet */
@@ -155,7 +155,7 @@
 .lesson-stack {
   display: flex;
   flex-direction: column;
-  gap: clamp(1.6rem, 3.4vw, 2.6rem);
+  gap: clamp(1.2rem, 2.5vw, 1.8rem);
 }
 
 .lesson-section,
@@ -176,7 +176,7 @@
 .lesson-section {
   display: flex;
   flex-direction: column;
-  gap: clamp(0.9rem, 2vw, 1.5rem);
+  gap: clamp(0.7rem, 1.5vw, 1.1rem);
 }
 
 .lesson-section__header {
@@ -221,7 +221,7 @@
 .lesson-section__body {
   display: flex;
   flex-direction: column;
-  gap: clamp(1.1rem, 2.5vw, 1.9rem);
+  gap: clamp(0.8rem, 1.8vw, 1.3rem);
 }
 
 /* ========================================
@@ -230,7 +230,7 @@
 .lesson-subsection {
   display: flex;
   flex-direction: column;
-  gap: clamp(0.75rem, 1.3vw, 1.15rem);
+  gap: clamp(0.6rem, 1vw, 0.9rem);
 }
 
 .lesson-subsection__header {
@@ -265,7 +265,7 @@
 .lesson-subsection__body {
   display: flex;
   flex-direction: column;
-  gap: clamp(0.7rem, 1.2vw, 1.1rem);
+  gap: clamp(0.5rem, 0.9vw, 0.8rem);
 }
 
 .lesson-subsection__elements {
@@ -319,17 +319,17 @@
   position: relative;
   display: flex;
   align-items: flex-start;
-  gap: 0.65rem;
+  gap: 0.5rem;
   color: var(--text-color);
   font-size: clamp(0.93rem, 1.6vw, 1.03rem);
   line-height: 1.75;
   letter-spacing: 0.01em;
-  padding: clamp(0.65rem, 1.2vw, 0.9rem) clamp(0.85rem, 1.6vw, 1.15rem);
+  padding: clamp(0.5rem, 1vw, 0.7rem) clamp(0.65rem, 1.2vw, 0.9rem);
   border-radius: clamp(9px, 1.6vw, 12px);
   background: rgba(255, 255, 255, 0.92);
   border: 1px solid rgba(148, 163, 184, 0.22);
   box-shadow: none;
-  margin: clamp(0.35rem, 0.9vw, 0.6rem) 0;
+  margin: clamp(0.25rem, 0.6vw, 0.4rem) 0;
 }
 
 .lesson-paragraph:hover {
@@ -542,14 +542,15 @@
   border: none;
   box-shadow: 0 10px 40px rgba(15, 23, 42, 0.08);
   border-radius: 0.75rem;
-  max-width: 1400px;
-  width: 98vw;
+  max-width: 1600px;
+  width: 95vw;
 }
 
 .lesson-solution-modal .modal-header {
   padding: 1.75rem 4rem 1.25rem 2rem;
   border-bottom: 1px solid #f1f5f9;
   background: #ffffff;
+  position: relative;
 }
 
 .lesson-solution-modal .modal-title {
@@ -558,6 +559,20 @@
   font-weight: 600;
   color: #1e293b;
   letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.lesson-solution-modal .modal-title::before {
+  content: '';
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background-image: url('data:image/svg+xml;utf8,<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false"><defs><radialGradient id="bulb-glow" cx="50%" cy="40%" r="65%"><stop offset="0%" stop-color="%23fff9e6" stop-opacity="0.92"/><stop offset="55%" stop-color="%23d9efff" stop-opacity="0.46"/><stop offset="100%" stop-color="%238ab4ff" stop-opacity="0"/></radialGradient><linearGradient id="bulb-gradient" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="%23fff7c2"/><stop offset="55%" stop-color="%23fcd34d"/><stop offset="100%" stop-color="%23f97316"/></linearGradient></defs><circle cx="12" cy="10" r="7.6" fill="url(%23bulb-glow)" opacity="0.65"/><path d="M12 3.5c-3.03 0-5.5 2.43-5.5 5.43 0 2.1 1.15 3.97 2.98 4.94.34.18.52.54.52.9v1.58c0 .31.25.56.56.56h3.88c.31 0 .56-.25.56-.56v-1.58c0-.36.2-.7.52-.88 1.86-.96 3.02-2.86 3.02-4.97 0-3-2.47-5.42-5.5-5.42Zm-2.5 16.1c0 .22.18.4.4.4h4.2c.22 0 .4-.18.4-.4v-.4H9.5v.4Z" fill="url(%23bulb-gradient)" stroke="%232563eb" stroke-width="0.6" paint-order="fill"/><path d="M10 18.7h4" stroke="%231d4ed8" stroke-width="1.1" stroke-linecap="round" opacity="0.65"/><circle cx="12" cy="6.4" r="1.55" fill="%23ffffff" opacity="0.82"/></svg>');
+  background-repeat: no-repeat;
+  background-size: contain;
+  flex-shrink: 0;
 }
 
 .lesson-solution__title {
