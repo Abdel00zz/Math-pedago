@@ -9,6 +9,7 @@ declare global {
       typesetClear?: (elements?: HTMLElement[]) => void;
       startup?: {
         promise?: Promise<void>;
+        defaultReady?: () => void;
         adaptor?: {
           outerHTML: (node: HTMLElement) => string;
         };
@@ -16,9 +17,11 @@ declare global {
       tex2chtmlPromise?: (math: string, options?: any) => Promise<HTMLElement>;
       tex2svgPromise?: (math: string, options?: any) => Promise<HTMLElement>;
       tex2chtml?: (math: string, options?: any) => HTMLElement;
-      tex2svg?: (math: string, options?: any) => HTMLElement;
+      tex2svg?: (math: string, options?: any) => HTMLElement>;
       texReset?: () => void;
     };
+    /** Indicateur global que MathJax est complètement chargé et prêt */
+    mathJaxReady?: boolean;
   }
 }
 
