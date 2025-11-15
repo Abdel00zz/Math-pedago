@@ -619,7 +619,15 @@
             {
               "type": "example-box",
               "preamble": "**Fonctions trigonométriques périodiques** :",
-              "content": "- Les fonctions $x \\mapsto \\sin(x)$ et $x \\mapsto \\cos(x)$ sont périodiques de période $___2\\pi___$\n\n- La fonction $x \\mapsto \\tan(x)$ est périodique de période $___\\pi___$"
+              "content": "- Les fonctions $x \\mapsto \\sin(x)$ et $x \\mapsto \\cos(x)$ sont périodiques de période $___2\\pi___$\n\n- La fonction $x \\mapsto \\tan(x)$ est périodique de période $___\\pi___$",
+              "image": {
+                "src": "/chapters/1bsm/lessons/pictures/Sinus.svg_7.png",
+                "alt": "Sinus.svg",
+                "caption": "",
+                "position": "right",
+                "align": "right",
+                "width": "50%"
+              }
             },
             {
               "type": "remark-box",

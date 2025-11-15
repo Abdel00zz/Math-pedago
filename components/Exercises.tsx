@@ -110,7 +110,7 @@ const Exercises: React.FC<ExercisesProps> = ({ onAllCompleted }) => {
             if (!subQuestions || subQuestions.length === 0) return null;
 
             return (
-                <ol className="list-decimal pl-6 mt-4 space-y-4 text-base sm:text-lg text-black">
+                <ol className="exercise-list-main mt-4 space-y-4 text-base sm:text-lg text-black">
                     {subQuestions.map((sq, index) => {
                         const sqImages = organizeImages(sq.images);
                         
@@ -254,15 +254,11 @@ const Exercises: React.FC<ExercisesProps> = ({ onAllCompleted }) => {
                     <img
                         src={`/${image.path}`}
                         alt={image.alt || image.caption || 'Image de l\'exercice'}
-                        className={`${sizeClass} rounded-lg shadow-md object-contain`}
+                        className={`${sizeClass} object-contain`}
                         style={customStyle}
                     />
                     {image.caption && (
-                        <figcaption className={`text-sm text-black italic mt-2 ${
-                            alignment === 'center' ? 'text-center' : 
-                            alignment === 'right' ? 'text-right' : 
-                            alignment === 'left' ? 'text-left' : 'text-center'
-                        }`}>
+                        <figcaption className="text-sm text-black italic mt-2 text-center">
                             {image.caption}
                         </figcaption>
                     )}

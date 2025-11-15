@@ -20,9 +20,20 @@ import {
     ArrowDownIcon
 } from './icons';
 import { FileSystemDirectoryHandle } from '../types';
-import { ImageUploadModal, ImageConfig } from './ImageUploadModal';
 import { LessonPreview } from './LessonPreview';
 import { RichTextToolbar } from './RichTextToolbar';
+
+// Interface pour la configuration d'image (compatible avec l'ancien ImageUploadModal)
+interface ImageConfig {
+    file: File;
+    caption: string;
+    alt: string;
+    size: 'small' | 'medium' | 'large' | 'full' | 'custom';
+    customWidth?: number;
+    customHeight?: number;
+    position: 'top' | 'bottom' | 'left' | 'right' | 'center' | 'inline' | 'float-left' | 'float-right';
+    alignment: 'left' | 'center' | 'right' | 'justify';
+}
 
 // Types
 interface LessonHeader {
@@ -789,20 +800,31 @@ export const LessonEditor: React.FC<LessonEditorProps> = ({
                                                                     <div className="mt-3 p-3 bg-blue-50 border border-blue-200 rounded-lg">
                                                                         <div className="flex items-center justify-between mb-2">
                                                                             <span className="text-xs font-semibold text-blue-800">Image attachée</span>
-                                                                            <button
-                                                                                onClick={() => {
-                                                                                    if (confirm('Supprimer cette image ?')) {
-                                                                                        const newLesson = { ...lesson };
-                                                                                        const elem = newLesson.sections[sIdx].subsections[ssIdx].elements[eIdx];
-                                                                                        delete (elem as any).image;
-                                                                                        setLesson(newLesson);
-                                                                                        saveToHistory(newLesson);
-                                                                                    }
-                                                                                }}
-                                                                                className="text-red-600 hover:bg-red-100 p-1 rounded"
-                                                                            >
-                                                                                <TrashIcon className="w-3 h-3" />
-                                                                            </button>
+                                                                            <div className="flex items-center gap-1">
+                                                                                <button
+                                                                                    onClick={() => openImageModal(sIdx, ssIdx, eIdx)}
+                                                                                    className="text-blue-600 hover:bg-blue-100 p-1 rounded flex items-center gap-1 text-xs"
+                                                                                    title="Rééditer l'image (position, taille, etc.)"
+                                                                                >
+                                                                                    <ImageIcon className="w-3 h-3" />
+                                                                                    <span>Rééditer</span>
+                                                                                </button>
+                                                                                <button
+                                                                                    onClick={() => {
+                                                                                        if (confirm('Supprimer cette image ?')) {
+                                                                                            const newLesson = { ...lesson };
+                                                                                            const elem = newLesson.sections[sIdx].subsections[ssIdx].elements[eIdx];
+                                                                                            delete (elem as any).image;
+                                                                                            setLesson(newLesson);
+                                                                                            saveToHistory(newLesson);
+                                                                                        }
+                                                                                    }}
+                                                                                    className="text-red-600 hover:bg-red-100 p-1 rounded"
+                                                                                    title="Supprimer l'image"
+                                                                                >
+                                                                                    <TrashIcon className="w-3 h-3" />
+                                                                                </button>
+                                                                            </div>
                                                                         </div>
                                                                         <p className="text-xs text-blue-700 truncate">{(element as any).image.src}</p>
                                                                     </div>
@@ -865,15 +887,208 @@ export const LessonEditor: React.FC<LessonEditorProps> = ({
                 )}
             </div>
 
-            {/* Image Upload Modal */}
-            <ImageUploadModal
-                isOpen={imageModalOpen}
-                onClose={() => {
-                    setImageModalOpen(false);
-                    setImageTargetPath(null);
-                }}
-                onUpload={handleImageUpload}
-            />
+            {/* Image Upload Modal - Simple file picker */}
+            {imageModalOpen && (
+                <SimpleImageUploadModal
+                    isOpen={imageModalOpen}
+                    onClose={() => {
+                        setImageModalOpen(false);
+                        setImageTargetPath(null);
+                    }}
+                    onUpload={handleImageUpload}
+                />
+            )}
+        </div>
+    );
+};
+
+/**
+ * SimpleImageUploadModal - Modal simple pour upload d'images dans les leçons
+ * Version simplifiée qui remplace l'ancien ImageUploadModal
+ */
+interface SimpleImageUploadModalProps {
+    isOpen: boolean;
+    onClose: () => void;
+    onUpload: (imageConfig: ImageConfig) => void;
+}
+
+const SimpleImageUploadModal: React.FC<SimpleImageUploadModalProps> = ({ isOpen, onClose, onUpload }) => {
+    const [selectedFile, setSelectedFile] = React.useState<File | null>(null);
+    const [previewUrl, setPreviewUrl] = React.useState<string | null>(null);
+    const [caption, setCaption] = React.useState('');
+    const [alt, setAlt] = React.useState('');
+    const [size, setSize] = React.useState<ImageConfig['size']>('medium');
+    const [customWidth, setCustomWidth] = React.useState(400);
+    const [position, setPosition] = React.useState<ImageConfig['position']>('center');
+    const [alignment, setAlignment] = React.useState<ImageConfig['alignment']>('center');
+    const fileInputRef = React.useRef<HTMLInputElement>(null);
+
+    if (!isOpen) return null;
+
+    const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            setSelectedFile(file);
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                setPreviewUrl(e.target?.result as string);
+            };
+            reader.readAsDataURL(file);
+            if (!alt) {
+                setAlt(file.name.replace(/\.[^/.]+$/, '').replace(/[_-]/g, ' '));
+            }
+        }
+    };
+
+    const handleUpload = () => {
+        if (!selectedFile) {
+            alert('Veuillez sélectionner une image');
+            return;
+        }
+
+        const config: ImageConfig = {
+            file: selectedFile,
+            caption,
+            alt: alt || selectedFile.name,
+            size,
+            customWidth: size === 'custom' ? customWidth : undefined,
+            customHeight: undefined,
+            position,
+            alignment
+        };
+
+        onUpload(config);
+        handleClose();
+    };
+
+    const handleClose = () => {
+        setSelectedFile(null);
+        setPreviewUrl(null);
+        setCaption('');
+        setAlt('');
+        setSize('medium');
+        setPosition('center');
+        setAlignment('center');
+        onClose();
+    };
+
+    return (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4" onClick={handleClose}>
+            <div className="bg-white rounded-lg shadow-2xl w-full max-w-3xl max-h-[90vh] flex flex-col" onClick={e => e.stopPropagation()}>
+                <div className="flex justify-between items-center p-6 border-b">
+                    <div className="flex items-center gap-3">
+                        <ImageIcon className="text-2xl text-blue-600" />
+                        <h2 className="text-2xl font-bold">Ajouter une image</h2>
+                    </div>
+                    <button onClick={handleClose} className="text-gray-500 hover:text-gray-800 text-3xl">&times;</button>
+                </div>
+
+                <div className="flex-1 overflow-y-auto p-6">
+                    <div className="space-y-4">
+                        <div>
+                            <label className="block text-sm font-medium mb-2">Fichier image</label>
+                            <input
+                                ref={fileInputRef}
+                                type="file"
+                                accept="image/*"
+                                onChange={handleFileSelect}
+                                className="hidden"
+                            />
+                            <button
+                                onClick={() => fileInputRef.current?.click()}
+                                className="w-full px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-500 hover:bg-blue-50"
+                            >
+                                {selectedFile ? selectedFile.name : 'Cliquez pour sélectionner une image'}
+                            </button>
+                        </div>
+
+                        {previewUrl && (
+                            <div className="border rounded-lg p-4 bg-gray-50">
+                                <label className="block text-sm font-medium mb-2">Aperçu</label>
+                                <img src={previewUrl} alt="Preview" className="max-w-full max-h-64 mx-auto object-contain" />
+                            </div>
+                        )}
+
+                        <div>
+                            <label className="block text-sm font-medium mb-2">Légende (optionnel)</label>
+                            <input
+                                type="text"
+                                value={caption}
+                                onChange={(e) => setCaption(e.target.value)}
+                                className="w-full px-3 py-2 border rounded-lg"
+                            />
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium mb-2">Texte alternatif</label>
+                            <input
+                                type="text"
+                                value={alt}
+                                onChange={(e) => setAlt(e.target.value)}
+                                className="w-full px-3 py-2 border rounded-lg"
+                            />
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium mb-2">Taille</label>
+                            <div className="grid grid-cols-3 gap-2">
+                                {(['small', 'medium', 'large'] as const).map((s) => (
+                                    <button
+                                        key={s}
+                                        onClick={() => setSize(s)}
+                                        className={`px-4 py-2 rounded border-2 ${size === s ? 'border-blue-500 bg-blue-50' : 'border-gray-300'}`}
+                                    >
+                                        {s === 'small' && 'Petit'}
+                                        {s === 'medium' && 'Moyen'}
+                                        {s === 'large' && 'Grand'}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium mb-2">Position</label>
+                            <select
+                                value={position}
+                                onChange={(e) => setPosition(e.target.value as ImageConfig['position'])}
+                                className="w-full px-3 py-2 border rounded-lg"
+                            >
+                                <option value="top">En haut</option>
+                                <option value="bottom">En bas</option>
+                                <option value="left">À gauche</option>
+                                <option value="right">À droite</option>
+                                <option value="center">Centré</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium mb-2">Alignement</label>
+                            <select
+                                value={alignment}
+                                onChange={(e) => setAlignment(e.target.value as ImageConfig['alignment'])}
+                                className="w-full px-3 py-2 border rounded-lg"
+                            >
+                                <option value="left">Gauche</option>
+                                <option value="center">Centré</option>
+                                <option value="right">Droite</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="flex justify-end gap-3 p-6 border-t">
+                    <button onClick={handleClose} className="px-6 py-2 border rounded-lg hover:bg-gray-50">
+                        Annuler
+                    </button>
+                    <button
+                        onClick={handleUpload}
+                        disabled={!selectedFile}
+                        className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+                    >
+                        Insérer l'image
+                    </button>
+                </div>
+            </div>
         </div>
     );
 };

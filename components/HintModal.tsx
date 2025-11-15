@@ -203,9 +203,9 @@ const findQuestionByKeywords = (exercise: Exercise, keywords: string[]): number 
 };
 
 const renderSubQuestions = (subQuestions: SubQuestion[] | undefined) => (
-    <ol className="list-decimal pl-6 mt-4 space-y-3 text-gray-900 text-base marker:text-gray-400 marker:font-medium">
+    <ol className="exercise-list-sub mt-4 space-y-3 text-gray-900 text-base">
         {subQuestions?.map((sq, index) => (
-            <li key={index} className="leading-relaxed pl-2">
+            <li key={index} className="leading-relaxed">
                 <MathContent content={cleanAndWrapTeX(sq.text)} inline={false} />
             </li>
         ))}

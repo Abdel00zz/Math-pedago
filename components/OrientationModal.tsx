@@ -249,7 +249,7 @@ const OrientationModal: React.FC<OrientationModalProps> = ({ isOpen, onClose, cl
                                                                         <span className="material-symbols-outlined text-lg text-primary">list_alt</span>
                                                                         Contenus
                                                                     </h6>
-                                                                    <ul className="space-y-2 text-sm text-muted-foreground list-disc list-inside">
+                                                                    <ul className="space-y-2 text-sm text-muted-foreground exercise-list-bullet">
                                                                         {chapter.contents.map(content => (
                                                                             <li key={content}>
                                                                                 <MathContent content={content} inline={true} />
@@ -263,7 +263,7 @@ const OrientationModal: React.FC<OrientationModalProps> = ({ isOpen, onClose, cl
                                                                         <span className="material-symbols-outlined text-lg text-primary">check_circle</span>
                                                                         Capacités
                                                                     </h6>
-                                                                    <ul className="space-y-2 text-sm text-muted-foreground list-disc list-inside">
+                                                                    <ul className="space-y-2 text-sm text-muted-foreground exercise-list-bullet">
                                                                         {chapter.capacities.map(capacity => (
                                                                             <li key={capacity}>
                                                                                 <MathContent content={capacity} inline={true} />

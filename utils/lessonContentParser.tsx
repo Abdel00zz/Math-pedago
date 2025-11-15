@@ -5,6 +5,7 @@
  */
 
 import React, { useEffect, useRef } from 'react';
+import type { CSSProperties } from 'react';
 import MathContent from '../components/MathContent';
 import type { LessonImageConfig } from '../types';
 
@@ -349,27 +350,56 @@ const parseLine = (line: string): React.ReactNode => {
 // COMPOSANT IMAGE
 // ============================================================================
 
+const resolveImageSrc = (rawSrc: string): string => {
+    if (!rawSrc) return '';
+    const trimmed = rawSrc.trim();
+    if (!trimmed) return '';
+    if (/^(https?:)?\/\//i.test(trimmed)) return trimmed; // absolute HTTP(S)
+    const cleaned = trimmed
+        .replace(/^public\//i, '')
+        .replace(/^\.\//, '')
+        .replace(/^\/+/, '');
+    return `/${cleaned}`;
+};
+
 const LessonImage: React.FC<{ config: LessonImageConfig }> = ({ config }) => {
-    const widthStyle = config.width || '100%';
-    const alignClass = config.align === 'center' ? 'mx-auto' 
-        : config.align === 'right' ? 'ml-auto' 
-        : config.align === 'left' ? 'mr-auto' 
-        : 'mx-auto';
+    const alignClass = config.align === 'center'
+        ? 'mx-auto'
+        : config.align === 'right'
+            ? 'ml-auto'
+            : config.align === 'left'
+                ? 'mr-auto'
+                : 'mx-auto';
+
+    const resolvedSrc = resolveImageSrc(config.src);
+    const targetWidth = config.width || '100%';
+    const figureStyle: CSSProperties = {
+        width: targetWidth,
+        maxWidth: '100%',
+    };
 
     return (
-        <figure className={`my-4 ${alignClass}`} style={{ width: widthStyle, maxWidth: '100%' }}>
-            <img 
-                src={config.src} 
-                alt={config.alt || ''} 
-                className="w-full h-auto rounded-lg shadow-md"
-                loading="lazy"
-                onError={(e) => {
-                    console.error('Image failed to load:', config.src);
-                    (e.target as HTMLImageElement).src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="150"%3E%3Crect fill="%23ddd" width="200" height="150"/%3E%3Ctext x="50%25" y="50%25" fill="%23999" text-anchor="middle" dy=".3em"%3EImage non disponible%3C/text%3E%3C/svg%3E';
-                }}
-            />
+        <figure
+            className={`lesson-figure my-4 ${alignClass}`}
+            style={figureStyle}
+            data-image-align={config.align || 'center'}
+            data-image-position={config.position || 'stack'}
+        >
+            <div className="lesson-figure__media relative">
+                <img
+                    src={resolvedSrc || 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="150"%3E%3Crect fill="%23ddd" width="200" height="150"/%3E%3Ctext x="50%25" y="50%25" fill="%23999" text-anchor="middle" dy=".3em"%3EImage non disponible%3C/text%3E%3C/svg%3E'}
+                    alt={config.alt || ''}
+                    className="w-full h-auto object-contain"
+                    loading="lazy"
+                    decoding="async"
+                    onError={(e) => {
+                        console.error('Image failed to load:', config.src);
+                        (e.target as HTMLImageElement).src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="150"%3E%3Crect fill="%23ddd" width="200" height="150"/%3E%3Ctext x="50%25" y="50%25" fill="%23999" text-anchor="middle" dy=".3em"%3EImage non disponible%3C/text%3E%3C/svg%3E';
+                    }}
+                />
+            </div>
             {config.caption && (
-                <figcaption className="mt-2 text-sm text-center text-gray-600 italic">
+                <figcaption className="lesson-figure__caption mt-2 text-sm text-center text-gray-600 italic">
                     {config.caption}
                 </figcaption>
             )}
@@ -391,50 +421,65 @@ const ContentWithImage: React.FC<ContentWithImageProps> = ({ image, children }) 
 
     const position = image.position || 'bottom';
 
-    // Center : afficher l'image centrée avant le contenu
+        const sideWrapperStyle: CSSProperties | undefined = (image.position === 'left' || image.position === 'right')
+            ? {
+                flexBasis: image.width || '420px',
+                maxWidth: image.width || '420px',
+                width: '100%'
+            }
+            : undefined;
+
+    const sideImageConfig = (image.position === 'left' || image.position === 'right')
+        ? { ...image, width: '100%' as const }
+        : image;
+
     if (position === 'center') {
         return (
-            <div className="flex flex-col gap-4">
-                <LessonImage config={image} />
-                <div>{children}</div>
+            <div className="flex flex-col items-center gap-4 text-center">
+                <LessonImage config={sideImageConfig} />
+                <div className="w-full text-left">{children}</div>
             </div>
         );
     }
 
-    // Top ou Bottom : stack vertical
     if (position === 'top' || position === 'bottom') {
         return (
             <div className="flex flex-col gap-4">
-                {position === 'top' && <LessonImage config={image} />}
+                {position === 'top' && <LessonImage config={sideImageConfig} />}
                 <div>{children}</div>
-                {position === 'bottom' && <LessonImage config={image} />}
+                {position === 'bottom' && <LessonImage config={sideImageConfig} />}
             </div>
         );
     }
 
-    // Left ou Right : disposition horizontale
     if (position === 'left' || position === 'right') {
-        return (
-            <div className="flex flex-col md:flex-row gap-6 items-start">
-                {position === 'left' && (
-                    <div className="w-full md:w-2/5 flex-shrink-0">
-                        <LessonImage config={image} />
-                    </div>
-                )}
-                <div className="flex-1">{children}</div>
-                {position === 'right' && (
-                    <div className="w-full md:w-2/5 flex-shrink-0">
-                        <LessonImage config={image} />
-                    </div>
-                )}
-            </div>
-        );
+            const imageBlock = (
+                <div className="w-full sm:w-auto sm:flex-shrink-0" style={sideWrapperStyle}>
+                    <LessonImage config={sideImageConfig} />
+                </div>
+            );
+            const contentBlock = <div className="flex-1 w-full">{children}</div>;
+
+            return (
+                <div className={`flex flex-col sm:flex-row gap-6 items-start`}>
+                    {position === 'left' ? (
+                        <>
+                            {imageBlock}
+                            {contentBlock}
+                        </>
+                    ) : (
+                        <>
+                            {contentBlock}
+                            {imageBlock}
+                        </>
+                    )}
+                </div>
+            );
     }
 
-    // Fallback : afficher l'image en haut par défaut
     return (
         <div className="flex flex-col gap-4">
-            <LessonImage config={image} />
+            <LessonImage config={sideImageConfig} />
             <div>{children}</div>
         </div>
     );

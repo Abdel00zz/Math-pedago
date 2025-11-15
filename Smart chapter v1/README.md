@@ -1,20 +1,50 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+﻿# Smart Chapter Manager v1
 
-# Run and deploy your AI Studio app
+##  Vue d'ensemble
 
-This contains everything you need to run your app locally.
+Smart Chapter Manager v1 - Éditeur web moderne pour chapitres pédagogiques
+-  Interface React 19 + TypeScript
+-  ImageManagerV2 (système d'images optimisé)
+-  File System Access API
+-  Multi-classes (1BSM, 2BSE, TCS, etc.)
 
-View your app in AI Studio: https://ai.studio/apps/drive/1_G8pp_JQf0rWTVi7NJJf5_avi8pF-htu
+##  Démarrage
 
-## Run Locally
+### Installation
+```bash
+cd "Smart chapter v1"
+npm install
+```
 
-**Prerequisites:**  Node.js
+### Développement
+```bash
+npm run dev
+# http://localhost:3000
+```
 
+##  Configuration
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+**Port**: 3000 (fixe pour éviter conflits avec app principale sur 5173)
+
+**Env**: Créez .env.local
+```env
+GEMINI_API_KEY=your_key
+```
+
+##  Nettoyage effectué
+
+Fichiers obsolètes supprimés:
+-  ImageManager.tsx
+-  ImageUploadModal.tsx  
+-  LessonEditor_old.tsx
+
+ Utilise ImageManagerV2.tsx (moderne)
+
+##  Documentation
+
+- GUIDE_UTILISATION.md
+- AMELIORATIONS.md
+- ../docs/IMAGE_SYSTEM_GUIDE.md
+
+---
+Version 1.0.0 | React 19 + Vite + TypeScript

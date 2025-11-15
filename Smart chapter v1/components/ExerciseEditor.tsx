@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ChapterData, Exercise, SubQuestion, ExerciseImage, FileSystemDirectoryHandle } from '../types';
 import { PlusCircleIcon, TrashIcon, ArrowUpIcon, ArrowDownIcon, DuplicateIcon, LightBulbIcon, ImageIcon } from './icons';
-import { ImageManager } from './ImageManager';
+import { ImageManagerV2 } from './ImageManagerV2';
 
 interface ExerciseEditorProps {
     chapter: ChapterData;
@@ -146,7 +146,7 @@ export const ExerciseEditor: React.FC<ExerciseEditorProps> = ({ chapter, setChap
             
             {/* Image Manager Modal for Exercise Statement Images */}
             {editingMainImages && selectedIndex !== null && (
-                <ImageManager
+                <ImageManagerV2
                     images={chapter.exercises[selectedIndex].images || []}
                     chapter={chapter}
                     onClose={() => setEditingMainImages(false)}
@@ -276,7 +276,7 @@ const SubQuestionsEditor: React.FC<SubQuestionsEditorProps> = ({ exercise, chapt
                 </div>
             </div>
              {editingImagesForSQIndex !== null && (
-                <ImageManager
+                <ImageManagerV2
                     images={exercise.sub_questions[editingImagesForSQIndex].images || []}
                     chapter={chapter}
                     onClose={() => setEditingImagesForSQIndex(null)}

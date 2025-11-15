@@ -71,7 +71,7 @@ const FrenchContent: React.FC = () => (
         
         <HelpSection icon="rate_review" title="Exercices & Auto-évaluation">
             <p>Après chaque exercice, évaluez votre ressenti pour m'aider à identifier vos points forts et les notions à renforcer.</p>
-            <ul className="list-disc list-inside space-y-1 mt-2">
+            <ul className="exercise-list-bullet space-y-1 mt-2">
                 <li><strong className="text-green-500">J'ai réussi facilement</strong> : Vous maîtrisez !</li>
                 <li><strong className="text-yellow-500">J'ai réfléchi</strong> : Bien, la pratique consolide.</li>
                 <li><strong className="text-red-500">C'était un défi</strong> : Parfait pour en discuter en cours.</li>
@@ -165,7 +165,7 @@ const ArabicContent: React.FC = () => (
 
         <HelpSection icon="rate_review" title="التمارين والتقييم الذاتي">
             <p>بعد كل تمرين، قيّموا شعوركم لمساعدتي على تحديد نقاط قوتكم والمفاهيم التي تحتاج تعزيز.</p>
-            <ul className="list-disc list-inside space-y-1 mt-2">
+            <ul className="exercise-list-bullet space-y-1 mt-2">
                 <li><strong className="text-green-500">نجحت بسهولة</strong> : أنتم تتقنون!</li>
                 <li><strong className="text-yellow-500">احتجت للتفكير</strong> : جيد، الممارسة تثبت.</li>
                 <li><strong className="text-red-500">كان تحدياً</strong> : ممتاز لمناقشته في الحصة.</li>

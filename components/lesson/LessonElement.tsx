@@ -13,7 +13,7 @@ import type {
     LessonInfoBoxElement,
     LessonInteractiveBoxElement,
 } from '../../types';
-import { parseContent, parseTable, ContentWithImage, LessonProvider, LessonImage } from '../../utils/lessonContentParser';
+import { parseContent, parseTable, ContentWithImage, LessonProvider } from '../../utils/lessonContentParser';
 import Modal from '../Modal';
 import { useLessonProgress, getParagraphNodeIdFromPath } from '../../context/LessonProgressContext';
 import { useNumbering } from '../../context/NumberingContext';
@@ -131,15 +131,18 @@ const Paragraph: React.FC<{ element: ElementType; path: LessonElementPath; showA
         isCallout ? 'lesson-paragraph--callout' : '',
     ].filter(Boolean).join(' ');
 
-    return (
-        <>
-            {textElement.image && <LessonImage config={textElement.image} />}
-            <div className={paragraphClasses} data-lesson-node-id={nodeId}>
-                <div className="lesson-paragraph__content">
-                    {contentNode}
-                </div>
+    const paragraphNode = (
+        <div className={paragraphClasses} data-lesson-node-id={nodeId}>
+            <div className="lesson-paragraph__content">
+                {contentNode}
             </div>
-        </>
+        </div>
+    );
+
+    return (
+        <ContentWithImage image={textElement.image}>
+            {paragraphNode}
+        </ContentWithImage>
     );
 };
 
@@ -147,10 +150,9 @@ const Table: React.FC<{ element: ElementType }> = ({ element }) => {
     const tableElement = element as LessonTableElement;
     
     return (
-        <>
-            {tableElement.image && <LessonImage config={tableElement.image} />}
+        <ContentWithImage image={tableElement.image}>
             {parseTable(tableElement.content)}
-        </>
+        </ContentWithImage>
     );
 };
 
@@ -177,38 +179,51 @@ const InfoBox: React.FC<{ element: ElementType; showAnswers?: boolean }> = ({ el
 
     const isInlineVariant = infoElement.type === 'example-box' || infoElement.type === 'remark-box';
 
+    const hasStructuredContent = Array.isArray(infoElement.content)
+        ? infoElement.content.some(item => (item || '').toString().trim().length > 0)
+        : typeof infoElement.content === 'string'
+            ? infoElement.content.trim().length > 0
+            : false;
+
     if (isInlineVariant) {
         const inlineStyle = {
             '--lesson-inline-accent': config.accent,
             '--lesson-inline-accent-soft': config.accentSoft,
         } as CSSProperties;
 
-    return (
-        <LessonProvider showAnswers={effectiveShowAnswers}>
-            <div className={`lesson-inline lesson-inline--${infoElement.type === 'example-box' ? 'example' : 'remark'}`} style={inlineStyle}>
-                <header className="lesson-inline__header">
-                    <span className="lesson-inline__badge">{config.label}</span>
-                    {infoElement.preamble && (
-                        <>
-                            <span className="lesson-inline__divider">|</span>
-                            <span className="lesson-inline__title">
-                                {parseContent(infoElement.preamble.replace(/\s*:+\s*$/, ''), false, effectiveShowAnswers)}
-                            </span>
-                        </>
-                    )}
-                </header>
-                {infoElement.image && <LessonImage config={infoElement.image} />}
-                <div className="lesson-inline__content">
-                    {infoElement.content && (
-                        <div className="lesson-inline__body">
-                            {parseContent(infoElement.content, isNumbered, effectiveShowAnswers)}
-                        </div>
-                    )}
-                </div>
+        const inlineBody = (
+            <div className="lesson-inline__content">
+                {hasStructuredContent && (
+                    <div className="lesson-inline__body">
+                        {parseContent(infoElement.content, isNumbered, effectiveShowAnswers)}
+                    </div>
+                )}
             </div>
-        </LessonProvider>
-    );
+        );
+
+        return (
+            <LessonProvider showAnswers={effectiveShowAnswers}>
+                <div className={`lesson-inline lesson-inline--${infoElement.type === 'example-box' ? 'example' : 'remark'}`} style={inlineStyle}>
+                    <header className="lesson-inline__header">
+                        <span className="lesson-inline__badge">{config.label}</span>
+                        {infoElement.preamble && (
+                            <>
+                                <span className="lesson-inline__divider">|</span>
+                                <span className="lesson-inline__title">
+                                    {parseContent(infoElement.preamble.replace(/\s*:+\s*$/, ''), false, effectiveShowAnswers)}
+                                </span>
+                            </>
+                        )}
+                    </header>
+                    <ContentWithImage image={infoElement.image}>
+                        {inlineBody}
+                    </ContentWithImage>
+                </div>
+            </LessonProvider>
+        );
     }
+
+    const shouldRenderBody = hasStructuredContent || !!infoElement.image;
 
     return (
         <LessonProvider showAnswers={effectiveShowAnswers}>
@@ -224,11 +239,12 @@ const InfoBox: React.FC<{ element: ElementType; showAnswers?: boolean }> = ({ el
                         </>
                     )}
                 </header>
-                {infoElement.image && <LessonImage config={infoElement.image} />}
 
-                {infoElement.content && (
+                {shouldRenderBody && (
                     <div className="lesson-box__body">
-                        {parseContent(infoElement.content, isNumbered, effectiveShowAnswers)}
+                        <ContentWithImage image={infoElement.image}>
+                            {hasStructuredContent ? parseContent(infoElement.content, isNumbered, effectiveShowAnswers) : null}
+                        </ContentWithImage>
                     </div>
                 )}
             </div>
@@ -317,18 +333,21 @@ const InteractiveBox: React.FC<{ element: ElementType; showAnswers?: boolean }> 
             </header>
 
             <LessonProvider showAnswers={effectiveShowAnswers}>
-                {interactiveElement.image && <LessonImage config={interactiveElement.image} />}
                 <div className="lesson-box__body lesson-box__body--activity">
-                    {interactiveElement.statement && (
-                        <div className="lesson-box__statement">
-                            {parseContent(interactiveElement.statement, false, effectiveShowAnswers)}
+                    <ContentWithImage image={interactiveElement.image}>
+                        <div className="space-y-4">
+                            {interactiveElement.statement && (
+                                <div className="lesson-box__statement">
+                                    {parseContent(interactiveElement.statement, false, effectiveShowAnswers)}
+                                </div>
+                            )}
+                            {interactiveElement.type === 'practice-box' && interactiveElement.content && (
+                                <div className="lesson-box__exercises">
+                                    {parseContent(interactiveElement.content, true, effectiveShowAnswers)}
+                                </div>
+                            )}
                         </div>
-                    )}
-                    {interactiveElement.type === 'practice-box' && interactiveElement.content && (
-                        <div className="lesson-box__exercises">
-                            {parseContent(interactiveElement.content, true, effectiveShowAnswers)}
-                        </div>
-                    )}
+                    </ContentWithImage>
                 </div>
             </LessonProvider>
 
