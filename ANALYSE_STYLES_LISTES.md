@@ -82,26 +82,28 @@ ul.exercise-list-bullet ul > li::before {
 
 ### 3️⃣ Puces Étoiles - Listes générales (`lessonContentParser.tsx:498-513`)
 
-**Composant StarBullet:**
+**Composant StarBullet (puce académique):**
 ```tsx
 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-  <path
-    d="M8 1.5L9.5 6H14L10.5 9L12 13.5L8 10.5L4 13.5L5.5 9L2 6H6.5L8 1.5Z"
-    fill="url(#starGradient)"
+  <circle
+    cx="8"
+    cy="8"
+    r="3.5"
+    fill="url(#bulletGradient)"
   />
   <defs>
-    <linearGradient id="starGradient" x1="2" y1="1.5" x2="14" y2="13.5">
-      <stop offset="0%" stop-color="#3b82f6" />   <!-- Bleu -->
-      <stop offset="100%" stop-color="#06b6d4" /> <!-- Cyan -->
+    <linearGradient id="bulletGradient" x1="4" y1="4" x2="12" y2="12" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stopColor="#4255ff" />
+      <stop offset="100%" stopColor="#5f7dff" stopOpacity="0.9" />
     </linearGradient>
   </defs>
 </svg>
 ```
 
 **Caractéristiques:**
-- ⭐ **Forme:** Étoile à 5 branches
-- 🎨 **Gradient:** Bleu (`#3b82f6`) → Cyan (`#06b6d4`)
-- 📐 **Dimensions:** `16×16px`
+- ● **Forme:** Cercle plein (design académique moderne)
+- 🎨 **Gradient:** Bleu primaire (`#4255ff`) → Bleu secondaire (`#5f7dff`)
+- 📐 **Dimensions:** `16×16px` (rayon: 3.5px)
 - 💧 **Ombre:** `drop-shadow-sm` pour profondeur
 - ✨ **Usage:** Listes non-numérotées dans les boxes et contenus
 
