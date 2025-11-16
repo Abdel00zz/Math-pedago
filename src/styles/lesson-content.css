@@ -1009,8 +1009,7 @@ mjx-container .blank-math-answer[data-revealed='true'] .blank-math-answer__conte
   opacity: 1;
   visibility: visible;
   position: relative;
-  top: -0.15em; /* Légèrement plus haut pour une meilleure ligne de base */
-  font-size: 1.05em; /* Légère augmentation pour une lecture chic */
+  top: -0.08em; /* Légèrement poussé vers le haut pour s'aligner avec le texte environnant */
 }
 
 /* Le placeholder (ligne pointillée) disparaît. */
