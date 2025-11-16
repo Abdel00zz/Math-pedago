@@ -32,6 +32,7 @@ export interface StorageStats {
 const STORAGE_KEYS = {
   APP_STATE: 'math-pedago:app:v5.0',
   LESSONS: 'math-pedago:lessons:v2.0',
+  LESSON_META: 'math-pedago:lessons-meta:v1.0',
   LESSON_CACHE: 'math-pedago:lesson-cache:v1.0',
   CONCOURS: 'math-pedago:concours:v1.0',
   UI_CACHE: 'math-pedago:ui-cache:v1.0',
@@ -315,6 +316,18 @@ class StorageService {
           console.log('[StorageService] Données leçons migrées');
         } catch (error) {
           console.error('[StorageService] Erreur migration leçons:', error);
+        }
+      }
+
+      // Migrer pedago.lessonProgressMeta.v1 → math-pedago:lessons-meta:v1.0
+      const oldLessonMeta = localStorage.getItem('pedago.lessonProgressMeta.v1');
+      if (oldLessonMeta) {
+        try {
+          const parsedMeta = JSON.parse(oldLessonMeta);
+          this.set(STORAGE_KEYS.LESSON_META, parsedMeta, { version: '1.0.0' });
+          console.log('[StorageService] Métadonnées leçons migrées');
+        } catch (error) {
+          console.error('[StorageService] Erreur migration métadonnées leçons:', error);
         }
       }
 

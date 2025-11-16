@@ -87,7 +87,7 @@ export const Notifications: React.FC = () => {
 
     return ReactDOM.createPortal(
         <div
-            className="fixed bottom-6 right-6 z-[1000] flex flex-col items-end gap-2 w-full max-w-sm pointer-events-none"
+            className="fixed top-6 right-6 z-[1000] flex flex-col items-end gap-2 w-full max-w-sm pointer-events-none"
             role="region"
             aria-label="Notifications"
         >
@@ -125,7 +125,7 @@ export const Notifications: React.FC = () => {
                             transition-all duration-250 ease-out
                             ${isClickable ? 'cursor-pointer hover:shadow-xl/40' : 'hover:shadow-xl/40'}
                             ${isLeaving
-                                ? 'opacity-0 translate-y-4 scale-95'
+                                ? 'opacity-0 -translate-y-4 scale-95'
                                 : 'opacity-100 translate-y-0 scale-100'
                             }
                         `}
