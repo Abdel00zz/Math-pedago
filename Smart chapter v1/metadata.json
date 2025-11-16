@@ -1,5 +1,0 @@
-{
-  "name": "Smart Chapter Manager Web",
-  "description": "A web-based version of the Smart Chapter Manager for creating and editing educational content, including quizzes and exercises, with automatic versioning.",
-  "requestFramePermissions": ["fileSystemAccess"]
-}
