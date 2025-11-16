@@ -36,12 +36,10 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Relation vectorielle du barycentre** :",
               "content": "De la relation $m_A\\overrightarrow{GA} + m_B\\overrightarrow{GB} = \\vec{0}$, on peut déduire :\n\n$$m_A\\overrightarrow{GA} = -m_B\\overrightarrow{GB}$$\n\nEn utilisant la relation de Chasles :\n$$m_A(\\overrightarrow{AG}) \\times (-1) = -m_B(\\overrightarrow{AB} - \\overrightarrow{AG})$$\n$$m_A\\overrightarrow{AG} = m_B\\overrightarrow{AB} - m_B\\overrightarrow{AG}$$\n$$(m_A + m_B)\\overrightarrow{AG} = m_B\\overrightarrow{AB}$$\n\nDonc : $$\\overrightarrow{AG} = \\dfrac{m_B}{m_A + m_B} \\overrightarrow{AB}$$"
             },
             {
               "type": "example-box",
-              "preamble": "**Cas particuliers de position** :",
               "content": [
                 ">>**Cas 1** : Si $m_A = m_B = 1$",
                 "$$\\overrightarrow{AG} = \\dfrac{1}{1+1} \\overrightarrow{AB} = \\dfrac{1}{2} \\overrightarrow{AB}$$",
@@ -118,7 +116,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Cas particuliers importants** :",
               "content": [
                 "**Milieu** : Si $G = bar\\{(A, 1); (B, 1)\\}$, alors $G$ est le milieu de $[AB]$",
                 "**Point confondu** : $bar\\{(A, 1); (B, 0)\\} = A$ et $bar\\{(A, 0); (B, 1)\\} = B$",
@@ -128,12 +125,10 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Calcul de position** :",
               "content": "Soit $G$ le barycentre de $\\{(A, 2); (B, 3)\\}$. Exprimer $\\overrightarrow{AG}$ en fonction de $\\overrightarrow{AB}$.\n\nOn a $\\alpha = 2$, $\\beta = 3$, donc $\\alpha + \\beta = ___5___$\n\n$$\\overrightarrow{AG} = \\dfrac{\\beta}{\\alpha + \\beta} \\overrightarrow{AB} = \\dfrac{3}{___5___} \\overrightarrow{AB}$$\n\nDonc $G$ se situe sur le segment $[AB]$ aux $\\dfrac{3}{5}$ de la distance de $A$ vers $B$."
             },
             {
               "type": "example-box",
-              "preamble": "**Barycentre avec coefficients négatifs** :",
               "content": "Soit $G = bar\\{(A, 5); (B, -3)\\}$. Où se situe le point $G$ ?\n\nOn a $\\alpha + \\beta = 5 + (-3) = ___2___ \\neq 0$, donc $G$ existe.\n\n$$\\overrightarrow{AG} = \\dfrac{-3}{2} \\overrightarrow{AB}$$\n\nLe coefficient est négatif, donc $G$ est à l'**extérieur** du segment $[AB]$, du côté de $A$ (car $\\alpha = 5$ a la plus grande valeur absolue parmi les coefficients positifs)."
             }
           ]
@@ -164,7 +159,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Application de l'homogénéité** :",
               "content": "$bar\\{(A, 200); (B, 300)\\} = bar\\{(A, 2); (B, 3)\\}$ (en divisant par 100)\n\nC'est utile pour simplifier les calculs avec de grands coefficients."
             },
             {
@@ -245,7 +239,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Centre de gravité d'un triangle** :",
               "content": "Le point $G = bar\\{(A, 1); (B, 1); (C, 1)\\}$ est appelé **centre de gravité** ou **isobarycentre** du triangle $ABC$.\n\nC'est aussi le point d'intersection des médianes du triangle.\n\nOn a : $\\overrightarrow{GA} + \\overrightarrow{GB} + \\overrightarrow{GC} = \\vec{0}$\n\nEn prenant $M = A$ dans la propriété caractéristique :\n$$\\vec{0} + \\overrightarrow{AB} + \\overrightarrow{AC} = 3\\overrightarrow{AG}$$\n\nDonc : $$\\overrightarrow{AG} = \\dfrac{1}{3}(\\overrightarrow{AB} + \\overrightarrow{AC})$$"
             },
             {
@@ -277,7 +270,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Détermination des coefficients** :",
               "content": "Déterminer deux réels $a$ et $b$ tel que $G = bar\\{(A; a); (B; b)\\}$ dans les cas suivants :\n\n**Cas 1** : $2\\overrightarrow{GA} + 3\\overrightarrow{BA} = \\vec{0}$\n\nOn a : $2\\overrightarrow{GA} + 3\\overrightarrow{BA} = \\vec{0}$\n\nSoit : $2\\overrightarrow{GA} + 3(\\overrightarrow{GA} + \\overrightarrow{AB}) = \\vec{0}$\n\nDonc : $5\\overrightarrow{GA} + 3\\overrightarrow{AB} = \\vec{0}$\n\nOr $\\overrightarrow{AB} = \\overrightarrow{GB} - \\overrightarrow{GA}$, donc :\n\n$5\\overrightarrow{GA} + 3\\overrightarrow{GB} - 3\\overrightarrow{GA} = \\vec{0}$\n\nFinalement : $2\\overrightarrow{GA} + 3\\overrightarrow{GB} = \\vec{0}$\n\nDonc $a = ___2___$ et $b = ___3___$\n\n**Cas 2** : $\\overrightarrow{GA} + \\overrightarrow{GB} = 3\\overrightarrow{AB}$\n\nOn a : $\\overrightarrow{GA} + \\overrightarrow{GB} = 3\\overrightarrow{AB}$\n\n$\\overrightarrow{GA} + \\overrightarrow{GB} = 3(\\overrightarrow{GB} - \\overrightarrow{GA})$\n\n$\\overrightarrow{GA} + \\overrightarrow{GB} = 3\\overrightarrow{GB} - 3\\overrightarrow{GA}$\n\n$4\\overrightarrow{GA} - 2\\overrightarrow{GB} = \\vec{0}$\n\nDonc $G = bar\\{(A; 4); (B; -2)\\}$, soit $a = ___4___$ et $b = ___-2___$"
             }
           ]
@@ -302,7 +294,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Construction par associativité** :",
               "content": "Soit $G = bar\\{(A; 2); (B; 3); (C; 1)\\}$. Construire $G$ par associativité.\n\n**Solution** :\n\nOn pose $I = bar\\{(A; 2); (B; 3)\\}$. On a $2 + 3 = ___5___ \\neq 0$, donc $I$ existe.\n\nAlors par associativité :\n$$G = bar\\{(I; 5); (C; 1)\\}$$\n\nCar $5 + 1 = ___6___ \\neq 0$.\n\n**Construction** :\n\n1. D'abord : $\\overrightarrow{AI} = \\dfrac{3}{2+3} \\overrightarrow{AB} = \\dfrac{3}{5} \\overrightarrow{AB}$\n\n2. Puis : $\\overrightarrow{IG} = \\dfrac{1}{5+1} \\overrightarrow{IC} = \\dfrac{1}{6} \\overrightarrow{IC}$"
             },
             {
@@ -361,12 +352,10 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Calcul de coordonnées** :",
               "content": "Dans un repère, on considère $A(1; 2)$, $B(4; -1)$ et $C(-2; 3)$.\n\nDéterminons les coordonnées de $G = bar\\{(A, 2); (B, -1); (C, 3)\\}$.\n\nOn a $\\alpha + \\beta + \\gamma = 2 + (-1) + 3 = ___4___$\n\n$$x_G = \\dfrac{2 \\times 1 + (-1) \\times 4 + 3 \\times (-2)}{4} = \\dfrac{2 - 4 - 6}{4} = \\dfrac{-8}{4} = ___-2___$$\n\n$$y_G = \\dfrac{2 \\times 2 + (-1) \\times (-1) + 3 \\times 3}{4} = \\dfrac{4 + 1 + 9}{4} = \\dfrac{14}{4} = ___\\dfrac{7}{2}___$$\n\nDonc $G\\left(-2; \\dfrac{7}{2}\\right)$"
             },
             {
               "type": "example-box",
-              "preamble": "**Centre de gravité d'un triangle** :",
               "content": "Dans un repère orthonormé, on considère $A(2; 0)$, $B(5; 6)$ et $C(-4; 2)$.\n\nDéterminons les coordonnées du centre de gravité $G$ du triangle $ABC$.\n\nOn sait que $G = bar\\{(A, 1); (B, 1); (C, 1)\\}$\n\nDonc :\n\n$$x_G = \\dfrac{1 \\times 2 + 1 \\times 5 + 1 \\times (-4)}{1+1+1} = \\dfrac{2 + 5 - 4}{3} = \\dfrac{3}{3} = ___1___$$\n\n$$y_G = \\dfrac{1 \\times 0 + 1 \\times 6 + 1 \\times 2}{3} = \\dfrac{0 + 6 + 2}{3} = \\dfrac{8}{3}$$\n\nDonc $G\\left(1; \\dfrac{8}{3}\\right)$"
             },
             {
@@ -423,7 +412,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Détermination d'un ensemble de points** :",
               "content": "Soit $A$ et $B$ deux points distincts du plan.\n\nDéterminons l'ensemble des points $M$ du plan tels que $\\|2\\overrightarrow{MA} + 3\\overrightarrow{MB}\\| = 20$\n\n**Solution** :\n\nSoit $G = bar\\{(A, 2); (B, 3)\\}$. On a $2 + 3 = 5 \\neq 0$, donc $G$ existe.\n\nD'après la propriété caractéristique :\n$$2\\overrightarrow{MA} + 3\\overrightarrow{MB} = (2+3)\\overrightarrow{MG} = 5\\overrightarrow{MG}$$\n\nDonc : $$\\|2\\overrightarrow{MA} + 3\\overrightarrow{MB}\\| = 20 \\Leftrightarrow \\|5\\overrightarrow{MG}\\| = 20$$\n\n$$\\Leftrightarrow 5 \\times MG = 20$$\n\n$$\\Leftrightarrow MG = 4$$\n\nDonc l'ensemble est le **cercle de centre $G$ et de rayon $4$**."
             },
             {
@@ -467,7 +455,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Concours de droites** :",
               "content": "Le barycentre permet de montrer que des droites sont concourantes (c'est-à-dire qu'elles passent toutes par un même point).\n\nPar exemple, les **médianes** d'un triangle sont concourantes au centre de gravité $G$ du triangle."
             },
             {

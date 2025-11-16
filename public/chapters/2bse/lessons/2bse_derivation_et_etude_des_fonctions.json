@@ -34,7 +34,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**À compléter - Calcul d'un nombre dérivé**",
               "content": "Étudions la dérivabilité de $f(x) = 2x^2$ en $x_0 = 2$.\n\n**Solution** :\n\n**Calcul du taux d'accroissement** :\n$$\\displaystyle \\frac{f(x) - f(2)}{x - 2} = \\frac{2x^2 - ___8___}{x - 2}$$\n\n**Factorisation** :\n$$= \\frac{2(x^2 - ___4___)}{x - 2} = \\frac{2(x - ___2___)(x + ___2___)}{x - 2}$$\n\n**Simplification** (pour $x \\neq 2$) :\n$$= 2(x + 2)$$\n\n**Limite** :\n$$\\displaystyle \\lim_{x \\to 2} 2(x + 2) = 2 \\times ___4___ = ___8___$$\n\n**Conclusion** : $f$ est dérivable en 2 et $f'(2) = ___8___$"
             },
             {
@@ -52,7 +51,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**À compléter - Équation de tangente**",
               "content": "Soit $g(x) = x^3$. Déterminons l'équation de la tangente à $(C_g)$ au point d'abscisse $x_0 = 1$.\n\n**Étape 1** : Calculons $g(1)$ :\n$$g(1) = ___1___^3 = ___1___$$\n\n**Étape 2** : Calculons $g'(1)$ :\n$$\\displaystyle \\frac{g(x) - g(1)}{x - 1} = \\frac{x^3 - 1}{x - 1} = \\frac{(x - ___1___)(x^2 + x + 1)}{x - 1} = x^2 + x + 1$$\n\n$$g'(1) = 1^2 + 1 + 1 = ___3___$$\n\n**Étape 3** : Équation de la tangente :\n$$y = ___3___(x - 1) + ___1___ = 3x - 3 + 1 = ___3x - 2___$$\n\n**Vérification** : Le point $(1, 1)$ appartient-il à la tangente ?\n$$y = 3(___1___) - 2 = ___1___$$"
             },
             {
@@ -91,7 +89,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**À compléter - Fonction valeur absolue**",
               "content": "Étudions la dérivabilité de $f(x) = |x^2 - 1|$ en $x_0 = 1$.\n\n**Étape 1** : Calculons $f(1)$ :\n$$f(1) = |1 - 1| = ___0___$$\n\n**Étape 2** : Dérivabilité à droite (pour $x > 1$ : $x^2 - 1 > 0$) :\n$$\\displaystyle \\lim_{x \\to 1^+} \\frac{|x^2 - 1| - 0}{x - 1} = \\lim_{x \\to 1^+} \\frac{x^2 - 1}{x - 1}$$\n\n$$= \\lim_{x \\to 1^+} \\frac{(x - 1)(x + ___1___)}{x - 1} = \\lim_{x \\to 1^+} (x + 1) = ___2___$$\n\nDonc $f'_d(1) = ___2___$\n\n**Étape 3** : Dérivabilité à gauche (pour $x < 1$ : $x^2 - 1 < 0$) :\n$$\\displaystyle \\lim_{x \\to 1^-} \\frac{|x^2 - 1| - 0}{x - 1} = \\lim_{x \\to 1^-} \\frac{-(x^2 - 1)}{x - 1}$$\n\n$$= \\lim_{x \\to 1^-} \\frac{-(x - 1)(x + 1)}{x - 1} = \\lim_{x \\to 1^-} -(x + 1) = ___-2___$$\n\nDonc $f'_g(1) = ___-2___$\n\n**Conclusion** : Puisque $f'_g(1) \\neq f'_d(1)$, $f$ **n'est pas dérivable** en $x_0 = 1$. La courbe présente un **point anguleux** en ce point."
             },
             {
@@ -110,7 +107,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**À compléter - Tangente verticale**",
               "content": "Soit $f(x) = \\sqrt[3]{x}$ (racine cubique). Étudions la dérivabilité en $x_0 = 0$.\n\n**Calcul** :\n$$\\displaystyle \\lim_{x \\to 0} \\frac{\\sqrt[3]{x} - 0}{x - 0} = \\lim_{x \\to 0} \\frac{1}{\\sqrt[3]{x^2}} = ___+\\infty___$$\n\n**Interprétation** : La fonction $f$ **n'est pas dérivable** en 0 car la limite est infinie. Géométriquement, la courbe admet une **tangente verticale** d'équation $x = ___0___$ au point $(0, 0)$."
             },
             {
@@ -154,7 +150,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**À compléter - Continuité sans dérivabilité**",
               "content": "Soit $f(x) = |x|$. Vérifions qu'elle est continue mais non dérivable en $x_0 = 0$.\n\n**Continuité en 0** :\n$$\\displaystyle \\lim_{x \\to 0} f(x) = \\lim_{x \\to 0} |x| = ___0___ = f(0)$$\n\nDonc $f$ est **continue** en 0.\n\n**Dérivabilité à droite** :\n$$\\displaystyle \\lim_{x \\to 0^+} \\frac{|x| - 0}{x - 0} = \\lim_{x \\to 0^+} \\frac{x}{x} = ___1___$$\n\nDonc $f'_d(0) = ___1___$\n\n**Dérivabilité à gauche** :\n$$\\displaystyle \\lim_{x \\to 0^-} \\frac{|x| - 0}{x - 0} = \\lim_{x \\to 0^-} \\frac{-x}{x} = ___-1___$$\n\nDonc $f'_g(0) = ___-1___$\n\n**Conclusion** : Puisque $f'_g(0) \\neq f'_d(0)$, $f$ **n'est pas dérivable** en 0, bien qu'elle soit continue en ce point."
             },
             {
@@ -205,7 +200,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**À compléter - Dérivées successives**",
               "content": "Soit $f(x) = x^4$. Calculons les dérivées successives.\n\n**Dérivée première** :\n$$f'(x) = ___4___x^3$$\n\n**Dérivée seconde** :\n$$f''(x) = (f')'(x) = (4x^3)' = 4 \\times ___3___x^2 = ___12x^2___$$\n\n**Dérivée troisième** :\n$$f^{(3)}(x) = (f'')'(x) = (12x^2)' = 12 \\times 2x = ___24x___$$\n\n**Dérivée quatrième** :\n$$f^{(4)}(x) = (f^{(3)})'(x) = (24x)' = ___24___$$\n\n**Dérivée cinquième** :\n$$f^{(5)}(x) = (f^{(4)})'(x) = (24)' = ___0___$$\n\n**Observation** : Pour tout $n \\geq 5$, $f^{(n)}(x) = ___0___$"
             }
           ]
@@ -245,7 +239,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**À compléter - Dérivées usuelles**",
               "content": "Calculons les dérivées suivantes :\n\n**1)** $f(x) = x^7$\n$$f'(x) = ___7___x^{___6___}$$\n\n**2)** $g(x) = \\dfrac{1}{x^3} = x^{-3}$\n$$g'(x) = ___-3___x^{___-4___} = -\\dfrac{___3___}{x^{___4___}}$$\n\n**3)** $h(x) = \\sqrt{x}$\n$$h'(x) = \\dfrac{1}{2\\sqrt{___x___}}$$\n\n**4)** $k(x) = \\sin x$\n$$k'(x) = ___\\cos x___$$\n\n**5)** $m(x) = \\cos x$\n$$m'(x) = ___-\\sin x___$$"
             },
             {
@@ -289,12 +282,10 @@
             },
             {
               "type": "example-box",
-              "preamble": "**À compléter - Règle du produit**",
               "content": "Calculons la dérivée de $f(x) = (2x + 3)(x^2 - 1)$.\n\n**Méthode** : Règle du produit avec $u = 2x + 3$ et $v = x^2 - 1$\n\n**Calcul des dérivées** :\n$$u' = ___2___$$\n$$v' = ___2x___$$\n\n**Application de la formule** :\n$$f'(x) = u'v + uv' = ___2___(x^2 - 1) + (2x + 3)(___2x___)$$\n\n**Développement** :\n$$= 2x^2 - 2 + 4x^2 + 6x = ___6x^2 + 6x - 2___$$\n\n**Réponse** : $f'(x) = 6x^2 + 6x - 2$"
             },
             {
               "type": "example-box",
-              "preamble": "**À compléter - Règle du quotient**",
               "content": "Calculons la dérivée de $\\displaystyle g(x) = \\frac{x^2 + 1}{x - 2}$.\n\n**Domaine** : $x \\neq ___2___$, donc dérivable sur $\\mathbb{R} \\setminus \\{2\\}$\n\n**Méthode** : Règle du quotient avec $u = x^2 + 1$ et $v = x - 2$\n\n**Calcul des dérivées** :\n$$u' = ___2x___$$\n$$v' = ___1___$$\n\n**Application de la formule** :\n$$\\displaystyle g'(x) = \\frac{u'v - uv'}{v^2} = \\frac{___2x___(x - 2) - (x^2 + 1)(___1___)}{(x - 2)^2}$$\n\n**Développement du numérateur** :\n$$= \\frac{2x^2 - 4x - x^2 - 1}{(x - 2)^2} = \\frac{___x^2 - 4x - 1___}{(x - 2)^2}$$\n\n**Réponse** : $\\displaystyle g'(x) = \\frac{x^2 - 4x - 1}{(x - 2)^2}$ sur $\\mathbb{R} \\setminus \\{2\\}$"
             },
             {
@@ -339,17 +330,14 @@
             },
             {
               "type": "example-box",
-              "preamble": "**À compléter - Fonction puissance**",
               "content": "Calculons la dérivée de $f(x) = (x^2 + 3x)^5$.\n\n**Identification** :\nFonction interne : $u(x) = x^2 + 3x$\nFonction externe : $g(u) = u^5$\n\n**Dérivées** :\n$$u'(x) = ___2x + 3___$$\n$$g'(u) = ___5u^4___$$\n\n**Application de la règle** :\n$$f'(x) = g'(u(x)) \\times u'(x) = 5(x^2 + 3x)^{___4___} \\times (___2x + 3___)$$\n\n**Réponse** : $f'(x) = 5(2x + 3)(x^2 + 3x)^4$"
             },
             {
               "type": "example-box",
-              "preamble": "**À compléter - Fonction inverse**",
               "content": "Calculons la dérivée de $\\displaystyle g(x) = \\frac{1}{x^2 + 1}$.\n\n**Identification** :\nFonction interne : $u(x) = x^2 + 1$\nType : $\\displaystyle \\frac{1}{u}$\n\n**Dérivée de $u$** :\n$$u'(x) = ___2x___$$\n\n**Application de la formule** $\\displaystyle \\left(\\frac{1}{u}\\right)' = -\\frac{u'}{u^2}$ :\n$$\\displaystyle g'(x) = -\\frac{___2x___}{(x^2 + 1)^{___2___}}$$\n\n**Réponse** : $\\displaystyle g'(x) = -\\frac{2x}{(x^2 + 1)^2}$"
             },
             {
               "type": "example-box",
-              "preamble": "**À compléter - Fonction trigonométrique composée**",
               "content": "Calculons la dérivée de $h(x) = \\cos(3x^2 + 1)$.\n\n**Identification** :\nFonction interne : $u(x) = 3x^2 + 1$\nFonction externe : $\\cos u$\n\n**Dérivée de $u$** :\n$$u'(x) = ___6x___$$\n\n**Formule** : $(\\cos u)' = -u' \\sin u$\n\n**Application** :\n$$h'(x) = -(___6x___) \\sin(3x^2 + 1) = ___-6x \\sin(3x^2 + 1)___$$\n\n**Réponse** : $h'(x) = -6x \\sin(3x^2 + 1)$"
             },
             {
@@ -391,7 +379,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**À compléter - Fonction réciproque**",
               "content": "Soit $f(x) = x^3 + 1$ sur $\\mathbb{R}$. Calculons $(f^{-1})'(2)$.\n\n**Étape 1** : Trouvons $a$ tel que $f(a) = 2$ :\n$$a^3 + 1 = 2 \\Rightarrow a^3 = ___1___ \\Rightarrow a = ___1___$$\n\n**Étape 2** : Calculons $f'(x)$ :\n$$f'(x) = ___3x^2___$$\n\nDonc $f'(1) = 3 \\times 1^2 = ___3___$\n\n**Étape 3** : Appliquons la formule :\n$$\\displaystyle (f^{-1})'(2) = \\frac{1}{f'(1)} = \\frac{1}{___3___}$$\n\n**Réponse** : $(f^{-1})'(2) = \\frac{1}{3}$"
             },
             {
@@ -440,7 +427,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**À compléter - Étude des variations**",
               "content": "Étudions les variations de $f(x) = x^3 - 3x + 1$ sur $\\mathbb{R}$.\n\n**Calcul de la dérivée** :\n$$f'(x) = ___3x^2 - 3___ = 3(x^2 - ___1___) = 3(x - ___1___)(x + ___1___)$$\n\n**Points critiques** :\n$$f'(x) = 0 \\Leftrightarrow x = ___-1___ \\text{ ou } x = ___1___$$\n\n**Signe de $f'(x)$** :\nPour $x < -1$ : $f'(x) ___> 0___$ (croissante)\nPour $-1 < x < 1$ : $f'(x) ___< 0___$ (décroissante)\nPour $x > 1$ : $f'(x) ___> 0___$ (croissante)\n\n**Conclusion** :\n$f$ est **croissante** sur $]-\\infty, -1]$ et $[1, +\\infty[$\n$f$ est **décroissante** sur $[-1, 1]$"
             },
             {
@@ -492,7 +478,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**À compléter - Recherche d'extremums**",
               "content": "Reprenons $f(x) = x^3 - 3x + 1$. Déterminons ses extremums.\n\nOn a $f'(x) = 3(x - 1)(x + 1)$\n\n**Points critiques** : $f'(x) = 0 \\Leftrightarrow x = ___-1___ \\text{ ou } x = ___1___$\n\n**En $x = -1$** :\n$f'$ passe de $___+___$ à $___-___$\nDonc $f$ admet un **maximum local** en $x = -1$\nValeur : $f(-1) = (-1)^3 - 3(-1) + 1 = -1 + 3 + 1 = ___3___$\n\n**En $x = 1$** :\n$f'$ passe de $___-___$ à $___+___$\nDonc $f$ admet un **minimum local** en $x = 1$\nValeur : $f(1) = 1^3 - 3(1) + 1 = 1 - 3 + 1 = ___-1___$\n\n**Conclusion** :\nMaximum local : $f(-1) = 3$\nMinimum local : $f(1) = -1$"
             },
             {
@@ -542,7 +527,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**À compléter - Étude de la concavité**",
               "content": "Étudions la concavité de $f(x) = x^3 - 3x + 1$.\n\n**Dérivée première** :\n$$f'(x) = ___3x^2 - 3___$$\n\n**Dérivée seconde** :\n$$f''(x) = ___6x___$$\n\n**Signe de $f''(x)$** :\n$$f''(x) = 0 \\Leftrightarrow x = ___0___$$\n\nPour $x < 0$ : $f''(x) = 6x ___< 0___$ $\\Rightarrow$ $(C_f)$ est **concave** ($\\cap$)\n\nPour $x > 0$ : $f''(x) = 6x ___> 0___$ $\\Rightarrow$ $(C_f)$ est **convexe** ($\\cup$)"
             },
             {
@@ -581,7 +565,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**À compléter - Point d'inflexion**",
               "content": "Reprenons $f(x) = x^3 - 3x + 1$ avec $f''(x) = 6x$.\n\n**Point d'inflexion** :\n$$f''(x) = 0 \\Leftrightarrow x = ___0___$$\n\n**Changement de signe** :\nPour $x < 0$ : $f''(x) ___< 0___$\nPour $x > 0$ : $f''(x) ___> 0___$\n\nDonc $f''$ **change de signe** en $x = 0$\n\n**Coordonnées du point d'inflexion** :\n$$f(0) = 0 - 0 + 1 = ___1___$$\n\n**Conclusion** : Le point $I(___0___, ___1___)$ est un **point d'inflexion** de $(C_f)$.\n\n**Tangente au point d'inflexion** :\n$$f'(0) = 3(0)^2 - 3 = ___-3___$$\n\nÉquation : $y = -3(x - 0) + 1 = ___-3x + 1___$"
             },
             {
@@ -634,7 +617,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**À compléter - Centre de symétrie**",
               "content": "Montrons que $I(0, 2)$ est centre de symétrie de $f(x) = -x^3 + 3x + 2$.\n\n**Vérification** :\n\nCalculons $f(-x)$ :\n$$f(-x) = -(-x)^3 + 3(-x) + 2 = ___x^3 - 3x + 2___$$\n\nCalculons $f(-x) + f(x)$ :\n$$f(-x) + f(x) = (x^3 - 3x + 2) + (-x^3 + 3x + 2) = ___4___$$\n\nOr $2b = 2 \\times ___2___ = ___4___$\n\nDe plus, le domaine est symétrique par rapport à 0.\n\n**Conclusion** : $I(___0___, ___2___)$ est bien centre de symétrie de $(C_f)$."
             },
             {
@@ -670,7 +652,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**À compléter - Axe de symétrie**",
               "content": "Montrons que $x = \\frac{1}{2}$ est axe de symétrie de $f(x) = x^2 - x + 1$.\n\n**Vérification** :\n\nCalculons $f(2 \\times \\frac{1}{2} - x) = f(1 - x)$ :\n$$f(1 - x) = (1 - x)^2 - (1 - x) + 1$$\n\n$$= 1 - 2x + x^2 - 1 + x + 1 = ___x^2 - x + 1___ = f(x)$$\n\n**Conclusion** : La droite d'équation $x = ___\\frac{1}{2}___$ est axe de symétrie de $(C_f)$."
             },
             {
@@ -701,7 +682,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**À compléter - Asymptote verticale**",
               "content": "Soit $\\displaystyle f(x) = \\frac{1}{x - 2}$ définie sur $\\mathbb{R} \\setminus \\{2\\}$.\n\n**Limites** :\n$$\\displaystyle \\lim_{x \\to 2^+} \\frac{1}{x - 2} = ___+\\infty___$$\n\n$$\\displaystyle \\lim_{x \\to 2^-} \\frac{1}{x - 2} = ___-\\infty___$$\n\n**Conclusion** : La droite d'équation $x = ___2___$ est **asymptote verticale** à $(C_f)$."
             }
           ]
@@ -720,7 +700,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**À compléter - Asymptote horizontale**",
               "content": "Soit $\\displaystyle f(x) = \\frac{2x + 1}{x - 3}$.\n\n**Limite en $+\\infty$** :\n$$\\displaystyle \\lim_{x \\to +\\infty} \\frac{2x + 1}{x - 3} = \\lim_{x \\to +\\infty} \\frac{2 + \\frac{1}{x}}{1 - \\frac{3}{x}} = \\frac{2 + 0}{1 - 0} = ___2___$$\n\n**Conclusion** : La droite d'équation $y = ___2___$ est **asymptote horizontale** à $(C_f)$ en $+\\infty$ (et aussi en $-\\infty$)."
             }
           ]
@@ -744,7 +723,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**À compléter - Asymptote oblique**",
               "content": "Soit $\\displaystyle f(x) = \\frac{x^2 - x + 1}{x - 2}$ sur $\\mathbb{R} \\setminus \\{2\\}$.\n\n**Étape 1** : Calculons $a$ :\n$$\\displaystyle a = \\lim_{x \\to +\\infty} \\frac{f(x)}{x} = \\lim_{x \\to +\\infty} \\frac{x^2 - x + 1}{x(x - 2)}$$\n\n$$= \\lim_{x \\to +\\infty} \\frac{x^2 - x + 1}{x^2 - 2x} = \\lim_{x \\to +\\infty} \\frac{1 - \\frac{1}{x} + \\frac{1}{x^2}}{1 - \\frac{2}{x}} = ___1___$$\n\n**Étape 2** : Division euclidienne de $x^2 - x + 1$ par $x - 2$ :\n$$x^2 - x + 1 = (x - 2)(x + 1) + 3$$\n\nDonc :\n$$\\displaystyle f(x) = \\frac{(x - 2)(x + 1) + 3}{x - 2} = x + 1 + \\frac{3}{x - 2}$$\n\n**Étape 3** : Calculons $b$ :\n$$\\displaystyle b = \\lim_{x \\to +\\infty} [f(x) - x] = \\lim_{x \\to +\\infty} \\left[1 + \\frac{3}{x - 2}\\right] = ___1___$$\n\n**Conclusion** : La droite d'équation $y = x + ___1___$ est asymptote oblique à $(C_f)$ en $\\pm\\infty$."
             },
             {
@@ -776,7 +754,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**À compléter - Branche parabolique**",
               "content": "Soit $f(x) = x^3$.\n\n**Calcul** :\n$$\\displaystyle \\lim_{x \\to +\\infty} \\frac{f(x)}{x} = \\lim_{x \\to +\\infty} \\frac{x^3}{x} = \\lim_{x \\to +\\infty} x^2 = ___+\\infty___$$\n\n**Conclusion** : $(C_f)$ admet une **branche parabolique de direction l'axe des ordonnées** en $+\\infty$."
             }
           ]

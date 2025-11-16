@@ -20,7 +20,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "Exemples de propositions :",
               "listType": "bullet",
               "content": [
                 "\"$2 + 3 = 5$\" est une proposition ___vraie___",
@@ -70,7 +69,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "Négations de propositions :",
               "listType": "bullet",
               "content": [
                 "$P$ : \"$5$ est un nombre pair\" → $\\overline{P}$ : ___\"$5$ n'est pas un nombre pair\"___ (ou \"$5$ est impair\")",
@@ -100,7 +98,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "Exemples de conjonction :",
               "listType": "bullet",
               "content": [
                 "$P$ : \"$6$ est pair\" ET $Q$ : \"$6$ est divisible par $3$\" → $P \\land Q$ est **vraie**",
@@ -135,7 +132,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "Exemples de disjonction :",
               "listType": "bullet",
               "content": [
                 "$P$ : \"$4$ est pair\" OU $Q$ : \"$4$ est premier\" → $P \\lor Q$ est **vraie** (car $P$ est vraie)",
@@ -177,7 +173,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "Exemples d'implication :",
               "listType": "bullet",
               "content": [
                 "\"Si $n$ est divisible par $4$, alors $n$ est pair\" → **Vraie** (toujours valide)",
@@ -203,7 +198,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "Exemples d'équivalence :",
               "listType": "bullet",
               "content": [
                 "\"$n$ est pair $\\Leftrightarrow$ $n$ est divisible par $2$\" → **Vraie**",
@@ -229,7 +223,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "Application des lois de De Morgan :",
               "listType": "bullet",
               "content": [
                 "Négation de \"$x > 0$ ET $x < 10$\" → \"$x \\leq 0$ OU $x \\geq 10$\"",
@@ -265,7 +258,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "Table de vérité de $(P \\land Q) \\Rightarrow R$ :",
               "content": "| $P$ | $Q$ | $R$ | $P \\land Q$ | $(P \\land Q) \\Rightarrow R$ |\n|-----|-----|-----|-------------|-----------------------------|\n| V   | V   | V   | V           | V                           |\n| V   | V   | F   | V           | F                           |\n| V   | F   | V   | F           | V                           |\n| V   | F   | F   | F           | V                           |\n| F   | V   | V   | F           | V                           |\n| F   | V   | F   | F           | V                           |\n| F   | F   | V   | F           | V                           |\n| F   | F   | F   | F           | V                           |"
             },
             {
@@ -298,7 +290,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "Exemples avec quantificateur universel :",
               "listType": "bullet",
               "content": [
                 "$\\forall x \\in \\mathbb{R}, x^2 \\geq 0$ → **Vraie** (le carré de tout réel est positif)",
@@ -318,7 +309,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "Exemples avec quantificateur existentiel :",
               "listType": "bullet",
               "content": [
                 "$\\exists x \\in \\mathbb{R}, x^2 = 4$ → **Vraie** (exemple : $x = 2$ ou $x = -2$)",
@@ -343,7 +333,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "Négations de propositions quantifiées :",
               "listType": "bullet",
               "content": [
                 "Négation de \"$\\forall x \\in \\mathbb{R}, x^2 \\geq 0$\" → \"$\\exists x \\in \\mathbb{R}, x^2 < 0$\"",
@@ -384,7 +373,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Démonstration directe** : \"Si $n$ est pair, alors $n^2$ est pair\"",
               "content": "**Preuve** :\n- **Hypothèse** : $n$ est pair\n- Donc il existe $k \\in \\mathbb{Z}$ tel que $n = 2k$\n- Alors $n^2 = (2k)^2 = 4k^2 = 2(2k^2)$\n- Posons $k' = 2k^2 \\in \\mathbb{Z}$\n- Donc $n^2 = 2k'$, ce qui signifie que $n^2$ est pair\n- **Conclusion** : $n^2$ est pair ✓"
             }
           ]
@@ -398,7 +386,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Démonstration par contraposée** : \"Si $n^2$ est pair, alors $n$ est pair\"",
               "content": "**Preuve** : On démontre la contraposée \"Si $n$ est impair, alors $n^2$ est impair\"\n- **Hypothèse** : $n$ est impair\n- Donc il existe $k \\in \\mathbb{Z}$ tel que $n = 2k + 1$\n- Alors $n^2 = (2k+1)^2 = 4k^2 + 4k + 1 = 2(2k^2 + 2k) + 1$\n- Posons $k' = 2k^2 + 2k \\in \\mathbb{Z}$\n- Donc $n^2 = 2k' + 1$, ce qui signifie que $n^2$ est impair\n- **Conclusion** : La contraposée est vraie, donc $n^2$ pair $\\Rightarrow$ $n$ pair ✓"
             }
           ]
@@ -413,7 +400,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Démonstration par l'absurde** : \"$\\sqrt{2}$ est irrationnel\"",
               "content": "**Preuve** :\n- **Hypothèse absurde** : Supposons que $\\sqrt{2}$ est **rationnel**\n- Alors il existe $p, q \\in \\mathbb{Z}$ avec $q \\neq 0$ et $\\gcd(p,q) = 1$ tels que $\\sqrt{2} = \\frac{p}{q}$\n- En élevant au carré : $2 = \\frac{p^2}{q^2}$, donc $p^2 = 2q^2$\n- Donc $p^2$ est pair, ce qui implique que $p$ est pair (d'après le théorème précédent)\n- Donc $p = 2k$ pour un certain $k \\in \\mathbb{Z}$\n- Alors $p^2 = 4k^2 = 2q^2$, donc $q^2 = 2k^2$\n- Donc $q^2$ est pair, ce qui implique que $q$ est pair\n- **Contradiction** : $p$ et $q$ sont tous deux pairs, donc $\\gcd(p,q) \\geq 2$, ce qui contredit $\\gcd(p,q) = 1$\n- **Conclusion** : L'hypothèse est fausse, donc $\\sqrt{2}$ est irrationnel ✓"
             }
           ]
@@ -428,7 +414,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Démonstration par récurrence** : \"Pour tout $n \\in \\mathbb{N}^*$, $1 + 2 + 3 + \\ldots + n = \\frac{n(n+1)}{2}$\"",
               "content": "**Preuve** : Notons $P(n)$ la propriété \"$1 + 2 + \\ldots + n = \\frac{n(n+1)}{2}$\"\n\n**1. Initialisation** ($n = 1$) :\n- Côté gauche : $1$\n- Côté droit : $\\frac{1 \\times 2}{2} = 1$ ✓\n- Donc $P(1)$ est vraie\n\n**2. Hérédité** : Supposons $P(k)$ vraie pour un certain $k \\geq 1$\n- Hypothèse : $1 + 2 + \\ldots + k = \\frac{k(k+1)}{2}$\n- Montrons $P(k+1)$ :\n$$\\begin{align}\n1 + 2 + \\ldots + k + (k+1) &= \\frac{k(k+1)}{2} + (k+1) \\\\\n&= \\frac{k(k+1) + 2(k+1)}{2} \\\\\n&= \\frac{(k+1)(k+2)}{2} \\\\\n&= \\frac{(k+1)((k+1)+1)}{2}\n\\end{align}$$\n- Donc $P(k+1)$ est vraie\n\n**3. Conclusion** : Par récurrence, $P(n)$ est vraie pour tout $n \\in \\mathbb{N}^*$ ✓"
             },
             {

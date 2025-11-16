@@ -28,7 +28,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Rotation particulière** :",
               "content": "La rotation de centre $O$ et d'angle $\\dfrac{\\pi}{2}$ (90°) transforme :\n- Le point $A$ situé à droite de $O$ en un point $A'$ situé au-dessus de $O$\n- Un carré en un carré tourné de 90°\n\nSi $OA = ___r___$, alors $OA' = r$ également."
             }
           ]
@@ -79,7 +78,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Application** :",
               "content": "Soit $R_1 = R\\left(O, \\dfrac{\\pi}{3}\\right)$ et $R_2 = R\\left(O, \\dfrac{\\pi}{6}\\right)$.\n\n$$R_2 \\circ R_1 = R\\left(O, \\dfrac{\\pi}{3} + \\dfrac{\\pi}{6}\\right) = R\\left(O, \\dfrac{2\\pi + \\pi}{6}\\right) = R\\left(O, \\dfrac{\\pi}{___2___}\\right)$$"
             },
             {
@@ -113,7 +111,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Calcul d'image** :",
               "content": "Déterminer l'image du point $A$ d'affixe $z_A = 1 + i$ par la rotation de centre $O$ et d'angle $\\dfrac{\\pi}{2}$.\n\n$$z_{A'} = e^{i\\frac{\\pi}{2}} \\cdot z_A = (\\cos\\frac{\\pi}{2} + i\\sin\\frac{\\pi}{2})(1 + i)$$\n\n$$= i(1 + i) = i + i^2 = i - 1 = ___-1 + i___$$\n\nDonc $A'(-1; 1)$"
             }
           ]

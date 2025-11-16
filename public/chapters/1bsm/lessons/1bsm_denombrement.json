@@ -29,7 +29,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 1 : À compléter - Cardinal d'ensembles simples**",
               "content": "Déterminons le cardinal des ensembles suivants :\n\n**1.** $E = \\{2, 4, 6, 8, 10\\}$\n$$\\text{Card}(E) = ___5___$$\n\n**2.** $F = \\{x \\in \\mathbb{N} : x < 7\\}$\n$$F = \\{0, 1, 2, 3, 4, 5, 6\\}$$\n$$\\text{Card}(F) = ___7___$$\n\n**3.** $G = \\{x \\in \\mathbb{N} : 5 \\leq x \\leq 12\\}$\n$$G = \\{5, 6, 7, 8, 9, 10, 11, 12\\}$$\n$$\\text{Card}(G) = ___8___$$\n\n**4.** $H = \\{lettres du mot MAROC\\}$\n$$H = \\{M, A, R, O, C\\}$$\n$$\\text{Card}(H) = ___5___$$"
             }
           ]
@@ -49,12 +48,10 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 2 : À compléter - Application de la formule d'inclusion-exclusion**",
               "content": "Dans une classe de 40 élèves :\n- 25 élèves étudient l'anglais\n- 18 élèves étudient l'espagnol\n- 10 élèves étudient les deux langues\n\n**Question** : Combien d'élèves étudient au moins une langue ?\n\n**Solution** :\nSoit $A$ l'ensemble des élèves étudiant l'anglais et $B$ l'ensemble des élèves étudiant l'espagnol.\n\nOn a :\n- $\\text{Card}(A) = ___25___$\n- $\\text{Card}(B) = ___18___$\n- $\\text{Card}(A \\cap B) = ___10___$\n\nD'après la formule d'inclusion-exclusion :\n$$\\text{Card}(A \\cup B) = \\text{Card}(A) + \\text{Card}(B) - \\text{Card}(A \\cap B)$$\n$$= 25 + 18 - ___10___$$\n$$= ___33___$$\n\n**Réponse** : ___33___ élèves étudient au moins une langue."
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 3 : Problème avec diagramme de Venn**",
               "content": "Dans une classe de 38 élèves :\n- 31 étudient l'anglais (A)\n- 24 étudient l'espagnol (E)\n- 17 étudient l'allemand (L)\n- 12 étudient l'anglais et l'allemand\n- 9 étudient l'espagnol et l'allemand\n- 4 étudient les trois langues\n\n**Questions** :\n\n**a)** Nombre d'élèves étudiant l'anglais et l'espagnol :\n\nUtilisons la formule pour trois ensembles. On sait que tous les 38 élèves étudient au moins une langue, donc :\n$$38 = 31 + 24 + 17 - \\text{Card}(A \\cap E) - 12 - 9 + 4$$\n$$38 = 72 - \\text{Card}(A \\cap E) - 21 + 4$$\n$$38 = 55 - \\text{Card}(A \\cap E)$$\n$$\\text{Card}(A \\cap E) = 17$$\n\n**b)** Nombre d'élèves étudiant uniquement l'allemand :\n\nLes élèves étudiant uniquement l'allemand = Total allemand - (ceux qui font allemand avec autre chose)\n$$= 17 - (12 + 9 - 4)$$\n$$= 17 - 17 = 0$$\n\nAucun élève n'étudie uniquement l'allemand."
             }
           ]
@@ -74,7 +71,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 4 : À compléter - Formation de nombres**",
               "content": "On dispose des chiffres $\\{2, 3, 5, 6, 7\\}$. On veut former des entiers naturels de trois chiffres **distincts** parmi ces chiffres.\n\n**a) Nombre total de nombres de 3 chiffres distincts :**\n\n- Choix du 1er chiffre : ___5___ possibilités\n- Choix du 2e chiffre : ___4___ possibilités (un chiffre déjà utilisé)\n- Choix du 3e chiffre : ___3___ possibilités (deux chiffres déjà utilisés)\n\nNombre total : $5 \\times 4 \\times 3 = ___60___$\n\n**b) Nombres pairs de 3 chiffres distincts :**\n\nPour qu'un nombre soit pair, il doit se terminer par 2 ou 6.\n\n- Choix du **dernier** chiffre : ___2___ possibilités (2 ou 6)\n- Choix du 1er chiffre : ___4___ possibilités (5 chiffres - 1 déjà utilisé)\n- Choix du 2e chiffre : ___3___ possibilités\n\nNombre de nombres pairs : $2 \\times 4 \\times 3 = ___24___$\n\n**c) Multiples de 5 de 3 chiffres distincts :**\n\nPour qu'un nombre soit divisible par 5, il doit se terminer par 5.\n\n- Choix du **dernier** chiffre : ___1___ possibilité (uniquement 5)\n- Choix du 1er chiffre : ___4___ possibilités\n- Choix du 2e chiffre : ___3___ possibilités\n\nNombre de multiples de 5 : $1 \\times 4 \\times 3 = ___12___$"
             }
           ]
@@ -94,7 +90,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 5 : À compléter - Numéros de téléphone**",
               "content": "**Question** : Combien existe-t-il de numéros de téléphone mobile marocains commençant par 061 ?\n\n**Solution** :\nUn numéro de téléphone mobile marocain a la forme : **0 6 1 _ _ _ _ _ _ _**\n\nIl reste ___7___ positions à remplir.\n\nChaque position peut être occupée par un chiffre de 0 à 9, soit ___10___ possibilités.\n\nNombre total de numéros :\n$$10^7 = ___10\\,000\\,000___$$\n\n**Réponse** : Il existe **10 millions** de numéros de téléphone commençant par 061."
             }
           ]
@@ -114,7 +109,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 6 : À compléter - Lancers de dés**",
               "content": "On lance un dé cubique (faces numérotées de 1 à 6) trois fois de suite. On obtient un triplet $(a, b, c)$ à l'issue des trois lancers.\n\n**a) Nombre total de triplets possibles :**\n\nChaque lancer donne ___6___ résultats possibles.\n\nOn effectue ___3___ lancers.\n\nNombre total : $6^3 = ___216___$ triplets\n\n**b) Triplets comportant uniquement des chiffres impairs :**\n\nChiffres impairs sur un dé : 1, 3, 5 (soit ___3___ chiffres)\n\nChaque lancer doit donner un chiffre impair : ___3___ possibilités\n\nNombre de triplets : $3^3 = ___27___$\n\n**c) Triplets avec chiffres deux à deux distincts :**\n\n- 1er lancer : ___6___ possibilités\n- 2e lancer : ___5___ possibilités (un chiffre déjà sorti)\n- 3e lancer : ___4___ possibilités (deux chiffres déjà sortis)\n\nNombre de triplets : $6 \\times 5 \\times 4 = ___120___$\n\n**d) Triplets comportant au moins une fois le chiffre 1 :**\n\nUtilisons le complémentaire : triplets **sans** le chiffre 1.\n\nChaque lancer doit donner un chiffre de {2, 3, 4, 5, 6} : ___5___ possibilités\n\nNombre de triplets sans 1 : $5^3 = ___125___$\n\nNombre de triplets avec au moins un 1 : $216 - 125 = ___91___$"
             }
           ]
@@ -134,7 +128,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 7 : Parties d'un ensemble**",
               "content": "Soit $E = \\{a, b, c\\}$. Déterminons toutes les parties de $E$.\n\n**Cardinal de $E$** : $\\text{Card}(E) = 3$\n\n**Nombre de parties** : $2^3 = 8$\n\n**Liste des parties** :\n1. $\\emptyset$ (ensemble vide)\n2. $\\{a\\}$\n3. $\\{b\\}$\n4. $\\{c\\}$\n5. $\\{a, b\\}$\n6. $\\{a, c\\}$\n7. $\\{b, c\\}$\n8. $\\{a, b, c\\}$ (ensemble $E$ lui-même)\n\nDonc : $\\mathcal{P}(E) = \\{\\emptyset, \\{a\\}, \\{b\\}, \\{c\\}, \\{a,b\\}, \\{a,c\\}, \\{b,c\\}, \\{a,b,c\\}\\}$"
             }
           ]
@@ -164,7 +157,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 8 : À compléter - Codes secrets**",
               "content": "Un code secret est formé de 4 chiffres choisis parmi {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}.\n\n**a) Nombre de codes possibles si les répétitions sont autorisées :**\n\nOn a $n = ___10___$ chiffres disponibles et $p = ___4___$ positions.\n\nNombre de codes : $10^4 = ___10\\,000___$\n\n**b) Nombre de codes commençant par 0 :**\n\nLe premier chiffre est fixé à 0 : ___1___ possibilité\n\nLes 3 autres positions : $10^3 = ___1\\,000___$ possibilités\n\nNombre de codes : $1 \\times 1000 = ___1\\,000___$\n\n**c) Nombre de codes ne contenant que des chiffres pairs :**\n\nChiffres pairs : 0, 2, 4, 6, 8 (soit ___5___ chiffres)\n\nChaque position peut être remplie par un chiffre pair : ___5___ possibilités\n\nNombre de codes : $5^4 = ___625___$"
             }
           ]
@@ -189,12 +181,10 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 9 : À compléter - Podium de course**",
               "content": "Dans une course de 12 athlètes, on veut déterminer le podium (1er, 2ème et 3ème).\n\n**Question** : De combien de façons différentes peut-on former le podium ?\n\n**Solution** :\nOn cherche le nombre d'arrangements de ___3___ éléments parmi ___12___.\n\n$$A_{12}^3 = 12 \\times 11 \\times 10$$\n$$= ___1\\,320___$$\n\nOu en utilisant la formule avec les factorielles :\n$$A_{12}^3 = \\dfrac{12!}{(12-3)!} = \\dfrac{12!}{9!}$$\n$$= \\dfrac{12 \\times 11 \\times 10 \\times 9!}{9!}$$\n$$= 12 \\times 11 \\times 10 = ___1\\,320___$$\n\n**Réponse** : Il y a **1 320** podiums possibles."
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 10 : Tirage de boules**",
               "content": "Une urne contient :\n- 10 boules noires numérotées de 1 à 10\n- 5 boules blanches numérotées de 11 à 15\n- 3 boules rouges numérotées de 16 à 18\n\nOn tire 5 boules successivement **sans remise**.\n\n**a) Nombre total de séries de tirages possibles :**\n\nTotal de boules : $10 + 5 + 3 = 18$\n\nOn tire 5 boules sans remise avec ordre :\n$$A_{18}^5 = 18 \\times 17 \\times 16 \\times 15 \\times 14$$\n$$= 1\\,028\\,160$$\n\n**b) Séries commençant par une boule rouge et composées uniquement de boules paires :**\n\nBoules paires : 2, 4, 6, 8, 10, 12, 14, 16, 18 (soit 9 boules)\n\nBoules rouges paires : 16, 18 (soit 2 boules)\n\n- 1ère position : une boule rouge paire : 2 choix\n- Reste 8 boules paires disponibles\n- 4 positions restantes : $A_8^4 = 8 \\times 7 \\times 6 \\times 5 = 1680$\n\nNombre de séries : $2 \\times 1680 = 3360$"
             }
           ]
@@ -234,12 +224,10 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 11 : À compléter - Rangement de livres**",
               "content": "On dispose de 5 livres différents sur une étagère.\n\n**Question** : De combien de façons peut-on ranger ces 5 livres ?\n\n**Solution** :\nOn cherche le nombre de permutations de ___5___ éléments.\n\n$$5! = 5 \\times 4 \\times 3 \\times 2 \\times 1$$\n$$= ___120___$$\n\n**Réponse** : Il y a **120** façons de ranger les livres."
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 12 : Coloriage avec contraintes**",
               "content": "On dispose de 4 couleurs (vert, jaune, rouge, bleu) pour colorier 4 cases d'un motif avec des couleurs **toutes distinctes**.\n\n**Question** : Combien de coloriages différents sont possibles ?\n\n**Solution** :\nPuisque chaque couleur doit être utilisée exactement une fois, il s'agit d'une permutation de 4 couleurs :\n\n$$4! = 4 \\times 3 \\times 2 \\times 1 = 24$$\n\n**Réponse** : **24 coloriages** différents sont possibles."
             }
           ]
@@ -279,7 +267,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 13 : À compléter - Comité d'élèves**",
               "content": "Une classe de 30 élèves doit élire un comité de 4 élèves.\n\n**Question** : Combien de comités différents peut-on former ?\n\n**Solution** :\nL'ordre des élèves dans le comité n'a pas d'importance. Il s'agit donc d'une **combinaison** de ___4___ élèves parmi ___30___.\n\n$$C_{30}^4 = \\dfrac{30!}{4!(30-4)!} = \\dfrac{30!}{4! \\times 26!}$$\n\n$$= \\dfrac{30 \\times 29 \\times 28 \\times 27 \\times 26!}{4! \\times 26!}$$\n\n$$= \\dfrac{30 \\times 29 \\times 28 \\times 27}{4 \\times 3 \\times 2 \\times 1}$$\n\n$$= \\dfrac{30 \\times 29 \\times 28 \\times 27}{24}$$\n\n$$= \\dfrac{657\\,720}{24} = ___27\\,405___$$\n\n**Réponse** : On peut former **27 405** comités différents."
             },
             {
@@ -316,12 +303,10 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 14 : À compléter - Développement avec le binôme**",
               "content": "Développons $(2x + 3)^4$ en utilisant la formule du binôme.\n\n**Solution** :\n$$(2x + 3)^4 = \\sum_{k=0}^{4} C_4^k (2x)^{4-k} (3)^k$$\n\nCalculons terme par terme :\n\n**$k=0$** : $C_4^0 (2x)^4 (3)^0 = 1 \\times 16x^4 \\times 1 = ___16x^4___$\n\n**$k=1$** : $C_4^1 (2x)^3 (3)^1 = 4 \\times 8x^3 \\times 3 = ___96x^3___$\n\n**$k=2$** : $C_4^2 (2x)^2 (3)^2 = 6 \\times 4x^2 \\times 9 = ___216x^2___$\n\n**$k=3$** : $C_4^3 (2x)^1 (3)^3 = 4 \\times 2x \\times 27 = ___216x___$\n\n**$k=4$** : $C_4^4 (2x)^0 (3)^4 = 1 \\times 1 \\times 81 = ___81___$\n\n**Résultat** :\n$$(2x + 3)^4 = 16x^4 + 96x^3 + 216x^2 + 216x + 81$$"
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 15 : Coefficient d'un terme particulier**",
               "content": "Quel est le coefficient de $a^7b^3$ dans le développement de $(a-b)^{10}$ ?\n\n**Solution** :\nDans le développement de $(a-b)^{10}$, le terme général est :\n$$C_{10}^k a^{10-k} (-b)^k = C_{10}^k (-1)^k a^{10-k} b^k$$\n\nPour avoir $a^7b^3$, il faut que :\n- $10 - k = 7 \\Rightarrow k = 3$\n\nLe terme correspondant est :\n$$C_{10}^3 (-1)^3 a^7 b^3$$\n\nCalculons le coefficient :\n$$C_{10}^3 \\times (-1)^3 = \\dfrac{10!}{3!7!} \\times (-1)$$\n$$= \\dfrac{10 \\times 9 \\times 8}{3 \\times 2 \\times 1} \\times (-1)$$\n$$= 120 \\times (-1) = -120$$\n\n**Réponse** : Le coefficient de $a^7b^3$ est **-120**."
             },
             {

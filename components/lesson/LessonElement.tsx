@@ -14,6 +14,7 @@ import type {
     LessonInteractiveBoxElement,
 } from '../../types';
 import { parseContent, parseTable, ContentWithImage, LessonProvider } from '../../utils/lessonContentParser';
+import { encodeLessonPath } from '../../services/lessonProgressService';
 import Modal from '../Modal';
 import { useLessonProgress, getParagraphNodeIdFromPath } from '../../context/LessonProgressContext';
 import { useNumbering } from '../../context/NumberingContext';
@@ -103,6 +104,7 @@ const Paragraph: React.FC<{ element: ElementType; path: LessonElementPath; showA
     const { isNodeCompleted } = useLessonProgress();
     const nodeId = useMemo(() => getParagraphNodeIdFromPath(path), [path]);
     const isCompleted = isNodeCompleted(nodeId);
+    const pathKey = useMemo(() => encodeLessonPath(path), [path]);
 
     // Protection: Vérifier que content est bien une chaîne
     const content = textElement.content;
@@ -123,7 +125,7 @@ const Paragraph: React.FC<{ element: ElementType; path: LessonElementPath; showA
     const trimmedContent = content.trim();
     const isCallout = trimmedContent.startsWith('!>') || trimmedContent.startsWith('?>');
 
-    const contentNode = parseContent(content, false, showAnswers);
+    const contentNode = parseContent(content, false, showAnswers, `${pathKey}.paragraph`);
 
     const paragraphClasses = [
         'lesson-paragraph',
@@ -198,7 +200,7 @@ const InfoBox: React.FC<{ element: ElementType; showAnswers?: boolean; pathKey: 
             <div className="lesson-inline__content">
                 {hasStructuredContent && (
                     <div className="lesson-inline__body">
-                        {parseContent(infoElement.content, isNumbered, effectiveShowAnswers)}
+                        {parseContent(infoElement.content, isNumbered, effectiveShowAnswers, `${pathKey}.content`)}
                     </div>
                 )}
             </div>
@@ -217,7 +219,7 @@ const InfoBox: React.FC<{ element: ElementType; showAnswers?: boolean; pathKey: 
                             <>
                                 <span className="lesson-inline__divider">|</span>
                                 <span className="lesson-inline__title">
-                                    {parseContent(infoElement.preamble.replace(/\s*:+\s*$/, ''), false, effectiveShowAnswers)}
+                                    {parseContent(infoElement.preamble.replace(/\s*:+\s*$/, ''), false, effectiveShowAnswers, `${pathKey}.preamble`)}
                                 </span>
                             </>
                         )}
@@ -241,7 +243,7 @@ const InfoBox: React.FC<{ element: ElementType; showAnswers?: boolean; pathKey: 
                         <>
                             <span className="lesson-box__divider">|</span>
                             <span className="lesson-box__title">
-                                {parseContent(infoElement.preamble.replace(/\s*:+\s*$/, ''), false, effectiveShowAnswers)}
+                                {parseContent(infoElement.preamble.replace(/\s*:+\s*$/, ''), false, effectiveShowAnswers, `${pathKey}.preamble`)}
                             </span>
                         </>
                     )}
@@ -250,7 +252,7 @@ const InfoBox: React.FC<{ element: ElementType; showAnswers?: boolean; pathKey: 
                 {shouldRenderBody && (
                     <div className="lesson-box__body">
                         <ContentWithImage image={infoElement.image}>
-                            {hasStructuredContent ? parseContent(infoElement.content, isNumbered, effectiveShowAnswers) : null}
+                            {hasStructuredContent ? parseContent(infoElement.content, isNumbered, effectiveShowAnswers, `${pathKey}.content`) : null}
                         </ContentWithImage>
                     </div>
                 )}
@@ -315,12 +317,12 @@ const InteractiveBox: React.FC<{ element: ElementType; showAnswers?: boolean; pa
                         <div className="space-y-4">
                             {interactiveElement.statement && (
                                 <div className="lesson-box__statement">
-                                    {parseContent(interactiveElement.statement, false, effectiveShowAnswers)}
+                                    {parseContent(interactiveElement.statement, false, effectiveShowAnswers, `${pathKey}.statement`)}
                                 </div>
                             )}
                             {interactiveElement.type === 'practice-box' && interactiveElement.content && (
                                 <div className="lesson-box__exercises">
-                                    {parseContent(interactiveElement.content, true, effectiveShowAnswers)}
+                                    {parseContent(interactiveElement.content, true, effectiveShowAnswers, `${pathKey}.content`)}
                                 </div>
                             )}
                         </div>
@@ -350,7 +352,7 @@ const InteractiveBox: React.FC<{ element: ElementType; showAnswers?: boolean; pa
                                     <div key={index} className="lesson-solution__step">
                                         <span className="lesson-solution__step-index">{index + 1}</span>
                                         <div className="lesson-solution__step-body">
-                                            {parseContent(normalizedStep, false, true)}
+                                            {parseContent(normalizedStep, false, true, `${pathKey}.solution.${index}`)}
                                         </div>
                                     </div>
                                 );
@@ -368,7 +370,7 @@ const InteractiveBox: React.FC<{ element: ElementType; showAnswers?: boolean; pa
 // ============================================================================
 
 export const LessonElement: React.FC<LessonElementProps> = ({ element, path, showAnswers = false }) => {
-    const pathKey = useMemo(() => path.join('>'), [path]);
+    const pathKey = useMemo(() => encodeLessonPath(path), [path]);
 
     switch (element.type) {
         case 'p':

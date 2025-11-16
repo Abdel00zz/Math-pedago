@@ -1,6 +1,6 @@
 {
   "header": {
-    "chapter": "1ère BSE - Mathématiques", 
+    "chapter": "1ère BSE - Mathématiques",
     "title": "Les Suites Numériques",
     "subtitle": "Définitions, limites et comportement asymptotique"
   },
@@ -57,7 +57,7 @@
             },
             {
               "type": "formula",
-              "title": "Terme général", 
+              "title": "Terme général",
               "content": "Si (uₙ) est géométrique de premier terme u₀ et de raison q : uₙ = u₀ × qⁿ"
             },
             {

@@ -33,6 +33,7 @@ const STORAGE_KEYS = {
   APP_STATE: 'math-pedago:app:v5.0',
   LESSONS: 'math-pedago:lessons:v2.0',
   LESSON_META: 'math-pedago:lessons-meta:v1.0',
+  LESSON_BLANKS: 'math-pedago:lesson-blanks:v1.0',
   LESSON_CACHE: 'math-pedago:lesson-cache:v1.0',
   CONCOURS: 'math-pedago:concours:v1.0',
   UI_CACHE: 'math-pedago:ui-cache:v1.0',

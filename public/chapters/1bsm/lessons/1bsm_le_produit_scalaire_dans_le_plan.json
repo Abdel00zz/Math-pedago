@@ -60,12 +60,10 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Calcul direct dans un repère orthonormé** :",
               "content": "Soient $\\vec{u}\\begin{pmatrix} 3 \\\\ -2 \\end{pmatrix}$ et $\\vec{v}\\begin{pmatrix} 1 \\\\ 4 \\end{pmatrix}$.\n\n$$\\vec{u} \\cdot \\vec{v} = 3 \\times 1 + (-2) \\times 4 = 3 - 8 = ___-5___$$"
             },
             {
               "type": "example-box",
-              "preamble": "**Produit scalaire avec des vecteurs quelconques** :",
               "content": "Dans un repère orthonormé, on donne $A(2; 1)$, $B(5; 3)$ et $C(4; -1)$.\n\nCalculons $\\overrightarrow{AB} \\cdot \\overrightarrow{AC}$.\n\n**Solution** :\n\nD'abord, calculons les coordonnées des vecteurs :\n$$\\overrightarrow{AB}\\begin{pmatrix} 5-2 \\\\ 3-1 \\end{pmatrix} = \\begin{pmatrix} ___3___ \\\\ ___2___ \\end{pmatrix}$$\n\n$$\\overrightarrow{AC}\\begin{pmatrix} 4-2 \\\\ -1-1 \\end{pmatrix} = \\begin{pmatrix} ___2___ \\\\ ___-2___ \\end{pmatrix}$$\n\nDonc :\n$$\\overrightarrow{AB} \\cdot \\overrightarrow{AC} = 3 \\times 2 + 2 \\times (-2) = 6 - 4 = ___2___$$"
             },
             {
@@ -117,7 +115,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Calcul d'angle entre deux vecteurs** :",
               "content": "Soient $\\vec{u}$ et $\\vec{v}$ deux vecteurs non nuls tels que $\\vec{u} \\cdot \\vec{v} = 12$, $\\|\\vec{u}\\| = 4$ et $\\|\\vec{v}\\| = 6$.\n\nDéterminons l'angle $\\theta$ entre $\\vec{u}$ et $\\vec{v}$.\n\n**Solution** :\n\nD'après la définition géométrique :\n$$\\cos(\\theta) = \\dfrac{\\vec{u} \\cdot \\vec{v}}{\\|\\vec{u}\\| \\times \\|\\vec{v}\\|} = \\dfrac{12}{4 \\times 6} = \\dfrac{12}{24} = \\dfrac{1}{2}$$\n\nDonc $\\theta = \\arccos\\left(\\dfrac{1}{2}\\right) = \\dfrac{\\pi}{3}$ radians = $___60___$°"
             },
             {
@@ -156,7 +153,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Calcul par projection** :",
               "content": "Soit $ABC$ un triangle rectangle en $B$ tel que $AB = 3$ et $BC = 4$.\n\nCalculons $\\overrightarrow{CA} \\cdot \\overrightarrow{CB}$.\n\n**Solution** :\n\nLe projeté orthogonal de $A$ sur la droite $(CB)$ est le point $B$ lui-même (car $ABC$ est rectangle en $B$).\n\nDonc :\n$$\\overrightarrow{CA} \\cdot \\overrightarrow{CB} = \\overrightarrow{CB} \\cdot \\overrightarrow{CB} = \\|\\overrightarrow{CB}\\|^2 = CB^2 = ___16___$$"
             }
           ]
@@ -223,7 +219,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Application des formules de développement** :",
               "content": "Soient $\\vec{u}$ et $\\vec{v}$ deux vecteurs tels que $\\|\\vec{u}\\| = 3$, $\\|\\vec{v}\\| = 2$ et $\\vec{u} \\cdot \\vec{v} = 4$.\n\n**1. Calculons $\\|\\vec{u} + \\vec{v}\\|$** :\n\n$$\\|\\vec{u} + \\vec{v}\\|^2 = \\|\\vec{u}\\|^2 + 2\\vec{u} \\cdot \\vec{v} + \\|\\vec{v}\\|^2$$\n\n$$= 3^2 + 2 \\times 4 + 2^2 = 9 + 8 + 4 = ___21___$$\n\nDonc $\\|\\vec{u} + \\vec{v}\\| = \\sqrt{21}$\n\n**2. Calculons $\\|\\vec{u} - \\vec{v}\\|$** :\n\n$$\\|\\vec{u} - \\vec{v}\\|^2 = \\|\\vec{u}\\|^2 - 2\\vec{u} \\cdot \\vec{v} + \\|\\vec{v}\\|^2$$\n\n$$= 9 - 8 + 4 = ___5___$$\n\nDonc $\\|\\vec{u} - \\vec{v}\\| = \\sqrt{5}$"
             },
             {
@@ -268,7 +263,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Détermination d'un vecteur orthogonal** :",
               "content": "Dans un repère orthonormé, on donne $\\vec{u}\\begin{pmatrix} 2 \\\\ 3 \\end{pmatrix}$ et $\\vec{v}\\begin{pmatrix} x \\\\ -2 \\end{pmatrix}$.\n\nDéterminons $x$ pour que $\\vec{u}$ et $\\vec{v}$ soient orthogonaux.\n\n**Solution** :\n\n$\\vec{u}$ et $\\vec{v}$ sont orthogonaux si et seulement si $\\vec{u} \\cdot \\vec{v} = 0$\n\n$$2x + 3 \\times (-2) = 0$$\n$$2x - 6 = 0$$\n$$x = ___3___$$\n\nDonc $\\vec{v}\\begin{pmatrix} 3 \\\\ -2 \\end{pmatrix}$"
             },
             {
@@ -303,7 +297,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Vérification de perpendicularité** :",
               "content": "Dans un repère orthonormé, on considère les droites $(D_1)$ et $(D_2)$ de vecteurs directeurs respectifs $\\vec{u}\\begin{pmatrix} 3 \\\\ 2 \\end{pmatrix}$ et $\\vec{v}\\begin{pmatrix} -4 \\\\ 6 \\end{pmatrix}$.\n\nVérifions si $(D_1)$ et $(D_2)$ sont perpendiculaires.\n\n**Solution** :\n\n$$\\vec{u} \\cdot \\vec{v} = 3 \\times (-4) + 2 \\times 6 = -12 + 12 = ___0___$$\n\nDonc $(D_1) \\perp (D_2)$"
             },
             {
@@ -350,7 +343,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Application du théorème d'Al-Kashi** :",
               "content": "Soit $ABC$ un triangle tel que $AB = 7$, $AC = 5$ et $\\widehat{BAC} = 60°$. Calculons $BC$.\n\n**Solution** :\n\nD'après le théorème d'Al-Kashi :\n$$BC^2 = AB^2 + AC^2 - 2 \\cdot AB \\cdot AC \\cdot \\cos(\\widehat{BAC})$$\n\n$$BC^2 = 7^2 + 5^2 - 2 \\times 7 \\times 5 \\times \\cos(60°)$$\n\n$$BC^2 = 49 + 25 - 70 \\times \\dfrac{1}{2}$$\n\n$$BC^2 = 74 - 35 = ___39___$$\n\nDonc $BC = \\sqrt{39} \\approx 6.24$"
             },
             {
@@ -385,7 +377,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Application du théorème de la médiane** :",
               "content": "Soit $ABC$ un triangle tel que $AB = 5$, $AC = 7$ et $BC = 6$. Si $I$ est le milieu de $[BC]$, calculons $AI$.\n\n**Solution** :\n\nD'après le théorème de la médiane :\n$$AB^2 + AC^2 = 2AI^2 + \\dfrac{BC^2}{2}$$\n\n$$25 + 49 = 2AI^2 + \\dfrac{36}{2}$$\n\n$$74 = 2AI^2 + 18$$\n\n$$2AI^2 = 74 - 18 = ___56___$$\n\n$$AI^2 = 28$$\n\nDonc $AI = \\sqrt{28} = 2\\sqrt{7} \\approx 5.29$"
             },
             {
@@ -424,7 +415,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Calcul de distance d'un point à une droite** :",
               "content": "Dans un repère orthonormé, soit $(D)$ la droite passant par $A(1; 2)$ et de vecteur directeur $\\vec{u}\\begin{pmatrix} 3 \\\\ 4 \\end{pmatrix}$.\n\nCalculons la distance du point $M(5; 7)$ à la droite $(D)$.\n\n**Solution** :\n\nUn vecteur normal à $(D)$ est $\\vec{n}\\begin{pmatrix} -4 \\\\ 3 \\end{pmatrix}$ (on permute les coordonnées de $\\vec{u}$ et on change un signe).\n\nVérifions : $\\vec{u} \\cdot \\vec{n} = 3 \\times (-4) + 4 \\times 3 = -12 + 12 = 0$ ✓\n\nCalculons $\\overrightarrow{AM}$ :\n$$\\overrightarrow{AM}\\begin{pmatrix} 5-1 \\\\ 7-2 \\end{pmatrix} = \\begin{pmatrix} 4 \\\\ 5 \\end{pmatrix}$$\n\nDonc :\n$$d(M, (D)) = \\dfrac{|\\overrightarrow{AM} \\cdot \\vec{n}|}{\\|\\vec{n}\\|} = \\dfrac{|4 \\times (-4) + 5 \\times 3|}{\\sqrt{(-4)^2 + 3^2}}$$\n\n$$= \\dfrac{|-16 + 15|}{\\sqrt{16 + 9}} = \\dfrac{|-1|}{\\sqrt{25}} = \\dfrac{1}{5} = ___0.2___$$"
             },
             {
@@ -468,12 +458,10 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Équation d'un cercle** :",
               "content": "Dans un repère orthonormé, déterminons l'équation du cercle de centre $\\Omega(2; -1)$ et de rayon $r = 3$.\n\n**Solution** :\n\n$$(x - 2)^2 + (y - (-1))^2 = 3^2$$\n$$(x - 2)^2 + (y + 1)^2 = ___9___$$\n\nDéveloppons :\n$$x^2 - 4x + 4 + y^2 + 2y + 1 = 9$$\n$$x^2 + y^2 - 4x + 2y - 4 = 0$$"
             },
             {
               "type": "example-box",
-              "preamble": "**Reconnaissance d'un cercle** :",
               "content": "Déterminons la nature de l'ensemble des points $M(x; y)$ vérifiant : $x^2 + y^2 - 6x + 4y + 9 = 0$\n\n**Solution** :\n\nOn regroupe les termes :\n$$(x^2 - 6x) + (y^2 + 4y) + 9 = 0$$\n\nOn complète les carrés :\n$$(x^2 - 6x + 9) - 9 + (y^2 + 4y + 4) - 4 + 9 = 0$$\n$$(x - 3)^2 + (y + 2)^2 = 9 - 9 + 4 = ___4___$$\n\nDonc c'est le cercle de centre $\\Omega(3; -2)$ et de rayon $r = 2$"
             },
             {
@@ -503,7 +491,6 @@
           "elements": [
             {
               "type": "example-box",
-              "preamble": "**Calcul guidé avec étapes** :",
               "content": "Dans un repère orthonormé, soient $\\vec{u}\\begin{pmatrix} -2 \\\\ 5 \\end{pmatrix}$ et $\\vec{v}\\begin{pmatrix} 3 \\\\ 1 \\end{pmatrix}$.\n\n**Étape 1** : Calculons le produit scalaire\n$$\\vec{u} \\cdot \\vec{v} = (-2) \\times 3 + 5 \\times 1 = -6 + 5 = ___-1___$$\n\n**Étape 2** : Calculons les normes\n$$\\|\\vec{u}\\| = \\sqrt{(-2)^2 + 5^2} = \\sqrt{4 + 25} = \\sqrt{___29___}$$\n$$\\|\\vec{v}\\| = \\sqrt{3^2 + 1^2} = \\sqrt{9 + 1} = \\sqrt{___10___}$$\n\n**Étape 3** : Calculons l'angle $\\theta$ entre les vecteurs\n$$\\cos(\\theta) = \\dfrac{\\vec{u} \\cdot \\vec{v}}{\\|\\vec{u}\\| \\times \\|\\vec{v}\\|} = \\dfrac{-1}{\\sqrt{29} \\times \\sqrt{10}} = \\dfrac{___-1___}{\\sqrt{290}}$$\n\nL'angle est obtus car $\\cos(\\theta) < 0$"
             },
             {
@@ -532,7 +519,6 @@
           "elements": [
             {
               "type": "example-box",
-              "preamble": "**Ensemble de points défini par un produit scalaire** :",
               "content": "Dans un repère orthonormé, on donne $A(2; 1)$ et $B(6; 3)$.\n\nDéterminons l'ensemble des points $M(x; y)$ tels que $\\overrightarrow{MA} \\cdot \\overrightarrow{MB} = 0$.\n\n**Solution** :\n\nCette condition signifie que $M$ appartient au cercle de diamètre $[AB]$.\n\nLe centre $\\Omega$ est le milieu de $[AB]$ :\n$$\\Omega\\left(\\dfrac{2+6}{2}; \\dfrac{1+3}{2}\\right) = \\Omega(___4___; ___2___)$$\n\nLe rayon est :\n$$r = \\dfrac{AB}{2} = \\dfrac{\\sqrt{(6-2)^2 + (3-1)^2}}{2} = \\dfrac{\\sqrt{16 + 4}}{2} = \\dfrac{\\sqrt{20}}{2} = \\dfrac{2\\sqrt{5}}{2} = \\sqrt{___5___}$$\n\nL'équation du cercle est :\n$$(x - 4)^2 + (y - 2)^2 = 5$$"
             },
             {
@@ -556,7 +542,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Produit scalaire et parallélogramme** :",
               "content": "Soit $ABCD$ un parallélogramme de centre $O$. On note $a = AB$ et $b = BC$.\n\nExprimons $\\overrightarrow{AC} \\cdot \\overrightarrow{BD}$ en fonction de $a$ et $b$.\n\n**Solution** :\n\nDans un parallélogramme, les diagonales se coupent en leur milieu. Donc :\n$$\\overrightarrow{AC} = \\overrightarrow{AB} + \\overrightarrow{BC}$$\n$$\\overrightarrow{BD} = \\overrightarrow{BC} + \\overrightarrow{CD} = \\overrightarrow{BC} - \\overrightarrow{AB}$$ (car $\\overrightarrow{CD} = -\\overrightarrow{AB}$)\n\nDonc :\n$$\\overrightarrow{AC} \\cdot \\overrightarrow{BD} = (\\overrightarrow{AB} + \\overrightarrow{BC}) \\cdot (\\overrightarrow{BC} - \\overrightarrow{AB})$$\n\nEn utilisant l'identité $(u + v)(v - u) = v^2 - u^2$ :\n$$\\overrightarrow{AC} \\cdot \\overrightarrow{BD} = \\|\\overrightarrow{BC}\\|^2 - \\|\\overrightarrow{AB}\\|^2 = b^2 - a^2 = ___b^2 - a^2___$$\n\n**Remarque** : Le parallélogramme est un losange si et seulement si $a = b$, c'est-à-dire si et seulement si $\\overrightarrow{AC} \\cdot \\overrightarrow{BD} = ___0___$ (diagonales perpendiculaires)."
             },
             {

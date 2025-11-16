@@ -26,7 +26,7 @@
           "title": "Domaine de définition",
           "elements": [
             {
-              "type": "definition", 
+              "type": "definition",
               "title": "Domaine de définition",
               "content": "Le domaine de définition Df d'une fonction f est l'ensemble de toutes les valeurs x pour lesquelles f(x) existe."
             },
@@ -51,7 +51,7 @@
               "content": "Une fonction f est paire si son domaine est symétrique par rapport à 0 et si pour tout x ∈ Df : f(-x) = f(x)"
             },
             {
-              "type": "definition", 
+              "type": "definition",
               "title": "Fonction impaire",
               "content": "Une fonction f est impaire si son domaine est symétrique par rapport à 0 et si pour tout x ∈ Df : f(-x) = -f(x)"
             },
@@ -71,7 +71,7 @@
             },
             {
               "type": "definition",
-              "title": "Fonction décroissante", 
+              "title": "Fonction décroissante",
               "content": "Une fonction f est décroissante sur un intervalle I si pour tous x₁, x₂ ∈ I avec x₁ < x₂, on a f(x₁) ≥ f(x₂)"
             }
           ]

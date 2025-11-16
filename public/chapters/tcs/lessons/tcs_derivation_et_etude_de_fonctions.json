@@ -22,7 +22,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "Étudions la dérivabilité de $f(x) = 2x^2$ en $x_0 = 2$:",
               "listType": "bullet",
               "content": [
                 "**Calcul du taux de variation:**\\n$$\\displaystyle \\lim_{x \\to 2} \\frac{2x^2 - 8}{x - 2} = \\lim_{x \\to 2} \\frac{2(x^2-4)}{x-2} = \\lim_{x \\to 2} \\frac{2(x-2)(x+2)}{x-2} = \\lim_{x \\to 2} 2(x+2) = 8$$",
@@ -81,7 +80,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "Étudions $f(x) = |x^2 - 1|$ en $x_0 = 1$:",
               "listType": "bullet",
               "content": [
                 "**À droite:** $\\displaystyle \\lim_{x \\to 1^+} \\frac{x^2-1}{x-1} = \\lim_{x \\to 1^+} (x+1) = 2$, donc $f'_d(1) = ___2___$",
@@ -191,7 +189,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "Calculons les dérivées suivantes:",
               "listType": "bullet",
               "content": [
                 "$\\displaystyle (x^2 + x - 1)' = 2x + 1$",
@@ -238,7 +235,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "Soit $f(x) = |x|$:",
               "listType": "bullet",
               "content": [
                 "**Continuité en 0:** $\\displaystyle \\lim_{x \\to 0} f(x) = 0 = f(0)$ ⟹ $f$ est continue",
@@ -280,7 +276,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "Calculons $\\displaystyle \\left( (x^2+3x)^5 \\right)'$:",
               "listType": "bullet",
               "content": [
                 "**Fonction interne ($u$):** $u(x) = x^2 + 3x$, donc $u'(x) = 2x + 3$",
@@ -329,7 +324,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "Soit $f(x) = x^3 + 1$ sur $I = \\mathbb{R}$.",
               "listType": "bullet",
               "content": [
                 "Trouvons $(f^{-1})'(2)$. On cherche $a$ tel que $f(a) = 2 \\Rightarrow a^3+1 = 2 \\Rightarrow a = 1$.",
@@ -383,7 +377,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "Étudions $f(x) = x^3 - 3x + 1$:",
               "listType": "bullet",
               "content": [
                 "**Calcul de $f'(x)$:** $f'(x) = 3x^2 - 3 = 3(x-1)(x+1)$",
@@ -430,7 +423,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "Reprenons $f(x) = x^3 - 3x + 1$:",
               "listType": "bullet",
               "content": [
                 "**Points critiques:** $x = -1$ et $x = 1$.",
@@ -478,7 +470,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "Étudions $f(x) = x^3 - 3x - 3$:",
               "listType": "bullet",
               "content": [
                 "**Calcul:** $f'(x) = 3x^2 - 3$, $f''(x) = 6x$",
@@ -524,7 +515,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "Analysons $\\displaystyle f(x) = \\frac{x^2 - x + 1}{x - 2}$ sur $\\mathbb{R} \\setminus \\{2\\}$:",
               "listType": "bullet",
               "content": [
                 "**Asymptote verticale:** $\\displaystyle \\lim_{x \\to 2^\\pm} f(x) = \\pm\\infty$ ⟹ $x = 2$ est asymptote",
@@ -568,7 +558,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "Montrons que $x = \\frac{1}{2}$ est axe de symétrie de $f(x) = x^2 - x + 1$:",
               "listType": "bullet",
               "content": [
                 "**Vérification:** $f(2 \\cdot \\frac{1}{2} - x) = f(1-x) = (1-x)^2 - (1-x) + 1 = 1 - 2x + x^2 - 1 + x + 1 = ___x^2 - x + 1___ = f(x)$ ✓"

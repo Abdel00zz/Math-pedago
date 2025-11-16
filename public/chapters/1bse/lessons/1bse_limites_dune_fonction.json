@@ -69,7 +69,7 @@
             },
             {
               "type": "theorem",
-              "title": "Produit", 
+              "title": "Produit",
               "content": "Si lim f = L et lim g = L', alors lim(f × g) = L × L'"
             },
             {

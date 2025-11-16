@@ -55,17 +55,14 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 1 : À compléter - Résolution d'équation**",
               "content": "Résoudre dans $\\mathbb{R}$ l'équation : $e^x - 3 = 0$\n\n$$e^x - 3 = 0 \\Leftrightarrow e^x = ___3___$$\n\n$$\\Leftrightarrow x = \\ln(___3___)$$\n\nL'ensemble des solutions est : $S = \\{___\\ln(3)___\\}$"
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 2 : Résolution d'équation exponentielle**",
               "content": "Résoudre dans $\\mathbb{R}$ l'équation : $e^{x+3} = e^{2x-7}$\n\nOn utilise la propriété : $e^a = e^b \\Leftrightarrow a = b$\n\n$$e^{x+3} = e^{2x-7} \\Leftrightarrow x+3 = 2x-7$$\n\n$$\\Leftrightarrow x = 10$$\n\nL'ensemble des solutions est : $S = \\{10\\}$"
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 3 : À compléter - Résolution d'inéquation**",
               "content": "Résoudre dans $\\mathbb{R}$ l'inéquation : $e^{x+1} < e^{6x-2}$\n\nOn utilise la croissance stricte de l'exponentielle :\n\n$$e^{x+1} < e^{6x-2} \\Leftrightarrow x+1 < ___6x-2___$$\n\n$$\\Leftrightarrow -5x < ___-3___$$\n\n$$\\Leftrightarrow x > \\dfrac{___3___}{___5___}$$\n\nL'ensemble des solutions est : $S = \\left]\\dfrac{3}{5};+\\infty\\right[$"
             },
             {
@@ -90,7 +87,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 4 : À compléter - Simplification d'expressions**",
               "content": "Simplifions les expressions suivantes :\n\n**1.** $\\dfrac{e^{5x+3}}{e^{x-3}} = e^{(5x+3)-(x-3)} = e^{___4x+6___}$\n\n**2.** $e^{2x} \\times e^{-x} \\times e^{3x} = e^{2x+(-x)+3x} = e^{___4x___}$\n\n**3.** $(e^{x+1})^3 = e^{3(x+1)} = e^{___3x+3___}$\n\n**4.** $\\sqrt{e^{2x-6}} = e^{\\frac{2x-6}{2}} = e^{___x-3___}$"
             },
             {
@@ -105,7 +101,6 @@
           "elements": [
             {
               "type": "example-box",
-              "preamble": "**Exemple 5 : Domaines de définition**",
               "listType": "bullet",
               "content": [
                 "**Fonction** $f(x) = \\dfrac{2}{e^x}$ : Comme $e^x > 0$ pour tout $x \\in \\mathbb{R}$, on a $D_f = \\mathbb{R}$",
@@ -140,7 +135,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 6 : À compléter - Calcul de limites**",
               "content": "**1.** Calculons $\\displaystyle\\lim_{x \\to +\\infty} \\dfrac{e^{2x}}{x}$\n\nPosons $t = 2x$. Quand $x \\to +\\infty$, on a $t \\to ___+\\infty___$\n\n$$\\lim_{x \\to +\\infty} \\dfrac{e^{2x}}{x} = \\lim_{t \\to +\\infty} \\dfrac{e^t}{\\frac{t}{2}} = \\lim_{t \\to +\\infty} \\dfrac{2e^t}{t} = ___+\\infty___$$\n\n**2.** Calculons $\\displaystyle\\lim_{x \\to +\\infty} \\dfrac{e^x + 2x}{x^3}$\n\n$$\\lim_{x \\to +\\infty} \\dfrac{e^x + 2x}{x^3} = \\lim_{x \\to +\\infty} \\left(\\dfrac{e^x}{x^3} + \\dfrac{2}{x^2}\\right) = ___+\\infty___ + ___0___ = +\\infty$$"
             }
           ]
@@ -165,7 +159,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 7 : Calcul de dérivées**",
               "content": "Calculons les dérivées des fonctions suivantes :\n\n**1.** $f(x) = e^{5x^2+3x}$\n\nOn pose $u(x) = 5x^2 + 3x$, donc $u'(x) = 10x + 3$\n\n$$f'(x) = (10x+3) \\times e^{5x^2+3x}$$\n\n**2.** $g(x) = x^2 \\times e^x$\n\nOn utilise la formule $(uv)' = u'v + uv'$ :\n\n$$g'(x) = 2x \\times e^x + x^2 \\times e^x = (2x+x^2) \\times e^x = x(x+2)e^x$$\n\n**3.** $h(x) = \\dfrac{e^x}{x^2}$\n\nOn utilise la formule $\\left(\\dfrac{u}{v}\\right)' = \\dfrac{u'v - uv'}{v^2}$ :\n\n$$h'(x) = \\dfrac{e^x \\times x^2 - e^x \\times 2x}{x^4} = \\dfrac{e^x(x-2)}{x^3}$$"
             }
           ]

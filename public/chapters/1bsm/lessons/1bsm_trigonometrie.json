@@ -43,12 +43,10 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Calcul avec décomposition d'angles remarquables**",
               "content": "En remarquant que $\\dfrac{5\\pi}{12} = \\dfrac{2\\pi}{3} - \\dfrac{\\pi}{4}$, calculons $\\cos\\left(\\dfrac{5\\pi}{12}\\right)$ et $\\sin\\left(\\dfrac{5\\pi}{12}\\right)$.\n\n**Solution** :\n\n**Calcul de $\\cos\\left(\\dfrac{5\\pi}{12}\\right)$** :\n\nOn utilise : $\\cos(a - b) = \\cos a \\cdot \\cos b + \\sin a \\cdot \\sin b$\n\n$$\\cos\\left(\\dfrac{5\\pi}{12}\\right) = \\cos\\left(\\dfrac{2\\pi}{3} - \\dfrac{\\pi}{4}\\right)$$\n\n$$= \\cos\\left(\\dfrac{2\\pi}{3}\\right) \\cdot \\cos\\left(\\dfrac{\\pi}{4}\\right) + \\sin\\left(\\dfrac{2\\pi}{3}\\right) \\cdot \\sin\\left(\\dfrac{\\pi}{4}\\right)$$\n\n$$= ___-\\dfrac{1}{2}___ \\times ___\\dfrac{\\sqrt{2}}{2}___ + ___\\dfrac{\\sqrt{3}}{2}___ \\times ___\\dfrac{\\sqrt{2}}{2}___$$\n\n$$= \\dfrac{-\\sqrt{2} + \\sqrt{6}}{4} = ___\\dfrac{\\sqrt{6} - \\sqrt{2}}{4}___$$\n\n**Calcul de $\\sin\\left(\\dfrac{5\\pi}{12}\\right)$** :\n\nOn utilise : $\\sin(a - b) = \\sin a \\cdot \\cos b - \\cos a \\cdot \\sin b$\n\n$$\\sin\\left(\\dfrac{5\\pi}{12}\\right) = \\sin\\left(\\dfrac{2\\pi}{3}\\right) \\cdot \\cos\\left(\\dfrac{\\pi}{4}\\right) - \\cos\\left(\\dfrac{2\\pi}{3}\\right) \\cdot \\sin\\left(\\dfrac{\\pi}{4}\\right)$$\n\n$$= ___\\dfrac{\\sqrt{3}}{2}___ \\times ___\\dfrac{\\sqrt{2}}{2}___ - ___\\left(-\\dfrac{1}{2}\\right)___ \\times ___\\dfrac{\\sqrt{2}}{2}___$$\n\n$$= ___\\dfrac{\\sqrt{6} + \\sqrt{2}}{4}___$$\n\n**Réponse** : $\\cos\\left(\\dfrac{5\\pi}{12}\\right) = \\dfrac{\\sqrt{6} - \\sqrt{2}}{4}$ et $\\sin\\left(\\dfrac{5\\pi}{12}\\right) = \\dfrac{\\sqrt{6} + \\sqrt{2}}{4}$"
             },
             {
               "type": "example-box",
-              "preamble": "**Calcul de valeurs avec somme d'angles**",
               "content": "Calculons $\\cos\\left(\\dfrac{11\\pi}{12}\\right)$ et $\\sin\\left(\\dfrac{11\\pi}{12}\\right)$ en remarquant que $\\dfrac{11\\pi}{12} = \\dfrac{2\\pi}{3} + \\dfrac{\\pi}{4}$.\n\n**Solution** :\n\n**Pour le cosinus** :\n\n$$\\cos\\left(\\dfrac{11\\pi}{12}\\right) = \\cos\\left(\\dfrac{2\\pi}{3} + \\dfrac{\\pi}{4}\\right)$$\n\n$$= \\cos\\left(\\dfrac{2\\pi}{3}\\right) \\cdot \\cos\\left(\\dfrac{\\pi}{4}\\right) - \\sin\\left(\\dfrac{2\\pi}{3}\\right) \\cdot \\sin\\left(\\dfrac{\\pi}{4}\\right)$$\n\n$$= ___-\\dfrac{1}{2}___ \\times ___\\dfrac{\\sqrt{2}}{2}___ - ___\\dfrac{\\sqrt{3}}{2}___ \\times ___\\dfrac{\\sqrt{2}}{2}___$$\n\n$$= ___-\\dfrac{\\sqrt{2} + \\sqrt{6}}{4}___$$\n\n**Pour le sinus** :\n\n$$\\sin\\left(\\dfrac{11\\pi}{12}\\right) = \\sin\\left(\\dfrac{2\\pi}{3}\\right) \\cdot \\cos\\left(\\dfrac{\\pi}{4}\\right) + \\cos\\left(\\dfrac{2\\pi}{3}\\right) \\cdot \\sin\\left(\\dfrac{\\pi}{4}\\right)$$\n\n$$= ___\\dfrac{\\sqrt{3}}{2}___ \\times ___\\dfrac{\\sqrt{2}}{2}___ + ___\\left(-\\dfrac{1}{2}\\right)___ \\times ___\\dfrac{\\sqrt{2}}{2}___$$\n\n$$= ___\\dfrac{\\sqrt{6} - \\sqrt{2}}{4}___$$\n\n**Vérification** : $\\cos^2\\left(\\dfrac{11\\pi}{12}\\right) + \\sin^2\\left(\\dfrac{11\\pi}{12}\\right) = 1$ ✓\n\n**Réponse** : $\\cos\\left(\\dfrac{11\\pi}{12}\\right) = -\\dfrac{\\sqrt{2} + \\sqrt{6}}{4}$ et $\\sin\\left(\\dfrac{11\\pi}{12}\\right) = \\dfrac{\\sqrt{6} - \\sqrt{2}}{4}$"
             },
             {
@@ -98,7 +96,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Calcul avec valeur donnée de cosinus**",
               "content": "Soit $x$ un réel tel que $\\cos x = \\dfrac{1}{3}$ avec $x \\in ]0 ; \\dfrac{\\pi}{2}[$. Calculons $\\cos(2x)$, $\\sin(2x)$ et $\\tan(2x)$.\n\n**Solution** :\n\n**Étape 1** : Calcul de $\\sin x$\n\n$$\\sin^2 x = 1 - \\cos^2 x = 1 - \\left(\\dfrac{1}{3}\\right)^2 = 1 - ___\\dfrac{1}{9}___ = ___\\dfrac{8}{9}___$$\n\nComme $x \\in ]0 ; \\dfrac{\\pi}{2}[$, on a $\\sin x > 0$, donc :\n\n$$\\sin x = \\sqrt{\\dfrac{8}{9}} = ___\\dfrac{2\\sqrt{2}}{3}___$$\n\n**Étape 2** : Calcul de $\\cos(2x)$\n\nUtilisons $\\cos(2x) = 2\\cos^2 x - 1$ :\n\n$$\\cos(2x) = 2 \\times \\left(___\\dfrac{1}{3}___\\right)^2 - 1 = 2 \\times ___\\dfrac{1}{9}___ - 1 = ___-\\dfrac{7}{9}___$$\n\n**Étape 3** : Calcul de $\\sin(2x)$\n\nUtilisons $\\sin(2x) = 2\\sin x \\cos x$ :\n\n$$\\sin(2x) = 2 \\times ___\\dfrac{2\\sqrt{2}}{3}___ \\times ___\\dfrac{1}{3}___ = ___\\dfrac{4\\sqrt{2}}{9}___$$\n\n**Étape 4** : Calcul de $\\tan(2x)$\n\n$$\\tan(2x) = \\dfrac{\\sin(2x)}{\\cos(2x)} = \\dfrac{\\frac{4\\sqrt{2}}{9}}{-\\frac{7}{9}} = ___-\\dfrac{4\\sqrt{2}}{7}___$$\n\n**Réponse** : $\\cos(2x) = -\\dfrac{7}{9}$, $\\sin(2x) = \\dfrac{4\\sqrt{2}}{9}$ et $\\tan(2x) = -\\dfrac{4\\sqrt{2}}{7}$"
             }
           ]
@@ -117,7 +114,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Linéarisation d'une puissance quatrième**",
               "content": "Linéarisons l'expression $f(x) = \\cos^4 x$ pour tout $x \\in \\mathbb{R}$.\n\n**Solution** :\n\nOn utilise : $\\cos^2 x = \\dfrac{1 + \\cos(2x)}{2}$\n\n$$\\cos^4 x = (\\cos^2 x)^2 = \\left(___\\dfrac{1 + \\cos(2x)}{2}___\\right)^2$$\n\nDéveloppons :\n\n$$= \\dfrac{(1 + \\cos(2x))^2}{4} = \\dfrac{1 + 2\\cos(2x) + \\cos^2(2x)}{4}$$\n\nLinéarisons $\\cos^2(2x)$ :\n\n$$\\cos^2(2x) = \\dfrac{1 + \\cos(4x)}{2}$$\n\nDonc :\n\n$$\\cos^4 x = \\dfrac{1 + 2\\cos(2x) + \\frac{1 + \\cos(4x)}{2}}{4}$$\n\n$$= \\dfrac{2 + 4\\cos(2x) + 1 + \\cos(4x)}{8}$$\n\n$$= \\dfrac{___3___ + ___4\\cos(2x)___ + ___\\cos(4x)___}{8}$$\n\n**Réponse** : $\\cos^4 x = \\dfrac{3 + 4\\cos(2x) + \\cos(4x)}{8}$"
             },
             {
@@ -151,7 +147,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Application des formules avec $\\tan\\left(\\dfrac{a}{2}\\right)$**",
               "content": "Soit $\\tan\\left(\\dfrac{a}{2}\\right) = 2$. Calculons $\\cos a$, $\\sin a$ et $\\tan a$.\n\n**Solution** :\n\nOn pose $t = \\tan\\left(\\dfrac{a}{2}\\right) = ___2___$\n\n**Calcul de $\\cos a$** :\n\n$$\\cos a = \\dfrac{1 - t^2}{1 + t^2} = \\dfrac{1 - ___4___}{1 + ___4___} = \\dfrac{___-3___}{___5___} = ___-\\dfrac{3}{5}___$$\n\n**Calcul de $\\sin a$** :\n\n$$\\sin a = \\dfrac{2t}{1 + t^2} = \\dfrac{2 \\times ___2___}{1 + ___4___} = \\dfrac{___4___}{___5___}$$\n\n**Calcul de $\\tan a$** :\n\n$$\\tan a = \\dfrac{2t}{1 - t^2} = \\dfrac{2 \\times ___2___}{1 - ___4___} = \\dfrac{___4___}{___-3___} = ___-\\dfrac{4}{3}___$$\n\n**Vérification** : $\\tan a = \\dfrac{\\sin a}{\\cos a} = \\dfrac{4/5}{-3/5} = -\\dfrac{4}{3}$ ✓\n\n**Réponse** : $\\cos a = -\\dfrac{3}{5}$, $\\sin a = \\dfrac{4}{5}$ et $\\tan a = -\\dfrac{4}{3}$"
             },
             {
@@ -208,7 +203,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Factorisation de sommes trigonométriques**",
               "content": "Écrivons sous forme de produit les sommes suivantes.\n\n**a)** $\\cos(5x) + \\cos(3x)$\n\nOn a $p = ___5x___$ et $q = ___3x___$\n\n$$\\dfrac{p + q}{2} = \\dfrac{5x + 3x}{2} = ___4x___$$\n\n$$\\dfrac{p - q}{2} = \\dfrac{5x - 3x}{2} = ___x___$$\n\nDonc : $$\\cos(5x) + \\cos(3x) = 2\\cos(___4x___) \\cdot \\cos(___x___)$$\n\n**b)** $\\sin(7x) - \\sin(3x)$\n\n$$\\dfrac{p + q}{2} = ___5x___ \\quad \\text{et} \\quad \\dfrac{p - q}{2} = ___2x___$$\n\nDonc : $$\\sin(7x) - \\sin(3x) = 2\\cos(___5x___) \\cdot \\sin(___2x___)$$"
             },
             {
@@ -261,12 +255,10 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Transformation de somme simple**",
               "content": "Mettons $f(x) = \\cos(x) + \\sin(x)$ sous forme de $R\\cos(x - \\varphi)$.\n\n**Solution** :\n\nOn a $a = ___1___$ et $b = ___1___$\n\n**Étape 1** : Calcul du module\n\n$$R = \\sqrt{___1___^2 + ___1___^2} = \\sqrt{___2___}$$\n\n**Étape 2** : Détermination de $\\varphi$\n\n$$\\cos \\varphi = \\dfrac{1}{___\\sqrt{2}___} = ___\\dfrac{\\sqrt{2}}{2}___$$\n\n$$\\sin \\varphi = \\dfrac{1}{___\\sqrt{2}___} = ___\\dfrac{\\sqrt{2}}{2}___$$\n\nOn reconnaît $\\varphi = ___\\dfrac{\\pi}{4}___$\n\n**Résultat** :\n\n$$\\cos(x) + \\sin(x) = ___\\sqrt{2}___ \\cdot \\cos\\left(x - ___\\dfrac{\\pi}{4}___\\right)$$\n\n**Vérification** (pour $x = 0$) :\n\n$\\cos(0) + \\sin(0) = 1$\n\n$\\sqrt{2} \\cos\\left(-\\dfrac{\\pi}{4}\\right) = \\sqrt{2} \\times \\dfrac{\\sqrt{2}}{2} = 1$ ✓\n\n**Réponse** : $\\cos(x) + \\sin(x) = \\sqrt{2}\\cos\\left(x - \\dfrac{\\pi}{4}\\right)$"
             },
             {
               "type": "example-box",
-              "preamble": "**Transformation avec coefficients particuliers**",
               "content": "Transformons $g(x) = \\sqrt{3}\\cos(x) - \\sin(x)$.\n\n**Solution** :\n\nOn a $a = ___\\sqrt{3}___$ et $b = ___-1___$\n\n$$R = \\sqrt{(___\\sqrt{3}___)^2 + (___-1___)^2} = \\sqrt{___3___ + ___1___} = ___2___$$\n\n$$\\cos \\varphi = \\dfrac{\\sqrt{3}}{___2___} \\quad \\text{et} \\quad \\sin \\varphi = \\dfrac{-1}{___2___}$$\n\nPuisque $\\cos \\varphi > 0$ et $\\sin \\varphi < 0$, on a $\\varphi$ dans le 4ème quadrant.\n\nOn reconnaît : $\\varphi = -\\dfrac{\\pi}{6}$\n\n**Résultat** :\n\n$$\\sqrt{3}\\cos(x) - \\sin(x) = 2\\cos\\left(x + \\dfrac{\\pi}{6}\\right)$$\n\n**Réponse** : $g(x) = 2\\cos\\left(x + \\dfrac{\\pi}{6}\\right)$"
             },
             {

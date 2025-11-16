@@ -73,7 +73,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Étude d'un trinôme** :",
               "content": "Étudier $f(x) = 2x^2 - 8x + 3$.\n\n**Sommet** : $\\alpha = -\\dfrac{-8}{2 \\times 2} = \\dfrac{8}{4} = ___2___$\n\n$f(2) = 2(2)^2 - 8(2) + 3 = 8 - 16 + 3 = ___-5___$\n\nLe sommet est $S(2; -5)$. C'est un **minimum** car $a = 2 > 0$.\n\n**Variations** : $f$ décroît sur $]-\\infty; 2]$ et croît sur $[2; +\\infty[$"
             }
           ]

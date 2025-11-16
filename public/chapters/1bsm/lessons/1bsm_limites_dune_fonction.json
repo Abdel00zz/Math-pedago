@@ -34,7 +34,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 1 : À compléter - Construction complète d'un intervalle pointé**",
               "content": "Soit l'intervalle $I = ]1, 5[$.\n\n**Étape 1** : Calculons le centre.\n$$x_0 = \\dfrac{1 + 5}{2} = \\dfrac{___6___}{2} = ___3___$$\n\n**Étape 2** : Calculons le rayon.\n$$r = \\dfrac{5 - 1}{2} = \\dfrac{___4___}{2} = ___2___$$\n\n**Étape 3** : Écrivons l'intervalle pointé.\n$$I^* = ]___3___ - ___2___, ___3___ + ___2___[\\setminus\\{___3___\\}$$\n$$= ]___1___, ___5___[\\setminus\\{___3___\\}$$\n\n**Étape 4** : Interprétation. Les points de $I^*$ sont tous les nombres $x$ tels que :\n$$___0___ < |x - ___3___| < ___2___$$\n\n**Exemples de points dans $I^*$** : $2.5$, $3.1$, $4$, mais pas $3$ (retiré)"
             }
           ]
@@ -75,17 +74,14 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 2 : À compléter - Démonstration formelle d'une puissance**",
               "content": "Montrons rigoureusement que $\\displaystyle\\lim_{x\\to 0} x^2 = 0$.\n\n**Étape 1** : Soit $\\varepsilon > 0$ un nombre arbitraire donné (la tolérance).\n\n**Étape 2** : On doit trouver $\\alpha > 0$ tel que :\n$$\\text{Si } 0 < |x| < \\alpha \\text{ alors } |x^2| < \\varepsilon$$\n\n**Étape 3** : Puisque $|x^2| = x^2 = |x|^2$, la condition devient :\n$$|x|^2 < \\varepsilon \\Rightarrow |x| < ___\\sqrt{\\varepsilon}___$$\n\n**Étape 4** : Posons $\\alpha = ___\\sqrt{\\varepsilon}___$. Alors pour $0 < |x| < ___\\sqrt{\\varepsilon}___$ :\n$$|x|^2 < ___\\varepsilon___ \\Rightarrow |x^2| < ___\\varepsilon___ ✓$$\n\n**Conclusion** : Cette propriété est vérifiée pour **tout** $\\varepsilon > 0$."
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 3 : À compléter - Racine carrée**",
               "content": "Montrons que $\\displaystyle\\lim_{x\\to 0} \\sqrt{|x|} = 0$.\n\n**Étape 1** : Soit $\\varepsilon > 0$.\n\n**Étape 2** : On cherche $\\alpha > 0$ tel que :\n$$0 < |x| < \\alpha \\Rightarrow |\\sqrt{|x|}| < \\varepsilon$$\n\n**Étape 3** : Puisque la racine est positive, $|\\sqrt{|x|}| = \\sqrt{|x|}$, d'où :\n$$\\sqrt{|x|} < \\varepsilon \\Rightarrow |x| < ___\\varepsilon^2___$$\n\n**Étape 4** : Posons $\\alpha = ___\\varepsilon^2___$. Alors :\n$$\\text{Si } 0 < |x| < ___\\varepsilon^2___ \\text{ alors } \\sqrt{|x|} < ___\\varepsilon___ ✓$$\n\n**Conclusion** : $\\displaystyle\\lim_{x\\to 0} \\sqrt{|x|} = 0$"
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 4 : À compléter - Théorème du gendarme appliqué**",
               "content": "Calculons $\\displaystyle\\lim_{x\\to 0} x\\sin\\left(\\dfrac{1}{x}\\right)$ en utilisant le théorème du gendarme.\n\n**Étape 1** : Rappelons que pour tout réel $u$ :\n$$-1 \\leq \\sin u \\leq 1$$\n\n**Étape 2** : Avec $u = \\dfrac{1}{x}$ (pour $x \\neq 0$) :\n$$-1 \\leq \\sin\\left(\\dfrac{1}{x}\\right) \\leq ___1___$$\n\n**Étape 3** : Encadrement de $f(x)$ :\n\n>> Pour $x > 0$ : $___-x___ \\leq x\\sin\\left(\\dfrac{1}{x}\\right) \\leq ___x___$\n>> Pour $x < 0$ : $___x___ \\leq x\\sin\\left(\\dfrac{1}{x}\\right) \\leq ___-x___$\n\n**Étape 4** : Limites des bornes :\n$$\\lim_{x\\to 0} (-|x|) = 0 \\text{ et } \\lim_{x\\to 0} |x| = 0$$\n\n**Étape 5** : Par le théorème du gendarme :\n$$\\lim_{x\\to 0} x\\sin\\left(\\dfrac{1}{x}\\right) = ___0___$$"
             }
           ]
@@ -129,12 +125,10 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 5 : À compléter - Substitution directe dans un polynôme**",
               "content": "Calculons $\\displaystyle\\lim_{x\\to 3} (2x^3 - 4x + 1)$.\n\n**Étape 1** : Identifions la fonction.\n$$f(x) = 2x^3 - 4x + 1 \\text{ (polynôme)}$$\n\n**Étape 2** : Pour un polynôme, la limite en un point est la valeur au point :\n$$\\lim_{x\\to 3} f(x) = f(3)$$\n\n**Étape 3** : Calculons $f(3)$ :\n$$f(3) = 2(___3___)^3 - 4(___3___) + 1$$\n$$= 2 \\times ___27___ - ___12___ + 1$$\n$$= ___54___ - 12 + 1$$\n$$= ___43___$$\n\n**Conclusion** : $\\displaystyle\\lim_{x\\to 3} (2x^3 - 4x + 1) = ___43___$"
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 6 : À compléter - Fonction rationnelle avec vérification du dénominateur**",
               "content": "Calculons $\\displaystyle\\lim_{x\\to 2} \\dfrac{x^2 + x - 1}{2x - 3}$.\n\n**Étape 1** : **Vérification essentielle** : le dénominateur en $x = 2$ :\n$$2(___2___) - 3 = ___4___ - 3 = ___1___ \\neq 0 ✓$$\n\n**Étape 2** : Calculons le numérateur en $x = 2$ :\n$$(___2___)^2 + ___2___ - 1 = 4 + 2 - 1 = ___5___$$\n\n**Étape 3** : Appliquons la formule de limit :\n$$\\lim_{x\\to 2} \\dfrac{x^2 + x - 1}{2x - 3} = \\dfrac{___5___}{___1___} = ___5___$$\n\n**Conclusion** : On pouvait directement substituer car le dénominateur n'est pas nul."
             }
           ]
@@ -149,12 +143,10 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 7 : À compléter - Simplification par quantité conjuguée**",
               "content": "Calculons $\\displaystyle\\lim_{x\\to 0} \\dfrac{\\sqrt{1 + x} - 1}{x}$.\n\n**Étape 1** : Vérifions la forme. En $x = 0$ : $\\dfrac{\\sqrt{1} - 1}{0} = \\dfrac{0}{0}$ (indéterminé)\n\n**Étape 2** : Multiplions par la quantité conjuguée :\n\n$$\\dfrac{\\sqrt{1 + x} - 1}{x} \\times \\dfrac{___\\sqrt{1 + x} + 1___}{___\\sqrt{1 + x} + 1___}$$\n\n**Étape 3** : Développons le numérateur (différence de carrés) :\n\n$$= \\dfrac{(1 + x) - 1}{x(\\sqrt{1 + x} + 1)} = \\dfrac{___x___}{x(\\sqrt{1 + x} + 1)}$$\n\n**Étape 4** : Simplifiez (pour $x \\neq 0$) :\n\n$$= \\dfrac{1}{___\\sqrt{1 + x} + 1___}$$\n\n**Étape 5** : Calculez la limite :\n\n$$\\lim_{x\\to 0} \\dfrac{1}{\\sqrt{1 + x} + 1} = \\dfrac{1}{\\sqrt{1} + 1} = \\dfrac{1}{___2___}$$"
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 8 : À compléter - Utilisation de la valeur absolue**",
               "content": "Montrons que si $\\displaystyle\\lim_{x\\to a} |f(x)| = 0$, alors $\\displaystyle\\lim_{x\\to a} f(x) = 0$.\n\n**Étape 1** : Supposons $\\displaystyle\\lim_{x\\to a} |f(x)| = 0$.\n\n**Étape 2** : Rappelons l'inégalité importante :\n$$-|f(x)| \\leq f(x) \\leq ___| f(x)|___$$\n\n**Étape 3** : Prenons les limites en $x \\to a$ :\n$$\\lim_{x\\to a} (-|f(x)|) = -0 = 0$$\n$$\\lim_{x\\to a} |f(x)| = 0$$\n\n**Étape 4** : Par le théorème du gendarme, la fonction $f(x)$ prise en sandwich entre deux suites tendant vers 0 doit :\n$$\\lim_{x\\to a} f(x) = ___0___$$\n\n**Conclusion** : La limite de la valeur absolue étant 0 implique que la limite de la fonction est 0."
             }
           ]
@@ -184,12 +176,10 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 9 : À compléter - Fonction définie par morceaux**",
               "content": "Soit $f(x) = \\begin{cases} x^2 + 1 & \\text{si } x < 2 \\\\ 3x - 2 & \\text{si } x \\geq 2 \\end{cases}$\n\nÉtudions la limite en $x = 2$.\n\n**Limite à gauche** (quand $x \\to 2^-$, on utilise $x^2 + 1$) :\n$$\\lim_{x\\to 2^-} f(x) = \\lim_{x\\to 2^-} (x^2 + 1) = (___2___)^2 + 1 = 4 + 1 = ___5___$$\n\n**Limite à droite** (quand $x \\to 2^+$, on utilise $3x - 2$) :\n$$\\lim_{x\\to 2^+} f(x) = \\lim_{x\\to 2^+} (3x - 2) = 3(___2___) - 2 = 6 - 2 = ___4___$$\n\n**Conclusion** : \nPuisque $\\lim_{x\\to 2^-} f(x) = 5 \\neq 4 = \\lim_{x\\to 2^+} f(x)$,\nla fonction **n'admet pas de limite en $x = 2$** (discontinuité de saut)."
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 10 : À compléter - Trouver un paramètre pour la continuité**",
               "content": "Soit $g(x) = \\begin{cases} 2x^2 - 3x + 5 & \\text{si } x \\geq 1 \\\\ -x^2 + x + k & \\text{si } x < 1 \\end{cases}$\n\nDéterminons la valeur de $k$ pour que $g$ admette une limite en $x = 1$.\n\n**Limite à droite** :\n$$\\lim_{x\\to 1^+} g(x) = 2(___1___)^2 - 3(___1___) + 5 = 2 - 3 + 5 = ___4___$$\n\n**Limite à gauche** :\n$$\\lim_{x\\to 1^-} g(x) = -(___1___)^2 + ___1___ + k = -1 + 1 + k = ___k___$$\n\n**Condition d'égalité** :\n$$\\lim_{x\\to 1^+} g(x) = \\lim_{x\\to 1^-} g(x)$$\n$$___4___ = ___k___$$\n\n**Conclusion** : Pour que $g$ admette une limite en $x = 1$, il faut $k = ___4___$."
             }
           ]
@@ -214,12 +204,10 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 11 : À compléter - Fonction rationnelle simple**",
               "content": "Étudions $f(x) = \\dfrac{1}{x}$ aux alentours de $x = 0$.\n\n**Limite à droite** (quand $x \\to 0^+$) :\n\nLe dénominateur tend vers $0^+$ (par des valeurs **positives**).\n\nDonc : $\\lim_{x\\to 0^+} \\dfrac{1}{x} = ___+\\infty___$\n\n**Limite à gauche** (quand $x \\to 0^-$) :\n\nLe dénominateur tend vers $0^-$ (par des valeurs **négatives**).\n\nDonc : $\\lim_{x\\to 0^-} \\dfrac{1}{x} = ___-\\infty___$\n\n**Conclusion** : \n>> - La droite $x = 0$ (axe des $y$) est une **asymptote verticale bilatérale**\n>> - La courbe monte vers $+\\infty$ à droite et descend vers $-\\infty$ à gauche"
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 12 : À compléter - Analyse du signe du dénominateur**",
               "content": "Calculons $\\displaystyle\\lim_{x\\to 1^+} \\dfrac{3x + 1}{x^2 - 1}$\n\n**Étape 1** : Analysons le numérateur en $x \\to 1^+$ :\n$$\\lim_{x\\to 1^+} (3x + 1) = 3(___1___) + 1 = ___4___ > 0$$\n\n**Étape 2** : Factorisons et analysons le dénominateur :\n$$x^2 - 1 = (x - 1)(x + 1)$$\n\nQuand $x \\to 1^+$ :\n>> - $(x - 1) \\to 0^+$ (positif puisque $x > 1$)\n>> - $(x + 1) \\to 2$ (positif)\n\nDonc : $(x - 1)(x + 1) \\to 0^+ \\times 2 = 0^+$\n\n**Étape 3** : Concluez :\n$$\\lim_{x\\to 1^+} \\dfrac{3x + 1}{x^2 - 1} = \\dfrac{4}{0^+} = ___+\\infty___$$"
             }
           ]
@@ -244,12 +232,10 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 13 : À compléter - Limite d'une fonction rationnelle en l'infini**",
               "content": "Calculons $\\displaystyle\\lim_{x\\to +\\infty} \\dfrac{3x^2 - x + 5}{2x^2 + 4}$\n\n**Méthode** : Factoriser le plus haut degré au numérateur et au dénominateur.\n\n**Numérateur** :\n$$3x^2 - x + 5 = x^2\\left(3 - \\dfrac{1}{___x___} + \\dfrac{5}{___x^2___}\\right)$$\n\n**Dénominateur** :\n$$2x^2 + 4 = x^2\\left(2 + \\dfrac{4}{___x^2___}\\right)$$\n\n**Fraction simplifiée** :\n$$\\dfrac{3x^2 - x + 5}{2x^2 + 4} = \\dfrac{x^2\\left(3 - \\dfrac{1}{x} + \\dfrac{5}{x^2}\\right)}{x^2\\left(2 + \\dfrac{4}{x^2}\\right)} = \\dfrac{3 - \\dfrac{1}{x} + \\dfrac{5}{x^2}}{2 + \\dfrac{4}{x^2}}$$\n\n**Limite** :\n$$\\lim_{x\\to +\\infty} \\dfrac{3x^2 - x + 5}{2x^2 + 4} = \\dfrac{3 - 0 + 0}{2 + 0} = \\dfrac{___3___}{___2___}$$"
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 14 : À compléter - Polynôme en l'infini**",
               "content": "Calculons $\\displaystyle\\lim_{x\\to +\\infty} (3x^3 - 5x + 2)$\n\n**Règle** : Pour un polynôme, la limite en $\\pm\\infty$ est celle de son **terme de plus haut degré**.\n\n**Identification du terme dominant** :\n$$\\lim_{x\\to +\\infty} (3x^3 - 5x + 2) = \\lim_{x\\to +\\infty} 3x^3$$\n\n**Calcul** :\n$$\\lim_{x\\to +\\infty} 3x^3 = 3 \\times (+\\infty) = ___+\\infty___$$\n\n**Pour $x \\to -\\infty$** :\n$$\\lim_{x\\to -\\infty} 3x^3 = 3 \\times (-\\infty) = ___-\\infty___$$\n\n**Note** : Le degré est impair (3), donc le signe de la limite change avec le signe de $x$."
             }
           ]
@@ -278,7 +264,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 15 : À compléter - Combinaison de limites finies**",
               "content": "Calculons $\\displaystyle\\lim_{x\\to -1} \\sqrt{3x^2 + 1 + 2x}$\n\n**Étape 1** : Calculez la limite de l'expression sous la racine :\n$$\\lim_{x\\to -1} (3x^2 + 1 + 2x) = 3(___-1___)^2 + 1 + 2(___-1___)$$\n$$= 3 \\times 1 + 1 - 2 = ___2___$$\n\n**Étape 2** : Appliquez la continuité de la racine carrée :\n$$\\lim_{x\\to -1} \\sqrt{3x^2 + 1 + 2x} = \\sqrt{___2___}$$\n\nPuisque $2 > 0$, on peut extraire la racine carrée."
             }
           ]

@@ -34,7 +34,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 1 : À compléter - Calcul de puissances de $i$**",
               "content": "Calculons quelques puissances de $i$ :\n\n**1.** $i^{10} = i^{4 \\times 2 + 2} = (i^4)^2 \\times i^2 = 1^2 \\times (___-1___) = ___-1___$\n\n**2.** $i^{17} = i^{4 \\times 4 + 1} = (i^4)^4 \\times i^1 = 1^4 \\times ___i___ = ___i___$\n\n**3.** $i^{23} = i^{4 \\times 5 + 3} = (i^4)^5 \\times i^3 = 1 \\times (___-i___) = ___-i___$\n\n**4.** $i^{100} = i^{4 \\times 25} = (i^4)^{25} = ___1___^{25} = ___1___$"
             }
           ]
@@ -65,12 +64,10 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 2 : À compléter - Identification de parties**",
               "content": "Pour chaque nombre complexe, identifions la partie réelle et la partie imaginaire :\n\n**1.** $z_1 = 5 + 7i$ : $\\text{Re}(z_1) = ___5___$ et $\\text{Im}(z_1) = ___7___$\n\n**2.** $z_2 = -3 + 2i$ : $\\text{Re}(z_2) = ___-3___$ et $\\text{Im}(z_2) = ___2___$\n\n**3.** $z_3 = 8$ : $\\text{Re}(z_3) = ___8___$ et $\\text{Im}(z_3) = ___0___$ (réel)\n\n**4.** $z_4 = -4i$ : $\\text{Re}(z_4) = ___0___$ et $\\text{Im}(z_4) = ___-4___$ (imaginaire pur)\n\n**5.** $z_5 = \\dfrac{1}{2} - \\dfrac{3}{4}i$ : $\\text{Re}(z_5) = ___\\dfrac{1}{2}___$ et $\\text{Im}(z_5) = ___-\\dfrac{3}{4}___$"
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 3 : Résolution d'équation par identification**",
               "content": "Déterminons les réels $x$ et $y$ tels que : $(2x-3) + (y+1)i = 5 - 2i$\n\nPar identification des parties réelle et imaginaire :\n\n$$\\begin{cases} 2x - 3 = 5 \\\\ y + 1 = -2 \\end{cases}$$\n\n$$\\begin{cases} 2x = 8 \\\\ y = -3 \\end{cases}$$\n\n$$\\begin{cases} x = 4 \\\\ y = -3 \\end{cases}$$\n\nDonc $x = 4$ et $y = -3$."
             }
           ]
@@ -90,12 +87,10 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 4 : À compléter - Addition et soustraction**",
               "content": "Soient $z = 4 + 3i$ et $z' = -1 + 5i$. Calculons $z + z'$ et $z - z'$.\n\n**Addition** :\n$$z + z' = (4 + 3i) + (-1 + 5i)$$\n$$= (4 + (___-1___)) + (3 + ___5___)i$$\n$$= ___3___ + ___8___i$$\n\n**Soustraction** :\n$$z - z' = (4 + 3i) - (-1 + 5i)$$\n$$= (4 - (___-1___)) + (3 - ___5___)i$$\n$$= ___5___ + (___-2___)i$$\n$$= 5 - 2i$$"
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 5 : À compléter - Multiplication**",
               "content": "Calculons le produit $(3 + 2i)(1 - 4i)$.\n\n$$(3 + 2i)(1 - 4i) = 3 \\times 1 + 3 \\times (___-4i___) + 2i \\times 1 + 2i \\times (___-4i___)$$\n\n$$= 3 - 12i + 2i - 8i^2$$\n\n$$= 3 - 10i - 8 \\times (___-1___)$$\n\n$$= 3 - 10i + ___8___$$\n\n$$= ___11___ - ___10___i$$"
             },
             {
@@ -115,12 +110,10 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 6 : À compléter - Calcul d'un quotient**",
               "content": "Calculons $\\dfrac{2 + 3i}{1 - i}$.\n\nOn multiplie le numérateur et le dénominateur par le conjugué de $1 - i$, qui est $1 + i$ :\n\n$$\\dfrac{2 + 3i}{1 - i} = \\dfrac{(2 + 3i)(1 + i)}{(1 - i)(1 + i)}$$\n\n**Numérateur** :\n$$(2 + 3i)(1 + i) = 2 + 2i + 3i + 3i^2$$\n$$= 2 + 5i + 3 \\times (___-1___)$$\n$$= 2 + 5i - ___3___$$\n$$= ___-1___ + ___5___i$$\n\n**Dénominateur** :\n$$(1 - i)(1 + i) = 1 - i^2 = 1 - (___-1___) = ___2___$$\n\n**Résultat** :\n$$\\dfrac{2 + 3i}{1 - i} = \\dfrac{-1 + 5i}{2} = ___-\\dfrac{1}{2}___ + ___\\dfrac{5}{2}___i$$"
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 7 : Calcul d'un inverse**",
               "content": "Calculons l'inverse de $z = 3 + 4i$.\n\n**Méthode** : On utilise la formule $\\dfrac{1}{z} = \\dfrac{\\overline{z}}{z \\times \\overline{z}}$\n\nLe conjugué de $z$ est $\\overline{z} = 3 - 4i$\n\n$$z \\times \\overline{z} = (3 + 4i)(3 - 4i) = 9 - 16i^2 = 9 + 16 = 25$$\n\nDonc :\n$$\\dfrac{1}{z} = \\dfrac{3 - 4i}{25} = \\dfrac{3}{25} - \\dfrac{4}{25}i$$"
             }
           ]
@@ -166,7 +159,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 8 : À compléter - Affixes de vecteurs**",
               "content": "Soient $A(2 + i)$, $B(5 - 3i)$ et $C(-1 + 4i)$ trois points du plan complexe.\n\n**1.** Affixe du vecteur $\\overrightarrow{AB}$ :\n$$z_{\\overrightarrow{AB}} = z_B - z_A = (5 - 3i) - (2 + i)$$\n$$= 5 - 3i - 2 - i = ___3___ - ___4___i$$\n\n**2.** Affixe du vecteur $\\overrightarrow{AC}$ :\n$$z_{\\overrightarrow{AC}} = z_C - z_A = (-1 + 4i) - (2 + i)$$\n$$= -1 + 4i - 2 - i = ___-3___ + ___3___i$$\n\n**3.** Affixe du vecteur $3\\overrightarrow{AB}$ :\n$$z_{3\\overrightarrow{AB}} = 3 \\times z_{\\overrightarrow{AB}} = 3(3 - 4i)$$\n$$= ___9___ - ___12___i$$"
             },
             {
@@ -181,7 +173,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 9 : À compléter - Milieu et barycentre**",
               "content": "Soient $A(3 + 2i)$ et $B(1 - 4i)$.\n\n**1.** Affixe du milieu $I$ de $[AB]$ :\n$$z_I = \\dfrac{z_A + z_B}{2} = \\dfrac{(3 + 2i) + (1 - 4i)}{2}$$\n$$= \\dfrac{___4___ + (___-2___)i}{2} = \\dfrac{4 - 2i}{2}$$\n$$= ___2___ - ___i___$$\n\n**2.** Soit $C(-2 + i)$. Affixe du centre de gravité $G$ du triangle $ABC$ :\n$$z_G = \\dfrac{z_A + z_B + z_C}{3}$$\n$$= \\dfrac{(3 + 2i) + (1 - 4i) + (-2 + i)}{3}$$\n$$= \\dfrac{___2___ + (___-1___)i}{3}$$\n$$= \\dfrac{2}{3} - \\dfrac{i}{3}$$"
             },
             {
@@ -211,7 +202,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 10 : À compléter - Calcul de conjugués**",
               "content": "Calculons le conjugué de chaque nombre complexe :\n\n**1.** $z_1 = 5 + 3i$ : $\\overline{z_1} = 5 - ___3___i = ___5___ - ___3___i$\n\n**2.** $z_2 = -2 - 7i$ : $\\overline{z_2} = -2 - (___-7___)i = ___-2___ + ___7___i$\n\n**3.** $z_3 = 4$ (réel) : $\\overline{z_3} = ___4___$ (le conjugué d'un réel est lui-même)\n\n**4.** $z_4 = 6i$ (imaginaire pur) : $\\overline{z_4} = 0 - ___6___i = ___-6___i$\n\n**5.** $z_5 = -i$ : $\\overline{z_5} = 0 - (___-1___)i = ___i___$"
             }
           ]
@@ -236,17 +226,14 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 11 : À compléter - Propriétés du conjugué**",
               "content": "Soit $z = 3 + 4i$. Vérifions les propriétés.\n\n**1.** $z + \\overline{z} = (3 + 4i) + (3 - 4i) = ___6___ = 2 \\times ___3___ = 2\\text{Re}(z)$ ✓\n\n**2.** $z - \\overline{z} = (3 + 4i) - (3 - 4i) = ___8i___ = 2i \\times ___4___ = 2i\\text{Im}(z)$ ✓\n\n**3.** $z \\times \\overline{z} = (3 + 4i)(3 - 4i)$\n$$= 9 - 12i + 12i - 16i^2$$\n$$= 9 - 16 \\times (___-1___)$$\n$$= 9 + ___16___ = ___25___$$\n$$= 3^2 + 4^2$$ ✓"
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 12 : À compléter - Conjugué d'un produit**",
               "content": "Soient $z = 2 - i$ et $z' = 1 + 3i$. Vérifions que $\\overline{z \\times z'} = \\overline{z} \\times \\overline{z'}$.\n\n**Méthode 1** : Calcul direct\n$$z \\times z' = (2 - i)(1 + 3i)$$\n$$= 2 + 6i - i - 3i^2$$\n$$= 2 + 5i + ___3___$$\n$$= ___5___ + ___5___i$$\n\nDonc : $\\overline{z \\times z'} = ___5___ - ___5___i$\n\n**Méthode 2** : Par la propriété\n$$\\overline{z} = 2 + i \\quad \\text{ et } \\quad \\overline{z'} = 1 - 3i$$\n$$\\overline{z} \\times \\overline{z'} = (2 + i)(1 - 3i)$$\n$$= 2 - 6i + i - 3i^2$$\n$$= 2 - 5i + 3 = 5 - 5i$$ ✓"
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 13 : Application - Simplification d'expressions**",
               "content": "Soit $z = 1 + 2i$. Montrons que $\\dfrac{z + \\overline{z}}{2}$ est un nombre réel.\n\n$$\\dfrac{z + \\overline{z}}{2} = \\dfrac{(1 + 2i) + (1 - 2i)}{2} = \\dfrac{2}{2} = 1 \\in \\mathbb{R}$$\n\nCette propriété est générale : $\\dfrac{z + \\overline{z}}{2} = \\text{Re}(z)$ est toujours réel."
             }
           ]
@@ -276,12 +263,10 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 14 : À compléter - Calcul de modules**",
               "content": "Calculons le module de chaque nombre complexe :\n\n**1.** $z_1 = 3 + 4i$ :\n$$|z_1| = \\sqrt{3^2 + 4^2} = \\sqrt{___9___ + ___16___} = \\sqrt{___25___} = ___5___$$\n\n**2.** $z_2 = -5 + 12i$ :\n$$|z_2| = \\sqrt{(-5)^2 + 12^2} = \\sqrt{___25___ + ___144___} = \\sqrt{___169___} = ___13___$$\n\n**3.** $z_3 = 1 - i$ :\n$$|z_3| = \\sqrt{1^2 + (-1)^2} = \\sqrt{___1___ + ___1___} = \\sqrt{___2___}$$\n\n**4.** $z_4 = 6$ (réel) :\n$$|z_4| = \\sqrt{6^2 + 0^2} = \\sqrt{___36___} = ___6___ = |6|$$\n\n**5.** $z_5 = -3i$ (imaginaire pur) :\n$$|z_5| = \\sqrt{0^2 + (-3)^2} = \\sqrt{___9___} = ___3___ = |-3|$$"
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 15 : À compléter - Distance entre deux points**",
               "content": "Soient $A(2 + 3i)$ et $B(5 - 1i)$. Calculons la distance $AB$.\n\n$$z_B - z_A = (5 - i) - (2 + 3i)$$\n$$= 5 - i - 2 - 3i$$\n$$= ___3___ - ___4___i$$\n\n$$AB = |z_B - z_A| = |3 - 4i|$$\n$$= \\sqrt{3^2 + (-4)^2}$$\n$$= \\sqrt{___9___ + ___16___}$$\n$$= \\sqrt{___25___} = ___5___$$"
             }
           ]
@@ -306,7 +291,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 16 : Application des propriétés**",
               "content": "Soient $z = 1 + i$ et $z' = 2 - 2i$.\n\n**1.** Calculons $|z|$ et $|z'|$ :\n$$|z| = \\sqrt{1^2 + 1^2} = \\sqrt{2}$$\n$$|z'| = \\sqrt{2^2 + (-2)^2} = \\sqrt{8} = 2\\sqrt{2}$$\n\n**2.** Vérifions que $|z \\times z'| = |z| \\times |z'|$ :\n\n**Méthode 1** : Calcul direct\n$$z \\times z' = (1 + i)(2 - 2i) = 2 - 2i + 2i - 2i^2 = 2 + 2 = 4$$\n$$|z \\times z'| = |4| = 4$$\n\n**Méthode 2** : Par la propriété\n$$|z| \\times |z'| = \\sqrt{2} \\times 2\\sqrt{2} = 2 \\times 2 = 4$$ ✓"
             },
             {
@@ -352,7 +336,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 17 : Arguments de nombres particuliers**",
               "listType": "bullet",
               "content": [
                 "$\\arg(1) = 0 \\quad [2\\pi]$",
@@ -367,7 +350,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 18 : À compléter - Détermination d'arguments**",
               "content": "Déterminons un argument de chaque nombre complexe.\n\n**1.** $z_1 = 2$ (réel positif) :\n$$\\arg(z_1) = ___0___ \\quad [2\\pi]$$\n\n**2.** $z_2 = -3$ (réel négatif) :\n$$\\arg(z_2) = ___\\pi___ \\quad [2\\pi]$$\n\n**3.** $z_3 = 4i$ (imaginaire pur positif) :\n$$\\arg(z_3) = ___\\dfrac{\\pi}{2}___ \\quad [2\\pi]$$\n\n**4.** $z_4 = -2i$ (imaginaire pur négatif) :\n$$\\arg(z_4) = ___-\\dfrac{\\pi}{2}___ \\quad [2\\pi]$$ ou $___\\dfrac{3\\pi}{2}___ \\quad [2\\pi]$"
             }
           ]
@@ -387,7 +369,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 19 : À compléter - Propriétés de l'argument**",
               "content": "Soit $z = 1 + i$. On sait que $\\arg(z) = \\dfrac{\\pi}{4}$.\n\n**1.** $\\arg(z^2) = 2\\arg(z) = 2 \\times \\dfrac{\\pi}{4} = ___\\dfrac{\\pi}{2}___ \\quad [2\\pi]$\n\n**2.** $\\arg(z^3) = 3\\arg(z) = 3 \\times \\dfrac{\\pi}{4} = ___\\dfrac{3\\pi}{4}___ \\quad [2\\pi]$\n\n**3.** $\\arg(\\overline{z}) = -\\arg(z) = -\\dfrac{\\pi}{4} \\quad [2\\pi]$\n\n**4.** $\\arg(-z) = \\arg(z) + \\pi = \\dfrac{\\pi}{4} + \\pi = ___\\dfrac{5\\pi}{4}___ \\quad [2\\pi]$\n\n**5.** $\\arg\\left(\\dfrac{1}{z}\\right) = -\\arg(z) = ___-\\dfrac{\\pi}{4}___ \\quad [2\\pi]$"
             },
             {
@@ -417,12 +398,10 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 20 : À compléter - Forme trigonométrique de $z = \\sqrt{3} + i$**",
               "content": "Déterminons la forme trigonométrique de $z = \\sqrt{3} + i$.\n\n**Étape 1** : Module\n$$r = |z| = \\sqrt{(\\sqrt{3})^2 + 1^2} = \\sqrt{___3___ + ___1___} = \\sqrt{___4___} = ___2___$$\n\n**Étape 2** : Argument\n$$\\cos\\theta = \\dfrac{\\sqrt{3}}{2} \\quad \\text{ et } \\quad \\sin\\theta = \\dfrac{1}{2}$$\n\nDonc $\\theta = ___\\dfrac{\\pi}{6}___$\n\n**Étape 3** : Forme trigonométrique\n$$z = 2\\left(\\cos\\dfrac{\\pi}{6} + i\\sin\\dfrac{\\pi}{6}\\right)$$"
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 21 : À compléter - Forme trigonométrique de $z = -1 - i\\sqrt{3}$**",
               "content": "Déterminons la forme trigonométrique de $z = -1 - i\\sqrt{3}$.\n\n**Étape 1** : Module\n$$r = |z| = \\sqrt{(-1)^2 + (-\\sqrt{3})^2} = \\sqrt{1 + ___3___} = ___2___$$\n\n**Étape 2** : Argument\n$$\\cos\\theta = \\dfrac{-1}{2} \\quad \\text{ et } \\quad \\sin\\theta = \\dfrac{-\\sqrt{3}}{2}$$\n\nLe point $M(-1, -\\sqrt{3})$ est dans le **3e quadrant**, donc :\n$$\\theta = ___-\\dfrac{2\\pi}{3}___ \\quad \\text{ ou } \\quad \\theta = ___\\dfrac{4\\pi}{3}___$$\n\n**Étape 3** : Forme trigonométrique\n$$z = 2\\left(\\cos\\left(-\\dfrac{2\\pi}{3}\\right) + i\\sin\\left(-\\dfrac{2\\pi}{3}\\right)\\right)$$"
             }
           ]
@@ -447,7 +426,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 22 : À compléter - Calcul avec la formule de Moivre**",
               "content": "Calculons $(1 + i\\sqrt{3})^5$ en utilisant la forme trigonométrique.\n\nOn sait que $1 + i\\sqrt{3} = 2\\left(\\cos\\dfrac{\\pi}{3} + i\\sin\\dfrac{\\pi}{3}\\right)$\n\nD'après la formule de Moivre :\n\n$$(1 + i\\sqrt{3})^5 = 2^5\\left[\\cos\\left(5 \\times \\dfrac{\\pi}{3}\\right) + i\\sin\\left(5 \\times \\dfrac{\\pi}{3}\\right)\\right]$$\n\n$$= ___32___\\left[\\cos\\dfrac{5\\pi}{3} + i\\sin\\dfrac{5\\pi}{3}\\right]$$\n\n$$= 32\\left[\\cos\\left(2\\pi - \\dfrac{\\pi}{3}\\right) + i\\sin\\left(2\\pi - \\dfrac{\\pi}{3}\\right)\\right]$$\n\n$$= 32\\left[\\cos\\left(-\\dfrac{\\pi}{3}\\right) + i\\sin\\left(-\\dfrac{\\pi}{3}\\right)\\right]$$\n\n$$= 32\\left[___\\dfrac{1}{2}___ + i\\left(___-\\dfrac{\\sqrt{3}}{2}___\\right)\\right]$$\n\n$$= ___16___ - ___16\\sqrt{3}___i$$"
             }
           ]
@@ -477,7 +455,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 23 : À compléter - Forme exponentielle**",
               "content": "Écrivons sous forme exponentielle :\n\n**1.** $z_1 = 1 + i$ : Module $r = \\sqrt{2}$, argument $\\theta = \\dfrac{\\pi}{4}$\n$$z_1 = ___\\sqrt{2}___e^{i\\frac{\\pi}{4}}$$\n\n**2.** $z_2 = -1 + i\\sqrt{3}$ : Module $r = 2$, argument $\\theta = \\dfrac{2\\pi}{3}$\n$$z_2 = ___2___e^{i\\frac{2\\pi}{3}}$$\n\n**3.** $z_3 = i$ : Module $r = 1$, argument $\\theta = \\dfrac{\\pi}{2}$\n$$z_3 = e^{i\\frac{\\pi}{2}}$$\n\n**4.** $z_4 = -2$ : Module $r = 2$, argument $\\theta = \\pi$\n$$z_4 = ___2___e^{i\\pi}$$"
             }
           ]
@@ -491,7 +468,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 24 : Linéarisation de $\\cos^2(\\theta)$**",
               "content": "Linéarisons $\\cos^2(\\theta)$ en utilisant les formules d'Euler.\n\nOn sait que : $\\cos\\theta = \\dfrac{e^{i\\theta} + e^{-i\\theta}}{2}$\n\nDonc :\n$$\\cos^2(\\theta) = \\left(\\dfrac{e^{i\\theta} + e^{-i\\theta}}{2}\\right)^2$$\n\n$$= \\dfrac{(e^{i\\theta})^2 + 2e^{i\\theta}e^{-i\\theta} + (e^{-i\\theta})^2}{4}$$\n\n$$= \\dfrac{e^{2i\\theta} + 2 + e^{-2i\\theta}}{4}$$\n\n$$= \\dfrac{e^{2i\\theta} + e^{-2i\\theta}}{4} + \\dfrac{2}{4}$$\n\n$$= \\dfrac{1}{2} \\times \\dfrac{e^{2i\\theta} + e^{-2i\\theta}}{2} + \\dfrac{1}{2}$$\n\n$$= \\dfrac{1}{2}\\cos(2\\theta) + \\dfrac{1}{2}$$\n\nDonc : $$\\cos^2(\\theta) = \\dfrac{1 + \\cos(2\\theta)}{2}$$"
             }
           ]
@@ -516,7 +492,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Exemple 25 : À compléter - Résolution de $z^2 - 4z + 13 = 0$**",
               "content": "Résolvons dans $\\mathbb{C}$ l'équation $z^2 - 4z + 13 = 0$.\n\n**Étape 1** : Discriminant\n$$\\Delta = b^2 - 4ac = (-4)^2 - 4(1)(13)$$\n$$= 16 - ___52___ = ___-36___$$\n\n**Étape 2** : Comme $\\Delta < 0$, on cherche $\\delta$ tel que $\\delta^2 = -36$\n$$\\delta = i\\sqrt{36} = ___6i___$$ (on peut aussi prendre $-6i$)\n\n**Étape 3** : Les solutions sont\n$$z_1 = \\dfrac{4 - 6i}{2} = ___2___ - ___3___i$$\n\n$$z_2 = \\dfrac{4 + 6i}{2} = ___2___ + ___3___i$$\n\nOn remarque que $z_1$ et $z_2$ sont conjugués : $z_2 = \\overline{z_1}$\n\n**Ensemble des solutions** : $S = \\{2 - 3i ; 2 + 3i\\}$"
             }
           ]

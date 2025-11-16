@@ -118,27 +118,22 @@
           "elements": [
             {
               "type": "example-box",
-              "preamble": "**Rotation de 90° - Calcul direct**",
               "content": "Dans un repère orthonormé, on considère le point $A(3; 2)$.\\nCalculer les coordonnées de son image $A'$ par la rotation de centre $O$ et d'angle $90°$.\\n\\n**Méthode** : Pour une rotation de $90°$, on applique $(x; y) \\mapsto (-y; x)$.\\n\\nDonc : $A(3; 2) \\mapsto A'(___-2___; ___3___)$\\n\\n**Vérification** : $OA = \\sqrt{3^2 + 2^2} = \\sqrt{___13___}$ et $OA' = \\sqrt{(-2)^2 + 3^2} = \\sqrt{___13___}$\\n\\nLa distance est bien conservée."
             },
             {
               "type": "example-box",
-              "preamble": "**Rotation de -90° - Sens horaire**",
               "content": "Soit le point $B(-1; 4)$. Déterminer son image $B'$ par la rotation de centre $O$ et d'angle $-90°$.\\n\\n**Méthode** : Pour une rotation de $-90°$, on applique $(x; y) \\mapsto (y; -x)$.\\n\\nDonc : $B(-1; 4) \\mapsto B'(___4___; ___1___)$\\n\\n**Interprétation géométrique** : Le point tourne de 90° dans le sens des aiguilles d'une montre autour de l'origine."
             },
             {
               "type": "example-box",
-              "preamble": "**Rotation de 180° - Symétrie centrale**",
               "content": "On considère le point $C(5; -3)$. Calculer son image $C'$ par la rotation de centre $O$ et d'angle $180°$.\\n\\n**Méthode** : Pour une rotation de $180°$, on applique $(x; y) \\mapsto (-x; -y)$.\\n\\nDonc : $C(5; -3) \\mapsto C'(___-5___; ___3___)$\\n\\n**Remarque importante** : Cette transformation est identique à la symétrie centrale de centre $O$."
             },
             {
               "type": "example-box",
-              "preamble": "**Rotation quelconque - Formule générale**",
               "content": "Calculer l'image du point $D(1; 0)$ par la rotation de centre $O$ et d'angle $60°$.\\n\\n**Méthode** : On utilise les formules générales avec $\\cos 60° = \\frac{1}{2}$ et $\\sin 60° = \\frac{\\sqrt{3}}{2}$.\\n\\n$$x' = 1 \\times \\frac{1}{2} - 0 \\times \\frac{\\sqrt{3}}{2} = ___\\frac{1}{2}___$$\\n$$y' = 1 \\times \\frac{\\sqrt{3}}{2} + 0 \\times \\frac{1}{2} = ___\\frac{\\sqrt{3}}{2}___$$\\n\\nDonc : $D'\\left(\\frac{1}{2}; \\frac{\\sqrt{3}}{2}\\right)$"
             },
             {
               "type": "example-box",
-              "preamble": "**Rotation de 45° - Calcul avec radicaux**",
               "content": "Déterminer l'image du point $E(2; 1)$ par la rotation de centre $O$ et d'angle $45°$.\\n\\n**Données** : $\\cos 45° = \\sin 45° = \\frac{\\sqrt{2}}{2}$\\n\\n**Calculs** :\\n$$x' = 2 \\times \\frac{\\sqrt{2}}{2} - 1 \\times \\frac{\\sqrt{2}}{2} = ___\\frac{\\sqrt{2}}{2}___$$\\n$$y' = 2 \\times \\frac{\\sqrt{2}}{2} + 1 \\times \\frac{\\sqrt{2}}{2} = ___\\frac{3\\sqrt{2}}{2}___$$\\n\\nDonc : $E'\\left(\\frac{\\sqrt{2}}{2}; \\frac{3\\sqrt{2}}{2}\\right)$"
             }
           ]
@@ -148,12 +143,10 @@
           "elements": [
             {
               "type": "example-box",
-              "preamble": "**Rotation d'un segment**",
               "content": "On considère le segment $[EF]$ avec $E(2; 0)$ et $F(4; 0)$ sur l'axe des abscisses.\\nEffectuer la rotation de centre $O$ et d'angle $90°$.\\n\\n**Calculs** :\\n- $E(2; 0) \\mapsto E'(___0___; ___2___)$\\n- $F(4; 0) \\mapsto F'(___0___; ___4___)$\\n\\n**Observation** : Le segment horizontal $[EF]$ devient le segment vertical $[E'F']$ sur l'axe des ordonnées.\\n\\n**Propriété vérifiée** : $EF = E'F' = ___2___$ (conservation des longueurs)."
             },
             {
               "type": "example-box",
-              "preamble": "**Rotation d'un triangle rectangle**",
               "content": "Soit le triangle rectangle $ABC$ avec $A(0; 0)$, $B(3; 0)$ et $C(3; 2)$.\\nEffectuer la rotation de centre $A$ et d'angle $90°$.\\n\\n**Attention** : Le centre de rotation n'est pas l'origine !\\n\\n**Méthode** :\\n1. Translater pour ramener $A$ à l'origine\\n2. Effectuer la rotation de $90°$\\n3. Translater à nouveau\\n\\n**Calculs** :\\n- $A(0; 0) \\mapsto A'(___0___; ___0___)$ (centre fixe)\\n- $B(3; 0) \\mapsto B'(___0___; ___3___)$\\n- $C(3; 2) \\mapsto C'(___-2___; ___3___)$\\n\\n**Résultat** : Le triangle $A'B'C'$ est l'image du triangle initial par rotation."
             }
           ]
@@ -163,7 +156,6 @@
           "elements": [
             {
               "type": "example-box",
-              "preamble": "**Composition de rotations de même centre**",
               "content": "Composer les rotations $r_{O,45°}$ et $r_{O,30°}$ de centre $O$.\\n\\n**Théorème** : La composée de deux rotations de même centre est une rotation de même centre dont l'angle est la somme des angles.\\n\\n**Application** :\\n$$r_{O,45°} \\circ r_{O,30°} = r_{O,___75°___}$$\\n\\n**Vérification sur un point** : Prenons $M(1; 0)$\\n- Par composition : $M \\xrightarrow{r_{O,30°}} M_1 \\xrightarrow{r_{O,45°}} M'$\\n- Par rotation directe : $M \\xrightarrow{r_{O,75°}} M'$\\n\\nLes deux méthodes donnent le même résultat $M'\\left(\\cos 75°; \\sin 75°\\right)$."
             }
           ]
@@ -260,7 +252,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "**Application en physique - Mouvement circulaire**",
               "content": "Un point matériel se déplace sur un cercle de centre $O$ et de rayon $R = 3$ avec une vitesse angulaire constante $\\omega = \\frac{\\pi}{4}$ rad/s.\\n\\nÀ $t = 0$, le point est en $M_0(3; 0)$.\\n\\n**Position à l'instant $t$ :**\\n$$M(t) = r_{O,\\omega t}(M_0)$$\\n\\nÀ $t = 2$ secondes :\\n- Angle parcouru : $\\omega t = \\frac{\\pi}{4} \\times 2 = ___\\frac{\\pi}{2}___$\\n- Position : $M(2) = (___0___; ___3___)$"
             },
             {

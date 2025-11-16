@@ -27,7 +27,6 @@
             },
             {
               "type": "example-box",
-              "preamble": "Exemples de fonctions usuelles avec leurs graphes :",
               "listType": "bullet",
               "content": [
                 "**Fonction identité :** $f(x) = x$",

@@ -1008,6 +1008,9 @@ mjx-container .blank-math-answer[data-revealed='true'] .blank-math-answer__conte
 .MathJax .blank-math-answer[data-revealed='true'] .blank-math-answer__content {
   opacity: 1;
   visibility: visible;
+  position: relative;
+  top: -0.15em; /* Légèrement plus haut pour une meilleure ligne de base */
+  font-size: 1.05em; /* Légère augmentation pour une lecture chic */
 }
 
 /* Le placeholder (ligne pointillée) disparaît. */

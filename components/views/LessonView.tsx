@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import { useAppState, useAppDispatch } from '../../context/AppContext';
 import { LessonDisplay } from '../lesson/LessonDisplay';
 import { HighlightableContent } from '../lesson/HighlightableContent';
@@ -10,6 +10,8 @@ import { validateLesson, formatValidationResults, ValidationResult } from '../..
 import ValidationErrorDisplay from '../ValidationErrorDisplay';
 import type { LessonContent } from '../../types';
 import StageBreadcrumb, { StageBreadcrumbStage } from '../StageBreadcrumb';
+import { LessonProvider } from '../../utils/lessonContentParser';
+import { blankRevealService } from '../../services/blankRevealService';
 
 const LessonView: React.FC = () => {
     const state = useAppState();
@@ -22,11 +24,42 @@ const LessonView: React.FC = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [validationResult, setValidationResult] = useState<ValidationResult | null>(null);
+    const [revealedBlanks, setRevealedBlanks] = useState<Set<string>>(() => new Set());
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const updateTimerRef = useRef<NodeJS.Timeout | null>(null);
 
     const chapter = currentChapterId ? activities[currentChapterId] : null;
     const chapterProgress = currentChapterId ? progress[currentChapterId] : null;
+    const lessonStorageId = chapter ? `${chapter.class}-${chapter.chapter}` : undefined;
+
+    const blankPersistence = useMemo(() => {
+        if (!lessonStorageId) {
+            return undefined;
+        }
+
+        return {
+            isBlankRevealed: (blankId: string) => revealedBlanks.has(blankId),
+            setBlankReveal: (blankId: string, revealed: boolean) => {
+                setRevealedBlanks((prev) => {
+                    if (revealed && prev.has(blankId)) {
+                        return prev;
+                    }
+                    if (!revealed && !prev.has(blankId)) {
+                        return prev;
+                    }
+                    const next = new Set(prev);
+                    if (revealed) {
+                        next.add(blankId);
+                    } else {
+                        next.delete(blankId);
+                    }
+                    return next;
+                });
+
+                blankRevealService.setBlankReveal(lessonStorageId, blankId, revealed);
+            },
+        };
+    }, [lessonStorageId, revealedBlanks]);
 
     // 🔥 SOLUTION RADICALE: Quand on quitte la vue Lesson, dispatcher un événement global
     useEffect(() => {
@@ -59,6 +92,16 @@ const LessonView: React.FC = () => {
         if (!chapter) return;
         dispatch({ type: 'CHANGE_VIEW', payload: { view: 'activity', chapterId: chapter.id, subView: stage } });
     }, [dispatch, chapter]);
+
+    useEffect(() => {
+        if (!lessonStorageId) {
+            setRevealedBlanks(new Set());
+            return;
+        }
+
+        const stored = blankRevealService.getRevealedBlankIds(lessonStorageId);
+        setRevealedBlanks(new Set(stored));
+    }, [lessonStorageId]);
 
     // Charger la leçon (inline ou depuis fichier) avec cache intelligent
     useEffect(() => {
@@ -333,22 +376,28 @@ const LessonView: React.FC = () => {
                     lesson={lesson}
                     scrollContainerRef={scrollContainerRef}
                 >
-                    <div className="lesson-experience">
-                        <LessonNavigator />
-                        <div className="lesson-experience__content">
-                            <StageBreadcrumb
-                                className="lesson-stage-breadcrumb lesson-stage-breadcrumb--content"
-                                currentStage="lesson"
-                                onNavigateHome={handleNavigateHome}
-                                onNavigateSteps={handleNavigateSteps}
-                                onSelectStage={handleStageSelect}
-                                disabledStages={lessonBreadcrumbDisabledStages}
-                            />
-                            <HighlightableContent className="lesson-experience__readable">
-                                <LessonDisplay lesson={lesson} onBack={handleBack} />
-                            </HighlightableContent>
+                    <LessonProvider
+                        showAnswers={false}
+                        lessonId={lessonStorageId}
+                        blankPersistence={blankPersistence}
+                    >
+                        <div className="lesson-experience">
+                            <LessonNavigator />
+                            <div className="lesson-experience__content">
+                                <StageBreadcrumb
+                                    className="lesson-stage-breadcrumb lesson-stage-breadcrumb--content"
+                                    currentStage="lesson"
+                                    onNavigateHome={handleNavigateHome}
+                                    onNavigateSteps={handleNavigateSteps}
+                                    onSelectStage={handleStageSelect}
+                                    disabledStages={lessonBreadcrumbDisabledStages}
+                                />
+                                <HighlightableContent className="lesson-experience__readable">
+                                    <LessonDisplay lesson={lesson} onBack={handleBack} />
+                                </HighlightableContent>
+                            </div>
                         </div>
-                    </div>
+                    </LessonProvider>
                 </LessonProgressProvider>
             </div>
 

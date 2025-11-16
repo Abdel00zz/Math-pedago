@@ -4,7 +4,7 @@
  * Version améliorée avec support complet des listes, tableaux et formatage
  */
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useMemo, useRef, useId } from 'react';
 import type { CSSProperties } from 'react';
 import MathContent from '../components/MathContent';
 import type { LessonImageConfig } from '../types';
@@ -13,8 +13,15 @@ import type { LessonImageConfig } from '../types';
 // CONTEXTE POUR SHOWANS WERS
 // ============================================================================
 
+interface BlankRevealPersistence {
+    isBlankRevealed: (blankId: string) => boolean;
+    setBlankReveal: (blankId: string, revealed: boolean) => void;
+}
+
 interface LessonContextType {
     showAnswers: boolean;
+    lessonId?: string;
+    blankPersistence?: BlankRevealPersistence;
 }
 
 const LessonContext = React.createContext<LessonContextType>({
@@ -23,20 +30,43 @@ const LessonContext = React.createContext<LessonContextType>({
 
 export const useLessonContext = () => React.useContext(LessonContext);
 
-export const LessonProvider: React.FC<{ children: React.ReactNode; showAnswers: boolean }> = ({ children, showAnswers }) => (
-    <LessonContext.Provider value={{ showAnswers }}>
-        {children}
-    </LessonContext.Provider>
-);
+interface LessonProviderProps {
+    children: React.ReactNode;
+    showAnswers?: boolean;
+    lessonId?: string;
+    blankPersistence?: BlankRevealPersistence;
+}
+
+export const LessonProvider: React.FC<LessonProviderProps> = ({ children, showAnswers, lessonId, blankPersistence }) => {
+    const parentContext = useLessonContext();
+
+    const value = useMemo<LessonContextType>(() => ({
+        showAnswers: showAnswers ?? parentContext.showAnswers,
+        lessonId: lessonId ?? parentContext.lessonId,
+        blankPersistence: blankPersistence ?? parentContext.blankPersistence,
+    }), [showAnswers, lessonId, blankPersistence, parentContext]);
+
+    return (
+        <LessonContext.Provider value={value}>
+            {children}
+        </LessonContext.Provider>
+    );
+};
 
 // ============================================================================
 // WRAPPER POUR MATHCONTENT QUI SUPPORTE LES REACTNODE
 // ============================================================================
 
-const MathContentWrapper: React.FC<{ children: React.ReactNode; inline?: boolean }> = ({ children, inline = false }) => {
+const MathContentWrapper: React.FC<{ children: React.ReactNode; inline?: boolean; hostKey?: string }> = ({ children, inline = false, hostKey }) => {
     const containerRef = useRef<HTMLElement | null>(null);
     const blankHandlersRef = useRef(new Map<HTMLElement, { click: EventListener; keydown: EventListener }>());
-    const { showAnswers } = useLessonContext();
+    const { showAnswers, blankPersistence, lessonId } = useLessonContext();
+    const generatedHostId = useId();
+    const hostIdentifier = useMemo(() => {
+        if (hostKey) return hostKey;
+        if (lessonId) return `${lessonId}::${generatedHostId}`;
+        return generatedHostId;
+    }, [hostKey, lessonId, generatedHostId]);
 
     useEffect(() => {
         const container = containerRef.current;
@@ -91,7 +121,17 @@ const MathContentWrapper: React.FC<{ children: React.ReactNode; inline?: boolean
                 const semanticLength = Math.max(4, Math.min(rawAnswer.replace(/\s+/g, '').length || 4, 18));
                 blank.style.setProperty('--blank-answer-length', semanticLength.toString());
 
-                const baseReveal = blank.dataset.revealed === 'true';
+                const blankId = hostIdentifier ? `${hostIdentifier}::${index}` : undefined;
+                if (blankId) {
+                    blank.dataset.blankId = blankId;
+                } else {
+                    delete blank.dataset.blankId;
+                }
+
+                const persistedReveal = blankId && blankPersistence
+                    ? blankPersistence.isBlankRevealed(blankId)
+                    : false;
+                const baseReveal = blank.dataset.revealed === 'true' || persistedReveal;
                 const shouldReveal = showAnswers || baseReveal;
 
                 blank.dataset.revealed = shouldReveal ? 'true' : 'false';
@@ -118,6 +158,10 @@ const MathContentWrapper: React.FC<{ children: React.ReactNode; inline?: boolean
                     blank.classList.toggle('blank-math-answer--revealed', nextState);
                     blank.setAttribute('aria-pressed', nextState ? 'true' : 'false');
                     blank.setAttribute('aria-label', nextState ? 'Masquer la réponse' : 'Révéler la réponse');
+
+                    if (!showAnswers && blankId && blankPersistence) {
+                        blankPersistence.setBlankReveal(blankId, nextState);
+                    }
                 };
 
                 const handleKeydown = (event: KeyboardEvent) => {
@@ -173,7 +217,7 @@ const MathContentWrapper: React.FC<{ children: React.ReactNode; inline?: boolean
             window.clearTimeout(fallbackTimeout);
             detachHandlers();
         };
-    }, [children, showAnswers]);
+    }, [children, showAnswers, blankPersistence, hostIdentifier]);
 
     const Tag = inline ? 'span' : 'div';
 
@@ -183,6 +227,7 @@ const MathContentWrapper: React.FC<{ children: React.ReactNode; inline?: boolean
                 containerRef.current = node as HTMLElement | null;
             }}
             className="math-content-wrapper"
+            data-blank-host-id={hostIdentifier}
         >
             {children}
         </Tag>
@@ -195,75 +240,16 @@ const MathContentWrapper: React.FC<{ children: React.ReactNode; inline?: boolean
 
 const Blank: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const { showAnswers } = useLessonContext();
-    const [isRevealed, setIsRevealed] = React.useState(false);
-    const [renderKey, setRenderKey] = React.useState(0);
-
-    const shouldShow = showAnswers || isRevealed;
-
-    const handleClick = () => {
-        if (isRevealed) {
-            setIsRevealed(false);
-            setRenderKey(prev => prev + 1);
-        } else {
-            setIsRevealed(true);
-        }
-    };
-
-    if (shouldShow) {
-        return (
-            <span
-                className="inline-flex items-center px-2 py-0.5 mx-1 rounded bg-red-50 border border-red-200 animate-pulse-once"
-                style={{
-                    color: '#dc2626',
-                    fontWeight: 600,
-                    animation: 'reveal-answer 0.4s ease-out'
-                }}
-            >
-                <MathContent
-                    key={`revealed-${renderKey}`}
-                    content={typeof children === 'string' ? children : String(children)}
-                    inline={true}
-                />
-            </span>
-        );
-    }
+    const content = React.Children.toArray(children)
+        .map((child) => (typeof child === 'string' ? child : String(child)))
+        .join('');
 
     return (
-        <span 
-            className="relative inline-flex items-center justify-center align-middle min-w-[90px] px-3 py-1.5 mx-1 cursor-pointer select-none group transition-transform duration-200 transform group-hover:-translate-y-0.5"
-            onClick={handleClick}
-            title="Réfléchis, écris ta réponse sur ton cahier, puis clique pour vérifier"
-            aria-label="Révèle la réponse après avoir réfléchi"
-            role="button"
-            tabIndex={0}
-            onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    handleClick();
-                }
-            }}
+        <span
+            className="blank-math-answer"
+            data-revealed={showAnswers ? 'true' : 'false'}
         >
-            <span className="sr-only">Cliquer pour révéler la réponse suggérée</span>
-
-            <span
-                aria-hidden="true"
-                className="pointer-events-none absolute -top-1 left-1/2 -translate-x-1/2 whitespace-nowrap text-center text-[0.6rem] font-semibold uppercase tracking-[0.22em] text-primary-dark/60 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-            >
-                À TON TOUR
-            </span>
-
-            <span className="opacity-0 select-none pointer-events-none">{children}</span>
-
-            <span
-                aria-hidden="true"
-                className="absolute inset-x-2 bottom-0.5 h-[3px] rounded-full transition-transform duration-300 ease-out group-hover:scale-x-110"
-                style={{
-                    backgroundImage: 'radial-gradient(circle, #3b82f6 1.2px, transparent 1.8px)',
-                    backgroundSize: '7px 3px',
-                    backgroundRepeat: 'repeat-x',
-                    opacity: 0.75,
-                }}
-            />
+            {content}
         </span>
     );
 };
@@ -523,13 +509,20 @@ const normalizeLineBreaks = (text: string): string => {
     return text;
 };
 
+const buildHostKey = (baseKey: string | undefined, ...segments: (string | number)[]): string | undefined => {
+    if (!baseKey) return undefined;
+    if (segments.length === 0) return baseKey;
+    return `${baseKey}.${segments.map((segment) => String(segment)).join('.')}`;
+};
+
 /**
  * Parse du contenu avec support des listes, tableaux inline, formules, et NoBullet
  */
 export const parseContent = (
     content: string | string[] | undefined,
     isNumberedList: boolean = false,
-    showAnswers: boolean = false
+    showAnswers: boolean = false,
+    contextKey?: string
 ): React.ReactNode => {
     if (!content) return null;
 
@@ -557,7 +550,10 @@ export const parseContent = (
                                     <div className="flex-1 space-y-2">
                                         {paragraphs.map((para, idx) => (
                                             <div key={idx}>
-                                                <MathContentWrapper inline={false}>
+                                                <MathContentWrapper
+                                                    inline={false}
+                                                    hostKey={buildHostKey(contextKey, 'list', i, 'paragraph', idx)}
+                                                >
                                                     {parseLine(para.trim())}
                                                 </MathContentWrapper>
                                             </div>
@@ -575,7 +571,10 @@ export const parseContent = (
                                 <div className="flex-1 space-y-2">
                                     {paragraphs.map((para, idx) => (
                                         <div key={idx}>
-                                            <MathContentWrapper inline={false}>
+                                            <MathContentWrapper
+                                                inline={false}
+                                                hostKey={buildHostKey(contextKey, 'list', i, 'paragraph', idx)}
+                                            >
                                                 {parseLine(para.trim())}
                                             </MathContentWrapper>
                                         </div>
@@ -604,7 +603,10 @@ export const parseContent = (
                                 <div className="flex-1 space-y-2">
                                     {paragraphs.map((para, idx) => (
                                         <div key={idx}>
-                                            <MathContentWrapper inline={false}>
+                                            <MathContentWrapper
+                                                inline={false}
+                                                hostKey={buildHostKey(contextKey, 'list', i, 'paragraph', idx)}
+                                            >
                                                 {parseLine(para.trim())}
                                             </MathContentWrapper>
                                         </div>
@@ -622,7 +624,10 @@ export const parseContent = (
                             <div className="flex-1 space-y-2">
                                 {paragraphs.map((para, idx) => (
                                     <div key={idx}>
-                                        <MathContentWrapper inline={false}>
+                                        <MathContentWrapper
+                                            inline={false}
+                                            hostKey={buildHostKey(contextKey, 'list', i, 'paragraph', idx)}
+                                        >
                                             {parseLine(para.trim())}
                                         </MathContentWrapper>
                                     </div>
@@ -778,7 +783,10 @@ export const parseContent = (
         } else {
             nodes.push(
                 <div key={`para-${i}`} className="mb-3">
-                    <MathContentWrapper inline={false}>
+                    <MathContentWrapper
+                        inline={false}
+                        hostKey={buildHostKey(contextKey, 'paragraph', i)}
+                    >
                         {parseLine(para)}
                     </MathContentWrapper>
                 </div>
