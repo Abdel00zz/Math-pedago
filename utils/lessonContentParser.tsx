@@ -196,40 +196,74 @@ const MathContentWrapper: React.FC<{ children: React.ReactNode; inline?: boolean
 const Blank: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const { showAnswers } = useLessonContext();
     const [isRevealed, setIsRevealed] = React.useState(false);
-    const content = typeof children === 'string' ? children : String(children);
-    const sanitizedLength = Math.max(4, Math.min(content.replace(/\s+/g, '').length || 4, 18));
-    const revealed = showAnswers || isRevealed;
+    const [renderKey, setRenderKey] = React.useState(0);
 
-    const toggleReveal = () => {
-        if (showAnswers) return;
-        setIsRevealed((prev) => !prev);
-    };
+    const shouldShow = showAnswers || isRevealed;
 
-    const handleKeydown = (event: React.KeyboardEvent<HTMLSpanElement>) => {
-        if (event.key === 'Enter' || event.key === ' ') {
-            event.preventDefault();
-            toggleReveal();
+    const handleClick = () => {
+        if (isRevealed) {
+            setIsRevealed(false);
+            setRenderKey(prev => prev + 1);
+        } else {
+            setIsRevealed(true);
         }
     };
 
+    if (shouldShow) {
+        return (
+            <span
+                className="inline-flex items-center px-2 py-0.5 mx-1 rounded bg-red-50 border border-red-200 animate-pulse-once"
+                style={{
+                    color: '#dc2626',
+                    fontWeight: 600,
+                    animation: 'reveal-answer 0.4s ease-out'
+                }}
+            >
+                <MathContent
+                    key={`revealed-${renderKey}`}
+                    content={typeof children === 'string' ? children : String(children)}
+                    inline={true}
+                />
+            </span>
+        );
+    }
+
     return (
-        <span
-            className={`blank-inline-answer ${revealed ? 'blank-inline-answer--revealed' : ''}`}
-            style={{ ['--blank-answer-length' as const]: sanitizedLength } as CSSProperties}
-            role={showAnswers ? undefined : 'button'}
-            tabIndex={showAnswers ? undefined : 0}
-            aria-pressed={showAnswers ? undefined : revealed ? 'true' : 'false'}
-            aria-label={showAnswers ? undefined : revealed ? 'Masquer la réponse' : 'Révéler la réponse'}
-            onClick={showAnswers ? undefined : toggleReveal}
-            onKeyDown={showAnswers ? undefined : handleKeydown}
+        <span 
+            className="relative inline-flex items-center justify-center align-middle min-w-[90px] px-3 py-1.5 mx-1 cursor-pointer select-none group transition-transform duration-200 transform group-hover:-translate-y-0.5"
+            onClick={handleClick}
+            title="Réfléchis, écris ta réponse sur ton cahier, puis clique pour vérifier"
+            aria-label="Révèle la réponse après avoir réfléchi"
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleClick();
+                }
+            }}
         >
-            <span className="blank-inline-answer__content">
-                <MathContent content={content} inline={true} />
+            <span className="sr-only">Cliquer pour révéler la réponse suggérée</span>
+
+            <span
+                aria-hidden="true"
+                className="pointer-events-none absolute -top-1 left-1/2 -translate-x-1/2 whitespace-nowrap text-center text-[0.6rem] font-semibold uppercase tracking-[0.22em] text-primary-dark/60 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+            >
+                À TON TOUR
             </span>
-            <span aria-hidden="true" className="blank-inline-answer__dots" />
-            <span className="sr-only">
-                {revealed ? 'Réponse affichée' : 'Cliquer ou appuyer sur Entrée pour révéler la réponse'}
-            </span>
+
+            <span className="opacity-0 select-none pointer-events-none">{children}</span>
+
+            <span
+                aria-hidden="true"
+                className="absolute inset-x-2 bottom-0.5 h-[3px] rounded-full transition-transform duration-300 ease-out group-hover:scale-x-110"
+                style={{
+                    backgroundImage: 'radial-gradient(circle, #3b82f6 1.2px, transparent 1.8px)',
+                    backgroundSize: '7px 3px',
+                    backgroundRepeat: 'repeat-x',
+                    opacity: 0.75,
+                }}
+            />
         </span>
     );
 };
@@ -456,24 +490,22 @@ const ContentWithImage: React.FC<ContentWithImageProps> = ({ image, children }) 
 // ============================================================================
 
 const NumberBullet: React.FC<{ number: number }> = ({ number }) => (
-    <span className="font-bold text-lg text-gray-800 flex-shrink-0 mr-1">
-        {number}.
+    <span className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full border border-gray-300 bg-gray-100 font-semibold text-xs text-gray-700 shadow-sm">
+        {number}
     </span>
 );
 
 const StarBullet: React.FC = () => (
     <span className="flex-shrink-0">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="drop-shadow-sm">
-            <circle
-                cx="8"
-                cy="8"
-                r="3.5"
-                fill="url(#bulletGradient)"
+            <path 
+                d="M8 1.5L9.5 6H14L10.5 9L12 13.5L8 10.5L4 13.5L5.5 9L2 6H6.5L8 1.5Z" 
+                fill="url(#starGradient)"
             />
             <defs>
-                <linearGradient id="bulletGradient" x1="4" y1="4" x2="12" y2="12" gradientUnits="userSpaceOnUse">
-                    <stop offset="0%" stopColor="#4255ff" />
-                    <stop offset="100%" stopColor="#5f7dff" stopOpacity="0.9" />
+                <linearGradient id="starGradient" x1="2" y1="1.5" x2="14" y2="13.5" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stopColor="#3b82f6" />
+                    <stop offset="100%" stopColor="#06b6d4" />
                 </linearGradient>
             </defs>
         </svg>
@@ -623,9 +655,7 @@ export const parseContent = (
                 </div>
                 <div className="lesson-callout__body">
                     {paragraphs.map((para, idx) => (
-                        <MathContentWrapper key={idx} inline={false}>
-                            {parseLine(para)}
-                        </MathContentWrapper>
+                        <MathContent key={idx} content={para} />
                     ))}
                 </div>
             </div>
@@ -668,9 +698,7 @@ export const parseContent = (
                         paragraphs.forEach((para, idx) => {
                             parts.push(
                                 <div key={`text-${sectionIndex}-${idx}`} className="mb-3">
-                                    <MathContentWrapper inline={false}>
-                                        {parseLine(para)}
-                                    </MathContentWrapper>
+                                    <MathContent content={para} />
                                 </div>
                             );
                         });
@@ -724,9 +752,7 @@ export const parseContent = (
                 paragraphs.forEach((para, idx) => {
                     parts.push(
                         <div key={`text-${sectionIndex}-${idx}`} className="mb-3">
-                            <MathContentWrapper inline={false}>
-                                {parseLine(para)}
-                            </MathContentWrapper>
+                            <MathContent content={para} />
                         </div>
                     );
                 });

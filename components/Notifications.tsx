@@ -87,7 +87,7 @@ export const Notifications: React.FC = () => {
 
     return ReactDOM.createPortal(
         <div
-            className="fixed top-6 right-6 z-[1000] flex flex-col items-end gap-2 w-full max-w-sm pointer-events-none"
+            className="fixed top-10 sm:top-12 right-6 z-[1000] flex flex-col items-end gap-2 w-full max-w-sm pointer-events-none"
             role="region"
             aria-label="Notifications"
         >

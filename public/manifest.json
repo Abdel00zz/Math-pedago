@@ -281,6 +281,12 @@
       "file": "2bse/2bse_calcul_de_probabilites.json",
       "isActive": false,
       "version": "v1.1.0-4a50cf"
+    },
+    {
+      "id": "2bse-limites-des-suites-numeriques",
+      "file": "2bse/2bse_limites_suites.json",
+      "isActive": true,
+      "version": "v1.1.0-123456"
     }
   ],
   "2bsm": [

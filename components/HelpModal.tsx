@@ -215,11 +215,9 @@ const ArabicContent: React.FC = () => (
             </div>
         </div>
 
-        <div className="mt-8 text-center" dir="rtl">
+        <div className="mt-8 text-center" dir="ltr">
             <p className="text-sm text-muted-foreground">
-                منصّة صُمِّمَت وطُوِّرَت بكل شغف على يد <span className="text-primary font-semibold">بدوح عبد المالك</span>
-                <span className="mx-1 text-slate-400">•</span>
-                المملكة المغربية
+                Plateforme créée avec <span className="text-red-500">passion</span> par Boudouh Abdelmalek au Maroc
             </p>
         </div>
     </div>

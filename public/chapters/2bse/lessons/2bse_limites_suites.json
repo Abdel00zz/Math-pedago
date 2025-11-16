@@ -1,0 +1,615 @@
+{
+  "header": {
+    "title": "Les Suites Numériques",
+    "subtitle": "Généralités, Limites, Convergence et Critères - Cours Interactif",
+    "classe": "2ème Bac Sciences Physiques et Sciences de la Vie",
+    "chapter": "Limites et Suites",
+    "academicYear": "2025-2026"
+  },
+  "sections": [
+    {
+      "title": "Généralités sur les Suites",
+      "subsections": [
+        {
+          "title": "Qu'est-ce qu'une Suite Numérique ?",
+          "elements": [
+            {
+              "type": "p",
+              "content": "Une suite numérique est une liste infinie de nombres rangés dans un ordre précis. Chaque nombre est appelé un **terme** de la suite, noté $u_0$, $u_1$, $u_2$, ..."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemples de suites simples** :",
+              "listType": "bullet",
+              "content": [
+                "**Les nombres pairs** : $u_n = 2n$ donne $___0___, 2, 4, 6, 8, ...$",
+                "**Les nombres impairs** : $u_n = 2n + 1$ donne $1, ___3___, 5, 7, 9, ...$",
+                "**Les inverses** : $u_n = \\dfrac{1}{n+1}$ donne $1, \\dfrac{1}{2}, \\dfrac{1}{___3___}, \\dfrac{1}{4}, ...$",
+                "**Les carrés** : $u_n = n^2$ donne $0, 1, ___4___, 9, 16, ...$"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Suite Majorée, Minorée et Bornée",
+          "elements": [
+            {
+              "type": "p",
+              "content": "Une suite **majorée** ne dépasse jamais une certaine hauteur maximale. Une suite **minorée** ne descend jamais en dessous d'une certaine hauteur minimale."
+            },
+            {
+              "type": "definition-box",
+              "preamble": "**Suite Majorée** :",
+              "content": "Une suite $(u_n)$ est **majorée** par un réel $M$ si tous ses termes restent inférieurs ou égaux à $M$ :\n\n$$u_n \\leq M \\text{ pour tout } n$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple concret** :",
+              "content": "La suite $u_n = \\dfrac{1}{n+1}$ donne : $1, \\dfrac{1}{2}, \\dfrac{1}{3}, \\dfrac{1}{4}, ...$\n\nCette suite est majorée par $___1___$ car aucun terme ne dépasse 1.\n\nOn peut aussi dire qu'elle est majorée par 2 ou par 10."
+            },
+            {
+              "type": "p",
+              "content": "?> Si une suite est majorée par $M$, elle est aussi majorée par tout nombre plus grand que $M$."
+            },
+            {
+              "type": "definition-box",
+              "preamble": "**Suite Minorée** :",
+              "content": "Une suite $(u_n)$ est **minorée** par un réel $m$ si tous ses termes restent supérieurs ou égaux à $m$ :\n\n$$u_n \\geq m \\text{ pour tout } n$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple** :",
+              "content": "La suite $u_n = n^2$ donne : $0, 1, 4, ___9___, 16, 25, ...$\n\nCette suite est minorée par $___0___$ car tous les carrés sont positifs.\n\nElle n'est pas majorée car $n^2$ peut devenir arbitrairement grand."
+            },
+            {
+              "type": "definition-box",
+              "preamble": "**Suite Bornée** :",
+              "content": "Une suite est **bornée** si elle est à la fois majorée ET minorée.\n\nFormule équivalente : il existe $A > 0$ tel que $|u_n| \\leq A$ pour tout $n$."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemples de suites bornées** :",
+              "listType": "bullet",
+              "content": [
+                "**Suite constante** : $u_n = 5$ est bornée (majorée et minorée par $___5___$)",
+                "**Cosinus** : $u_n = \\cos(n)$ est bornée car $-1 \\leq \\cos(n) \\leq ___1___$",
+                "**Combinaison** : $u_n = 3 + \\dfrac{\\sin(n)}{n}$ est bornée"
+              ]
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Analyse complète** :",
+              "content": "Soit $u_n = \\dfrac{2n + 1}{n + 3}$ pour $n \\geq 0$.\n\nCalculons quelques termes :\n\n$u_0 = \\dfrac{1}{3}$, $u_1 = \\dfrac{3}{4}$, $u_2 = ___1___$, $u_3 \\approx 1.17$\n\nRéécrivons : $u_n = \\dfrac{2n + 6 - 5}{n + 3} = 2 - \\dfrac{5}{n + 3}$\n\nDonc $u_n < ___2___$ pour tout $n$ (majorée par 2)\n\nEt $u_n > 0$ pour tout $n$ (minorée par 0)\n\nLa suite est **bornée**."
+            }
+          ]
+        },
+        {
+          "title": "Monotonie d'une Suite",
+          "elements": [
+            {
+              "type": "p",
+              "content": "La monotonie indique si une suite monte, descend, ou reste stable."
+            },
+            {
+              "type": "definition-box",
+              "preamble": "**Suite Croissante** :",
+              "content": "Une suite $(u_n)$ est **croissante** si chaque terme est supérieur ou égal au précédent :\n\n$$u_{n+1} \\geq u_n \\text{ pour tout } n$$\n\nSi $u_{n+1} > u_n$ strictement, elle est **strictement croissante**."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Vérification de monotonie** :",
+              "content": "La suite $u_n = 2n + 1$ donne : $1, 3, 5, ___7___, 9, ...$\n\nVérifions : $u_{n+1} - u_n = 2(n+1) + 1 - (2n + 1) = ___2___$\n\nComme $u_{n+1} - u_n = 2 > 0$, la suite est **strictement croissante**."
+            },
+            {
+              "type": "definition-box",
+              "preamble": "**Suite Décroissante** :",
+              "content": "Une suite $(u_n)$ est **décroissante** si chaque terme est inférieur ou égal au précédent :\n\n$$u_{n+1} \\leq u_n \\text{ pour tout } n$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple de suite décroissante** :",
+              "content": "La suite $u_n = \\dfrac{10}{n+1}$ donne : $10, 5, \\dfrac{10}{3}, ___2.5___, 2, ...$\n\nCalculons : $u_{n+1} - u_n = \\dfrac{10}{n+2} - \\dfrac{10}{n+1}$\n\n$= 10\\left(\\dfrac{1}{n+2} - \\dfrac{1}{n+1}\\right) = \\dfrac{-10}{(n+2)(n+1)} < ___0___$\n\nLa suite est **strictement décroissante**."
+            },
+            {
+              "type": "p",
+              "content": "?> **Deux méthodes pour étudier la monotonie** :\n\n**Méthode 1** : Calculer $u_{n+1} - u_n$\n\n**Méthode 2** (si $u_n > 0$) : Calculer $\\dfrac{u_{n+1}}{u_n}$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Suites Arithmétiques et Géométriques",
+      "subsections": [
+        {
+          "title": "Suites Arithmétiques",
+          "elements": [
+            {
+              "type": "p",
+              "content": "Une suite arithmétique ajoute toujours le même nombre $r$ (la raison) pour passer d'un terme au suivant."
+            },
+            {
+              "type": "definition-box",
+              "preamble": "**Suite Arithmétique** :",
+              "content": "Une suite $(u_n)$ est **arithmétique de raison $r$** si :\n\n$$u_{n+1} = u_n + r$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Reconnaissance de la raison** :",
+              "listType": "bullet",
+              "content": [
+                "$0, 2, 4, 6, 8, ...$ a pour raison $r = ___2___$",
+                "$10, 7, 4, 1, -2, ...$ a pour raison $r = ___-3___$",
+                "$5, 10, 15, 20, 25, ...$ a pour raison $r = ___5___$",
+                "$0.5, 1, 1.5, 2, 2.5, ...$ a pour raison $r = ___0.5___$"
+              ]
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Terme général** :",
+              "content": "Si $(u_n)$ est arithmétique de raison $r$ avec premier terme $u_0$, alors :\n\n$$u_n = u_0 + n \\times r$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Calcul du 50ème terme** :",
+              "content": "Une suite arithmétique a $u_0 = 3$ et $r = 4$.\n\nTrouvons $u_{50}$ :\n\n$$u_{50} = u_0 + 50 \\times r = 3 + 50 \\times 4 = 3 + ___200___ = ___203___$$\n\nVérifions : $u_0 = 3$, $u_1 = 7$, $u_2 = ___11___$, $u_3 = 15$, ..."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Trouver la raison** :",
+              "content": "Si $u_3 = 17$ et $u_7 = 33$, quelle est la raison ?\n\nOn a : $u_7 = u_3 + (7-3) \\times r$\n\nDonc : $33 = 17 + 4r$\n\n$16 = 4r$\n\n$r = ___4___$"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Somme des termes** :",
+              "content": "La somme vaut :\n\n$$S = \\dfrac{\\text{nombre de termes} \\times (\\text{premier} + \\text{dernier})}{2}$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Somme classique** :",
+              "content": "Calculons $S = 1 + 2 + 3 + ... + 100$.\n\nNombre de termes : $___100___$\n\nPremier terme : $___1___$, dernier terme : $___100___$\n\n$$S = \\dfrac{100 \\times (1 + 100)}{2} = \\dfrac{100 \\times 101}{2} = ___5050___$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Somme avec raison 3** :",
+              "content": "Calculons $S = 5 + 8 + 11 + 14 + ... + 50$.\n\nRaison : $r = ___3___$\n\nPour trouver le nombre de termes : $u_n = 5 + 3n = 50$\n\nDonc $3n = 45$, soit $n = 15$ (il y a donc $___16___ $ termes)\n\n$$S = \\dfrac{16 \\times (5 + 50)}{2} = 8 \\times 55 = ___440___$$"
+            }
+          ]
+        },
+        {
+          "title": "Suites Géométriques",
+          "elements": [
+            {
+              "type": "p",
+              "content": "Une suite géométrique multiplie toujours par le même nombre $q$ (la raison) pour passer d'un terme au suivant."
+            },
+            {
+              "type": "definition-box",
+              "preamble": "**Suite Géométrique** :",
+              "content": "Une suite $(u_n)$ est **géométrique de raison $q$** si :\n\n$$u_{n+1} = q \\times u_n$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Reconnaissance de la raison** :",
+              "listType": "bullet",
+              "content": [
+                "$1, 2, 4, 8, 16, ...$ a pour raison $q = ___2___$",
+                "$27, 9, 3, 1, \\dfrac{1}{3}, ...$ a pour raison $q = ___\\dfrac{1}{3}___$",
+                "$5, -10, 20, -40, ...$ a pour raison $q = ___-2___$",
+                "$7, 7, 7, 7, ...$ a pour raison $q = ___1___$"
+              ]
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Terme général** :",
+              "content": "Si $(u_n)$ est géométrique de raison $q$ avec premier terme $u_0$, alors :\n\n$$u_n = u_0 \\times q^n$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Doublement de population** :",
+              "content": "Une population de bactéries double chaque heure. Il y a 100 bactéries au départ.\n\nAprès 10 heures : $u_{10} = 100 \\times 2^{10} = 100 \\times ___1024___ = ___102400___ $ bactéries"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Trouver la raison** :",
+              "content": "Si $u_2 = 12$ et $u_5 = 324$, quelle est la raison ?\n\nOn a : $u_5 = u_2 \\times q^{3}$\n\nDonc : $324 = 12 \\times q^3$\n\n$q^3 = \\dfrac{324}{12} = ___27___$\n\n$q = \\sqrt[3]{27} = ___3___$"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Somme des termes** :",
+              "content": "**Si $q \\neq 1$** :\n\n$$S_n = u_0 \\times \\dfrac{1 - q^n}{1 - q}$$\n\n**Si $q = 1$** : $S_n = u_0 \\times n$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Somme de puissances de 2** :",
+              "content": "Calculons $S = 1 + 2 + 4 + 8 + 16 + 32 + 64$.\n\nPremier terme : $u_0 = ___1___$, raison : $q = ___2___$, nombre de termes : $___7___$\n\n$$S = 1 \\times \\dfrac{2^7 - 1}{2 - 1} = \\dfrac{128 - 1}{1} = ___127___$$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Limites des Suites Numériques",
+      "subsections": [
+        {
+          "title": "Introduction aux Limites",
+          "elements": [
+            {
+              "type": "p",
+              "content": "Une suite a une limite quand ses termes se rapprochent de plus en plus d'une certaine valeur."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Observation** :",
+              "content": "Pour $u_n = \\dfrac{1}{n}$, calculons :\n\n$u_1 = ___1___$, $u_2 = 0.5$, $u_{10} = ___0.1___$, $u_{100} = 0.01$, $u_{1000} = ___0.001___$\n\nLes termes se rapprochent de $___0___$ ! La limite est 0."
+            }
+          ]
+        },
+        {
+          "title": "Limite Finie",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Limite Finie** :",
+              "content": "La suite $(u_n)$ a pour limite le nombre réel $\\ell$ si les termes se rapprochent de $\\ell$ quand $n$ devient très grand.\n\nNotation : $\\displaystyle\\lim_{n \\to +\\infty} u_n = \\ell$"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Limites fondamentales** :",
+              "listType": "bullet",
+              "content": [
+                "$\\displaystyle\\lim_{n \\to +\\infty} \\dfrac{1}{n} = ___0___$",
+                "$\\displaystyle\\lim_{n \\to +\\infty} \\dfrac{1}{n^2} = ___0___$",
+                "$\\displaystyle\\lim_{n \\to +\\infty} \\dfrac{1}{n^k} = ___0___$ pour tout $k > 0$"
+              ]
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Calculs directs** :",
+              "listType": "bullet",
+              "content": [
+                "$u_n = \\dfrac{1}{n} + 5$ donne $\\displaystyle\\lim_{n \\to +\\infty} u_n = 0 + 5 = ___5___$",
+                "$u_n = 3 - \\dfrac{2}{n}$ donne $\\displaystyle\\lim_{n \\to +\\infty} u_n = 3 - 0 = ___3___$",
+                "$u_n = \\dfrac{4}{n^2} + 7$ donne $\\displaystyle\\lim_{n \\to +\\infty} u_n = ___7___$",
+                "$u_n = \\dfrac{1}{2n} - 1$ donne $\\displaystyle\\lim_{n \\to +\\infty} u_n = 0 - 1 = ___-1___$"
+              ]
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Limite avec fraction** :",
+              "content": "Soit $u_n = \\dfrac{3n + 5}{n + 2}$.\n\nDivisons par $n$ : $u_n = \\dfrac{3 + \\frac{5}{n}}{1 + \\frac{2}{n}}$\n\nQuand $n$ devient très grand : $\\dfrac{5}{n}$ et $\\dfrac{2}{n}$ tendent vers $___0___$\n\nDonc : $\\displaystyle\\lim_{n \\to +\\infty} u_n = \\dfrac{3 + 0}{1 + 0} = ___3___$"
+            },
+            {
+              "type": "p",
+              "content": "?> **Règle pour les fractions** : La limite est le quotient des coefficients dominants."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Applications de la règle** :",
+              "listType": "bullet",
+              "content": [
+                "$\\dfrac{5n + 3}{2n - 1}$ a pour limite $\\dfrac{5}{2}$ (coefficients de $n$)",
+                "$\\dfrac{7n^2 + n}{3n^2 - 5}$ a pour limite $\\dfrac{___7___}{3}$ (coefficients de $n^2$)",
+                "$\\dfrac{2n^3 - n}{4n^3 + 7n^2}$ a pour limite $\\dfrac{2}{4} = ___\\dfrac{1}{2}___$ (coefficients de $n^3$)"
+              ]
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Avec racine carrée** :",
+              "content": "Soit $u_n = \\dfrac{\\sqrt{n^2 + 3n} - n}{n + 1}$.\n\nMultiplions par l'expression conjuguée :\n\n$$u_n = \\dfrac{3n}{(n + 1)(\\sqrt{n^2 + 3n} + n)}$$\n\nDivisons par $n$ :\n\n$$u_n = \\dfrac{3}{(1 + \\frac{1}{n})(\\sqrt{1 + \\frac{3}{n}} + 1)}$$\n\nLa limite est : $\\dfrac{3}{1 \\times 2} = ___\\dfrac{3}{2}___$"
+            }
+          ]
+        },
+        {
+          "title": "Limite Infinie",
+          "elements": [
+            {
+              "type": "p",
+              "content": "Une suite peut grandir indéfiniment (vers $+\\infty$) ou diminuer indéfiniment (vers $-\\infty$)."
+            },
+            {
+              "type": "definition-box",
+              "preamble": "**Limite $+\\infty$** :",
+              "content": "La suite $(u_n)$ a pour limite $+\\infty$ si les termes deviennent arbitrairement grands.\n\nNotation : $\\displaystyle\\lim_{n \\to +\\infty} u_n = +\\infty$"
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Limites infinies fondamentales** :",
+              "listType": "bullet",
+              "content": [
+                "$\\displaystyle\\lim_{n \\to +\\infty} n = ___+\\infty___$",
+                "$\\displaystyle\\lim_{n \\to +\\infty} n^2 = ___+\\infty___$",
+                "$\\displaystyle\\lim_{n \\to +\\infty} n^k = +\\infty$ pour tout $k > 0$",
+                "$\\displaystyle\\lim_{n \\to +\\infty} \\sqrt{n} = ___+\\infty___$"
+              ]
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemples** :",
+              "listType": "bullet",
+              "content": [
+                "$u_n = 3n + 5$ a pour limite $___+\\infty___$",
+                "$u_n = -2n^2$ a pour limite $___-\\infty___$",
+                "$u_n = n^3 - 1000n$ a pour limite $___+\\infty___$ (car $n^3$ domine)",
+                "$u_n = \\sqrt{n} + \\sin(n)$ a pour limite $___+\\infty___$"
+              ]
+            },
+            {
+              "type": "p",
+              "content": "?> **Règle des degrés** :\n\nSi degré(numérateur) est supérieur à degré(dénominateur), la limite est infinie.\n\nSi les degrés sont égaux, la limite est le quotient des coefficients.\n\nSi degré(numérateur) est inférieur à degré(dénominateur), la limite est $___0___$."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Applications** :",
+              "listType": "bullet",
+              "content": [
+                "$\\dfrac{n^3 + 5}{n^2 - 1}$ : degré 3 est supérieur à degré 2, limite = $___+\\infty___$",
+                "$\\dfrac{4n^2 + n}{7n^2 + 3}$ : degrés égaux, limite = $\\dfrac{4}{___7___}$",
+                "$\\dfrac{n + 5}{n^3 - 2}$ : degré 1 est inférieur à degré 3, limite = $___0___$"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Convergence et Divergence",
+          "elements": [
+            {
+              "type": "definition-box",
+              "preamble": "**Suite Convergente** :",
+              "content": "Une suite est **convergente** si elle admet une limite finie."
+            },
+            {
+              "type": "definition-box",
+              "preamble": "**Suite Divergente** :",
+              "content": "Une suite est **divergente** si elle tend vers l'infini ou n'a pas de limite."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Classification** :",
+              "listType": "bullet",
+              "content": [
+                "$u_n = \\dfrac{1}{n} + 2$ tend vers 2, donc **convergente**",
+                "$u_n = n^2$ tend vers $+\\infty$, donc **divergente**",
+                "$u_n = (-1)^n$ oscille entre $-1$ et $1$, donc **divergente**"
+              ]
+            },
+            {
+              "type": "theorem-box",
+              "preamble": "**Théorème de Convergence Monotone** :",
+              "listType": "bullet",
+              "content": [
+                "Toute suite **croissante** et **majorée** est convergente",
+                "Toute suite **décroissante** et **minorée** est convergente"
+              ]
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Application** :",
+              "content": "Soit $u_n = 3 - \\dfrac{1}{n}$ pour $n \\geq 1$.\n\n**Monotonie** : $u_{n+1} - u_n = \\dfrac{1}{n} - \\dfrac{1}{n+1} = \\dfrac{1}{n(n+1)} > ___0___$\n\nLa suite est **croissante**.\n\n**Majoration** : $u_n = 3 - \\dfrac{1}{n} < ___3___$\n\nD'après le théorème, la suite est **convergente** (et sa limite est 3)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Opérations sur les Limites",
+      "subsections": [
+        {
+          "title": "Règles de Calcul",
+          "elements": [
+            {
+              "type": "p",
+              "content": "Les limites se calculent comme des opérations ordinaires, sauf pour les formes indéterminées."
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Somme** :",
+              "content": "Si $\\displaystyle\\lim_{n \\to +\\infty} u_n = \\ell$ et $\\displaystyle\\lim_{n \\to +\\infty} v_n = \\ell'$, alors :\n\n$$\\displaystyle\\lim_{n \\to +\\infty} (u_n + v_n) = \\ell + \\ell'$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemples de sommes** :",
+              "listType": "bullet",
+              "content": [
+                "$u_n = \\dfrac{1}{n}$ et $v_n = \\dfrac{2}{n}$ donnent $\\lim(u_n + v_n) = 0 + 0 = ___0___$",
+                "$u_n = 3 + \\dfrac{1}{n}$ et $v_n = 5 - \\dfrac{2}{n}$ donnent $\\lim(u_n + v_n) = 3 + 5 = ___8___$"
+              ]
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Produit** :",
+              "content": "Si $\\displaystyle\\lim_{n \\to +\\infty} u_n = \\ell$ et $\\displaystyle\\lim_{n \\to +\\infty} v_n = \\ell'$, alors :\n\n$$\\displaystyle\\lim_{n \\to +\\infty} (u_n \\times v_n) = \\ell \\times \\ell'$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemples de produits** :",
+              "listType": "bullet",
+              "content": [
+                "$u_n = \\dfrac{2}{n}$ et $v_n = 3$ donnent $\\lim(u_n \\times v_n) = 0 \\times 3 = ___0___$",
+                "$u_n = -n$ et $v_n = n^2$ donnent $\\lim(u_n \\times v_n) = ___-\\infty___$"
+              ]
+            },
+            {
+              "type": "property-box",
+              "preamble": "**Quotient** :",
+              "content": "Si $\\displaystyle\\lim_{n \\to +\\infty} u_n = \\ell$ et $\\displaystyle\\lim_{n \\to +\\infty} v_n = \\ell'$ avec $\\ell' \\neq 0$, alors :\n\n$$\\displaystyle\\lim_{n \\to +\\infty} \\dfrac{u_n}{v_n} = \\dfrac{\\ell}{\\ell'}$$"
+            },
+            {
+              "type": "p",
+              "content": "!> **Formes indéterminées** : $\\dfrac{\\infty}{\\infty}$, $\\dfrac{0}{0}$, $(+\\infty) + (-\\infty)$, $(0) \\times (\\infty)$\n\nIl faut transformer l'expression pour lever l'indétermination."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Critères de Convergence",
+      "subsections": [
+        {
+          "title": "Théorème des Gendarmes",
+          "elements": [
+            {
+              "type": "theorem-box",
+              "preamble": "**Théorème des Gendarmes** :",
+              "content": "Si à partir d'un certain rang : $v_n \\leq u_n \\leq w_n$\n\nET si $\\displaystyle\\lim_{n \\to +\\infty} v_n = \\displaystyle\\lim_{n \\to +\\infty} w_n = \\ell$\n\nAlors : $\\displaystyle\\lim_{n \\to +\\infty} u_n = \\ell$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Avec cosinus** :",
+              "content": "Soit $u_n = \\dfrac{\\cos(n)}{n}$ pour $n \\geq 1$.\n\nOn sait que $-1 \\leq \\cos(n) \\leq ___1___$\n\nEn divisant par $n > 0$ : $\\dfrac{-1}{n} \\leq \\dfrac{\\cos(n)}{n} \\leq \\dfrac{1}{n}$\n\nOr : $\\displaystyle\\lim_{n \\to +\\infty} \\dfrac{-1}{n} = ___0___$ et $\\displaystyle\\lim_{n \\to +\\infty} \\dfrac{1}{n} = ___0___$\n\nD'après le théorème : $\\displaystyle\\lim_{n \\to +\\infty} \\dfrac{\\cos(n)}{n} = ___0___$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Avec sinus** :",
+              "content": "Soit $v_n = \\dfrac{n + \\sin(n)}{n}$ pour $n \\geq 1$.\n\nOn a $-1 \\leq \\sin(n) \\leq 1$, donc : $n - 1 \\leq n + \\sin(n) \\leq n + ___1___$\n\nEn divisant par $n$ : $1 - \\dfrac{1}{n} \\leq v_n \\leq 1 + \\dfrac{1}{n}$\n\nOr : $\\displaystyle\\lim_{n \\to +\\infty} \\left(1 - \\dfrac{1}{n}\\right) = ___1___$ et $\\displaystyle\\lim_{n \\to +\\infty} \\left(1 + \\dfrac{1}{n}\\right) = ___1___$\n\nDonc : $\\displaystyle\\lim_{n \\to +\\infty} v_n = ___1___$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Cas plus complexe** :",
+              "content": "Soit $w_n = \\dfrac{2n + \\cos(n)}{3n - \\sin(n)}$ pour $n \\geq 1$.\n\nEncadrement : $\\dfrac{2n - 1}{3n + 1} \\leq w_n \\leq \\dfrac{2n + 1}{3n - 1}$\n\nLes deux bornes tendent vers $\\dfrac{2}{___3___}$\n\nDonc : $\\displaystyle\\lim_{n \\to +\\infty} w_n = ___\\dfrac{2}{3}___$"
+            }
+          ]
+        },
+        {
+          "title": "Critères de Comparaison",
+          "elements": [
+            {
+              "type": "theorem-box",
+              "preamble": "**Critères** :",
+              "listType": "bullet",
+              "content": [
+                "Si $v_n \\geq \\alpha u_n$ avec $\\alpha > 0$ et $\\displaystyle\\lim_{n \\to +\\infty} u_n = +\\infty$, alors $\\displaystyle\\lim_{n \\to +\\infty} v_n = +\\infty$",
+                "Si $|v_n - \\ell| \\leq \\alpha u_n$ et $\\displaystyle\\lim_{n \\to +\\infty} u_n = 0$, alors $\\displaystyle\\lim_{n \\to +\\infty} v_n = \\ell$"
+              ]
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Vers l'infini** :",
+              "content": "Soit $u_n = 2n + \\cos(n)$ pour $n \\geq 1$.\n\nOn a : $u_n \\geq 2n - 1$\n\nOr : $\\displaystyle\\lim_{n \\to +\\infty} (2n - 1) = ___+\\infty___$\n\nDonc : $\\displaystyle\\lim_{n \\to +\\infty} u_n = ___+\\infty___$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Limite nulle** :",
+              "content": "Soit $v_n = \\dfrac{\\sin(n)}{n^2}$ pour $n \\geq 1$.\n\nOn a : $\\left|\\dfrac{\\sin(n)}{n^2}\\right| \\leq \\dfrac{1}{n^2}$\n\nOr : $\\displaystyle\\lim_{n \\to +\\infty} \\dfrac{1}{n^2} = ___0___$\n\nDonc : $\\displaystyle\\lim_{n \\to +\\infty} v_n = ___0___$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Suites de Formes Particulières",
+      "subsections": [
+        {
+          "title": "Suites Géométriques $q^n$",
+          "elements": [
+            {
+              "type": "property-box",
+              "preamble": "**Comportement de $q^n$** :",
+              "content": "| Condition | Limite |\n|-----------|--------|\n| $q > 1$ | $+\\infty$ |\n| $q = 1$ | $1$ |\n| $-1 < q < 1$ | $0$ |\n| $q \\leq -1$ | Pas de limite |"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Applications** :",
+              "listType": "bullet",
+              "content": [
+                "$\\displaystyle\\lim_{n \\to +\\infty} 2^n = ___+\\infty___$ car $q = 2 > 1$",
+                "$\\displaystyle\\lim_{n \\to +\\infty} \\left(\\dfrac{1}{3}\\right)^n = ___0___$ car $-1 < \\dfrac{1}{3} < 1$",
+                "$\\displaystyle\\lim_{n \\to +\\infty} \\left(\\dfrac{2}{5}\\right)^n = ___0___$ car $-1 < \\dfrac{2}{5} < 1$",
+                "$\\displaystyle\\lim_{n \\to +\\infty} (-0.5)^n = ___0___$ car $-1 < -0.5 < 1$"
+              ]
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Avec plusieurs puissances** :",
+              "content": "Calculons $\\displaystyle\\lim_{n \\to +\\infty} \\dfrac{3^n - 5^n}{7^n}$.\n\nFactorisons par $5^n$ au numérateur :\n\n$$\\dfrac{3^n - 5^n}{7^n} = \\left(\\dfrac{5}{7}\\right)^n \\left(\\left(\\dfrac{3}{5}\\right)^n - 1\\right)$$\n\nQuand $n$ devient grand : $\\left(\\dfrac{3}{5}\\right)^n$ tend vers $___0___$ et $\\left(\\dfrac{5}{7}\\right)^n$ tend vers $___0___$\n\nDonc la limite est $___0___$"
+            }
+          ]
+        },
+        {
+          "title": "Suites Puissance $n^r$",
+          "elements": [
+            {
+              "type": "property-box",
+              "preamble": "**Comportement de $n^r$** :",
+              "listType": "bullet",
+              "content": [
+                "Si $r > 0$ : $\\displaystyle\\lim_{n \\to +\\infty} n^r = +\\infty$",
+                "Si $r < 0$ : $\\displaystyle\\lim_{n \\to +\\infty} n^r = 0$"
+              ]
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Applications** :",
+              "listType": "bullet",
+              "content": [
+                "$\\displaystyle\\lim_{n \\to +\\infty} n^{5} = ___+\\infty___$ car $r = 5 > 0$",
+                "$\\displaystyle\\lim_{n \\to +\\infty} n^{-2} = \\displaystyle\\lim_{n \\to +\\infty} \\dfrac{1}{n^2} = ___0___$ car $r = -2 < 0$",
+                "$\\displaystyle\\lim_{n \\to +\\infty} \\sqrt{n} = ___+\\infty___$ car $r = \\dfrac{1}{2} > 0$"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Suites Composées $v_n = f(u_n)$",
+          "elements": [
+            {
+              "type": "theorem-box",
+              "preamble": "**Composition avec fonction continue** :",
+              "content": "Si $(u_n)$ converge vers $\\ell$ et si $f$ est continue en $\\ell$, alors :\n\n$$\\displaystyle\\lim_{n \\to +\\infty} f(u_n) = f(\\ell)$$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Avec racine carrée** :",
+              "content": "Soit $u_n = \\dfrac{4n + 1}{n} = 4 + \\dfrac{1}{n}$\n\nOn a $\\displaystyle\\lim_{n \\to +\\infty} u_n = ___4___$\n\nSoit $v_n = \\sqrt{u_n}$. La fonction $f(x) = \\sqrt{x}$ est continue en 4.\n\nDonc : $\\displaystyle\\lim_{n \\to +\\infty} v_n = \\sqrt{4} = ___2___$"
+            }
+          ]
+        },
+        {
+          "title": "Suites Récurrentes",
+          "elements": [
+            {
+              "type": "theorem-box",
+              "preamble": "**Théorème du Point Fixe** :",
+              "content": "Soit $(u_n)$ définie par $u_{n+1} = f(u_n)$.\n\nSi la suite est convergente vers $\\ell$ et si $f$ est continue en $\\ell$, alors :\n\n$$f(\\ell) = \\ell$$\n\nOn dit que $\\ell$ est un **point fixe** de $f$."
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Exemple simple** :",
+              "content": "Considérons $f(x) = \\dfrac{x}{2} + 1$ et $u_0 = 0$, $u_{n+1} = f(u_n)$.\n\nCalculons : $u_0 = 0$, $u_1 = 1$, $u_2 = ___1.5___$, $u_3 = 1.75$, $u_4 = ___1.875___$\n\nLa suite converge vers 2. Vérifions : $x = \\dfrac{x}{2} + 1$ donne $\\dfrac{x}{2} = 1$, soit $x = ___2___$"
+            },
+            {
+              "type": "example-box",
+              "preamble": "**Application** :",
+              "content": "Soit $f(x) = \\sqrt{3 + x}$ et $u_0 = 1$, $u_{n+1} = \\sqrt{3 + u_n}$.\n\nSi la suite converge vers $\\ell$, alors :\n\n$$\\ell = \\sqrt{3 + \\ell}$$\n\nEn élevant au carré : $\\ell^2 = 3 + \\ell$\n\nDonc : $\\ell^2 - \\ell - 3 = 0$\n\nDiscriminant : $\\Delta = 1 + 12 = ___13___$\n\nSolution positive : $\\ell = \\dfrac{1 + \\sqrt{13}}{2} \\approx ___2.3___$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Exercices d'Application",
+      "subsections": [
+        {
+          "title": "Exercice Complet",
+          "elements": [
+            {
+              "type": "practice-box",
+              "statement": "Étude d'une suite récurrente\n\nOn considère la suite $(u_n)$ définie par :\n\n$$\\begin{cases}u_0 = 2 \\\\ u_{n+1} = \\sqrt{6 + u_n}\\end{cases}$$",
+              "listType": "numbered",
+              "content": [
+                "Montrer par récurrence que $0 \\leq u_n \\leq 3$ pour tout $n$",
+                "Étudier la monotonie de $(u_n)$",
+                "En déduire que $(u_n)$ est convergente, puis calculer sa limite"
+              ],
+              "solution": [
+                "**Récurrence**\n\n**Initialisation** : $u_0 = 2$ et $0 \\leq 2 \\leq 3$\n\n**Hérédité** : Si $0 \\leq u_n \\leq 3$, alors $6 \\leq 6 + u_n \\leq 9$\n\nDonc $\\sqrt{6} \\leq \\sqrt{6 + u_n} \\leq 3$, soit $0 \\leq u_{n+1} \\leq 3$",
+                "**Monotonie**\n\n$$u_{n+1} - u_n = \\sqrt{6 + u_n} - u_n = \\dfrac{6 + u_n - u_n^2}{\\sqrt{6 + u_n} + u_n}$$\n\n$$= \\dfrac{-(u_n - 3)(u_n + 2)}{\\sqrt{6 + u_n} + u_n}$$\n\nComme $0 \\leq u_n \\leq 3$ : $u_n - 3 \\leq 0$ et $u_n + 2 > 0$\n\nDonc $u_{n+1} - u_n \\geq 0$. La suite est croissante.",
+                "**Convergence et limite**\n\nLa suite est croissante et majorée par 3, donc convergente.\n\nSoit $\\ell$ sa limite. On a $\\ell = \\sqrt{6 + \\ell}$, donc $\\ell^2 = 6 + \\ell$\n\nAinsi : $\\ell^2 - \\ell - 6 = 0$, soit $(\\ell - 3)(\\ell + 2) = 0$\n\nComme $\\ell \\geq 0$, on a $\\ell = 3$"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

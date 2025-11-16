@@ -17,9 +17,15 @@ Ce guide est conçu pour permettre aux outils IA de générer automatiquement de
 
 ---
 
-## Structure Obligatoire
+## Structure Obligatoire (sans numérotation visible)
 
-### 1. Architecture JSON Complète
+**RÈGLE GLOBALE SUR LES TITRES**  
+Les IA **ne doivent jamais générer** de numérotation explicite dans les titres ou sous‑titres du JSON.
+- ❌ Interdit : "1. Introduction", "2) Définitions", "A) Propriétés" dans `title`, `subtitle`, `sections[].title`, `subsections[].title` ou `preamble`.
+- ✅ Autorisé : Titres descriptifs simples comme "Introduction", "Définition de la dérivée", "Propriétés utiles".
+- ✅ Si une progression numérotée est nécessaire, utiliser une **liste** avec `listType: "numbered"` à l’intérieur du `content`, jamais dans les titres.
+
+### Architecture JSON Complète
 
 ```json
 {
@@ -49,7 +55,7 @@ Ce guide est conçu pour permettre aux outils IA de générer automatiquement de
 }
 ```
 
-### 2. Règles Structurelles STRICTES
+### Règles Structurelles STRICTES
 
 #### ✅ OBLIGATOIRE
 - **Header** : Doit contenir au minimum `title`, `subtitle`, et `classe`
@@ -180,7 +186,7 @@ Ce guide est conçu pour permettre aux outils IA de générer automatiquement de
 ```json
 {
   "type": "practice-box",
-  "statement": "Soit $f(x) = x^2 - 4x + 3$",
+  "statement": "Étude d'une fonction polynomiale\n\nSoit $f(x) = x^2 - 4x + 3$",
   "listType": "numbered",
   "content": [
     "Calculer $f(0)$ et $f(2)$",
@@ -202,6 +208,8 @@ Ce guide est conçu pour permettre aux outils IA de générer automatiquement de
 - ✅ Utiliser `listType: "numbered"` pour des questions multiples
 - ❌ Ne jamais laisser une solution vide
 - ❌ Ne pas mettre "Solution :" dans le texte de la solution (c'est automatique)
+- ❌ **INTERDIT** : Ne JAMAIS mettre "**Exercice 1** :", "**Exercice 2** :", etc. dans le `statement` ou `preamble`
+- ✅ Mettre directement le titre descriptif : "Étude d'une fonction", "Calcul de dérivées", etc.
 
 ---
 
@@ -288,17 +296,40 @@ Ce guide est conçu pour permettre aux outils IA de générer automatiquement de
 - `?>` : Astuce/Conseil (affichage en cyan)
 - Sans préfixe : Remarque normale
 
-**Exemples** :
+**⚠️ IMPORTANT** : Ne jamais imbriquer les astuces dans les remarques. Créer des `remark-box` séparés :
+- Un `remark-box` avec `!>` pour les remarques/attention
+- Un autre `remark-box` avec `?>` pour les astuces
+
+Ne PAS faire :
 ```json
 {
   "type": "remark-box",
-  "content": "!> **Attention** : Ne pas confondre $f'(a)$ (nombre dérivé en $a$) avec $f'(x)$ (fonction dérivée)."
+  "content": "!> **Attention** : ...\n\n?> **Astuce** : ..."
 }
 ```
 
 ```json
 {
   "type": "remark-box",
+  "content": "!> **Attention** : ..."
+},
+{
+  "type": "remark-box",
+  "content": "?> **Astuce** : ..."
+}
+```
+
+**Exemples** :
+```json
+{
+  "type": "p",
+  "content": "!> **Attention** : Ne pas confondre $f'(a)$ (nombre dérivé en $a$) avec $f'(x)$ (fonction dérivée)."
+}
+```
+
+```json
+{
+  "type": "p",
   "content": "?> **Astuce** : Pour vérifier qu'une fonction est paire, il suffit de vérifier que $f(-x) = f(x)$ pour quelques valeurs de $x$."
 }
 ```
@@ -354,8 +385,29 @@ Ce guide est conçu pour permettre aux outils IA de générer automatiquement de
 }
 ```
 
-**Préfixe spécial** :
-- `>>` : Désactive la puce pour cette ligne (utile pour les titres dans une liste)
+**Préfixe spécial `>>`** :
+- **Usage** : Désactive la puce pour une ligne spécifique
+- **Utile pour** :
+  - Les titres/sous-titres dans une liste
+  - Les notes/remarques intercalées
+  - Les séparateurs visuels
+- **Position** : Au début de la ligne, avant tout texte
+
+**Exemple d'utilisation dans remark-box** :
+```json
+{
+  "type": "remark-box",
+  "preamble": "**Points clés** :",
+  "listType": "bullet",
+  "content": [
+    ">> **Définition** :",
+    "Une fonction est continue si...",
+    "Une fonction est dérivable si...",
+    ">> **Attention** :",
+    "Ne pas confondre continuité et dérivabilité"
+  ]
+}
+```
 
 **Règles** :
 - ✅ Utiliser pour des explications courtes
@@ -420,7 +472,7 @@ Ce guide est conçu pour permettre aux outils IA de générer automatiquement de
 
 ## Règles de Validation
 
-### 1. Validation du JSON
+### Validation du JSON
 
 #### ✅ Structure Valide
 ```json
@@ -465,7 +517,7 @@ Ce guide est conçu pour permettre aux outils IA de générer automatiquement de
 
 ---
 
-### 2. Validation du LaTeX
+### Validation du LaTeX
 
 #### ✅ LaTeX Correct
 ```json
@@ -493,7 +545,7 @@ Ce guide est conçu pour permettre aux outils IA de générer automatiquement de
 
 ---
 
-### 3. Validation des Fill-in-Blank
+### Validation des Fill-in-Blank
 
 #### ✅ Fill-in-Blank Correct
 ```json
@@ -520,6 +572,11 @@ Ce guide est conçu pour permettre aux outils IA de générer automatiquement de
 **Erreur** : doit être 3 underscores, pas 2
 
 ```json
+"content": "Donc $f(0) = 0$ ✓"
+```
+**Erreur** : Ne pas utiliser le symbole ✓ (coche)
+
+```json
 {
   "type": "definition-box",
   "content": "Une fonction est ___dérivable___ si..."
@@ -536,7 +593,41 @@ Ce guide est conçu pour permettre aux outils IA de générer automatiquement de
 
 ---
 
-### 4. Validation des Listes
+### Éviter les Accolades/Cases LaTeX
+
+**⚠️ RÈGLE IMPORTANTE** : Éviter `\begin{cases}...\end{cases}` pour présenter des résultats.
+
+#### ❌ À ÉVITER
+```json
+{
+  "type": "theorem-box",
+  "content": "$$f(x) = \\begin{cases} x^2 & \\text{si } x \\geq 0 \\\\ -x & \\text{si } x < 0 \\end{cases}$$"
+}
+```
+
+#### ✅ PRÉFÉRER : Utiliser des listes à puces
+```json
+{
+  "type": "theorem-box",
+  "preamble": "**Définition par morceaux** :",
+  "content": "La fonction $f$ est définie par :",
+  "listType": "bullet",
+  "subContent": [
+    "$f(x) = x^2$ si $x \\geq 0$",
+    "$f(x) = -x$ si $x < 0$"
+  ]
+}
+```
+
+**Exception** : Les `\begin{cases}` sont autorisés dans les énoncés d'exercices (`statement`) quand c'est la définition originale d'une fonction.
+
+---
+
+### Validation des Listes
+
+**⚠️ RÈGLE OBLIGATOIRE** : Toute liste doit avoir un `listType` défini !
+- Listes numérotées : `"listType": "numbered"`
+- Listes à puces : `"listType": "bullet"`
 
 #### ✅ Liste Correcte avec listType
 ```json
@@ -548,6 +639,19 @@ Ce guide est conçu pour permettre aux outils IA de générer automatiquement de
     "Premier exemple",
     "Deuxième exemple",
     "Troisième exemple"
+  ]
+}
+```
+
+```json
+{
+  "type": "property-box",
+  "preamble": "**Règles de dérivation** :",
+  "listType": "numbered",
+  "content": [
+    "Règle 1 : $(u + v)' = u' + v'$",
+    "Règle 2 : $(ku)' = ku'$",
+    "Règle 3 : $(uv)' = u'v + uv'$"
   ]
 }
 ```
@@ -581,30 +685,35 @@ Ce guide est conçu pour permettre aux outils IA de générer automatiquement de
 
 ---
 
-### 5. Validation des Tableaux Markdown
+### Validation des Tableaux Markdown
 
-#### ✅ Tableau Correct
+**⚠️ IMPORTANT : TABLEAUX DE VARIATION INTERDITS**
+
+**❌ NE PAS CRÉER de tableaux de variation dans le JSON** - Ils seront injectés manuellement comme images.
+
+Si un exercice demande "Dresser le tableau de variations" :
+- ✅ Garder la question dans le `content`
+- ✅ Dans la solution, décrire verbalement : "$f$ est croissante sur $]-\infty, -1]$ puis décroissante sur $[-1, 1]$..."
+- ❌ Ne PAS inclure le tableau markdown dans la solution
+
+**Exception** : Les tableaux de signes pour factorisation peuvent être gardés.
+
+#### ✅ Tableau de Signes (AUTORISÉ)
+```json
+"content": "Tableau de signes :\n\n| $x$ | $-\\infty$ | | $-1$ | | $3$ | | $+\\infty$ |\n|-----|-----------|---|------|---|-----|---|----------|\n| $x+1$ | | $-$ | $0$ | $+$ | $+$ | $+$ | |\n| $x-3$ | | $-$ | $-$ | $-$ | $0$ | $+$ | |"
+```
+
+#### ❌ Tableau de Variations (INTERDIT)
 ```json
 "content": "Tableau de variations :\n\n| $x$ | $-\\infty$ | | $2$ | | $+\\infty$ |\n|-----|-----------|---|-----|---|----------|\n| $f(x)$ | $+\\infty$ | ↘ | $-1$ | ↗ | $+\\infty$ |"
 ```
-
-**Règles** :
-- Toujours 2 lignes vides avant le tableau (`\n\n`)
-- Ligne de séparation avec `|---|---|...`
-- Symboles de variation : `↗` (croissant), `↘` (décroissant)
-- LaTeX dans les cellules : `$...$`
-
-#### ❌ Tableau Incorrect
-```json
-"content": "| $x$ | $-\\infty$ | $2$ |\n| $f(x)$ | $+\\infty$ | $-1$ |"
-```
-**Erreur** : manque la ligne de séparation
+**Erreur** : Les tableaux de variations seront injectés manuellement
 
 ---
 
 ## Principes Pédagogiques
 
-### 1. Progression Pédagogique
+### Progression Pédagogique
 
 **Ordre recommandé dans une subsection** :
 1. **Paragraphe d'introduction** (`p`) : Contexte et motivation
@@ -642,7 +751,7 @@ Ce guide est conçu pour permettre aux outils IA de générer automatiquement de
           "content": "..."
         },
         {
-          "type": "remark-box",
+          "type": "p",
           "content": "?> **Astuce** : ..."
         },
         {
@@ -659,7 +768,7 @@ Ce guide est conçu pour permettre aux outils IA de générer automatiquement de
 
 ---
 
-### 2. Langage et Style
+### Langage et Style
 
 #### ✅ Style Recommandé
 - Phrases courtes et directes
@@ -680,7 +789,7 @@ Ce guide est conçu pour permettre aux outils IA de générer automatiquement de
 
 ---
 
-### 3. Contexte Marocain
+### Contexte Marocain
 
 **Adapter le vocabulaire** :
 - ✅ Ensemble de définition (pas "domaine")
@@ -772,11 +881,11 @@ Ce guide est conçu pour permettre aux outils IA de générer automatiquement de
               "content": "Calculer la dérivée de $f(x) = x^2$ en $a = 2$.\n\n$$f'(2) = \\lim_{h \\to 0} \\dfrac{(2 + h)^2 - 4}{h}$$\n\n$$= \\lim_{h \\to 0} \\dfrac{4 + 4h + h^2 - 4}{h}$$\n\n$$= \\lim_{h \\to 0} \\dfrac{4h + h^2}{h}$$\n\n$$= \\lim_{h \\to 0} (4 + h) = ___4___$$"
             },
             {
-              "type": "remark-box",
+              "type": "p",
               "content": "?> **Astuce** : Factoriser par $h$ au numérateur permet de simplifier avant de calculer la limite."
             },
             {
-              "type": "remark-box",
+              "type": "p",
               "content": "!> **Attention** : Si la limite n'existe pas ou est infinie, la fonction n'est pas dérivable en ce point."
             },
             {
@@ -870,6 +979,9 @@ Ce guide est conçu pour permettre aux outils IA de générer automatiquement de
    - [ ] Tous les éléments ont un `content`
    - [ ] Les `practice-box` ont un `solution`
    - [ ] Nombre de solutions = nombre de questions
+   - [ ] **INTERDIT** : Pas de "**Exercice X** :" dans `statement` ou `preamble`
+   - [ ] Titres descriptifs directs : "Étude de fonction", "Calcul de limites", etc.
+   - [ ] Éviter `\begin{cases}` : utiliser listes à puces avec `subContent`
 
 3. **LaTeX**
    - [ ] Toutes les formules sont entre `$...$` ou `$$...$$`
@@ -883,11 +995,16 @@ Ce guide est conçu pour permettre aux outils IA de générer automatiquement de
    - [ ] Jamais dans definitions, theorems, properties
 
 5. **Listes**
-   - [ ] `listType` défini si `content` est un array
-   - [ ] Pas de puces manuelles si `listType` est défini
-   - [ ] Utiliser `>>` pour désactiver les puces
+   - [ ] `listType` **OBLIGATOIRE** si `content` est un array
+   - [ ] Utiliser `"numbered"` pour listes numérotées
+   - [ ] Utiliser `"bullet"` pour listes à puces
+   - [ ] Pas de puces manuelles (•, -, *) si `listType` est défini
+   - [ ] Utiliser `>>` au début de ligne pour désactiver la puce (titres, notes)
+   - [ ] Pas d'imbrication astuces/remarques : créer des remark-box séparés
 
 6. **Tableaux**
+   - [ ] **INTERDIT** : Pas de tableaux de variation (seront injectés comme images)
+   - [ ] Tableaux de signes autorisés uniquement
    - [ ] 2 lignes vides avant : `\n\n`
    - [ ] Ligne de séparation présente
    - [ ] LaTeX dans les cellules
@@ -1087,36 +1204,36 @@ Ce guide est conçu pour permettre aux outils IA de générer automatiquement de
 
 ### Instructions pour Génération Automatique
 
-#### 1. Workflow Recommandé
+#### Workflow Recommandé
 
 ```
 1. ANALYSER le contenu source (PDF, texte)
-   ↓
+  ↓
 2. STRUCTURER en sections logiques
-   ↓
+  ↓
 3. IDENTIFIER les types d'éléments (définition, exemple, etc.)
-   ↓
+  ↓
 4. GÉNÉRER le JSON section par section
-   ↓
+  ↓
 5. VALIDER le JSON (syntaxe + structure)
-   ↓
+  ↓
 6. VÉRIFIER la cohérence pédagogique
 ```
 
-#### 2. Priorités
+#### Priorités de génération
 
-**PRIORITÉ 1 - STRUCTURE**
+**PRIORITÉ 1 – STRUCTURE**
 - Header complet obligatoire
 - Au moins 3 sections minimum
 - Chaque section avec 1-3 subsections
 - Chaque subsection avec 3-10 éléments
 
-**PRIORITÉ 2 - CONTENU**
+**PRIORITÉ 2 – CONTENU**
 - Toujours inclure des exemples après les définitions
 - Toujours inclure au moins 2 exercices avec solutions
 - Utiliser fill-in-blank dans 30% des exemples
 
-**PRIORITÉ 3 - QUALITÉ**
+**PRIORITÉ 3 – QUALITÉ**
 - Solutions détaillées étape par étape
 - LaTeX correct partout
 - Progression pédagogique logique

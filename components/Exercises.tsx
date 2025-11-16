@@ -115,7 +115,10 @@ const Exercises: React.FC<ExercisesProps> = ({ onAllCompleted }) => {
                         const sqImages = organizeImages(sq.images);
                         
                         return (
-                            <li key={index} className="pl-2 text-sm sm:text-base leading-relaxed">
+                            <li
+                                key={index}
+                                className="text-base sm:text-lg leading-relaxed font-semibold tracking-tight text-slate-900"
+                            >
                                 {/* Images en position top pour la sous-question */}
                                 {sqImages.top.length > 0 && (
                                     <div className="mb-4 space-y-4">
@@ -135,31 +138,17 @@ const Exercises: React.FC<ExercisesProps> = ({ onAllCompleted }) => {
                                 )}
 
                                 {sq.sub_sub_questions && sq.sub_sub_questions.length > 0 && (
-                                    <ol 
-                                        className="list-none pl-0 mt-2 space-y-2"
-                                        style={{ 
-                                            counterReset: 'subsub-counter',
-                                            marginLeft: '1.5rem'
-                                        }}
-                                    >
+                                    <ol className="exercise-list-subsub mt-2 space-y-2">
                                         {sq.sub_sub_questions.map((ssq, ssqIndex) => (
-                                            <li 
-                                                key={ssqIndex} 
-                                                className="relative pl-8 text-sm sm:text-base leading-relaxed text-black"
-                                                style={{
-                                                    counterIncrement: 'subsub-counter',
-                                                    textAlign: 'left'
-                                                }}
+                                            <li
+                                                key={ssqIndex}
+                                                className="text-base sm:text-lg leading-relaxed tracking-tight"
                                             >
-                                                <span 
-                                                    className="absolute left-0 top-0 font-medium text-black"
-                                                    style={{
-                                                        content: 'counter(subsub-counter, lower-alpha) ". "',
-                                                    }}
-                                                >
-                                                    {String.fromCharCode(97 + ssqIndex)}.
-                                                </span>
-                                                <MathContent content={formatText(ssq.text)} className="text-sm sm:text-base" inline={true} />
+                                                <MathContent
+                                                    content={formatText(ssq.text)}
+                                                    className="text-sm sm:text-base"
+                                                    inline={true}
+                                                />
                                             </li>
                                         ))}
                                     </ol>
@@ -353,31 +342,17 @@ const Exercises: React.FC<ExercisesProps> = ({ onAllCompleted }) => {
 
                                         {/* Sub-sub-questions si elles existent */}
                                         {singleQuestion.sub_sub_questions && singleQuestion.sub_sub_questions.length > 0 && (
-                                            <ol
-                                                className="list-none pl-0 mt-2 space-y-2"
-                                                style={{
-                                                    counterReset: 'subsub-counter',
-                                                    marginLeft: '1.5rem'
-                                                }}
-                                            >
+                                            <ol className="exercise-list-subsub mt-2 space-y-2">
                                                 {singleQuestion.sub_sub_questions.map((ssq, ssqIndex) => (
                                                     <li
                                                         key={ssqIndex}
-                                                        className="relative pl-8 text-sm sm:text-base leading-relaxed text-black"
-                                                        style={{
-                                                            counterIncrement: 'subsub-counter',
-                                                            textAlign: 'left'
-                                                        }}
+                                                        className="text-base sm:text-lg leading-relaxed tracking-tight"
                                                     >
-                                                        <span
-                                                            className="absolute left-0 top-0 font-medium text-black"
-                                                            style={{
-                                                                content: 'counter(subsub-counter, lower-alpha) ". "',
-                                                            }}
-                                                        >
-                                                            {String.fromCharCode(97 + ssqIndex)}.
-                                                        </span>
-                                                        <MathContent content={formatText(ssq.text)} className="text-sm sm:text-base" inline={true} />
+                                                        <MathContent
+                                                            content={formatText(ssq.text)}
+                                                            className="text-sm sm:text-base"
+                                                            inline={true}
+                                                        />
                                                     </li>
                                                 ))}
                                             </ol>

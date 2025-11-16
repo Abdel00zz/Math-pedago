@@ -101,7 +101,7 @@ const MathContent: React.FC<MathContentProps> = ({ content, className = '', inli
             });
 
             // Vérifier si MathJax est disponible
-            if (!window.MathJax || !window.mathJaxReady) {
+            if (!window.MathJax) {
                 retryCount++;
                 if (retryCount < MAX_RETRIES) {
                     // Délai réduit : 50ms au lieu de 100-200ms

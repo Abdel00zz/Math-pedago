@@ -5,6 +5,67 @@ Créer des cours JSON **pédagogiques, complets et structurés** pour les élèv
 
 ---
 
+## 🚨 RÈGLES CRITIQUES À RESPECTER
+
+### 1. Structure des Listes
+- **✅ OBLIGATOIRE** : Toute liste (array) doit avoir `"listType"` défini
+  - `"listType": "numbered"` pour listes numérotées (1, 2, 3...)
+  - `"listType": "bullet"` pour listes à puces (•)
+- **❌ INTERDIT** : Puces manuelles (•, -, *) quand `listType` est défini
+- **🔹 Commande spéciale `>>`** : Désactive la puce pour une ligne
+  - Utile pour titres/sous-titres dans une liste
+  - Se place au début de la ligne : `">> **Titre** :"`
+
+### 2. Séparation Remarques/Astuces
+- **❌ INTERDIT** : Imbriquer astuces dans remarques
+- **✅ OBLIGATOIRE** : Créer des `remark-box` séparés
+  - Un avec `!>` pour remarques/attention (orange)
+  - Un autre avec `?>` pour astuces/conseils (cyan)
+
+### 3. Exercices (practice-box)
+- **❌ INTERDIT** : "**Exercice 1** :", "**Exercice 2** :" dans `statement` ou `preamble`
+- **✅ OBLIGATOIRE** : Titre descriptif direct
+  - ✅ "Étude complète d'une fonction"
+  - ✅ "Calcul de limites"
+  - ❌ "**Exercice 3** : Calcul de limites"
+
+### 4. Tableaux
+- **❌ INTERDIT** : Tableaux de variation (injectés manuellement comme images)
+- **✅ AUTORISÉ** : Tableaux de signes uniquement
+- Si question "Dresser le tableau de variations" :
+  - ✅ Garder la question dans `content`
+  - ✅ Réponse verbale : "$f$ est croissante sur..., décroissante sur..."
+  - ❌ Ne pas créer le tableau markdown
+
+### 5. Éviter \begin{cases}
+- **⚠️ À ÉVITER** : `\begin{cases}...\end{cases}` pour présenter des résultats
+- **✅ PRÉFÉRER** : Listes à puces avec `listType: "bullet"` et `subContent`
+- **Exception** : Autorisé dans `statement` pour définition originale de fonction
+
+**Exemple - À ÉVITER** :
+```json
+{
+  "type": "theorem-box",
+  "content": "$$f(x) = \\begin{cases} x^2 & \\text{si } x \\geq 0 \\\\ -x & \\text{si } x < 0 \\end{cases}$$"
+}
+```
+
+**Exemple - PRÉFÉRER** :
+```json
+{
+  "type": "theorem-box",
+  "preamble": "**Définition par morceaux** :",
+  "content": "La fonction $f$ est définie par :",
+  "listType": "bullet",
+  "subContent": [
+    "$f(x) = x^2$ si $x \\geq 0$",
+    "$f(x) = -x$ si $x < 0$"
+  ]
+}
+```
+
+---
+
 ## 📋 Structure JSON Obligatoire
 
 ```json
@@ -137,6 +198,28 @@ Créer des cours JSON **pédagogiques, complets et structurés** pour les élèv
 }
 ```
 
+**🚨 IMPORTANT - listType OBLIGATOIRE** :
+- Si `content` est un array (liste), **TOUJOURS** ajouter `"listType"`
+- `"listType": "numbered"` pour listes numérotées (1., 2., 3...)
+- `"listType": "bullet"` pour listes à puces (•)
+- Ne PAS mettre de puces manuelles (•, -, *) dans le texte
+
+**Utilisation de >> pour désactiver la puce** :
+```json
+{
+  "type": "property-box",
+  "preamble": "**Règles de calcul** :",
+  "listType": "bullet",
+  "content": [
+    ">> **Addition** :",
+    "$(u + v)' = u' + v'$",
+    "$(u - v)' = u' - v'$",
+    ">> **Multiplication** :",
+    "$(uv)' = u'v + uv'$"
+  ]
+}
+```
+
 ---
 
 ### 5. Remarque (`type: "remark-box"`)
@@ -157,6 +240,23 @@ Créer des cours JSON **pédagogiques, complets et structurés** pour les élèv
 - **Cas particuliers** : Pour illustrer avec des exemples simples
 - **Attention** : Pour éviter les erreurs courantes
 
+**🚨 Préfixes spéciaux** :
+- `!>` au début du content pour remarque/attention (affichage orange)
+- `?>` au début du content pour astuce/conseil (affichage cyan)
+- **IMPORTANT** : Ne JAMAIS mélanger `!>` et `?>` dans le même remark-box. Créer deux remark-box séparés.
+
+**Exemple correct** :
+```json
+{
+  "type": "remark-box",
+  "content": "!> **Attention** : La fonction n'est pas définie en $x=0$."
+},
+{
+  "type": "remark-box",
+  "content": "?> **Astuce** : Factoriser le numérateur et le dénominateur."
+}
+```
+
 ---
 
 ### 6. Exemple Standard (`type: "example-box"`)
@@ -166,7 +266,7 @@ Créer des cours JSON **pédagogiques, complets et structurés** pour les élèv
 ```json
 {
   "type": "example-box",
-  "preamble": "**Exemple X : Titre descriptif**",
+  "preamble": "**Titre descriptif**",
   "content": "Énoncé de l'exemple.\n\n**Solution** :\nDéveloppement détaillé de la solution.\n\n**Réponse** : Réponse finale claire."
 }
 ```
@@ -186,7 +286,7 @@ Créer des cours JSON **pédagogiques, complets et structurés** pour les élèv
 ```json
 {
   "type": "example-box",
-  "preamble": "**Exemple X : À compléter - Titre descriptif**",
+  "preamble": "** À compléter - Titre descriptif**",
   "content": "Énoncé avec des espaces à compléter.\n\n**Étape 1** :\nCalculons $x = ___?___$\n\nOn a $x = ___2___$ (réponse entre underscores)\n\n**Étape 2** :\nDonc $y = a \\times ___2___ = ___résultat___$"
 }
 ```
@@ -216,30 +316,44 @@ Créer des cours JSON **pédagogiques, complets et structurés** pour les élèv
 
 **Utilisation** : Exercices d'application avec solutions détaillées
 
+**🚨 RÈGLE IMPORTANTE** : Ne JAMAIS mettre "**Exercice X** :" dans le `statement` ou `preamble`. Utiliser directement un titre descriptif.
+
+**❌ À ÉVITER** :
 ```json
 {
   "type": "practice-box",
-  "statement": "**Exercice X** : Titre de l'exercice\n\nContexte et données de l'exercice.",
+  "statement": "**Exercice 2** : Calcul de limites\n\nSoit $f(x) = ...$",
+  ...
+}
+```
+
+**✅ CORRECT** :
+```json
+{
+  "type": "practice-box",
+  "statement": "Calcul de limites\n\nSoit $f(x) = \\frac{x^2-1}{x-1}$ définie sur $\\mathbb{R} \\setminus \\{1\\}$",
   "listType": "numbered",
   "content": [
-    "Question 1",
-    "Question 2",
-    "Question 3"
+    "Calculer $\\lim_{x \\to 1} f(x)$",
+    "Calculer $\\lim_{x \\to +\\infty} f(x)$",
+    "En déduire les asymptotes éventuelles"
   ],
   "solution": [
-    "Solution détaillée de la question 1 avec toutes les étapes.\n\n**Réponse** : Réponse finale claire.",
-    "Solution détaillée de la question 2.",
-    "Solution détaillée de la question 3."
+    "On factorise : $f(x) = \\frac{(x-1)(x+1)}{x-1} = x+1$ pour $x \\neq 1$\n\nDonc $\\lim_{x \\to 1} f(x) = 1+1 = 2$\n\n**Réponse** : $\\lim_{x \\to 1} f(x) = 2$",
+    "$\\lim_{x \\to +\\infty} (x+1) = +\\infty$\n\n**Réponse** : $\\lim_{x \\to +\\infty} f(x) = +\\infty$",
+    "Pas d'asymptote horizontale car limite infinie.\n\nPas d'asymptote verticale en $x=1$ car la limite existe.\n\n**Réponse** : Pas d'asymptote"
   ]
 }
 ```
 
 **✅ Bonnes pratiques** :
 - **5 exercices minimum par cours**
+- **listType OBLIGATOIRE** si plusieurs questions
 - Questions progressives (facile → difficile)
 - Solutions ultra-détaillées (chaque étape expliquée)
 - Réponse finale en gras
 - Utiliser des contextes marocains quand possible
+- **IMPORTANT** : Nombre de solutions = nombre de questions
 
 ---
 
@@ -430,7 +544,7 @@ Avant de finaliser un JSON, vérifier :
 ```json
 {
   "type": "example-box",
-  "preamble": "**Exemple X : À compléter - [Titre descriptif]**",
+  "preamble": "**À compléter - [Titre descriptif]**",
   "content": "[Énoncé du problème]\n\n**Solution** :\n\n**Étape 1** : [Description]\n$$\\text{Formule} = ___valeur___$$\n\n**Étape 2** : [Description]\nOn calcule : $x = ___a___ \\times ___b___ = ___résultat___$\n\n**Étape 3** : [Description finale]\n$$\\text{Résultat final} = ___réponse___$$\n\n**Réponse** : [Réponse complète]"
 }
 ```
@@ -467,7 +581,7 @@ Avant de finaliser un JSON, vérifier :
 },
 {
   "type": "example-box",
-  "preamble": "**Exemple X : Illustration de [concept]**",
+  "preamble": "**Illustration de [concept]**",
   "content": "[Exemple concret]\n\n**Solution** :\n[Développement]\n\n**Réponse** : [Conclusion]"
 }
 ```
@@ -525,7 +639,7 @@ Avant de finaliser un JSON, vérifier :
 
 Dans les exemples, ajouter des vérifications finales :
 ```json
-"**Vérification** : $\\text{calcul} = \\text{résultat}$ ✓"
+"**Vérification** : $\\text{calcul} = \\text{résultat}$"
 ```
 
 ---
@@ -557,6 +671,127 @@ Dans les exemples, ajouter des vérifications finales :
 6. **Notation incohérente**
    - Mauvais : Mélanger $Card(E)$, $|E|$, $card(E)$
    - Bon : Choisir une notation et s'y tenir
+
+7. **Astuces imbriquées dans remarques**
+   - Mauvais : Un seul `remark-box` avec `!>` et `?>` mélangés
+   - Bon : Deux `remark-box` séparés (un pour `!>`, un pour `?>`)
+
+8. **"Exercice X:" dans les titres**
+   - Mauvais : `"statement": "**Exercice 2** : Calculer la limite"`
+   - Bon : `"statement": "Calcul de limite\n\nSoit $f(x) = ...$"`
+
+9. **Tableaux de variation dans le JSON**
+   - Mauvais : Créer des tableaux markdown de variation
+   - Bon : Description verbale ("$f$ est croissante sur...")
+
+10. **Utilisation de \\begin{cases} pour résultats**
+    - Mauvais : `$$f(x) = \\begin{cases} ... \\end{cases}$$` dans theorem-box
+    - Bon : Liste à puces avec `listType: "bullet"`
+
+11. **Utilisation du symbole ✓ (coche)**
+    - Mauvais : `"content": "Donc $f(0) = 0$ ✓"`
+    - Bon : `"content": "Donc $f(0) = 0$"` (pas de coche)
+    - Note : Les validations doivent être implicites, pas marquées avec ✓
+
+---
+
+## ✅ Exemples de Bonnes Pratiques
+
+### 1. Liste avec listType et >>
+
+```json
+{
+  "type": "p",
+  "listType": "bullet",
+  "content": [
+    ">> **Méthode pour étudier une fonction** :",
+    "Déterminer l'ensemble de définition $D_f$",
+    "Étudier la parité si possible",
+    "Calculer la dérivée $f'(x)$",
+    "Dresser le tableau de variations",
+    ">> **Important** : Ne pas oublier les limites aux bornes"
+  ]
+}
+```
+
+### 2. Remarques et Astuces Séparées
+
+```json
+{
+  "type": "remark-box",
+  "content": "!> **Attention** : Ne pas confondre $f'(a)$ (nombre dérivé en $a$) et $f'(x)$ (fonction dérivée)."
+},
+{
+  "type": "remark-box",
+  "content": "?> **Astuce** : Pour factoriser $x^2 - 4$, penser à l'identité remarquable $a^2 - b^2 = (a-b)(a+b)$."
+}
+```
+
+### 3. Exercice Sans "Exercice X:"
+
+```json
+{
+  "type": "practice-box",
+  "statement": "Étude complète d'une fonction rationnelle\n\nSoit $f(x) = \\frac{x+1}{x-2}$ définie sur $\\mathbb{R} \\setminus \\{2\\}$",
+  "listType": "numbered",
+  "content": [
+    "Déterminer l'ensemble de définition",
+    "Calculer les limites aux bornes de $D_f$",
+    "Calculer $f'(x)$ et étudier son signe",
+    "Dresser le tableau de variations"
+  ],
+  "solution": [
+    "$D_f = \\mathbb{R} \\setminus \\{2\\}$",
+    "$\\lim_{x \\to +\\infty} f(x) = 1$, $\\lim_{x \\to 2^+} f(x) = +\\infty$, $\\lim_{x \\to 2^-} f(x) = -\\infty$",
+    "$f'(x) = \\frac{-3}{(x-2)^2} < 0$ pour tout $x \\in D_f$",
+    "$f$ est strictement décroissante sur $]-\\infty, 2[$ et sur $]2, +\\infty[$"
+  ]
+}
+```
+
+### 4. Éviter cases : Utiliser Listes
+
+**❌ À éviter** :
+```json
+{
+  "type": "theorem-box",
+  "content": "$$f(x) = \\begin{cases} x^2 & \\text{si } x \\geq 0 \\\\ -x & \\text{si } x < 0 \\end{cases}$$"
+}
+```
+
+**✅ Préférer** :
+```json
+{
+  "type": "theorem-box",
+  "preamble": "**Fonction valeur absolue** :",
+  "content": "La fonction $|x|$ est définie par :",
+  "listType": "bullet",
+  "subContent": [
+    "$f(x) = x$ si $x \\geq 0$",
+    "$f(x) = -x$ si $x < 0$"
+  ]
+}
+```
+
+### 5. Tableau de Variations INTERDIT
+
+**❌ Ne PAS faire** :
+```json
+{
+  "solution": [
+    "Tableau de variations :\n\n| $x$ | $-\\infty$ | | $2$ | | $+\\infty$ |\n|-----|-----------|---|-----|---|----------|\n| $f(x)$ | $+\\infty$ | ↘ | $-1$ | ↗ | $+\\infty$ |"
+  ]
+}
+```
+
+**✅ Faire à la place** :
+```json
+{
+  "solution": [
+    "$f$ est décroissante sur $]-\\infty, 2]$, atteint un minimum en $x=2$ avec $f(2)=-1$, puis croissante sur $[2, +\\infty[$."
+  ]
+}
+```
 
 ---
 
@@ -604,7 +839,7 @@ Dans les exemples, ajouter des vérifications finales :
 {
   "type": "example-box",
   "preamble": "**Exemple 4 : À compléter - Application des formules**",
-  "content": "Soit $\\tan\\left(\\dfrac{a}{2}\\right) = 2$. Calculons $\\cos a$, $\\sin a$ et $\\tan a$.\n\n**Solution** :\n\nOn pose $t = \\tan\\left(\\dfrac{a}{2}\\right) = ___2___$\n\n**Calcul de $\\cos a$** :\n\nOn utilise la formule : $\\cos a = \\dfrac{1 - t^2}{1 + t^2}$\n\n$$\\cos a = \\dfrac{1 - ___4___}{1 + ___4___} = \\dfrac{___-3___}{___5___} = ___-\\dfrac{3}{5}___$$\n\n**Calcul de $\\sin a$** :\n\nOn utilise : $\\sin a = \\dfrac{2t}{1 + t^2}$\n\n$$\\sin a = \\dfrac{2 \\times ___2___}{1 + ___4___} = \\dfrac{___4___}{___5___}$$\n\n**Calcul de $\\tan a$** :\n\n$$\\tan a = \\dfrac{\\sin a}{\\cos a} = \\dfrac{4/5}{-3/5} = ___-\\dfrac{4}{3}___$$\n\n**Vérification** : $\\tan a = \\dfrac{2t}{1-t^2} = \\dfrac{4}{1-4} = -\\dfrac{4}{3}$ ✓"
+  "content": "Soit $\\tan\\left(\\dfrac{a}{2}\\right) = 2$. Calculons $\\cos a$, $\\sin a$ et $\\tan a$.\n\n**Solution** :\n\nOn pose $t = \\tan\\left(\\dfrac{a}{2}\\right) = ___2___$\n\n**Calcul de $\\cos a$** :\n\nOn utilise la formule : $\\cos a = \\dfrac{1 - t^2}{1 + t^2}$\n\n$$\\cos a = \\dfrac{1 - ___4___}{1 + ___4___} = \\dfrac{___-3___}{___5___} = ___-\\dfrac{3}{5}___$$\n\n**Calcul de $\\sin a$** :\n\nOn utilise : $\\sin a = \\dfrac{2t}{1 + t^2}$\n\n$$\\sin a = \\dfrac{2 \\times ___2___}{1 + ___4___} = \\dfrac{___4___}{___5___}$$\n\n**Calcul de $\\tan a$** :\n\n$$\\tan a = \\dfrac{\\sin a}{\\cos a} = \\dfrac{4/5}{-3/5} = ___-\\dfrac{4}{3}___$$\n\n**Vérification** : $\\tan a = \\dfrac{2t}{1-t^2} = \\dfrac{4}{1-4} = -\\dfrac{4}{3}$"
 }
 ```
 
