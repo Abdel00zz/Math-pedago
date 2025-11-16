@@ -674,6 +674,7 @@ const ChapterHubView: React.FC = () => {
                     onNavigateSteps={handleNavigateSteps}
                     onSelectStage={handleBreadcrumbStageSelect}
                     disabledStages={breadcrumbDisabledStages}
+                    showStages={false}
                 />
 
                 <StandardHeader

@@ -9,6 +9,7 @@ interface StageBreadcrumbProps {
     onNavigateSteps?: () => void;
     onSelectStage?: (stage: StageBreadcrumbStage) => void;
     disabledStages?: StageBreadcrumbStage[];
+    showStages?: boolean; // Si false, masque la section "Leçon / Vidéos / Quiz / Exercices"
 }
 
 const stageOrder: StageBreadcrumbStage[] = ['lesson', 'videos', 'quiz', 'exercises'];
@@ -26,6 +27,7 @@ const StageBreadcrumb: React.FC<StageBreadcrumbProps> = ({
     onNavigateSteps,
     onSelectStage,
     disabledStages = [],
+    showStages = true, // Par défaut, afficher les étapes
 }) => {
     const renderPrimarySegment = (label: string, handler?: () => void, key?: string) => {
         if (!handler) {
@@ -54,29 +56,33 @@ const StageBreadcrumb: React.FC<StageBreadcrumbProps> = ({
                 {renderPrimarySegment('Page principale', onNavigateHome, 'home')}
                 <span className="stage-breadcrumb__divider">/</span>
                 {renderPrimarySegment('Les étapes', onNavigateSteps, 'steps')}
-                <span className="stage-breadcrumb__divider">/</span>
-                <div className="stage-breadcrumb__stages" aria-label="Accès rapide aux activités">
-                    {stageOrder.map((stage) => {
-                        const isStageDisabled = disabledStages.includes(stage) || !onSelectStage;
+                {showStages && (
+                    <>
+                        <span className="stage-breadcrumb__divider">/</span>
+                        <div className="stage-breadcrumb__stages" aria-label="Accès rapide aux activités">
+                            {stageOrder.map((stage) => {
+                                const isStageDisabled = disabledStages.includes(stage) || !onSelectStage;
 
-                        return (
-                            <button
-                                key={stage}
-                                type="button"
-                                className={`stage-breadcrumb__stage${currentStage === stage ? ' stage-breadcrumb__stage--active' : ''}`}
-                                onClick={() => {
-                                    if (isStageDisabled || !onSelectStage) return;
-                                    onSelectStage(stage);
-                                }}
-                                aria-current={currentStage === stage ? 'step' : undefined}
-                                disabled={isStageDisabled}
-                                aria-disabled={isStageDisabled}
-                            >
-                                {stageLabels[stage]}
-                            </button>
-                        );
-                    })}
-                </div>
+                                return (
+                                    <button
+                                        key={stage}
+                                        type="button"
+                                        className={`stage-breadcrumb__stage${currentStage === stage ? ' stage-breadcrumb__stage--active' : ''}`}
+                                        onClick={() => {
+                                            if (isStageDisabled || !onSelectStage) return;
+                                            onSelectStage(stage);
+                                        }}
+                                        aria-current={currentStage === stage ? 'step' : undefined}
+                                        disabled={isStageDisabled}
+                                        aria-disabled={isStageDisabled}
+                                    >
+                                        {stageLabels[stage]}
+                                    </button>
+                                );
+                            })}
+                        </div>
+                    </>
+                )}
             </div>
         </nav>
     );
