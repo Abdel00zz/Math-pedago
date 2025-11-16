@@ -9,6 +9,7 @@ import { storageService, STORAGE_KEYS } from '../services/StorageService';
 const initialState: AppState = {
     view: 'login',
     profile: null,
+    allowLoginWithProfile: false,
     activities: {},
     activityVersions: {},
     progress: {},
@@ -60,6 +61,7 @@ const appReducer = (state: AppState, action: Action): AppState => {
             return {
                 ...state,
                 profile: profile || null,
+                allowLoginWithProfile: false,
                 progress,
                 chapterOrder: chapterOrder || [],
                 activityVersions: activityVersions || {},
@@ -87,7 +89,8 @@ const appReducer = (state: AppState, action: Action): AppState => {
                 concoursId,
                 concoursYear,
                 concoursTheme,
-                concoursMode
+                concoursMode,
+                forceLogin
             } = action.payload;
 
             const requestedView = view;
@@ -95,7 +98,7 @@ const appReducer = (state: AppState, action: Action): AppState => {
             let safeView = requestedView;
 
             // Une fois connecté, ignorer toute navigation explicite vers l'écran de login
-            if (state.profile && requestedView === 'login') {
+            if (state.profile && requestedView === 'login' && !forceLogin) {
                 safeView = state.profile.classId === 'concours' ? 'concours' : 'dashboard';
             }
 
@@ -122,6 +125,7 @@ const appReducer = (state: AppState, action: Action): AppState => {
             let newState: AppState = {
                 ...state,
                 view: safeView,
+                allowLoginWithProfile: safeView === 'login' && !!forceLogin,
                 currentChapterId: chapterId !== undefined ? chapterId : state.currentChapterId,
                 activitySubView: subView !== undefined ? subView : state.activitySubView,
                 isReviewMode: review ?? false,

@@ -221,6 +221,7 @@ export interface ChapterProgress {
 export interface AppState {
     view: 'login' | 'dashboard' | 'work-plan' | 'activity' | 'concours' | 'concours-list' | 'concours-year' | 'concours-resume' | 'concours-quiz';
     profile: Profile | null;
+    allowLoginWithProfile?: boolean;
     activities: { [chapterId: string]: Chapter };
     activityVersions: { [chapterId: string]: string }; // To track versions for update notifications
     progress: { [chapterId: string]: ChapterProgress };
@@ -385,6 +386,7 @@ export type Action =
         concoursTheme?: string | null;
         concoursMode?: 'theme' | 'year' | null;
         fromHistory?: boolean;
+        forceLogin?: boolean;
     } }
     | { type: 'LOGIN'; payload: Profile }
     | { type: 'NAVIGATE_QUIZ'; payload: number }
