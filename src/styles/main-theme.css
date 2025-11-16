@@ -10,6 +10,7 @@
 /* Component Styles */
 @import './dashboard.css';
 @import './chapter-hub.css';
+@import './stage-breadcrumb.css';
 @import './lesson-navigator.css';
 @import './lesson-content.css';
 @import './lesson-boxes.css';

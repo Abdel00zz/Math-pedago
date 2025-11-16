@@ -9,6 +9,7 @@ import { storageService } from '../../services/StorageService';
 import { validateLesson, formatValidationResults, ValidationResult } from '../../utils/jsonValidator';
 import ValidationErrorDisplay from '../ValidationErrorDisplay';
 import type { LessonContent } from '../../types';
+import StageBreadcrumb, { StageBreadcrumbStage } from '../StageBreadcrumb';
 
 const LessonView: React.FC = () => {
     const state = useAppState();
@@ -44,6 +45,20 @@ const LessonView: React.FC = () => {
             window.history.back();
         }
     }, []);
+
+    const handleNavigateHome = useCallback(() => {
+        dispatch({ type: 'CHANGE_VIEW', payload: { view: 'dashboard' } });
+    }, [dispatch]);
+
+    const handleNavigateSteps = useCallback(() => {
+        if (!chapter) return;
+        dispatch({ type: 'CHANGE_VIEW', payload: { view: 'work-plan', chapterId: chapter.id } });
+    }, [dispatch, chapter]);
+
+    const handleStageSelect = useCallback((stage: StageBreadcrumbStage) => {
+        if (!chapter) return;
+        dispatch({ type: 'CHANGE_VIEW', payload: { view: 'activity', chapterId: chapter.id, subView: stage } });
+    }, [dispatch, chapter]);
 
     // Charger la leçon (inline ou depuis fichier) avec cache intelligent
     useEffect(() => {
@@ -291,6 +306,25 @@ const LessonView: React.FC = () => {
         );
     }
 
+    const lessonBreadcrumbDisabledStagesSet = new Set<StageBreadcrumbStage>();
+    const lessonHasVideos = (chapter.videos?.length ?? 0) > 0;
+    const lessonProgressMeta = chapterProgress?.lesson;
+    const isLessonComplete = !!(lessonProgressMeta?.isRead || (lessonProgressMeta?.scrollProgress ?? 0) >= 95);
+    const isQuizCompleted = !!chapterProgress?.quiz?.isSubmitted;
+
+    if (!lessonHasVideos) {
+        lessonBreadcrumbDisabledStagesSet.add('videos');
+    }
+
+    if (!isLessonComplete) {
+        lessonBreadcrumbDisabledStagesSet.add('quiz');
+        lessonBreadcrumbDisabledStagesSet.add('exercises');
+    } else if (!isQuizCompleted) {
+        lessonBreadcrumbDisabledStagesSet.add('exercises');
+    }
+
+    const lessonBreadcrumbDisabledStages = Array.from(lessonBreadcrumbDisabledStagesSet);
+
     return (
         <div ref={scrollContainerRef} className="lesson-shell">
             <div className="lesson-shell__body pl-16 sm:pl-20">
@@ -302,6 +336,14 @@ const LessonView: React.FC = () => {
                     <div className="lesson-experience">
                         <LessonNavigator />
                         <div className="lesson-experience__content">
+                            <StageBreadcrumb
+                                className="lesson-stage-breadcrumb lesson-stage-breadcrumb--content"
+                                currentStage="lesson"
+                                onNavigateHome={handleNavigateHome}
+                                onNavigateSteps={handleNavigateSteps}
+                                onSelectStage={handleStageSelect}
+                                disabledStages={lessonBreadcrumbDisabledStages}
+                            />
                             <HighlightableContent className="lesson-experience__readable">
                                 <LessonDisplay lesson={lesson} onBack={handleBack} />
                             </HighlightableContent>

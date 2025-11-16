@@ -5,6 +5,7 @@ import Exercises from '../Exercises';
 import VideoCapsules from '../VideoCapsules';
 import LessonView from './LessonView';
 import StandardHeader from '../StandardHeader';
+import { LessonStageNavigation, LessonStage } from '../lesson/LessonStageNavigation';
 import {
     LESSON_PROGRESS_EVENT,
     readLessonCompletion,
@@ -16,7 +17,7 @@ import {
 const ActivityView: React.FC = () => {
     const state = useAppState();
     const dispatch = useAppDispatch();
-    const { currentChapterId, activities, activitySubView } = state;
+    const { currentChapterId, activities, activitySubView, progress } = state;
 
     const [highlightBackButton, setHighlightBackButton] = useState(false);
     const headerRef = useRef<HTMLElement>(null);
@@ -45,6 +46,8 @@ const ActivityView: React.FC = () => {
 
     // Calculer chapter et lessonId AVANT le return
     const chapter = currentChapterId ? activities[currentChapterId] : null;
+    const chapterProgress = currentChapterId ? progress[currentChapterId] : null;
+    const activeStage: LessonStage = (activitySubView || 'lesson') as LessonStage;
     const lessonId = chapter ? `${chapter.class}-${chapter.chapter}` : null;
 
     useEffect(() => {
@@ -88,6 +91,20 @@ const ActivityView: React.FC = () => {
     }
     
     const subViewTitle = activitySubView === 'lesson' ? 'Leçon' : activitySubView === 'videos' ? 'Vidéos' : activitySubView === 'quiz' ? 'Quiz' : 'Exercices';
+
+    const handleStageSelect = (stage: LessonStage) => {
+        if (!chapter) return;
+        dispatch({ type: 'CHANGE_VIEW', payload: { view: 'activity', chapterId: chapter.id, subView: stage } });
+    };
+
+    const handleNavigateHome = () => {
+        dispatch({ type: 'CHANGE_VIEW', payload: { view: 'dashboard' } });
+    };
+
+    const handleNavigateSteps = () => {
+        if (!chapter) return;
+        dispatch({ type: 'CHANGE_VIEW', payload: { view: 'work-plan', chapterId: chapter.id } });
+    };
 
     // Si c'est la vue leçon, on utilise le composant spécialisé
     if (activitySubView === 'lesson') {
@@ -136,6 +153,14 @@ const ActivityView: React.FC = () => {
 
     return (
         <div className="max-w-4xl mx-auto animate-slideInUp px-4 sm:px-6">
+            <LessonStageNavigation
+                chapter={chapter}
+                chapterProgress={chapterProgress}
+                activeStage={activeStage}
+                onNavigateHome={handleNavigateHome}
+                onNavigateSteps={handleNavigateSteps}
+                onStageSelect={handleStageSelect}
+            />
             <StandardHeader
                 title={subViewTitle}
                 subtitle={chapter.chapter}

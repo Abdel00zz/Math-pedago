@@ -6,6 +6,7 @@ import { useNotification } from '../../context/NotificationContext';
 import GlobalActionButtons from '../GlobalActionButtons';
 import { ExportedProgressFile } from '../../types';
 import StandardHeader from '../StandardHeader';
+import StageBreadcrumb, { StageBreadcrumbStage } from '../StageBreadcrumb';
 import {
     readLessonCompletion,
     type LessonCompletionSummary,
@@ -238,6 +239,12 @@ const ChapterHubView: React.FC = () => {
     const handleStartQuiz = useCallback(() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'activity', chapterId: chapter?.id, subView: 'quiz' } }), [dispatch, chapter?.id]);
     const handleReviewQuiz = useCallback(() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'activity', chapterId: chapter?.id, subView: 'quiz', review: true } }), [dispatch, chapter?.id]);
     const handleStartExercises = useCallback(() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'activity', chapterId: chapter?.id, subView: 'exercises' } }), [dispatch, chapter?.id]);
+    const handleNavigateHome = useCallback(() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'dashboard' } }), [dispatch]);
+    const handleNavigateSteps = useCallback(() => dispatch({ type: 'CHANGE_VIEW', payload: { view: 'work-plan', chapterId: chapter?.id } }), [dispatch, chapter?.id]);
+    const handleBreadcrumbStageSelect = useCallback((stage: StageBreadcrumbStage) => {
+        if (!chapter?.id) return;
+        dispatch({ type: 'CHANGE_VIEW', payload: { view: 'activity', chapterId: chapter.id, subView: stage } });
+    }, [dispatch, chapter?.id]);
 
     // Easter egg: Triple-click on verified badge to resend work
     const handleVerifiedBadgeClick = () => {
@@ -534,6 +541,21 @@ const ChapterHubView: React.FC = () => {
     const lessonCompletedNodes = lessonCompletion.completed;
 
     // Texte de progression pédagogique pour la leçon
+    const breadcrumbDisabledStagesSet = new Set<StageBreadcrumbStage>();
+    if (!hasLesson) {
+        breadcrumbDisabledStagesSet.add('lesson');
+    }
+    if (!hasVideos) {
+        breadcrumbDisabledStagesSet.add('videos');
+    }
+    if (lessonReadPercentage < 100) {
+        breadcrumbDisabledStagesSet.add('quiz');
+        breadcrumbDisabledStagesSet.add('exercises');
+    } else if (!isQuizCompleted) {
+        breadcrumbDisabledStagesSet.add('exercises');
+    }
+    const breadcrumbDisabledStages = Array.from(breadcrumbDisabledStagesSet);
+
     const getLessonProgressText = () => {
         if (!hasLesson || lessonTotalNodes === 0) return undefined;
         
@@ -644,6 +666,15 @@ const ChapterHubView: React.FC = () => {
                 {showConfetti && (
                     <div className="absolute inset-0 pointer-events-none z-50">{[...Array(100)].map((_, i) => <div key={i} className="confetti" style={{left: `${Math.random()*100}%`, animationDuration: `${Math.random()*3+2}s`, animationDelay: `${Math.random()*2}s`, backgroundColor: ['#FF6B35','#10B981','#3B82F6','#F59E0B'][i%4]}} />)}</div>
                 )}
+
+                <StageBreadcrumb
+                    className="chapter-hub-stage-breadcrumb"
+                    currentStage="lesson"
+                    onNavigateHome={handleNavigateHome}
+                    onNavigateSteps={handleNavigateSteps}
+                    onSelectStage={handleBreadcrumbStageSelect}
+                    disabledStages={breadcrumbDisabledStages}
+                />
 
                 <StandardHeader
                     title={chapter.chapter}

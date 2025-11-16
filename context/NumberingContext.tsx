@@ -12,7 +12,7 @@ interface NumberingState {
 }
 
 interface NumberingContextValue {
-    getNextNumber: (type: keyof NumberingState) => number;
+    getNumberFor: (type: keyof NumberingState, key: string) => number;
     reset: () => void;
 }
 
@@ -31,14 +31,22 @@ const createInitialCounters = (): NumberingState => ({
 
 export const NumberingProvider: React.FC<{ children: ReactNode; resetKey?: string | number | null }> = ({ children, resetKey = null }) => {
     const countersRef = useRef<NumberingState>(createInitialCounters());
+    const assignedNumbersRef = useRef<Record<string, number>>({});
 
-    const getNextNumber = useCallback((type: keyof NumberingState) => {
+    const getNumberFor = useCallback((type: keyof NumberingState, key: string) => {
+        const mapKey = `${type}::${key}`;
+        if (assignedNumbersRef.current[mapKey]) {
+            return assignedNumbersRef.current[mapKey];
+        }
+
         countersRef.current[type] += 1;
-        return countersRef.current[type];
+        assignedNumbersRef.current[mapKey] = countersRef.current[type];
+        return assignedNumbersRef.current[mapKey];
     }, []);
 
     const reset = useCallback(() => {
         countersRef.current = createInitialCounters();
+        assignedNumbersRef.current = {};
     }, []);
 
     useEffect(() => {
@@ -46,7 +54,7 @@ export const NumberingProvider: React.FC<{ children: ReactNode; resetKey?: strin
     }, [resetKey, reset]);
 
     return (
-        <NumberingContext.Provider value={{ getNextNumber, reset }}>
+        <NumberingContext.Provider value={{ getNumberFor, reset }}>
             {children}
         </NumberingContext.Provider>
     );

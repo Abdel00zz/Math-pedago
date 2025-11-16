@@ -156,13 +156,16 @@ const Table: React.FC<{ element: ElementType }> = ({ element }) => {
     );
 };
 
-const InfoBox: React.FC<{ element: ElementType; showAnswers?: boolean }> = ({ element, showAnswers }) => {
+const InfoBox: React.FC<{ element: ElementType; showAnswers?: boolean; pathKey: string }> = ({ element, showAnswers, pathKey }) => {
     const infoElement = element as LessonInfoBoxElement;
     const config = BOX_CONFIG[infoElement.type as keyof typeof BOX_CONFIG];
-    const { getNextNumber } = useNumbering();
+    const { getNumberFor } = useNumbering();
     
     // Obtenir le numéro pour cette box AVANT le check de config
-    const boxNumber = useMemo(() => getNextNumber(infoElement.type as keyof typeof BOX_CONFIG), [infoElement.type, getNextNumber]);
+    const boxNumber = useMemo(
+        () => getNumberFor(infoElement.type as keyof typeof BOX_CONFIG, pathKey),
+        [infoElement.type, pathKey, getNumberFor]
+    );
     
     if (!config) return null;
 
@@ -201,11 +204,15 @@ const InfoBox: React.FC<{ element: ElementType; showAnswers?: boolean }> = ({ el
             </div>
         );
 
+        const inlineBadgeLabel = infoElement.type === 'example-box'
+            ? `${config.label} ${boxNumber}`
+            : config.label;
+
         return (
             <LessonProvider showAnswers={effectiveShowAnswers}>
                 <div className={`lesson-inline lesson-inline--${infoElement.type === 'example-box' ? 'example' : 'remark'}`} style={inlineStyle}>
                     <header className="lesson-inline__header">
-                        <span className="lesson-inline__badge">{config.label}</span>
+                        <span className="lesson-inline__badge">{inlineBadgeLabel}</span>
                         {infoElement.preamble && (
                             <>
                                 <span className="lesson-inline__divider">|</span>
@@ -252,14 +259,17 @@ const InfoBox: React.FC<{ element: ElementType; showAnswers?: boolean }> = ({ el
     );
 };
 
-const InteractiveBox: React.FC<{ element: ElementType; showAnswers?: boolean }> = ({ element, showAnswers }) => {
+const InteractiveBox: React.FC<{ element: ElementType; showAnswers?: boolean; pathKey: string }> = ({ element, showAnswers, pathKey }) => {
     const interactiveElement = element as LessonInteractiveBoxElement;
     const config = INTERACTIVE_CONFIG[interactiveElement.type as keyof typeof INTERACTIVE_CONFIG];
-    const { getNextNumber } = useNumbering();
+    const { getNumberFor } = useNumbering();
     const [isModalOpen, setIsModalOpen] = useState(false);
     
     // Obtenir le numéro pour cette box AVANT le check de config
-    const boxNumber = useMemo(() => getNextNumber(interactiveElement.type as keyof typeof INTERACTIVE_CONFIG), [interactiveElement.type, getNextNumber]);
+    const boxNumber = useMemo(
+        () => getNumberFor(interactiveElement.type as keyof typeof INTERACTIVE_CONFIG, pathKey),
+        [interactiveElement.type, pathKey, getNumberFor]
+    );
     
     if (!config) return null;
 
@@ -358,6 +368,8 @@ const InteractiveBox: React.FC<{ element: ElementType; showAnswers?: boolean }> 
 // ============================================================================
 
 export const LessonElement: React.FC<LessonElementProps> = ({ element, path, showAnswers = false }) => {
+    const pathKey = useMemo(() => path.join('>'), [path]);
+
     switch (element.type) {
         case 'p':
             return <Paragraph element={element} path={path} showAnswers={showAnswers} />;
@@ -367,7 +379,7 @@ export const LessonElement: React.FC<LessonElementProps> = ({ element, path, sho
         
         case 'practice-box':
         case 'explain-box':
-            return <InteractiveBox element={element} showAnswers={showAnswers} />;
+            return <InteractiveBox element={element} showAnswers={showAnswers} pathKey={pathKey} />;
         
         case 'definition-box':
         case 'theorem-box':
@@ -375,7 +387,7 @@ export const LessonElement: React.FC<LessonElementProps> = ({ element, path, sho
         case 'property-box':
         case 'remark-box':
         case 'example-box':
-            return <InfoBox element={element} showAnswers={showAnswers} />;
+            return <InfoBox element={element} showAnswers={showAnswers} pathKey={pathKey} />;
         
         default:
             return null;
