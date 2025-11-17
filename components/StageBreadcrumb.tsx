@@ -54,11 +54,11 @@ const StageBreadcrumb: React.FC<StageBreadcrumbProps> = ({
         <nav className={`stage-breadcrumb ${className}`} aria-label="Navigation pédagogique">
             <div className="stage-breadcrumb__trail">
                 {renderPrimarySegment('Page principale', onNavigateHome, 'home')}
-                <span className="stage-breadcrumb__divider">/</span>
-                {renderPrimarySegment('Les étapes', onNavigateSteps, 'steps')}
+                <span className="stage-breadcrumb__divider">›</span>
+                {renderPrimarySegment('Plan de travail', onNavigateSteps, 'steps')}
                 {showStages && (
                     <>
-                        <span className="stage-breadcrumb__divider">/</span>
+                        <span className="stage-breadcrumb__divider">›</span>
                         <div className="stage-breadcrumb__stages" aria-label="Accès rapide aux activités">
                             {stageOrder.map((stage) => {
                                 const isStageDisabled = disabledStages.includes(stage) || !onSelectStage;

@@ -15,7 +15,7 @@
 @media (min-width: 1024px) {
   .lesson-experience__content {
     /* account for the right-side fixed navigator (width + gutter) */
-    margin-right: 420px;
+    margin-right: 378px;
     /* minimal left margin to move content to left edge */
     margin-left: 20px;
   }
@@ -42,7 +42,7 @@
   position: fixed;
   top: 100px;
   right: 3rem;
-  width: 320px;
+  width: 288px;
   max-height: calc(100vh - 120px);
   background-color: var(--navigator-bg);
   border: 1px solid var(--navigator-border);
@@ -64,7 +64,7 @@
     left: auto;
     right: 2.5rem;
     top: 100px;
-    width: 220px;
+    width: 198px;
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(249, 250, 251, 0.95) 100%);
     border: 1px solid rgba(229, 231, 235, 0.8);
     border-radius: 14px;
@@ -101,7 +101,7 @@
     left: auto;
     right: max(3rem, calc((100vw - 1200px) / 2 + 1rem));
     top: 100px;
-    width: 320px;
+    width: 288px;
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(249, 250, 251, 0.95) 100%);
     border: 1px solid rgba(229, 231, 235, 0.8);
     border-radius: 16px;
