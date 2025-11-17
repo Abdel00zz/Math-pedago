@@ -61,16 +61,13 @@
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background-image:
-    radial-gradient(circle at 15% 20%, color-mix(in srgb, var(--box-border-accent) 20%, transparent) 0%, transparent 45%),
-    radial-gradient(circle at 85% 10%, color-mix(in srgb, var(--box-border-accent) 15%, transparent) 0%, transparent 40%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%3Cg opacity='0.4'%3E%3Cpath d='M0 50 Q55 0 110 50 T220 50' stroke='%23f8c5a3' stroke-width='1.4' fill='none'/%3E%3Cpath d='M0 170 Q55 220 110 170 T220 170' stroke='%23f8c5a3' stroke-width='1.4' fill='none'/%3E%3Ccircle cx='30' cy='120' r='14' fill='%23ffe8da'/%3E%3Ccircle cx='182' cy='42' r='9' fill='%23ffd7c1' fill-opacity='0.85'/%3E%3Ccircle cx='160' cy='182' r='7' fill='%23ffe8da' fill-opacity='0.65'/%3E%3C/g%3E%3C/svg%3E");
-  background-size: 100% 100%, 100% 100%, 220px 220px;
-  background-repeat: no-repeat, no-repeat, repeat;
-  background-blend-mode: screen;
-  opacity: 0.8;
+  background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='geo' x='0' y='0' width='30' height='30' patternUnits='userSpaceOnUse'%3E%3Cg stroke='currentColor' stroke-width='0.8' fill='none' opacity='0.3'%3E%3Cpath d='M15 5 L25 15 L15 25 L5 15 Z'/%3E%3C/g%3E%3C/pattern%3E%3C/defs%3E%3Crect width='120' height='120' fill='url(%23geo)' /%3E%3C/svg%3E");
+  background-size: 120px 120px;
+  background-repeat: repeat;
+  color: var(--box-border-accent);
+  opacity: 0.15;
   pointer-events: none;
-  z-index: 0;
+  z-index: -1;
 }
 
 .lesson-box::after,
@@ -79,13 +76,11 @@
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: linear-gradient(120deg,
-    color-mix(in srgb, var(--box-border-accent) 5%, transparent) 0%,
-    transparent 45%,
-    color-mix(in srgb, var(--box-border-accent) 8%, rgba(255, 255, 255, 0.35)) 100%);
-  opacity: 0.45;
+  background: radial-gradient(circle at 20% 80%, color-mix(in srgb, var(--box-border-accent) 8%, transparent) 0%, transparent 50%),
+              radial-gradient(circle at 80% 20%, color-mix(in srgb, var(--box-border-accent) 6%, transparent) 0%, transparent 45%);
+  opacity: 0.6;
   pointer-events: none;
-  z-index: 0;
+  z-index: -1;
 }
 
 .lesson-box:hover,
