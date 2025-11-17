@@ -5,7 +5,8 @@ import Exercises from '../Exercises';
 import VideoCapsules from '../VideoCapsules';
 import LessonView from './LessonView';
 import StandardHeader from '../StandardHeader';
-import { LessonStageNavigation, LessonStage } from '../lesson/LessonStageNavigation';
+import { LessonStage } from '../lesson/LessonStageNavigation';
+import StageBreadcrumb from '../StageBreadcrumb';
 import {
     LESSON_PROGRESS_EVENT,
     readLessonCompletion,
@@ -153,13 +154,25 @@ const ActivityView: React.FC = () => {
 
     return (
         <div className="max-w-4xl mx-auto animate-slideInUp px-4 sm:px-6">
-            <LessonStageNavigation
-                chapter={chapter}
-                chapterProgress={chapterProgress}
-                activeStage={activeStage}
+            <StageBreadcrumb
+                currentStage={activeStage}
                 onNavigateHome={handleNavigateHome}
                 onNavigateSteps={handleNavigateSteps}
-                onStageSelect={handleStageSelect}
+                onSelectStage={handleStageSelect}
+                disabledStages={(() => {
+                    const disabled: LessonStage[] = [];
+                    const hasLesson = !!(chapter.lesson || chapter.lessonFile);
+                    const lessonMeta = chapterProgress?.lesson;
+                    const lessonPercent = Math.max(lessonMeta?.scrollProgress ?? 0, lessonMeta?.checklistPercentage ?? 0);
+                    const isLessonDone = !!lessonMeta?.isRead || lessonPercent >= 95;
+                    const quizDone = !!chapterProgress?.quiz?.isSubmitted;
+                    
+                    if (!hasLesson) disabled.push('lesson');
+                    if (!isLessonDone) disabled.push('quiz', 'exercises');
+                    else if (!quizDone) disabled.push('exercises');
+                    
+                    return disabled;
+                })()}
             />
             <StandardHeader
                 title={subViewTitle}
