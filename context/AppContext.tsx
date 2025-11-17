@@ -793,7 +793,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
             const newData = storageService.get(STORAGE_KEYS.APP_STATE);
             if (newData) {
                 savedData = newData;
-                console.log('[AppContext] Données chargées depuis nouvelle clé');
+                console.log('[AppContext] Données chargées depuis nouvelle clé', savedData);
             } else {
                 // Fallback vers l'ancienne clé si la nouvelle n'existe pas
                 const rawData = localStorage.getItem(DB_KEY);
@@ -801,7 +801,10 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
                     const parsedData = JSON.parse(rawData);
                     if (typeof parsedData === 'object' && parsedData !== null) {
                         savedData = parsedData;
-                        console.log('[AppContext] Données chargées depuis ancienne clé');
+                        console.log('[AppContext] Données chargées depuis ancienne clé', savedData);
+                        // Migrer immédiatement vers la nouvelle clé
+                        storageService.set(STORAGE_KEYS.APP_STATE, parsedData, { version: '5.0.0' });
+                        console.log('[AppContext] Données migrées vers nouvelle clé');
                     }
                 }
             }
@@ -934,9 +937,18 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     // Effect 3: Persist state to localStorage immediately on any state change.
     useEffect(() => {
         if (state.profile) {
-            const { activities, ...stateToSave } = state; 
+            const { activities, ...stateToSave } = state;
+            console.log('[AppContext] Sauvegarde état avec profil:', stateToSave.profile);
             try {
-                localStorage.setItem(DB_KEY, JSON.stringify(stateToSave));
+                // Sauvegarder avec la nouvelle clé via StorageService
+                const saved = storageService.set(STORAGE_KEYS.APP_STATE, stateToSave, { version: '5.0.0' });
+                if (saved) {
+                    console.log('[AppContext] État sauvegardé avec succès dans nouvelle clé');
+                    // Aussi sauvegarder dans l'ancienne clé pour compatibilité temporaire
+                    localStorage.setItem(DB_KEY, JSON.stringify(stateToSave));
+                } else {
+                    throw new Error('Échec de sauvegarde via StorageService');
+                }
             } catch (error) {
                 console.error("Failed to save state to localStorage:", error);
                 addNotification("Sauvegarde échouée", "error", {

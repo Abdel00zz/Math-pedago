@@ -200,7 +200,11 @@ const LoginView: React.FC = () => {
     const [error, setError] = useState('');
 
     useEffect(() => {
-        if (state.profile?.name) setName(state.profile.name);
+        console.log('[LoginView] Profile chargé:', state.profile);
+        if (state.profile?.name) {
+            setName(state.profile.name);
+            console.log('[LoginView] Nom pré-rempli:', state.profile.name);
+        }
         if (state.profile?.classId) {
             if (state.profile.classId === 'concours') {
                 setMode('concours');
@@ -208,6 +212,7 @@ const LoginView: React.FC = () => {
                 setMode('school');
                 setClassId(state.profile.classId);
             }
+            console.log('[LoginView] Classe pré-remplie:', state.profile.classId);
         }
     }, [state.profile]);
 

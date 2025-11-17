@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test PWA Storage - Centre Scientifique</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6">🧪 Test de Persistance PWA</h1>
+        
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-xl font-semibold text-gray-700 mb-4">📊 État du localStorage</h2>
+            <div id="storage-status" class="space-y-2"></div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-xl font-semibold text-gray-700 mb-4">👤 Profil Utilisateur</h2>
+            <div id="profile-status" class="space-y-2"></div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-xl font-semibold text-gray-700 mb-4">🔧 Actions de Test</h2>
+            <div class="space-y-3">
+                <button onclick="testSaveProfile()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full">
+                    💾 Sauvegarder un profil de test
+                </button>
+                <button onclick="testLoadProfile()" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 w-full">
+                    📂 Charger le profil
+                </button>
+                <button onclick="testMigration()" class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600 w-full">
+                    🔄 Tester la migration
+                </button>
+                <button onclick="clearAll()" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 w-full">
+                    🗑️ Vider tout le localStorage
+                </button>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-xl font-semibold text-gray-700 mb-4">📋 Logs</h2>
+            <div id="logs" class="bg-gray-50 p-4 rounded font-mono text-sm h-64 overflow-y-auto"></div>
+        </div>
+    </div>
+
+    <script>
+        // Constantes (correspondant à celles de l'app)
+        const STORAGE_KEYS = {
+            APP_STATE: 'math-pedago:app:v5.0',
+            OLD_KEY: 'pedagoEleveData_V4.7_React',
+        };
+
+        // Fonction de log
+        function log(message, type = 'info') {
+            const logsDiv = document.getElementById('logs');
+            const timestamp = new Date().toLocaleTimeString();
+            const colors = {
+                info: 'text-blue-600',
+                success: 'text-green-600',
+                error: 'text-red-600',
+                warning: 'text-orange-600'
+            };
+            logsDiv.innerHTML += `<div class="${colors[type]}">[${timestamp}] ${message}</div>`;
+            logsDiv.scrollTop = logsDiv.scrollHeight;
+            console.log(`[${type.toUpperCase()}]`, message);
+        }
+
+        // Vérifier l'état du localStorage
+        function checkStorageStatus() {
+            const statusDiv = document.getElementById('storage-status');
+            statusDiv.innerHTML = '';
+
+            const newKeyData = localStorage.getItem(STORAGE_KEYS.APP_STATE);
+            const oldKeyData = localStorage.getItem(STORAGE_KEYS.OLD_KEY);
+
+            statusDiv.innerHTML = `
+                <div class="flex items-center space-x-2">
+                    <span class="font-semibold">Nouvelle clé (${STORAGE_KEYS.APP_STATE}):</span>
+                    <span class="${newKeyData ? 'text-green-600' : 'text-red-600'}">
+                        ${newKeyData ? '✅ Présente' : '❌ Absente'}
+                    </span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <span class="font-semibold">Ancienne clé (${STORAGE_KEYS.OLD_KEY}):</span>
+                    <span class="${oldKeyData ? 'text-green-600' : 'text-gray-400'}">
+                        ${oldKeyData ? '✅ Présente' : '⚪ Absente'}
+                    </span>
+                </div>
+                <div class="text-sm text-gray-600 mt-2">
+                    Taille totale: ${JSON.stringify(localStorage).length} caractères
+                </div>
+            `;
+
+            log('État du localStorage vérifié');
+        }
+
+        // Vérifier le profil utilisateur
+        function checkProfileStatus() {
+            const profileDiv = document.getElementById('profile-status');
+            profileDiv.innerHTML = '';
+
+            try {
+                // Nouvelle clé
+                const newKeyRaw = localStorage.getItem(STORAGE_KEYS.APP_STATE);
+                let newProfile = null;
+                if (newKeyRaw) {
+                    const parsed = JSON.parse(newKeyRaw);
+                    newProfile = parsed.data?.profile || parsed.profile;
+                }
+
+                // Ancienne clé
+                const oldKeyRaw = localStorage.getItem(STORAGE_KEYS.OLD_KEY);
+                let oldProfile = null;
+                if (oldKeyRaw) {
+                    const parsed = JSON.parse(oldKeyRaw);
+                    oldProfile = parsed.profile;
+                }
+
+                profileDiv.innerHTML = `
+                    <div class="space-y-3">
+                        <div class="border-l-4 border-blue-500 pl-3">
+                            <div class="font-semibold text-gray-700">Nouvelle clé:</div>
+                            ${newProfile ? `
+                                <div class="text-sm text-gray-600">
+                                    <div>👤 Nom: <strong>${newProfile.name}</strong></div>
+                                    <div>🎓 Classe: <strong>${newProfile.classId}</strong></div>
+                                </div>
+                            ` : '<div class="text-red-600">Aucun profil trouvé</div>'}
+                        </div>
+                        
+                        <div class="border-l-4 border-gray-400 pl-3">
+                            <div class="font-semibold text-gray-700">Ancienne clé (pour compatibilité):</div>
+                            ${oldProfile ? `
+                                <div class="text-sm text-gray-600">
+                                    <div>👤 Nom: <strong>${oldProfile.name}</strong></div>
+                                    <div>🎓 Classe: <strong>${oldProfile.classId}</strong></div>
+                                </div>
+                            ` : '<div class="text-gray-400">Aucun profil trouvé</div>'}
+                        </div>
+                    </div>
+                `;
+
+                if (newProfile) {
+                    log(`Profil trouvé: ${newProfile.name} (${newProfile.classId})`, 'success');
+                } else {
+                    log('Aucun profil trouvé dans la nouvelle clé', 'warning');
+                }
+            } catch (error) {
+                profileDiv.innerHTML = `<div class="text-red-600">Erreur: ${error.message}</div>`;
+                log(`Erreur lors de la vérification du profil: ${error.message}`, 'error');
+            }
+        }
+
+        // Sauvegarder un profil de test
+        function testSaveProfile() {
+            const testProfile = {
+                name: "Test Utilisateur",
+                classId: "1bac-sm"
+            };
+
+            const testState = {
+                profile: testProfile,
+                view: 'dashboard',
+                progress: {},
+                chapterOrder: []
+            };
+
+            try {
+                // Sauvegarder avec la nouvelle structure (comme StorageService)
+                const cachedData = {
+                    data: testState,
+                    version: '5.0.0',
+                    timestamp: Date.now(),
+                    expiresAt: null
+                };
+
+                localStorage.setItem(STORAGE_KEYS.APP_STATE, JSON.stringify(cachedData));
+                
+                // Aussi sauvegarder dans l'ancienne clé pour compatibilité
+                localStorage.setItem(STORAGE_KEYS.OLD_KEY, JSON.stringify(testState));
+
+                log('✅ Profil de test sauvegardé avec succès!', 'success');
+                checkStorageStatus();
+                checkProfileStatus();
+            } catch (error) {
+                log(`❌ Erreur lors de la sauvegarde: ${error.message}`, 'error');
+            }
+        }
+
+        // Charger le profil
+        function testLoadProfile() {
+            try {
+                const data = localStorage.getItem(STORAGE_KEYS.APP_STATE);
+                if (!data) {
+                    log('❌ Aucune donnée trouvée dans la nouvelle clé', 'error');
+                    return;
+                }
+
+                const parsed = JSON.parse(data);
+                const profile = parsed.data?.profile || parsed.profile;
+
+                if (profile) {
+                    log(`✅ Profil chargé: ${profile.name} (${profile.classId})`, 'success');
+                } else {
+                    log('❌ Aucun profil trouvé dans les données', 'error');
+                }
+
+                checkProfileStatus();
+            } catch (error) {
+                log(`❌ Erreur lors du chargement: ${error.message}`, 'error');
+            }
+        }
+
+        // Tester la migration
+        function testMigration() {
+            try {
+                log('🔄 Début de la migration...', 'info');
+
+                // Simuler l'ancienne structure
+                const oldData = {
+                    profile: { name: "Ancien Utilisateur", classId: "tcs" },
+                    view: 'dashboard',
+                    progress: { "ch1": { quiz: { answers: {} } } }
+                };
+
+                // Sauvegarder dans l'ancienne clé
+                localStorage.setItem(STORAGE_KEYS.OLD_KEY, JSON.stringify(oldData));
+                log('📝 Données anciennes créées', 'info');
+
+                // Supprimer la nouvelle clé pour simuler une vraie migration
+                localStorage.removeItem(STORAGE_KEYS.APP_STATE);
+                log('🗑️ Nouvelle clé supprimée pour simulation', 'info');
+
+                // Effectuer la migration (comme dans AppContext)
+                const oldRaw = localStorage.getItem(STORAGE_KEYS.OLD_KEY);
+                if (oldRaw) {
+                    const parsed = JSON.parse(oldRaw);
+                    
+                    const cachedData = {
+                        data: parsed,
+                        version: '5.0.0',
+                        timestamp: Date.now(),
+                        expiresAt: null
+                    };
+
+                    localStorage.setItem(STORAGE_KEYS.APP_STATE, JSON.stringify(cachedData));
+                    log('✅ Migration effectuée avec succès!', 'success');
+                }
+
+                checkStorageStatus();
+                checkProfileStatus();
+            } catch (error) {
+                log(`❌ Erreur lors de la migration: ${error.message}`, 'error');
+            }
+        }
+
+        // Vider tout
+        function clearAll() {
+            if (confirm('⚠️ Êtes-vous sûr de vouloir vider tout le localStorage ?')) {
+                localStorage.clear();
+                log('🗑️ localStorage vidé', 'warning');
+                checkStorageStatus();
+                checkProfileStatus();
+            }
+        }
+
+        // Initialisation
+        window.addEventListener('load', () => {
+            log('🚀 Page de test chargée', 'success');
+            checkStorageStatus();
+            checkProfileStatus();
+        });
+
+        // Auto-refresh toutes les 5 secondes
+        setInterval(() => {
+            checkStorageStatus();
+            checkProfileStatus();
+        }, 5000);
+    </script>
+</body>
+</html>
