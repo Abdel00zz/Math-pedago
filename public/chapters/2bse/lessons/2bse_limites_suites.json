@@ -23,7 +23,7 @@
               "content": [
                 "Une suite numérique, c'est une application qui associe à chaque nombre entier naturel $n$ un nombre réel $u_n$.",
                 "",
-                "On l'écrit : $$u : \\mathbb{N} \\to \\mathbb{R}$, $n \\mapsto u_n$$",
+                "On l'écrit : $u : \\mathbb{N} \\to \\mathbb{R}$, $n \\mapsto u_n$",
                 "",
                 "Le nombre $u_n$ s'appelle le **terme de rang $n$**."
               ]
