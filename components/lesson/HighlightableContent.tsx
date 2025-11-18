@@ -74,6 +74,17 @@ export const HighlightableContent: React.FC<HighlightableContentProps> = ({ chil
             });
         };
 
+        const clearAllHighlightNodes = () => {
+            if (!container) {
+                return;
+            }
+
+            const existing = container.querySelectorAll('[data-highlight-id]');
+            existing.forEach((node) => unwrapHighlightElement(node as HTMLElement));
+            container.normalize();
+            highlightsRef.current.clear();
+        };
+
         const persistHighlights = (dataOverride?: HighlightRecord[]) => {
             if (!isBrowser || !storageKey) return;
             removeEmptyHighlights();
@@ -401,6 +412,7 @@ export const HighlightableContent: React.FC<HighlightableContentProps> = ({ chil
             }
         };
 
+        clearAllHighlightNodes();
         cleanupLegacyArtifacts();
         hydrateHighlights();
         removeEmptyHighlights();

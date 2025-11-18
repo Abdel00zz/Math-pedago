@@ -17,7 +17,7 @@
               "type": "definition-box",
               "preamble": "**Fonction numérique** :",
               "content": [
-                ">>Toute relation $f$ qui associe à chaque élément $x$ de $\\mathbb{R}$ **au plus un élément** $y$ de >>$\\mathbb{R}$ est dite une fonction numérique à variable réelle $x$.",
+                ">>Toute relation $f$ qui associe à chaque élément $x$ de $\\mathbb{R}$ **au plus un élément** $y$ de $\\mathbb{R}$ est dite une fonction numérique à variable réelle $x$.",
                 "",
                 ">>**Notation** : $f : \\mathbb{R} \\to \\mathbb{R}$",
                 ">>$$x \\mapsto f(x) = y$$",
