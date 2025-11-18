@@ -5,6 +5,7 @@ import { AppProvider } from './context/AppContext';
 import { NotificationProvider } from './context/NotificationContext';
 import ErrorBoundary from './components/ErrorBoundary';
 import { diagnoseMathJax } from './utils/mathJaxDiagnostic';
+import { initServiceWorkerSync } from './services/sw-sync';
 import './src/styles/main-theme.css';
 
 // Exposer le diagnostic MathJax globalement
@@ -12,6 +13,9 @@ if (typeof window !== 'undefined') {
     (window as any).diagnoseMathJax = diagnoseMathJax;
     console.log('🔍 Diagnostic MathJax chargé! Tapez: window.diagnoseMathJax()');
 }
+
+// Initialiser la synchronisation Service Worker <-> localStorage
+initServiceWorkerSync();
 
 // Wait for the DOM to be fully loaded before mounting the app
 document.addEventListener('DOMContentLoaded', () => {

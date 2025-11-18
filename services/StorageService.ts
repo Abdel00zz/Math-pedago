@@ -229,6 +229,31 @@ class StorageService {
   }
 
   /**
+   * Synchronise le cache localStorage avec la version du Service Worker
+   * À appeler lors de la détection d'une mise à jour du SW
+   */
+  syncWithServiceWorkerVersion(swVersion: string): void {
+    if (!this.isBrowser) return;
+
+    const SW_VERSION_KEY = 'math-pedago:sw-version:v1.0';
+    const currentSwVersion = this.get<string>(SW_VERSION_KEY);
+
+    // Si la version du SW a changé, invalider tous les caches
+    if (currentSwVersion && currentSwVersion !== swVersion) {
+      console.log(`[StorageService] Version SW changée: ${currentSwVersion} → ${swVersion}`);
+      console.log('[StorageService] Invalidation de tous les caches de leçons');
+      this.invalidateAllLessonCaches();
+
+      // Nettoyer aussi les autres caches potentiellement obsolètes
+      this.remove(STORAGE_KEYS.UI_CACHE);
+    }
+
+    // Sauvegarder la nouvelle version
+    this.set(SW_VERSION_KEY, swVersion, { version: '1.0' });
+    console.log(`[StorageService] Version SW mise à jour: ${swVersion}`);
+  }
+
+  /**
    * Nettoie les données expirées et anciennes
    */
   cleanup(): number {

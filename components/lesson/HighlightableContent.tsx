@@ -423,6 +423,13 @@ export const HighlightableContent: React.FC<HighlightableContentProps> = ({ chil
             }
 
             // Créer un nouveau highlight
+            createHighlightFromSelection();
+        };
+
+        /**
+         * Crée un highlight à partir de la sélection courante
+         */
+        const createHighlightFromSelection = () => {
             const selection = window.getSelection();
             if (!selection || selection.rangeCount === 0) return;
 
@@ -478,6 +485,76 @@ export const HighlightableContent: React.FC<HighlightableContentProps> = ({ chil
         };
 
         /**
+         * Gère les événements tactiles pour mobile (long-press)
+         */
+        let touchTimer: number | null = null;
+        let touchStartX = 0;
+        let touchStartY = 0;
+        const LONG_PRESS_DURATION = 500; // 500ms pour long-press
+        const MOVE_THRESHOLD = 10; // pixels de mouvement autorisés
+
+        const handleTouchStart = (e: TouchEvent) => {
+            const target = e.target as HTMLElement;
+            if (!target || FORBIDDEN_TAGS.has(target.tagName)) {
+                return;
+            }
+
+            // Vérifier si on touche un élément MathJax
+            const mathJaxElement = target.closest('mjx-container, .MathJax, [data-mathml]');
+            if (mathJaxElement) {
+                return;
+            }
+
+            // Si on touche un highlight existant, le supprimer
+            const highlightElement = target.closest('[data-highlight-id]') as HTMLElement | null;
+            if (highlightElement) {
+                e.preventDefault();
+                const id = highlightElement.getAttribute('data-highlight-id');
+                unwrapHighlightElement(highlightElement);
+                if (id) {
+                    highlightsRef.current.delete(id);
+                    saveHighlights();
+                }
+                return;
+            }
+
+            // Enregistrer la position de départ
+            const touch = e.touches[0];
+            touchStartX = touch.clientX;
+            touchStartY = touch.clientY;
+
+            // Démarrer le timer pour long-press
+            touchTimer = window.setTimeout(() => {
+                console.log('[Highlight] Long-press détecté');
+                createHighlightFromSelection();
+                touchTimer = null;
+            }, LONG_PRESS_DURATION);
+        };
+
+        const handleTouchMove = (e: TouchEvent) => {
+            if (!touchTimer) return;
+
+            // Annuler si l'utilisateur bouge trop
+            const touch = e.touches[0];
+            const deltaX = Math.abs(touch.clientX - touchStartX);
+            const deltaY = Math.abs(touch.clientY - touchStartY);
+
+            if (deltaX > MOVE_THRESHOLD || deltaY > MOVE_THRESHOLD) {
+                if (touchTimer) {
+                    clearTimeout(touchTimer);
+                    touchTimer = null;
+                }
+            }
+        };
+
+        const handleTouchEnd = () => {
+            if (touchTimer) {
+                clearTimeout(touchTimer);
+                touchTimer = null;
+            }
+        };
+
+        /**
          * Gère la synchronisation avec MathJax
          */
         const handleMathJaxRendered = () => {
@@ -521,16 +598,27 @@ export const HighlightableContent: React.FC<HighlightableContentProps> = ({ chil
 
         // Event listeners
         container.addEventListener('dblclick', handleDoubleClick);
+        container.addEventListener('touchstart', handleTouchStart as EventListener, { passive: false });
+        container.addEventListener('touchmove', handleTouchMove as EventListener, { passive: true });
+        container.addEventListener('touchend', handleTouchEnd as EventListener, { passive: true });
         container.addEventListener('mathjax-rendered', handleMathJaxRendered as EventListener);
 
         // Cleanup
         return () => {
             container.removeEventListener('dblclick', handleDoubleClick);
+            container.removeEventListener('touchstart', handleTouchStart as EventListener);
+            container.removeEventListener('touchmove', handleTouchMove as EventListener);
+            container.removeEventListener('touchend', handleTouchEnd as EventListener);
             container.removeEventListener('mathjax-rendered', handleMathJaxRendered as EventListener);
 
             if (rehydrationTimerRef.current) {
                 clearTimeout(rehydrationTimerRef.current);
                 rehydrationTimerRef.current = null;
+            }
+
+            if (touchTimer) {
+                clearTimeout(touchTimer);
+                touchTimer = null;
             }
 
             highlightsRef.current.clear();
@@ -593,6 +681,59 @@ export const HighlightableContent: React.FC<HighlightableContentProps> = ({ chil
                 .highlightable-content li:hover,
                 .highlightable-content td:hover {
                     background: rgba(255, 255, 255, 0.02);
+                }
+
+                /* Optimisations mobile */
+                @media (hover: none) and (pointer: coarse) {
+                    .lesson-highlight {
+                        /* Plus d'espacement pour le toucher */
+                        padding: 0.25rem 0.6rem;
+                        margin: 0.1rem 0.15rem;
+                        /* Désactiver les transitions hover */
+                        transition: background 0.15s ease;
+                    }
+
+                    /* Indicateur visuel de suppression sur mobile */
+                    .lesson-highlight::after {
+                        content: '×';
+                        position: relative;
+                        margin-left: 0.3rem;
+                        font-size: 1.1em;
+                        font-weight: bold;
+                        color: rgba(255, 87, 34, 0.8);
+                        opacity: 0.7;
+                    }
+
+                    /* Feedback tactile */
+                    .lesson-highlight:active {
+                        background: rgba(255, 234, 163, 0.95);
+                        transform: scale(0.98);
+                    }
+
+                    /* Pas de hover sur mobile */
+                    .lesson-highlight:hover {
+                        background: rgba(255, 214, 77, 0.35);
+                        border-color: rgba(255, 193, 7, 0.6);
+                        box-shadow: inset 0 -2px 0 rgba(255, 179, 0, 0.75);
+                    }
+
+                    .lesson-highlight:hover::before {
+                        opacity: 0;
+                    }
+
+                    /* Améliorer la lisibilité du texte sélectionné sur mobile */
+                    .highlightable-content {
+                        -webkit-user-select: text;
+                        user-select: text;
+                        -webkit-touch-callout: default;
+                    }
+                }
+
+                /* Cacher l'indicateur × sur desktop */
+                @media (hover: hover) and (pointer: fine) {
+                    .lesson-highlight::after {
+                        display: none;
+                    }
                 }
             `}</style>
         </div>
