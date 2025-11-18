@@ -27,6 +27,10 @@ export const HighlightableContent: React.FC<HighlightableContentProps> = ({ chil
     const containerRef = useRef<HTMLDivElement>(null);
     const highlightsRef = useRef<Map<string, HighlightRecord>>(new Map());
     const incrementalIdRef = useRef(0);
+    // 🔧 FIX: Ajouter des refs pour la synchronisation avec MathJax
+    const mathjaxUpdatePendingRef = useRef(false);
+    const highlightsBackupRef = useRef<HighlightRecord[]>([]);
+    const rehydrationTimerRef = useRef<number | null>(null);
 
     useEffect(() => {
         const container = containerRef.current;
@@ -34,7 +38,10 @@ export const HighlightableContent: React.FC<HighlightableContentProps> = ({ chil
 
         const isBrowser = typeof window !== 'undefined';
 
-        const nextHighlightId = () => `highlight-word-${Date.now()}-${incrementalIdRef.current++}`;
+        // 🔧 FIX: Améliorer la génération d'IDs pour éviter les collisions
+        // Utiliser un compteur global plus un timestamp au début pour unicité
+        const sessionStartTime = Date.now();
+        const nextHighlightId = () => `highlight-word-${sessionStartTime}-${incrementalIdRef.current++}`;
 
         const normalizeTextContent = (value?: string | null) => (value ?? '').replace(INVISIBLE_CHARACTERS, '');
 
@@ -161,12 +168,43 @@ export const HighlightableContent: React.FC<HighlightableContentProps> = ({ chil
             return null;
         };
 
+        // 🔧 FIX: Améliorer getOffsetsFromRange pour ignorer les éléments MathJax
+        // MathJax crée des éléments mjx-container qui n'ont pas de textContent visible
+        // mais qui prennent de la place dans le DOM. Nous devons les ignorer.
         const getOffsetsFromRange = (range: Range) => {
             try {
                 const preRange = range.cloneRange();
                 preRange.selectNodeContents(container);
                 preRange.setEnd(range.startContainer, range.startOffset);
-                const start = preRange.toString().length;
+
+                // Calculer la longueur en ignorant les éléments MathJax
+                let start = 0;
+                const walker = document.createTreeWalker(
+                    preRange.cloneContents(),
+                    NodeFilter.SHOW_TEXT,
+                    {
+                        acceptNode: (node) => {
+                            // Ignorer les nœuds texte à l'intérieur de mjx-container
+                            let parent = node.parentNode;
+                            while (parent) {
+                                if (parent instanceof HTMLElement &&
+                                    (parent.tagName === 'MJX-CONTAINER' ||
+                                     parent.classList.contains('MathJax') ||
+                                     parent.hasAttribute('data-mathml'))) {
+                                    return NodeFilter.FILTER_REJECT;
+                                }
+                                parent = parent.parentNode;
+                            }
+                            return NodeFilter.FILTER_ACCEPT;
+                        }
+                    }
+                );
+
+                let node;
+                while ((node = walker.nextNode())) {
+                    start += (node.textContent || '').length;
+                }
+
                 const textLength = range.toString().length;
                 preRange.detach();
                 return { start, end: start + textLength };
@@ -177,6 +215,16 @@ export const HighlightableContent: React.FC<HighlightableContentProps> = ({ chil
         };
 
         const createSpanFromRange = (range: Range, record: HighlightRecord) => {
+            // 🔧 FIX: Vérifier si la sélection contient des éléments MathJax
+            const tempDiv = document.createElement('div');
+            tempDiv.appendChild(range.cloneContents());
+            const hasMathJax = tempDiv.querySelector('mjx-container, .MathJax, [data-mathml]') !== null;
+
+            if (hasMathJax) {
+                console.warn('[Highlight] Sélection contient des éléments MathJax, highlight ignoré');
+                return null;
+            }
+
             const fragment = range.extractContents();
             const fallbackText = fragment.textContent ?? '';
             const cleanedFragment = unwrapHighlightWrappersInFragment(fragment);
@@ -417,9 +465,75 @@ export const HighlightableContent: React.FC<HighlightableContentProps> = ({ chil
         hydrateHighlights();
         removeEmptyHighlights();
 
+        // 🔧 FIX: Ajouter des listeners pour synchroniser avec MathJax
+        const handleMathJaxBeforeUpdate = () => {
+            // MathJax va modifier le DOM, sauvegarder les highlights actuels
+            console.log('[Highlight] MathJax va modifier le DOM, sauvegarde des highlights');
+            mathjaxUpdatePendingRef.current = true;
+            highlightsBackupRef.current = Array.from(highlightsRef.current.values());
+
+            // Nettoyer le timer de rehydration s'il existe
+            if (rehydrationTimerRef.current) {
+                clearTimeout(rehydrationTimerRef.current);
+                rehydrationTimerRef.current = null;
+            }
+        };
+
+        const handleMathJaxRendered = () => {
+            // MathJax a fini son rendu, réappliquer les highlights après un court délai
+            console.log('[Highlight] MathJax a fini, réapplication des highlights dans 100ms');
+            mathjaxUpdatePendingRef.current = false;
+
+            // Nettoyer le timer précédent
+            if (rehydrationTimerRef.current) {
+                clearTimeout(rehydrationTimerRef.current);
+            }
+
+            // Attendre que le DOM soit stable avant de réappliquer
+            rehydrationTimerRef.current = window.setTimeout(() => {
+                if (!container) return;
+
+                console.log('[Highlight] Réapplication des highlights sauvegardés');
+                clearAllHighlightNodes();
+
+                const backup = highlightsBackupRef.current;
+                if (backup.length > 0) {
+                    const applied: HighlightRecord[] = [];
+                    backup
+                        .sort((a, b) => a.startOffset - b.startOffset)
+                        .forEach((record) => {
+                            if (applyRecord(record)) {
+                                applied.push(record);
+                            }
+                        });
+
+                    highlightsRef.current = new Map(applied.map((record) => [record.id, record]));
+
+                    if (applied.length !== backup.length) {
+                        console.warn(`[Highlight] Seulement ${applied.length}/${backup.length} highlights réappliqués`);
+                        persistHighlights(applied);
+                    }
+                }
+
+                highlightsBackupRef.current = [];
+                rehydrationTimerRef.current = null;
+            }, 100);
+        };
+
+        // Écouter les événements MathJax
+        container.addEventListener('mathjax-before-update', handleMathJaxBeforeUpdate as EventListener);
+        container.addEventListener('mathjax-rendered', handleMathJaxRendered as EventListener);
+
         const handleDoubleClick = (e: MouseEvent) => {
             const target = e.target as HTMLElement;
             if (!target || FORBIDDEN_TAGS.has(target.tagName)) {
+                return;
+            }
+
+            // 🔧 FIX: Ignorer les clics sur les éléments MathJax
+            const mathJaxElement = target.closest('mjx-container, .MathJax, [data-mathml]');
+            if (mathJaxElement) {
+                console.log('[Highlight] Clic sur élément MathJax ignoré');
                 return;
             }
 
@@ -474,8 +588,18 @@ export const HighlightableContent: React.FC<HighlightableContentProps> = ({ chil
         container.addEventListener('dblclick', handleDoubleClick);
 
         return () => {
+            // 🔧 FIX: Nettoyer tous les listeners et timers
             container.removeEventListener('dblclick', handleDoubleClick);
+            container.removeEventListener('mathjax-before-update', handleMathJaxBeforeUpdate as EventListener);
+            container.removeEventListener('mathjax-rendered', handleMathJaxRendered as EventListener);
+
+            if (rehydrationTimerRef.current) {
+                clearTimeout(rehydrationTimerRef.current);
+                rehydrationTimerRef.current = null;
+            }
+
             highlightsRef.current.clear();
+            highlightsBackupRef.current = [];
         };
     }, [storageKey]);
 
