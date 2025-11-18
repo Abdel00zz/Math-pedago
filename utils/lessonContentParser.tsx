@@ -564,8 +564,8 @@ export const parseContent = (
                         }
                         
                         return (
-                            <li key={i} className="flex items-center gap-3 text-gray-700 leading-relaxed">
-                                <div className="flex-shrink-0">
+                            <li key={i} className="flex gap-3 text-gray-700 leading-relaxed">
+                                <div className="flex-shrink-0 pt-0.5">
                                     <NumberBullet number={i + 1} />
                                 </div>
                                 <div className="flex-1 space-y-2">
@@ -617,8 +617,8 @@ export const parseContent = (
                     }
                     
                     return (
-                        <li key={i} className="flex items-center gap-3 text-gray-700 leading-relaxed">
-                            <div className="flex-shrink-0">
+                        <li key={i} className="flex gap-3 text-gray-700 leading-relaxed">
+                            <div className="flex-shrink-0 pt-0.5">
                                 <StarBullet />
                             </div>
                             <div className="flex-1 space-y-2">

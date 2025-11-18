@@ -6,539 +6,471 @@
     "2025-11-27T10:00:00Z"
   ],
   "lessonFile": "lessons/2bse_limites_suites.json",
-  "videos": [],
   "quiz": [
     {
       "id": "q_def_majoree",
-      "question": "Une suite $(u_n)_{n \\ge n_0}$ est dite **majorée** par un réel $M$ si et seulement si :",
       "type": "mcq",
+      "question": "Une suite $(u_n)_{n \\ge n_0}$ est dite **majorée** par un réel $M$ si et seulement si :",
       "options": [
         {
           "text": "$\\forall n \\ge n_0; u_n \\le M$",
-          "is_correct": true,
-          "explanation": "La définition d'une suite majorée est que TOUS les termes de la suite sont inférieurs ou égaux au majorant $M$."
+          "isCorrect": true
         },
         {
           "text": "$\\forall n \\ge n_0; u_n \\ge M$",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         },
         {
           "text": "$\\exists n \\ge n_0; u_n \\le M$",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         },
         {
           "text": "$\\forall n \\ge n_0; u_n < M$",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         }
       ],
-      "steps": []
+      "explanation": "La définition d'une suite majorée est que TOUS les termes de la suite sont inférieurs ou égaux au majorant $M$."
     },
     {
       "id": "q_def_bornee",
-      "question": "Une suite $(u_n)$ est dite **bornée** si :",
       "type": "mcq",
+      "question": "Une suite $(u_n)$ est dite **bornée** si :",
       "options": [
         {
           "text": "Elle est seulement majorée",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         },
         {
           "text": "Elle est majorée et minorée",
-          "is_correct": true,
-          "explanation": "Une suite est bornée si elle est à la fois majorée et minorée."
+          "isCorrect": true
         },
         {
           "text": "Elle est seulement minorée",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         },
         {
           "text": "Elle est croissante et majorée",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         }
       ],
-      "steps": []
+      "explanation": "Une suite est bornée si elle est à la fois majorée et minorée."
     },
     {
       "id": "q_def_croissante",
-      "question": "Une suite $(u_n)$ est **croissante** si et seulement si :",
       "type": "mcq",
+      "question": "Une suite $(u_n)$ est **croissante** si et seulement si :",
       "options": [
         {
           "text": "$\\forall n \\ge n_0; u_{n+1} > u_n$",
-          "is_correct": false,
+          "isCorrect": false,
           "explanation": "Ceci est la définition d'une suite *strictement* croissante."
         },
         {
           "text": "$\\forall n \\ge n_0; u_{n+1} \\le u_n$",
-          "is_correct": false,
+          "isCorrect": false,
           "explanation": "Ceci est la définition d'une suite décroissante."
         },
         {
           "text": "$\\forall n \\ge n_0; u_{n+1} \\ge u_n$",
-          "is_correct": true,
-          "explanation": "La définition d'une suite croissante (au sens large) est $u_{n+1} \\ge u_n$ pour tout $n$."
+          "isCorrect": true
         },
         {
           "text": "$\\forall n \\ge n_0; u_{n+1} = u_n$",
-          "is_correct": false,
+          "isCorrect": false,
           "explanation": "Ceci est la définition d'une suite constante."
         }
       ],
-      "steps": []
+      "explanation": "La définition d'une suite croissante (au sens large) est $u_{n+1} \\ge u_n$ pour tout $n$."
     },
     {
       "id": "q_arith_terme_general",
-      "question": "Si $(u_n)$ est une suite arithmétique de raison $r$ et de premier terme $u_{n_0}$, alors son terme général est :",
       "type": "mcq",
+      "question": "Si $(u_n)$ est une suite arithmétique de raison $r$ et de premier terme $u_{n_0}$, alors son terme général est :",
       "options": [
         {
           "text": "$u_n = u_{n_0} + (n-n_0)r$",
-          "is_correct": true,
-          "explanation": "C'est la formule du terme général d'une suite arithmétique."
+          "isCorrect": true
         },
         {
           "text": "$u_n = u_{n_0} + nr$",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         },
         {
           "text": "$u_n = u_{n_0} \\times r^{n-n_0}$",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         },
         {
           "text": "$u_n = u_{n_0} + (n+1)r$",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         }
       ],
-      "steps": []
+      "explanation": "C'est la formule du terme général d'une suite arithmétique."
     },
     {
       "id": "q_geo_terme_general",
-      "question": "Si $(u_n)$ est une suite géométrique de raison $q$ et de premier terme $u_{n_0}$, alors son terme général est :",
       "type": "mcq",
+      "question": "Si $(u_n)$ est une suite géométrique de raison $q$ et de premier terme $u_{n_0}$, alors son terme général est :",
       "options": [
         {
           "text": "$u_n = u_{n_0} + (n-n_0)q$",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         },
         {
           "text": "$u_n = u_{n_0} \\times q^{n}$",
-          "is_correct": false,
+          "isCorrect": false,
           "explanation": "Ceci est vrai seulement si le premier terme est $u_0$."
         },
         {
           "text": "$u_n = u_{n_0} \\times q^{n-n_0}$",
-          "is_correct": true,
-          "explanation": "C'est la formule du terme général d'une suite géométrique."
+          "isCorrect": true
         },
         {
           "text": "$u_n = u_{n_0} \\times (n-n_0)q$",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         }
       ],
-      "steps": []
+      "explanation": "C'est la formule du terme général d'une suite géométrique."
     },
     {
       "id": "q_geo_somme",
-      "question": "La somme $S_n = u_p + ... + u_n$ d'une suite géométrique de raison $q \\neq 1$ est :",
       "type": "mcq",
+      "question": "La somme $S_n = u_p + ... + u_n$ d'une suite géométrique de raison $q \\neq 1$ est :",
       "options": [
         {
           "text": "$S_n = u_p \\times \\frac{q^{n-p+1}-1}{q-1}$",
-          "is_correct": true,
-          "explanation": "La formule de la somme est $premier\\_terme \\times \\frac{q^{nombre\\_de\\_termes}-1}{q-1}$. Le nombre de termes est $(n-p+1)$."
+          "isCorrect": true
         },
         {
           "text": "$S_n = u_p \\times \\frac{q^n-1}{q-1}$",
-          "is_correct": false,
+          "isCorrect": false,
           "explanation": "Le nombre de termes est $(n-p+1)$, pas $n$."
         },
         {
           "text": "$S_n = (n-p+1) \\times \\frac{u_p+u_n}{2}$",
-          "is_correct": false,
+          "isCorrect": false,
           "explanation": "Ceci est la formule de la somme pour une suite arithmétique."
         },
         {
           "text": "$S_n = u_p \\times (n-p+1)$",
-          "is_correct": false,
+          "isCorrect": false,
           "explanation": "Ceci est vrai seulement si $q=1$."
         }
       ],
-      "steps": []
+      "explanation": "La formule de la somme est $premier\\_terme \\times \\frac{q^{nombre\\_de\\_termes}-1}{q-1}$. Le nombre de termes est $(n-p+1)$."
     },
     {
       "id": "q_lim_finie_def",
-      "question": "Laquelle de ces affirmations est équivalente à $lim_{n \\to +\\infty} u_n = l$ ?",
       "type": "mcq",
+      "question": "Laquelle de ces affirmations est équivalente à $lim_{n \\to +\\infty} u_n = l$ ?",
       "options": [
         {
           "text": "$lim_{n \\to +\\infty} (u_n + l) = 0$",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         },
         {
           "text": "$lim_{n \\to +\\infty} (u_n - l) = 0$",
-          "is_correct": true,
-          "explanation": "Dire que $u_n$ tend vers $l$ est équivalent à dire que l'écart $(u_n - l)$ tend vers 0."
+          "isCorrect": true
         },
         {
           "text": "$lim_{n \\to +\\infty} |u_n - l| = +\\infty$",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         },
         {
           "text": "$lim_{n \\to +\\infty} u_n = 0$",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         }
       ],
-      "steps": []
+      "explanation": "Dire que $u_n$ tend vers $l$ est équivalent à dire que l'écart $(u_n - l)$ tend vers 0."
     },
     {
       "id": "q_lim_usuelles_zero",
-      "question": "Laquelle de ces limites est **incorrecte** ?",
       "type": "mcq",
+      "question": "Laquelle de ces limites est **incorrecte** ?",
       "options": [
         {
           "text": "$lim_{n \\to +\\infty} \\frac{1}{n} = 0$",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         },
         {
           "text": "$lim_{n \\to +\\infty} \\frac{1}{\\sqrt{n}} = 0$",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         },
         {
           "text": "$lim_{n \\to +\\infty} \\frac{1}{n^2} = 0$",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         },
         {
           "text": "$lim_{n \\to +\\infty} \\frac{1}{n} = +\\infty$",
-          "is_correct": true,
-          "explanation": "Les suites $1/n$, $1/n^2$, $1/n^i$ ($i \\in \\mathbb{N}^*$), et $1/\\sqrt{n}$ tendent toutes vers 0 quand $n$ tend vers $+\\infty$."
+          "isCorrect": true
         }
       ],
-      "steps": []
+      "explanation": "Les suites $1/n$, $1/n^2$, $1/n^i$ ($i \\in \\mathbb{N}^*$), et $1/\\sqrt{n}$ tendent toutes vers 0 quand $n$ tend vers $+\\infty$."
     },
     {
       "id": "q_lim_usuelles_inf",
-      "question": "Laquelle de ces limites est **correcte** ?",
       "type": "mcq",
+      "question": "Laquelle de ces limites est **correcte** ?",
       "options": [
         {
           "text": "$lim_{n \\to +\\infty} n^2 = 0$",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         },
         {
           "text": "$lim_{n \\to +\\infty} \\sqrt{n} = +\\infty$",
-          "is_correct": true,
-          "explanation": "Les suites $n$, $n^2$, $n^i$ ($i \\in \\mathbb{N}^*$), et $\\sqrt{n}$ tendent toutes vers $+\\infty$."
+          "isCorrect": true
         },
         {
           "text": "$lim_{n \\to +\\infty} n = 0$",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         },
         {
           "text": "$lim_{n \\to +\\infty} n^i = 0$ (pour $i \\in \\mathbb{N}^*$)",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         }
       ],
-      "steps": []
+      "explanation": "Les suites $n$, $n^2$, $n^i$ ($i \\in \\mathbb{N}^*$), et $\\sqrt{n}$ tendent toutes vers $+\\infty$."
     },
     {
       "id": "q_def_convergence",
-      "question": "On dit qu'une suite $(u_n)$ est **convergente** si :",
       "type": "mcq",
+      "question": "On dit qu'une suite $(u_n)$ est **convergente** si :",
       "options": [
         {
           "text": "Sa limite est un nombre réel fini",
-          "is_correct": true,
-          "explanation": "Une suite est convergente si sa limite est finie (un nombre réel $l$)."
+          "isCorrect": true
         },
         {
           "text": "Sa limite est $+\\infty$ ou $-\\infty$",
-          "is_correct": false,
+          "isCorrect": false,
           "explanation": "Dans ce cas, la suite est dite divergente."
         },
         {
           "text": "Elle est croissante",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         },
         {
           "text": "Elle n'a pas de limite",
-          "is_correct": false,
+          "isCorrect": false,
           "explanation": "Dans ce cas, la suite est dite divergente."
         }
       ],
-      "steps": []
+      "explanation": "Une suite est convergente si sa limite est finie (un nombre réel $l$)."
     },
     {
       "id": "q_thm_convergence_monotone_1",
-      "question": "Toute suite **croissante** et **majorée** est :",
       "type": "mcq",
+      "question": "Toute suite **croissante** et **majorée** est :",
       "options": [
         {
           "text": "Convergente",
-          "is_correct": true,
-          "explanation": "C'est le théorème de la convergence monotone. Une suite croissante qui est 'bloquée' par un majorant converge nécessairement vers une limite finie."
+          "isCorrect": true
         },
         {
           "text": "Divergente",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         },
         {
           "text": "Constante",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         },
         {
           "text": "N'a pas de limite",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         }
       ],
-      "steps": []
+      "explanation": "C'est le théorème de la convergence monotone. Une suite croissante qui est 'bloquée' par un majorant converge nécessairement vers une limite finie."
     },
     {
       "id": "q_thm_convergence_monotone_2",
-      "question": "Toute suite **décroissante** et **minorée** est :",
       "type": "mcq",
+      "question": "Toute suite **décroissante** et **minorée** est :",
       "options": [
         {
           "text": "Divergente vers $-\\infty$",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         },
         {
           "text": "Constante",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         },
         {
           "text": "Convergente",
-          "is_correct": true,
-          "explanation": "C'est le théorème de la convergence monotone. Une suite décroissante qui est 'bloquée' par un minorant converge nécessairement vers une limite finie."
+          "isCorrect": true
         },
         {
           "text": "Majorée",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         }
       ],
-      "steps": []
+      "explanation": "C'est le théorème de la convergence monotone. Une suite décroissante qui est 'bloquée' par un minorant converge nécessairement vers une limite finie."
     },
     {
       "id": "q_thm_gendarmes",
-      "question": "Si $v_n \\le u_n \\le w_n$ pour $n \\ge p$, et $lim_{n \\to +\\infty} v_n = lim_{n \\to +\\infty} w_n = l$, alors :",
       "type": "mcq",
+      "question": "Si $v_n \\le u_n \\le w_n$ pour $n \\ge p$, et $lim_{n \\to +\\infty} v_n = lim_{n \\to +\\infty} w_n = l$, alors :",
       "options": [
         {
           "text": "$lim_{n \\to +\\infty} u_n = l$",
-          "is_correct": true,
-          "explanation": "C'est le théorème des gendarmes (ou critère de convergence). La suite $(u_n)$ est 'encadrée' par two suites qui tendent vers la même limite $l$, donc elle doit aussi tendre vers $l$."
+          "isCorrect": true
         },
         {
           "text": "$lim_{n \\to +\\infty} u_n = 0$",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         },
         {
           "text": "$lim_{n \\to +\\infty} u_n = +\\infty$",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         },
         {
           "text": "On ne peut rien conclure",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         }
       ],
-      "steps": []
+      "explanation": "C'est le théorème des gendarmes (ou critère de convergence). La suite $(u_n)$ est 'encadrée' par two suites qui tendent vers la même limite $l$, donc elle doit aussi tendre vers $l$."
     },
     {
       "id": "q_critere_divergence",
-      "question": "Si $v_n \\ge u_n$ pour $n \\ge p$ et $lim_{n \\to +\\infty} u_n = +\\infty$, alors :",
       "type": "mcq",
+      "question": "Si $v_n \\ge u_n$ pour $n \\ge p$ et $lim_{n \\to +\\infty} u_n = +\\infty$, alors :",
       "options": [
         {
           "text": "$lim_{n \\to +\\infty} v_n = 0$",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         },
         {
           "text": "$lim_{n \\to +\\infty} v_n = +\\infty$",
-          "is_correct": true,
-          "explanation": "Si $u_n$ tend vers $+\\infty$ et que $v_n$ est toujours plus grande, $v_n$ tend aussi vers $+\\infty$ (critère de divergence par comparaison)."
+          "isCorrect": true
         },
         {
           "text": "$lim_{n \\to +\\infty} v_n = -\\infty$",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         },
         {
           "text": "On ne peut rien conclure",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         }
       ],
-      "steps": []
+      "explanation": "Si $u_n$ tend vers $+\\infty$ et que $v_n$ est toujours plus grande, $v_n$ tend aussi vers $+\\infty$ (critère de divergence par comparaison)."
     },
     {
       "id": "q_critere_limite_l",
-      "question": "Si $|v_n - l| \\le u_n$ pour $n \\ge p$ et $lim_{n \\to +\\infty} u_n = 0$, alors :",
       "type": "mcq",
+      "question": "Si $|v_n - l| \\le u_n$ pour $n \\ge p$ et $lim_{n \\to +\\infty} u_n = 0$, alors :",
       "options": [
         {
           "text": "$lim_{n \\to +\\infty} v_n = 0$",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         },
         {
           "text": "$lim_{n \\to +\\infty} v_n = +\\infty$",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         },
         {
           "text": "$lim_{n \\to +\\infty} v_n = l$",
-          "is_correct": true,
-          "explanation": "Si l'écart entre $v_n$ et $l$, $|v_n - l|$, est majoré par une suite qui tend vers 0, alors cet écart tend lui-même vers 0 (par le th. des gendarmes), ce qui signifie que $v_n$ tend vers $l$."
+          "isCorrect": true
         },
         {
           "text": "On ne peut rien conclure",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         }
       ],
-      "steps": []
+      "explanation": "Si l'écart entre $v_n$ et $l$, $|v_n - l|$, est majoré par une suite qui tend vers 0, alors cet écart tend lui-même vers 0 (par le th. des gendarmes), ce qui signifie que $v_n$ tend vers $l$."
     },
     {
       "id": "q_lim_qn_cas1",
-      "question": "Si $q > 1$, alors $lim_{n \\to +\\infty} q^n = $ ?",
       "type": "mcq",
+      "question": "Si $q > 1$, alors $lim_{n \\to +\\infty} q^n = $ ?",
       "options": [
         {
           "text": "$0$",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         },
         {
           "text": "$1$",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         },
         {
           "text": "$+\\infty$",
-          "is_correct": true,
-          "explanation": "Pour $q>1$, la suite géométrique $q^n$ diverge vers $+\\infty$ (par exemple $3^n$)."
+          "isCorrect": true
         },
         {
           "text": "N'existe pas",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         }
       ],
-      "steps": []
+      "explanation": "Pour $q>1$, la suite géométrique $q^n$ diverge vers $+\\infty$ (par exemple $3^n$)."
     },
     {
       "id": "q_lim_qn_cas2",
-      "question": "Si $-1 < q < 1$, alors $lim_{n \\to +\\infty} q^n = $ ?",
       "type": "mcq",
+      "question": "Si $-1 < q < 1$, alors $lim_{n \\to +\\infty} q^n = $ ?",
       "options": [
         {
           "text": "$0$",
-          "is_correct": true,
-          "explanation": "Pour $|q|<1$, la suite géométrique $q^n$ converge vers 0 (par exemple $(\\frac{1}{2})^n$)."
+          "isCorrect": true
         },
         {
           "text": "$1$",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         },
         {
           "text": "$+\\infty$",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         },
         {
           "text": "N'existe pas",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         }
       ],
-      "steps": []
+      "explanation": "Pour $|q|<1$, la suite géométrique $q^n$ converge vers 0 (par exemple $(\\frac{1}{2})^n$)."
     },
     {
       "id": "q_lim_qn_cas3",
-      "question": "Si $q \\le -1$, alors $lim_{n \\to +\\infty} q^n = $ ?",
       "type": "mcq",
+      "question": "Si $q \\le -1$, alors $lim_{n \\to +\\infty} q^n = $ ?",
       "options": [
         {
           "text": "$0$",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         },
         {
           "text": "$-\\infty$",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         },
         {
           "text": "$+\\infty$",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         },
         {
           "text": "N'a pas de limite",
-          "is_correct": true,
-          "explanation": "Pour $q \\le -1$, la suite $q^n$ n'a pas de limite car elle oscille (par exemple $(-1)^n$ ou $(-2)^n$)."
+          "isCorrect": true
         }
       ],
-      "steps": []
+      "explanation": "Pour $q \\le -1$, la suite $q^n$ n'a pas de limite car elle oscille (par exemple $(-1)^n$ ou $(-2)^n$)."
     },
     {
       "id": "q_thm_point_fixe",
-      "question": "Si $(u_n)$ est définie par $u_{n+1}=f(u_n)$, avec $u_0 \\in I$, $f$ est continue sur $I$, $f(I) \\subset I$ et $(u_n)$ converge vers $l$. Que peut-on dire de $l$ ?",
       "type": "mcq",
+      "question": "Si $(u_n)$ est définie par $u_{n+1}=f(u_n)$, avec $u_0 \\in I$, $f$ est continue sur $I$, $f(I) \\subset I$ et $(u_n)$ converge vers $l$. Que peut-on dire de $l$ ?",
       "options": [
         {
           "text": "$l = 0$",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         },
         {
           "text": "$l$ est solution de $f(x) = x$",
-          "is_correct": true,
-          "explanation": "Si une suite récurrente $u_{n+1}=f(u_n)$ converge vers $l$ et que $f$ est continue, alors la limite $l$ est un point fixe de $f$, c'est-à-dire une solution de l'équation $f(l)=l$."
+          "isCorrect": true
         },
         {
           "text": "$l$ est solution de $f'(x) = 0$",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         },
         {
           "text": "$l = u_0$",
-          "is_correct": false,
-          "explanation": null
+          "isCorrect": false
         }
       ],
-      "steps": []
+      "explanation": "Si une suite récurrente $u_{n+1}=f(u_n)$ converge vers $l$ et que $f$ est continue, alors la limite $l$ est un point fixe de $f$, c'est-à-dire une solution de l'équation $f(l)=l$."
     }
   ],
   "exercises": [
@@ -548,20 +480,13 @@
       "statement": "Soit $(U_n)_{n \\in \\mathbb{N}}$ la suite numérique définie par $u_0 = \\frac{1}{2}$ et $u_{n+1} = \\frac{u_n}{3 - 2u_n}$ pour tout $n$ de $\\mathbb{N}$.",
       "sub_questions": [
         {
-          "text": "Calculer $u_1$.",
-          "questionNumber": "1",
-          "sub_sub_questions": [],
-          "images": []
+          "text": "Calculer $u_1$."
         },
         {
-          "text": "Montrer par récurrence que pour tout $n$ de $\\mathbb{N}$ $0 < u_n \\le \\frac{1}{2}$.",
-          "questionNumber": "2",
-          "sub_sub_questions": [],
-          "images": []
+          "text": "Montrer par récurrence que pour tout $n$ de $\\mathbb{N}$ $0 < u_n \\le \\frac{1}{2}$."
         },
         {
           "text": "Analyse de la monotonie :",
-          "questionNumber": "3",
           "sub_sub_questions": [
             {
               "text": "Montrer que pour $n$ de $\\mathbb{N}$ on a $\\frac{u_{n+1}}{u_n} \\le \\frac{1}{2}$."
@@ -569,12 +494,10 @@
             {
               "text": "En déduire la monotonie de la suite $(u_n)_{n \\in \\mathbb{N}}$."
             }
-          ],
-          "images": []
+          ]
         },
         {
           "text": "Convergence de $(u_n)$ :",
-          "questionNumber": "4",
           "sub_sub_questions": [
             {
               "text": "Montrer que pour tout $n$ de $\\mathbb{N}$ $0 < u_n \\le (\\frac{1}{2})^{n+1}$ puis calculer $lim \\, u_n$."
@@ -582,12 +505,10 @@
             {
               "text": "On pose $v_n = \\ln(3 - 2u_n)$ pour tout $n$ de $\\mathbb{N}$ calculer $lim \\, v_n$."
             }
-          ],
-          "images": []
+          ]
         },
         {
           "text": "Suite auxiliaire $(v_n)$ (alternative) :",
-          "questionNumber": "5",
           "sub_sub_questions": [
             {
               "text": "Vérifier que pour tout $n$ de $\\mathbb{N}$ $\\frac{1}{u_{n+1}} - 1 = 3(\\frac{1}{u_n} - 1)$."
@@ -595,8 +516,7 @@
             {
               "text": "En déduire $u_n$ en fonction de $n$ pour tout $n$ de $\\mathbb{N}$."
             }
-          ],
-          "images": []
+          ]
         }
       ],
       "hint": [
@@ -607,6 +527,30 @@
         {
           "text": "**Question 2 (Récurrence)** : \n1. **Initialisation** : Vérifiez que la propriété $0 < u_0 \\le 1/2$ est vraie pour $n=0$.\n2. **Hérédité** : Supposez $0 < u_k \\le 1/2$ (Hypothèse de Récurrence). Étudiez la fonction $f(x) = \\frac{x}{3-2x}$ sur l'intervalle $]0, 1/2]$ pour montrer que $0 < f(u_k) \\le 1/2$, c'est-à-dire $0 < u_{k+1} \\le 1/2$.",
           "questionNumber": "2"
+        },
+        {
+          "text": "**Question 3a** : Calculez le quotient $\\frac{u_{n+1}}{u_n} = \\frac{1}{u_n} \\times \\frac{u_n}{3-2u_n} = \\frac{1}{3-2u_n}$. Utilisez ensuite le résultat de la question 2 ($u_n \\le 1/2$) pour majorer cette expression.",
+          "questionNumber": "3a"
+        },
+        {
+          "text": "**Question 3b** : Vous avez $\\frac{u_{n+1}}{u_n} \\le \\frac{1}{2}$. Comme $u_n > 0$, vous pouvez comparer $u_{n+1}$ et $u_n$.",
+          "questionNumber": "3b"
+        },
+        {
+          "text": "**Question 4a** : Utilisez une récurrence ou une méthode de majoration successive à partir de $\\frac{u_{n+1}}{u_n} \\le \\frac{1}{2}$. Pour la limite, appliquez le théorème des gendarmes.",
+          "questionNumber": "4a"
+        },
+        {
+          "text": "**Question 4b** : Vous avez $lim \\, u_n = 0$. La fonction $x \\mapsto \\ln(3-2x)$ est continue en 0. Utilisez le théorème sur la limite d'une suite de la forme $v_n = f(u_n)$.",
+          "questionNumber": "4b"
+        },
+        {
+          "text": "**Question 5a** : Calculez $\\frac{1}{u_{n+1}} - 1$ en remplaçant $u_{n+1}$ par $\\frac{u_n}{3 - 2u_n}$. Simplifiez l'expression $\\frac{3-2u_n}{u_n} - 1$ et factorisez par 3.",
+          "questionNumber": "5a"
+        },
+        {
+          "text": "**Question 5b** : Vous avez montré que si l'on pose $v_n = \\frac{1}{u_n} - 1$, alors $v_{n+1} = 3v_n$. C'est une suite géométrique. Calculez son premier terme $v_0 = \\frac{1}{u_0} - 1$. Exprimez $v_n$ en fonction de $n$, puis isolez $u_n$ de l'équation $v_n = \\frac{1}{u_n} - 1$.",
+          "questionNumber": "5b"
         }
       ]
     },
@@ -617,7 +561,6 @@
       "sub_questions": [
         {
           "text": "Analyse préliminaire :",
-          "questionNumber": "1",
           "sub_sub_questions": [
             {
               "text": "Montrer que $u_{n+1} - \\frac{1}{3} = \\frac{u_n - \\frac{1}{3}}{15u_n + 1}$ pour tout $n$ de $\\mathbb{N}$."
@@ -625,23 +568,24 @@
             {
               "text": "Montrer que $u_n > \\frac{1}{3}$ pour tout $n$ de $\\mathbb{N}$."
             }
-          ],
-          "images": []
+          ]
         },
         {
-          "text": "Soit $(V_n)_{n \\in \\mathbb{N}}$ la suite numérique définie par $v_n = 1 - \\frac{1}{3u_n}$ pour tout $n$ de $\\mathbb{N}$.\n$\\Rightarrow$ Montrer que $(V_n)_{n \\in \\mathbb{N}}$ est une suite géométrique de raison $\\frac{1}{6}$ puis écrire $v_n$ en fonction de $n$.",
-          "questionNumber": "2",
-          "sub_sub_questions": [],
-          "images": []
+          "text": "Soit $(V_n)_{n \\in \\mathbb{N}}$ la suite numérique définie par $v_n = 1 - \\frac{1}{3u_n}$ pour tout $n$ de $\\mathbb{N}$.\n$\\Rightarrow$ Montrer que $(V_n)_{n \\in \\mathbb{N}}$ est une suite géométrique de raison $\\frac{1}{6}$ puis écrire $v_n$ en fonction de $n$."
         },
         {
-          "text": "Montrer que $u_n = \\frac{1}{3 - 2 \\times (\\frac{1}{6})^n}$ pour tout $n$ de $\\mathbb{N}$ et en déduire $lim \\, u_n$.",
-          "questionNumber": "3",
-          "sub_sub_questions": [],
-          "images": []
+          "text": "Montrer que $u_n = \\frac{1}{3 - 2 \\times (\\frac{1}{6})^n}$ pour tout $n$ de $\\mathbb{N}$ et en déduire $lim \\, u_n$."
         }
       ],
       "hint": [
+        {
+          "text": "**Question 1a** : Partez du membre de gauche $u_{n+1} - \\frac{1}{3}$. Remplacez $u_{n+1}$ par son expression $\\frac{6u_n}{15u_n + 1}$. Mettez tout au même dénominateur $3(15u_n + 1)$. Simplifiez le numérateur. Vous devriez trouver $3u_n - 1$, ce qui est $3(u_n - 1/3)$.",
+          "questionNumber": "1a"
+        },
+        {
+          "text": "**Question 1b (Récurrence)** : \n1. **Initialisation** : $u_0 = 1$. Est-ce que $1 > 1/3$ ? Oui.\n2. **Hérédité** : Supposez $u_k > 1/3$ (HR). Vous voulez montrer $u_{k+1} > 1/3$. Utilisez le résultat de 1a : $u_{k+1} - 1/3 = \\frac{u_k - 1/3}{15u_k + 1}$. D'après (HR), le numérateur $(u_k - 1/3)$ est positif. Le dénominateur $(15u_k + 1)$ est aussi positif (car $u_k > 1/3 > 0$). Le quotient est donc positif.",
+          "questionNumber": "1b"
+        },
         {
           "text": "**Question 2 (Suite géométrique)** : Calculez $v_{n+1}$ en fonction de $u_{n+1}$.\n$v_{n+1} = 1 - \\frac{1}{3u_{n+1}} = 1 - \\frac{1}{3(\\frac{6u_n}{15u_n+1})} = 1 - \\frac{15u_n+1}{18u_n}$.\nSimplifiez cette expression en mettant au même dénominateur $18u_n$ : $v_{n+1} = \\frac{18u_n - (15u_n+1)}{18u_n} = \\frac{3u_n - 1}{18u_n}$.\nFactorisez par $1/6$ : $v_{n+1} = \\frac{1}{6} \\times \\frac{3u_n - 1}{3u_n}$.\nReconnaissez $v_n = 1 - \\frac{1}{3u_n} = \\frac{3u_n-1}{3u_n}$.\nDonc $v_{n+1} = \\frac{1}{6} v_n$. C'est une suite géométrique de raison $q=1/6$.",
           "questionNumber": "2"
@@ -652,6 +596,5 @@
         }
       ]
     }
-  ],
-  "version": "v1.1.0-aeba18"
+  ]
 }

@@ -20,28 +20,11 @@
             {
               "type": "definition-box",
               "preamble": "**À retenir**",
-              "content": [
-                "Une suite numérique, c'est une application qui associe à chaque nombre entier naturel $n$ un nombre réel $u_n$.",
-                "",
-                "On l'écrit : $u : \\mathbb{N} \\to \\mathbb{R}$, $n \\mapsto u_n$",
-                "",
-                "Le nombre $u_n$ s'appelle le **terme de rang $n$**."
-              ]
+              "content": "Une suite numérique, c'est une application qui associe à chaque nombre entier naturel $n$ un nombre réel $u_n$.\n\nOn l'écrit : $u : \\mathbb{N} \\to \\mathbb{R}$, $n \\mapsto u_n$\n\nLe nombre $u_n$ s'appelle le **terme de rang $n$**."
             },
             {
               "type": "example-box",
-              "content": [
-                ">> Prenons la suite définie par $u_n = 2n + 1$ pour $n \\geq 0$.",
-                "",
-                ">> Calculons les premiers termes :",
-                "Au rang 0 : $u_0 = 2 \\times 0 + 1 = ___1___$",
-                "Au rang 1 : $u_1 = 2 \\times 1 + 1 = ___3___$",
-                "Au rang 2 : $u_2 = 2 \\times 2 + 1 = ___5___$",
-                "Au rang 3 : $u_3 = 2 \\times 3 + 1 = ___7___$",
-                "",
-                ">> On obtient la liste : $1, 3, 5, 7, ...$"
-              ],
-              "listType": "bullet"
+              "content": "Prenons la suite définie par $u_n = 2n + 1$ pour $n \\geq 0$.\n\nCalculons les premiers termes :\n- Au rang 0 : $u_0 = 2 \\times 0 + 1 = ___1___$\n- Au rang 1 : $u_1 = 2 \\times 1 + 1 = ___3___$\n- Au rang 2 : $u_2 = 2 \\times 2 + 1 = ___5___$\n- Au rang 3 : $u_3 = 2 \\times 3 + 1 = ___7___$\n\nOn obtient la liste : $1, 3, 5, 7, ...$"
             },
             {
               "type": "p",
@@ -59,11 +42,7 @@
             {
               "type": "definition-box",
               "preamble": "**Suite majorée**",
-              "content": [
-                "Une suite $(u_n)$ est **majorée** quand il existe un nombre $M$ tel que tous les termes restent en dessous de $M$.",
-                "",
-                "En clair : $u_n \\leq M$ pour tous les rangs $n$. On dit que $M$ est un **majorant** de la suite."
-              ]
+              "content": "Une suite $(u_n)$ est **majorée** quand il existe un nombre $M$ tel que tous les termes restent en dessous de $M$.\n\nEn clair : $u_n \\leq M$ pour tous les rangs $n$.\n\nOn dit que $M$ est un **majorant** de la suite."
             },
             {
               "type": "example-box",
