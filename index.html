@@ -9,6 +9,7 @@
     <link rel="manifest" href="/manifest.webmanifest" />
     <link rel="apple-touch-icon" href="/public/icone.png" />
     <link rel="icon" type="image/png" href="/icone.png" />
+    <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="Centre Scientifique" />
@@ -29,14 +30,18 @@
     <!-- MathJax Configuration -->
     <script>
       window.MathJax = {
-        loader: { load: ['[tex]/html'] },
+        loader: { 
+          load: ['[tex]/html'],
+          // Disable caching to avoid tracking prevention warnings
+          cacheCss: false
+        },
         tex: {
           inlineMath: [['$', '$'], ['\\(', '\\)']],
           displayMath: [['$$', '$$'], ['\\[', '\\]']],
           packages: {'[+]': ['html']},
         },
         svg: {
-          fontCache: 'global',
+          fontCache: 'none',
           scale: 1,
           minScale: 0.5,
           mtextInheritFont: true,

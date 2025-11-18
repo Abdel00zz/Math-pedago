@@ -4,43 +4,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test PWA Storage - Centre Scientifique</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: system-ui, -apple-system, sans-serif; background: #f3f4f6; padding: 2rem; line-height: 1.6; }
+        .container { max-width: 64rem; margin: 0 auto; }
+        h1 { font-size: 1.875rem; font-weight: 700; color: #1f2937; margin-bottom: 1.5rem; }
+        h2 { font-size: 1.25rem; font-weight: 600; color: #374151; margin-bottom: 1rem; }
+        .card { background: white; border-radius: 0.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); padding: 1.5rem; margin-bottom: 1.5rem; }
+        .space-y-2 > * + * { margin-top: 0.5rem; }
+        .space-y-3 > * + * { margin-top: 0.75rem; }
+        button { width: 100%; padding: 0.5rem 1rem; border-radius: 0.25rem; border: none; color: white; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+        button:hover { opacity: 0.9; transform: translateY(-1px); }
+        .btn-blue { background: #3b82f6; }
+        .btn-green { background: #10b981; }
+        .btn-purple { background: #8b5cf6; }
+        .btn-red { background: #ef4444; }
+        .text-green { color: #059669; }
+        .text-red { color: #dc2626; }
+        .text-gray { color: #6b7280; }
+        .text-blue { color: #2563eb; }
+        .text-orange { color: #ea580c; }
+        .font-semibold { font-weight: 600; }
+        .text-sm { font-size: 0.875rem; }
+        .flex { display: flex; }
+        .items-center { align-items: center; }
+        .space-x-2 > * + * { margin-left: 0.5rem; }
+        .mt-2 { margin-top: 0.5rem; }
+        .pl-3 { padding-left: 0.75rem; }
+        .border-l-4 { border-left: 4px solid; }
+        .border-blue { border-color: #3b82f6; }
+        .border-gray { border-color: #9ca3af; }
+        #logs { background: #f9fafb; padding: 1rem; border-radius: 0.25rem; font-family: 'Courier New', monospace; font-size: 0.875rem; height: 16rem; overflow-y: auto; }
+    </style>
 </head>
-<body class="bg-gray-100 p-8">
-    <div class="max-w-4xl mx-auto">
-        <h1 class="text-3xl font-bold text-gray-800 mb-6">🧪 Test de Persistance PWA</h1>
+<body>
+    <div class="container">
+        <h1>🧪 Test de Persistance PWA</h1>
         
-        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-            <h2 class="text-xl font-semibold text-gray-700 mb-4">📊 État du localStorage</h2>
+        <div class="card">
+            <h2>📊 État du localStorage</h2>
             <div id="storage-status" class="space-y-2"></div>
         </div>
 
-        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-            <h2 class="text-xl font-semibold text-gray-700 mb-4">👤 Profil Utilisateur</h2>
+        <div class="card">
+            <h2>👤 Profil Utilisateur</h2>
             <div id="profile-status" class="space-y-2"></div>
         </div>
 
-        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-            <h2 class="text-xl font-semibold text-gray-700 mb-4">🔧 Actions de Test</h2>
+        <div class="card">
+            <h2>🔧 Actions de Test</h2>
             <div class="space-y-3">
-                <button onclick="testSaveProfile()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full">
+                <button onclick="testSaveProfile()" class="btn-blue">
                     💾 Sauvegarder un profil de test
                 </button>
-                <button onclick="testLoadProfile()" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 w-full">
+                <button onclick="testLoadProfile()" class="btn-green">
                     📂 Charger le profil
                 </button>
-                <button onclick="testMigration()" class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600 w-full">
+                <button onclick="testMigration()" class="btn-purple">
                     🔄 Tester la migration
                 </button>
-                <button onclick="clearAll()" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 w-full">
+                <button onclick="clearAll()" class="btn-red">
                     🗑️ Vider tout le localStorage
                 </button>
             </div>
         </div>
 
-        <div class="bg-white rounded-lg shadow-md p-6">
-            <h2 class="text-xl font-semibold text-gray-700 mb-4">📋 Logs</h2>
-            <div id="logs" class="bg-gray-50 p-4 rounded font-mono text-sm h-64 overflow-y-auto"></div>
+        <div class="card">
+            <h2>📋 Logs</h2>
+            <div id="logs"></div>
         </div>
     </div>
 
@@ -56,10 +87,10 @@
             const logsDiv = document.getElementById('logs');
             const timestamp = new Date().toLocaleTimeString();
             const colors = {
-                info: 'text-blue-600',
-                success: 'text-green-600',
-                error: 'text-red-600',
-                warning: 'text-orange-600'
+                info: 'text-blue',
+                success: 'text-green',
+                error: 'text-red',
+                warning: 'text-orange'
             };
             logsDiv.innerHTML += `<div class="${colors[type]}">[${timestamp}] ${message}</div>`;
             logsDiv.scrollTop = logsDiv.scrollHeight;
@@ -77,17 +108,17 @@
             statusDiv.innerHTML = `
                 <div class="flex items-center space-x-2">
                     <span class="font-semibold">Nouvelle clé (${STORAGE_KEYS.APP_STATE}):</span>
-                    <span class="${newKeyData ? 'text-green-600' : 'text-red-600'}">
+                    <span class="${newKeyData ? 'text-green' : 'text-red'}">
                         ${newKeyData ? '✅ Présente' : '❌ Absente'}
                     </span>
                 </div>
                 <div class="flex items-center space-x-2">
                     <span class="font-semibold">Ancienne clé (${STORAGE_KEYS.OLD_KEY}):</span>
-                    <span class="${oldKeyData ? 'text-green-600' : 'text-gray-400'}">
+                    <span class="${oldKeyData ? 'text-green' : 'text-gray'}">
                         ${oldKeyData ? '✅ Présente' : '⚪ Absente'}
                     </span>
                 </div>
-                <div class="text-sm text-gray-600 mt-2">
+                <div class="text-sm text-gray mt-2">
                     Taille totale: ${JSON.stringify(localStorage).length} caractères
                 </div>
             `;
@@ -119,24 +150,24 @@
 
                 profileDiv.innerHTML = `
                     <div class="space-y-3">
-                        <div class="border-l-4 border-blue-500 pl-3">
-                            <div class="font-semibold text-gray-700">Nouvelle clé:</div>
+                        <div class="border-l-4 border-blue pl-3">
+                            <div class="font-semibold">Nouvelle clé:</div>
                             ${newProfile ? `
-                                <div class="text-sm text-gray-600">
+                                <div class="text-sm text-gray">
                                     <div>👤 Nom: <strong>${newProfile.name}</strong></div>
                                     <div>🎓 Classe: <strong>${newProfile.classId}</strong></div>
                                 </div>
-                            ` : '<div class="text-red-600">Aucun profil trouvé</div>'}
+                            ` : '<div class="text-red">Aucun profil trouvé</div>'}
                         </div>
                         
-                        <div class="border-l-4 border-gray-400 pl-3">
-                            <div class="font-semibold text-gray-700">Ancienne clé (pour compatibilité):</div>
+                        <div class="border-l-4 border-gray pl-3">
+                            <div class="font-semibold">Ancienne clé (pour compatibilité):</div>
                             ${oldProfile ? `
-                                <div class="text-sm text-gray-600">
+                                <div class="text-sm text-gray">
                                     <div>👤 Nom: <strong>${oldProfile.name}</strong></div>
                                     <div>🎓 Classe: <strong>${oldProfile.classId}</strong></div>
                                 </div>
-                            ` : '<div class="text-gray-400">Aucun profil trouvé</div>'}
+                            ` : '<div class="text-gray">Aucun profil trouvé</div>'}
                         </div>
                     </div>
                 `;
@@ -147,7 +178,7 @@
                     log('Aucun profil trouvé dans la nouvelle clé', 'warning');
                 }
             } catch (error) {
-                profileDiv.innerHTML = `<div class="text-red-600">Erreur: ${error.message}</div>`;
+                profileDiv.innerHTML = `<div class="text-red">Erreur: ${error.message}</div>`;
                 log(`Erreur lors de la vérification du profil: ${error.message}`, 'error');
             }
         }
