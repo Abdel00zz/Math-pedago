@@ -6,7 +6,6 @@ import ChapterHubView from './components/views/ChapterHubView';
 import ActivityView from './components/views/ActivityView';
 import ConcoursView from './components/views/ConcoursView';
 import ConcoursListView from './components/views/ConcoursListView';
-import ConcoursYearView from './components/views/ConcoursYearView';
 import ConcoursResumeView from './components/views/ConcoursResumeView';
 import ConcoursQuizView from './components/views/ConcoursQuizView';
 import { Notifications } from './components/Notifications';
@@ -16,16 +15,6 @@ const App: React.FC = () => {
     const state = useAppState();
 
     const renderView = () => {
-        // Si l'utilisateur est connecté et essaie d'accéder à la page de connexion,
-        // le rediriger vers le dashboard ou concours selon son profil
-        if (state.profile && state.view === 'login' && !state.allowLoginWithProfile) {
-            if (state.profile.classId === 'concours') {
-                return <ConcoursView />;
-            } else {
-                return <DashboardView />;
-            }
-        }
-
         switch (state.view) {
             case 'login':
                 return <LoginView />;
@@ -39,8 +28,6 @@ const App: React.FC = () => {
                 return <ConcoursView />;
             case 'concours-list':
                 return <ConcoursListView />;
-            case 'concours-year':
-                return <ConcoursYearView />;
             case 'concours-resume':
                 return <ConcoursResumeView />;
             case 'concours-quiz':

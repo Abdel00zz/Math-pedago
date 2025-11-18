@@ -9,39 +9,100 @@
     <link rel="manifest" href="/manifest.webmanifest" />
     <link rel="apple-touch-icon" href="/public/icone.png" />
     <link rel="icon" type="image/png" href="/icone.png" />
-    <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="Centre Scientifique" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: 'var(--coursera-blue)',
+              'primary-light': 'var(--coursera-blue-light)',
+              secondary: 'var(--coursera-grey)',
+              background: 'var(--coursera-light-grey)',
+              surface: 'var(--coursera-white)',
+              border: 'var(--border-color)',
+              'border-hover': '#adb5bd',
+              text: 'var(--coursera-black)',
+              'text-secondary': 'var(--coursera-grey)',
+              'text-disabled': '#ced4da',
+              success: '#10B981',
+              warning: '#F59E0B',
+              error: '#EF4444',
+              info: '#3B82F6',
+              'modal-backdrop': 'rgba(0, 0, 0, 0.5)',
+            },
+            fontFamily: {
+              sans: ['Plus Jakarta Sans', 'system-ui', '-apple-system', 'sans-serif'],
+              display: ['Space Grotesk', 'Plus Jakarta Sans', 'sans-serif'],
+              mono: ['DM Mono', 'Consolas', 'monospace'],
+            },
+            boxShadow: {
+              'claude': '0 4px 12px rgba(0, 0, 0, 0.2)',
+              'soft': '0 2px 8px rgba(0, 0, 0, 0.15)',
+              'medium': '0 4px 16px rgba(0, 0, 0, 0.2)',
+              'elevated': '0 8px 24px rgba(0, 0, 0, 0.3)',
+              'glow-primary': '0 0 20px rgba(255, 107, 53, 0.3)',
+              'glow-success': '0 0 20px rgba(16, 185, 129, 0.3)',
+            },
+            keyframes: {
+                fadeIn: { '0%': { opacity: 0 }, '100%': { opacity: 1 } },
+                slideInUp: { '0%': { transform: 'translateY(10px)', opacity: 0 }, '100%': { transform: 'translateY(0)', opacity: 1 } },
+                blink: { '50%': { opacity: 0.5 } },
+                textGlow: {
+                  '0%, 100%': { textShadow: '0 0 5px rgba(255, 107, 53, 0.4), 0 0 10px rgba(255, 107, 53, 0.3)' },
+                  '50%': { textShadow: '0 0 10px rgba(255, 107, 53, 0.8), 0 0 20px rgba(255, 107, 53, 0.6)' }
+                },
+                gentleGlow: {
+                    '0%, 100%': { borderColor: 'rgba(255, 107, 53, 0.25)' },
+          '50%': { borderColor: 'rgba(255, 107, 53, 0.75)' }
+        },
+        alertBeacon: {
+          '0%, 100%': { opacity: 0.35, transform: 'scaleX(0.9)' },
+          '50%': { opacity: 1, transform: 'scaleX(1)' }
+        },
+        alertCard: {
+          '0%, 100%': { boxShadow: '0 12px 30px rgba(245, 158, 11, 0.08)' },
+          '50%': { boxShadow: '0 18px 48px rgba(245, 158, 11, 0.18)' }
+                }
+            },
+            animation: {
+                fadeIn: 'fadeIn 0.3s ease-out forwards',
+                slideInUp: 'slideInUp 0.4s ease-out forwards',
+                blink: 'blink 1.2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                textGlow: 'textGlow 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        gentleGlow: 'gentleGlow 2.5s ease-in-out infinite',
+        alertBeacon: 'alertBeacon 1.2s ease-in-out infinite',
+        alertCard: 'alertCard 2.6s ease-in-out infinite',
+            },
+          }
+        }
+      }
+    </script>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
+    <link 
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
     />
-
+    
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-
-    <!-- Préconnexion au CDN MathJax pour un chargement plus rapide -->
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
-
+    
     <!-- MathJax Configuration -->
     <script>
       window.MathJax = {
-        loader: { 
-          load: ['[tex]/html'],
-          // Disable caching to avoid tracking prevention warnings
-          cacheCss: false
-        },
+        loader: { load: ['[tex]/html'] },
         tex: {
           inlineMath: [['$', '$'], ['\\(', '\\)']],
           displayMath: [['$$', '$$'], ['\\[', '\\]']],
           packages: {'[+]': ['html']},
         },
         svg: {
-          fontCache: 'none',
+          fontCache: 'global',
           scale: 1,
           minScale: 0.5,
           mtextInheritFont: true,
@@ -56,21 +117,17 @@
         },
         startup: {
           ready: () => {
-            console.log('✅ MathJax chargé et prêt en', performance.now().toFixed(0), 'ms');
+            console.log('MathJax est chargé et prêt');
             window.MathJax.startup.defaultReady();
-            // Signal que MathJax est prêt pour éviter les tentatives inutiles
-            window.mathJaxReady = true;
-            document.dispatchEvent(new CustomEvent('mathjax-ready'));
           }
         }
       };
     </script>
-    <!-- defer au lieu de async pour garantir le chargement avant l'exécution de React -->
-    <script id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
     <style>
         body {
-          font-family: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
+          font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
           /* Background géré par coursera-theme.css avec SVG pattern */
           color: #E2E8F0;
           font-size: 16px;
@@ -81,7 +138,7 @@
         }
 
         h1, h2, h3, h4, h5, h6 {
-          font-family: 'Sora', 'Outfit', sans-serif;
+          font-family: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
           font-weight: 700;
           line-height: 1.15;
           letter-spacing: -0.03em;
@@ -94,14 +151,14 @@
         h4 { font-size: 1.25rem; font-weight: 600; }
 
         p {
-          font-family: 'Outfit', 'Inter', sans-serif;
+          font-family: 'Plus Jakarta Sans', sans-serif;
           line-height: 1.7;
           font-weight: 400;
           color: #94A3B8;
         }
 
         button, .btn {
-          font-family: 'Manrope', 'Outfit', sans-serif;
+          font-family: 'DM Sans', 'Plus Jakarta Sans', sans-serif;
           font-weight: 600;
           letter-spacing: 0.015em;
           font-size: 14px;
@@ -114,13 +171,13 @@
         }
 
         nav {
-          font-family: 'Sora', 'Outfit', sans-serif;
+          font-family: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
           font-weight: 600;
           font-size: 15px;
         }
 
         blockquote {
-          font-family: 'Outfit', sans-serif;
+          font-family: 'Plus Jakarta Sans', sans-serif;
           font-style: italic;
           font-weight: 400;
           font-size: 1.125rem;
@@ -129,7 +186,7 @@
         }
 
         .question {
-          font-family: 'Sora', sans-serif;
+          font-family: 'Space Grotesk', sans-serif;
           font-weight: 600;
           font-size: 18px;
           color: #F1F5F9;
@@ -138,7 +195,7 @@
         }
 
         .answer {
-          font-family: 'Outfit', sans-serif;
+          font-family: 'Plus Jakarta Sans', sans-serif;
           font-weight: 400;
           font-size: 16px;
         }
@@ -148,22 +205,6 @@
         }
         
         /* ===== MATHJAX STYLING - Responsive Math Fonts ===== */
-
-        /* Masquer le contenu LaTeX non compilé pour éviter le flash de syntaxe */
-        .math-content:not(.math-initialized) {
-            visibility: hidden;
-        }
-
-        .math-content.math-initialized {
-            visibility: visible;
-            animation: fadeInMath 0.2s ease-out;
-        }
-
-        @keyframes fadeInMath {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
         :root {
             --math-text-color: #E2E8F0;
             --math-bg-color: transparent;

@@ -2,7 +2,7 @@ import React, { useState, useCallback, useRef, useEffect, useMemo } from 'react'
 import { useAppDispatch, useAppState } from '../context/AppContext';
 import HelpModal from './HelpModal';
 import OrientationModal from './OrientationModal';
-import { DB_KEY, HELP_CLICKS_TO_RESET, HELP_RESET_DELAY_MS, HELP_SECRET_HOLD_MS } from '../constants';
+import { DB_KEY, HELP_CLICKS_TO_RESET, HELP_RESET_DELAY_MS } from '../constants';
 
 const useKeyboardShortcuts = (callbacks: {
     onHelp: () => void;
@@ -115,7 +115,7 @@ const GlobalActionButtons: React.FC = () => {
 
     const startSecretDoorCountdown = useCallback(() => {
         cancelSecretDoorCountdown();
-        secretHoldTimerRef.current = setTimeout(triggerSecretDoor, HELP_SECRET_HOLD_MS);
+        secretHoldTimerRef.current = setTimeout(triggerSecretDoor, 3000);
     }, [cancelSecretDoorCountdown, triggerSecretDoor]);
 
     const handleHelpClick = useCallback(() => {
