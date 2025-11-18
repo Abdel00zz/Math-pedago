@@ -31,9 +31,6 @@ const LessonView: React.FC = () => {
     const chapter = currentChapterId ? activities[currentChapterId] : null;
     const chapterProgress = currentChapterId ? progress[currentChapterId] : null;
     const lessonStorageId = chapter ? `${chapter.class}-${chapter.chapter}` : undefined;
-    const lessonVersion = chapter?.version ?? '1.0.0';
-    const highlightStorageKey = lessonStorageId ? `lesson-highlights:${lessonStorageId}:v${lessonVersion}` : undefined;
-    const legacyHighlightKey = lessonStorageId ? `lesson-highlights:${lessonStorageId}` : undefined;
 
     const blankPersistence = useMemo(() => {
         if (!lessonStorageId) {
@@ -63,11 +60,6 @@ const LessonView: React.FC = () => {
             },
         };
     }, [lessonStorageId, revealedBlanks]);
-
-    useEffect(() => {
-        if (!legacyHighlightKey || typeof window === 'undefined') return;
-        window.localStorage.removeItem(legacyHighlightKey);
-    }, [legacyHighlightKey]);
 
     // 🔥 SOLUTION RADICALE: Quand on quitte la vue Lesson, dispatcher un événement global
     useEffect(() => {
@@ -151,6 +143,7 @@ const LessonView: React.FC = () => {
                 if (chapter.lessonFile) {
                     const chapterId = chapter.id;
                     const chapterVersion = chapter.version || '1.0.0';
+                    let servedFromCache = false;
 
                     // 🚀 OPTIMISATION: Vérifier le cache d'abord
                     const cachedLesson = storageService.getCachedLesson(chapterId, chapterVersion);
@@ -159,50 +152,60 @@ const LessonView: React.FC = () => {
                         const lesson = cachedLesson.lesson || cachedLesson;
                         setLesson(lesson);
                         setIsLoading(false);
-                        return;
+                        servedFromCache = true;
                     }
 
-                    // Cache manquant ou version différente → fetch depuis le serveur
-                    console.log(`🌐 Chargement leçon "${chapter.chapter}" depuis le serveur (v${chapterVersion})`);
+                    // Fetch depuis le serveur (toujours exécuté pour revalider les données)
+                    const logPrefix = servedFromCache ? '♻️ Rafraîchissement' : '🌐 Chargement';
+                    console.log(`${logPrefix} leçon "${chapter.chapter}" depuis le serveur (v${chapterVersion})`);
 
-                    // ⚡ IMPORTANT: Ajouter cacheBuster pour forcer rechargement
-                    const cacheBuster = `?t=${Date.now()}`;
-                    const lessonPath = `/chapters/${chapter.class}/${chapter.lessonFile}${cacheBuster}`;
-                    const response = await fetch(lessonPath);
+                    try {
+                        // ⚡ IMPORTANT: Ajouter cacheBuster pour forcer rechargement
+                        const cacheBuster = `?t=${Date.now()}`;
+                        const lessonPath = `/chapters/${chapter.class}/${chapter.lessonFile}${cacheBuster}`;
+                        const response = await fetch(lessonPath);
 
-                    if (!response.ok) {
-                        throw new Error(`Impossible de charger la leçon depuis ${lessonPath}`);
-                    }
+                        if (!response.ok) {
+                            throw new Error(`Impossible de charger la leçon depuis ${lessonPath}`);
+                        }
 
-                    const jsonText = await response.text();
-                    const lessonData = JSON.parse(jsonText);
+                        const jsonText = await response.text();
+                        const lessonData = JSON.parse(jsonText);
 
-                    // ✅ Valider la structure de la leçon AVANT de l'utiliser
-                    const result = validateLesson(lessonData, lessonPath, jsonText);
+                        // ✅ Valider la structure de la leçon AVANT de l'utiliser
+                        const result = validateLesson(lessonData, lessonPath, jsonText);
 
-                    if (!result.valid) {
-                        const errorMessage = `Erreur dans la structure du fichier ${lessonPath}:\n\n${formatValidationResults(result)}`;
-                        console.error(errorMessage);
-                        setError(errorMessage);
-                        setValidationResult(result);
+                        if (!result.valid) {
+                            const errorMessage = `Erreur dans la structure du fichier ${lessonPath}:\n\n${formatValidationResults(result)}`;
+                            console.error(errorMessage);
+                            setError(errorMessage);
+                            setValidationResult(result);
+                            setIsLoading(false);
+                            return;
+                        }
+
+                        // Afficher les avertissements s'il y en a
+                        if (result.warnings.length > 0) {
+                            console.warn(`⚠️ Avertissements pour ${lessonPath}:`, result.warnings);
+                        }
+
+                        // 💾 Mettre en cache pour les prochaines fois (seulement si valide)
+                        storageService.cacheLessonContent(chapterId, lessonData, chapterVersion);
+                        console.log(`💾 Leçon "${chapter.chapter}" mise à jour dans le cache (v${chapterVersion})`);
+
+                        // Extraire la propriété 'lesson' du JSON si elle existe
+                        const lesson = lessonData.lesson || lessonData;
+                        setLesson(lesson);
                         setIsLoading(false);
                         return;
+                    } catch (networkError) {
+                        if (servedFromCache) {
+                            console.warn('♻️ Impossible de rafraîchir la leçon, utilisation du cache existant.', networkError);
+                            return;
+                        }
+
+                        throw networkError;
                     }
-
-                    // Afficher les avertissements s'il y en a
-                    if (result.warnings.length > 0) {
-                        console.warn(`⚠️ Avertissements pour ${lessonPath}:`, result.warnings);
-                    }
-
-                    // 💾 Mettre en cache pour les prochaines fois (seulement si valide)
-                    storageService.cacheLessonContent(chapterId, lessonData, chapterVersion);
-                    console.log(`💾 Leçon "${chapter.chapter}" mise en cache (v${chapterVersion})`);
-
-                    // Extraire la propriété 'lesson' du JSON si elle existe
-                    const lesson = lessonData.lesson || lessonData;
-                    setLesson(lesson);
-                    setIsLoading(false);
-                    return;
                 }
 
                 // Aucune leçon disponible
@@ -402,7 +405,7 @@ const LessonView: React.FC = () => {
                                 />
                                 <HighlightableContent
                                     className="lesson-experience__readable"
-                                    storageKey={highlightStorageKey}
+                                    storageKey={lessonStorageId}
                                 >
                                     <LessonDisplay lesson={lesson} onBack={handleBack} />
                                 </HighlightableContent>
