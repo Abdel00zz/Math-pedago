@@ -69,6 +69,38 @@ export interface Exercise {
   images?: ExerciseImage[];
 }
 
+// Concours types
+export interface ConcoursResumeSection {
+  type: 'definitions' | 'formules' | 'methodes' | 'pieges' | 'reflexion' | 'astuces';
+  title: string;
+  items: string[];
+}
+
+export interface ConcoursResume {
+  title: string;
+  introduction: string;
+  sections: ConcoursResumeSection[];
+}
+
+export interface ConcoursQuestion {
+  id: string;
+  theme: string;
+  question: string;
+  type: 'mcq' | 'ordering';
+  options: { id: string; text: string; isCorrect: boolean }[];
+  explanation: string;
+  hints: string[];
+}
+
+export interface ConcoursData {
+  id: string;
+  concours: string; // "Médecine", "ENSA", "ENSAM"
+  annee: string;
+  theme: string;
+  resume: ConcoursResume;
+  quiz: ConcoursQuestion[];
+}
+
 export interface ChapterData {
   // From manifest
   id: string;
@@ -83,6 +115,7 @@ export interface ChapterData {
   quiz_questions: QuizQuestion[];
   exercises: Exercise[];
   lessonFile?: string; // Optional: path to lesson JSON file (e.g., "lessons/logique_mathematique.json")
+  concours?: ConcoursData[]; // Optional: concours data for this chapter
   // For internal state
   file_content?: string; // Raw content from file
 }

@@ -9,6 +9,7 @@ import { VideoEditor } from './VideoEditor';
 import { QuizEditor } from './QuizEditor';
 import { ExerciseEditor } from './ExerciseEditor';
 import { LessonEditor } from './LessonEditor';
+import { ConcoursEditor } from './ConcoursEditor';
 import { TreeView } from './TreeView';
 import {
     DocumentTextIcon,
@@ -20,7 +21,8 @@ import {
     SaveIcon,
     XCircleIcon,
     LayoutIcon,
-    EyeIcon
+    EyeIcon,
+    TrophyIcon
 } from './icons';
 
 interface ChapterEditorProps {
@@ -30,7 +32,7 @@ interface ChapterEditorProps {
     dirHandle: FileSystemDirectoryHandle | null;
 }
 
-type Tab = 'info' | 'videos' | 'quiz' | 'exercises' | 'lesson';
+type Tab = 'info' | 'videos' | 'quiz' | 'exercises' | 'lesson' | 'concours';
 
 export const ChapterEditor: React.FC<ChapterEditorProps> = ({ chapter, onClose, onSave, dirHandle }) => {
     const [editedChapter, setEditedChapter] = useState<ChapterData>(() => JSON.parse(JSON.stringify(chapter)));
@@ -68,6 +70,8 @@ export const ChapterEditor: React.FC<ChapterEditorProps> = ({ chapter, onClose, 
             setActiveTab('quiz');
         } else if (type.includes('exercise')) {
             setActiveTab('exercises');
+        } else if (type.includes('concours')) {
+            setActiveTab('concours');
         }
     };
 
@@ -173,6 +177,7 @@ export const ChapterEditor: React.FC<ChapterEditorProps> = ({ chapter, onClose, 
         { id: 'videos', name: 'Vidéos', icon: VideoCameraIcon },
         { id: 'quiz', name: 'Quiz', icon: QuestionMarkCircleIcon },
         { id: 'exercises', name: 'Exercices', icon: PencilSquareIcon },
+        { id: 'concours', name: 'Concours', icon: TrophyIcon },
     ];
 
     return (
@@ -253,6 +258,7 @@ export const ChapterEditor: React.FC<ChapterEditorProps> = ({ chapter, onClose, 
                         {activeTab === 'videos' && <VideoEditor chapter={editedChapter} setChapter={setEditedChapter} />}
                         {activeTab === 'quiz' && <QuizEditor chapter={editedChapter} setChapter={setEditedChapter} />}
                         {activeTab === 'exercises' && <ExerciseEditor chapter={editedChapter} setChapter={setEditedChapter} dirHandle={dirHandle} />}
+                        {activeTab === 'concours' && <ConcoursEditor chapter={editedChapter} setChapter={setEditedChapter} />}
                     </main>
 
                     {/* Panel 3: Properties (optionnel, pour le futur) */}

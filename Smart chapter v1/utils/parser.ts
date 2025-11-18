@@ -1,5 +1,5 @@
 
-import { ChapterData, QuizQuestion, Exercise, Video, QuizOption, SubQuestion, SubSubQuestion, ExerciseImage, Hint } from '../types';
+import { ChapterData, QuizQuestion, Exercise, Video, QuizOption, SubQuestion, SubSubQuestion, ExerciseImage, Hint, ConcoursData, ConcoursQuestion, ConcoursResume, ConcoursResumeSection } from '../types';
 
 /**
  * Extrait le type de classe à partir du nom de fichier
@@ -124,6 +124,34 @@ export function parseChapterFile(content: string, manifestEntry: any, classType?
                 })),
             };
         }),
+        concours: (data.concours || []).map((c: any): ConcoursData => ({
+            id: c.id || '',
+            concours: c.concours || '',
+            annee: c.annee || '',
+            theme: c.theme || '',
+            resume: {
+                title: c.resume?.title || '',
+                introduction: c.resume?.introduction || '',
+                sections: (c.resume?.sections || []).map((s: any): ConcoursResumeSection => ({
+                    type: s.type || 'definitions',
+                    title: s.title || '',
+                    items: s.items || [],
+                })),
+            },
+            quiz: (c.quiz || []).map((q: any): ConcoursQuestion => ({
+                id: q.id || '',
+                theme: q.theme || c.theme || '',
+                question: q.question || '',
+                type: q.type || 'mcq',
+                options: (q.options || []).map((opt: any) => ({
+                    id: opt.id || '',
+                    text: opt.text || '',
+                    isCorrect: opt.isCorrect !== undefined ? opt.isCorrect : (opt.is_correct || false),
+                })),
+                explanation: q.explanation || '',
+                hints: q.hints || [],
+            })),
+        })),
     };
     return chapter;
 }

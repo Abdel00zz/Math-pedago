@@ -193,7 +193,7 @@ const App: React.FC = () => {
                                 questionNumber: sq.questionNumber || (index + 1).toString()
                             }))
                             .filter((h): h is { text: string; questionNumber: string } => !!h.text && h.text.trim() !== '');
-                        
+
                         return {
                              id: ex.id,
                              title: ex.title,
@@ -203,6 +203,7 @@ const App: React.FC = () => {
                              hint: hints_to_save.length > 0 ? hints_to_save : undefined,
                         }
                     }),
+                    concours: chapter.concours && chapter.concours.length > 0 ? chapter.concours : undefined,
                     version: newVersion,
                 };
                 

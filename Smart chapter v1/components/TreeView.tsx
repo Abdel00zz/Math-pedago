@@ -15,7 +15,8 @@ import {
     InformationCircleIcon,
     DocumentTextIcon,
     ImageIcon,
-    LightBulbIcon
+    LightBulbIcon,
+    TrophyIcon
 } from './icons';
 
 interface TreeViewProps {
@@ -36,7 +37,7 @@ interface TreeNode {
 }
 
 export const TreeView: React.FC<TreeViewProps> = ({ chapter, onSelectElement, activeElement }) => {
-    const [expandedNodes, setExpandedNodes] = useState<Set<string>>(new Set(['root', 'info', 'videos', 'quiz', 'exercises', 'lesson']));
+    const [expandedNodes, setExpandedNodes] = useState<Set<string>>(new Set(['root', 'info', 'videos', 'quiz', 'exercises', 'lesson', 'concours']));
 
     const toggleNode = (nodeId: string) => {
         setExpandedNodes(prev => {
@@ -176,6 +177,55 @@ export const TreeView: React.FC<TreeViewProps> = ({ chapter, onSelectElement, ac
             });
         }
 
+        // Concours
+        if (chapter.concours && chapter.concours.length > 0) {
+            tree.push({
+                id: 'concours',
+                label: 'Concours',
+                icon: TrophyIcon,
+                type: 'concours-section',
+                color: 'yellow',
+                count: chapter.concours.length,
+                children: chapter.concours.map((concours, index) => {
+                    const children: TreeNode[] = [];
+
+                    // Résumé pédagogique
+                    if (concours.resume && concours.resume.sections && concours.resume.sections.length > 0) {
+                        children.push({
+                            id: `concours-${concours.id}-resume`,
+                            label: `Résumé (${concours.resume.sections.length} sections)`,
+                            icon: BookOpenIcon,
+                            type: 'concours-resume',
+                            itemId: concours.id,
+                            color: 'blue',
+                        });
+                    }
+
+                    // Questions du quiz
+                    if (concours.quiz && concours.quiz.length > 0) {
+                        children.push({
+                            id: `concours-${concours.id}-quiz`,
+                            label: `Quiz (${concours.quiz.length} questions)`,
+                            icon: QuestionMarkCircleIcon,
+                            type: 'concours-quiz',
+                            itemId: concours.id,
+                            color: 'purple',
+                        });
+                    }
+
+                    return {
+                        id: `concours-${concours.id}`,
+                        label: `${concours.concours} ${concours.annee} - ${concours.theme}`,
+                        icon: TrophyIcon,
+                        type: 'concours',
+                        itemId: concours.id,
+                        color: 'yellow',
+                        children: children.length > 0 ? children : undefined,
+                    };
+                })
+            });
+        }
+
         return tree;
     };
 
@@ -269,7 +319,7 @@ export const TreeView: React.FC<TreeViewProps> = ({ chapter, onSelectElement, ac
 
             {/* Statistiques en bas */}
             <div className="flex-shrink-0 px-4 py-3 border-t border-slate-200 bg-slate-50">
-                <div className="grid grid-cols-3 gap-2 text-center">
+                <div className="grid grid-cols-4 gap-2 text-center">
                     <div>
                         <div className="text-lg font-bold text-red-600">{chapter.videos?.length || 0}</div>
                         <div className="text-xs text-slate-600">Vidéos</div>
@@ -281,6 +331,10 @@ export const TreeView: React.FC<TreeViewProps> = ({ chapter, onSelectElement, ac
                     <div>
                         <div className="text-lg font-bold text-orange-600">{chapter.exercises?.length || 0}</div>
                         <div className="text-xs text-slate-600">Exercices</div>
+                    </div>
+                    <div>
+                        <div className="text-lg font-bold text-yellow-600">{chapter.concours?.length || 0}</div>
+                        <div className="text-xs text-slate-600">Concours</div>
                     </div>
                 </div>
             </div>
