@@ -31,6 +31,9 @@ const LessonView: React.FC = () => {
     const chapter = currentChapterId ? activities[currentChapterId] : null;
     const chapterProgress = currentChapterId ? progress[currentChapterId] : null;
     const lessonStorageId = chapter ? `${chapter.class}-${chapter.chapter}` : undefined;
+    const lessonVersion = chapter?.version ?? '1.0.0';
+    const highlightStorageKey = lessonStorageId ? `lesson-highlights:${lessonStorageId}:v${lessonVersion}` : undefined;
+    const legacyHighlightKey = lessonStorageId ? `lesson-highlights:${lessonStorageId}` : undefined;
 
     const blankPersistence = useMemo(() => {
         if (!lessonStorageId) {
@@ -60,6 +63,11 @@ const LessonView: React.FC = () => {
             },
         };
     }, [lessonStorageId, revealedBlanks]);
+
+    useEffect(() => {
+        if (!legacyHighlightKey || typeof window === 'undefined') return;
+        window.localStorage.removeItem(legacyHighlightKey);
+    }, [legacyHighlightKey]);
 
     // 🔥 SOLUTION RADICALE: Quand on quitte la vue Lesson, dispatcher un événement global
     useEffect(() => {
@@ -394,7 +402,7 @@ const LessonView: React.FC = () => {
                                 />
                                 <HighlightableContent
                                     className="lesson-experience__readable"
-                                    storageKey={lessonStorageId}
+                                    storageKey={highlightStorageKey}
                                 >
                                     <LessonDisplay lesson={lesson} onBack={handleBack} />
                                 </HighlightableContent>

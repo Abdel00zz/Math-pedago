@@ -202,6 +202,14 @@ const MathContentWrapper: React.FC<{ children: React.ReactNode; inline?: boolean
                 if (window.MathJax.typesetPromise) {
                     await window.MathJax.typesetPromise([currentContainer]);
                 }
+
+                // Émettre un événement pour notifier que MathJax a fini
+                if (currentContainer) {
+                    currentContainer.dispatchEvent(new CustomEvent('mathjax-rendered', {
+                        bubbles: true,
+                        detail: { timestamp: Date.now() }
+                    }));
+                }
             } catch (error) {
                 console.error('MathJax rendering error:', error);
             } finally {

@@ -21,35 +21,46 @@ const logDebug = (...args: any[]) => {
  */
 const processMarkdown = (text: string): string => {
     if (!text) return text;
-    
+
     let processed = text;
-    
-    // Protéger temporairement les expressions LaTeX
+
+    // 🔧 FIX: Protéger temporairement les expressions LaTeX avec un placeholder unique
     const mathExpressions: string[] = [];
     let mathIndex = 0;
-    
-    // Sauvegarder les expressions $...$ et $$...$$
-    processed = processed.replace(/\$\$[\s\S]+?\$\$|\$[^\$]+?\$/g, (match) => {
-        const placeholder = `__MATH_${mathIndex}__`;
+    // Utiliser un UUID-like placeholder pour éviter les collisions
+    const placeholderPrefix = `__MATHPEDAGO_${Date.now()}_`;
+
+    // Sauvegarder les expressions $$...$$ d'abord (pour éviter les conflits avec $...$)
+    processed = processed.replace(/\$\$([\s\S]+?)\$\$/g, (match) => {
+        const placeholder = `${placeholderPrefix}${mathIndex}__`;
         mathExpressions.push(match);
         mathIndex++;
         return placeholder;
     });
-    
+
+    // Puis sauvegarder les expressions $...$
+    processed = processed.replace(/\$([^\$]+?)\$/g, (match) => {
+        const placeholder = `${placeholderPrefix}${mathIndex}__`;
+        mathExpressions.push(match);
+        mathIndex++;
+        return placeholder;
+    });
+
     // Maintenant convertir le Markdown sans toucher aux maths
     // **texte** → <strong>texte</strong>
     processed = processed.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
-    
+
     // *texte* → <em>texte</em> (mais pas si déjà dans **)
     processed = processed.replace(/(?<!\*)\*([^*]+)\*(?!\*)/g, '<em>$1</em>');
-    
-    // Restaurer les expressions LaTeX
+
+    // Restaurer les expressions LaTeX dans l'ordre
     mathExpressions.forEach((mathExpr, idx) => {
-        processed = processed.replace(`__MATH_${idx}__`, mathExpr);
+        const placeholder = `${placeholderPrefix}${idx}__`;
+        processed = processed.replace(placeholder, mathExpr);
     });
-    
+
     logDebug('Markdown processed:', { original: text, processed });
-    
+
     return processed;
 };
 
@@ -169,6 +180,13 @@ const MathContent: React.FC<MathContentProps> = ({ content, className = '', inli
                     // Rendre le contenu visible après le rendu réussi
                     if (containerRef.current) {
                         containerRef.current.classList.add('math-initialized');
+
+                        // Émettre un événement pour notifier que MathJax a fini
+                        containerRef.current.dispatchEvent(new CustomEvent('mathjax-rendered', {
+                            bubbles: true,
+                            detail: { timestamp: Date.now() }
+                        }));
+                        logDebug('Événement mathjax-rendered émis');
                     }
 
                     // 🔍 DIAGNOSTIC 4: Contenu après rendu
@@ -205,8 +223,9 @@ const MathContent: React.FC<MathContentProps> = ({ content, className = '', inli
             }
         };
 
-        // Démarrer le rendu avec un délai minimal (réduit de 100ms à 20ms)
-        timeoutId = window.setTimeout(typeset, 20);
+        // 🔧 FIX: Augmenter le délai pour éviter les race conditions avec HighlightableContent
+        // Démarrer le rendu avec un délai de 50ms pour laisser le temps au DOM de se stabiliser
+        timeoutId = window.setTimeout(typeset, 50);
 
         return () => {
             cancelled = true;
