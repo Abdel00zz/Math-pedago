@@ -152,7 +152,7 @@
       "id": "1bsm-generalites-sur-les-fonctions",
       "file": "1bsm/1bsm_generalites_sur_les_fonctions.json",
       "isActive": true,
-      "version": "v1.1.0-6c2961"
+      "version": "v1.1.0-2fee98"
     },
     {
       "id": "1bsm-le-barycentre-dans-le-plan",
@@ -286,7 +286,7 @@
       "id": "2bse-limites-des-suites-numeriques",
       "file": "2bse/2bse_limites_suites.json",
       "isActive": true,
-      "version": "v1.1.0-123456"
+      "version": "v1.1.0-aeba18"
     }
   ],
   "2bsm": [

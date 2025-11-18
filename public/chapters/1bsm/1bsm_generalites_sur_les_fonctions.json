@@ -683,10 +683,6 @@
           "questionNumber": "3"
         },
         {
-          "text": "**Points d'intersection (partie b)** : utilise les solutions trouvées pour calculer les ordonnées $y = f(x)$ ou $y = g(x)$ et former les points d'intersection $(x; y)$ de $C_f$ et $C_g$.",
-          "questionNumber": "3.b"
-        },
-        {
           "text": "**Intersections avec les axes** : pour l'axe des abscisses, impose $y=0$ donc résous $f(x)=0$ ou $g(x)=0$. Pour l'axe des ordonnées, impose $x=0$ et calcule $f(0)$ et $g(0)$.",
           "questionNumber": "4"
         },
@@ -987,6 +983,7 @@
             {
               "id": "img_1762886788316",
               "path": "pictures/1bsm/1bsm-generalites-sur-les-fonctions/img_20251111T184628249Z_test__3_.png",
+              "caption": "",
               "size": "small",
               "custom_width": null,
               "custom_height": null,
@@ -1085,22 +1082,6 @@
         {
           "text": "**Parité de $f$** : calcule $f(-x)$ et compare-le à $f(x)$ et à $-f(x)$ pour décider si $f$ est paire, impaire ou ni l'une ni l'autre.",
           "questionNumber": "1"
-        },
-        {
-          "text": "**Bornes de $f$** : pense à étudier $|f(x)| = \\left|\\frac{4x}{x^2+1}\\right|$ et essaie de majorer cette expression pour tout $x$ réel.",
-          "questionNumber": "1.b"
-        },
-        {
-          "text": "**Variations de $f$** : dérive $f$ ou utilise une étude de signe sur $\\frac{4x}{x^2+1}$ pour déterminer sur quels intervalles $f$ est croissante ou décroissante, puis construis le tableau de variations.",
-          "questionNumber": "1.c"
-        },
-        {
-          "text": "**Inégalité avec $a+b$** : essaie de relier l'inégalité à la forme de $f$ en posant par exemple $a=\\sqrt{u}$ et $b=\\sqrt{v}$ ou en utilisant une inégalité classique comme $a^2+b^2 \\ge 2ab$.",
-          "questionNumber": "1.d"
-        },
-        {
-          "text": "**Image de $f$** : une fois les bornes trouvées, vérifie qu'elles sont effectivement atteintes par la fonction pour conclure que $f(\\mathbb{R}) = [-2;2]$.",
-          "questionNumber": "1.e"
         },
         {
           "text": "**Étude de $g$ et $h$** : pour $g(x)=\\sqrt{x}$, rappelle-toi que la racine carrée est croissante sur $\\mathbb{R}^+$. Pour $h(x)=\\frac{4\\sqrt{x}}{1+x}$, observe qu'il s'agit d'une composition entre $f$ et $g$.",
@@ -1219,58 +1200,8 @@
           ],
           "images": []
         }
-      ],
-      "hint": [
-        {
-          "text": "**Choix de $n$** : exploite la définition de la partie entière de $\\frac{1}{a-b}$ pour encadrer $n$. L'encadrement $E(x) \\le x < E(x)+1$ permet de conclure que $n \\in \\mathbb{N}^*$.",
-          "questionNumber": "1.a"
-        },
-        {
-          "text": "**Encadrement de $\\frac{1+m}{n}$** : écris $m = E(nb)$ puis encadre $m$ par $nb$ et $nb+1$ afin de traduire l'inégalité obtenue sur $\\frac{1+m}{n}$.",
-          "questionNumber": "1.b"
-        },
-        {
-          "text": "**Deux rationnels distincts** : subdivise l'intervalle $[\\beta; \\alpha]$ avec un entier $n$ assez grand pour obtenir des bornes rationnelles et choisis deux points consécutifs de cette subdivision.",
-          "questionNumber": "1.c"
-        },
-        {
-          "text": "**Choix de $p$** : applique encore la propriété de la partie entière à $\\frac{\\sqrt{2}}{y-x}$ pour montrer que $p \\in \\mathbb{N}^*$.",
-          "questionNumber": "1.d"
-        },
-        {
-          "text": "**Construction de $\\omega$** : suppose que $\\omega$ est rationnel et observe que cela impliquerait que $\\sqrt{2}$ est rationnel. Utilise l'encadrement précédent pour vérifier que $\\omega$ reste bien dans $] \\beta; \\alpha[$.",
-          "questionNumber": "1.e"
-        },
-        {
-          "text": "**Valeur de $f(0)$** : utilise l'équation fonctionnelle avec $(x, y) = (0, 0)$ pour calculer $f(0)$. Teste ensuite $(1, 0)$ et $(0, 1)$ afin d'encadrer les valeurs possibles de $f(1)$.",
-          "questionNumber": "2.a"
-        },
-        {
-          "text": "**Parité de $f$** : compare $f(x)$ et $f(-x)$ en évaluant l'équation fonctionnelle avec $(x, y) = (x, -x)$ pour montrer que $f$ est impaire.",
-          "questionNumber": "2.b"
-        },
-        {
-          "text": "**Valeurs sur $\\mathbb{N}$** : mets en place une récurrence en partant de $f(0)$ et en utilisant la relation $f(n+1) = f(n) + f(1)$.",
-          "questionNumber": "2.c"
-        },
-        {
-          "text": "**Extension à $\\mathbb{Z}$** : exploite la parité de $f$ pour relier $f(-n)$ à $f(n)$ et ainsi connaître la valeur sur tous les entiers.",
-          "questionNumber": "2.d"
-        },
-        {
-          "text": "**Valeurs sur $\\mathbb{Q}$** : écris un rationnel sous la forme $\\frac{p}{q}$ et applique l'équation fonctionnelle à $q \\cdot \\frac{p}{q}$ pour utiliser les valeurs déjà connues sur $p$ et $q$.",
-          "questionNumber": "2.e"
-        },
-        {
-          "text": "**Monotonie** : montre que $f$ est bornée sur un intervalle et additive, ce qui permet de conclure qu'elle est continue en 0 puis croissante sur tout $\\mathbb{R}$.",
-          "questionNumber": "2.f"
-        },
-        {
-          "text": "**Conclusion sur $f$** : utilise la densité de $\\mathbb{Q}$ dans $\\mathbb{R}$ et la continuité (ou la monotonie) obtenue pour affirmer que $f(x) = x$ pour tout réel.",
-          "questionNumber": "2.g"
-        }
       ]
     }
   ],
-  "version": "v1.1.0-6c2961"
+  "version": "v1.1.0-2fee98"
 }
