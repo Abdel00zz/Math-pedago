@@ -482,19 +482,38 @@ const NumberBullet: React.FC<{ number: number }> = ({ number }) => (
 );
 
 const StarBullet: React.FC = () => (
-    <span className="flex-shrink-0">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="drop-shadow-sm">
-            <path 
-                d="M8 1.5L9.5 6H14L10.5 9L12 13.5L8 10.5L4 13.5L5.5 9L2 6H6.5L8 1.5Z" 
-                fill="url(#starGradient)"
-            />
-            <defs>
-                <linearGradient id="starGradient" x1="2" y1="1.5" x2="14" y2="13.5" gradientUnits="userSpaceOnUse">
-                    <stop offset="0%" stopColor="#3b82f6" />
-                    <stop offset="100%" stopColor="#06b6d4" />
-                </linearGradient>
-            </defs>
-        </svg>
+    <span
+        className="flex-shrink-0"
+        style={{ display: 'inline-flex', alignItems: 'center', marginTop: '0.14em', marginRight: '0.4rem', lineHeight: 1 }}
+        aria-hidden
+    >
+        <span
+            style={{
+                width: '1.5rem',
+                height: '1.5rem',
+                borderRadius: '50%',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: 'rgba(255, 241, 128, 0.22)', /* subtle soft yellow circle */
+                boxShadow: '0 1px 2px rgba(0,0,0,0.04)'
+            }}
+        >
+            <span
+                className="material-symbols-outlined"
+                role="img"
+                aria-label="puce étoile"
+                style={{
+                    fontSize: '0.95rem', /* smaller */
+                    color: '#FFD54A', /* clear modern yellow */
+                    lineHeight: 1,
+                    transform: 'translateY(-1px)', /* move slightly up */
+                    display: 'inline-block'
+                }}
+            >
+                star
+            </span>
+        </span>
     </span>
 );
 
