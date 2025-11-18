@@ -392,7 +392,10 @@ const LessonView: React.FC = () => {
                                     onSelectStage={handleStageSelect}
                                     disabledStages={lessonBreadcrumbDisabledStages}
                                 />
-                                <HighlightableContent className="lesson-experience__readable">
+                                <HighlightableContent
+                                    className="lesson-experience__readable"
+                                    storageKey={lessonStorageId ? `lesson-highlights:${lessonStorageId}` : undefined}
+                                >
                                     <LessonDisplay lesson={lesson} onBack={handleBack} />
                                 </HighlightableContent>
                             </div>
