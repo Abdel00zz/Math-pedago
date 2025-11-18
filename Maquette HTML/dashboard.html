@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Math-pedago</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .dashboard-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: var(--spacing-xl) 0;
+        }
+
+        .welcome-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .welcome-text h1 {
+            color: white;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .welcome-text p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.125rem;
+        }
+
+        .profile-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-full);
+            font-weight: 600;
+        }
+
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .stat-card {
+            background: white;
+            padding: var(--spacing-md);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stat-icon .material-symbols-outlined {
+            font-size: 2rem;
+            color: white;
+        }
+
+        .stat-info h3 {
+            font-size: 1.75rem;
+            margin-bottom: 0.25rem;
+            color: var(--gray-900);
+        }
+
+        .stat-info p {
+            color: var(--gray-600);
+            font-size: 0.875rem;
+            margin: 0;
+        }
+
+        .dashboard-content {
+            padding: var(--spacing-xl) 0;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .section-header h2 {
+            margin: 0;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: var(--spacing-sm);
+            background: var(--gray-100);
+            padding: 0.25rem;
+            border-radius: var(--radius-md);
+        }
+
+        .filter-tab {
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-sm);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--gray-700);
+            transition: var(--transition-fast);
+        }
+
+        .filter-tab.active {
+            background: white;
+            color: var(--primary);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .chapters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .chapter-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            transition: var(--transition-base);
+            border: 2px solid transparent;
+        }
+
+        .chapter-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .chapter-card.live {
+            border-color: var(--danger);
+        }
+
+        .chapter-card.in-progress {
+            border-color: var(--warning);
+        }
+
+        .chapter-card.completed {
+            border-color: var(--success);
+        }
+
+        .chapter-banner {
+            height: 8px;
+        }
+
+        .chapter-banner.live { background: var(--danger); }
+        .chapter-banner.in-progress { background: var(--warning); }
+        .chapter-banner.completed { background: var(--success); }
+        .chapter-banner.available { background: var(--gray-300); }
+
+        .chapter-content {
+            padding: var(--spacing-lg);
+        }
+
+        .chapter-status {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            padding: 0.375rem 0.75rem;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .chapter-status.live {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+        }
+
+        .chapter-status.in-progress {
+            background: rgba(251, 191, 36, 0.1);
+            color: var(--warning);
+        }
+
+        .chapter-status.completed {
+            background: rgba(34, 197, 94, 0.1);
+            color: var(--success);
+        }
+
+        .chapter-status.available {
+            background: rgba(107, 114, 128, 0.1);
+            color: var(--gray-600);
+        }
+
+        .chapter-title {
+            font-size: 1.25rem;
+            margin-bottom: var(--spacing-sm);
+            color: var(--gray-900);
+        }
+
+        .chapter-meta {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+
+        .chapter-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: var(--gray-200);
+            border-radius: var(--radius-full);
+            overflow: hidden;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            border-radius: var(--radius-full);
+            transition: width var(--transition-slow);
+        }
+
+        .chapter-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+
+        .btn-sm {
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+        }
+
+        .live-badge {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .live-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--danger);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(1.2);
+            }
+        }
+
+        .quick-actions {
+            background: white;
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            margin-top: var(--spacing-xl);
+        }
+
+        .quick-actions h3 {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .quick-actions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .quick-action-card {
+            padding: var(--spacing-md);
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-md);
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .quick-action-card:hover {
+            border-color: var(--primary);
+            background: rgba(66, 85, 255, 0.05);
+        }
+
+        .quick-action-icon {
+            font-size: 3rem;
+            margin-bottom: var(--spacing-sm);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container navbar-content">
+            <div class="navbar-brand">
+                <span class="material-symbols-outlined">calculate</span>
+                <span class="brand-text">Math-pedago</span>
+            </div>
+            <ul class="navbar-menu">
+                <li><a href="dashboard.html" class="active">Dashboard</a></li>
+                <li><a href="concours.html">Concours</a></li>
+                <li><a href="about.html">À propos</a></li>
+                <li><a href="index.html">Déconnexion</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Dashboard Header -->
+    <div class="dashboard-header">
+        <div class="container">
+            <div class="welcome-section">
+                <div class="welcome-text">
+                    <h1>Bonjour, <span id="userName">Étudiant</span> ! 👋</h1>
+                    <p>Continuez votre apprentissage là où vous l'avez laissé</p>
+                </div>
+                <div class="profile-badge">
+                    <span class="material-symbols-outlined">school</span>
+                    <span id="userProfile">2BSM</span>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="stats-cards">
+                <div class="stat-card animate-fadeIn">
+                    <div class="stat-icon bg-blue">
+                        <span class="material-symbols-outlined">book</span>
+                    </div>
+                    <div class="stat-info">
+                        <h3>12</h3>
+                        <p>Chapitres complétés</p>
+                    </div>
+                </div>
+                <div class="stat-card animate-fadeIn delay-1">
+                    <div class="stat-icon bg-purple">
+                        <span class="material-symbols-outlined">quiz</span>
+                    </div>
+                    <div class="stat-info">
+                        <h3>87%</h3>
+                        <p>Taux de réussite</p>
+                    </div>
+                </div>
+                <div class="stat-card animate-fadeIn delay-2">
+                    <div class="stat-icon bg-orange">
+                        <span class="material-symbols-outlined">trending_up</span>
+                    </div>
+                    <div class="stat-info">
+                        <h3>45h</h3>
+                        <p>Temps d'étude</p>
+                    </div>
+                </div>
+                <div class="stat-card animate-fadeIn delay-3">
+                    <div class="stat-icon bg-green">
+                        <span class="material-symbols-outlined">emoji_events</span>
+                    </div>
+                    <div class="stat-info">
+                        <h3>24</h3>
+                        <p>Badges gagnés</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Content -->
+    <div class="dashboard-content">
+        <div class="container">
+            <div class="section-header">
+                <h2>Mes Chapitres</h2>
+                <div class="filter-tabs">
+                    <button class="filter-tab active" data-filter="all">Tous</button>
+                    <button class="filter-tab" data-filter="live">En direct</button>
+                    <button class="filter-tab" data-filter="in-progress">En cours</button>
+                    <button class="filter-tab" data-filter="completed">Complétés</button>
+                </div>
+            </div>
+
+            <!-- Chapters Grid -->
+            <div class="chapters-grid">
+                <!-- LIVE Chapter -->
+                <div class="chapter-card live" data-status="live">
+                    <div class="chapter-banner live"></div>
+                    <div class="chapter-content">
+                        <div class="chapter-status live">
+                            <div class="live-badge">LIVE - Session en direct</div>
+                        </div>
+                        <h3 class="chapter-title">Primitives et Intégrales</h3>
+                        <div class="chapter-meta">
+                            <span>
+                                <span class="material-symbols-outlined" style="font-size: 1rem;">schedule</span>
+                                En ce moment
+                            </span>
+                            <span>
+                                <span class="material-symbols-outlined" style="font-size: 1rem;">group</span>
+                                127 participants
+                            </span>
+                        </div>
+                        <div class="chapter-actions">
+                            <a href="chapter-hub.html" class="btn btn-primary btn-sm" style="flex: 1;">
+                                <span class="material-symbols-outlined">play_arrow</span>
+                                Rejoindre maintenant
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- In Progress Chapter -->
+                <div class="chapter-card in-progress" data-status="in-progress">
+                    <div class="chapter-banner in-progress"></div>
+                    <div class="chapter-content">
+                        <div class="chapter-status in-progress">En cours</div>
+                        <h3 class="chapter-title">Suites Numériques</h3>
+                        <div class="chapter-meta">
+                            <span>
+                                <span class="material-symbols-outlined" style="font-size: 1rem;">video_library</span>
+                                8 vidéos
+                            </span>
+                            <span>
+                                <span class="material-symbols-outlined" style="font-size: 1rem;">quiz</span>
+                                12 quiz
+                            </span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 65%;"></div>
+                        </div>
+                        <div class="chapter-actions">
+                            <a href="chapter-hub.html" class="btn btn-primary btn-sm" style="flex: 1;">
+                                <span class="material-symbols-outlined">play_arrow</span>
+                                Continuer
+                            </a>
+                            <button class="btn btn-secondary btn-sm">
+                                <span class="material-symbols-outlined">bookmark</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Completed Chapter -->
+                <div class="chapter-card completed" data-status="completed">
+                    <div class="chapter-banner completed"></div>
+                    <div class="chapter-content">
+                        <div class="chapter-status completed">
+                            <span class="material-symbols-outlined" style="font-size: 1rem;">check_circle</span>
+                            Complété
+                        </div>
+                        <h3 class="chapter-title">Dérivabilité</h3>
+                        <div class="chapter-meta">
+                            <span>
+                                <span class="material-symbols-outlined" style="font-size: 1rem;">star</span>
+                                Score: 92%
+                            </span>
+                            <span>
+                                <span class="material-symbols-outlined" style="font-size: 1rem;">schedule</span>
+                                Il y a 2 jours
+                            </span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 100%;"></div>
+                        </div>
+                        <div class="chapter-actions">
+                            <a href="chapter-hub.html" class="btn btn-secondary btn-sm" style="flex: 1;">
+                                <span class="material-symbols-outlined">replay</span>
+                                Revoir
+                            </a>
+                            <button class="btn btn-primary btn-sm">
+                                <span class="material-symbols-outlined">workspace_premium</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Available Chapters -->
+                <div class="chapter-card" data-status="available">
+                    <div class="chapter-banner available"></div>
+                    <div class="chapter-content">
+                        <div class="chapter-status available">Disponible</div>
+                        <h3 class="chapter-title">Fonctions Exponentielles</h3>
+                        <div class="chapter-meta">
+                            <span>
+                                <span class="material-symbols-outlined" style="font-size: 1rem;">video_library</span>
+                                10 vidéos
+                            </span>
+                            <span>
+                                <span class="material-symbols-outlined" style="font-size: 1rem;">quiz</span>
+                                15 quiz
+                            </span>
+                        </div>
+                        <div class="chapter-actions">
+                            <a href="chapter-hub.html" class="btn btn-primary btn-sm" style="flex: 1;">
+                                <span class="material-symbols-outlined">play_arrow</span>
+                                Commencer
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chapter-card" data-status="available">
+                    <div class="chapter-banner available"></div>
+                    <div class="chapter-content">
+                        <div class="chapter-status available">Disponible</div>
+                        <h3 class="chapter-title">Nombres Complexes</h3>
+                        <div class="chapter-meta">
+                            <span>
+                                <span class="material-symbols-outlined" style="font-size: 1rem;">video_library</span>
+                                12 vidéos
+                            </span>
+                            <span>
+                                <span class="material-symbols-outlined" style="font-size: 1rem;">quiz</span>
+                                18 quiz
+                            </span>
+                        </div>
+                        <div class="chapter-actions">
+                            <a href="chapter-hub.html" class="btn btn-primary btn-sm" style="flex: 1;">
+                                <span class="material-symbols-outlined">play_arrow</span>
+                                Commencer
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chapter-card" data-status="available">
+                    <div class="chapter-banner available"></div>
+                    <div class="chapter-content">
+                        <div class="chapter-status available">Disponible</div>
+                        <h3 class="chapter-title">Géométrie Analytique</h3>
+                        <div class="chapter-meta">
+                            <span>
+                                <span class="material-symbols-outlined" style="font-size: 1rem;">video_library</span>
+                                9 vidéos
+                            </span>
+                            <span>
+                                <span class="material-symbols-outlined" style="font-size: 1rem;">quiz</span>
+                                14 quiz
+                            </span>
+                        </div>
+                        <div class="chapter-actions">
+                            <a href="chapter-hub.html" class="btn btn-primary btn-sm" style="flex: 1;">
+                                <span class="material-symbols-outlined">play_arrow</span>
+                                Commencer
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <h3>Actions Rapides</h3>
+                <div class="quick-actions-grid">
+                    <a href="concours.html" class="quick-action-card">
+                        <div class="quick-action-icon">🎯</div>
+                        <h4>Concours</h4>
+                        <p>Préparez-vous aux examens</p>
+                    </a>
+                    <div class="quick-action-card">
+                        <div class="quick-action-icon">📊</div>
+                        <h4>Statistiques</h4>
+                        <p>Voir vos progrès</p>
+                    </div>
+                    <div class="quick-action-card">
+                        <div class="quick-action-icon">🏆</div>
+                        <h4>Badges</h4>
+                        <p>Vos récompenses</p>
+                    </div>
+                    <div class="quick-action-card">
+                        <div class="quick-action-icon">📝</div>
+                        <h4>Notes</h4>
+                        <p>Vos annotations</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load user data from localStorage
+        document.addEventListener('DOMContentLoaded', () => {
+            const userName = localStorage.getItem('userName') || 'Étudiant';
+            const userProfile = localStorage.getItem('userProfile') || '2BSM';
+
+            document.getElementById('userName').textContent = userName;
+            document.getElementById('userProfile').textContent = userProfile.toUpperCase();
+        });
+
+        // Filter functionality
+        const filterTabs = document.querySelectorAll('.filter-tab');
+        const chapterCards = document.querySelectorAll('.chapter-card');
+
+        filterTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Update active tab
+                filterTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                const filter = tab.dataset.filter;
+
+                // Filter chapters
+                chapterCards.forEach(card => {
+                    if (filter === 'all' || card.dataset.status === filter) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

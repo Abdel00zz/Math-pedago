@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>À propos - Math-pedago</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .about-hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: var(--spacing-xl) 0;
+            text-align: center;
+        }
+
+        .about-hero h1 {
+            color: white;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .about-hero p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.25rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .about-content {
+            padding: var(--spacing-xl) 0;
+        }
+
+        .about-section {
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .about-section h2 {
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .mission-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .mission-card {
+            background: white;
+            padding: var(--spacing-xl);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            text-align: center;
+            transition: var(--transition-base);
+        }
+
+        .mission-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .mission-icon {
+            font-size: 4rem;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .mission-card h3 {
+            color: var(--primary);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .mission-card p {
+            color: var(--gray-700);
+            margin: 0;
+            line-height: 1.8;
+        }
+
+        .features-list {
+            background: white;
+            padding: var(--spacing-xl);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+        }
+
+        .features-list h3 {
+            color: var(--primary);
+            margin-bottom: var(--spacing-lg);
+            text-align: center;
+        }
+
+        .features-items {
+            display: grid;
+            gap: var(--spacing-md);
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: start;
+            gap: var(--spacing-md);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-md);
+            transition: var(--transition-fast);
+        }
+
+        .feature-item:hover {
+            background: var(--bg-primary);
+        }
+
+        .feature-item-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .feature-item-icon .material-symbols-outlined {
+            font-size: 2rem;
+            color: white;
+        }
+
+        .feature-item-content h4 {
+            margin-bottom: var(--spacing-xs);
+            color: var(--gray-900);
+        }
+
+        .feature-item-content p {
+            color: var(--gray-600);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .team-section {
+            background: var(--bg-primary);
+            padding: var(--spacing-xl);
+            border-radius: var(--radius-lg);
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .team-member {
+            background: white;
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-lg);
+            text-align: center;
+            box-shadow: var(--shadow-md);
+        }
+
+        .team-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--spacing-md);
+            font-size: 3rem;
+        }
+
+        .team-name {
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .team-role {
+            color: var(--primary);
+            font-size: 0.875rem;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .team-bio {
+            color: var(--gray-600);
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+
+        .contact-section {
+            background: white;
+            padding: var(--spacing-xl);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            text-align: center;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-xl);
+            flex-wrap: wrap;
+            margin-top: var(--spacing-lg);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            color: var(--gray-700);
+        }
+
+        .contact-item .material-symbols-outlined {
+            color: var(--primary);
+            font-size: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container navbar-content">
+            <div class="navbar-brand">
+                <span class="material-symbols-outlined">calculate</span>
+                <span class="brand-text">Math-pedago</span>
+            </div>
+            <ul class="navbar-menu">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="login.html">Se connecter</a></li>
+                <li><a href="about.html" class="active">À propos</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- About Hero -->
+    <div class="about-hero">
+        <div class="container">
+            <h1>À Propos de Math-pedago</h1>
+            <p>
+                Votre plateforme de référence pour l'excellence en mathématiques,
+                conçue spécialement pour les lycéens marocains du TCS au 2ème Bac
+            </p>
+        </div>
+    </div>
+
+    <!-- About Content -->
+    <div class="about-content">
+        <div class="container">
+            <!-- Mission Section -->
+            <div class="about-section">
+                <h2 class="section-title">Notre Mission</h2>
+                <div class="mission-grid">
+                    <div class="mission-card">
+                        <div class="mission-icon">🎯</div>
+                        <h3>Excellence Académique</h3>
+                        <p>
+                            Accompagner chaque étudiant vers l'excellence en mathématiques grâce à une pédagogie moderne,
+                            structurée et adaptée au programme marocain.
+                        </p>
+                    </div>
+                    <div class="mission-card">
+                        <div class="mission-icon">🚀</div>
+                        <h3>Innovation Pédagogique</h3>
+                        <p>
+                            Combiner les méthodes d'enseignement traditionnelles avec les technologies modernes
+                            pour une expérience d'apprentissage optimale.
+                        </p>
+                    </div>
+                    <div class="mission-card">
+                        <div class="mission-icon">🤝</div>
+                        <h3>Accessibilité</h3>
+                        <p>
+                            Rendre l'apprentissage des mathématiques accessible à tous,
+                            partout au Maroc, avec des ressources de qualité gratuites.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features Section -->
+            <div class="about-section">
+                <h2 class="section-title">Ce Qui Nous Différencie</h2>
+                <div class="features-list">
+                    <div class="features-items">
+                        <div class="feature-item">
+                            <div class="feature-item-icon bg-blue">
+                                <span class="material-symbols-outlined">school</span>
+                            </div>
+                            <div class="feature-item-content">
+                                <h4>Parcours Structuré en 5 Étapes</h4>
+                                <p>
+                                    Chaque chapitre suit une méthodologie éprouvée : Leçon → Vidéos → Quiz → Exercices → Évaluation finale.
+                                    Une progression logique pour une maîtrise complète.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-item-icon bg-red">
+                                <span class="material-symbols-outlined">video_library</span>
+                            </div>
+                            <div class="feature-item-content">
+                                <h4>Capsules Vidéo Explicatives</h4>
+                                <p>
+                                    Plus de 500 vidéos courtes et ciblées pour visualiser et comprendre chaque concept mathématique.
+                                    Des explications claires avec des exemples concrets.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-item-icon bg-purple">
+                                <span class="material-symbols-outlined">quiz</span>
+                            </div>
+                            <div class="feature-item-content">
+                                <h4>Quiz Interactifs et Adaptatifs</h4>
+                                <p>
+                                    Des QCM et exercices d'ordonnancement pour tester vos connaissances immédiatement.
+                                    Corrections détaillées avec explications pédagogiques.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-item-icon bg-orange">
+                                <span class="material-symbols-outlined">fitness_center</span>
+                            </div>
+                            <div class="feature-item-content">
+                                <h4>Exercices avec Indices Progressifs</h4>
+                                <p>
+                                    Entraînez-vous avec des exercices variés. Système d'indices à débloquer progressivement
+                                    pour vous guider sans vous donner directement la réponse.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-item-icon bg-yellow">
+                                <span class="material-symbols-outlined">emoji_events</span>
+                            </div>
+                            <div class="feature-item-content">
+                                <h4>Préparation aux Concours</h4>
+                                <p>
+                                    Résumés pédagogiques et quiz basés sur les examens réels de Médecine, ENSA et ENSAM.
+                                    Maximisez vos chances de réussite aux concours.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-item-icon bg-green">
+                                <span class="material-symbols-outlined">trending_up</span>
+                            </div>
+                            <div class="feature-item-content">
+                                <h4>Suivi Personnalisé</h4>
+                                <p>
+                                    Statistiques détaillées de votre progression, badges de réussite,
+                                    et accès prioritaire aux sessions en direct pour un accompagnement optimal.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Team Section -->
+            <div class="about-section">
+                <h2 class="section-title">Notre Équipe</h2>
+                <div class="team-section">
+                    <div class="team-grid">
+                        <div class="team-member">
+                            <div class="team-avatar">👨‍🏫</div>
+                            <div class="team-name">Prof. Ahmed Benali</div>
+                            <div class="team-role">Fondateur & Directeur Pédagogique</div>
+                            <p class="team-bio">
+                                20 ans d'expérience en enseignement des mathématiques.
+                                Diplômé de l'ENS et passionné par l'innovation pédagogique.
+                            </p>
+                        </div>
+                        <div class="team-member">
+                            <div class="team-avatar">👩‍💻</div>
+                            <div class="team-name">Dr. Sara El Amrani</div>
+                            <div class="team-role">Responsable Contenu</div>
+                            <p class="team-bio">
+                                Docteure en mathématiques appliquées.
+                                Spécialiste en création de contenus pédagogiques numériques.
+                            </p>
+                        </div>
+                        <div class="team-member">
+                            <div class="team-avatar">👨‍💼</div>
+                            <div class="team-name">Youssef Alaoui</div>
+                            <div class="team-role">Développeur Principal</div>
+                            <p class="team-bio">
+                                Ingénieur informatique spécialisé en technologies éducatives.
+                                Créateur de la plateforme Math-pedago.
+                            </p>
+                        </div>
+                        <div class="team-member">
+                            <div class="team-avatar">👩‍🎓</div>
+                            <div class="team-name">Fatima Zahra Idrissi</div>
+                            <div class="team-role">Coordinatrice Concours</div>
+                            <p class="team-bio">
+                                Ancienne lauréate ENSA.
+                                Experte en préparation aux concours d'ingénierie et de médecine.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Section -->
+            <div class="about-section">
+                <h2 class="section-title">Contactez-Nous</h2>
+                <div class="contact-section">
+                    <h3 style="color: var(--primary); margin-bottom: var(--spacing-md);">
+                        Nous Sommes à Votre Écoute
+                    </h3>
+                    <p style="color: var(--gray-700); margin-bottom: var(--spacing-lg); max-width: 600px; margin-left: auto; margin-right: auto;">
+                        Une question ? Une suggestion ? N'hésitez pas à nous contacter.
+                        Notre équipe est là pour vous accompagner dans votre réussite.
+                    </p>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <span class="material-symbols-outlined">mail</span>
+                            <div>
+                                <div style="font-weight: 600;">Email</div>
+                                <div>contact@math-pedago.ma</div>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <span class="material-symbols-outlined">phone</span>
+                            <div>
+                                <div style="font-weight: 600;">Téléphone</div>
+                                <div>+212 6XX XXX XXX</div>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <span class="material-symbols-outlined">location_on</span>
+                            <div>
+                                <div style="font-weight: 600;">Adresse</div>
+                                <div>Casablanca, Maroc</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Math-pedago</h4>
+                    <p>Centre Scientifique des Mathématiques pour l'excellence académique</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="login.html">Se connecter</a></li>
+                        <li><a href="dashboard.html">Dashboard</a></li>
+                        <li><a href="concours.html">Concours</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Niveaux</h4>
+                    <ul>
+                        <li><a href="#">TCS</a></li>
+                        <li><a href="#">1BSE / 1BSM</a></li>
+                        <li><a href="#">2BSE / 2BSM</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <p>📧 contact@math-pedago.ma</p>
+                    <p>📱 +212 6XX XXX XXX</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Math-pedago. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

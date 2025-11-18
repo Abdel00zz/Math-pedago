@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz - Suites Numériques - Math-pedago</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- KaTeX for LaTeX -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+    <style>
+        .quiz-header {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            color: white;
+            padding: var(--spacing-xl) 0;
+        }
+
+        .quiz-header h1 {
+            color: white;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .quiz-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: var(--spacing-xl) var(--spacing-md);
+        }
+
+        .quiz-progress {
+            background: white;
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .progress-text {
+            font-weight: 600;
+            color: var(--gray-700);
+        }
+
+        .progress-score {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--quiz-color);
+        }
+
+        .progress-bar-quiz {
+            height: 10px;
+            background: var(--gray-200);
+            border-radius: var(--radius-full);
+            overflow: hidden;
+        }
+
+        .progress-bar-quiz .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--quiz-color), #a78bfa);
+            transition: width var(--transition-slow);
+        }
+
+        .question-card {
+            background: white;
+            padding: var(--spacing-xl);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-lg);
+            padding-bottom: var(--spacing-md);
+            border-bottom: 2px solid var(--gray-200);
+        }
+
+        .question-number {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--quiz-color);
+            text-transform: uppercase;
+        }
+
+        .question-type-badge {
+            padding: 0.375rem 0.75rem;
+            border-radius: var(--radius-full);
+            background: rgba(139, 92, 246, 0.1);
+            color: var(--quiz-color);
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .question-text {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: var(--spacing-lg);
+            line-height: 1.6;
+        }
+
+        .options-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+
+        .option-item {
+            position: relative;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: var(--spacing-md);
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: var(--transition-fast);
+            background: white;
+        }
+
+        .option-label:hover {
+            border-color: var(--quiz-color);
+            background: rgba(139, 92, 246, 0.05);
+        }
+
+        .option-input {
+            margin-right: var(--spacing-md);
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+        }
+
+        .option-text {
+            flex: 1;
+            color: var(--gray-700);
+            font-weight: 500;
+        }
+
+        .option-label.selected {
+            border-color: var(--quiz-color);
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        .option-label.correct {
+            border-color: var(--success);
+            background: rgba(34, 197, 94, 0.1);
+        }
+
+        .option-label.incorrect {
+            border-color: var(--danger);
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .explanation-box {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(59, 130, 246, 0.02));
+            border-left: 4px solid var(--info);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-md);
+            margin-top: var(--spacing-lg);
+            display: none;
+        }
+
+        .explanation-box.show {
+            display: block;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .explanation-box h4 {
+            color: var(--info);
+            margin-bottom: var(--spacing-sm);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+
+        .explanation-box p {
+            color: var(--gray-700);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .question-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: var(--spacing-md);
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .breadcrumb a {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .breadcrumb a:hover {
+            color: white;
+        }
+
+        .breadcrumb .material-symbols-outlined {
+            font-size: 1rem;
+        }
+
+        .result-card {
+            background: white;
+            padding: var(--spacing-xl);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-xl);
+            text-align: center;
+            display: none;
+        }
+
+        .result-card.show {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .result-icon {
+            font-size: 5rem;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .result-title {
+            font-size: 2rem;
+            margin-bottom: var(--spacing-sm);
+            color: var(--gray-900);
+        }
+
+        .result-score {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--quiz-color);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .result-message {
+            font-size: 1.125rem;
+            color: var(--gray-600);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .result-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-lg);
+            margin: var(--spacing-xl) 0;
+        }
+
+        .result-stat {
+            text-align: center;
+        }
+
+        .result-stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .result-stat-value.correct { color: var(--success); }
+        .result-stat-value.incorrect { color: var(--danger); }
+        .result-stat-value.total { color: var(--info); }
+
+        .result-stat-label {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+
+        .result-actions {
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container navbar-content">
+            <div class="navbar-brand">
+                <span class="material-symbols-outlined">calculate</span>
+                <span class="brand-text">Math-pedago</span>
+            </div>
+            <ul class="navbar-menu">
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="concours.html">Concours</a></li>
+                <li><a href="about.html">À propos</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Quiz Header -->
+    <div class="quiz-header">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="dashboard.html">Dashboard</a>
+                <span class="material-symbols-outlined">chevron_right</span>
+                <a href="chapter-hub.html">Suites Numériques</a>
+                <span class="material-symbols-outlined">chevron_right</span>
+                <span>Quiz</span>
+            </div>
+            <h1>Quiz - Suites Numériques</h1>
+            <p style="color: rgba(255, 255, 255, 0.9); margin: 0;">
+                Testez vos connaissances avec 15 questions
+            </p>
+        </div>
+    </div>
+
+    <!-- Quiz Container -->
+    <div class="quiz-container">
+        <!-- Progress Bar -->
+        <div class="quiz-progress">
+            <div class="progress-header">
+                <span class="progress-text">Question <span id="currentQuestion">1</span> sur 15</span>
+                <span class="progress-score">Score: <span id="currentScore">0</span>/15</span>
+            </div>
+            <div class="progress-bar-quiz">
+                <div class="progress-fill" id="quizProgress" style="width: 6.67%;"></div>
+            </div>
+        </div>
+
+        <!-- Questions Container -->
+        <div id="questionsContainer">
+            <!-- Question 1 -->
+            <div class="question-card" data-question="1">
+                <div class="question-header">
+                    <span class="question-number">Question 1 / 15</span>
+                    <span class="question-type-badge">QCM</span>
+                </div>
+                <div class="question-text">
+                    Quelle est la définition d'une suite arithmétique de raison $r$ ?
+                </div>
+                <ul class="options-list">
+                    <li class="option-item">
+                        <label class="option-label">
+                            <input type="radio" name="q1" value="a" class="option-input">
+                            <span class="option-text">$u_{n+1} = u_n \times r$</span>
+                        </label>
+                    </li>
+                    <li class="option-item">
+                        <label class="option-label">
+                            <input type="radio" name="q1" value="b" class="option-input">
+                            <span class="option-text">$u_{n+1} = u_n + r$ ✓</span>
+                        </label>
+                    </li>
+                    <li class="option-item">
+                        <label class="option-label">
+                            <input type="radio" name="q1" value="c" class="option-input">
+                            <span class="option-text">$u_{n+1} = u_n - r$</span>
+                        </label>
+                    </li>
+                    <li class="option-item">
+                        <label class="option-label">
+                            <input type="radio" name="q1" value="d" class="option-input">
+                            <span class="option-text">$u_{n+1} = \frac{u_n}{r}$</span>
+                        </label>
+                    </li>
+                </ul>
+                <div class="explanation-box">
+                    <h4>
+                        <span class="material-symbols-outlined">info</span>
+                        Explication
+                    </h4>
+                    <p>
+                        Une suite arithmétique est caractérisée par une différence constante entre deux termes consécutifs. Cette différence est appelée la raison $r$, donc $u_{n+1} = u_n + r$.
+                    </p>
+                </div>
+                <div class="question-actions">
+                    <button class="btn btn-secondary" onclick="showHint(1)">
+                        <span class="material-symbols-outlined">lightbulb</span>
+                        Indice
+                    </button>
+                    <button class="btn btn-primary" onclick="validateAnswer(1, 'b')">
+                        Valider
+                        <span class="material-symbols-outlined">check</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question-card" data-question="2" style="display: none;">
+                <div class="question-header">
+                    <span class="question-number">Question 2 / 15</span>
+                    <span class="question-type-badge">QCM</span>
+                </div>
+                <div class="question-text">
+                    Si $u_0 = 3$ et $r = 5$, quel est le terme $u_4$ de cette suite arithmétique ?
+                </div>
+                <ul class="options-list">
+                    <li class="option-item">
+                        <label class="option-label">
+                            <input type="radio" name="q2" value="a" class="option-input">
+                            <span class="option-text">$u_4 = 18$</span>
+                        </label>
+                    </li>
+                    <li class="option-item">
+                        <label class="option-label">
+                            <input type="radio" name="q2" value="b" class="option-input">
+                            <span class="option-text">$u_4 = 20$</span>
+                        </label>
+                    </li>
+                    <li class="option-item">
+                        <label class="option-label">
+                            <input type="radio" name="q2" value="c" class="option-input">
+                            <span class="option-text">$u_4 = 23$ ✓</span>
+                        </label>
+                    </li>
+                    <li class="option-item">
+                        <label class="option-label">
+                            <input type="radio" name="q2" value="d" class="option-input">
+                            <span class="option-text">$u_4 = 15$</span>
+                        </label>
+                    </li>
+                </ul>
+                <div class="explanation-box">
+                    <h4>
+                        <span class="material-symbols-outlined">info</span>
+                        Explication
+                    </h4>
+                    <p>
+                        Utilisons la formule $u_n = u_0 + n \cdot r$. Donc $u_4 = 3 + 4 \times 5 = 3 + 20 = 23$.
+                    </p>
+                </div>
+                <div class="question-actions">
+                    <button class="btn btn-secondary" onclick="showHint(2)">
+                        <span class="material-symbols-outlined">lightbulb</span>
+                        Indice
+                    </button>
+                    <button class="btn btn-primary" onclick="validateAnswer(2, 'c')">
+                        Valider
+                        <span class="material-symbols-outlined">check</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question-card" data-question="3" style="display: none;">
+                <div class="question-header">
+                    <span class="question-number">Question 3 / 15</span>
+                    <span class="question-type-badge">QCM</span>
+                </div>
+                <div class="question-text">
+                    Quelle est la formule du terme général d'une suite géométrique de raison $q$ ?
+                </div>
+                <ul class="options-list">
+                    <li class="option-item">
+                        <label class="option-label">
+                            <input type="radio" name="q3" value="a" class="option-input">
+                            <span class="option-text">$u_n = u_0 + n \cdot q$</span>
+                        </label>
+                    </li>
+                    <li class="option-item">
+                        <label class="option-label">
+                            <input type="radio" name="q3" value="b" class="option-input">
+                            <span class="option-text">$u_n = u_0 \cdot q^n$ ✓</span>
+                        </label>
+                    </li>
+                    <li class="option-item">
+                        <label class="option-label">
+                            <input type="radio" name="q3" value="c" class="option-input">
+                            <span class="option-text">$u_n = u_0 + q^n$</span>
+                        </label>
+                    </li>
+                    <li class="option-item">
+                        <label class="option-label">
+                            <input type="radio" name="q3" value="d" class="option-input">
+                            <span class="option-text">$u_n = u_0 \cdot n \cdot q$</span>
+                        </label>
+                    </li>
+                </ul>
+                <div class="explanation-box">
+                    <h4>
+                        <span class="material-symbols-outlined">info</span>
+                        Explication
+                    </h4>
+                    <p>
+                        Pour une suite géométrique, chaque terme est obtenu en multipliant le précédent par la raison $q$. Le terme général s'écrit donc $u_n = u_0 \cdot q^n$.
+                    </p>
+                </div>
+                <div class="question-actions">
+                    <button class="btn btn-secondary" onclick="showHint(3)">
+                        <span class="material-symbols-outlined">lightbulb</span>
+                        Indice
+                    </button>
+                    <button class="btn btn-primary" onclick="validateAnswer(3, 'b')">
+                        Valider
+                        <span class="material-symbols-outlined">check</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Result Card (hidden initially) -->
+        <div class="result-card" id="resultCard">
+            <div class="result-icon">🎉</div>
+            <h2 class="result-title">Quiz Terminé !</h2>
+            <div class="result-score"><span id="finalScore">0</span>/15</div>
+            <p class="result-message" id="resultMessage">Excellent travail !</p>
+
+            <div class="result-stats">
+                <div class="result-stat">
+                    <div class="result-stat-value correct"><span id="correctCount">0</span></div>
+                    <div class="result-stat-label">Correctes</div>
+                </div>
+                <div class="result-stat">
+                    <div class="result-stat-value incorrect"><span id="incorrectCount">0</span></div>
+                    <div class="result-stat-label">Incorrectes</div>
+                </div>
+                <div class="result-stat">
+                    <div class="result-stat-value total">15</div>
+                    <div class="result-stat-label">Total</div>
+                </div>
+            </div>
+
+            <div class="result-actions">
+                <button class="btn btn-secondary" onclick="retakeQuiz()">
+                    <span class="material-symbols-outlined">replay</span>
+                    Recommencer
+                </button>
+                <a href="exercises.html" class="btn btn-primary">
+                    Étape suivante : Exercices
+                    <span class="material-symbols-outlined">arrow_forward</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Navigation (shown when not in quiz) -->
+        <div style="display: flex; justify-content: space-between; margin-top: var(--spacing-xl);" id="bottomNav">
+            <a href="videos.html" class="btn btn-secondary">
+                <span class="material-symbols-outlined">arrow_back</span>
+                Étape précédente
+            </a>
+            <a href="exercises.html" class="btn btn-primary">
+                Étape suivante : Exercices
+                <span class="material-symbols-outlined">arrow_forward</span>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        let currentQuestionIndex = 1;
+        let score = 0;
+        const totalQuestions = 3; // Simplified for mockup (would be 15 in real app)
+
+        // Render LaTeX
+        document.addEventListener("DOMContentLoaded", function() {
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: "$$", right: "$$", display: true},
+                        {left: "$", right: "$", display: false}
+                    ],
+                    throwOnError: false
+                });
+            }
+
+            // Add click listeners to radio options
+            document.querySelectorAll('.option-label').forEach(label => {
+                label.addEventListener('click', function() {
+                    const parent = this.closest('.options-list');
+                    parent.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+                    this.classList.add('selected');
+                });
+            });
+        });
+
+        function validateAnswer(questionNum, correctAnswer) {
+            const selectedInput = document.querySelector(`input[name="q${questionNum}"]:checked`);
+            if (!selectedInput) {
+                alert('Veuillez sélectionner une réponse');
+                return;
+            }
+
+            const selectedValue = selectedInput.value;
+            const questionCard = document.querySelector(`[data-question="${questionNum}"]`);
+            const explanationBox = questionCard.querySelector('.explanation-box');
+
+            if (selectedValue === correctAnswer) {
+                score++;
+                selectedInput.parentElement.classList.add('correct');
+            } else {
+                selectedInput.parentElement.classList.add('incorrect');
+                // Show correct answer
+                const correctInput = questionCard.querySelector(`input[value="${correctAnswer}"]`);
+                if (correctInput) {
+                    correctInput.parentElement.classList.add('correct');
+                }
+            }
+
+            explanationBox.classList.add('show');
+            document.getElementById('currentScore').textContent = score;
+
+            // Disable all inputs for this question
+            questionCard.querySelectorAll('.option-input').forEach(input => input.disabled = true);
+
+            // Show next button or finish
+            setTimeout(() => {
+                if (currentQuestionIndex < totalQuestions) {
+                    nextQuestion();
+                } else {
+                    showResults();
+                }
+            }, 2000);
+        }
+
+        function nextQuestion() {
+            // Hide current question
+            document.querySelector(`[data-question="${currentQuestionIndex}"]`).style.display = 'none';
+
+            // Show next question
+            currentQuestionIndex++;
+            document.querySelector(`[data-question="${currentQuestionIndex}"]`).style.display = 'block';
+
+            // Update progress
+            document.getElementById('currentQuestion').textContent = currentQuestionIndex;
+            const progressPercent = (currentQuestionIndex / totalQuestions) * 100;
+            document.getElementById('quizProgress').style.width = progressPercent + '%';
+        }
+
+        function showResults() {
+            document.getElementById('questionsContainer').style.display = 'none';
+            document.getElementById('bottomNav').style.display = 'none';
+            document.getElementById('resultCard').classList.add('show');
+
+            document.getElementById('finalScore').textContent = score;
+            document.getElementById('correctCount').textContent = score;
+            document.getElementById('incorrectCount').textContent = totalQuestions - score;
+
+            const percentage = (score / totalQuestions) * 100;
+            let message = '';
+            if (percentage >= 80) {
+                message = 'Excellent travail ! Vous maîtrisez parfaitement ce chapitre.';
+            } else if (percentage >= 60) {
+                message = 'Bon travail ! Continuez à vous entraîner.';
+            } else {
+                message = 'Il est recommandé de revoir le cours avant de continuer.';
+            }
+            document.getElementById('resultMessage').textContent = message;
+        }
+
+        function retakeQuiz() {
+            location.reload();
+        }
+
+        function showHint(questionNum) {
+            alert('Indice : Relisez attentivement la définition dans la leçon !');
+        }
+    </script>
+</body>
+</html>

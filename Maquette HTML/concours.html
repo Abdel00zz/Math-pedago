@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concours - Math-pedago</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- KaTeX for LaTeX -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+    <style>
+        .concours-hero {
+            background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+            color: white;
+            padding: var(--spacing-xl) 0;
+            text-align: center;
+        }
+
+        .concours-hero h1 {
+            color: white;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .concours-hero p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.25rem;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .concours-types {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-md);
+            flex-wrap: wrap;
+        }
+
+        .concours-type-card {
+            background: white;
+            padding: var(--spacing-md);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            font-weight: 700;
+            color: var(--gray-900);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .concours-type-icon {
+            font-size: 2rem;
+        }
+
+        .concours-content {
+            padding: var(--spacing-xl) 0;
+        }
+
+        .concours-tabs {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-xl);
+            border-bottom: 2px solid var(--gray-200);
+            overflow-x: auto;
+        }
+
+        .concours-tab {
+            padding: var(--spacing-md) var(--spacing-lg);
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--gray-600);
+            border-bottom: 3px solid transparent;
+            transition: var(--transition-fast);
+            white-space: nowrap;
+        }
+
+        .concours-tab:hover {
+            color: var(--submit-color);
+        }
+
+        .concours-tab.active {
+            color: var(--submit-color);
+            border-bottom-color: var(--submit-color);
+        }
+
+        .concours-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .concours-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            transition: var(--transition-base);
+            border-left: 6px solid var(--submit-color);
+        }
+
+        .concours-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .concours-card-header {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(6, 182, 212, 0.05));
+            padding: var(--spacing-lg);
+            border-bottom: 2px solid var(--gray-200);
+        }
+
+        .concours-badge {
+            display: inline-block;
+            padding: 0.375rem 0.75rem;
+            border-radius: var(--radius-full);
+            background: var(--submit-color);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .concours-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .concours-meta {
+            display: flex;
+            gap: var(--spacing-md);
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+
+        .concours-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .concours-card-body {
+            padding: var(--spacing-lg);
+        }
+
+        .concours-description {
+            color: var(--gray-700);
+            margin-bottom: var(--spacing-md);
+            line-height: 1.6;
+        }
+
+        .concours-topics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-xs);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .concours-topic {
+            padding: 0.25rem 0.75rem;
+            background: var(--gray-100);
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            color: var(--gray-700);
+        }
+
+        .concours-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-md);
+            padding: var(--spacing-md);
+            background: var(--bg-primary);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .concours-stat {
+            text-align: center;
+        }
+
+        .concours-stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--submit-color);
+        }
+
+        .concours-stat-label {
+            font-size: 0.75rem;
+            color: var(--gray-600);
+        }
+
+        .concours-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+
+        .info-banner {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(59, 130, 246, 0.02));
+            border-left: 4px solid var(--info);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .info-banner h3 {
+            color: var(--info);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .info-banner ul {
+            list-style: none;
+            margin-left: var(--spacing-md);
+        }
+
+        .info-banner li {
+            padding: var(--spacing-xs) 0;
+            padding-left: var(--spacing-md);
+            position: relative;
+            color: var(--gray-700);
+        }
+
+        .info-banner li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--info);
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container navbar-content">
+            <div class="navbar-brand">
+                <span class="material-symbols-outlined">calculate</span>
+                <span class="brand-text">Math-pedago</span>
+            </div>
+            <ul class="navbar-menu">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="concours.html" class="active">Concours</a></li>
+                <li><a href="about.html">À propos</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Concours Hero -->
+    <div class="concours-hero">
+        <div class="container">
+            <h1>🎯 Préparation aux Concours</h1>
+            <p>Préparez-vous aux concours d'entrée avec des résumés pédagogiques et des quiz d'examens réels</p>
+            <div class="concours-types">
+                <div class="concours-type-card">
+                    <span class="concours-type-icon">🏥</span>
+                    <span>Médecine</span>
+                </div>
+                <div class="concours-type-card">
+                    <span class="concours-type-icon">🔧</span>
+                    <span>ENSA</span>
+                </div>
+                <div class="concours-type-card">
+                    <span class="concours-type-icon">⚙️</span>
+                    <span>ENSAM</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Concours Content -->
+    <div class="concours-content">
+        <div class="container">
+            <!-- Info Banner -->
+            <div class="info-banner">
+                <h3>
+                    <span class="material-symbols-outlined">info</span>
+                    À propos de la préparation aux concours
+                </h3>
+                <p>Chaque concours comprend :</p>
+                <ul>
+                    <li><strong>Résumé pédagogique structuré</strong> avec définitions, formules, méthodes, pièges à éviter, réflexions et astuces</li>
+                    <li><strong>Quiz d'examens réels</strong> avec QCM et exercices d'ordonnancement</li>
+                    <li><strong>Corrections détaillées</strong> avec explications et conseils</li>
+                    <li><strong>Suivi de progression</strong> pour mesurer vos performances</li>
+                </ul>
+            </div>
+
+            <!-- Tabs -->
+            <div class="concours-tabs">
+                <button class="concours-tab active" data-type="all">Tous les Concours</button>
+                <button class="concours-tab" data-type="medecine">Médecine</button>
+                <button class="concours-tab" data-type="ensa">ENSA</button>
+                <button class="concours-tab" data-type="ensam">ENSAM</button>
+            </div>
+
+            <!-- Concours Grid -->
+            <div class="concours-grid">
+                <!-- Médecine 2024 -->
+                <div class="concours-card" data-concours-type="medecine">
+                    <div class="concours-card-header">
+                        <span class="concours-badge">Médecine 2024</span>
+                        <h3 class="concours-title">Fonctions Continues et Dérivables</h3>
+                        <div class="concours-meta">
+                            <span>
+                                <span class="material-symbols-outlined" style="font-size: 1rem;">calendar_today</span>
+                                Session 2024
+                            </span>
+                            <span>
+                                <span class="material-symbols-outlined" style="font-size: 1rem;">school</span>
+                                2BSM / 2BSE
+                            </span>
+                        </div>
+                    </div>
+                    <div class="concours-card-body">
+                        <p class="concours-description">
+                            Résumé complet et quiz basé sur l'examen réel du concours de Médecine 2024.
+                        </p>
+                        <div class="concours-topics">
+                            <span class="concours-topic">Continuité</span>
+                            <span class="concours-topic">Dérivabilité</span>
+                            <span class="concours-topic">Théorèmes</span>
+                            <span class="concours-topic">Applications</span>
+                        </div>
+                        <div class="concours-stats">
+                            <div class="concours-stat">
+                                <div class="concours-stat-value">15</div>
+                                <div class="concours-stat-label">Questions</div>
+                            </div>
+                            <div class="concours-stat">
+                                <div class="concours-stat-value">45min</div>
+                                <div class="concours-stat-label">Durée</div>
+                            </div>
+                        </div>
+                        <div class="concours-actions">
+                            <button class="btn btn-secondary" style="flex: 1;">
+                                <span class="material-symbols-outlined">book</span>
+                                Résumé
+                            </button>
+                            <button class="btn btn-primary" style="flex: 1;">
+                                <span class="material-symbols-outlined">quiz</span>
+                                Quiz
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Médecine 2023 -->
+                <div class="concours-card" data-concours-type="medecine">
+                    <div class="concours-card-header">
+                        <span class="concours-badge">Médecine 2023</span>
+                        <h3 class="concours-title">Suites Numériques</h3>
+                        <div class="concours-meta">
+                            <span>
+                                <span class="material-symbols-outlined" style="font-size: 1rem;">calendar_today</span>
+                                Session 2023
+                            </span>
+                            <span>
+                                <span class="material-symbols-outlined" style="font-size: 1rem;">school</span>
+                                2BSM / 2BSE
+                            </span>
+                        </div>
+                    </div>
+                    <div class="concours-card-body">
+                        <p class="concours-description">
+                            Préparation complète basée sur l'examen du concours de Médecine 2023.
+                        </p>
+                        <div class="concours-topics">
+                            <span class="concours-topic">Suites arithmétiques</span>
+                            <span class="concours-topic">Suites géométriques</span>
+                            <span class="concours-topic">Limites</span>
+                            <span class="concours-topic">Récurrence</span>
+                        </div>
+                        <div class="concours-stats">
+                            <div class="concours-stat">
+                                <div class="concours-stat-value">18</div>
+                                <div class="concours-stat-label">Questions</div>
+                            </div>
+                            <div class="concours-stat">
+                                <div class="concours-stat-value">50min</div>
+                                <div class="concours-stat-label">Durée</div>
+                            </div>
+                        </div>
+                        <div class="concours-actions">
+                            <button class="btn btn-secondary" style="flex: 1;">
+                                <span class="material-symbols-outlined">book</span>
+                                Résumé
+                            </button>
+                            <button class="btn btn-primary" style="flex: 1;">
+                                <span class="material-symbols-outlined">quiz</span>
+                                Quiz
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ENSA 2024 -->
+                <div class="concours-card" data-concours-type="ensa">
+                    <div class="concours-card-header">
+                        <span class="concours-badge" style="background: #10b981;">ENSA 2024</span>
+                        <h3 class="concours-title">Calcul Intégral</h3>
+                        <div class="concours-meta">
+                            <span>
+                                <span class="material-symbols-outlined" style="font-size: 1rem;">calendar_today</span>
+                                Session 2024
+                            </span>
+                            <span>
+                                <span class="material-symbols-outlined" style="font-size: 1rem;">school</span>
+                                2BSM
+                            </span>
+                        </div>
+                    </div>
+                    <div class="concours-card-body">
+                        <p class="concours-description">
+                            Maîtrisez le calcul intégral pour le concours ENSA 2024.
+                        </p>
+                        <div class="concours-topics">
+                            <span class="concours-topic">Primitives</span>
+                            <span class="concours-topic">Intégrales</span>
+                            <span class="concours-topic">Méthodes de calcul</span>
+                            <span class="concours-topic">Applications</span>
+                        </div>
+                        <div class="concours-stats">
+                            <div class="concours-stat">
+                                <div class="concours-stat-value">20</div>
+                                <div class="concours-stat-label">Questions</div>
+                            </div>
+                            <div class="concours-stat">
+                                <div class="concours-stat-value">60min</div>
+                                <div class="concours-stat-label">Durée</div>
+                            </div>
+                        </div>
+                        <div class="concours-actions">
+                            <button class="btn btn-secondary" style="flex: 1;">
+                                <span class="material-symbols-outlined">book</span>
+                                Résumé
+                            </button>
+                            <button class="btn btn-primary" style="flex: 1;">
+                                <span class="material-symbols-outlined">quiz</span>
+                                Quiz
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ENSA 2023 -->
+                <div class="concours-card" data-concours-type="ensa">
+                    <div class="concours-card-header">
+                        <span class="concours-badge" style="background: #10b981;">ENSA 2023</span>
+                        <h3 class="concours-title">Nombres Complexes</h3>
+                        <div class="concours-meta">
+                            <span>
+                                <span class="material-symbols-outlined" style="font-size: 1rem;">calendar_today</span>
+                                Session 2023
+                            </span>
+                            <span>
+                                <span class="material-symbols-outlined" style="font-size: 1rem;">school</span>
+                                2BSM
+                            </span>
+                        </div>
+                    </div>
+                    <div class="concours-card-body">
+                        <p class="concours-description">
+                            Préparez-vous sur les nombres complexes avec l'examen ENSA 2023.
+                        </p>
+                        <div class="concours-topics">
+                            <span class="concours-topic">Forme algébrique</span>
+                            <span class="concours-topic">Forme trigonométrique</span>
+                            <span class="concours-topic">Équations</span>
+                            <span class="concours-topic">Géométrie</span>
+                        </div>
+                        <div class="concours-stats">
+                            <div class="concours-stat">
+                                <div class="concours-stat-value">16</div>
+                                <div class="concours-stat-label">Questions</div>
+                            </div>
+                            <div class="concours-stat">
+                                <div class="concours-stat-value">55min</div>
+                                <div class="concours-stat-label">Durée</div>
+                            </div>
+                        </div>
+                        <div class="concours-actions">
+                            <button class="btn btn-secondary" style="flex: 1;">
+                                <span class="material-symbols-outlined">book</span>
+                                Résumé
+                            </button>
+                            <button class="btn btn-primary" style="flex: 1;">
+                                <span class="material-symbols-outlined">quiz</span>
+                                Quiz
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ENSAM 2024 -->
+                <div class="concours-card" data-concours-type="ensam">
+                    <div class="concours-card-header">
+                        <span class="concours-badge" style="background: #8b5cf6;">ENSAM 2024</span>
+                        <h3 class="concours-title">Équations Différentielles</h3>
+                        <div class="concours-meta">
+                            <span>
+                                <span class="material-symbols-outlined" style="font-size: 1rem;">calendar_today</span>
+                                Session 2024
+                            </span>
+                            <span>
+                                <span class="material-symbols-outlined" style="font-size: 1rem;">school</span>
+                                2BSE
+                            </span>
+                        </div>
+                    </div>
+                    <div class="concours-card-body">
+                        <p class="concours-description">
+                            Résolution d'équations différentielles pour le concours ENSAM 2024.
+                        </p>
+                        <div class="concours-topics">
+                            <span class="concours-topic">Équations du 1er ordre</span>
+                            <span class="concours-topic">Équations du 2nd ordre</span>
+                            <span class="concours-topic">Solutions générales</span>
+                            <span class="concours-topic">Applications physiques</span>
+                        </div>
+                        <div class="concours-stats">
+                            <div class="concours-stat">
+                                <div class="concours-stat-value">14</div>
+                                <div class="concours-stat-label">Questions</div>
+                            </div>
+                            <div class="concours-stat">
+                                <div class="concours-stat-value">40min</div>
+                                <div class="concours-stat-label">Durée</div>
+                            </div>
+                        </div>
+                        <div class="concours-actions">
+                            <button class="btn btn-secondary" style="flex: 1;">
+                                <span class="material-symbols-outlined">book</span>
+                                Résumé
+                            </button>
+                            <button class="btn btn-primary" style="flex: 1;">
+                                <span class="material-symbols-outlined">quiz</span>
+                                Quiz
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ENSAM 2023 -->
+                <div class="concours-card" data-concours-type="ensam">
+                    <div class="concours-card-header">
+                        <span class="concours-badge" style="background: #8b5cf6;">ENSAM 2023</span>
+                        <h3 class="concours-title">Probabilités</h3>
+                        <div class="concours-meta">
+                            <span>
+                                <span class="material-symbols-outlined" style="font-size: 1rem;">calendar_today</span>
+                                Session 2023
+                            </span>
+                            <span>
+                                <span class="material-symbols-outlined" style="font-size: 1rem;">school</span>
+                                2BSE / 2BSM
+                            </span>
+                        </div>
+                    </div>
+                    <div class="concours-card-body">
+                        <p class="concours-description">
+                            Probabilités conditionnelles et lois de probabilité pour ENSAM 2023.
+                        </p>
+                        <div class="concours-topics">
+                            <span class="concours-topic">Probabilités conditionnelles</span>
+                            <span class="concours-topic">Variables aléatoires</span>
+                            <span class="concours-topic">Lois de probabilité</span>
+                            <span class="concours-topic">Espérance</span>
+                        </div>
+                        <div class="concours-stats">
+                            <div class="concours-stat">
+                                <div class="concours-stat-value">17</div>
+                                <div class="concours-stat-label">Questions</div>
+                            </div>
+                            <div class="concours-stat">
+                                <div class="concours-stat-value">50min</div>
+                                <div class="concours-stat-label">Durée</div>
+                            </div>
+                        </div>
+                        <div class="concours-actions">
+                            <button class="btn btn-secondary" style="flex: 1;">
+                                <span class="material-symbols-outlined">book</span>
+                                Résumé
+                            </button>
+                            <button class="btn btn-primary" style="flex: 1;">
+                                <span class="material-symbols-outlined">quiz</span>
+                                Quiz
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab filtering
+        const tabs = document.querySelectorAll('.concours-tab');
+        const cards = document.querySelectorAll('.concours-card');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Update active tab
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                const filterType = tab.dataset.type;
+
+                // Filter cards
+                cards.forEach(card => {
+                    if (filterType === 'all' || card.dataset.concoursType === filterType) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vidéos - Suites Numériques - Math-pedago</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .videos-header {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            padding: var(--spacing-xl) 0;
+        }
+
+        .videos-header h1 {
+            color: white;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .videos-content {
+            padding: var(--spacing-xl) 0;
+        }
+
+        .videos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .video-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            transition: var(--transition-base);
+        }
+
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .video-thumbnail {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .video-thumbnail::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.3);
+            transition: var(--transition-fast);
+        }
+
+        .video-card:hover .video-thumbnail::after {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .play-button {
+            position: relative;
+            z-index: 1;
+            width: 70px;
+            height: 70px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-fast);
+        }
+
+        .video-card:hover .play-button {
+            transform: scale(1.1);
+        }
+
+        .play-button .material-symbols-outlined {
+            font-size: 3rem;
+            color: var(--video-color);
+        }
+
+        .video-duration {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.75rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+
+        .video-info {
+            padding: var(--spacing-md);
+        }
+
+        .video-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-sm);
+            color: var(--gray-900);
+        }
+
+        .video-description {
+            color: var(--gray-600);
+            font-size: 0.875rem;
+            margin-bottom: var(--spacing-md);
+            line-height: 1.6;
+        }
+
+        .video-meta {
+            display: flex;
+            gap: var(--spacing-md);
+            font-size: 0.75rem;
+            color: var(--gray-500);
+            padding-top: var(--spacing-sm);
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .video-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .video-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: var(--video-color);
+            color: white;
+            padding: 0.375rem 0.75rem;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 700;
+            z-index: 2;
+        }
+
+        .video-badge.completed {
+            background: var(--success);
+        }
+
+        .playlist-section {
+            background: white;
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .playlist-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .playlist-stats {
+            display: flex;
+            gap: var(--spacing-xl);
+            color: var(--gray-600);
+            font-size: 0.875rem;
+        }
+
+        .filters {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-lg);
+            flex-wrap: wrap;
+        }
+
+        .filter-chip {
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-full);
+            background: white;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .filter-chip:hover {
+            border-color: var(--video-color);
+            color: var(--video-color);
+        }
+
+        .filter-chip.active {
+            background: var(--video-color);
+            border-color: var(--video-color);
+            color: white;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: var(--spacing-md);
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .breadcrumb a {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .breadcrumb a:hover {
+            color: white;
+        }
+
+        .breadcrumb .material-symbols-outlined {
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container navbar-content">
+            <div class="navbar-brand">
+                <span class="material-symbols-outlined">calculate</span>
+                <span class="brand-text">Math-pedago</span>
+            </div>
+            <ul class="navbar-menu">
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="concours.html">Concours</a></li>
+                <li><a href="about.html">À propos</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Videos Header -->
+    <div class="videos-header">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="dashboard.html">Dashboard</a>
+                <span class="material-symbols-outlined">chevron_right</span>
+                <a href="chapter-hub.html">Suites Numériques</a>
+                <span class="material-symbols-outlined">chevron_right</span>
+                <span>Vidéos</span>
+            </div>
+            <h1>Capsules Vidéo - Suites Numériques</h1>
+            <p style="color: rgba(255, 255, 255, 0.9); margin: 0;">
+                8 vidéos explicatives pour maîtriser le chapitre
+            </p>
+        </div>
+    </div>
+
+    <!-- Videos Content -->
+    <div class="videos-content">
+        <div class="container">
+            <!-- Playlist Info -->
+            <div class="playlist-section">
+                <div class="playlist-header">
+                    <div>
+                        <h2 style="margin-bottom: var(--spacing-xs);">Playlist Complète</h2>
+                        <div class="playlist-stats">
+                            <span>
+                                <span class="material-symbols-outlined" style="font-size: 1rem; vertical-align: middle;">video_library</span>
+                                8 vidéos
+                            </span>
+                            <span>
+                                <span class="material-symbols-outlined" style="font-size: 1rem; vertical-align: middle;">schedule</span>
+                                1h 05min au total
+                            </span>
+                            <span>
+                                <span class="material-symbols-outlined" style="font-size: 1rem; vertical-align: middle;">check_circle</span>
+                                6/8 complétées
+                            </span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary">
+                        <span class="material-symbols-outlined">play_arrow</span>
+                        Tout regarder
+                    </button>
+                </div>
+
+                <!-- Filters -->
+                <div class="filters">
+                    <button class="filter-chip active">Toutes</button>
+                    <button class="filter-chip">Introduction</button>
+                    <button class="filter-chip">Exemples</button>
+                    <button class="filter-chip">Exercices</button>
+                    <button class="filter-chip">Complétées</button>
+                    <button class="filter-chip">Non vues</button>
+                </div>
+            </div>
+
+            <!-- Videos Grid -->
+            <div class="videos-grid">
+                <!-- Video 1 -->
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <span class="video-badge completed">✓ Vu</span>
+                        <div class="play-button">
+                            <span class="material-symbols-outlined">play_arrow</span>
+                        </div>
+                        <div class="video-duration">8:45</div>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">1. Introduction aux Suites Numériques</h3>
+                        <p class="video-description">
+                            Découvrez ce qu'est une suite numérique, ses différentes notations et les premiers concepts fondamentaux.
+                        </p>
+                        <div class="video-meta">
+                            <span>
+                                <span class="material-symbols-outlined" style="font-size: 1rem;">visibility</span>
+                                142 vues
+                            </span>
+                            <span>
+                                <span class="material-symbols-outlined" style="font-size: 1rem;">calendar_today</span>
+                                Il y a 3 jours
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video 2 -->
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <span class="video-badge completed">✓ Vu</span>
+                        <div class="play-button">
+                            <span class="material-symbols-outlined">play_arrow</span>
+                        </div>
+                        <div class="video-duration">12:30</div>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">2. Suites Arithmétiques</h3>
+                        <p class="video-description">
+                            Comprendre les suites arithmétiques : définition, raison, terme général et somme des termes.
+                        </p>
+                        <div class="video-meta">
+                            <span>
+                                <span class="material-symbols-outlined" style="font-size: 1rem;">visibility</span>
+                                128 vues
+                            </span>
+                            <span>
+                                <span class="material-symbols-outlined" style="font-size: 1rem;">calendar_today</span>
+                                Il y a 2 jours
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video 3 -->
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <span class="video-badge completed">✓ Vu</span>
+                        <div class="play-button">
+                            <span class="material-symbols-outlined">play_arrow</span>
+                        </div>
+                        <div class="video-duration">10:15</div>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">3. Suites Géométriques</h3>
+                        <p class="video-description">
+                            Étude complète des suites géométriques avec exemples d'applications pratiques.
+                        </p>
+                        <div class="video-meta">
+                            <span>
+                                <span class="material-symbols-outlined" style="font-size: 1rem;">visibility</span>
+                                115 vues
+                            </span>
+                            <span>
+                                <span class="material-symbols-outlined" style="font-size: 1rem;">calendar_today</span>
+                                Il y a 1 jour
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video 4 -->
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <span class="video-badge completed">✓ Vu</span>
+                        <div class="play-button">
+                            <span class="material-symbols-outlined">play_arrow</span>
+                        </div>
+                        <div class="video-duration">9:20</div>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">4. Sens de Variation des Suites</h3>
+                        <p class="video-description">
+                            Méthodes pour étudier la monotonie d'une suite : croissance, décroissance et exemples.
+                        </p>
+                        <div class="video-meta">
+                            <span>
+                                <span class="material-symbols-outlined" style="font-size: 1rem;">visibility</span>
+                                98 vues
+                            </span>
+                            <span>
+                                <span class="material-symbols-outlined" style="font-size: 1rem;">calendar_today</span>
+                                Il y a 1 jour
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video 5 -->
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <span class="video-badge completed">✓ Vu</span>
+                        <div class="play-button">
+                            <span class="material-symbols-outlined">play_arrow</span>
+                        </div>
+                        <div class="video-duration">7:50</div>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">5. Suites Bornées</h3>
+                        <p class="video-description">
+                            Qu'est-ce qu'une suite majorée, minorée ou bornée ? Définitions et exemples détaillés.
+                        </p>
+                        <div class="video-meta">
+                            <span>
+                                <span class="material-symbols-outlined" style="font-size: 1rem;">visibility</span>
+                                87 vues
+                            </span>
+                            <span>
+                                <span class="material-symbols-outlined" style="font-size: 1rem;">calendar_today</span>
+                                Aujourd'hui
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video 6 -->
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <span class="video-badge completed">✓ Vu</span>
+                        <div class="play-button">
+                            <span class="material-symbols-outlined">play_arrow</span>
+                        </div>
+                        <div class="video-duration">11:40</div>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">6. Limites de Suites</h3>
+                        <p class="video-description">
+                            Introduction aux limites : définition, convergence, divergence et théorème des gendarmes.
+                        </p>
+                        <div class="video-meta">
+                            <span>
+                                <span class="material-symbols-outlined" style="font-size: 1rem;">visibility</span>
+                                76 vues
+                            </span>
+                            <span>
+                                <span class="material-symbols-outlined" style="font-size: 1rem;">calendar_today</span>
+                                Aujourd'hui
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video 7 (Not watched) -->
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <span class="video-badge">Nouveau</span>
+                        <div class="play-button">
+                            <span class="material-symbols-outlined">play_arrow</span>
+                        </div>
+                        <div class="video-duration">13:15</div>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">7. Raisonnement par Récurrence</h3>
+                        <p class="video-description">
+                            Maîtrisez la technique du raisonnement par récurrence avec des exemples pas à pas.
+                        </p>
+                        <div class="video-meta">
+                            <span>
+                                <span class="material-symbols-outlined" style="font-size: 1rem;">visibility</span>
+                                45 vues
+                            </span>
+                            <span>
+                                <span class="material-symbols-outlined" style="font-size: 1rem;">calendar_today</span>
+                                Il y a 2h
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video 8 (Not watched) -->
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <span class="video-badge">Nouveau</span>
+                        <div class="play-button">
+                            <span class="material-symbols-outlined">play_arrow</span>
+                        </div>
+                        <div class="video-duration">15:25</div>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">8. Exercices Corrigés Complets</h3>
+                        <p class="video-description">
+                            Résolution complète de 5 exercices types couvrant tous les aspects du chapitre.
+                        </p>
+                        <div class="video-meta">
+                            <span>
+                                <span class="material-symbols-outlined" style="font-size: 1rem;">visibility</span>
+                                32 vues
+                            </span>
+                            <span>
+                                <span class="material-symbols-outlined" style="font-size: 1rem;">calendar_today</span>
+                                Il y a 1h
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <div style="display: flex; justify-content: space-between; margin-top: var(--spacing-xl);">
+                <a href="lesson.html" class="btn btn-secondary">
+                    <span class="material-symbols-outlined">arrow_back</span>
+                    Étape précédente
+                </a>
+                <a href="quiz.html" class="btn btn-primary">
+                    Étape suivante : Quiz
+                    <span class="material-symbols-outlined">arrow_forward</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Filter functionality
+        const filterChips = document.querySelectorAll('.filter-chip');
+        filterChips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                filterChips.forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

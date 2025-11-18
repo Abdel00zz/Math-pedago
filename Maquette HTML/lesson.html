@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leçon - Suites Numériques - Math-pedago</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- KaTeX for LaTeX rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+    <style>
+        .lesson-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: var(--spacing-lg);
+            padding: var(--spacing-xl) 0;
+            min-height: calc(100vh - 60px);
+        }
+
+        .lesson-sidebar {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-md);
+            height: fit-content;
+            position: sticky;
+            top: 80px;
+        }
+
+        .lesson-sidebar h3 {
+            font-size: 1rem;
+            margin-bottom: var(--spacing-md);
+            color: var(--gray-900);
+        }
+
+        .lesson-nav {
+            list-style: none;
+        }
+
+        .lesson-nav-item {
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .lesson-nav-link {
+            display: block;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-sm);
+            color: var(--gray-700);
+            font-size: 0.875rem;
+            transition: var(--transition-fast);
+        }
+
+        .lesson-nav-link:hover {
+            background: var(--gray-100);
+            color: var(--primary);
+        }
+
+        .lesson-nav-link.active {
+            background: rgba(66, 85, 255, 0.1);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .lesson-content {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-md);
+        }
+
+        .lesson-header {
+            margin-bottom: var(--spacing-xl);
+            padding-bottom: var(--spacing-lg);
+            border-bottom: 2px solid var(--gray-200);
+        }
+
+        .lesson-breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: var(--spacing-md);
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+
+        .lesson-breadcrumb a {
+            color: var(--primary);
+        }
+
+        .lesson-breadcrumb .material-symbols-outlined {
+            font-size: 1rem;
+        }
+
+        .lesson-title {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .lesson-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--lesson-color), #059669);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .lesson-title h1 {
+            margin: 0;
+        }
+
+        .lesson-meta {
+            display: flex;
+            gap: var(--spacing-lg);
+            color: var(--gray-600);
+            font-size: 0.875rem;
+        }
+
+        .lesson-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .lesson-section {
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .lesson-section h2 {
+            color: var(--gray-900);
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 2px solid var(--primary);
+            display: inline-block;
+        }
+
+        .lesson-section h3 {
+            color: var(--gray-800);
+            margin-top: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .lesson-section p {
+            line-height: 1.8;
+            color: var(--gray-700);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .definition-box {
+            background: linear-gradient(135deg, rgba(66, 85, 255, 0.05), rgba(66, 85, 255, 0.02));
+            border-left: 4px solid var(--primary);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-md);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .definition-box h4 {
+            color: var(--primary);
+            margin-bottom: var(--spacing-sm);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+
+        .theorem-box {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.05), rgba(139, 92, 246, 0.02));
+            border-left: 4px solid var(--quiz-color);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-md);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .theorem-box h4 {
+            color: var(--quiz-color);
+            margin-bottom: var(--spacing-sm);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+
+        .example-box {
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.05), rgba(249, 115, 22, 0.02));
+            border-left: 4px solid var(--exercise-color);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-md);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .example-box h4 {
+            color: var(--exercise-color);
+            margin-bottom: var(--spacing-sm);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+
+        .note-box {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.05), rgba(251, 191, 36, 0.02));
+            border-left: 4px solid var(--warning);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-md);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .note-box h4 {
+            color: var(--warning);
+            margin-bottom: var(--spacing-sm);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+
+        .formula {
+            background: white;
+            padding: var(--spacing-md);
+            border-radius: var(--radius-sm);
+            margin: var(--spacing-md) 0;
+            overflow-x: auto;
+            text-align: center;
+            border: 1px solid var(--gray-200);
+        }
+
+        .lesson-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: var(--spacing-xl);
+            padding-top: var(--spacing-lg);
+            border-top: 2px solid var(--gray-200);
+        }
+
+        .lesson-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+
+        ul.bullet-list {
+            margin-left: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
+        }
+
+        ul.bullet-list li {
+            margin-bottom: var(--spacing-xs);
+            color: var(--gray-700);
+            line-height: 1.8;
+        }
+
+        .highlight {
+            background: rgba(66, 85, 255, 0.1);
+            padding: 0.125rem 0.375rem;
+            border-radius: 0.25rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .progress-indicator {
+            background: var(--gray-100);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .progress-text {
+            font-size: 0.875rem;
+            color: var(--gray-700);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .progress-bar-lesson {
+            height: 6px;
+            background: var(--gray-200);
+            border-radius: var(--radius-full);
+            overflow: hidden;
+        }
+
+        .progress-bar-lesson .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--lesson-color), #059669);
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container navbar-content">
+            <div class="navbar-brand">
+                <span class="material-symbols-outlined">calculate</span>
+                <span class="brand-text">Math-pedago</span>
+            </div>
+            <ul class="navbar-menu">
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="concours.html">Concours</a></li>
+                <li><a href="about.html">À propos</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Lesson Layout -->
+    <div class="container">
+        <div class="lesson-layout">
+            <!-- Sidebar Navigation -->
+            <aside class="lesson-sidebar">
+                <h3>Table des Matières</h3>
+                <ul class="lesson-nav">
+                    <li class="lesson-nav-item">
+                        <a href="#introduction" class="lesson-nav-link active">Introduction</a>
+                    </li>
+                    <li class="lesson-nav-item">
+                        <a href="#definitions" class="lesson-nav-link">Définitions</a>
+                    </li>
+                    <li class="lesson-nav-item">
+                        <a href="#proprietes" class="lesson-nav-link">Propriétés</a>
+                    </li>
+                    <li class="lesson-nav-item">
+                        <a href="#types" class="lesson-nav-link">Types de Suites</a>
+                    </li>
+                    <li class="lesson-nav-item">
+                        <a href="#limites" class="lesson-nav-link">Limites</a>
+                    </li>
+                    <li class="lesson-nav-item">
+                        <a href="#recurrence" class="lesson-nav-link">Raisonnement par Récurrence</a>
+                    </li>
+                    <li class="lesson-nav-item">
+                        <a href="#exemples" class="lesson-nav-link">Exemples</a>
+                    </li>
+                    <li class="lesson-nav-item">
+                        <a href="#resume" class="lesson-nav-link">Résumé</a>
+                    </li>
+                </ul>
+
+                <div class="progress-indicator">
+                    <div class="progress-text">Progression de lecture</div>
+                    <div class="progress-bar-lesson">
+                        <div class="progress-fill" id="readProgress" style="width: 0%;"></div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Lesson Content -->
+            <main class="lesson-content">
+                <div class="lesson-header">
+                    <div class="lesson-breadcrumb">
+                        <a href="dashboard.html">Dashboard</a>
+                        <span class="material-symbols-outlined">chevron_right</span>
+                        <a href="chapter-hub.html">Suites Numériques</a>
+                        <span class="material-symbols-outlined">chevron_right</span>
+                        <span>Leçon</span>
+                    </div>
+
+                    <div class="lesson-title">
+                        <div class="lesson-icon">
+                            <span class="material-symbols-outlined">book</span>
+                        </div>
+                        <div>
+                            <h1>Suites Numériques</h1>
+                            <div class="lesson-meta">
+                                <span>
+                                    <span class="material-symbols-outlined" style="font-size: 1rem;">schedule</span>
+                                    45 minutes
+                                </span>
+                                <span>
+                                    <span class="material-symbols-outlined" style="font-size: 1rem;">article</span>
+                                    12 sections
+                                </span>
+                                <span>
+                                    <span class="material-symbols-outlined" style="font-size: 1rem;">school</span>
+                                    2BSM • Semestre 1
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Introduction -->
+                <section class="lesson-section" id="introduction">
+                    <h2>Introduction</h2>
+                    <p>
+                        Les <span class="highlight">suites numériques</span> sont des fonctions définies sur l'ensemble des entiers naturels ℕ ou une partie de ℕ. Elles constituent un outil fondamental en mathématiques et apparaissent dans de nombreux domaines comme la physique, l'économie et l'informatique.
+                    </p>
+                    <p>
+                        Dans ce chapitre, nous allons étudier les différents types de suites, leurs propriétés, et les méthodes pour déterminer leur comportement à l'infini.
+                    </p>
+                </section>
+
+                <!-- Définitions -->
+                <section class="lesson-section" id="definitions">
+                    <h2>Définitions Fondamentales</h2>
+
+                    <div class="definition-box">
+                        <h4>
+                            <span class="material-symbols-outlined">menu_book</span>
+                            Définition : Suite numérique
+                        </h4>
+                        <p>
+                            Une <strong>suite numérique</strong> est une fonction $u$ définie sur ℕ (ou une partie de ℕ) à valeurs dans ℝ.
+                        </p>
+                        <div class="formula">
+                            $u : \mathbb{N} \to \mathbb{R}$<br>
+                            $n \mapsto u(n) = u_n$
+                        </div>
+                        <p>
+                            On note généralement $(u_n)$ ou $(u_n)_{n \in \mathbb{N}}$ pour désigner la suite.
+                        </p>
+                    </div>
+
+                    <h3>Modes de Définition</h3>
+                    <p>Une suite peut être définie de plusieurs manières :</p>
+
+                    <ul class="bullet-list">
+                        <li><strong>Par une formule explicite :</strong> $u_n = f(n)$ où $f$ est une fonction de $n$</li>
+                        <li><strong>Par récurrence :</strong> On donne $u_0$ (ou $u_1$) et une relation $u_{n+1} = f(u_n)$</li>
+                        <li><strong>Par une relation de récurrence :</strong> On exprime $u_n$ en fonction de plusieurs termes précédents</li>
+                    </ul>
+
+                    <div class="example-box">
+                        <h4>
+                            <span class="material-symbols-outlined">lightbulb</span>
+                            Exemples
+                        </h4>
+                        <p><strong>Formule explicite :</strong></p>
+                        <div class="formula">
+                            $u_n = 2n + 1$ donne $u_0 = 1, u_1 = 3, u_2 = 5, ...$
+                        </div>
+                        <p><strong>Par récurrence :</strong></p>
+                        <div class="formula">
+                            $\begin{cases} u_0 = 1 \\ u_{n+1} = 2u_n + 3 \end{cases}$ donne $u_0 = 1, u_1 = 5, u_2 = 13, ...$
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Propriétés -->
+                <section class="lesson-section" id="proprietes">
+                    <h2>Propriétés des Suites</h2>
+
+                    <h3>Sens de Variation</h3>
+
+                    <div class="definition-box">
+                        <h4>
+                            <span class="material-symbols-outlined">menu_book</span>
+                            Définitions
+                        </h4>
+                        <p>Une suite $(u_n)$ est :</p>
+                        <ul class="bullet-list">
+                            <li><strong>Croissante</strong> si $\forall n \in \mathbb{N}, u_{n+1} \geq u_n$</li>
+                            <li><strong>Décroissante</strong> si $\forall n \in \mathbb{N}, u_{n+1} \leq u_n$</li>
+                            <li><strong>Strictement croissante</strong> si $\forall n \in \mathbb{N}, u_{n+1} > u_n$</li>
+                            <li><strong>Strictement décroissante</strong> si $\forall n \in \mathbb{N}, u_{n+1} < u_n$</li>
+                            <li><strong>Monotone</strong> si elle est croissante ou décroissante</li>
+                        </ul>
+                    </div>
+
+                    <div class="note-box">
+                        <h4>
+                            <span class="material-symbols-outlined">info</span>
+                            Méthodes pour étudier le sens de variation
+                        </h4>
+                        <ul class="bullet-list">
+                            <li>Étudier le signe de $u_{n+1} - u_n$</li>
+                            <li>Si $u_n > 0$, comparer $\frac{u_{n+1}}{u_n}$ à 1</li>
+                            <li>Utiliser les variations de la fonction $f$ si $u_n = f(n)$</li>
+                        </ul>
+                    </div>
+
+                    <h3>Suites Bornées</h3>
+
+                    <div class="definition-box">
+                        <h4>
+                            <span class="material-symbols-outlined">menu_book</span>
+                            Définition : Suite bornée
+                        </h4>
+                        <p>Une suite $(u_n)$ est :</p>
+                        <ul class="bullet-list">
+                            <li><strong>Majorée</strong> s'il existe $M \in \mathbb{R}$ tel que $\forall n \in \mathbb{N}, u_n \leq M$</li>
+                            <li><strong>Minorée</strong> s'il existe $m \in \mathbb{R}$ tel que $\forall n \in \mathbb{N}, u_n \geq m$</li>
+                            <li><strong>Bornée</strong> si elle est à la fois majorée et minorée</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Types de Suites -->
+                <section class="lesson-section" id="types">
+                    <h2>Types de Suites Particulières</h2>
+
+                    <h3>Suites Arithmétiques</h3>
+
+                    <div class="definition-box">
+                        <h4>
+                            <span class="material-symbols-outlined">menu_book</span>
+                            Définition
+                        </h4>
+                        <p>
+                            Une suite $(u_n)$ est <strong>arithmétique</strong> s'il existe un nombre réel $r$ (appelé raison) tel que :
+                        </p>
+                        <div class="formula">
+                            $\forall n \in \mathbb{N}, u_{n+1} = u_n + r$
+                        </div>
+                    </div>
+
+                    <div class="theorem-box">
+                        <h4>
+                            <span class="material-symbols-outlined">functions</span>
+                            Propriétés
+                        </h4>
+                        <p><strong>Terme général :</strong></p>
+                        <div class="formula">
+                            $u_n = u_0 + n \cdot r$
+                        </div>
+                        <p><strong>Somme des premiers termes :</strong></p>
+                        <div class="formula">
+                            $S_n = u_0 + u_1 + ... + u_n = \frac{(n+1)(u_0 + u_n)}{2}$
+                        </div>
+                    </div>
+
+                    <h3>Suites Géométriques</h3>
+
+                    <div class="definition-box">
+                        <h4>
+                            <span class="material-symbols-outlined">menu_book</span>
+                            Définition
+                        </h4>
+                        <p>
+                            Une suite $(u_n)$ est <strong>géométrique</strong> s'il existe un nombre réel $q \neq 0$ (appelé raison) tel que :
+                        </p>
+                        <div class="formula">
+                            $\forall n \in \mathbb{N}, u_{n+1} = q \cdot u_n$
+                        </div>
+                    </div>
+
+                    <div class="theorem-box">
+                        <h4>
+                            <span class="material-symbols-outlined">functions</span>
+                            Propriétés
+                        </h4>
+                        <p><strong>Terme général :</strong></p>
+                        <div class="formula">
+                            $u_n = u_0 \cdot q^n$
+                        </div>
+                        <p><strong>Somme des premiers termes (si $q \neq 1$) :</strong></p>
+                        <div class="formula">
+                            $S_n = u_0 + u_1 + ... + u_n = u_0 \cdot \frac{1 - q^{n+1}}{1 - q}$
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Limites -->
+                <section class="lesson-section" id="limites">
+                    <h2>Limites de Suites</h2>
+
+                    <div class="definition-box">
+                        <h4>
+                            <span class="material-symbols-outlined">menu_book</span>
+                            Définition : Limite finie
+                        </h4>
+                        <p>
+                            Une suite $(u_n)$ a pour limite $\ell \in \mathbb{R}$ si :
+                        </p>
+                        <div class="formula">
+                            $\forall \varepsilon > 0, \exists N \in \mathbb{N}, \forall n \geq N, |u_n - \ell| < \varepsilon$
+                        </div>
+                        <p>On note : $\lim_{n \to +\infty} u_n = \ell$ ou $u_n \to \ell$</p>
+                    </div>
+
+                    <div class="theorem-box">
+                        <h4>
+                            <span class="material-symbols-outlined">functions</span>
+                            Théorèmes Importants
+                        </h4>
+                        <p><strong>Théorème des gendarmes :</strong></p>
+                        <p>
+                            Si $\forall n \in \mathbb{N}, v_n \leq u_n \leq w_n$ et si $\lim v_n = \lim w_n = \ell$, alors $\lim u_n = \ell$
+                        </p>
+                        <p><strong>Suites monotones bornées :</strong></p>
+                        <p>
+                            Toute suite croissante et majorée converge.<br>
+                            Toute suite décroissante et minorée converge.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- Raisonnement par récurrence -->
+                <section class="lesson-section" id="recurrence">
+                    <h2>Raisonnement par Récurrence</h2>
+
+                    <div class="theorem-box">
+                        <h4>
+                            <span class="material-symbols-outlined">functions</span>
+                            Principe
+                        </h4>
+                        <p>Pour démontrer qu'une propriété $P(n)$ est vraie pour tout $n \geq n_0$ :</p>
+                        <ul class="bullet-list">
+                            <li><strong>Initialisation :</strong> Vérifier que $P(n_0)$ est vraie</li>
+                            <li><strong>Hérédité :</strong> Montrer que si $P(n)$ est vraie, alors $P(n+1)$ est vraie</li>
+                            <li><strong>Conclusion :</strong> La propriété est vraie pour tout $n \geq n_0$</li>
+                        </ul>
+                    </div>
+
+                    <div class="example-box">
+                        <h4>
+                            <span class="material-symbols-outlined">lightbulb</span>
+                            Exemple d'application
+                        </h4>
+                        <p>Montrons que $\forall n \in \mathbb{N}, 1 + 2 + 3 + ... + n = \frac{n(n+1)}{2}$</p>
+                        <p><strong>Initialisation :</strong> Pour $n = 0$, $0 = \frac{0 \cdot 1}{2}$ ✓</p>
+                        <p><strong>Hérédité :</strong> Supposons $P(n)$ vraie. Montrons $P(n+1)$ :</p>
+                        <div class="formula">
+                            $1 + 2 + ... + n + (n+1) = \frac{n(n+1)}{2} + (n+1) = \frac{n(n+1) + 2(n+1)}{2} = \frac{(n+1)(n+2)}{2}$
+                        </div>
+                        <p><strong>Conclusion :</strong> La propriété est vraie pour tout $n \in \mathbb{N}$ ✓</p>
+                    </div>
+                </section>
+
+                <!-- Exemples -->
+                <section class="lesson-section" id="exemples">
+                    <h2>Exemples d'Application</h2>
+
+                    <div class="example-box">
+                        <h4>
+                            <span class="material-symbols-outlined">lightbulb</span>
+                            Exemple 1 : Étude complète d'une suite
+                        </h4>
+                        <p>Soit la suite définie par $u_0 = 2$ et $u_{n+1} = \frac{2u_n + 3}{u_n + 2}$</p>
+                        <p><strong>1. Calculons les premiers termes :</strong></p>
+                        <div class="formula">
+                            $u_0 = 2, \quad u_1 = \frac{7}{4}, \quad u_2 = \frac{26}{15}$
+                        </div>
+                        <p><strong>2. Étudions la monotonie :</strong></p>
+                        <p>Calculons $u_{n+1} - u_n$...</p>
+                    </div>
+                </section>
+
+                <!-- Résumé -->
+                <section class="lesson-section" id="resume">
+                    <h2>Résumé du Chapitre</h2>
+
+                    <div class="note-box">
+                        <h4>
+                            <span class="material-symbols-outlined">assignment</span>
+                            Points Clés à Retenir
+                        </h4>
+                        <ul class="bullet-list">
+                            <li>Une suite est une fonction de ℕ vers ℝ</li>
+                            <li>Suite arithmétique : $u_{n+1} = u_n + r$ → $u_n = u_0 + nr$</li>
+                            <li>Suite géométrique : $u_{n+1} = qu_n$ → $u_n = u_0 q^n$</li>
+                            <li>Une suite monotone bornée converge toujours</li>
+                            <li>Le raisonnement par récurrence nécessite initialisation et hérédité</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Footer Navigation -->
+                <div class="lesson-footer">
+                    <a href="chapter-hub.html" class="btn btn-secondary">
+                        <span class="material-symbols-outlined">arrow_back</span>
+                        Retour au parcours
+                    </a>
+                    <div class="lesson-actions">
+                        <button class="btn btn-secondary">
+                            <span class="material-symbols-outlined">bookmark</span>
+                            Sauvegarder
+                        </button>
+                        <a href="videos.html" class="btn btn-primary">
+                            Étape suivante : Vidéos
+                            <span class="material-symbols-outlined">arrow_forward</span>
+                        </a>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Render LaTeX
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "$", right: "$", display: false}
+                ],
+                throwOnError: false
+            });
+
+            // Smooth scroll for navigation
+            document.querySelectorAll('.lesson-nav-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const target = document.querySelector(link.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+                        // Update active state
+                        document.querySelectorAll('.lesson-nav-link').forEach(l => l.classList.remove('active'));
+                        link.classList.add('active');
+                    }
+                });
+            });
+
+            // Reading progress
+            window.addEventListener('scroll', () => {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                document.getElementById('readProgress').style.width = scrolled + '%';
+            });
+        });
+    </script>
+</body>
+</html>

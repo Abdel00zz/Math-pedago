@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercices - Suites Numériques - Math-pedago</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- KaTeX for LaTeX -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+    <style>
+        .exercises-header {
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+            color: white;
+            padding: var(--spacing-xl) 0;
+        }
+
+        .exercises-header h1 {
+            color: white;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .exercises-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: var(--spacing-xl) var(--spacing-md);
+        }
+
+        .exercises-grid {
+            display: grid;
+            gap: var(--spacing-lg);
+        }
+
+        .exercise-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            transition: var(--transition-base);
+        }
+
+        .exercise-card:hover {
+            box-shadow: var(--shadow-xl);
+        }
+
+        .exercise-header {
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.1), rgba(249, 115, 22, 0.05));
+            padding: var(--spacing-lg);
+            border-bottom: 3px solid var(--exercise-color);
+        }
+
+        .exercise-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .exercise-number {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--exercise-color);
+            text-transform: uppercase;
+        }
+
+        .difficulty-badge {
+            padding: 0.375rem 0.75rem;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .difficulty-badge.easy {
+            background: rgba(34, 197, 94, 0.1);
+            color: var(--success);
+        }
+
+        .difficulty-badge.medium {
+            background: rgba(251, 191, 36, 0.1);
+            color: var(--warning);
+        }
+
+        .difficulty-badge.hard {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+        }
+
+        .exercise-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .exercise-meta {
+            display: flex;
+            gap: var(--spacing-lg);
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+
+        .exercise-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .exercise-content {
+            padding: var(--spacing-lg);
+        }
+
+        .exercise-statement {
+            font-size: 1rem;
+            color: var(--gray-700);
+            line-height: 1.8;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .exercise-statement strong {
+            color: var(--exercise-color);
+        }
+
+        .hints-section {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(59, 130, 246, 0.02));
+            border-left: 4px solid var(--info);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .hints-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .hints-header h4 {
+            color: var(--info);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            margin: 0;
+        }
+
+        .hints-list {
+            list-style: none;
+            display: none;
+        }
+
+        .hints-list.show {
+            display: block;
+        }
+
+        .hints-list li {
+            padding: var(--spacing-sm) 0;
+            padding-left: var(--spacing-lg);
+            position: relative;
+            color: var(--gray-700);
+            border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+        }
+
+        .hints-list li:last-child {
+            border-bottom: none;
+        }
+
+        .hints-list li::before {
+            content: '💡';
+            position: absolute;
+            left: 0;
+        }
+
+        .solution-section {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.05), rgba(34, 197, 94, 0.02));
+            border-left: 4px solid var(--success);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .solution-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .solution-header h4 {
+            color: var(--success);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            margin: 0;
+        }
+
+        .solution-content {
+            display: none;
+            padding-top: var(--spacing-sm);
+        }
+
+        .solution-content.show {
+            display: block;
+        }
+
+        .solution-steps {
+            list-style: none;
+        }
+
+        .solution-steps li {
+            padding: var(--spacing-sm) 0;
+            padding-left: var(--spacing-lg);
+            position: relative;
+            color: var(--gray-700);
+            line-height: 1.8;
+        }
+
+        .solution-steps li::before {
+            content: '➜';
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: 700;
+        }
+
+        .exercise-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-md);
+            border-top: 1px solid var(--gray-200);
+            background: var(--bg-primary);
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: var(--spacing-md);
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .breadcrumb a {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .breadcrumb a:hover {
+            color: white;
+        }
+
+        .breadcrumb .material-symbols-outlined {
+            font-size: 1rem;
+        }
+
+        .filter-section {
+            background: white;
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .filter-chips {
+            display: flex;
+            gap: var(--spacing-sm);
+            flex-wrap: wrap;
+        }
+
+        .filter-chip {
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-full);
+            background: white;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .filter-chip:hover {
+            border-color: var(--exercise-color);
+            color: var(--exercise-color);
+        }
+
+        .filter-chip.active {
+            background: var(--exercise-color);
+            border-color: var(--exercise-color);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container navbar-content">
+            <div class="navbar-brand">
+                <span class="material-symbols-outlined">calculate</span>
+                <span class="brand-text">Math-pedago</span>
+            </div>
+            <ul class="navbar-menu">
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="concours.html">Concours</a></li>
+                <li><a href="about.html">À propos</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Exercises Header -->
+    <div class="exercises-header">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="dashboard.html">Dashboard</a>
+                <span class="material-symbols-outlined">chevron_right</span>
+                <a href="chapter-hub.html">Suites Numériques</a>
+                <span class="material-symbols-outlined">chevron_right</span>
+                <span>Exercices</span>
+            </div>
+            <h1>Exercices - Suites Numériques</h1>
+            <p style="color: rgba(255, 255, 255, 0.9); margin: 0;">
+                20 exercices avec indices progressifs et corrections détaillées
+            </p>
+        </div>
+    </div>
+
+    <!-- Exercises Container -->
+    <div class="exercises-container">
+        <!-- Filter Section -->
+        <div class="filter-section">
+            <h3 style="margin-bottom: var(--spacing-md);">Filtrer par difficulté</h3>
+            <div class="filter-chips">
+                <button class="filter-chip active">Tous</button>
+                <button class="filter-chip">Facile</button>
+                <button class="filter-chip">Moyen</button>
+                <button class="filter-chip">Difficile</button>
+            </div>
+        </div>
+
+        <!-- Exercises Grid -->
+        <div class="exercises-grid">
+            <!-- Exercise 1 -->
+            <div class="exercise-card">
+                <div class="exercise-header">
+                    <div class="exercise-title-row">
+                        <span class="exercise-number">Exercice 1</span>
+                        <span class="difficulty-badge easy">Facile</span>
+                    </div>
+                    <h3 class="exercise-title">Suite Arithmétique Simple</h3>
+                    <div class="exercise-meta">
+                        <span>
+                            <span class="material-symbols-outlined" style="font-size: 1rem;">schedule</span>
+                            10 minutes
+                        </span>
+                        <span>
+                            <span class="material-symbols-outlined" style="font-size: 1rem;">school</span>
+                            Suites arithmétiques
+                        </span>
+                    </div>
+                </div>
+
+                <div class="exercise-content">
+                    <div class="exercise-statement">
+                        <p>Soit $(u_n)$ une suite arithmétique de premier terme $u_0 = 7$ et de raison $r = 3$.</p>
+                        <p><strong>1.</strong> Calculer $u_1, u_2, u_3$</p>
+                        <p><strong>2.</strong> Donner l'expression de $u_n$ en fonction de $n$</p>
+                        <p><strong>3.</strong> Calculer $u_{10}$</p>
+                        <p><strong>4.</strong> Calculer la somme $S = u_0 + u_1 + ... + u_{10}$</p>
+                    </div>
+
+                    <div class="hints-section">
+                        <div class="hints-header" onclick="toggleHints(1)">
+                            <h4>
+                                <span class="material-symbols-outlined">lightbulb</span>
+                                Indices (3 disponibles)
+                            </h4>
+                            <span class="material-symbols-outlined">expand_more</span>
+                        </div>
+                        <ul class="hints-list" id="hints-1">
+                            <li><strong>Indice 1 :</strong> Pour une suite arithmétique, $u_{n+1} = u_n + r$</li>
+                            <li><strong>Indice 2 :</strong> Le terme général s'écrit $u_n = u_0 + n \cdot r$</li>
+                            <li><strong>Indice 3 :</strong> La somme des termes est $S_n = \frac{(n+1)(u_0 + u_n)}{2}$</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-section">
+                        <div class="solution-header" onclick="toggleSolution(1)">
+                            <h4>
+                                <span class="material-symbols-outlined">check_circle</span>
+                                Correction Détaillée
+                            </h4>
+                            <span class="material-symbols-outlined">expand_more</span>
+                        </div>
+                        <div class="solution-content" id="solution-1">
+                            <ol class="solution-steps">
+                                <li>$u_1 = u_0 + r = 7 + 3 = 10$<br>
+                                    $u_2 = u_1 + r = 10 + 3 = 13$<br>
+                                    $u_3 = u_2 + r = 13 + 3 = 16$</li>
+                                <li>$u_n = u_0 + n \cdot r = 7 + 3n$</li>
+                                <li>$u_{10} = 7 + 3 \times 10 = 7 + 30 = 37$</li>
+                                <li>$S = \frac{(10+1)(u_0 + u_{10})}{2} = \frac{11 \times (7 + 37)}{2} = \frac{11 \times 44}{2} = \frac{484}{2} = 242$</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="exercise-actions">
+                    <button class="btn btn-secondary">
+                        <span class="material-symbols-outlined">bookmark</span>
+                        Sauvegarder
+                    </button>
+                    <button class="btn btn-primary">
+                        <span class="material-symbols-outlined">check</span>
+                        Marquer comme complété
+                    </button>
+                </div>
+            </div>
+
+            <!-- Exercise 2 -->
+            <div class="exercise-card">
+                <div class="exercise-header">
+                    <div class="exercise-title-row">
+                        <span class="exercise-number">Exercice 2</span>
+                        <span class="difficulty-badge easy">Facile</span>
+                    </div>
+                    <h3 class="exercise-title">Suite Géométrique Simple</h3>
+                    <div class="exercise-meta">
+                        <span>
+                            <span class="material-symbols-outlined" style="font-size: 1rem;">schedule</span>
+                            15 minutes
+                        </span>
+                        <span>
+                            <span class="material-symbols-outlined" style="font-size: 1rem;">school</span>
+                            Suites géométriques
+                        </span>
+                    </div>
+                </div>
+
+                <div class="exercise-content">
+                    <div class="exercise-statement">
+                        <p>Soit $(v_n)$ une suite géométrique de premier terme $v_0 = 2$ et de raison $q = 3$.</p>
+                        <p><strong>1.</strong> Calculer $v_1, v_2, v_3$</p>
+                        <p><strong>2.</strong> Donner l'expression de $v_n$ en fonction de $n$</p>
+                        <p><strong>3.</strong> Calculer $v_5$</p>
+                        <p><strong>4.</strong> Calculer la somme $S = v_0 + v_1 + ... + v_5$</p>
+                    </div>
+
+                    <div class="hints-section">
+                        <div class="hints-header" onclick="toggleHints(2)">
+                            <h4>
+                                <span class="material-symbols-outlined">lightbulb</span>
+                                Indices (3 disponibles)
+                            </h4>
+                            <span class="material-symbols-outlined">expand_more</span>
+                        </div>
+                        <ul class="hints-list" id="hints-2">
+                            <li><strong>Indice 1 :</strong> Pour une suite géométrique, $v_{n+1} = q \cdot v_n$</li>
+                            <li><strong>Indice 2 :</strong> Le terme général s'écrit $v_n = v_0 \cdot q^n$</li>
+                            <li><strong>Indice 3 :</strong> La somme est $S_n = v_0 \cdot \frac{1 - q^{n+1}}{1 - q}$ (si $q \neq 1$)</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-section">
+                        <div class="solution-header" onclick="toggleSolution(2)">
+                            <h4>
+                                <span class="material-symbols-outlined">check_circle</span>
+                                Correction Détaillée
+                            </h4>
+                            <span class="material-symbols-outlined">expand_more</span>
+                        </div>
+                        <div class="solution-content" id="solution-2">
+                            <ol class="solution-steps">
+                                <li>$v_1 = v_0 \cdot q = 2 \times 3 = 6$<br>
+                                    $v_2 = v_1 \cdot q = 6 \times 3 = 18$<br>
+                                    $v_3 = v_2 \cdot q = 18 \times 3 = 54$</li>
+                                <li>$v_n = v_0 \cdot q^n = 2 \cdot 3^n$</li>
+                                <li>$v_5 = 2 \cdot 3^5 = 2 \times 243 = 486$</li>
+                                <li>$S = 2 \cdot \frac{1 - 3^6}{1 - 3} = 2 \cdot \frac{1 - 729}{-2} = 2 \cdot \frac{-728}{-2} = 2 \times 364 = 728$</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="exercise-actions">
+                    <button class="btn btn-secondary">
+                        <span class="material-symbols-outlined">bookmark</span>
+                        Sauvegarder
+                    </button>
+                    <button class="btn btn-primary">
+                        <span class="material-symbols-outlined">check</span>
+                        Marquer comme complété
+                    </button>
+                </div>
+            </div>
+
+            <!-- Exercise 3 -->
+            <div class="exercise-card">
+                <div class="exercise-header">
+                    <div class="exercise-title-row">
+                        <span class="exercise-number">Exercice 3</span>
+                        <span class="difficulty-badge medium">Moyen</span>
+                    </div>
+                    <h3 class="exercise-title">Étude de Convergence</h3>
+                    <div class="exercise-meta">
+                        <span>
+                            <span class="material-symbols-outlined" style="font-size: 1rem;">schedule</span>
+                            25 minutes
+                        </span>
+                        <span>
+                            <span class="material-symbols-outlined" style="font-size: 1rem;">school</span>
+                            Limites et convergence
+                        </span>
+                    </div>
+                </div>
+
+                <div class="exercise-content">
+                    <div class="exercise-statement">
+                        <p>Soit la suite $(w_n)$ définie par $w_0 = 1$ et $w_{n+1} = \frac{2w_n + 3}{w_n + 2}$ pour tout $n \in \mathbb{N}$.</p>
+                        <p><strong>1.</strong> Calculer $w_1, w_2, w_3$</p>
+                        <p><strong>2.</strong> Montrer que $w_n > 0$ pour tout $n$ (par récurrence)</p>
+                        <p><strong>3.</strong> Étudier la monotonie de la suite</p>
+                        <p><strong>4.</strong> En déduire que la suite converge</p>
+                        <p><strong>5.</strong> Déterminer sa limite</p>
+                    </div>
+
+                    <div class="hints-section">
+                        <div class="hints-header" onclick="toggleHints(3)">
+                            <h4>
+                                <span class="material-symbols-outlined">lightbulb</span>
+                                Indices (4 disponibles)
+                            </h4>
+                            <span class="material-symbols-outlined">expand_more</span>
+                        </div>
+                        <ul class="hints-list" id="hints-3">
+                            <li><strong>Indice 1 :</strong> Appliquez la formule de récurrence successivement</li>
+                            <li><strong>Indice 2 :</strong> Pour la récurrence, montrez P(0) puis P(n) ⇒ P(n+1)</li>
+                            <li><strong>Indice 3 :</strong> Pour la monotonie, étudiez le signe de $w_{n+1} - w_n$</li>
+                            <li><strong>Indice 4 :</strong> Si la suite converge vers $\ell$, alors $\ell = \frac{2\ell + 3}{\ell + 2}$</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-section">
+                        <div class="solution-header" onclick="toggleSolution(3)">
+                            <h4>
+                                <span class="material-symbols-outlined">check_circle</span>
+                                Correction Détaillée
+                            </h4>
+                            <span class="material-symbols-outlined">expand_more</span>
+                        </div>
+                        <div class="solution-content" id="solution-3">
+                            <ol class="solution-steps">
+                                <li>$w_1 = \frac{2 \times 1 + 3}{1 + 2} = \frac{5}{3} \approx 1.67$<br>
+                                    $w_2 = \frac{2 \times \frac{5}{3} + 3}{\frac{5}{3} + 2} = \frac{\frac{19}{3}}{\frac{11}{3}} = \frac{19}{11} \approx 1.73$<br>
+                                    $w_3 \approx 1.74$ (calculs détaillés similaires)</li>
+                                <li><strong>Initialisation :</strong> $w_0 = 1 > 0$ ✓<br>
+                                    <strong>Hérédité :</strong> Si $w_n > 0$, alors $w_{n+1} = \frac{2w_n + 3}{w_n + 2} > 0$ car numérateur et dénominateur positifs ✓</li>
+                                <li>$w_{n+1} - w_n = \frac{2w_n + 3}{w_n + 2} - w_n = \frac{3 - w_n^2}{w_n + 2}$<br>
+                                    On conjecture que $w_n \leq \sqrt{3}$, donc $w_{n+1} - w_n \geq 0$ : suite croissante</li>
+                                <li>La suite est croissante et majorée par $\sqrt{3}$, donc elle converge</li>
+                                <li>Si $\lim w_n = \ell$, alors $\ell = \frac{2\ell + 3}{\ell + 2}$<br>
+                                    $\ell(\ell + 2) = 2\ell + 3$<br>
+                                    $\ell^2 + 2\ell = 2\ell + 3$<br>
+                                    $\ell^2 = 3$<br>
+                                    Donc $\ell = \sqrt{3}$ (car $\ell > 0$)</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="exercise-actions">
+                    <button class="btn btn-secondary">
+                        <span class="material-symbols-outlined">bookmark</span>
+                        Sauvegarder
+                    </button>
+                    <button class="btn btn-primary">
+                        <span class="material-symbols-outlined">check</span>
+                        Marquer comme complété
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div style="display: flex; justify-content: space-between; margin-top: var(--spacing-xl);">
+            <a href="quiz.html" class="btn btn-secondary">
+                <span class="material-symbols-outlined">arrow_back</span>
+                Étape précédente
+            </a>
+            <a href="chapter-hub.html" class="btn btn-primary">
+                Retour au parcours
+                <span class="material-symbols-outlined">arrow_forward</span>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Render LaTeX
+        document.addEventListener("DOMContentLoaded", function() {
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: "$$", right: "$$", display: true},
+                        {left: "$", right: "$", display: false}
+                    ],
+                    throwOnError: false
+                });
+            }
+        });
+
+        function toggleHints(exerciseNum) {
+            const hintsList = document.getElementById(`hints-${exerciseNum}`);
+            hintsList.classList.toggle('show');
+        }
+
+        function toggleSolution(exerciseNum) {
+            const solutionContent = document.getElementById(`solution-${exerciseNum}`);
+            solutionContent.classList.toggle('show');
+        }
+
+        // Filter functionality
+        const filterChips = document.querySelectorAll('.filter-chip');
+        filterChips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                filterChips.forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
