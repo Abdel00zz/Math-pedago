@@ -1,7 +1,10 @@
 /* Main Theme File - Imports all modular CSS files */
 /* PERFORMANCE OPTIMIZED - NO TRANSITIONS ON CRITICAL ELEMENTS */
 
-/* Design Tokens - Must be imported first */
+/* Tailwind CSS - Must be imported first */
+@import './global.css';
+
+/* Design Tokens */
 @import './lesson-variables.css';
 
 /* Core Styles */
