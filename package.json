@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.16",
+    "@tailwindcss/vite": "^4.1.17",
     "@types/katex": "^0.16.7",
     "@types/node": "^22.14.0",
     "@vercel/node": "^5.5.0",
