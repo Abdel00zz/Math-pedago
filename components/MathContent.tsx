@@ -93,17 +93,7 @@ const MathContent: React.FC<MathContentProps> = ({ content, className = '', inli
             hasMath: /\$/.test(content)
         });
 
-        // 🔧 FIX: Vérifier si le conteneur contient déjà des highlights
-        // Si oui, nous devons préserver ces highlights lors du rendu
-        const hasExistingHighlights = el.querySelectorAll('.lesson-highlight').length > 0;
-
         if (latestContent.current !== processedContent) {
-            // Si des highlights existent, émettre un événement pour les sauvegarder
-            if (hasExistingHighlights) {
-                logDebug('Highlights détectés, émission événement avant mutation DOM');
-                el.dispatchEvent(new CustomEvent('mathjax-before-update', { bubbles: true }));
-            }
-
             el.innerHTML = processedContent || '';
             latestContent.current = processedContent;
             logDebug('DOM updated with:', processedContent);
@@ -191,8 +181,7 @@ const MathContent: React.FC<MathContentProps> = ({ content, className = '', inli
                     if (containerRef.current) {
                         containerRef.current.classList.add('math-initialized');
 
-                        // 🔧 FIX: Émettre un événement pour notifier que MathJax a fini
-                        // Cela permet à HighlightableContent de réappliquer les highlights
+                        // Émettre un événement pour notifier que MathJax a fini
                         containerRef.current.dispatchEvent(new CustomEvent('mathjax-rendered', {
                             bubbles: true,
                             detail: { timestamp: Date.now() }

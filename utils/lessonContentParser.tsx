@@ -72,13 +72,6 @@ const MathContentWrapper: React.FC<{ children: React.ReactNode; inline?: boolean
         const container = containerRef.current;
         if (!container) return;
 
-        // 🔧 FIX: Vérifier si le conteneur contient déjà des highlights
-        const hasExistingHighlights = container.querySelectorAll('.lesson-highlight').length > 0;
-        if (hasExistingHighlights) {
-            console.log('[MathContentWrapper] Highlights détectés, émission événement avant mutation DOM');
-            container.dispatchEvent(new CustomEvent('mathjax-before-update', { bubbles: true }));
-        }
-
         const detachHandlers = () => {
             blankHandlersRef.current.forEach((handlers, element) => {
                 element.removeEventListener('click', handlers.click);
@@ -210,13 +203,12 @@ const MathContentWrapper: React.FC<{ children: React.ReactNode; inline?: boolean
                     await window.MathJax.typesetPromise([currentContainer]);
                 }
 
-                // 🔧 FIX: Émettre un événement pour notifier que MathJax a fini
+                // Émettre un événement pour notifier que MathJax a fini
                 if (currentContainer) {
                     currentContainer.dispatchEvent(new CustomEvent('mathjax-rendered', {
                         bubbles: true,
                         detail: { timestamp: Date.now() }
                     }));
-                    console.log('[MathContentWrapper] Événement mathjax-rendered émis');
                 }
             } catch (error) {
                 console.error('MathJax rendering error:', error);

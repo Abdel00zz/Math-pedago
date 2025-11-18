@@ -1,5 +1,6 @@
 /**
- * Composant pour rendre le contenu highlightable au double-clic avec persistance et fusion intelligente
+ * Composant pour rendre le contenu highlightable au double-clic avec persistance
+ * VERSION 2.0 - Architecture moderne basée sur le contenu textuel
  */
 
 import React, { useEffect, useRef } from 'react';
@@ -10,27 +11,29 @@ interface HighlightableContentProps {
     storageKey?: string;
 }
 
+/**
+ * Nouveau format de sauvegarde basé sur le CONTENU au lieu des offsets
+ * Plus robuste face aux mutations DOM de MathJax
+ */
 type HighlightRecord = {
     id: string;
-    startOffset: number;
-    endOffset: number;
+    text: string;              // Le texte exact qui a été surligné
+    contextBefore: string;     // 20 caractères avant pour contexte
+    contextAfter: string;      // 20 caractères après pour contexte
     createdAt: number;
 };
 
-const FORBIDDEN_TAGS = new Set(['BUTTON', 'INPUT', 'A', 'TEXTAREA']);
-const LEGACY_ID_PATTERN = /highlight-word-\d+(?:-\d+)?/g;
-const LEGACY_ID_TEST = /highlight-word-\d+(?:-\d+)?/;
+const FORBIDDEN_TAGS = new Set(['BUTTON', 'INPUT', 'A', 'TEXTAREA', 'MJX-CONTAINER']);
 const INVISIBLE_CHARACTERS = /[\u200b\u200c\u200d\uFEFF]/g;
 const VISIBLE_GLYPH_PATTERN = /[^\s\u00a0]/;
+const CONTEXT_LENGTH = 20;
 
 export const HighlightableContent: React.FC<HighlightableContentProps> = ({ children, className = '', storageKey }) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const highlightsRef = useRef<Map<string, HighlightRecord>>(new Map());
     const incrementalIdRef = useRef(0);
-    // 🔧 FIX: Ajouter des refs pour la synchronisation avec MathJax
-    const mathjaxUpdatePendingRef = useRef(false);
-    const highlightsBackupRef = useRef<HighlightRecord[]>([]);
     const rehydrationTimerRef = useRef<number | null>(null);
+    const sessionId = useRef(`session-${Date.now()}`);
 
     useEffect(() => {
         const container = containerRef.current;
@@ -38,215 +41,230 @@ export const HighlightableContent: React.FC<HighlightableContentProps> = ({ chil
 
         const isBrowser = typeof window !== 'undefined';
 
-        // 🔧 FIX: Améliorer la génération d'IDs pour éviter les collisions
-        // Utiliser un compteur global plus un timestamp au début pour unicité
-        const sessionStartTime = Date.now();
-        const nextHighlightId = () => `highlight-word-${sessionStartTime}-${incrementalIdRef.current++}`;
+        /**
+         * Génère un ID unique basé sur la session + compteur
+         */
+        const nextHighlightId = () => `hl-${sessionId.current}-${incrementalIdRef.current++}`;
 
-        const normalizeTextContent = (value?: string | null) => (value ?? '').replace(INVISIBLE_CHARACTERS, '');
-
-        const hasVisibleGlyph = (text?: string | null) => VISIBLE_GLYPH_PATTERN.test(normalizeTextContent(text));
-
-        const unwrapHighlightElement = (element: HTMLElement) => {
-            const parent = element.parentNode;
-            if (!parent) {
-                return;
-            }
-
-            while (element.firstChild) {
-                parent.insertBefore(element.firstChild, element);
-            }
-
-            parent.removeChild(element);
-            parent.normalize();
+        /**
+         * Normalise le texte en supprimant les caractères invisibles
+         */
+        const normalizeText = (text?: string | null): string => {
+            return (text ?? '').replace(INVISIBLE_CHARACTERS, '').trim();
         };
 
-        const removeEmptyHighlights = () => {
-            if (!container) {
-                return;
-            }
-
-            const highlights = container.querySelectorAll('.lesson-highlight');
-            highlights.forEach((node) => {
-                if (hasVisibleGlyph((node as HTMLElement).textContent)) {
-                    return;
-                }
-
-                const element = node as HTMLElement;
-                const highlightId = element.getAttribute('data-highlight-id');
-                unwrapHighlightElement(element);
-                if (highlightId) {
-                    highlightsRef.current.delete(highlightId);
-                }
-            });
+        /**
+         * Vérifie si le texte contient des caractères visibles
+         */
+        const hasVisibleGlyph = (text?: string | null): boolean => {
+            return VISIBLE_GLYPH_PATTERN.test(normalizeText(text));
         };
 
-        const clearAllHighlightNodes = () => {
-            if (!container) {
-                return;
-            }
-
-            const existing = container.querySelectorAll('[data-highlight-id]');
-            existing.forEach((node) => unwrapHighlightElement(node as HTMLElement));
-            container.normalize();
-            highlightsRef.current.clear();
-        };
-
-        const persistHighlights = (dataOverride?: HighlightRecord[]) => {
-            if (!isBrowser || !storageKey) return;
-            removeEmptyHighlights();
-            const data = (dataOverride ?? Array.from(highlightsRef.current.values())).sort(
-                (a, b) => a.startOffset - b.startOffset
-            );
-            try {
-                localStorage.setItem(storageKey, JSON.stringify(data));
-            } catch (error) {
-                console.error('Impossible de sauvegarder les surlignages', error);
-            }
-        };
-
-        const cleanupLegacyArtifacts = () => {
-            const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT);
-            const corruptNodes: Text[] = [];
-            let current = walker.nextNode() as Text | null;
-
-            while (current) {
-                const content = current.textContent ?? '';
-                if (LEGACY_ID_TEST.test(content)) {
-                    corruptNodes.push(current);
-                }
-                current = walker.nextNode() as Text | null;
-            }
-
-            corruptNodes.forEach((node) => {
-                const cleaned = (node.textContent ?? '').replace(LEGACY_ID_PATTERN, '').replace(/\s{2,}/g, ' ');
-                if (cleaned.trim().length === 0) {
-                    node.parentNode?.removeChild(node);
-                } else {
-                    node.textContent = cleaned;
-                }
-            });
-
-            removeEmptyHighlights();
-        };
-
-        const unwrapHighlightWrappersInFragment = (fragment: DocumentFragment) => {
-            const temp = document.createElement('div');
-            temp.appendChild(fragment);
-            const nested = temp.querySelectorAll('[data-highlight-id]');
-            nested.forEach((node) => unwrapHighlightElement(node as HTMLElement));
-
-            const cleanedFragment = document.createDocumentFragment();
-            while (temp.firstChild) {
-                cleanedFragment.appendChild(temp.firstChild);
-            }
-
-            return cleanedFragment;
-        };
-
-        const getTextNodeAtOffset = (targetOffset: number) => {
-            let remainingOffset = targetOffset;
-            const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT);
-            let currentNode = walker.nextNode() as Text | null;
-            let lastNode: Text | null = null;
-
-            while (currentNode) {
-                const length = currentNode.textContent?.length ?? 0;
-                if (remainingOffset <= length) {
-                    return { node: currentNode, offset: remainingOffset };
-                }
-
-                remainingOffset -= length;
-                lastNode = currentNode;
-                currentNode = walker.nextNode() as Text | null;
-            }
-
-            if (lastNode) {
-                return { node: lastNode, offset: lastNode.textContent?.length ?? 0 };
-            }
-
-            return null;
-        };
-
-        // 🔧 FIX: Améliorer getOffsetsFromRange pour ignorer les éléments MathJax
-        // MathJax crée des éléments mjx-container qui n'ont pas de textContent visible
-        // mais qui prennent de la place dans le DOM. Nous devons les ignorer.
-        const getOffsetsFromRange = (range: Range) => {
-            try {
-                const preRange = range.cloneRange();
-                preRange.selectNodeContents(container);
-                preRange.setEnd(range.startContainer, range.startOffset);
-
-                // Calculer la longueur en ignorant les éléments MathJax
-                let start = 0;
-                const walker = document.createTreeWalker(
-                    preRange.cloneContents(),
-                    NodeFilter.SHOW_TEXT,
-                    {
-                        acceptNode: (node) => {
-                            // Ignorer les nœuds texte à l'intérieur de mjx-container
-                            let parent = node.parentNode;
-                            while (parent) {
-                                if (parent instanceof HTMLElement &&
-                                    (parent.tagName === 'MJX-CONTAINER' ||
-                                     parent.classList.contains('MathJax') ||
-                                     parent.hasAttribute('data-mathml'))) {
-                                    return NodeFilter.FILTER_REJECT;
-                                }
-                                parent = parent.parentNode;
+        /**
+         * Obtient tout le texte visible du container en ignorant MathJax
+         */
+        const getVisibleText = (): string => {
+            const walker = document.createTreeWalker(
+                container,
+                NodeFilter.SHOW_TEXT,
+                {
+                    acceptNode: (node) => {
+                        let parent = node.parentElement;
+                        while (parent) {
+                            // Ignorer les éléments MathJax et les highlights existants
+                            if (parent.tagName === 'MJX-CONTAINER' ||
+                                parent.classList?.contains('MathJax') ||
+                                parent.hasAttribute('data-mathml')) {
+                                return NodeFilter.FILTER_REJECT;
                             }
-                            return NodeFilter.FILTER_ACCEPT;
+                            if (parent === container) break;
+                            parent = parent.parentElement;
                         }
+                        return NodeFilter.FILTER_ACCEPT;
                     }
-                );
+                }
+            );
 
-                let node;
-                while ((node = walker.nextNode())) {
-                    start += (node.textContent || '').length;
+            let text = '';
+            let node;
+            while ((node = walker.nextNode())) {
+                text += node.textContent || '';
+            }
+            return normalizeText(text);
+        };
+
+        /**
+         * Trouve un texte dans le DOM et retourne un Range
+         * Utilise le contexte avant/après pour être sûr de trouver la bonne occurrence
+         */
+        const findTextInDOM = (record: HighlightRecord): Range | null => {
+            const fullText = getVisibleText();
+            const searchPattern = record.contextBefore + record.text + record.contextAfter;
+            const index = fullText.indexOf(searchPattern);
+
+            if (index === -1) {
+                console.warn('[Highlight] Texte introuvable:', record.text);
+                return null;
+            }
+
+            // Calculer la position de début du texte à surligner
+            const startOffset = index + record.contextBefore.length;
+            const endOffset = startOffset + record.text.length;
+
+            // Créer un TreeWalker pour parcourir uniquement les nœuds texte valides
+            const walker = document.createTreeWalker(
+                container,
+                NodeFilter.SHOW_TEXT,
+                {
+                    acceptNode: (node) => {
+                        let parent = node.parentElement;
+                        while (parent) {
+                            if (parent.tagName === 'MJX-CONTAINER' ||
+                                parent.classList?.contains('MathJax') ||
+                                parent.hasAttribute('data-mathml') ||
+                                parent.hasAttribute('data-highlight-id')) {
+                                return NodeFilter.FILTER_REJECT;
+                            }
+                            if (parent === container) break;
+                            parent = parent.parentElement;
+                        }
+                        return NodeFilter.FILTER_ACCEPT;
+                    }
+                }
+            );
+
+            let currentOffset = 0;
+            let startNode: Text | null = null;
+            let startNodeOffset = 0;
+            let endNode: Text | null = null;
+            let endNodeOffset = 0;
+
+            let node;
+            while ((node = walker.nextNode() as Text)) {
+                const nodeText = normalizeText(node.textContent);
+                const nodeLength = nodeText.length;
+
+                // Trouver le nœud de début
+                if (!startNode && currentOffset + nodeLength > startOffset) {
+                    startNode = node;
+                    startNodeOffset = startOffset - currentOffset;
                 }
 
-                const textLength = range.toString().length;
-                preRange.detach();
-                return { start, end: start + textLength };
+                // Trouver le nœud de fin
+                if (currentOffset + nodeLength >= endOffset) {
+                    endNode = node;
+                    endNodeOffset = endOffset - currentOffset;
+                    break;
+                }
+
+                currentOffset += nodeLength;
+            }
+
+            if (!startNode || !endNode) {
+                console.warn('[Highlight] Impossible de créer le Range pour:', record.text);
+                return null;
+            }
+
+            try {
+                const range = document.createRange();
+                range.setStart(startNode, Math.min(startNodeOffset, startNode.length));
+                range.setEnd(endNode, Math.min(endNodeOffset, endNode.length));
+                return range;
             } catch (error) {
-                console.error('Impossible de calculer les offsets du surlignage', error);
+                console.error('[Highlight] Erreur création Range:', error);
                 return null;
             }
         };
 
-        const createSpanFromRange = (range: Range, record: HighlightRecord) => {
-            // 🔧 FIX: Vérifier si la sélection contient des éléments MathJax
+        /**
+         * Supprime un élément highlight et restaure le texte
+         */
+        const unwrapHighlightElement = (element: HTMLElement) => {
+            const parent = element.parentNode;
+            if (!parent) return;
+
+            while (element.firstChild) {
+                parent.insertBefore(element.firstChild, element);
+            }
+            parent.removeChild(element);
+            parent.normalize();
+        };
+
+        /**
+         * Supprime tous les highlights vides
+         */
+        const removeEmptyHighlights = () => {
+            const highlights = container.querySelectorAll('.lesson-highlight');
+            highlights.forEach((node) => {
+                const element = node as HTMLElement;
+                if (!hasVisibleGlyph(element.textContent)) {
+                    const id = element.getAttribute('data-highlight-id');
+                    unwrapHighlightElement(element);
+                    if (id) highlightsRef.current.delete(id);
+                }
+            });
+        };
+
+        /**
+         * Nettoie tous les highlights du DOM
+         */
+        const clearAllHighlights = () => {
+            const highlights = container.querySelectorAll('[data-highlight-id]');
+            highlights.forEach((node) => unwrapHighlightElement(node as HTMLElement));
+            container.normalize();
+            highlightsRef.current.clear();
+        };
+
+        /**
+         * Sauvegarde les highlights dans localStorage
+         */
+        const saveHighlights = (data?: HighlightRecord[]) => {
+            if (!isBrowser || !storageKey) return;
+
+            removeEmptyHighlights();
+            const records = data ?? Array.from(highlightsRef.current.values());
+
+            try {
+                localStorage.setItem(storageKey, JSON.stringify(records));
+                console.log(`[Highlight] ${records.length} highlights sauvegardés`);
+            } catch (error) {
+                console.error('[Highlight] Erreur sauvegarde:', error);
+            }
+        };
+
+        /**
+         * Crée un span de highlight à partir d'un Range
+         */
+        const createHighlightSpan = (range: Range, record: HighlightRecord): HTMLElement | null => {
+            // Vérifier qu'il n'y a pas de MathJax dans la sélection
             const tempDiv = document.createElement('div');
             tempDiv.appendChild(range.cloneContents());
             const hasMathJax = tempDiv.querySelector('mjx-container, .MathJax, [data-mathml]') !== null;
 
             if (hasMathJax) {
-                console.warn('[Highlight] Sélection contient des éléments MathJax, highlight ignoré');
+                console.warn('[Highlight] Sélection contient MathJax, ignorée');
                 return null;
             }
 
+            // Extraire le contenu
             const fragment = range.extractContents();
-            const fallbackText = fragment.textContent ?? '';
-            const cleanedFragment = unwrapHighlightWrappersInFragment(fragment);
-            const cleanedText = normalizeTextContent(cleanedFragment.textContent ?? fallbackText);
+            const text = normalizeText(fragment.textContent);
 
-            if (!hasVisibleGlyph(cleanedText)) {
-                range.insertNode(cleanedFragment);
+            if (!hasVisibleGlyph(text)) {
+                range.insertNode(fragment);
                 return null;
             }
 
+            // Créer le span de highlight
             const span = document.createElement('span');
             span.className = 'lesson-highlight';
             span.setAttribute('data-highlight-id', record.id);
+            span.appendChild(fragment);
 
-            if (cleanedFragment.childNodes.length > 0) {
-                span.appendChild(cleanedFragment);
-            } else {
-                span.textContent = cleanedText;
-            }
-
+            // Insérer dans le DOM
             range.insertNode(span);
 
+            // Animation
             requestAnimationFrame(() => {
                 span.classList.add('lesson-highlight--applied');
                 setTimeout(() => span.classList.remove('lesson-highlight--applied'), 200);
@@ -255,176 +273,83 @@ export const HighlightableContent: React.FC<HighlightableContentProps> = ({ chil
             return span;
         };
 
-        const findNeighborHighlight = (span: HTMLElement, direction: 'previous' | 'next') => {
-            let sibling: ChildNode | null = direction === 'previous' ? span.previousSibling : span.nextSibling;
+        /**
+         * Applique un highlight depuis un record sauvegardé
+         */
+        const applyHighlight = (record: HighlightRecord): boolean => {
+            const range = findTextInDOM(record);
+            if (!range) return false;
 
-            while (sibling) {
-                if (sibling.nodeType === Node.TEXT_NODE) {
-                    if ((sibling.textContent ?? '').trim() === '') {
-                        sibling = direction === 'previous' ? sibling.previousSibling : sibling.nextSibling;
-                        continue;
-                    }
-                    return null;
-                }
-
-                if (sibling.nodeType === Node.ELEMENT_NODE) {
-                    const el = sibling as HTMLElement;
-                    if (el.hasAttribute('data-highlight-id')) {
-                        return el;
-                    }
-                    return null;
-                }
-
-                sibling = direction === 'previous' ? sibling.previousSibling : sibling.nextSibling;
-            }
-
-            return null;
-        };
-
-        const mergeAdjacentHighlights = (span: HTMLElement, baseRecord: HighlightRecord) => {
-            let workingSpan = span;
-            let workingRecord = baseRecord;
-            let merged = false;
-
-            const executeMerge = (neighborElement: HTMLElement, direction: 'previous' | 'next') => {
-                const neighborId = neighborElement.getAttribute('data-highlight-id');
-                if (!neighborId) {
-                    return false;
-                }
-
-                const neighborRecord = highlightsRef.current.get(neighborId);
-                if (!neighborRecord) {
-                    return false;
-                }
-
-                const range = document.createRange();
-                if (direction === 'previous') {
-                    range.setStartBefore(neighborElement);
-                    range.setEndAfter(workingSpan);
-                } else {
-                    range.setStartBefore(workingSpan);
-                    range.setEndAfter(neighborElement);
-                }
-
-                const fragment = range.extractContents();
-                const cleanedFragment = unwrapHighlightWrappersInFragment(fragment);
-                const mergedText = normalizeTextContent(cleanedFragment.textContent ?? '');
-
-                if (!hasVisibleGlyph(mergedText)) {
-                    range.insertNode(cleanedFragment);
-                    return false;
-                }
-
-                const mergedSpan = document.createElement('span');
-                mergedSpan.className = 'lesson-highlight lesson-highlight--grouped';
-                const mergedId = nextHighlightId();
-                mergedSpan.setAttribute('data-highlight-id', mergedId);
-
-                if (cleanedFragment.childNodes.length > 0) {
-                    mergedSpan.appendChild(cleanedFragment);
-                } else {
-                    mergedSpan.textContent = mergedText;
-                }
-
-                range.insertNode(mergedSpan);
-
-                const mergedRange = document.createRange();
-                mergedRange.selectNodeContents(mergedSpan);
-                const offsets = getOffsetsFromRange(mergedRange);
-                mergedRange.detach();
-                if (!offsets) {
-                    return false;
-                }
-
-                highlightsRef.current.delete(workingRecord.id);
-                highlightsRef.current.delete(neighborId);
-
-                workingRecord = {
-                    id: mergedId,
-                    startOffset: offsets.start,
-                    endOffset: offsets.end,
-                    createdAt: Math.min(workingRecord.createdAt, neighborRecord.createdAt),
-                };
-
-                mergedSpan.classList.add('lesson-highlight--grouped');
-                workingSpan = mergedSpan;
-                highlightsRef.current.set(workingRecord.id, workingRecord);
-                merged = true;
-                return true;
-            };
-
-            let keepMerging = true;
-            while (keepMerging) {
-                keepMerging = false;
-
-                const previousHighlight = findNeighborHighlight(workingSpan, 'previous');
-                if (previousHighlight && executeMerge(previousHighlight, 'previous')) {
-                    keepMerging = true;
-                    continue;
-                }
-
-                const nextHighlight = findNeighborHighlight(workingSpan, 'next');
-                if (nextHighlight && executeMerge(nextHighlight, 'next')) {
-                    keepMerging = true;
-                }
-            }
-
-            return { span: workingSpan, record: workingRecord, merged };
-        };
-
-        const wrapRange = (
-            range: Range,
-            record: HighlightRecord,
-            options?: { skipPersistence?: boolean; skipMerge?: boolean }
-        ): HighlightRecord | null => {
-            const span = createSpanFromRange(range, record);
+            const span = createHighlightSpan(range, record);
             if (!span) {
-                return null;
-            }
-            highlightsRef.current.set(record.id, record);
-
-            let finalRecord = record;
-            if (!options?.skipMerge) {
-                const mergeResult = mergeAdjacentHighlights(span, record);
-                finalRecord = mergeResult.record;
-            }
-
-            if (!options?.skipPersistence) {
-                persistHighlights();
-            }
-
-            return finalRecord;
-        };
-
-        const applyRecord = (record: HighlightRecord) => {
-            const range = document.createRange();
-            const start = getTextNodeAtOffset(record.startOffset);
-            const end = getTextNodeAtOffset(record.endOffset);
-            if (!start || !end) {
-                return false;
-            }
-
-            try {
-                range.setStart(start.node, start.offset);
-                range.setEnd(end.node, end.offset);
-            } catch (error) {
-                console.error('Impossible de réappliquer un surlignage', error);
-                return false;
-            }
-
-            if (!wrapRange(range, record, { skipPersistence: true, skipMerge: true })) {
                 range.detach();
                 return false;
             }
+
+            highlightsRef.current.set(record.id, record);
             range.detach();
             return true;
         };
 
-        const hydrateHighlights = () => {
+        /**
+         * Nettoie les anciennes données corrompues du localStorage
+         * Détecte l'ancien format avec startOffset/endOffset et le supprime
+         */
+        const cleanupLegacyData = () => {
+            if (!isBrowser || !storageKey) return;
+
+            try {
+                const raw = localStorage.getItem(storageKey);
+                if (!raw) return;
+
+                const data = JSON.parse(raw);
+                if (!Array.isArray(data) || data.length === 0) return;
+
+                // Vérifier si c'est l'ancien format (avec startOffset/endOffset)
+                const hasLegacyFormat = data.some((item: any) =>
+                    item && ('startOffset' in item || 'endOffset' in item)
+                );
+
+                if (hasLegacyFormat) {
+                    console.warn('[Highlight] Ancien format détecté, nettoyage du localStorage');
+                    localStorage.removeItem(storageKey);
+
+                    // Nettoyer aussi tous les highlights avec pattern legacy
+                    Object.keys(localStorage).forEach((key) => {
+                        if (key.startsWith('lesson-highlights:')) {
+                            try {
+                                const value = localStorage.getItem(key);
+                                if (value) {
+                                    const parsed = JSON.parse(value);
+                                    if (Array.isArray(parsed) && parsed.some((item: any) =>
+                                        item && ('startOffset' in item || 'endOffset' in item)
+                                    )) {
+                                        console.warn('[Highlight] Nettoyage clé legacy:', key);
+                                        localStorage.removeItem(key);
+                                    }
+                                }
+                            } catch (e) {
+                                // Ignorer les erreurs de parsing
+                            }
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('[Highlight] Erreur nettoyage legacy:', error);
+            }
+        };
+
+        /**
+         * Charge et applique les highlights depuis localStorage
+         */
+        const loadHighlights = () => {
             if (!isBrowser || !storageKey) {
                 highlightsRef.current = new Map();
                 return;
             }
+
+            // Nettoyer les anciennes données avant de charger
+            cleanupLegacyData();
 
             let stored: HighlightRecord[] = [];
             try {
@@ -433,7 +358,13 @@ export const HighlightableContent: React.FC<HighlightableContentProps> = ({ chil
                     stored = JSON.parse(raw);
                 }
             } catch (error) {
-                console.error('Impossible de charger les surlignages', error);
+                console.error('[Highlight] Erreur chargement:', error);
+                // En cas d'erreur, supprimer la clé corrompue
+                try {
+                    localStorage.removeItem(storageKey);
+                } catch (e) {
+                    // Ignorer
+                }
             }
 
             if (!Array.isArray(stored) || stored.length === 0) {
@@ -441,123 +372,62 @@ export const HighlightableContent: React.FC<HighlightableContentProps> = ({ chil
                 return;
             }
 
+            console.log(`[Highlight] Chargement de ${stored.length} highlights...`);
+
+            // Appliquer chaque highlight
             const applied: HighlightRecord[] = [];
-            stored
-                .filter((record) =>
-                    record && typeof record.startOffset === 'number' && typeof record.endOffset === 'number' && record.endOffset > record.startOffset
-                )
-                .sort((a, b) => a.startOffset - b.startOffset)
-                .forEach((record) => {
-                    if (applyRecord(record)) {
+            stored.forEach((record) => {
+                if (record && record.text && hasVisibleGlyph(record.text)) {
+                    if (applyHighlight(record)) {
                         applied.push(record);
-                    }
-                });
-
-            highlightsRef.current = new Map(applied.map((record) => [record.id, record]));
-
-            if (applied.length !== stored.length) {
-                persistHighlights(applied);
-            }
-        };
-
-        clearAllHighlightNodes();
-        cleanupLegacyArtifacts();
-        hydrateHighlights();
-        removeEmptyHighlights();
-
-        // 🔧 FIX: Ajouter des listeners pour synchroniser avec MathJax
-        const handleMathJaxBeforeUpdate = () => {
-            // MathJax va modifier le DOM, sauvegarder les highlights actuels
-            console.log('[Highlight] MathJax va modifier le DOM, sauvegarde des highlights');
-            mathjaxUpdatePendingRef.current = true;
-            highlightsBackupRef.current = Array.from(highlightsRef.current.values());
-
-            // Nettoyer le timer de rehydration s'il existe
-            if (rehydrationTimerRef.current) {
-                clearTimeout(rehydrationTimerRef.current);
-                rehydrationTimerRef.current = null;
-            }
-        };
-
-        const handleMathJaxRendered = () => {
-            // MathJax a fini son rendu, réappliquer les highlights après un court délai
-            console.log('[Highlight] MathJax a fini, réapplication des highlights dans 100ms');
-            mathjaxUpdatePendingRef.current = false;
-
-            // Nettoyer le timer précédent
-            if (rehydrationTimerRef.current) {
-                clearTimeout(rehydrationTimerRef.current);
-            }
-
-            // Attendre que le DOM soit stable avant de réappliquer
-            rehydrationTimerRef.current = window.setTimeout(() => {
-                if (!container) return;
-
-                console.log('[Highlight] Réapplication des highlights sauvegardés');
-                clearAllHighlightNodes();
-
-                const backup = highlightsBackupRef.current;
-                if (backup.length > 0) {
-                    const applied: HighlightRecord[] = [];
-                    backup
-                        .sort((a, b) => a.startOffset - b.startOffset)
-                        .forEach((record) => {
-                            if (applyRecord(record)) {
-                                applied.push(record);
-                            }
-                        });
-
-                    highlightsRef.current = new Map(applied.map((record) => [record.id, record]));
-
-                    if (applied.length !== backup.length) {
-                        console.warn(`[Highlight] Seulement ${applied.length}/${backup.length} highlights réappliqués`);
-                        persistHighlights(applied);
+                    } else {
+                        console.warn('[Highlight] Échec application:', record.text);
                     }
                 }
+            });
 
-                highlightsBackupRef.current = [];
-                rehydrationTimerRef.current = null;
-            }, 100);
+            console.log(`[Highlight] ${applied.length}/${stored.length} highlights appliqués`);
+
+            // Nettoyer le localStorage si certains highlights n'ont pas pu être appliqués
+            if (applied.length !== stored.length) {
+                saveHighlights(applied);
+            }
         };
 
-        // Écouter les événements MathJax
-        container.addEventListener('mathjax-before-update', handleMathJaxBeforeUpdate as EventListener);
-        container.addEventListener('mathjax-rendered', handleMathJaxRendered as EventListener);
-
+        /**
+         * Gère le double-clic pour créer/supprimer des highlights
+         */
         const handleDoubleClick = (e: MouseEvent) => {
             const target = e.target as HTMLElement;
             if (!target || FORBIDDEN_TAGS.has(target.tagName)) {
                 return;
             }
 
-            // 🔧 FIX: Ignorer les clics sur les éléments MathJax
+            // Vérifier si on clique sur un élément MathJax
             const mathJaxElement = target.closest('mjx-container, .MathJax, [data-mathml]');
             if (mathJaxElement) {
-                console.log('[Highlight] Clic sur élément MathJax ignoré');
+                console.log('[Highlight] Clic sur MathJax ignoré');
                 return;
             }
 
+            // Si on clique sur un highlight existant, le supprimer
             const highlightElement = target.closest('[data-highlight-id]') as HTMLElement | null;
             if (highlightElement) {
-                const highlightId = highlightElement.getAttribute('data-highlight-id');
-
+                const id = highlightElement.getAttribute('data-highlight-id');
                 unwrapHighlightElement(highlightElement);
-
-                if (highlightId && highlightsRef.current.has(highlightId)) {
-                    highlightsRef.current.delete(highlightId);
-                    persistHighlights();
+                if (id) {
+                    highlightsRef.current.delete(id);
+                    saveHighlights();
                 }
-
                 return;
             }
 
+            // Créer un nouveau highlight
             const selection = window.getSelection();
-            if (!selection || selection.rangeCount === 0) {
-                return;
-            }
+            if (!selection || selection.rangeCount === 0) return;
 
-            const selectedTextRaw = selection.toString();
-            if (selectedTextRaw.trim() === '') {
+            const selectedText = normalizeText(selection.toString());
+            if (!hasVisibleGlyph(selectedText)) {
                 selection.removeAllRanges();
                 return;
             }
@@ -568,29 +438,94 @@ export const HighlightableContent: React.FC<HighlightableContentProps> = ({ chil
                 return;
             }
 
-            const offsets = getOffsetsFromRange(range);
-            if (!offsets) {
+            // Obtenir le contexte avant/après
+            const fullText = getVisibleText();
+            const rangeText = normalizeText(range.toString());
+            const rangeIndex = fullText.indexOf(rangeText);
+
+            if (rangeIndex === -1) {
+                console.warn('[Highlight] Texte introuvable dans le contexte');
                 selection.removeAllRanges();
                 return;
             }
 
+            const contextBefore = fullText.substring(
+                Math.max(0, rangeIndex - CONTEXT_LENGTH),
+                rangeIndex
+            );
+            const contextAfter = fullText.substring(
+                rangeIndex + rangeText.length,
+                Math.min(fullText.length, rangeIndex + rangeText.length + CONTEXT_LENGTH)
+            );
+
+            // Créer le record
             const record: HighlightRecord = {
                 id: nextHighlightId(),
-                startOffset: offsets.start,
-                endOffset: offsets.end,
+                text: rangeText,
+                contextBefore,
+                contextAfter,
                 createdAt: Date.now(),
             };
 
-            wrapRange(range, record);
+            // Créer le highlight
+            const span = createHighlightSpan(range, record);
+            if (span) {
+                highlightsRef.current.set(record.id, record);
+                saveHighlights();
+            }
+
             selection.removeAllRanges();
         };
 
-        container.addEventListener('dblclick', handleDoubleClick);
+        /**
+         * Gère la synchronisation avec MathJax
+         */
+        const handleMathJaxRendered = () => {
+            console.log('[Highlight] MathJax rendu détecté, réapplication des highlights dans 150ms');
 
+            if (rehydrationTimerRef.current) {
+                clearTimeout(rehydrationTimerRef.current);
+            }
+
+            rehydrationTimerRef.current = window.setTimeout(() => {
+                console.log('[Highlight] Réapplication après MathJax...');
+
+                // Sauvegarder les records actuels
+                const currentRecords = Array.from(highlightsRef.current.values());
+
+                // Nettoyer tout
+                clearAllHighlights();
+
+                // Réappliquer
+                const applied: HighlightRecord[] = [];
+                currentRecords.forEach((record) => {
+                    if (applyHighlight(record)) {
+                        applied.push(record);
+                    }
+                });
+
+                console.log(`[Highlight] ${applied.length}/${currentRecords.length} highlights réappliqués`);
+
+                if (applied.length !== currentRecords.length) {
+                    saveHighlights(applied);
+                }
+
+                rehydrationTimerRef.current = null;
+            }, 150);
+        };
+
+        // Initialisation
+        clearAllHighlights();
+        loadHighlights();
+        removeEmptyHighlights();
+
+        // Event listeners
+        container.addEventListener('dblclick', handleDoubleClick);
+        container.addEventListener('mathjax-rendered', handleMathJaxRendered as EventListener);
+
+        // Cleanup
         return () => {
-            // 🔧 FIX: Nettoyer tous les listeners et timers
             container.removeEventListener('dblclick', handleDoubleClick);
-            container.removeEventListener('mathjax-before-update', handleMathJaxBeforeUpdate as EventListener);
             container.removeEventListener('mathjax-rendered', handleMathJaxRendered as EventListener);
 
             if (rehydrationTimerRef.current) {
@@ -599,16 +534,15 @@ export const HighlightableContent: React.FC<HighlightableContentProps> = ({ chil
             }
 
             highlightsRef.current.clear();
-            highlightsBackupRef.current = [];
         };
-    }, [storageKey]);
+    }, [storageKey, children]); // Ajouter children comme dépendance
 
     return (
         <div ref={containerRef} className={`highlightable-content ${className}`}>
             {children}
             <style>{`
                 .lesson-highlight {
-                    display: inline-block;
+                    display: inline;
                     position: relative;
                     padding: 0.15rem 0.5rem;
                     margin: 0 0.12rem;
@@ -617,7 +551,7 @@ export const HighlightableContent: React.FC<HighlightableContentProps> = ({ chil
                     border: 1px solid rgba(255, 193, 7, 0.6);
                     box-shadow: inset 0 -2px 0 rgba(255, 179, 0, 0.75);
                     color: inherit;
-                    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+                    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
                 }
 
                 .lesson-highlight::before {
@@ -631,13 +565,6 @@ export const HighlightableContent: React.FC<HighlightableContentProps> = ({ chil
                     pointer-events: none;
                 }
 
-                .lesson-highlight--grouped {
-                    padding: 0.18rem 0.7rem;
-                    background: rgba(255, 226, 140, 0.8);
-                    border-color: rgba(255, 193, 7, 0.9);
-                    box-shadow: inset 0 -2px 0 rgba(255, 193, 0, 0.9), 0 12px 22px rgba(255, 193, 0, 0.18);
-                }
-
                 .lesson-highlight--applied {
                     transform: translateY(-1px);
                     box-shadow: inset 0 -2px 0 rgba(255, 193, 0, 0.9), 0 8px 16px rgba(255, 193, 0, 0.25);
@@ -647,6 +574,7 @@ export const HighlightableContent: React.FC<HighlightableContentProps> = ({ chil
                     background: rgba(255, 234, 163, 0.9);
                     border-color: rgba(255, 193, 7, 1);
                     box-shadow: inset 0 -3px 0 rgba(255, 193, 0, 0.8), 0 6px 16px rgba(15, 23, 42, 0.12);
+                    cursor: pointer;
                 }
 
                 .lesson-highlight:hover::before {
@@ -658,7 +586,7 @@ export const HighlightableContent: React.FC<HighlightableContentProps> = ({ chil
                 .highlightable-content td,
                 .highlightable-content th {
                     cursor: text;
-                    transition: transform 0.15s ease-out;
+                    user-select: text;
                 }
 
                 .highlightable-content p:hover,
