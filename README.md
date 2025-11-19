@@ -19,6 +19,10 @@
 - [Modales (Orientation & Aide)](#-modales-orientation--aide)
 - [Soumission du travail via Resend](#-soumission-du-travail-via-resend)
 - [Suivi de progression](#-suivi-de-progression)
+- [Validation des JSON](#-validation-des-json)
+- [Gestion des erreurs (ErrorBoundary)](#-gestion-des-erreurs-errorboundary)
+- [Système de chronométrage des quiz](#-système-de-chronométrage-des-quiz)
+- [Sommaire des concours](#-sommaire-des-concours)
 - [Installation et développement](#-installation-et-développement)
 - [Technologies utilisées](#-technologies-utilisées)
 
@@ -980,6 +984,827 @@ Toutes les progressions sont sauvegardées en temps réel dans localStorage via 
 // Après chaque action
 storageService.set('math-pedago:app:v5.0', updatedState);
 ```
+
+---
+
+## ✅ Validation des JSON
+
+L'application intègre un **système de validation robuste** pour détecter automatiquement les erreurs dans les fichiers JSON.
+
+### Architecture du validateur
+
+**Fichier** : `utils/jsonValidator.ts`
+
+```typescript
+interface ValidationError {
+  type: 'structure' | 'math' | 'content' | 'parsing';
+  severity: 'error' | 'warning';
+  message: string;
+  file?: string;
+  line?: number;
+  path?: string; // Chemin JSON (ex: "sections[0].subsections[1].elements[3]")
+  suggestion?: string;
+  code?: string; // Code d'erreur
+}
+
+interface ValidationResult {
+  valid: boolean;
+  errors: ValidationError[];
+  warnings: ValidationError[];
+}
+```
+
+### Types de validation
+
+#### 1. Validation de structure
+
+Détecte les erreurs de syntaxe JSON et de structure :
+
+```typescript
+// ❌ ERREUR détectée
+{
+  "type": "p",
+  "content": ["item 1", "item 2"],  // Tableau au lieu de string
+  "listType": "bullet"  // Conflit: type="p" avec listType
+}
+
+// Code erreur: TYPE_P_WITH_LISTTYPE
+// Suggestion: "Retirez 'type: p'. Les éléments avec listType n'ont pas besoin de type."
+```
+
+**Règles validées** :
+- `type` doit être parmi les types valides : `p`, `table`, `definition-box`, `theorem-box`, etc.
+- Un élément avec `listType` ne peut **PAS** avoir `type: "p"`
+- `content` doit être une chaîne si `type: "p"`, un tableau si `listType` est présent
+- `sections`, `subsections`, `elements` doivent être des tableaux
+
+#### 2. Validation mathématique (LaTeX)
+
+Détecte les formules LaTeX mal formées :
+
+```typescript
+// Vérifications automatiques :
+- Délimiteurs $ non fermés (nombre impair)
+- Délimiteurs \( \) non appariés
+- Délimiteurs \[ \] non appariés
+- Accolades {} déséquilibrées dans les formules
+- Commandes \frac, \sqrt mal formées
+```
+
+**Exemples d'erreurs détectées** :
+
+```typescript
+// ❌ Formule non fermée
+"La formule est $x^2 + 3x"  // $ manquant
+// Code: UNCLOSED_MATH_DELIMITER
+
+// ❌ Accolades déséquilibrées
+"$\frac{a{b}$"  // } manquant
+// Code: UNBALANCED_BRACES
+
+// ❌ Commande mal formée
+"$\frac a + b$"  // Doit être \frac{a}{b}
+// Code: MALFORMED_FRAC
+```
+
+#### 3. Validation de contenu
+
+Vérifie la cohérence des données :
+
+```typescript
+// Practice-box avec solution manquante
+{
+  "type": "practice-box",
+  "content": ["Question 1", "Question 2"],
+  "solution": ["Réponse 1"]  // ❌ Nombre différent
+}
+// Code: SOLUTION_MISMATCH
+// Suggestion: "Assurez-vous qu'il y a une solution pour chaque question"
+```
+
+### API de validation
+
+```typescript
+// Valider une leçon
+import { validateLesson, formatValidationResults } from './utils/jsonValidator';
+
+const result = validateLesson(lessonData, 'tc-nombres-complexes.json', jsonText);
+
+if (!result.valid) {
+  console.log(formatValidationResults(result));
+  /*
+  ═══ ERREURS ═══
+
+  1. 🏗️ ❌ ERREUR [TYPE_P_WITH_LISTTYPE]
+     📍 Fichier: tc-nombres-complexes.json:45
+     🔍 Chemin: sections[0].subsections[2].elements[3]
+     💬 Erreur: un élément avec "listType" ne peut pas avoir "type": "p"
+     💡 Solution: Retirez la propriété "type": "p" de cet élément
+  */
+}
+
+// Valider un chapitre (quiz + exercices)
+const chapterResult = validateChapter(chapterData, 'tc-1.json', jsonText);
+```
+
+### Détection automatique du numéro de ligne
+
+Le validateur **calcule automatiquement** le numéro de ligne de l'erreur dans le fichier JSON source :
+
+```typescript
+function findLineNumber(jsonText: string, path: string): number {
+  // Parse le chemin: "sections[0].subsections[1].elements[3]"
+  // Trouve la ligne correspondante dans le JSON
+  return lineNumber;
+}
+```
+
+### Formatage des erreurs
+
+```typescript
+formatValidationError(error);
+/*
+🏗️ ❌ ERREUR [INVALID_ELEMENT_TYPE]
+📍 Fichier: lesson.json:123
+🔍 Chemin: sections[2].subsections[0].elements[5].type
+💬 Type d'élément invalide: "custom-box"
+💡 Solution: Types valides: p, table, definition-box, theorem-box, etc.
+*/
+```
+
+### Codes d'erreur complets
+
+| Code | Type | Description |
+|------|------|-------------|
+| `INVALID_ELEMENT_TYPE` | structure | Type d'élément non reconnu |
+| `TYPE_P_WITH_LISTTYPE` | structure | Conflit type="p" avec listType |
+| `LISTTYPE_REQUIRES_ARRAY` | structure | content doit être un tableau avec listType |
+| `PARAGRAPH_REQUIRES_STRING` | structure | content doit être une chaîne pour type="p" |
+| `MISSING_SECTIONS` | structure | Propriété "sections" manquante |
+| `MISSING_SUBSECTIONS` | structure | Propriété "subsections" manquante |
+| `MISSING_ELEMENTS` | structure | Propriété "elements" manquante |
+| `UNCLOSED_MATH_DELIMITER` | math | Délimiteur $ non fermé |
+| `UNCLOSED_PAREN_DELIMITER` | math | Délimiteur \( \) non fermé |
+| `UNCLOSED_BRACKET_DELIMITER` | math | Délimiteur \[ \] non fermé |
+| `UNBALANCED_BRACES` | math | Accolades {} déséquilibrées |
+| `MALFORMED_FRAC` | math | Commande \frac mal formée |
+| `MALFORMED_SQRT` | math | Commande \sqrt mal formée |
+| `MISSING_SOLUTION` | content | Solution manquante pour practice-box |
+| `SOLUTION_MISMATCH` | content | Nombre solutions ≠ nombre questions |
+| `VALIDATION_ERROR` | parsing | Erreur lors de la validation |
+
+### Intégration dans l'application
+
+Le validateur est utilisé :
+1. **Au chargement des fichiers JSON** (détection précoce)
+2. **Dans ErrorBoundary** (diagnostic des erreurs runtime)
+3. **En développement** (tests automatiques)
+
+---
+
+## 🛡️ Gestion des erreurs (ErrorBoundary)
+
+L'application utilise un **ErrorBoundary React** intelligent qui détecte et analyse les erreurs pour fournir des messages clairs et des solutions.
+
+### Architecture
+
+**Fichier** : `components/ErrorBoundary.tsx`
+
+```typescript
+interface ParsedErrorInfo {
+  type: 'structure' | 'math' | 'content' | 'runtime' | 'unknown';
+  title: string;
+  message: string;
+  file?: string;
+  line?: number;
+  path?: string;
+  suggestion?: string;
+  details?: string;
+}
+```
+
+### Détection intelligente des erreurs
+
+L'ErrorBoundary **analyse automatiquement** les messages d'erreur pour identifier le problème :
+
+#### 1. Erreur `.trim is not a function`
+
+```typescript
+// Détection
+if (errorMessage.includes('.trim is not a function')) {
+  return {
+    type: 'structure',
+    title: 'Erreur de structure JSON',
+    message: 'Un élément de type "p" contient un tableau au lieu d\'une chaîne',
+    suggestion: 'Retirez "type": "p" et utilisez "listType": "bullet"'
+  };
+}
+```
+
+**Cause** : Un paragraphe (`type: "p"`) reçoit un tableau au lieu d'une chaîne.
+
+**Solution affichée** :
+```
+❌ INCORRECT:
+{
+  "type": "p",
+  "content": ["item 1", "item 2"],
+  "listType": "bullet"
+}
+
+✅ CORRECT:
+{
+  "content": ["item 1", "item 2"],
+  "listType": "bullet"
+}
+```
+
+#### 2. Erreur `map is not a function`
+
+```typescript
+if (errorMessage.includes('map is not a function')) {
+  return {
+    type: 'structure',
+    title: 'Erreur de type de données',
+    message: 'Un tableau était attendu mais une autre valeur a été fournie',
+    suggestion: 'Vérifiez que "sections", "elements" sont bien des tableaux []'
+  };
+}
+```
+
+#### 3. Erreur LaTeX/Math
+
+```typescript
+if (errorMessage.includes('KaTeX') || errorMessage.includes('$')) {
+  return {
+    type: 'math',
+    title: 'Erreur dans une formule mathématique',
+    message: 'Une formule LaTeX est mal formée',
+    suggestion: 'Vérifiez les $ fermés, accolades {} équilibrées'
+  };
+}
+```
+
+**Exemples de formules correctes affichés** :
+```javascript
+// Inline math:
+"La formule est $x^2 + 3x + 2$"
+
+// Fraction:
+"$\\frac{a}{b}$" ou "$\\dfrac{a}{b}$"
+
+// Racine:
+"$\\sqrt{x}$" ou "$\\sqrt[3]{x}$"
+```
+
+#### 4. Erreur `Cannot read property`
+
+```typescript
+if (errorMessage.includes('Cannot read property')) {
+  return {
+    type: 'content',
+    title: 'Propriété manquante',
+    message: 'Tentative d\'accès à une propriété sur undefined/null',
+    suggestion: 'Vérifiez que toutes les propriétés requises sont présentes'
+  };
+}
+```
+
+### Extraction du fichier source
+
+L'ErrorBoundary **extrait automatiquement** le nom du fichier depuis la stack trace :
+
+```typescript
+private extractFileFromStack(stack: string): string {
+  // Chercher "lessons/xxx.json" ou "chapters/xxx.json"
+  const jsonMatch = stack.match(/(?:lessons|chapters|public)\/[^\s)]+\.json/);
+  if (jsonMatch) return jsonMatch[0];
+
+  // Chercher le composant React
+  const componentMatch = stack.match(/at (\w+) \(/);
+  if (componentMatch) return `Component: ${componentMatch[1]}`;
+
+  return 'Stack trace non disponible';
+}
+```
+
+### Interface utilisateur
+
+L'ErrorBoundary affiche une page d'erreur **claire et actionnable** :
+
+```
+┌─────────────────────────────────────────────────┐
+│ 🏗️  Erreur de structure JSON                    │
+│ Type: STRUCTURE                                 │
+├─────────────────────────────────────────────────┤
+│                                                 │
+│ ❌ Un élément de type "p" contient un tableau   │
+│    au lieu d'une chaîne de caractères          │
+│                                                 │
+│ 📍 Fichier concerné: tc-1.json                 │
+│                                                 │
+│ 💡 Comment corriger:                            │
+│    Retirez "type": "p" et utilisez             │
+│    "listType": "bullet" ou "numbered"          │
+│                                                 │
+│ ✅ Exemple de structure correcte:               │
+│    [Code example...]                            │
+│                                                 │
+│ 🔧 Détails techniques (pour développeurs)      │
+│    [Collapsible stack trace...]                │
+│                                                 │
+│ [← Retour]  [🔄 Recharger l'application]       │
+│                                                 │
+│ 💡 Besoin d'aide? Vérifiez la console (F12)    │
+└─────────────────────────────────────────────────┘
+```
+
+### Codes couleur par type
+
+| Type | Icône | Couleur |
+|------|-------|---------|
+| `structure` | 🏗️ | Rouge |
+| `math` | 🔢 | Bleu |
+| `content` | 📝 | Jaune |
+| `runtime` | ⚙️ | Violet |
+
+### Actions disponibles
+
+```typescript
+// Bouton "Retour"
+handleGoBack = () => window.history.back();
+
+// Bouton "Recharger"
+handleReset = () => window.location.reload();
+```
+
+### Lifecycle React
+
+```typescript
+class ErrorBoundary extends React.Component {
+  static getDerivedStateFromError(error: Error) {
+    // Capture l'erreur
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    // Log l'erreur
+    console.error("Uncaught error:", error, errorInfo);
+    this.setState({ errorInfo });
+  }
+}
+```
+
+### Intégration
+
+```typescript
+// index.tsx
+<ErrorBoundary>
+  <App />
+</ErrorBoundary>
+```
+
+Toute erreur non gérée dans l'application est **automatiquement capturée**, analysée et présentée de manière compréhensible à l'utilisateur.
+
+---
+
+## ⏱️ Système de chronométrage des quiz
+
+Les quiz intègrent un **système de chronométrage précis** qui mesure le temps passé sur chaque question et le temps total.
+
+### Architecture du timer
+
+**Fichier** : `components/quiz/Quiz.tsx`
+
+```typescript
+// Références pour le timer
+const timerRef = useRef<number | null>(null);
+const latestTimeRef = useRef<number>(0);
+
+// État du temps écoulé (en secondes)
+const [timeSpent, setTimeSpent] = useState(() => persistedDuration);
+```
+
+### Démarrage automatique
+
+Le timer démarre **automatiquement** quand l'utilisateur entre dans le quiz :
+
+```typescript
+useEffect(() => {
+  // Ne pas démarrer si en mode révision ou quiz déjà soumis
+  if (isReviewMode || isSubmitted) {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+    return;
+  }
+
+  // Démarrer le timer (incrémente chaque seconde)
+  timerRef.current = window.setInterval(() => {
+    setTimeSpent(prev => prev + 1);
+  }, 1000);
+
+  // Cleanup
+  return () => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+  };
+}, [isReviewMode, isSubmitted]);
+```
+
+### Persistance du temps
+
+Le temps est **sauvegardé en temps réel** pour éviter toute perte en cas de fermeture accidentelle :
+
+#### 1. Sauvegarde au démontage du composant
+
+```typescript
+useEffect(() => {
+  if (!chapter) return;
+
+  return () => {
+    // Sauvegarder avant de quitter
+    dispatch({
+      type: 'SET_QUIZ_DURATION',
+      payload: {
+        chapterId: chapter.id,
+        duration: latestTimeRef.current
+      }
+    });
+  };
+}, [chapter, dispatch]);
+```
+
+#### 2. Sauvegarde avant fermeture du navigateur
+
+```typescript
+useEffect(() => {
+  if (!chapter) return;
+
+  const handleBeforeUnload = () => {
+    dispatch({
+      type: 'SET_QUIZ_DURATION',
+      payload: {
+        chapterId: chapter.id,
+        duration: latestTimeRef.current
+      }
+    });
+  };
+
+  window.addEventListener('beforeunload', handleBeforeUnload);
+
+  return () => {
+    window.removeEventListener('beforeunload', handleBeforeUnload);
+  };
+}, [chapter, dispatch]);
+```
+
+#### 3. Sauvegarde lors de la soumission
+
+```typescript
+useEffect(() => {
+  if (!chapter) return;
+  if (isReviewMode || isSubmitted) {
+    // Sauvegarder immédiatement
+    dispatch({
+      type: 'SET_QUIZ_DURATION',
+      payload: {
+        chapterId: chapter.id,
+        duration: latestTimeRef.current
+      }
+    });
+  }
+}, [chapter, dispatch, isReviewMode, isSubmitted]);
+```
+
+### Affichage du temps
+
+Le temps est formaté en **MM:SS** et affiché en permanence :
+
+```typescript
+const formattedTime = useMemo(() => {
+  const minutes = Math.floor(timeSpent / 60).toString().padStart(2, '0');
+  const seconds = (timeSpent % 60).toString().padStart(2, '0');
+  return `${minutes}:${seconds}`;
+}, [timeSpent]);
+
+// Affichage
+<div className="timer">
+  ⏱️ {formattedTime}
+</div>
+```
+
+**Exemples** :
+- `00:45` → 45 secondes
+- `05:30` → 5 minutes 30 secondes
+- `12:08` → 12 minutes 8 secondes
+
+### Restauration du temps
+
+Quand l'utilisateur revient au quiz, le temps est **restauré** :
+
+```typescript
+const {
+  duration: persistedDuration = 0  // Temps sauvegardé
+} = quizProgress || {};
+
+const [timeSpent, setTimeSpent] = useState(() => persistedDuration);
+
+useEffect(() => {
+  setTimeSpent(persistedDuration);
+  latestTimeRef.current = persistedDuration;
+}, [persistedDuration]);
+```
+
+### Utilisation de `useRef` pour la précision
+
+```typescript
+// latestTimeRef garde toujours la valeur la plus récente
+// Évite les problèmes de closure dans les callbacks
+useEffect(() => {
+  latestTimeRef.current = timeSpent;
+}, [timeSpent]);
+```
+
+### États du timer
+
+| État | Timer actif | Sauvegarde |
+|------|-------------|------------|
+| **Quiz en cours** | ✅ Oui (incrémente) | ✅ Automatique |
+| **Quiz soumis** | ❌ Non (arrêté) | ✅ Sauvegardé |
+| **Mode révision** | ❌ Non (arrêté) | ✅ Sauvegardé |
+| **Fermeture navigateur** | ⏸️ Suspendu | ✅ Avant fermeture |
+| **Changement de page** | ⏸️ Suspendu | ✅ Au démontage |
+
+### Intégration dans la progression
+
+Le temps est inclus dans le rapport de soumission :
+
+```json
+{
+  "quiz": {
+    "score": 80,
+    "scoreRaw": "8/10",
+    "durationSeconds": 450,  // 7 minutes 30 secondes
+    "attempts": 1
+  }
+}
+```
+
+### Avantages du système
+
+1. **Précision** : Incrémentation à la seconde près
+2. **Persistance** : Aucune perte de données
+3. **Performance** : Utilisation de `useRef` pour éviter les re-renders inutiles
+4. **Fiabilité** : Sauvegarde multiple (démontage, beforeunload, soumission)
+5. **UX** : Affichage temps réel formaté
+
+---
+
+## 📖 Sommaire des concours
+
+Le système de **résumé des concours** permet d'agréger et d'afficher les contenus pédagogiques de manière flexible.
+
+### Architecture
+
+**Fichier** : `components/views/ConcoursResumeView.tsx`
+
+```typescript
+interface ConcoursData {
+  id: string;
+  concours: string;
+  annee: string;
+  theme: string;
+  resume: {
+    title: string;
+    introduction: string;
+    sections: ConcoursResumeSection[];
+  };
+  quiz: QuizQuestion[];
+}
+
+interface ConcoursResumeSection {
+  type: 'definitions' | 'formules' | 'methodes' | 'pieges' | 'reflexion';
+  titre: string;
+  items: string[];
+}
+```
+
+### Modes de navigation
+
+Le système supporte **2 modes** :
+
+#### 1. Mode "année" (single file)
+
+Charge un seul fichier JSON pour une année spécifique :
+
+```typescript
+// localStorage
+localStorage.setItem('currentConcoursFile', '/public/concours/ensa/2024-probabilites.json');
+localStorage.setItem('concoursNavigationMode', 'year');
+
+// Chargement
+fetch(concoursFile)
+  .then(res => res.json())
+  .then((data: ConcoursData) => {
+    setConcoursData(data);
+  });
+```
+
+#### 2. Mode "thème" (multiple files aggregation)
+
+Agrège **plusieurs fichiers JSON** pour un même thème sur différentes années :
+
+```typescript
+// localStorage
+localStorage.setItem('concoursNavigationMode', 'theme');
+localStorage.setItem('concoursThemeFiles', JSON.stringify([
+  { file: '/public/concours/ensa/2018-probabilites.json' },
+  { file: '/public/concours/ensa/2022-probabilites.json' },
+  { file: '/public/concours/ensa/2024-probabilites.json' }
+]));
+
+// Chargement et agrégation
+Promise.all(files.map(f => fetch(f.file).then(r => r.json())))
+  .then(all => {
+    const valid = all.filter(Boolean) as ConcoursData[];
+
+    // Combiner les sections de résumé
+    const combinedSections = valid.reduce((acc, d) => {
+      return acc.concat(d.resume.sections);
+    }, []);
+
+    // Combiner les quiz
+    const combinedQuiz = valid.reduce((acc, d) => {
+      return acc.concat(d.quiz || []);
+    }, []);
+
+    // Créer un objet agrégé
+    const aggregated: ConcoursData = {
+      ...base,
+      resume: {
+        title: `${base.theme} — Résumé agrégé`,
+        introduction: base.resume.introduction,
+        sections: combinedSections
+      },
+      quiz: combinedQuiz
+    };
+
+    setConcoursData(aggregated);
+  });
+```
+
+### Structure des sections
+
+Chaque section a un **type** qui détermine son style visuel :
+
+```typescript
+type SectionType = 'definitions' | 'formules' | 'methodes' | 'pieges' | 'reflexion';
+```
+
+| Type | Couleur | Icône | Usage |
+|------|---------|-------|-------|
+| `definitions` | Bleu | 📘 | Définitions mathématiques clés |
+| `formules` | Violet | 🔮 | Formules essentielles à retenir |
+| `methodes` | Vert | 💡 | Méthodes et astuces de résolution |
+| `pieges` | Rouge | ⚠️ | Pièges courants et erreurs à éviter |
+| `reflexion` | Indigo | 🤔 | Points de réflexion importants |
+
+### Exemple de résumé agrégé
+
+```json
+{
+  "id": "ensa-probabilites-theme",
+  "concours": "ENSA",
+  "theme": "Probabilités",
+  "resume": {
+    "title": "Probabilités — Résumé agrégé (2018-2024)",
+    "introduction": "Compilation des concepts essentiels...",
+    "sections": [
+      // De 2018
+      {
+        "type": "definitions",
+        "titre": "Concepts de base (2018)",
+        "items": [
+          "**Univers** : $\\Omega$",
+          "**Événement** : Sous-ensemble de $\\Omega$"
+        ]
+      },
+      // De 2022
+      {
+        "type": "formules",
+        "titre": "Formules avancées (2022)",
+        "items": [
+          "**Bayes** : $P(B|A) = \\frac{P(A|B) \\cdot P(B)}{P(A)}$"
+        ]
+      },
+      // De 2024
+      {
+        "type": "methodes",
+        "titre": "Nouvelles méthodes (2024)",
+        "items": [
+          "**Arbres pondérés** : Multiplier sur branches"
+        ]
+      }
+    ]
+  },
+  "quiz": [
+    /* Questions de 2018, 2022, 2024 combinées */
+  ]
+}
+```
+
+### Navigation entre sections
+
+L'interface permet de naviguer entre les sections :
+
+```typescript
+const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
+
+// Section précédente
+const handlePrevSection = () => {
+  setCurrentSectionIndex(prev => Math.max(0, prev - 1));
+};
+
+// Section suivante
+const handleNextSection = () => {
+  setCurrentSectionIndex(prev =>
+    Math.min(concoursData.resume.sections.length - 1, prev + 1)
+  );
+};
+```
+
+### Affichage des sections
+
+Chaque section utilise le composant `FormattedText` pour le rendu LaTeX :
+
+```typescript
+<FormattedText content={item} />
+// Rend: "**Formule** : $x^2 + 3x + 2$"
+// → <strong>Formule</strong> : [MathJax rendered]
+```
+
+### Détection des pièges
+
+Les items contenant **ATTENTION**, **DANGER**, ou **PIÈGE** reçoivent un style spécial :
+
+```typescript
+const isPiege = item.match(/\*\*(ATTENTION|DANGER|PIÈGE)\*\*/);
+
+if (isPiege) {
+  // Bordure rouge, fond rouge clair
+  className = "border-l-4 border-red-500 bg-red-50 p-3";
+}
+```
+
+**Exemple** :
+```json
+{
+  "type": "pieges",
+  "items": [
+    "**ATTENTION** : $|z + z'| \\neq |z| + |z'|$ en général"
+  ]
+}
+```
+
+Rendu :
+```
+┌─────────────────────────────────────────┐
+│ ⚠️ PIÈGES À ÉVITER                      │
+├─────────────────────────────────────────┤
+│ ⚠️ ATTENTION : |z + z'| ≠ |z| + |z'|   │
+│    en général                           │
+│    [Bordure rouge, fond rouge clair]   │
+└─────────────────────────────────────────┘
+```
+
+### Transition vers le quiz
+
+Une fois le résumé lu, l'utilisateur peut passer au quiz :
+
+```typescript
+const [confirmed, setConfirmed] = useState(false);
+
+const handleStartQuiz = () => {
+  if (!confirmed) {
+    setConfirmed(true);  // Demander confirmation
+    return;
+  }
+  // Passer au quiz
+  dispatch({ type: 'CHANGE_VIEW', payload: { view: 'concours-quiz' } });
+};
+```
+
+### Avantages de l'agrégation
+
+1. **Vue complète** : Compile tous les concepts d'un thème sur plusieurs années
+2. **Révision optimale** : Évite les redondances, regroupe les notions
+3. **Évolution** : Montre l'évolution des sujets dans le temps
+4. **Flexibilité** : Peut afficher mode année OU mode thème sans changement de code
+5. **Performance** : Chargement parallèle avec `Promise.all()`
 
 ---
 
